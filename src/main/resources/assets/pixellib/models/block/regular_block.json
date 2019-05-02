@@ -1,0 +1,6 @@
+{
+    "parent": "expertmodecore:block/colored_block",
+    "textures": {
+        "all": "expertmodecore:block/regular_block"
+    }
+}

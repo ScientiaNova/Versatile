@@ -1,0 +1,7 @@
+{
+  "parent":"item/handheld",
+  "textures": {
+    "layer0":"expertmodecore:item/shovel_rod",
+    "layer1":"expertmodecore:item/shovel_head"
+  }
+}

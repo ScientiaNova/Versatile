@@ -1,0 +1,23 @@
+{
+	"itemGroup.pixel_lib_main": "Pixel Lib",
+
+	"blocktype.storage_block.name": "Block of %s",
+	"blocktype.ore.name": "%s Ore",
+
+	"itemtype.ingot.name": "%s Ingot",
+	"itemtype.dust.name": "%s Dust",
+	"itemtype.nugget.name": "%s Nugget",
+	"itemtype.axe.name": "%s Axe",
+	"itemtype.pickaxe.name": "%s Pickaxe",
+	"itemtype.hoe.name": "%s Hoe",
+	"itemtype.shovel.name": "%s Shovel",
+	"itemtype.sword.name": "%s Sword",
+
+	"material.diamond.name": "Diamond",
+	"material.emerald.name": "Emerald",
+	"material.gold.name": "Gold",
+	"material.iron.name": "Iron",
+	"material.lapis.name": "Lapis",
+	"material.redstone.name": "Redstone",
+	"material.quartz.name": "Nether Quartz"
+}

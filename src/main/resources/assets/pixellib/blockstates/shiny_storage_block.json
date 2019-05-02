@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "": { "model": "expertmodecore:block/shiny_block" }
+    }
+}
