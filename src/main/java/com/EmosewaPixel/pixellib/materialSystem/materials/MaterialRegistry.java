@@ -10,51 +10,53 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.ArmorMaterial;
+import net.minecraft.item.ItemTier;
 
 public class MaterialRegistry {
-    public static TextureType ROUGH, REGULAR, SHINY;
+    public static TextureType ROUGH, REGULAR, SHINY, FUEL, PENTAGONAL, OCTAGONAL, CRYSTAL, SHARP;
 
-    public static Material IRON, GOLD, LAPIS, QUARTZ, DIAMOND, PRISMARINE, EMERALD, REDSTONE;
+    public static Material IRON, GOLD, LAPIS, QUARTZ, DIAMOND, EMERALD, REDSTONE, STONE, WOOD, COAL;
 
-    public static ObjectType DUST, INGOT, NUGGET, BLOCK, ORE, PICKAXE, SHOVEL, AXE, SWORD, HOE, GEM;
+    public static ObjectType DUST, INGOT, NUGGET, BLOCK, ORE, GEM;
 
     static {
         //Texture Types
         ROUGH = new TextureType("rough");
         REGULAR = new TextureType("regular");
         SHINY = new TextureType("shiny");
+        FUEL = new TextureType("fuel");
+        PENTAGONAL = new TextureType("pentagonal");
+        OCTAGONAL = new TextureType("octagonal");
+        CRYSTAL = new TextureType("crystal");
+        SHARP = new TextureType("sharp");
 
         //Materials
-        IRON = new IngotMaterial("iron", ROUGH, 0xd8d8d8).hasOre().build();
-        GOLD = new IngotMaterial("gold", SHINY, 0xfad64a).hasOre().build();
-        LAPIS = new GemMaterial("lapis", REGULAR, 0x2351be).build();
-        QUARTZ = new GemMaterial("quartz", REGULAR, 0xe8dfd0).build();
-        DIAMOND = new GemMaterial("diamond", REGULAR, 0x34ebe3).build();
-        EMERALD = new GemMaterial("emerald", REGULAR, 0x08ad2c).build();
-        REDSTONE = new DustMaterial("redstone", REGULAR, 0xfc1a19).hasOre().build();
+        COAL = new DustMaterial("coal", FUEL, 0x1a1a1a, 0).hasOre().build();
+        IRON = new IngotMaterial("iron", ROUGH, 0xd8d8d8, 1).setItemTier(ItemTier.IRON).setArmorMaterial(ArmorMaterial.IRON).hasOre().build();
+        GOLD = new IngotMaterial("gold", SHINY, 0xfad64a, 2).setItemTier(ItemTier.GOLD).setArmorMaterial(ArmorMaterial.GOLD).hasOre().build();
+        LAPIS = new GemMaterial("lapis", REGULAR, 0x2351be, 0).hasOre().build();
+        QUARTZ = new GemMaterial("quartz", CRYSTAL, 0xe8dfd0, 0).hasOre().build();
+        DIAMOND = new GemMaterial("diamond", PENTAGONAL, 0x34ebe3, 2).setItemTier(ItemTier.DIAMOND).setArmorMaterial(ArmorMaterial.DIAMOND).build();
+        EMERALD = new GemMaterial("emerald", OCTAGONAL, 0x08ad2c, 2).hasOre().build();
+        REDSTONE = new DustMaterial("redstone", REGULAR, 0xfc1a19, 1).hasOre().build();
+        STONE = new Material("stone", REGULAR, 0xcccccc, 0).setItemTier(ItemTier.STONE).build();
+        WOOD = new Material("wood", REGULAR, 0xd5bc77, -1).setItemTier(ItemTier.WOOD).build();
 
         //Object Types
         DUST = new ItemType("dust", mat -> mat instanceof DustMaterial);
         INGOT = new ItemType("ingot", mat -> mat instanceof IngotMaterial);
         NUGGET = new ItemType("nugget", mat -> mat instanceof IngotMaterial);
-        BLOCK = new BlockType("storage_block", mat -> {
-            if (mat instanceof DustMaterial)
-                return ((DustMaterial) mat).getHarvestTier() != null;
-            return false;
-        }, Block.Properties.create(net.minecraft.block.material.Material.IRON).sound(SoundType.METAL));
-        ORE = new BlockType("ore", mat -> {
-            if (mat instanceof IngotMaterial && mat.doesHaveOre())
-                return ((IngotMaterial) mat).getHarvestTier() != null;
-            return false;
-        }, Block.Properties.create(net.minecraft.block.material.Material.ROCK).sound(SoundType.STONE));
-        PICKAXE = new ItemType("pickaxe", mat -> false);
-        AXE = new ItemType("axe", mat -> false);
-        SHOVEL = new ItemType("shovel", mat -> false);
-        SWORD = new ItemType("sword", mat -> false);
-        HOE = new ItemType("hoe", mat -> false);
+        BLOCK = new BlockType("storage_block", mat -> mat instanceof DustMaterial,
+                Block.Properties.create(net.minecraft.block.material.Material.IRON).sound(SoundType.METAL));
+        ORE = new BlockType("ore", mat -> mat instanceof IngotMaterial && mat.doesHaveOre(),
+                Block.Properties.create(net.minecraft.block.material.Material.ROCK).sound(SoundType.STONE));
         GEM = new ItemType("gem", mat -> mat instanceof GemMaterial);
 
-        //Giving vanilla items material values
+        MaterialItems.addItem(COAL, GEM, Items.COAL);
+        MaterialBlocks.addBlock(COAL, BLOCK, Blocks.COAL_BLOCK);
+        MaterialBlocks.addBlock(COAL, ORE, Blocks.COAL_ORE);
+
         MaterialItems.addItem(IRON, INGOT, Items.IRON_INGOT);
         MaterialItems.addItem(IRON, NUGGET, Items.IRON_NUGGET);
         MaterialBlocks.addBlock(IRON, BLOCK, Blocks.IRON_BLOCK);
@@ -79,9 +81,6 @@ public class MaterialRegistry {
 
         MaterialItems.addItem(QUARTZ, GEM, Items.QUARTZ);
         MaterialBlocks.addBlock(QUARTZ, BLOCK, Blocks.QUARTZ_BLOCK);
-
-        MaterialItems.addItem(PRISMARINE, GEM, Items.PRISMARINE_CRYSTALS);
-        MaterialBlocks.addBlock(PRISMARINE, BLOCK, Blocks.PRISMARINE);
 
         MaterialItems.addItem(REDSTONE, DUST, Items.REDSTONE);
         MaterialBlocks.addBlock(REDSTONE, BLOCK, Blocks.REDSTONE_BLOCK);

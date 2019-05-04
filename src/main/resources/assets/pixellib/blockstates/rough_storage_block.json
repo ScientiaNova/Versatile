@@ -1,5 +1,5 @@
 {
     "variants": {
-        "": { "model": "expertmodecore:block/rough_block" }
+        "": { "model": "pixellib:block/rough_block" }
     }
 }

@@ -1,7 +1,7 @@
 {
-  "parent":"expertmodecore:block/overlayed_colored_block",
+  "parent":"pixellib:block/overlayed_colored_block",
   "textures": {
     "all": "block/stone",
-    "overlay": "expertmodecore:block/ore"
+    "overlay": "pixellib:block/ore"
   }
 }

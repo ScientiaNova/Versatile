@@ -1,5 +1,5 @@
 {
     "variants": {
-        "": { "model": "expertmodecore:block/ore" }
+        "": { "model": "pixellib:block/ore" }
     }
 }

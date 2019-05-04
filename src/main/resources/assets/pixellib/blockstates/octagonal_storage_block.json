@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "": { "model": "pixellib:block/octagonal_block" }
+    }
+}

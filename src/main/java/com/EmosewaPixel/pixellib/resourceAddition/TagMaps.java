@@ -10,16 +10,23 @@ public class TagMaps {
     protected static ListMultimap<String, Item> ITEM_TAGS = MultimapBuilder.treeKeys().arrayListValues().build();
     protected static ListMultimap<String, Block> BLOCK_TAGS = MultimapBuilder.treeKeys().arrayListValues().build();
 
-    public static void addItemToTag(IMaterialItem item) {
+    public static void addMatItemToTag(IMaterialItem item) {
         if (item instanceof Item) {
-            ITEM_TAGS.put(item.getObjType().getName() + "s/" + item.getMaterial().getName(), (Item) item);
-            ITEM_TAGS.put(item.getObjType().getName() + "s", (Item) item);
+            addItemToTag(item.getObjType().getName() + "s/" + item.getMaterial().getName(), (Item) item);
+            addItemToTag(item.getObjType().getName() + "s", (Item) item);
         }
         if (item instanceof Block) {
-            ITEM_TAGS.put(item.getObjType().getName() + "s/" + item.getMaterial().getName(), Item.getItemFromBlock((Block) item));
-            ITEM_TAGS.put(item.getObjType().getName() + "s", Item.getItemFromBlock((Block) item));
-            BLOCK_TAGS.put(item.getObjType().getName() + "s/" + item.getMaterial().getName(), (Block) item);
-            BLOCK_TAGS.put(item.getObjType().getName() + "s", (Block) item);
+            addBlockToTag(item.getObjType().getName() + "s/" + item.getMaterial().getName(), (Block) item);
+            addBlockToTag(item.getObjType().getName() + "s", (Block) item);
         }
+    }
+
+    public static void addItemToTag(String tag, Item item) {
+        ITEM_TAGS.put(tag, item);
+    }
+
+    public static void addBlockToTag(String tag, Block block) {
+        BLOCK_TAGS.put(tag, block);
+        ITEM_TAGS.put(tag, Item.getItemFromBlock(block));
     }
 }

@@ -5,16 +5,18 @@ import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.SoundEvent;
 
+import java.util.function.Supplier;
+
 public class ArmorMaterial implements IArmorMaterial {
     private final int durability;
     private final int damageRecudtiom;
     private final int enchantability;
     private final SoundEvent souldEvent;
-    private final Ingredient repairMaterial;
+    private final Supplier<Ingredient> repairMaterial;
     private final String name;
     private final float toughness;
 
-    public ArmorMaterial(int durability, int damageRecudtiom, int enchantability, SoundEvent souldEvent, Ingredient repairMaterial, String name, float toughness) {
+    public ArmorMaterial(int durability, int damageRecudtiom, int enchantability, SoundEvent souldEvent, Supplier<Ingredient> repairMaterial, String name, float toughness) {
         this.durability = durability;
         this.damageRecudtiom = damageRecudtiom;
         this.enchantability = enchantability;
@@ -46,7 +48,7 @@ public class ArmorMaterial implements IArmorMaterial {
 
     @Override
     public Ingredient getRepairMaterial() {
-        return repairMaterial;
+        return repairMaterial.get();
     }
 
     @Override

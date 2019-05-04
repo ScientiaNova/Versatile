@@ -1,7 +1,0 @@
-{
-  "parent":"item/handheld",
-  "textures": {
-    "layer0":"expertmodecore:item/sword_rod",
-    "layer1":"expertmodecore:item/sword_head"
-  }
-}

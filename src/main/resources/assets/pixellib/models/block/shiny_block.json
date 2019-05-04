@@ -1,6 +1,6 @@
 {
-    "parent": "expertmodecore:block/colored_block",
+    "parent": "pixellib:block/colored_cube_all",
     "textures": {
-        "all": "expertmodecore:block/shiny_block"
+        "all": "pixellib:block/shiny_block"
     }
 }

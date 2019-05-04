@@ -3,8 +3,8 @@ package com.EmosewaPixel.pixellib.blocks;
 import com.EmosewaPixel.pixellib.PixelLib;
 import com.EmosewaPixel.pixellib.materialSystem.lists.MaterialBlocks;
 import com.EmosewaPixel.pixellib.materialSystem.lists.Materials;
-import com.EmosewaPixel.pixellib.materialSystem.lists.TextureTypes;
 import com.EmosewaPixel.pixellib.materialSystem.lists.ObjTypes;
+import com.EmosewaPixel.pixellib.materialSystem.lists.TextureTypes;
 import com.EmosewaPixel.pixellib.materialSystem.materials.IMaterialItem;
 import com.EmosewaPixel.pixellib.materialSystem.materials.IngotMaterial;
 import com.EmosewaPixel.pixellib.materialSystem.types.BlockType;
@@ -30,13 +30,13 @@ public class BlockRegistry {
     public static void registry(RegistryEvent.Register<Block> e) {
         for (com.EmosewaPixel.pixellib.materialSystem.materials.Material mat : Materials.getAll())
             for (ObjectType type : ObjTypes.getAll())
-                if (type instanceof BlockType && type.isMaterialCompatible(mat) && !MaterialBlocks.contains(mat, type))
+                if (type instanceof BlockType && type.isMaterialCompatible(mat) && !MaterialBlocks.contains(mat, type) && !mat.hasBlacklisted(type))
                     register(new MaterialBlock((IngotMaterial) mat, (BlockType) type), e);
 
         for (ObjectType objT : ObjTypes.getAll())
             if (objT instanceof BlockType)
                 for (TextureType textureT : TextureTypes.getAll())
-                    templates.add(register(new ModBlock(Block.Properties.create(Material.IRON), textureT.toString() + "_" + objT.getName(), 0), e));
+                    templates.add(register(new ModBlock(Block.Properties.create(Material.IRON), "pixellib:" + textureT.toString() + "_" + objT.getName(), 0), e));
     }
 
     public static void itemRegistry(RegistryEvent.Register<Item> e) {

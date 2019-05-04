@@ -1,9 +1,9 @@
 package com.EmosewaPixel.pixellib.blocks;
 
 import com.EmosewaPixel.pixellib.materialSystem.lists.MaterialBlocks;
+import com.EmosewaPixel.pixellib.materialSystem.materials.IMaterialItem;
 import com.EmosewaPixel.pixellib.materialSystem.materials.IngotMaterial;
 import com.EmosewaPixel.pixellib.materialSystem.materials.Material;
-import com.EmosewaPixel.pixellib.materialSystem.materials.IMaterialItem;
 import com.EmosewaPixel.pixellib.materialSystem.types.BlockType;
 import com.EmosewaPixel.pixellib.materialSystem.types.ObjectType;
 import net.minecraft.util.BlockRenderLayer;
@@ -15,7 +15,7 @@ public class MaterialBlock extends ModBlock implements IMaterialItem {
     private ObjectType type;
 
     public MaterialBlock(IngotMaterial mat, BlockType type) {
-        super(type.getProperties().hardnessAndResistance(mat.getHarvestTier().getHardness(), mat.getHarvestTier().getResistance()), mat.getName() + "_" + type.getName(), mat.getHarvestTier().getHarvestLevel());
+        super(type.getProperties().hardnessAndResistance(mat.getHarvestTier().getHardness(), mat.getHarvestTier().getResistance()), "pixellib:" + mat.getName() + "_" + type.getName(), mat.getHarvestTier().getHarvestLevel());
         this.material = mat;
         this.type = type;
         MaterialBlocks.addBlock(this);

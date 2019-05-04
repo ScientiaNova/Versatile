@@ -10,7 +10,7 @@ public class ModBlock extends Block {
     public ModBlock(Block.Properties properties, String name, int level) {
         super(properties);
         this.level = level;
-        setRegistryName("pixellib:" + name);
+        setRegistryName(name);
     }
 
     @Override

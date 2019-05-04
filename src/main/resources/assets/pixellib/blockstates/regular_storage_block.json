@@ -1,5 +1,5 @@
 {
     "variants": {
-        "": { "model": "expertmodecore:block/regular_block" }
+        "": { "model": "pixellib:block/regular_block" }
     }
 }

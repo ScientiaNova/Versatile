@@ -16,6 +16,9 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 
+import java.util.ArrayList;
+import java.util.function.Supplier;
+
 public class Material {
     private String name;
     private TextureType textureType;
@@ -23,11 +26,14 @@ public class Material {
     private boolean hasOre = false;
     private IItemTier itemTier = null;
     private IArmorMaterial armorMaterial = null;
+    private ArrayList<ObjectType> blacklist = new ArrayList<>();
+    private int tier;
 
-    public Material(String name, TextureType textureType, int color) {
+    public Material(String name, TextureType textureType, int color, int tier) {
         this.name = name;
         this.textureType = textureType;
         this.color = color;
+        this.tier = tier;
     }
 
     public Material hasOre() {
@@ -40,8 +46,12 @@ public class Material {
         return this;
     }
 
-    public Material setItemTierStats(int harvestLevelIn, int maxUsesIn, float efficiencyIn, float attackDamageIn, int enchantabilityIn, Ingredient repairMaterialIn) {
+    public Material setItemTierStats(int harvestLevelIn, int maxUsesIn, float efficiencyIn, float attackDamageIn, int enchantabilityIn, Supplier<Ingredient> repairMaterialIn) {
         return setItemTier(new ItemTier(harvestLevelIn, maxUsesIn, efficiencyIn, attackDamageIn, enchantabilityIn, repairMaterialIn));
+    }
+
+    public Material setItemTierStats(int maxUsesIn, float efficiencyIn, float attackDamageIn, int enchantabilityIn, Supplier<Ingredient> repairMaterialIn) {
+        return setItemTier(new ItemTier(tier + 1, maxUsesIn, efficiencyIn, attackDamageIn, enchantabilityIn, repairMaterialIn));
     }
 
     public Material setArmorMaterial(IArmorMaterial mat) {
@@ -49,8 +59,14 @@ public class Material {
         return this;
     }
 
-    public Material setArmorStats(int durability, int damageRecudtiom, int enchantability, SoundEvent souldEvent, Ingredient repairMaterial, float toughness) {
+    public Material setArmorStats(int durability, int damageRecudtiom, int enchantability, SoundEvent souldEvent, Supplier<Ingredient> repairMaterial, float toughness) {
         return setArmorMaterial(new ArmorMaterial(durability, damageRecudtiom, enchantability, souldEvent, repairMaterial, name, toughness));
+    }
+
+    public Material blacklistTypes(ObjectType... types) {
+        for (ObjectType type : types)
+            blacklist.add(type);
+        return this;
     }
 
     public Material build() {
@@ -88,5 +104,13 @@ public class Material {
 
     public Tag<Item> getTag(ObjectType type) {
         return new ItemTags.Wrapper(new ResourceLocation("forge", type.getName() + "s/" + name));
+    }
+
+    public boolean hasBlacklisted(ObjectType type) {
+        return blacklist.contains(type);
+    }
+
+    public int getTier() {
+        return tier;
     }
 }

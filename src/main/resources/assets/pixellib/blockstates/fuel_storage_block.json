@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "": { "model": "pixellib:block/fuel_block" }
+    }
+}

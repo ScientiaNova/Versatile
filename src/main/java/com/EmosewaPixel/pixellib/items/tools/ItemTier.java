@@ -3,15 +3,17 @@ package com.EmosewaPixel.pixellib.items.tools;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.crafting.Ingredient;
 
+import java.util.function.Supplier;
+
 public class ItemTier implements IItemTier {
     private final int harvestLevel;
     private final int maxUses;
     private final float efficiency;
     private final float attackDamage;
     private final int enchantability;
-    private final Ingredient repairMaterial;
+    private final Supplier<Ingredient> repairMaterial;
 
-    public ItemTier(int harvestLevelIn, int maxUsesIn, float efficiencyIn, float attackDamageIn, int enchantabilityIn, Ingredient repairMaterialIn) {
+    public ItemTier(int harvestLevelIn, int maxUsesIn, float efficiencyIn, float attackDamageIn, int enchantabilityIn, Supplier<Ingredient> repairMaterialIn) {
         this.harvestLevel = harvestLevelIn;
         this.maxUses = maxUsesIn;
         this.efficiency = efficiencyIn;
@@ -41,6 +43,6 @@ public class ItemTier implements IItemTier {
     }
 
     public Ingredient getRepairMaterial() {
-        return this.repairMaterial;
+        return this.repairMaterial.get();
     }
 }

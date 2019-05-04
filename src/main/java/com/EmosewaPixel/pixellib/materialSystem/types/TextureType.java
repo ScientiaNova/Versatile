@@ -7,7 +7,7 @@ public class TextureType {
 
     public TextureType(String name) {
         this.name = name;
-        TextureTypes.textureTypes.add(this);
+        TextureTypes.add(this);
     }
 
     public String toString() {
