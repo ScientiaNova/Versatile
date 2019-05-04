@@ -2,53 +2,29 @@ package com.EmosewaPixel.pixellib.tiles.guis;
 
 import com.EmosewaPixel.pixellib.tiles.TileEntityFuelBased;
 import com.EmosewaPixel.pixellib.tiles.containers.ContainerMachineFuelBased;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.util.ResourceLocation;
 
-public class GUIMachineBase extends GuiContainer {
-    protected TileEntityFuelBased te;
-    private String backGround;
-    private IInventory playerInventory;
+public class GUIFuelBasedMachine extends GUIRecipeBasedMachine {
+    private TileEntityFuelBased te;
 
-    public GUIMachineBase(IInventory playerInventory, TileEntityFuelBased te, String backGround) {
-        super(new ContainerMachineFuelBased(playerInventory, te));
+    public GUIFuelBasedMachine(IInventory playerInventory, TileEntityFuelBased te, String backGround) {
+        super(new ContainerMachineFuelBased(playerInventory, te), playerInventory, te, backGround);
         this.te = te;
-        this.backGround = backGround;
-        this.playerInventory = playerInventory;
+    }
+
+    public GUIFuelBasedMachine(ContainerMachineFuelBased container, IInventory playerInventory, TileEntityFuelBased te, String backGround) {
+        super(container, playerInventory, te, backGround);
+        this.te = te;
     }
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-        mc.getTextureManager().bindTexture(new ResourceLocation(backGround));
-        drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
-        int progress;
+        super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
+        int burnTime;
         if (te.getBurnTime() > 0) {
-            progress = getBurnLeftScaled(13);
-            drawTexturedModalRect(guiLeft + 56 - (te.getInputCount() - 1) * 9, guiTop + 36 + 12 - progress, 176, 12 - progress, 14, progress + 1);
+            burnTime = getBurnLeftScaled(13);
+            drawTexturedModalRect(guiLeft + 56 - (te.getInputCount() - 1) * 9, guiTop + 36 + 12 - burnTime, 176, 12 - burnTime, 14, burnTime + 1);
         }
-        if (te.getProgress() > 0 && !te.getCurrentRecipe().isEmpty()) {
-            progress = getProgressLeftScaled(24);
-            drawTexturedModalRect(guiLeft + 79, guiTop + 34, 176, 14, progress + 1, 16);
-        }
-    }
-
-    @Override
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        String name = te.getBlockState().getBlock().getNameTextComponent().getFormattedText();
-        fontRenderer.drawString(name, xSize / 2 - fontRenderer.getStringWidth(name) / 2, 6.0F, 4210752);
-        fontRenderer.drawString(playerInventory.getDisplayName().getFormattedText(), 8.0F, ySize - 96 + 2, 4210752);
-    }
-
-    @Override
-    public void render(int mouseX, int mouseY, float partialTicks) {
-        drawDefaultBackground();
-        super.render(mouseX, mouseY, partialTicks);
-        renderHoveredToolTip(mouseX, mouseY);
-    }
-
-    private int getProgressLeftScaled(int scale) {
-        return (int) (scale - (float) te.getProgress() / te.getCurrentRecipe().getTime() * scale);
     }
 
     private int getBurnLeftScaled(int scale) {

@@ -1,6 +1,6 @@
 package com.EmosewaPixel.pixellib.tiles.containers;
 
-import com.EmosewaPixel.pixellib.tiles.TileEntityFuelBased;
+import com.EmosewaPixel.pixellib.tiles.TileEntityRecipeBased;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
@@ -11,9 +11,8 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class ContainerMachineFuelBased extends Container {
-    private TileEntityFuelBased te;
-
+public class ContainerMachineRecipeBased extends Container {
+    private TileEntityRecipeBased te;
     private IItemHandler itemHandler;
 
     @Override
@@ -21,7 +20,7 @@ public class ContainerMachineFuelBased extends Container {
         return te.canInteractWith(playerIn);
     }
 
-    public ContainerMachineFuelBased(IInventory playerInventory, TileEntityFuelBased te) {
+    public ContainerMachineRecipeBased(IInventory playerInventory, TileEntityRecipeBased te) {
         this.te = te;
 
         te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> itemHandler = handler);
@@ -82,8 +81,6 @@ public class ContainerMachineFuelBased extends Container {
         for (IContainerListener listener : listeners) {
             listener.sendWindowProperty(this, 0, te.getProgress());
             listener.sendWindowProperty(this, 1, te.getCurrentRecipe().getTime());
-            listener.sendWindowProperty(this, 2, te.getBurnTime());
-            listener.sendWindowProperty(this, 3, te.getMaxBurnTime());
         }
     }
 
@@ -95,13 +92,6 @@ public class ContainerMachineFuelBased extends Container {
                 break;
             case 1:
                 te.getCurrentRecipe().setTime(data);
-                break;
-            case 2:
-                te.setBurnTime(data);
-                break;
-            case 3:
-                if (!te.getCurrentRecipe().isEmpty())
-                    te.setMaxBurnTime(data);
                 break;
         }
     }

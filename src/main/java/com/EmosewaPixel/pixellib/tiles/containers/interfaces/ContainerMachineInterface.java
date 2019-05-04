@@ -1,6 +1,7 @@
-package com.EmosewaPixel.pixellib.tiles.containers;
+package com.EmosewaPixel.pixellib.tiles.containers.interfaces;
 
 import com.EmosewaPixel.pixellib.tiles.TileEntityRecipeBased;
+import com.EmosewaPixel.pixellib.tiles.containers.ContainerMachineRecipeBased;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -13,7 +14,7 @@ import net.minecraft.world.IInteractionObject;
 import javax.annotation.Nullable;
 
 public class ContainerMachineInterface implements IInteractionObject {
-    private BlockPos pos;
+    public static BlockPos pos;
     private ResourceLocation name;
 
     public ContainerMachineInterface(BlockPos pos, ResourceLocation name) {

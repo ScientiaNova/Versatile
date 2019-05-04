@@ -1,21 +1,28 @@
 package com.EmosewaPixel.pixellib.tiles.guis;
 
-import com.EmosewaPixel.pixellib.tiles.TileEntityFuelBased;
-import com.EmosewaPixel.pixellib.tiles.containers.ContainerMachineFuelBased;
+import com.EmosewaPixel.pixellib.tiles.TileEntityRecipeBased;
+import com.EmosewaPixel.pixellib.tiles.containers.ContainerMachineRecipeBased;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 
-public class GUIMachineBase extends GuiContainer {
-    protected TileEntityFuelBased te;
+public class GUIRecipeBasedMachine extends GuiContainer {
+    private TileEntityRecipeBased te;
     private String backGround;
     private IInventory playerInventory;
 
-    public GUIMachineBase(IInventory playerInventory, TileEntityFuelBased te, String backGround) {
-        super(new ContainerMachineFuelBased(playerInventory, te));
-        this.te = te;
+    public GUIRecipeBasedMachine(IInventory playerInventory, TileEntityRecipeBased te, String backGround) {
+        super(new ContainerMachineRecipeBased(playerInventory, te));
         this.backGround = backGround;
         this.playerInventory = playerInventory;
+        this.te = te;
+    }
+
+    public GUIRecipeBasedMachine(ContainerMachineRecipeBased container, IInventory playerInventory, TileEntityRecipeBased te, String backGround) {
+        super(container);
+        this.backGround = backGround;
+        this.playerInventory = playerInventory;
+        this.te = te;
     }
 
     @Override
@@ -23,10 +30,6 @@ public class GUIMachineBase extends GuiContainer {
         mc.getTextureManager().bindTexture(new ResourceLocation(backGround));
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
         int progress;
-        if (te.getBurnTime() > 0) {
-            progress = getBurnLeftScaled(13);
-            drawTexturedModalRect(guiLeft + 56 - (te.getInputCount() - 1) * 9, guiTop + 36 + 12 - progress, 176, 12 - progress, 14, progress + 1);
-        }
         if (te.getProgress() > 0 && !te.getCurrentRecipe().isEmpty()) {
             progress = getProgressLeftScaled(24);
             drawTexturedModalRect(guiLeft + 79, guiTop + 34, 176, 14, progress + 1, 16);
@@ -49,9 +52,5 @@ public class GUIMachineBase extends GuiContainer {
 
     private int getProgressLeftScaled(int scale) {
         return (int) (scale - (float) te.getProgress() / te.getCurrentRecipe().getTime() * scale);
-    }
-
-    private int getBurnLeftScaled(int scale) {
-        return (int) ((float) te.getBurnTime() / te.getMaxBurnTime() * scale);
     }
 }
