@@ -1,18 +1,18 @@
 package com.EmosewaPixel.pixellib.tiles.guis;
 
-import com.EmosewaPixel.pixellib.tiles.TileEntityFuelBased;
+import com.EmosewaPixel.pixellib.tiles.TEFuelBased;
 import com.EmosewaPixel.pixellib.tiles.containers.ContainerMachineFuelBased;
 import net.minecraft.inventory.IInventory;
 
 public class GUIFuelBasedMachine extends GUIRecipeBasedMachine {
-    private TileEntityFuelBased te;
+    private TEFuelBased te;
 
-    public GUIFuelBasedMachine(IInventory playerInventory, TileEntityFuelBased te, String backGround) {
+    public GUIFuelBasedMachine(IInventory playerInventory, TEFuelBased te, String backGround) {
         super(new ContainerMachineFuelBased(playerInventory, te), playerInventory, te, backGround);
         this.te = te;
     }
 
-    public GUIFuelBasedMachine(ContainerMachineFuelBased container, IInventory playerInventory, TileEntityFuelBased te, String backGround) {
+    public GUIFuelBasedMachine(ContainerMachineFuelBased container, IInventory playerInventory, TEFuelBased te, String backGround) {
         super(container, playerInventory, te, backGround);
         this.te = te;
     }
@@ -23,7 +23,7 @@ public class GUIFuelBasedMachine extends GUIRecipeBasedMachine {
         int burnTime;
         if (te.getBurnTime() > 0) {
             burnTime = getBurnLeftScaled(13);
-            drawTexturedModalRect(guiLeft + 56 - (te.getInputCount() - 1) * 9, guiTop + 36 + 12 - burnTime, 176, 12 - burnTime, 14, burnTime + 1);
+            drawTexturedModalRect(guiLeft + 56 - (te.getRecipeList().getMaxInputs() - 1) * 9, guiTop + 36 + 12 - burnTime, 176, 12 - burnTime, 14, burnTime + 1);
         }
     }
 

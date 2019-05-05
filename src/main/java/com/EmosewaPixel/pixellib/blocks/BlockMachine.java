@@ -1,7 +1,7 @@
 package com.EmosewaPixel.pixellib.blocks;
 
-import com.EmosewaPixel.pixellib.tiles.TileEntityProgressive;
-import com.EmosewaPixel.pixellib.tiles.TileEntityRecipeBased;
+import com.EmosewaPixel.pixellib.tiles.TEProgressive;
+import com.EmosewaPixel.pixellib.tiles.TERecipeBased;
 import com.EmosewaPixel.pixellib.tiles.containers.interfaces.ContainerMachineInterface;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
@@ -26,15 +26,15 @@ import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
 public class BlockMachine extends Block implements ITileEntityProvider {
-    private Supplier<TileEntityProgressive> te;
+    private Supplier<TEProgressive> te;
 
-    public BlockMachine(ResourceLocation name, Supplier<TileEntityProgressive> te) {
+    public BlockMachine(ResourceLocation name, Supplier<TEProgressive> te) {
         super(Properties.create(Material.ROCK).hardnessAndResistance(3.5F));
         setRegistryName(name);
         this.te = te;
     }
 
-    public BlockMachine(Block.Properties properties, ResourceLocation name, Supplier<TileEntityProgressive> te) {
+    public BlockMachine(Block.Properties properties, ResourceLocation name, Supplier<TEProgressive> te) {
         super(properties);
         setRegistryName(name);
         this.te = te;
@@ -53,8 +53,8 @@ public class BlockMachine extends Block implements ITileEntityProvider {
 
     @Override
     public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack) {
-        if (te instanceof TileEntityRecipeBased)
-            ((TileEntityRecipeBased) te).dropInventory();
+        if (te instanceof TERecipeBased)
+            ((TERecipeBased) te).dropInventory();
         super.harvestBlock(worldIn, player, pos, state, te, stack);
     }
 
@@ -62,7 +62,7 @@ public class BlockMachine extends Block implements ITileEntityProvider {
     public void onReplaced(IBlockState state, World world, BlockPos pos, IBlockState newState, boolean p_196243_5_) {
         if (state.getBlock() != newState.getBlock()) {
             TileEntity te = world.getTileEntity(pos);
-            if (te instanceof TileEntityRecipeBased) {
+            if (te instanceof TERecipeBased) {
                 world.updateComparatorOutputLevel(pos, this);
             }
 
@@ -73,7 +73,7 @@ public class BlockMachine extends Block implements ITileEntityProvider {
     @Override
     public boolean onBlockActivated(IBlockState state, World worldIn, BlockPos pos, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (!worldIn.isRemote)
-            if (worldIn.getTileEntity(pos) instanceof TileEntityRecipeBased)
+            if (worldIn.getTileEntity(pos) instanceof TERecipeBased)
                 NetworkHooks.openGui((EntityPlayerMP) player, new ContainerMachineInterface(pos, getRegistryName()), pos);
         return true;
     }

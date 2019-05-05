@@ -1,6 +1,6 @@
 package com.EmosewaPixel.pixellib.tiles.containers.interfaces;
 
-import com.EmosewaPixel.pixellib.tiles.TileEntityFuelBased;
+import com.EmosewaPixel.pixellib.tiles.TEFuelBased;
 import com.EmosewaPixel.pixellib.tiles.containers.ContainerMachineFuelBased;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -15,6 +15,6 @@ public class ContainerMachineFueledInterface extends ContainerMachineInterface {
 
     @Override
     public Container createContainer(InventoryPlayer inventoryPlayer, EntityPlayer entityPlayer) {
-        return new ContainerMachineFuelBased(inventoryPlayer, (TileEntityFuelBased) entityPlayer.world.getTileEntity(pos));
+        return new ContainerMachineFuelBased(inventoryPlayer, (TEFuelBased) entityPlayer.world.getTileEntity(pos));
     }
 }

@@ -11,7 +11,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class TileEntityProgressive extends TileEntity implements ITickable {
+public class TEProgressive extends TileEntity implements ITickable {
     private int progress = 0;
 
     public void setProgress(int i) {
@@ -26,7 +26,7 @@ public class TileEntityProgressive extends TileEntity implements ITickable {
         return progress -= amount;
     }
 
-    public TileEntityProgressive(TileEntityType type) {
+    public TEProgressive(TileEntityType type) {
         super(type);
     }
 

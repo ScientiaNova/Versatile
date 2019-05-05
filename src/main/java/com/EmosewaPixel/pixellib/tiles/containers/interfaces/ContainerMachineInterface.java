@@ -1,6 +1,6 @@
 package com.EmosewaPixel.pixellib.tiles.containers.interfaces;
 
-import com.EmosewaPixel.pixellib.tiles.TileEntityRecipeBased;
+import com.EmosewaPixel.pixellib.tiles.TERecipeBased;
 import com.EmosewaPixel.pixellib.tiles.containers.ContainerMachineRecipeBased;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -24,7 +24,7 @@ public class ContainerMachineInterface implements IInteractionObject {
 
     @Override
     public Container createContainer(InventoryPlayer inventoryPlayer, EntityPlayer entityPlayer) {
-        return new ContainerMachineRecipeBased(inventoryPlayer, (TileEntityRecipeBased) entityPlayer.world.getTileEntity(pos));
+        return new ContainerMachineRecipeBased(inventoryPlayer, (TERecipeBased) entityPlayer.world.getTileEntity(pos));
     }
 
     @Override

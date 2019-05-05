@@ -1,13 +1,13 @@
 package com.EmosewaPixel.pixellib.tiles.containers;
 
-import com.EmosewaPixel.pixellib.tiles.TileEntityFuelBased;
+import com.EmosewaPixel.pixellib.tiles.TEFuelBased;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 
 public class ContainerMachineFuelBased extends ContainerMachineRecipeBased {
-    private TileEntityFuelBased te;
+    private TEFuelBased te;
 
-    public ContainerMachineFuelBased(IInventory playerInventory, TileEntityFuelBased te) {
+    public ContainerMachineFuelBased(IInventory playerInventory, TEFuelBased te) {
         super(playerInventory, te);
         this.te = te;
     }

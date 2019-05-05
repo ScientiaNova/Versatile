@@ -6,13 +6,13 @@ import net.minecraft.item.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MachineRecipe {
+public class SimpleMachineRecipe {
     private Object[] input;
     private Object[] output;
     private int time;
-    public static final MachineRecipe EMPTY = new MachineRecipe(null, null, 0);
+    public static final SimpleMachineRecipe EMPTY = new SimpleMachineRecipe(null, null, 0);
 
-    public MachineRecipe(Object[] input, Object[] output, int time) {
+    public SimpleMachineRecipe(Object[] input, Object[] output, int time) {
         this.input = input;
         this.output = output;
         this.time = time;

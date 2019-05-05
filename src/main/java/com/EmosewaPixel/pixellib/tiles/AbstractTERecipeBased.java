@@ -1,6 +1,7 @@
 package com.EmosewaPixel.pixellib.tiles;
 
-import com.EmosewaPixel.pixellib.recipes.MachineRecipe;
+import com.EmosewaPixel.pixellib.recipes.AbstractRecipeList;
+import com.EmosewaPixel.pixellib.recipes.SimpleMachineRecipe;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -15,43 +16,41 @@ import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 
-public class TileEntityRecipeBased extends TileEntityProgressive implements ITileEntityRecipeBased {
-    private int inputCount;
-    private int outputCount;
-    public int slotCount;
+public abstract class AbstractTERecipeBased<T extends SimpleMachineRecipe> extends TEProgressive {
+    private int slotCount;
+    private AbstractRecipeList<T, ?> recipeList;
+    private T currentRecipe;
 
-    private ArrayList<MachineRecipe> recipes;
-    private MachineRecipe currentRecipe = MachineRecipe.EMPTY;
-
-    public MachineRecipe getCurrentRecipe() {
+    public T getCurrentRecipe() {
         return currentRecipe;
     }
 
-    public void setCurrentRecipe(MachineRecipe recipe) {
+    public void setCurrentRecipe(T recipe) {
         currentRecipe = recipe;
     }
 
-    public int getInputCount() {
-        return inputCount;
+    public AbstractRecipeList<T, ?> getRecipeList() {
+        return recipeList;
     }
 
-    public int getOutputCount() {
-        return outputCount;
+    public int getSlotCount() {
+        return slotCount;
     }
 
-    public TileEntityRecipeBased(TileEntityType type, int inputCount, int outputCount, ArrayList<MachineRecipe> recipes) {
+    protected void setSlotCount(int count) {
+        slotCount = count;
+    }
+
+    public AbstractTERecipeBased(TileEntityType type, AbstractRecipeList<T, ?> recipeList) {
         super(type);
-        this.inputCount = inputCount;
-        this.outputCount = outputCount;
-        slotCount = inputCount + 1 + outputCount;
-        this.recipes = recipes;
+        slotCount = recipeList.getMaxInputs() + recipeList.getMaxOutputs();
+        this.recipeList = recipeList;
 
-        input = new ItemStackHandler(inputCount) {
+        input = new ItemStackHandler(recipeList.getMaxInputs()) {
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                for (MachineRecipe recipe : TileEntityRecipeBased.this.recipes)
+                for (SimpleMachineRecipe recipe : recipeList.getReipes())
                     if (recipe.itemBelongsInRecipe(stack))
                         return true;
 
@@ -60,12 +59,12 @@ public class TileEntityRecipeBased extends TileEntityProgressive implements ITil
 
             @Override
             protected void onContentsChanged(int slot) {
-                TileEntityRecipeBased.this.currentRecipe = getRecipeByInput();
-                TileEntityRecipeBased.this.markDirty();
+                AbstractTERecipeBased.this.currentRecipe = getRecipeByInput();
+                AbstractTERecipeBased.this.markDirty();
             }
         };
 
-        output = new ItemStackHandler(outputCount) {
+        output = new ItemStackHandler(recipeList.getMaxOutputs()) {
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
                 return false;
@@ -73,18 +72,18 @@ public class TileEntityRecipeBased extends TileEntityProgressive implements ITil
 
             @Override
             protected void onContentsChanged(int slot) {
-                TileEntityRecipeBased.this.markDirty();
+                AbstractTERecipeBased.this.markDirty();
             }
         };
 
         combinedHandler = new CombinedInvWrapper(input, output);
     }
 
-    public static ItemStackHandler input;
+    protected static ItemStackHandler input;
 
-    public static ItemStackHandler output;
+    protected static ItemStackHandler output;
 
-    public static CombinedInvWrapper combinedHandler;
+    protected static CombinedInvWrapper combinedHandler;
 
     @Override
     public void tick() {
@@ -101,18 +100,16 @@ public class TileEntityRecipeBased extends TileEntityProgressive implements ITil
         markDirty();
     }
 
-    @Override
-    public void startWorking() {
+    protected void startWorking() {
         if (!currentRecipe.isEmpty())
             if (canOutput(currentRecipe, true))
                 setProgress(currentRecipe.getTime() - 1);
     }
 
-    @Override
-    public void work() {
-        MachineRecipe lastRecipe = currentRecipe;
+    protected void work() {
+        SimpleMachineRecipe lastRecipe = currentRecipe;
         canOutput(lastRecipe, false);
-        for (int i = 0; i < inputCount; i++)
+        for (int i = 0; i < recipeList.getMaxInputs(); i++)
             input.extractItem(i, lastRecipe.getInputCount(i), false);
     }
 
@@ -152,7 +149,7 @@ public class TileEntityRecipeBased extends TileEntityProgressive implements ITil
         return LazyOptional.empty();
     }
 
-    protected boolean canOutput(MachineRecipe recipe, boolean simulate) {
+    protected boolean canOutput(SimpleMachineRecipe recipe, boolean simulate) {
         boolean can = true;
 
         for (int i = 0; i < recipe.getAllOutputs().length; i++)
@@ -170,23 +167,5 @@ public class TileEntityRecipeBased extends TileEntityProgressive implements ITil
         }
     }
 
-    private MachineRecipe getRecipeByInput() {
-        ItemStack[] stacks = new ItemStack[input.getSlots()];
-        for (int i = 0; i < input.getSlots(); i++) {
-            if (input.getStackInSlot(i).isEmpty())
-                return MachineRecipe.EMPTY;
-            stacks[i] = input.getStackInSlot(i);
-        }
-
-        ItemStack recipeInputs[] = new ItemStack[input.getSlots()];
-        MachineRecipe returnRecipe;
-        for (MachineRecipe recipe : recipes)
-            if (recipe.isInputValid(stacks)) {
-                for (int i = 0; i < input.getSlots(); i++)
-                    recipeInputs[i] = new ItemStack(input.getStackInSlot(i).getItem(), recipe.getCountOfInputItem(input.getStackInSlot(i)));
-                returnRecipe = new MachineRecipe(recipeInputs, recipe.getAllOutputs(), recipe.getTime());
-                return returnRecipe;
-            }
-        return MachineRecipe.EMPTY;
-    }
+    abstract T getRecipeByInput();
 }

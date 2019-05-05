@@ -1,7 +1,7 @@
 package com.EmosewaPixel.pixellib.jei;
 
 import com.EmosewaPixel.pixellib.PixelLib;
-import com.EmosewaPixel.pixellib.recipes.MachineRecipe;
+import com.EmosewaPixel.pixellib.recipes.SimpleMachineRecipe;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
@@ -14,15 +14,15 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-public abstract class MachineBaseCategory implements IRecipeCategory<MachineRecipe> {
+public abstract class MachineBaseCategory implements IRecipeCategory<SimpleMachineRecipe> {
     private String name;
     private IDrawable icon;
     protected IDrawable backGround;
-    private Class<? extends MachineRecipe> recipeClass;
+    private Class<? extends SimpleMachineRecipe> recipeClass;
     protected IDrawableAnimated arrow;
     protected IDrawableAnimated flame;
 
-    public MachineBaseCategory(IGuiHelper helper, String name, Item icon, Class<? extends MachineRecipe> recipeClass) {
+    public MachineBaseCategory(IGuiHelper helper, String name, Item icon, Class<? extends SimpleMachineRecipe> recipeClass) {
         this.name = name;
         this.icon = helper.createDrawableIngredient(new ItemStack(icon));
         this.recipeClass = recipeClass;
@@ -40,7 +40,7 @@ public abstract class MachineBaseCategory implements IRecipeCategory<MachineReci
     }
 
     @Override
-    public Class<? extends MachineRecipe> getRecipeClass() {
+    public Class<? extends SimpleMachineRecipe> getRecipeClass() {
         return recipeClass;
     }
 
@@ -61,7 +61,7 @@ public abstract class MachineBaseCategory implements IRecipeCategory<MachineReci
 
 
     @Override
-    public void setIngredients(MachineRecipe recipe, IIngredients ingredients) {
+    public void setIngredients(SimpleMachineRecipe recipe, IIngredients ingredients) {
         ingredients.setInputLists(VanillaTypes.ITEM, recipe.getInputsAsList());
         ingredients.setOutputs(VanillaTypes.ITEM, recipe.getOutputsAsList());
     }

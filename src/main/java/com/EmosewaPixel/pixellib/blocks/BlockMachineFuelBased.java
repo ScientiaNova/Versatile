@@ -1,7 +1,7 @@
 package com.EmosewaPixel.pixellib.blocks;
 
-import com.EmosewaPixel.pixellib.tiles.TileEntityFuelBased;
-import com.EmosewaPixel.pixellib.tiles.TileEntityProgressive;
+import com.EmosewaPixel.pixellib.tiles.TEFuelBased;
+import com.EmosewaPixel.pixellib.tiles.TEProgressive;
 import com.EmosewaPixel.pixellib.tiles.containers.interfaces.ContainerMachineFueledInterface;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRedstoneTorch;
@@ -28,12 +28,12 @@ import java.util.function.Supplier;
 public class BlockMachineFuelBased extends BlockRotateableMachine {
     public static final BooleanProperty LIT = BlockRedstoneTorch.LIT;
 
-    public BlockMachineFuelBased(ResourceLocation name, Supplier<TileEntityProgressive> te) {
+    public BlockMachineFuelBased(ResourceLocation name, Supplier<TEProgressive> te) {
         super(name, te);
         this.setDefaultState(stateContainer.getBaseState().with(LIT, false));
     }
 
-    public BlockMachineFuelBased(Block.Properties properties, ResourceLocation name, Supplier<TileEntityProgressive> te) {
+    public BlockMachineFuelBased(Block.Properties properties, ResourceLocation name, Supplier<TEProgressive> te) {
         super(properties, name, te);
         this.setDefaultState(stateContainer.getBaseState().with(LIT, false));
     }
@@ -72,7 +72,7 @@ public class BlockMachineFuelBased extends BlockRotateableMachine {
     @Override
     public boolean onBlockActivated(IBlockState state, World worldIn, BlockPos pos, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (!worldIn.isRemote)
-            if (worldIn.getTileEntity(pos) instanceof TileEntityFuelBased)
+            if (worldIn.getTileEntity(pos) instanceof TEFuelBased)
                 NetworkHooks.openGui((EntityPlayerMP) player, new ContainerMachineFueledInterface(pos, getRegistryName()), pos);
         return true;
     }

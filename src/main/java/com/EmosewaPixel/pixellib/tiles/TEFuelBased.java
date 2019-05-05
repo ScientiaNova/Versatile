@@ -1,8 +1,7 @@
 package com.EmosewaPixel.pixellib.tiles;
 
 import com.EmosewaPixel.pixellib.blocks.BlockMachineFuelBased;
-import com.EmosewaPixel.pixellib.recipes.MachineRecipe;
-import net.minecraft.entity.player.EntityPlayer;
+import com.EmosewaPixel.pixellib.recipes.SimpleRecipeList;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityFurnace;
@@ -17,9 +16,8 @@ import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 
-public class TileEntityFuelBased extends TileEntityRecipeBased {
+public class TEFuelBased extends TERecipeBased {
     private int burnTime = 0;
     private int maxBurnTime = 0;
 
@@ -39,8 +37,9 @@ public class TileEntityFuelBased extends TileEntityRecipeBased {
         return maxBurnTime;
     }
 
-    public TileEntityFuelBased(TileEntityType type, int inputCount, int outputCount, ArrayList<MachineRecipe> recipes) {
-        super(type, inputCount, outputCount, recipes);
+    public TEFuelBased(TileEntityType type, SimpleRecipeList list) {
+        super(type, list);
+        setSlotCount(list.getMaxInputs() + 1 + list.getMaxOutputs());
 
         fuel_input = new ItemStackHandler(1) {
             @Override
@@ -50,7 +49,7 @@ public class TileEntityFuelBased extends TileEntityRecipeBased {
 
             @Override
             protected void onContentsChanged(int slot) {
-                TileEntityFuelBased.this.markDirty();
+                TEFuelBased.this.markDirty();
             }
         };
 
@@ -113,10 +112,6 @@ public class TileEntityFuelBased extends TileEntityRecipeBased {
         compound.setInt("BurnTime", burnTime);
         compound.setInt("MaxBurnTime", maxBurnTime);
         return compound;
-    }
-
-    public boolean canInteractWith(EntityPlayer playerIn) {
-        return playerIn.getDistanceSq(pos.add(0.5D, 0.5D, 0.5D)) <= 64D;
     }
 
     @Nonnull

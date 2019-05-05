@@ -1,24 +1,24 @@
 package com.EmosewaPixel.pixellib.tiles.guis;
 
-import com.EmosewaPixel.pixellib.tiles.TileEntityRecipeBased;
+import com.EmosewaPixel.pixellib.tiles.TERecipeBased;
 import com.EmosewaPixel.pixellib.tiles.containers.ContainerMachineRecipeBased;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 
 public class GUIRecipeBasedMachine extends GuiContainer {
-    private TileEntityRecipeBased te;
+    private TERecipeBased te;
     private String backGround;
     private IInventory playerInventory;
 
-    public GUIRecipeBasedMachine(IInventory playerInventory, TileEntityRecipeBased te, String backGround) {
+    public GUIRecipeBasedMachine(IInventory playerInventory, TERecipeBased te, String backGround) {
         super(new ContainerMachineRecipeBased(playerInventory, te));
         this.backGround = backGround;
         this.playerInventory = playerInventory;
         this.te = te;
     }
 
-    public GUIRecipeBasedMachine(ContainerMachineRecipeBased container, IInventory playerInventory, TileEntityRecipeBased te, String backGround) {
+    public GUIRecipeBasedMachine(ContainerMachineRecipeBased container, IInventory playerInventory, TERecipeBased te, String backGround) {
         super(container);
         this.backGround = backGround;
         this.playerInventory = playerInventory;

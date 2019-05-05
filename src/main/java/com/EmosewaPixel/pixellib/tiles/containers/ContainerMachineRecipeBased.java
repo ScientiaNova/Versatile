@@ -1,6 +1,6 @@
 package com.EmosewaPixel.pixellib.tiles.containers;
 
-import com.EmosewaPixel.pixellib.tiles.TileEntityRecipeBased;
+import com.EmosewaPixel.pixellib.tiles.TERecipeBased;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
@@ -12,7 +12,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerMachineRecipeBased extends Container {
-    private TileEntityRecipeBased te;
+    private TERecipeBased te;
     private IItemHandler itemHandler;
 
     @Override
@@ -20,18 +20,18 @@ public class ContainerMachineRecipeBased extends Container {
         return te.canInteractWith(playerIn);
     }
 
-    public ContainerMachineRecipeBased(IInventory playerInventory, TileEntityRecipeBased te) {
+    public ContainerMachineRecipeBased(IInventory playerInventory, TERecipeBased te) {
         this.te = te;
 
         te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> itemHandler = handler);
 
-        for (int i = 0; i < te.getInputCount(); i++)
-            this.addSlot(new SlotItemHandler(itemHandler, i, te.getInputCount() == 1 ? 56 : 38 + i * 18, 17));
+        for (int i = 0; i < te.getRecipeList().getMaxInputs(); i++)
+            this.addSlot(new SlotItemHandler(itemHandler, i, te.getRecipeList().getMaxInputs() == 1 ? 56 : 38 + i * 18, 17));
 
-        this.addSlot(new SlotItemHandler(itemHandler, te.getInputCount(), 56 - (te.getInputCount() - 1) * 9, 53));
+        this.addSlot(new SlotItemHandler(itemHandler, te.getRecipeList().getMaxInputs(), 56 - (te.getRecipeList().getMaxInputs() - 1) * 9, 53));
 
-        for (int i = 0; i < te.getOutputCount(); i++)
-            this.addSlot(new SlotItemHandler(itemHandler, te.slotCount - i - 1, 116, te.getOutputCount() == 1 ? 35 : 48 - i * 22));
+        for (int i = 0; i < te.getRecipeList().getMaxOutputs(); i++)
+            this.addSlot(new SlotItemHandler(itemHandler, te.getSlotCount() - i - 1, 116, te.getRecipeList().getMaxOutputs() == 1 ? 35 : 48 - i * 22));
 
         addPlayerSlots(playerInventory);
     }
@@ -57,11 +57,11 @@ public class ContainerMachineRecipeBased extends Container {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
 
-            if (index < te.slotCount) {
-                if (!this.mergeItemStack(itemstack1, te.slotCount, this.inventorySlots.size(), true)) {
+            if (index < te.getSlotCount()) {
+                if (!this.mergeItemStack(itemstack1, te.getSlotCount(), this.inventorySlots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.mergeItemStack(itemstack1, 0, te.slotCount, false)) {
+            } else if (!this.mergeItemStack(itemstack1, 0, te.getSlotCount(), false)) {
                 return ItemStack.EMPTY;
             }
 
