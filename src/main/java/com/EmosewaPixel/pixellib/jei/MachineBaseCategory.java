@@ -17,15 +17,20 @@ import net.minecraft.util.ResourceLocation;
 public abstract class MachineBaseCategory implements IRecipeCategory<SimpleMachineRecipe> {
     private String name;
     private IDrawable icon;
+    protected Class<? extends SimpleMachineRecipe> recipeClass;
     protected IDrawable backGround;
-    private Class<? extends SimpleMachineRecipe> recipeClass;
     protected IDrawableAnimated arrow;
     protected IDrawableAnimated flame;
 
-    public MachineBaseCategory(IGuiHelper helper, String name, Item icon, Class<? extends SimpleMachineRecipe> recipeClass) {
+    public MachineBaseCategory(IGuiHelper helper, String name, Item icon) {
         this.name = name;
         this.icon = helper.createDrawableIngredient(new ItemStack(icon));
-        this.recipeClass = recipeClass;
+        class clazz extends SimpleMachineRecipe {
+            clazz(Object[] input, Object[] output, int time) {
+                super(input, output, time);
+            }
+        }
+        this.recipeClass = clazz.class;
 
         arrow = helper.drawableBuilder(Constants.RECIPE_GUI_VANILLA, 82, 128, 24, 17)
                 .buildAnimated(200, IDrawableAnimated.StartDirection.LEFT, false);
@@ -58,7 +63,6 @@ public abstract class MachineBaseCategory implements IRecipeCategory<SimpleMachi
     public IDrawable getIcon() {
         return icon;
     }
-
 
     @Override
     public void setIngredients(SimpleMachineRecipe recipe, IIngredients ingredients) {

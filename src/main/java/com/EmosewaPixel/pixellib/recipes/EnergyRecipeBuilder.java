@@ -12,7 +12,7 @@ public class EnergyRecipeBuilder extends AbstractRecipeBuilder<EnergyMachineReci
         return this;
     }
 
-    public int getEnergyPerTick() {
+    protected int getEnergyPerTick() {
         return energyPerTick;
     }
 

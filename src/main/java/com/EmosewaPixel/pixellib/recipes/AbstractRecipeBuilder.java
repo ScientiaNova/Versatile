@@ -12,19 +12,19 @@ public abstract class AbstractRecipeBuilder<T extends SimpleMachineRecipe, R ext
         this.recipeList = recipeList;
     }
 
-    public List<Object> getInputs() {
+    protected List<Object> getInputs() {
         return inputs;
     }
 
-    public List<Object> getOutputs() {
+    protected List<Object> getOutputs() {
         return outputs;
     }
 
-    public int getTime() {
+    protected int getTime() {
         return time;
     }
 
-    public AbstractRecipeList<T, R> getRecipeList() {
+    protected AbstractRecipeList<T, R> getRecipeList() {
         return recipeList;
     }
 

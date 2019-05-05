@@ -13,8 +13,6 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.resources.IResourceManagerReloadListener;
-import net.minecraft.resources.SimpleReloadableResourceManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -26,10 +24,6 @@ import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.List;
 
 @Mod(PixelLib.ModId)
 public class PixelLib {
@@ -80,17 +74,8 @@ public class PixelLib {
     public static class GaneEvents {
         @SubscribeEvent
         public static void onServerAboutToStart(FMLServerAboutToStartEvent e) {
-            List<IResourceManagerReloadListener> reloadListeners;
-            try {
-                Field reloadListenersField = Arrays.stream(SimpleReloadableResourceManager.class.getDeclaredFields()).filter(field -> field.getType() == List.class).findFirst().get();
-                reloadListenersField.setAccessible(true);
-                reloadListeners = (List<IResourceManagerReloadListener>) reloadListenersField.get(e.getServer().getResourceManager());
-            } catch (Exception exc) {
-                LOGGER.warn("Unable to obtain listener list.", exc);
-                return;
-            }
             e.getServer().getResourcePacks().addPackFinder(new FakePackFinder());
-            reloadListeners.add(reloadListeners.indexOf(e.getServer().getRecipeManager()) + 1, resourceManager -> new RecipeInjector(e.getServer().getRecipeManager()).injectRecipes(resourceManager));
+            e.getServer().getResourceManager().addReloadListener(resourceManager -> new RecipeInjector(e.getServer().getRecipeManager()).injectRecipes(resourceManager));
         }
     }
 }
