@@ -75,7 +75,7 @@ public class PixelLib {
         @SubscribeEvent
         public static void onServerAboutToStart(FMLServerAboutToStartEvent e) {
             e.getServer().getResourcePacks().addPackFinder(new FakePackFinder());
-            e.getServer().getResourceManager().addReloadListener(resourceManager -> new RecipeInjector(e.getServer().getRecipeManager()).injectRecipes(resourceManager));
+            e.getServer().getResourceManager().addReloadListener(new RecipeInjector(e.getServer().getRecipeManager()));
         }
     }
 }

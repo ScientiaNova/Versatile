@@ -116,18 +116,18 @@ public abstract class AbstractTERecipeBased<T extends SimpleMachineRecipe> exten
     @Override
     public void read(NBTTagCompound compound) {
         super.read(compound);
-        if (compound.hasKey("InputItems"))
-            input.deserializeNBT((NBTTagCompound) compound.getTag("InputItems"));
-        if (compound.hasKey("OutputItems"))
-            output.deserializeNBT((NBTTagCompound) compound.getTag("OutputItems"));
+        if (compound.contains("InputItems"))
+            input.deserializeNBT((NBTTagCompound) compound.get("InputItems"));
+        if (compound.contains("OutputItems"))
+            output.deserializeNBT((NBTTagCompound) compound.get("OutputItems"));
         currentRecipe = getRecipeByInput();
     }
 
     @Override
     public NBTTagCompound write(NBTTagCompound compound) {
         super.write(compound);
-        compound.setTag("InputItems", input.serializeNBT());
-        compound.setTag("OutputItems", output.serializeNBT());
+        compound.put("InputItems", input.serializeNBT());
+        compound.put("OutputItems", output.serializeNBT());
         return compound;
     }
 

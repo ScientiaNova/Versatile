@@ -59,8 +59,8 @@ public class BlockMachineFuelBased extends BlockRotateableMachine {
             double lvt_17_1_ = axis == EnumFacing.Axis.X ? (double) facing.getXOffset() * 0.52D : lvt_15_1_;
             double lvt_19_1_ = rand.nextDouble() * 6.0D / 16.0D;
             double lvt_21_1_ = axis == EnumFacing.Axis.Z ? (double) facing.getZOffset() * 0.52D : lvt_15_1_;
-            world.spawnParticle(Particles.SMOKE, x + lvt_17_1_, y + lvt_19_1_, z + lvt_21_1_, 0.0D, 0.0D, 0.0D);
-            world.spawnParticle(Particles.FLAME, x + lvt_17_1_, y + lvt_19_1_, z + lvt_21_1_, 0.0D, 0.0D, 0.0D);
+            world.addParticle(Particles.SMOKE, x + lvt_17_1_, y + lvt_19_1_, z + lvt_21_1_, 0.0D, 0.0D, 0.0D);
+            world.addParticle(Particles.FLAME, x + lvt_17_1_, y + lvt_19_1_, z + lvt_21_1_, 0.0D, 0.0D, 0.0D);
         }
     }
 

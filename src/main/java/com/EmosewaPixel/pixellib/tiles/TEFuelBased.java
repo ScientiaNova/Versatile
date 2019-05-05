@@ -99,8 +99,8 @@ public class TEFuelBased extends TERecipeBased {
     @Override
     public void read(NBTTagCompound compound) {
         super.read(compound);
-        if (compound.hasKey("FuelItems"))
-            fuel_input.deserializeNBT((NBTTagCompound) compound.getTag("FuelItems"));
+        if (compound.contains("FuelItems"))
+            fuel_input.deserializeNBT((NBTTagCompound) compound.get("FuelItems"));
         burnTime = compound.getInt("BurnTime");
         maxBurnTime = compound.getInt("MaxBurnTime");
     }
@@ -108,9 +108,9 @@ public class TEFuelBased extends TERecipeBased {
     @Override
     public NBTTagCompound write(NBTTagCompound compound) {
         super.write(compound);
-        compound.setTag("FuelItems", fuel_input.serializeNBT());
-        compound.setInt("BurnTime", burnTime);
-        compound.setInt("MaxBurnTime", maxBurnTime);
+        compound.put("FuelItems", fuel_input.serializeNBT());
+        compound.putInt("BurnTime", burnTime);
+        compound.putInt("MaxBurnTime", maxBurnTime);
         return compound;
     }
 

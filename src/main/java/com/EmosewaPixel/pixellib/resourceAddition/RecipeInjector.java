@@ -9,6 +9,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.resources.IResourceManager;
+import net.minecraft.resources.IResourceManagerReloadListener;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
 
@@ -16,7 +17,7 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.function.Supplier;
 
-public class RecipeInjector {
+public class RecipeInjector implements IResourceManagerReloadListener {
     private RecipeManager recipeManager;
 
     public RecipeInjector(RecipeManager manager) {
@@ -25,7 +26,7 @@ public class RecipeInjector {
 
     private static ArrayList<Supplier<IRecipe>> RECIPES = new ArrayList<>();
 
-    public void injectRecipes(IResourceManager manager) {
+    public void onResourceManagerReload(IResourceManager manager) {
         for (Supplier<IRecipe> recipe : RECIPES)
             if (recipe.get() != null)
                 recipeManager.addRecipe(recipe.get());

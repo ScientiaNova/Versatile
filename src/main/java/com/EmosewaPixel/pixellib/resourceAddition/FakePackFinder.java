@@ -14,7 +14,7 @@ import java.util.Map;
 public class FakePackFinder implements IPackFinder {
     @Override
     public <T extends ResourcePackInfo> void addPackInfosToMap(Map<String, T> nameToPackMap, ResourcePackInfo.IFactory<T> packInfoFactory) {
-        T packInfo = ResourcePackInfo.func_195793_a("fake:pixellib", true, () -> {
+        T packInfo = ResourcePackInfo.createResourcePack("fake:pixellib", true, () -> {
             FakePack pack = new FakePack("fake:pixellib");
             TagMaps.ITEM_TAGS.asMap().forEach((name, items) -> {
                 Tag<Item> tag = Tag.Builder.<Item>create().addAll(items).build(new ResourceLocation("forge", name));

@@ -43,7 +43,7 @@ public class TEProgressive extends TileEntity implements ITickable {
     @Override
     public NBTTagCompound write(NBTTagCompound compound) {
         super.write(compound);
-        compound.setInt("Progress", progress);
+        compound.putInt("Progress", progress);
         return compound;
     }
 
