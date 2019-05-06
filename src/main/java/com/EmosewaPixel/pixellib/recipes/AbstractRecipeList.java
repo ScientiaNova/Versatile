@@ -17,7 +17,7 @@ public abstract class AbstractRecipeList<T extends SimpleMachineRecipe, B extend
         recipes.add(recipe);
     }
 
-    abstract B recipeBuilder();
+    public abstract B recipeBuilder();
 
     public int getMaxInputs() {
         return maxInputs;

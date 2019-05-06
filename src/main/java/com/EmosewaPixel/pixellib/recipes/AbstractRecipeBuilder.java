@@ -1,12 +1,13 @@
 package com.EmosewaPixel.pixellib.recipes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractRecipeBuilder<T extends SimpleMachineRecipe, R extends AbstractRecipeBuilder<T, R>> {
     private AbstractRecipeList<T, R> recipeList;
-    private List<Object> inputs;
-    private List<Object> outputs;
-    private int time;
+    private List<Object> inputs = new ArrayList<>();
+    private List<Object> outputs = new ArrayList<>();
+    private int time = 0;
 
     public AbstractRecipeBuilder(AbstractRecipeList<T, R> recipeList) {
         this.recipeList = recipeList;

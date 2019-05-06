@@ -5,6 +5,7 @@ import com.EmosewaPixel.pixellib.materialSystem.lists.MaterialBlocks;
 import com.EmosewaPixel.pixellib.materialSystem.lists.Materials;
 import com.EmosewaPixel.pixellib.materialSystem.lists.ObjTypes;
 import com.EmosewaPixel.pixellib.materialSystem.lists.TextureTypes;
+import com.EmosewaPixel.pixellib.materialSystem.materials.DustMaterial;
 import com.EmosewaPixel.pixellib.materialSystem.materials.IMaterialItem;
 import com.EmosewaPixel.pixellib.materialSystem.materials.IngotMaterial;
 import com.EmosewaPixel.pixellib.materialSystem.types.BlockType;
@@ -30,8 +31,8 @@ public class BlockRegistry {
     public static void registry(RegistryEvent.Register<Block> e) {
         for (com.EmosewaPixel.pixellib.materialSystem.materials.Material mat : Materials.getAll())
             for (ObjectType type : ObjTypes.getAll())
-                if (type instanceof BlockType && type.isMaterialCompatible(mat) && !MaterialBlocks.contains(mat, type) && !mat.hasBlacklisted(type))
-                    register(new MaterialBlock((IngotMaterial) mat, (BlockType) type), e);
+                if (mat instanceof DustMaterial && type instanceof BlockType && type.isMaterialCompatible(mat) && !MaterialBlocks.contains(mat, type) && !mat.hasBlacklisted(type))
+                    register(new MaterialBlock((DustMaterial) mat, (BlockType) type), e);
 
         for (ObjectType objT : ObjTypes.getAll())
             if (objT instanceof BlockType)

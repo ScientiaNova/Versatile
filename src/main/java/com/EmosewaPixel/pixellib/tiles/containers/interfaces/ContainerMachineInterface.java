@@ -7,44 +7,14 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.IInteractionObject;
 
-import javax.annotation.Nullable;
-
-public class ContainerMachineInterface implements IInteractionObject {
-    public static BlockPos pos;
-    private ResourceLocation name;
-
+public class ContainerMachineInterface extends AbstractContainerMachineInterface {
     public ContainerMachineInterface(BlockPos pos, ResourceLocation name) {
-        this.pos = pos;
-        this.name = name;
+        super(pos, name);
     }
 
     @Override
     public Container createContainer(InventoryPlayer inventoryPlayer, EntityPlayer entityPlayer) {
         return new ContainerMachineRecipeBased(inventoryPlayer, (TERecipeBased) entityPlayer.world.getTileEntity(pos));
-    }
-
-    @Override
-    public String getGuiID() {
-        return name.toString();
-    }
-
-    @Override
-    public ITextComponent getName() {
-        return new TextComponentTranslation("block." + name.getNamespace() + "." + name.getPath(), new Object[0]);
-    }
-
-    @Override
-    public boolean hasCustomName() {
-        return false;
-    }
-
-    @Nullable
-    @Override
-    public ITextComponent getCustomName() {
-        return null;
     }
 }

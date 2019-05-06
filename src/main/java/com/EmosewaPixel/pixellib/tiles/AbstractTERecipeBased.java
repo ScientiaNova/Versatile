@@ -59,8 +59,8 @@ public abstract class AbstractTERecipeBased<T extends SimpleMachineRecipe> exten
 
             @Override
             protected void onContentsChanged(int slot) {
-                AbstractTERecipeBased.this.currentRecipe = getRecipeByInput();
-                AbstractTERecipeBased.this.markDirty();
+                currentRecipe = getRecipeByInput();
+                markDirty();
             }
         };
 
@@ -72,7 +72,7 @@ public abstract class AbstractTERecipeBased<T extends SimpleMachineRecipe> exten
 
             @Override
             protected void onContentsChanged(int slot) {
-                AbstractTERecipeBased.this.markDirty();
+                markDirty();
             }
         };
 
@@ -150,6 +150,9 @@ public abstract class AbstractTERecipeBased<T extends SimpleMachineRecipe> exten
     }
 
     protected boolean canOutput(SimpleMachineRecipe recipe, boolean simulate) {
+        if (recipe.getAllInputs() == null)
+            return false;
+
         boolean can = true;
 
         for (int i = 0; i < recipe.getAllOutputs().length; i++)
@@ -167,5 +170,5 @@ public abstract class AbstractTERecipeBased<T extends SimpleMachineRecipe> exten
         }
     }
 
-    abstract T getRecipeByInput();
+    protected abstract T getRecipeByInput();
 }

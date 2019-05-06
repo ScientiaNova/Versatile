@@ -1,6 +1,6 @@
 package com.EmosewaPixel.pixellib.tiles.containers;
 
-import com.EmosewaPixel.pixellib.tiles.TERecipeBased;
+import com.EmosewaPixel.pixellib.tiles.AbstractTERecipeBased;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
@@ -11,8 +11,8 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class ContainerMachineRecipeBased extends Container {
-    private TERecipeBased te;
+public class ContainerMachineRecipeBased<T extends AbstractTERecipeBased> extends Container {
+    private T te;
     private IItemHandler itemHandler;
 
     @Override
@@ -20,7 +20,7 @@ public class ContainerMachineRecipeBased extends Container {
         return te.canInteractWith(playerIn);
     }
 
-    public ContainerMachineRecipeBased(IInventory playerInventory, TERecipeBased te) {
+    public ContainerMachineRecipeBased(IInventory playerInventory, T te) {
         this.te = te;
 
         te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> itemHandler = handler);

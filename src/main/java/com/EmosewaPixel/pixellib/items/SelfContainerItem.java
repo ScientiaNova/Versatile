@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 public class SelfContainerItem extends Item {
     public SelfContainerItem(String name) {
         super(new Item.Properties().group(PixelLib.main));
-        setRegistryName("pixellib:" + name);
+        setRegistryName(name);
     }
 
     @Override
