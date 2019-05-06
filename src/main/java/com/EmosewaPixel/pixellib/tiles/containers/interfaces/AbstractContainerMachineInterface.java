@@ -1,7 +1,5 @@
 package com.EmosewaPixel.pixellib.tiles.containers.interfaces;
 
-import com.EmosewaPixel.pixellib.tiles.TERecipeBased;
-import com.EmosewaPixel.pixellib.tiles.containers.ContainerMachineRecipeBased;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;

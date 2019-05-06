@@ -1,6 +1,5 @@
 package com.EmosewaPixel.pixellib.blocks;
 
-import com.EmosewaPixel.pixellib.tiles.TEProgressive;
 import com.EmosewaPixel.pixellib.tiles.TERecipeBased;
 import com.EmosewaPixel.pixellib.tiles.containers.interfaces.ContainerMachineInterface;
 import net.minecraft.block.Block;
@@ -23,27 +22,22 @@ import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
-import java.util.function.Supplier;
 
 public class BlockMachine extends Block implements ITileEntityProvider {
-    private Supplier<TEProgressive> te;
-
-    public BlockMachine(ResourceLocation name, Supplier<TEProgressive> te) {
+    public BlockMachine(ResourceLocation name) {
         super(Properties.create(Material.ROCK).hardnessAndResistance(3.5F));
         setRegistryName(name);
-        this.te = te;
     }
 
-    public BlockMachine(Block.Properties properties, ResourceLocation name, Supplier<TEProgressive> te) {
+    public BlockMachine(Block.Properties properties, ResourceLocation name) {
         super(properties);
         setRegistryName(name);
-        this.te = te;
     }
 
     @Nullable
     @Override
     public TileEntity createNewTileEntity(IBlockReader worldIn) {
-        return te.get();
+        return null;
     }
 
     @Override

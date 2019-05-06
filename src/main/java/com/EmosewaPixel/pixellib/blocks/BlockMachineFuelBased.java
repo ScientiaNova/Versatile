@@ -1,7 +1,6 @@
 package com.EmosewaPixel.pixellib.blocks;
 
 import com.EmosewaPixel.pixellib.tiles.TEFuelBased;
-import com.EmosewaPixel.pixellib.tiles.TEProgressive;
 import com.EmosewaPixel.pixellib.tiles.containers.interfaces.ContainerMachineFueledInterface;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRedstoneTorch;
@@ -23,18 +22,17 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import java.util.Random;
-import java.util.function.Supplier;
 
 public class BlockMachineFuelBased extends BlockRotateableMachine {
     public static final BooleanProperty LIT = BlockRedstoneTorch.LIT;
 
-    public BlockMachineFuelBased(ResourceLocation name, Supplier<TEProgressive> te) {
-        super(name, te);
+    public BlockMachineFuelBased(ResourceLocation name) {
+        super(name);
         this.setDefaultState(stateContainer.getBaseState().with(LIT, false));
     }
 
-    public BlockMachineFuelBased(Block.Properties properties, ResourceLocation name, Supplier<TEProgressive> te) {
-        super(properties, name, te);
+    public BlockMachineFuelBased(Block.Properties properties, ResourceLocation name) {
+        super(properties, name);
         this.setDefaultState(stateContainer.getBaseState().with(LIT, false));
     }
 

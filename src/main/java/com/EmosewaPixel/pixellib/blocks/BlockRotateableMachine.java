@@ -1,6 +1,5 @@
 package com.EmosewaPixel.pixellib.blocks;
 
-import com.EmosewaPixel.pixellib.tiles.TEProgressive;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.state.IBlockState;
@@ -12,18 +11,16 @@ import net.minecraft.util.Mirror;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
 
-import java.util.function.Supplier;
-
 public class BlockRotateableMachine extends BlockMachine {
     public static final DirectionProperty FACING = BlockHorizontal.HORIZONTAL_FACING;
 
-    public BlockRotateableMachine(ResourceLocation name, Supplier<TEProgressive> te) {
-        super(name, te);
+    public BlockRotateableMachine(ResourceLocation name) {
+        super(name);
         this.setDefaultState(stateContainer.getBaseState().with(FACING, EnumFacing.NORTH));
     }
 
-    public BlockRotateableMachine(Properties properties, ResourceLocation name, Supplier<TEProgressive> te) {
-        super(properties, name, te);
+    public BlockRotateableMachine(Properties properties, ResourceLocation name) {
+        super(properties, name);
         this.setDefaultState(stateContainer.getBaseState().with(FACING, EnumFacing.NORTH));
     }
 

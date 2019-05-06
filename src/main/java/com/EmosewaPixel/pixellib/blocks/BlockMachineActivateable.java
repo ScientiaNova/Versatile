@@ -1,7 +1,6 @@
 package com.EmosewaPixel.pixellib.blocks;
 
 import com.EmosewaPixel.pixellib.tiles.TEPowered;
-import com.EmosewaPixel.pixellib.tiles.TEProgressive;
 import com.EmosewaPixel.pixellib.tiles.containers.interfaces.ContainerMachineInterface;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -16,18 +15,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-import java.util.function.Supplier;
-
 public class BlockMachineActivateable extends BlockRotateableMachine {
     public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
 
-    public BlockMachineActivateable(ResourceLocation name, Supplier<TEProgressive> te) {
-        super(name, te);
+    public BlockMachineActivateable(ResourceLocation name) {
+        super(name);
         this.setDefaultState(stateContainer.getBaseState().with(ACTIVE, false));
     }
 
-    public BlockMachineActivateable(Properties properties, ResourceLocation name, Supplier<TEProgressive> te) {
-        super(properties, name, te);
+    public BlockMachineActivateable(Properties properties, ResourceLocation name) {
+        super(properties, name);
         this.setDefaultState(stateContainer.getBaseState().with(ACTIVE, false));
     }
 

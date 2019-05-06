@@ -7,7 +7,6 @@ import com.EmosewaPixel.pixellib.materialSystem.lists.ObjTypes;
 import com.EmosewaPixel.pixellib.materialSystem.lists.TextureTypes;
 import com.EmosewaPixel.pixellib.materialSystem.materials.DustMaterial;
 import com.EmosewaPixel.pixellib.materialSystem.materials.IMaterialItem;
-import com.EmosewaPixel.pixellib.materialSystem.materials.IngotMaterial;
 import com.EmosewaPixel.pixellib.materialSystem.types.BlockType;
 import com.EmosewaPixel.pixellib.materialSystem.types.ObjectType;
 import com.EmosewaPixel.pixellib.materialSystem.types.TextureType;

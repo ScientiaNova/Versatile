@@ -13,7 +13,7 @@ import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerMachineRecipeBased<T extends AbstractTERecipeBased> extends Container {
     private T te;
-    private IItemHandler itemHandler;
+    protected IItemHandler itemHandler;
 
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
@@ -25,15 +25,19 @@ public class ContainerMachineRecipeBased<T extends AbstractTERecipeBased> extend
 
         te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> itemHandler = handler);
 
+        addMachineSlots();
+
+        addPlayerSlots(playerInventory);
+    }
+
+    protected void addMachineSlots() {
         for (int i = 0; i < te.getRecipeList().getMaxInputs(); i++)
             this.addSlot(new SlotItemHandler(itemHandler, i, te.getRecipeList().getMaxInputs() == 1 ? 56 : 38 + i * 18, 17));
 
         this.addSlot(new SlotItemHandler(itemHandler, te.getRecipeList().getMaxInputs(), 56 - (te.getRecipeList().getMaxInputs() - 1) * 9, 53));
 
         for (int i = 0; i < te.getRecipeList().getMaxOutputs(); i++)
-            this.addSlot(new SlotItemHandler(itemHandler, te.getSlotCount() - i - 1, 116, te.getRecipeList().getMaxOutputs() == 1 ? 35 : 48 - i * 22));
-
-        addPlayerSlots(playerInventory);
+            this.addSlot(new SlotItemHandler(itemHandler, te.getSlotCount() - i, 116, te.getRecipeList().getMaxOutputs() == 1 ? 35 : 48 - i * 22));
     }
 
     private void addPlayerSlots(IInventory playerInventory) {

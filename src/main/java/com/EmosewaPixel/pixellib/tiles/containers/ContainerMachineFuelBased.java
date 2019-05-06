@@ -4,6 +4,7 @@ import com.EmosewaPixel.pixellib.tiles.TEFuelBased;
 import com.EmosewaPixel.pixellib.tiles.TERecipeBased;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
+import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerMachineFuelBased extends ContainerMachineRecipeBased<TERecipeBased> {
     private TEFuelBased te;
@@ -11,6 +12,17 @@ public class ContainerMachineFuelBased extends ContainerMachineRecipeBased<TERec
     public ContainerMachineFuelBased(IInventory playerInventory, TEFuelBased te) {
         super(playerInventory, te);
         this.te = te;
+    }
+
+    @Override
+    protected void addMachineSlots() {
+        for (int i = 0; i < te.getRecipeList().getMaxInputs(); i++)
+            this.addSlot(new SlotItemHandler(itemHandler, i, te.getRecipeList().getMaxInputs() == 1 ? 56 : 38 + i * 18, 17));
+
+        this.addSlot(new SlotItemHandler(itemHandler, te.getRecipeList().getMaxInputs(), 56 - (te.getRecipeList().getMaxInputs() - 1) * 9, 53));
+
+        for (int i = 0; i < te.getRecipeList().getMaxOutputs(); i++)
+            this.addSlot(new SlotItemHandler(itemHandler, te.getSlotCount() - i - 1, 116, te.getRecipeList().getMaxOutputs() == 1 ? 35 : 48 - i * 22));
     }
 
     @Override
