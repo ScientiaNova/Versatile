@@ -123,7 +123,7 @@ public class SimpleMachineRecipe {
     }
 
     public boolean itemBelongsInRecipe(ItemStack stack) {
-        if (stack.isEmpty())
+        if (stack.isEmpty() || input == null)
             return false;
 
         for (Object stackRec : input) {

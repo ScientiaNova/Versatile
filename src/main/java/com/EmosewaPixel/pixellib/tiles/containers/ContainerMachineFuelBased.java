@@ -7,11 +7,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerMachineFuelBased extends ContainerMachineRecipeBased<TERecipeBased> {
-    private TEFuelBased te;
-
     public ContainerMachineFuelBased(IInventory playerInventory, TEFuelBased te) {
         super(playerInventory, te);
-        this.te = te;
     }
 
     @Override
@@ -29,8 +26,8 @@ public class ContainerMachineFuelBased extends ContainerMachineRecipeBased<TERec
     public void detectAndSendChanges() {
         super.detectAndSendChanges();
         for (IContainerListener listener : listeners) {
-            listener.sendWindowProperty(this, 2, te.getBurnTime());
-            listener.sendWindowProperty(this, 3, te.getMaxBurnTime());
+            listener.sendWindowProperty(this, 2, ((TEFuelBased) te).getBurnTime());
+            listener.sendWindowProperty(this, 3, ((TEFuelBased) te).getMaxBurnTime());
         }
     }
 
@@ -39,11 +36,11 @@ public class ContainerMachineFuelBased extends ContainerMachineRecipeBased<TERec
         super.updateProgressBar(id, data);
         switch (id) {
             case 2:
-                te.setBurnTime(data);
+                ((TEFuelBased) te).setBurnTime(data);
                 break;
             case 3:
                 if (!te.getCurrentRecipe().isEmpty())
-                    te.setMaxBurnTime(data);
+                    ((TEFuelBased) te).setMaxBurnTime(data);
                 break;
         }
     }

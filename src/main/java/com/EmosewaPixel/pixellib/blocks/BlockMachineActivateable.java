@@ -8,23 +8,25 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
+import java.util.function.Supplier;
+
 public class BlockMachineActivateable extends BlockRotateableMachine {
     public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
 
-    public BlockMachineActivateable(ResourceLocation name) {
-        super(name);
+    public BlockMachineActivateable(String name, Supplier<TileEntity> te) {
+        super(name, te);
         this.setDefaultState(stateContainer.getBaseState().with(ACTIVE, false));
     }
 
-    public BlockMachineActivateable(Properties properties, ResourceLocation name) {
-        super(properties, name);
+    public BlockMachineActivateable(Properties properties, String name, Supplier<TileEntity> te) {
+        super(properties, name, te);
         this.setDefaultState(stateContainer.getBaseState().with(ACTIVE, false));
     }
 

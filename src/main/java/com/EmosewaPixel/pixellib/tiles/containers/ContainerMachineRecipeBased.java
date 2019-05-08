@@ -12,7 +12,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerMachineRecipeBased<T extends AbstractTERecipeBased> extends Container {
-    private T te;
+    protected T te;
     protected IItemHandler itemHandler;
 
     @Override
@@ -32,24 +32,19 @@ public class ContainerMachineRecipeBased<T extends AbstractTERecipeBased> extend
 
     protected void addMachineSlots() {
         for (int i = 0; i < te.getRecipeList().getMaxInputs(); i++)
-            this.addSlot(new SlotItemHandler(itemHandler, i, te.getRecipeList().getMaxInputs() == 1 ? 56 : 38 + i * 18, 17));
-
-        this.addSlot(new SlotItemHandler(itemHandler, te.getRecipeList().getMaxInputs(), 56 - (te.getRecipeList().getMaxInputs() - 1) * 9, 53));
+            this.addSlot(new SlotItemHandler(itemHandler, i, te.getRecipeList().getMaxInputs() == 1 ? 56 : 38 + i * 18, 35));
 
         for (int i = 0; i < te.getRecipeList().getMaxOutputs(); i++)
-            this.addSlot(new SlotItemHandler(itemHandler, te.getSlotCount() - i, 116, te.getRecipeList().getMaxOutputs() == 1 ? 35 : 48 - i * 22));
+            this.addSlot(new SlotItemHandler(itemHandler, te.getSlotCount() - i - 1, 116, te.getRecipeList().getMaxOutputs() == 1 ? 35 : 48 - i * 22));
     }
 
     private void addPlayerSlots(IInventory playerInventory) {
-        for (int i = 0; i < 3; ++i) {
-            for (int j = 0; j < 9; ++j) {
+        for (int i = 0; i < 3; ++i)
+            for (int j = 0; j < 9; ++j)
                 this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
-            }
-        }
 
-        for (int k = 0; k < 9; ++k) {
+        for (int k = 0; k < 9; ++k)
             this.addSlot(new Slot(playerInventory, k, 8 + k * 18, 142));
-        }
     }
 
     @Override
@@ -58,22 +53,19 @@ public class ContainerMachineRecipeBased<T extends AbstractTERecipeBased> extend
         Slot slot = this.inventorySlots.get(index);
 
         if (slot != null && slot.getHasStack()) {
-            ItemStack itemstack1 = slot.getStack();
-            itemstack = itemstack1.copy();
+            ItemStack stack1 = slot.getStack();
+            itemstack = stack1.copy();
 
             if (index < te.getSlotCount()) {
-                if (!this.mergeItemStack(itemstack1, te.getSlotCount(), this.inventorySlots.size(), true)) {
+                if (!this.mergeItemStack(stack1, te.getSlotCount(), this.inventorySlots.size(), true))
                     return ItemStack.EMPTY;
-                }
-            } else if (!this.mergeItemStack(itemstack1, 0, te.getSlotCount(), false)) {
+            } else if (!this.mergeItemStack(stack1, 0, te.getSlotCount(), false))
                 return ItemStack.EMPTY;
-            }
 
-            if (itemstack1.isEmpty()) {
+            if (stack1.isEmpty())
                 slot.putStack(ItemStack.EMPTY);
-            } else {
+            else
                 slot.onSlotChanged();
-            }
         }
 
         return itemstack;

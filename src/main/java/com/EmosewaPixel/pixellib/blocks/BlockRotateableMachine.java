@@ -6,21 +6,23 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Mirror;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
+
+import java.util.function.Supplier;
 
 public class BlockRotateableMachine extends BlockMachine {
     public static final DirectionProperty FACING = BlockHorizontal.HORIZONTAL_FACING;
 
-    public BlockRotateableMachine(ResourceLocation name) {
-        super(name);
+    public BlockRotateableMachine(String name, Supplier<TileEntity> te) {
+        super(name, te);
         this.setDefaultState(stateContainer.getBaseState().with(FACING, EnumFacing.NORTH));
     }
 
-    public BlockRotateableMachine(Properties properties, ResourceLocation name) {
-        super(properties, name);
+    public BlockRotateableMachine(Properties properties, String name, Supplier<TileEntity> te) {
+        super(properties, name, te);
         this.setDefaultState(stateContainer.getBaseState().with(FACING, EnumFacing.NORTH));
     }
 

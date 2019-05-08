@@ -56,8 +56,7 @@ public class TEFuelBased extends TERecipeBased {
         combinedHandler = new CombinedInvWrapper(input, fuel_input, output);
     }
 
-
-    public static ItemStackHandler fuel_input;
+    public ItemStackHandler fuel_input;
 
     @Override
     public void tick() {

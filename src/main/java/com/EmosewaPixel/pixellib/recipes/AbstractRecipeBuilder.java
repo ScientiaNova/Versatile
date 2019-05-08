@@ -1,5 +1,7 @@
 package com.EmosewaPixel.pixellib.recipes;
 
+import com.EmosewaPixel.pixellib.PixelLib;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +51,9 @@ public abstract class AbstractRecipeBuilder<T extends SimpleMachineRecipe, R ext
     public abstract T build();
 
     public void buildAndRegister() {
-        recipeList.add(build());
+        if (!build().isEmpty())
+            recipeList.add(build());
+        else
+            PixelLib.LOGGER.error("Recipe with output {} is empty", outputs);
     }
 }

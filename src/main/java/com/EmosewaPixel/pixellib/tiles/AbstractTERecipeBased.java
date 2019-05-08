@@ -79,11 +79,11 @@ public abstract class AbstractTERecipeBased<T extends SimpleMachineRecipe> exten
         combinedHandler = new CombinedInvWrapper(input, output);
     }
 
-    protected static ItemStackHandler input;
+    protected ItemStackHandler input;
 
-    protected static ItemStackHandler output;
+    protected ItemStackHandler output;
 
-    protected static CombinedInvWrapper combinedHandler;
+    protected CombinedInvWrapper combinedHandler;
 
     @Override
     public void tick() {

@@ -7,7 +7,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 
 public class GUIRecipeBasedMachine<T extends AbstractTERecipeBased> extends GuiContainer {
-    private T te;
+    protected T te;
     private String backGround;
     private IInventory playerInventory;
 

@@ -4,17 +4,13 @@ import com.EmosewaPixel.pixellib.tiles.TEFuelBased;
 import com.EmosewaPixel.pixellib.tiles.containers.ContainerMachineFuelBased;
 import net.minecraft.inventory.IInventory;
 
-public class GUIFuelBasedMachine extends GUIRecipeBasedMachine {
-    private TEFuelBased te;
-
+public class GUIFuelBasedMachine extends GUIRecipeBasedMachine<TEFuelBased> {
     public GUIFuelBasedMachine(IInventory playerInventory, TEFuelBased te, String backGround) {
         super(new ContainerMachineFuelBased(playerInventory, te), playerInventory, te, backGround);
-        this.te = te;
     }
 
     public GUIFuelBasedMachine(ContainerMachineFuelBased container, IInventory playerInventory, TEFuelBased te, String backGround) {
         super(container, playerInventory, te, backGround);
-        this.te = te;
     }
 
     @Override

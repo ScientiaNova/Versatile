@@ -1,6 +1,5 @@
 package com.EmosewaPixel.pixellib.jei;
 
-import com.EmosewaPixel.pixellib.PixelLib;
 import com.EmosewaPixel.pixellib.recipes.SimpleMachineRecipe;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -17,7 +16,6 @@ import net.minecraft.util.ResourceLocation;
 public abstract class MachineBaseCategory implements IRecipeCategory<SimpleMachineRecipe> {
     private String name;
     private IDrawable icon;
-    protected Class<? extends SimpleMachineRecipe> recipeClass;
     protected IDrawable backGround;
     protected IDrawableAnimated arrow;
     protected IDrawableAnimated flame;
@@ -25,12 +23,6 @@ public abstract class MachineBaseCategory implements IRecipeCategory<SimpleMachi
     public MachineBaseCategory(IGuiHelper helper, String name, Item icon) {
         this.name = name;
         this.icon = helper.createDrawableIngredient(new ItemStack(icon));
-        class clazz extends SimpleMachineRecipe {
-            clazz(Object[] input, Object[] output, int time) {
-                super(input, output, time);
-            }
-        }
-        this.recipeClass = clazz.class;
 
         arrow = helper.drawableBuilder(Constants.RECIPE_GUI_VANILLA, 82, 128, 24, 17)
                 .buildAnimated(200, IDrawableAnimated.StartDirection.LEFT, false);
@@ -41,12 +33,7 @@ public abstract class MachineBaseCategory implements IRecipeCategory<SimpleMachi
 
     @Override
     public ResourceLocation getUid() {
-        return new ResourceLocation(PixelLib.ModId, name);
-    }
-
-    @Override
-    public Class<? extends SimpleMachineRecipe> getRecipeClass() {
-        return recipeClass;
+        return new ResourceLocation(name);
     }
 
     @Override

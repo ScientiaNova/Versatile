@@ -16,8 +16,8 @@ import javax.annotation.Nullable;
 
 public class TEPowered extends AbstractTERecipeBased<EnergyMachineRecipe> implements IEnergyStorage {
     protected int energy = 0;
-    protected static int maxPower;
-    protected static int maxPowerIn;
+    protected int maxPower;
+    protected int maxPowerIn;
 
     public TEPowered(TileEntityType type, EnergyRecipeList recipeList, int maxPower, int maxPowerIn) {
         super(type, recipeList);

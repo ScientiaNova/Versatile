@@ -1,5 +1,6 @@
 package com.EmosewaPixel.pixellib.blocks;
 
+import com.EmosewaPixel.pixellib.tiles.AbstractTERecipeBased;
 import com.EmosewaPixel.pixellib.tiles.TERecipeBased;
 import com.EmosewaPixel.pixellib.tiles.containers.interfaces.ContainerMachineInterface;
 import net.minecraft.block.Block;
@@ -14,7 +15,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
@@ -22,22 +22,27 @@ import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
+import java.util.function.Supplier;
 
 public class BlockMachine extends Block implements ITileEntityProvider {
-    public BlockMachine(ResourceLocation name) {
+    private Supplier<TileEntity> te;
+
+    public BlockMachine(String name, Supplier<TileEntity> te) {
         super(Properties.create(Material.ROCK).hardnessAndResistance(3.5F));
         setRegistryName(name);
+        this.te = te;
     }
 
-    public BlockMachine(Block.Properties properties, ResourceLocation name) {
+    public BlockMachine(Block.Properties properties, String name, Supplier<TileEntity> te) {
         super(properties);
         setRegistryName(name);
+        this.te = te;
     }
 
     @Nullable
     @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn) {
-        return null;
+    public TileEntity createNewTileEntity(IBlockReader world) {
+        return te.get();
     }
 
     @Override
@@ -47,8 +52,8 @@ public class BlockMachine extends Block implements ITileEntityProvider {
 
     @Override
     public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack) {
-        if (te instanceof TERecipeBased)
-            ((TERecipeBased) te).dropInventory();
+        if (te instanceof AbstractTERecipeBased)
+            ((AbstractTERecipeBased) te).dropInventory();
         super.harvestBlock(worldIn, player, pos, state, te, stack);
     }
 
@@ -56,7 +61,7 @@ public class BlockMachine extends Block implements ITileEntityProvider {
     public void onReplaced(IBlockState state, World world, BlockPos pos, IBlockState newState, boolean p_196243_5_) {
         if (state.getBlock() != newState.getBlock()) {
             TileEntity te = world.getTileEntity(pos);
-            if (te instanceof TERecipeBased) {
+            if (te instanceof AbstractTERecipeBased) {
                 world.updateComparatorOutputLevel(pos, this);
             }
 

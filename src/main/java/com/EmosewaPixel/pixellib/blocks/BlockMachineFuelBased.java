@@ -11,9 +11,9 @@ import net.minecraft.init.Particles;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -22,17 +22,18 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import java.util.Random;
+import java.util.function.Supplier;
 
 public class BlockMachineFuelBased extends BlockRotateableMachine {
     public static final BooleanProperty LIT = BlockRedstoneTorch.LIT;
 
-    public BlockMachineFuelBased(ResourceLocation name) {
-        super(name);
+    public BlockMachineFuelBased(String name, Supplier<TileEntity> te) {
+        super(name, te);
         this.setDefaultState(stateContainer.getBaseState().with(LIT, false));
     }
 
-    public BlockMachineFuelBased(Block.Properties properties, ResourceLocation name) {
-        super(properties, name);
+    public BlockMachineFuelBased(Block.Properties properties, String name, Supplier<TileEntity> te) {
+        super(properties, name, te);
         this.setDefaultState(stateContainer.getBaseState().with(LIT, false));
     }
 

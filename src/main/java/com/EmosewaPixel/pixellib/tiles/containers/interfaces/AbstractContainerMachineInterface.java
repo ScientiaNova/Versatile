@@ -12,7 +12,7 @@ import net.minecraft.world.IInteractionObject;
 import javax.annotation.Nullable;
 
 public abstract class AbstractContainerMachineInterface implements IInteractionObject {
-    protected static BlockPos pos;
+    protected BlockPos pos;
     private ResourceLocation name;
 
     public AbstractContainerMachineInterface(BlockPos pos, ResourceLocation name) {
