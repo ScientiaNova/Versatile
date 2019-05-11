@@ -33,7 +33,7 @@ public class MaterialRegistry {
 
         //Materials
         COAL = new DustMaterial("coal", FUEL, 0x1a1a1a, 0).hasOre().build();
-        IRON = new IngotMaterial("iron", ROUGH, 0xd8d8d8, 1).setItemTier(ItemTier.IRON).setArmorMaterial(ArmorMaterial.IRON).hasOre().build();
+        IRON = new IngotMaterial("iron", ROUGH, 0xececec, 1).setItemTier(ItemTier.IRON).setArmorMaterial(ArmorMaterial.IRON).hasOre().build();
         GOLD = new IngotMaterial("gold", SHINY, 0xfad64a, 2).setItemTier(ItemTier.GOLD).setArmorMaterial(ArmorMaterial.GOLD).hasOre().build();
         LAPIS = new GemMaterial("lapis", REGULAR, 0x2351be, 0).hasOre().build();
         QUARTZ = new GemMaterial("quartz", CRYSTAL, 0xe8dfd0, 0).hasOre().build();
