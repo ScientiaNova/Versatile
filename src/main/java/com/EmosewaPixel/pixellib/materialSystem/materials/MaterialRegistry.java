@@ -20,6 +20,9 @@ public class MaterialRegistry {
 
     public static ObjectType DUST, INGOT, NUGGET, BLOCK, ORE, GEM;
 
+    public static MaterialTag HAS_ORE = new MaterialTag("has_ore");
+    public static MaterialTag DISABLE_SIMPLE_PROCESIING = new MaterialTag("disable_simple_processing");
+
     static {
         //Texture Types
         ROUGH = new TextureType("rough");
@@ -32,14 +35,14 @@ public class MaterialRegistry {
         SHARP = new TextureType("sharp");
 
         //Materials
-        COAL = new DustMaterial("coal", FUEL, 0x1a1a1a, 0).hasOre().build();
-        IRON = new IngotMaterial("iron", ROUGH, 0xececec, 1).setItemTier(ItemTier.IRON).setArmorMaterial(ArmorMaterial.IRON).hasOre().build();
-        GOLD = new IngotMaterial("gold", SHINY, 0xfad64a, 2).setItemTier(ItemTier.GOLD).setArmorMaterial(ArmorMaterial.GOLD).hasOre().build();
-        LAPIS = new GemMaterial("lapis", REGULAR, 0x2351be, 0).hasOre().build();
-        QUARTZ = new GemMaterial("quartz", CRYSTAL, 0xe8dfd0, 0).hasOre().build();
+        COAL = new DustMaterial("coal", FUEL, 0x1a1a1a, 0).addTags(HAS_ORE).build();
+        IRON = new IngotMaterial("iron", ROUGH, 0xececec, 1).setItemTier(ItemTier.IRON).setArmorMaterial(ArmorMaterial.IRON).addTags(HAS_ORE).build();
+        GOLD = new IngotMaterial("gold", SHINY, 0xfad64a, 2).setItemTier(ItemTier.GOLD).setArmorMaterial(ArmorMaterial.GOLD).addTags(HAS_ORE).build();
+        LAPIS = new GemMaterial("lapis", REGULAR, 0x2351be, 0).addTags(HAS_ORE).build();
+        QUARTZ = new GemMaterial("quartz", CRYSTAL, 0xe8dfd0, 0).addTags(HAS_ORE).build();
         DIAMOND = new GemMaterial("diamond", PENTAGONAL, 0x34ebe3, 2).setItemTier(ItemTier.DIAMOND).setArmorMaterial(ArmorMaterial.DIAMOND).build();
-        EMERALD = new GemMaterial("emerald", OCTAGONAL, 0x08ad2c, 2).hasOre().build();
-        REDSTONE = new DustMaterial("redstone", REGULAR, 0xfc1a19, 1).hasOre().build();
+        EMERALD = new GemMaterial("emerald", OCTAGONAL, 0x08ad2c, 2).addTags(HAS_ORE).build();
+        REDSTONE = new DustMaterial("redstone", REGULAR, 0xfc1a19, 1).addTags(HAS_ORE).build();
         STONE = new Material("stone", REGULAR, 0xcccccc, 0).setItemTier(ItemTier.STONE).build();
         WOOD = new Material("wood", REGULAR, 0xd5bc77, -1).setItemTier(ItemTier.WOOD).build();
 
@@ -49,7 +52,7 @@ public class MaterialRegistry {
         NUGGET = new ItemType("nugget", mat -> mat instanceof IngotMaterial);
         BLOCK = new BlockType("storage_block", mat -> mat instanceof DustMaterial,
                 Block.Properties.create(net.minecraft.block.material.Material.IRON).sound(SoundType.METAL));
-        ORE = new BlockType("ore", mat -> mat instanceof IngotMaterial && mat.doesHaveOre(),
+        ORE = new BlockType("ore", mat -> mat instanceof IngotMaterial && mat.hasTag(HAS_ORE),
                 Block.Properties.create(net.minecraft.block.material.Material.ROCK).sound(SoundType.STONE));
         GEM = new ItemType("gem", mat -> mat instanceof GemMaterial);
 

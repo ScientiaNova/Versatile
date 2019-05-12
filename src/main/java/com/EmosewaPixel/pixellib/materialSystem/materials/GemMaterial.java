@@ -17,8 +17,8 @@ public class GemMaterial extends DustMaterial {
         super(name, textureType, color, tier);
     }
 
-    public GemMaterial hasOre() {
-        super.hasOre();
+    public GemMaterial addTags(MaterialTag... tags) {
+        super.addTags(tags);
         return this;
     }
 
@@ -63,11 +63,6 @@ public class GemMaterial extends DustMaterial {
 
     public GemMaterial setHarvestProperties(float hardness, float resistance) {
         return setHarvestProperties(hardness, resistance, getTier());
-    }
-
-    public GemMaterial disableSimpleProcessing() {
-        super.disableSimpleProcessing();
-        return this;
     }
 
     public GemMaterial blacklistTypes(ObjectType... types) {

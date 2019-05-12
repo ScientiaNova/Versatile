@@ -17,8 +17,8 @@ public class IngotMaterial extends DustMaterial {
         super(name, textureType, color, tier);
     }
 
-    public IngotMaterial hasOre() {
-        super.hasOre();
+    public IngotMaterial addTags(MaterialTag... tags) {
+        super.addTags(tags);
         return this;
     }
 
@@ -63,11 +63,6 @@ public class IngotMaterial extends DustMaterial {
 
     public IngotMaterial setHarvestProperties(float hardness, float resistance) {
         return setHarvestProperties(hardness, resistance, getTier());
-    }
-
-    public IngotMaterial disableSimpleProcessing() {
-        super.disableSimpleProcessing();
-        return this;
     }
 
     public IngotMaterial blacklistTypes(ObjectType... types) {

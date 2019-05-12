@@ -86,8 +86,8 @@ public class TEFuelBased extends TERecipeBased {
         if (!getCurrentRecipe().isEmpty() && canOutput(getCurrentRecipe(), true)) {
             burnTime = maxBurnTime = getItemBurnTime(fuel_input.getStackInSlot(0));
             if (burnTime > 0) {
-                if (fuel_input.getStackInSlot(0).getItem().hasContainerItem())
-                    fuel_input.setStackInSlot(0, new ItemStack(fuel_input.getStackInSlot(0).getItem().getContainerItem()));
+                if (fuel_input.getStackInSlot(0).hasContainerItem())
+                    fuel_input.setStackInSlot(0, fuel_input.getStackInSlot(0).getContainerItem());
                 else
                     fuel_input.extractItem(0, 1, false);
             }

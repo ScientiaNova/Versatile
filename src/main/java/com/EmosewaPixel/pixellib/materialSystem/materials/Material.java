@@ -17,17 +17,18 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
 
 public class Material {
     private String name;
     private TextureType textureType;
     private int color;
-    private boolean hasOre = false;
     private IItemTier itemTier = null;
     private IArmorMaterial armorMaterial = null;
     private ArrayList<ObjectType> blacklist = new ArrayList<>();
     private int tier;
+    private List<MaterialTag> materialTags = new ArrayList<>();
 
     public Material(String name, TextureType textureType, int color, int tier) {
         this.name = name;
@@ -36,8 +37,9 @@ public class Material {
         this.tier = tier;
     }
 
-    public Material hasOre() {
-        this.hasOre = true;
+    public Material addTags(MaterialTag... tags) {
+        for (MaterialTag tag : tags)
+            materialTags.add(tag);
         return this;
     }
 
@@ -86,10 +88,6 @@ public class Material {
         return color;
     }
 
-    public boolean doesHaveOre() {
-        return hasOre;
-    }
-
     public IArmorMaterial getArmorMaterial() {
         return armorMaterial;
     }
@@ -112,5 +110,9 @@ public class Material {
 
     public int getTier() {
         return tier;
+    }
+
+    public boolean hasTag(MaterialTag tag) {
+        return materialTags.contains(tag);
     }
 }

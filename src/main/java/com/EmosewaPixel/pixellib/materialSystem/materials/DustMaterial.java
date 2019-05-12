@@ -13,15 +13,14 @@ import java.util.function.Supplier;
 
 public class DustMaterial extends Material {
     private HarvestTier harvestTier = null;
-    private boolean simpleProcessing = true;
 
     public DustMaterial(String name, TextureType textureType, int color, int tier) {
         super(name, textureType, color, tier);
         setHarvestProperties(1.5f * (getTier() + 1), 1.5f * (getTier() + 1));
     }
 
-    public DustMaterial hasOre() {
-        super.hasOre();
+    public DustMaterial addTags(MaterialTag... tags) {
+        super.addTags(tags);
         return this;
     }
 
@@ -60,11 +59,6 @@ public class DustMaterial extends Material {
         return setHarvestProperties(hardness, resistance, getTier());
     }
 
-    public DustMaterial disableSimpleProcessing() {
-        simpleProcessing = false;
-        return this;
-    }
-
     public DustMaterial blacklistTypes(ObjectType... types) {
         super.blacklistTypes(types);
         return this;
@@ -72,9 +66,5 @@ public class DustMaterial extends Material {
 
     public HarvestTier getHarvestTier() {
         return harvestTier;
-    }
-
-    public boolean hasSimpleProcessing() {
-        return simpleProcessing;
     }
 }
