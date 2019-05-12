@@ -1,8 +1,10 @@
 package com.EmosewaPixel.pixellib.recipes;
 
+import net.minecraft.util.ResourceLocation;
+
 public class EnergyRecipeList extends AbstractRecipeList<EnergyMachineRecipe, EnergyRecipeBuilder> {
-    public EnergyRecipeList(int maxInputs, int maxOutputs) {
-        super(maxInputs, maxOutputs);
+    public EnergyRecipeList(ResourceLocation name, int maxInputs, int maxOutputs) {
+        super(name, maxInputs, maxOutputs);
     }
 
     @Override
