@@ -10,11 +10,14 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.BlockPos;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public abstract class MultiblockTE<T extends SimpleMachineRecipe> extends AbstractTERecipeBased<T> {
+    protected ArrayList<IMultiblockPart> partList = new ArrayList<>();
+
     public MultiblockTE(TileEntityType type, AbstractRecipeList<T, ?> recipeList) {
         super(type, recipeList);
     }
@@ -33,9 +36,12 @@ public abstract class MultiblockTE<T extends SimpleMachineRecipe> extends Abstra
         if (posInPattern == null)
             return false;
 
-        for (BlockPos pos : pattern.keySet())
+        for (BlockPos pos : pattern.keySet()) {
             if (!pattern.get(pos).test(world.getBlockState(getPos().subtract(posInPattern).add(pos))))
                 return false;
+            if (world.getTileEntity(pos) instanceof IMultiblockPart)
+                partList.add((IMultiblockPart) world.getTileEntity(pos));
+        }
 
         return true;
     }

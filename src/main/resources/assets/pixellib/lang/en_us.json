@@ -18,5 +18,8 @@
 	"material.redstone.name": "Redstone",
 	"material.stone.name": "Stone",
 	"material.quartz.name": "Nether Quartz",
-	"material.wood.name": "Wood"
+	"material.wooden.name": "Wooden",
+	"material.glowstone.name": "Glowstone",
+	"material.brick.name": "Brick",
+	"material.flint.name": "Flint"
 }

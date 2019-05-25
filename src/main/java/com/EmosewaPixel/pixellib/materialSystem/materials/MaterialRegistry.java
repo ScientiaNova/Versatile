@@ -16,12 +16,13 @@ import net.minecraft.item.ItemTier;
 public class MaterialRegistry {
     public static TextureType ROUGH, REGULAR, SHINY, FUEL, PENTAGONAL, OCTAGONAL, CRYSTAL, SHARP;
 
-    public static Material IRON, GOLD, LAPIS, QUARTZ, DIAMOND, EMERALD, REDSTONE, STONE, WOOD, COAL;
+    public static Material IRON, GOLD, LAPIS, QUARTZ, DIAMOND, EMERALD, REDSTONE, STONE, WOODEN, COAL, GLOWSTONE, BRICK, FLINT;
 
     public static ObjectType DUST, INGOT, NUGGET, BLOCK, ORE, GEM;
 
     public static MaterialTag HAS_ORE = new MaterialTag("has_ore");
     public static MaterialTag DISABLE_SIMPLE_PROCESIING = new MaterialTag("disable_simple_processing");
+    public static MaterialTag BLOCK_FROM_4X4 = new MaterialTag("block_from_4x4");
 
     static {
         //Texture Types
@@ -34,18 +35,6 @@ public class MaterialRegistry {
         CRYSTAL = new TextureType("crystal");
         SHARP = new TextureType("sharp");
 
-        //Materials
-        COAL = new DustMaterial("coal", FUEL, 0x1a1a1a, 0).addTags(HAS_ORE).build();
-        IRON = new IngotMaterial("iron", ROUGH, 0xececec, 1).setItemTier(ItemTier.IRON).setArmorMaterial(ArmorMaterial.IRON).addTags(HAS_ORE).build();
-        GOLD = new IngotMaterial("gold", SHINY, 0xfad64a, 2).setItemTier(ItemTier.GOLD).setArmorMaterial(ArmorMaterial.GOLD).addTags(HAS_ORE).build();
-        LAPIS = new GemMaterial("lapis", REGULAR, 0x2351be, 0).addTags(HAS_ORE).build();
-        QUARTZ = new GemMaterial("quartz", CRYSTAL, 0xe8dfd0, 0).addTags(HAS_ORE).build();
-        DIAMOND = new GemMaterial("diamond", PENTAGONAL, 0x34ebe3, 2).setItemTier(ItemTier.DIAMOND).setArmorMaterial(ArmorMaterial.DIAMOND).build();
-        EMERALD = new GemMaterial("emerald", OCTAGONAL, 0x08ad2c, 2).addTags(HAS_ORE).build();
-        REDSTONE = new DustMaterial("redstone", REGULAR, 0xfc1a19, 1).addTags(HAS_ORE).build();
-        STONE = new Material("stone", REGULAR, 0xcccccc, 0).setItemTier(ItemTier.STONE).build();
-        WOOD = new Material("wood", REGULAR, 0xd5bc77, -1).setItemTier(ItemTier.WOOD).build();
-
         //Object Types
         DUST = new ItemType("dust", mat -> mat instanceof DustMaterial);
         INGOT = new ItemType("ingot", mat -> mat instanceof IngotMaterial);
@@ -55,6 +44,21 @@ public class MaterialRegistry {
         ORE = new BlockType("ore", mat -> mat instanceof IngotMaterial && mat.hasTag(HAS_ORE),
                 Block.Properties.create(net.minecraft.block.material.Material.ROCK).sound(SoundType.STONE));
         GEM = new ItemType("gem", mat -> mat instanceof GemMaterial);
+
+        //Materials
+        COAL = new DustMaterial("coal", FUEL, 0x1a1a1a, 0).addTags(HAS_ORE).build();
+        IRON = new IngotMaterial("iron", ROUGH, 0xececec, 1).setItemTier(ItemTier.IRON).setArmorMaterial(ArmorMaterial.IRON).addTags(HAS_ORE).build();
+        GOLD = new IngotMaterial("gold", SHINY, 0xfad64a, 2).setItemTier(ItemTier.GOLD).setArmorMaterial(ArmorMaterial.GOLD).addTags(HAS_ORE).build();
+        LAPIS = new GemMaterial("lapis", REGULAR, 0x2351be, 0).addTags(HAS_ORE).build();
+        QUARTZ = new GemMaterial("quartz", CRYSTAL, 0xe8dfd0, 0).addTags(HAS_ORE, BLOCK_FROM_4X4).build();
+        DIAMOND = new GemMaterial("diamond", PENTAGONAL, 0x34ebe3, 2).setItemTier(ItemTier.DIAMOND).setArmorMaterial(ArmorMaterial.DIAMOND).build();
+        EMERALD = new GemMaterial("emerald", OCTAGONAL, 0x08ad2c, 2).addTags(HAS_ORE).build();
+        REDSTONE = new DustMaterial("redstone", REGULAR, 0xfc1a19, 1).addTags(HAS_ORE).build();
+        STONE = new Material("stone", REGULAR, 0xcccccc, 0).setItemTier(ItemTier.STONE).build();
+        WOODEN = new Material("wooden", REGULAR, 0xd5bc77, -1).setItemTier(ItemTier.WOOD).build();
+        GLOWSTONE = new DustMaterial("glowstone", REGULAR, 0xfcbe60, 1).addTags(BLOCK_FROM_4X4).build();
+        BRICK = new IngotMaterial("brick", REGULAR, 0xb55c42, 1).addTags(BLOCK_FROM_4X4).blacklistTypes(NUGGET).build();
+        FLINT = new GemMaterial("flint", SHARP, 0x222020, -1).blacklistTypes(BLOCK).build();
 
         MaterialItems.addItem(COAL, GEM, Items.COAL);
         MaterialBlocks.addBlock(COAL, BLOCK, Blocks.COAL_BLOCK);
@@ -88,5 +92,13 @@ public class MaterialRegistry {
         MaterialItems.addItem(REDSTONE, DUST, Items.REDSTONE);
         MaterialBlocks.addBlock(REDSTONE, BLOCK, Blocks.REDSTONE_BLOCK);
         MaterialBlocks.addBlock(REDSTONE, ORE, Blocks.REDSTONE_ORE);
+
+        MaterialItems.addItem(GLOWSTONE, DUST, Items.GLOWSTONE_DUST);
+        MaterialBlocks.addBlock(GLOWSTONE, BLOCK, Blocks.GLOWSTONE);
+
+        MaterialItems.addItem(BRICK, INGOT, Items.BRICK);
+        MaterialBlocks.addBlock(BRICK, BLOCK, Blocks.BRICKS);
+
+        MaterialItems.addItem(FLINT, GEM, Items.FLINT);
     }
 }
