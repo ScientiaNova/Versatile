@@ -5,6 +5,7 @@ import com.EmosewaPixel.pixellib.items.tools.ItemTier;
 import com.EmosewaPixel.pixellib.materialSystem.lists.Materials;
 import com.EmosewaPixel.pixellib.materialSystem.types.ObjectType;
 import com.EmosewaPixel.pixellib.materialSystem.types.TextureType;
+import com.google.common.collect.ImmutableList;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
@@ -17,6 +18,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -29,6 +31,7 @@ public class Material {
     private ArrayList<ObjectType> blacklist = new ArrayList<>();
     private int tier;
     private List<MaterialTag> materialTags = new ArrayList<>();
+    private ImmutableList<MaterialStack> composition = new ImmutableList.Builder<MaterialStack>().build();
 
     public Material(String name, TextureType textureType, int color, int tier) {
         this.name = name;
@@ -66,8 +69,7 @@ public class Material {
     }
 
     public Material blacklistTypes(ObjectType... types) {
-        for (ObjectType type : types)
-            blacklist.add(type);
+            blacklist.addAll(Arrays.asList(types));
         return this;
     }
 
@@ -102,6 +104,14 @@ public class Material {
 
     public Tag<Item> getTag(ObjectType type) {
         return new ItemTags.Wrapper(new ResourceLocation("forge", type.getName() + "s/" + name));
+    }
+
+    public ImmutableList<MaterialStack> getComposition() {
+        return composition;
+    }
+
+    public void setComposition(MaterialStack... stacks) {
+        this.composition.addAll(Arrays.asList(stacks));
     }
 
     public boolean hasBlacklisted(ObjectType type) {

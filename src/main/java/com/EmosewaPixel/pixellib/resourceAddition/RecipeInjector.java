@@ -53,6 +53,8 @@ public class RecipeInjector implements IResourceManagerReloadListener {
     }
 
     public static Ingredient getIngredient(Object input) {
+        if (input instanceof Ingredient)
+            return (Ingredient) input;
         if (input instanceof ItemStack)
             return Ingredient.fromStacks((ItemStack) input);
         if (input instanceof Tag)
