@@ -8,7 +8,7 @@ import com.EmosewaPixel.pixellib.materialSystem.types.ObjectType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class MaterialItem extends Item implements IMaterialItem {
     private Material material;
@@ -34,6 +34,6 @@ public class MaterialItem extends Item implements IMaterialItem {
 
     @Override
     public ITextComponent getDisplayName(ItemStack stack) {
-        return new TextComponentTranslation("itemtype." + type.getName() + ".name", material.getTranslationKey());
+        return new TranslationTextComponent("itemtype." + type.getName() + ".name", material.getTranslationKey());
     }
 }

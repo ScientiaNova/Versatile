@@ -8,7 +8,7 @@ import com.EmosewaPixel.pixellib.materialSystem.types.BlockType;
 import com.EmosewaPixel.pixellib.materialSystem.types.ObjectType;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class MaterialBlock extends ModBlock implements IMaterialItem {
     private DustMaterial material;
@@ -38,6 +38,6 @@ public class MaterialBlock extends ModBlock implements IMaterialItem {
 
     @Override
     public ITextComponent getNameTextComponent() {
-        return new TextComponentTranslation("blocktype." + type.getName() + ".name", material.getTranslationKey());
+        return new TranslationTextComponent("blocktype." + type.getName() + ".name", material.getTranslationKey());
     }
 }

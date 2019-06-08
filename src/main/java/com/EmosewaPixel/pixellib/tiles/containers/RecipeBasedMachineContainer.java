@@ -1,22 +1,22 @@
 package com.EmosewaPixel.pixellib.tiles.containers;
 
-import com.EmosewaPixel.pixellib.tiles.AbstractTERecipeBased;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IContainerListener;
+import com.EmosewaPixel.pixellib.tiles.AbstractRecipeBasedTE;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.IContainerListener;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class ContainerMachineRecipeBased<T extends AbstractTERecipeBased> extends Container {
+public class ContainerMachineRecipeBased<T extends AbstractRecipeBasedTE> extends Container {
     protected T te;
     protected IItemHandler itemHandler;
 
     @Override
-    public boolean canInteractWith(EntityPlayer playerIn) {
+    public boolean canInteractWith(PlayerEntity playerIn) {
         return te.canInteractWith(playerIn);
     }
 
@@ -48,7 +48,7 @@ public class ContainerMachineRecipeBased<T extends AbstractTERecipeBased> extend
     }
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
+    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);
 

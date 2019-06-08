@@ -1,13 +1,13 @@
 package com.EmosewaPixel.pixellib.tiles.containers;
 
-import com.EmosewaPixel.pixellib.tiles.TEFuelBased;
-import com.EmosewaPixel.pixellib.tiles.TERecipeBased;
-import net.minecraft.inventory.IContainerListener;
+import com.EmosewaPixel.pixellib.tiles.FuelBasedTE;
+import com.EmosewaPixel.pixellib.tiles.RecipeBasedTE;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.container.IContainerListener;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class ContainerMachineFuelBased extends ContainerMachineRecipeBased<TERecipeBased> {
-    public ContainerMachineFuelBased(IInventory playerInventory, TEFuelBased te) {
+public class ContainerMachineFuelBased extends ContainerMachineRecipeBased<RecipeBasedTE> {
+    public ContainerMachineFuelBased(IInventory playerInventory, FuelBasedTE te) {
         super(playerInventory, te);
     }
 
@@ -26,8 +26,8 @@ public class ContainerMachineFuelBased extends ContainerMachineRecipeBased<TERec
     public void detectAndSendChanges() {
         super.detectAndSendChanges();
         for (IContainerListener listener : listeners) {
-            listener.sendWindowProperty(this, 2, ((TEFuelBased) te).getBurnTime());
-            listener.sendWindowProperty(this, 3, ((TEFuelBased) te).getMaxBurnTime());
+            listener.sendWindowProperty(this, 2, ((FuelBasedTE) te).getBurnTime());
+            listener.sendWindowProperty(this, 3, ((FuelBasedTE) te).getMaxBurnTime());
         }
     }
 
@@ -36,11 +36,11 @@ public class ContainerMachineFuelBased extends ContainerMachineRecipeBased<TERec
         super.updateProgressBar(id, data);
         switch (id) {
             case 2:
-                ((TEFuelBased) te).setBurnTime(data);
+                ((FuelBasedTE) te).setBurnTime(data);
                 break;
             case 3:
                 if (!te.getCurrentRecipe().isEmpty())
-                    ((TEFuelBased) te).setMaxBurnTime(data);
+                    ((FuelBasedTE) te).setMaxBurnTime(data);
                 break;
         }
     }

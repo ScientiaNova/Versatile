@@ -1,6 +1,6 @@
 package com.EmosewaPixel.pixellib.items.tools;
 
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.SoundEvent;
@@ -27,12 +27,12 @@ public class ArmorMaterial implements IArmorMaterial {
     }
 
     @Override
-    public int getDurability(EntityEquipmentSlot slotIn) {
+    public int getDurability(EquipmentSlotType slotIn) {
         return durability;
     }
 
     @Override
-    public int getDamageReductionAmount(EntityEquipmentSlot slotIn) {
+    public int getDamageReductionAmount(EquipmentSlotType slotIn) {
         return damageRecudtiom;
     }
 

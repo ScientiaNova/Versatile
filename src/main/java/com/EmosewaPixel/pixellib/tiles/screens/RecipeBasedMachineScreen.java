@@ -1,24 +1,26 @@
-package com.EmosewaPixel.pixellib.tiles.guis;
+package com.EmosewaPixel.pixellib.tiles.screens;
 
-import com.EmosewaPixel.pixellib.tiles.AbstractTERecipeBased;
-import com.EmosewaPixel.pixellib.tiles.containers.ContainerMachineRecipeBased;
+import com.EmosewaPixel.pixellib.tiles.AbstractRecipeBasedTE;
+import com.EmosewaPixel.pixellib.tiles.containers.RecipeBasedMachineContainer;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 
-public class GUIRecipeBasedMachine<T extends AbstractTERecipeBased> extends GuiContainer {
+public class RecipeBasedMachineScreen<T extends AbstractRecipeBasedTE> extends ContainerScreen<RecipeBasedMachineContainer<T>> {
     protected T te;
     private String backGround;
     private IInventory playerInventory;
 
-    public GUIRecipeBasedMachine(IInventory playerInventory, T te, String backGround) {
-        super(new ContainerMachineRecipeBased<>(playerInventory, te));
+    public RecipeBasedMachineScreen(PlayerInventory playerInventory, T te, String backGround) {
+        super(new RecipeBasedMachineContainer<>(playerInventory, te), playerInventory);
         this.backGround = backGround;
         this.playerInventory = playerInventory;
         this.te = te;
     }
 
-    public GUIRecipeBasedMachine(ContainerMachineRecipeBased container, IInventory playerInventory, T te, String backGround) {
+    public RecipeBasedMachineScreen(RecipeBasedMachineContainer container, IInventory playerInventory, T te, String backGround) {
         super(container);
         this.backGround = backGround;
         this.playerInventory = playerInventory;

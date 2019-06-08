@@ -2,12 +2,12 @@ package com.EmosewaPixel.pixellib.tiles;
 
 import com.EmosewaPixel.pixellib.recipes.AbstractRecipeList;
 import com.EmosewaPixel.pixellib.recipes.SimpleMachineRecipe;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -17,7 +17,7 @@ import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public abstract class AbstractTERecipeBased<T extends SimpleMachineRecipe> extends TEProgressive {
+public abstract class AbstractRecipeBasedTE<T extends SimpleMachineRecipe> extends ProgressiveTE {
     private int slotCount;
     private AbstractRecipeList<T, ?> recipeList;
     private T currentRecipe;
@@ -42,7 +42,7 @@ public abstract class AbstractTERecipeBased<T extends SimpleMachineRecipe> exten
         slotCount = count;
     }
 
-    public AbstractTERecipeBased(TileEntityType type, AbstractRecipeList<T, ?> recipeList) {
+    public AbstractRecipeBasedTE(TileEntityType type, AbstractRecipeList<T, ?> recipeList) {
         super(type);
         slotCount = recipeList.getMaxInputs() + recipeList.getMaxOutputs();
         this.recipeList = recipeList;
@@ -114,37 +114,37 @@ public abstract class AbstractTERecipeBased<T extends SimpleMachineRecipe> exten
     }
 
     @Override
-    public void read(NBTTagCompound compound) {
+    public void read(CompoundNBT compound) {
         super.read(compound);
         if (compound.contains("InputItems"))
-            input.deserializeNBT((NBTTagCompound) compound.get("InputItems"));
+            input.deserializeNBT((CompoundNBT) compound.get("InputItems"));
         if (compound.contains("OutputItems"))
-            output.deserializeNBT((NBTTagCompound) compound.get("OutputItems"));
+            output.deserializeNBT((CompoundNBT) compound.get("OutputItems"));
         currentRecipe = getRecipeByInput();
     }
 
     @Override
-    public NBTTagCompound write(NBTTagCompound compound) {
+    public CompoundNBT write(CompoundNBT compound) {
         super.write(compound);
         compound.put("InputItems", input.serializeNBT());
         compound.put("OutputItems", output.serializeNBT());
         return compound;
     }
 
-    public boolean canInteractWith(EntityPlayer playerIn) {
+    public boolean canInteractWith(PlayerEntity playerIn) {
         return playerIn.getDistanceSq(pos.add(0.5D, 0.5D, 0.5D)) <= 64D;
     }
 
     @Nonnull
     @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable EnumFacing side) {
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             if (side == null)
                 return LazyOptional.of(() -> combinedHandler).cast();
-            if (side == EnumFacing.UP)
-                return LazyOptional.of(() -> this.input).cast();
-            if (side == EnumFacing.DOWN)
-                return LazyOptional.of(() -> this.output).cast();
+            if (side == Direction.UP)
+                return LazyOptional.of(() -> input).cast();
+            if (side == Direction.DOWN)
+                return LazyOptional.of(() -> output).cast();
         }
         return LazyOptional.empty();
     }
@@ -166,7 +166,7 @@ public abstract class AbstractTERecipeBased<T extends SimpleMachineRecipe> exten
         for (int i = 0; i < slotCount; i++) {
             ItemStack stack = combinedHandler.getStackInSlot(i);
 
-            world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), stack));
+            world.spawnEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), stack));
         }
     }
 

@@ -15,7 +15,8 @@ import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -99,7 +100,7 @@ public class Material {
     }
 
     public ITextComponent getTranslationKey() {
-        return new TextComponentTranslation("material." + name + ".name");
+        return new TranslationTextComponent("material." + name + ".name");
     }
 
     public Tag<Item> getTag(ObjectType type) {

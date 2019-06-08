@@ -9,7 +9,7 @@ import net.minecraft.block.Block;
 import java.util.Collection;
 
 public class MaterialBlocks {
-    public static HashBasedTable<Material, ObjectType, Block> materialBlocks = HashBasedTable.create();
+    private static HashBasedTable<Material, ObjectType, Block> materialBlocks = HashBasedTable.create();
 
     public static Block getBlock(Material material, ObjectType type) {
         return materialBlocks.get(material, type);

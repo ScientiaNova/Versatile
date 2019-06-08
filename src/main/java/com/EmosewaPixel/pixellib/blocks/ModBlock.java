@@ -1,7 +1,7 @@
 package com.EmosewaPixel.pixellib.blocks;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraftforge.common.ToolType;
 
 public class ModBlock extends Block {
@@ -14,12 +14,12 @@ public class ModBlock extends Block {
     }
 
     @Override
-    public ToolType getHarvestTool(IBlockState state) {
+    public ToolType getHarvestTool(BlockState state) {
         return ToolType.PICKAXE;
     }
 
     @Override
-    public int getHarvestLevel(IBlockState state) {
+    public int getHarvestLevel(BlockState state) {
         return level;
     }
 }

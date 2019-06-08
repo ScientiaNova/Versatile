@@ -3,10 +3,10 @@ package com.EmosewaPixel.pixellib.tiles;
 import com.EmosewaPixel.pixellib.blocks.BlockMachineFuelBased;
 import com.EmosewaPixel.pixellib.recipes.SimpleRecipeList;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.ForgeEventFactory;
@@ -17,7 +17,7 @@ import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class TEFuelBased extends TERecipeBased {
+public class FuelBasedTE extends RecipeBasedTE {
     private int burnTime = 0;
     private int maxBurnTime = 0;
 
@@ -37,7 +37,7 @@ public class TEFuelBased extends TERecipeBased {
         return maxBurnTime;
     }
 
-    public TEFuelBased(TileEntityType type, SimpleRecipeList list) {
+    public FuelBasedTE(TileEntityType type, SimpleRecipeList list) {
         super(type, list);
         setSlotCount(list.getMaxInputs() + 1 + list.getMaxOutputs());
 
@@ -49,7 +49,7 @@ public class TEFuelBased extends TERecipeBased {
 
             @Override
             protected void onContentsChanged(int slot) {
-                TEFuelBased.this.markDirty();
+                FuelBasedTE.this.markDirty();
             }
         };
 
@@ -96,16 +96,16 @@ public class TEFuelBased extends TERecipeBased {
     }
 
     @Override
-    public void read(NBTTagCompound compound) {
+    public void read(CompoundNBT compound) {
         super.read(compound);
         if (compound.contains("FuelItems"))
-            fuel_input.deserializeNBT((NBTTagCompound) compound.get("FuelItems"));
+            fuel_input.deserializeNBT((CompoundNBT) compound.get("FuelItems"));
         burnTime = compound.getInt("BurnTime");
         maxBurnTime = compound.getInt("MaxBurnTime");
     }
 
     @Override
-    public NBTTagCompound write(NBTTagCompound compound) {
+    public CompoundNBT write(CompoundNBT compound) {
         super.write(compound);
         compound.put("FuelItems", fuel_input.serializeNBT());
         compound.putInt("BurnTime", burnTime);
@@ -115,9 +115,9 @@ public class TEFuelBased extends TERecipeBased {
 
     @Nonnull
     @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable EnumFacing side) {
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-            if (side == EnumFacing.EAST || side == EnumFacing.WEST || side == EnumFacing.NORTH || side == EnumFacing.SOUTH)
+            if (side == Direction.EAST || side == Direction.WEST || side == Direction.NORTH || side == Direction.SOUTH)
                 return LazyOptional.of(() -> this.fuel_input).cast();
         return super.getCapability(cap, side);
     }

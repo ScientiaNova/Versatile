@@ -1,15 +1,15 @@
 package com.EmosewaPixel.pixellib.blocks;
 
-import com.EmosewaPixel.pixellib.tiles.TEPowered;
-import com.EmosewaPixel.pixellib.tiles.containers.interfaces.ContainerMachineInterface;
+import com.EmosewaPixel.pixellib.tiles.PoweredTE;
+import com.EmosewaPixel.pixellib.tiles.containers.providers.MachineContainerProvider;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -31,15 +31,15 @@ public class BlockMachineActivateable extends BlockRotateableMachine {
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, IBlockState> stateBuilder) {
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> stateBuilder) {
         stateBuilder.add(FACING, ACTIVE);
     }
 
     @Override
-    public boolean onBlockActivated(IBlockState state, World worldIn, BlockPos pos, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, EnumHand hand, Direction side, float hitX, float hitY, float hitZ) {
         if (!worldIn.isRemote)
-            if (worldIn.getTileEntity(pos) instanceof TEPowered)
-                NetworkHooks.openGui((EntityPlayerMP) player, new ContainerMachineInterface(pos, getRegistryName()), pos);
+            if (worldIn.getTileEntity(pos) instanceof PoweredTE)
+                NetworkHooks.openGui((ServerPlayerEntity) player, new MachineContainerProvider(pos, getRegistryName()), pos);
         return true;
     }
 }

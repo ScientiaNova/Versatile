@@ -19,7 +19,7 @@ archivesBaseName = 'pixellib'
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: 'snapshot', version: '20190505-1.13.2'
+    mappings channel: 'snapshot', version: '20190530-1.14.2'
 
     runs {
         client {
@@ -32,7 +32,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                examplemod {
+                pixellib {
                     source sourceSets.main
                 }
             }
@@ -48,7 +48,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                examplemod {
+                pixellib {
                     source sourceSets.main
                 }
             }
@@ -56,23 +56,23 @@ minecraft {
     }
 }
 
-repositories {
-    maven {
-        // location of the maven that hosts JEI files
-        name = "Progwml6 maven"
-        url = "https://dvs1.progwml6.com/files/maven/"
-    }
-    maven {
-        // location of a maven mirror for JEI files, as a fallback
-        name = "ModMaven"
-        url = "https://modmaven.k-4u.nl"
-    }
-}
+//repositories {
+//    maven {
+//        // location of the maven that hosts JEI files
+//        name = "Progwml6 maven"
+//        url = "https://dvs1.progwml6.com/files/maven/"
+//    }
+//    maven {
+//        // location of a maven mirror for JEI files, as a fallback
+//        name = "ModMaven"
+//        url = "https://modmaven.k-4u.nl"
+//    }
+//}
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.13.2-25.0.146'
-    compileOnly("mezz.jei:jei-${mc_version}:${jei_version}:api")
-    compileOnly("mezz.jei:jei-${mc_version}:${jei_version}")
+    minecraft 'net.minecraftforge:forge:1.14.2-26.0.5'
+    //compileOnly("mezz.jei:jei-${mc_version}:${jei_version}:api")
+    //compileOnly("mezz.jei:jei-${mc_version}:${jei_version}")
 }
 
 jar {

@@ -1,19 +1,19 @@
 package com.EmosewaPixel.pixellib.blocks;
 
-import com.EmosewaPixel.pixellib.tiles.AbstractTERecipeBased;
-import com.EmosewaPixel.pixellib.tiles.TERecipeBased;
-import com.EmosewaPixel.pixellib.tiles.containers.interfaces.ContainerMachineInterface;
+import com.EmosewaPixel.pixellib.tiles.AbstractRecipeBasedTE;
+import com.EmosewaPixel.pixellib.tiles.RecipeBasedTE;
+import com.EmosewaPixel.pixellib.tiles.containers.providers.MachineContainerProvider;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.inventory.Container;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
@@ -46,22 +46,22 @@ public class BlockMachine extends Block implements ITileEntityProvider {
     }
 
     @Override
-    public ToolType getHarvestTool(IBlockState state) {
+    public ToolType getHarvestTool(BlockState state) {
         return ToolType.PICKAXE;
     }
 
     @Override
-    public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack) {
-        if (te instanceof AbstractTERecipeBased)
-            ((AbstractTERecipeBased) te).dropInventory();
+    public void harvestBlock(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {
+        if (te instanceof AbstractRecipeBasedTE)
+            ((AbstractRecipeBasedTE) te).dropInventory();
         super.harvestBlock(worldIn, player, pos, state, te, stack);
     }
 
     @Override
-    public void onReplaced(IBlockState state, World world, BlockPos pos, IBlockState newState, boolean p_196243_5_) {
+    public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean p_196243_5_) {
         if (state.getBlock() != newState.getBlock()) {
             TileEntity te = world.getTileEntity(pos);
-            if (te instanceof AbstractTERecipeBased) {
+            if (te instanceof AbstractRecipeBasedTE) {
                 world.updateComparatorOutputLevel(pos, this);
             }
 
@@ -70,25 +70,25 @@ public class BlockMachine extends Block implements ITileEntityProvider {
     }
 
     @Override
-    public boolean onBlockActivated(IBlockState state, World worldIn, BlockPos pos, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, EnumHand hand, Direction side, float hitX, float hitY, float hitZ) {
         if (!worldIn.isRemote)
-            if (worldIn.getTileEntity(pos) instanceof TERecipeBased)
-                NetworkHooks.openGui((EntityPlayerMP) player, new ContainerMachineInterface(pos, getRegistryName()), pos);
+            if (worldIn.getTileEntity(pos) instanceof RecipeBasedTE)
+                NetworkHooks.openGui((ServerPlayerEntity) player, new MachineContainerProvider(pos, getRegistryName()), pos);
         return true;
     }
 
     @Override
-    public boolean hasComparatorInputOverride(IBlockState state) {
+    public boolean hasComparatorInputOverride(BlockState state) {
         return true;
     }
 
     @Override
-    public int getComparatorInputOverride(IBlockState state, World world, BlockPos pos) {
+    public int getComparatorInputOverride(BlockState state, World world, BlockPos pos) {
         return Container.calcRedstone(world.getTileEntity(pos));
     }
 
     @Override
-    public EnumBlockRenderType getRenderType(IBlockState state) {
-        return EnumBlockRenderType.MODEL;
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
     }
 }

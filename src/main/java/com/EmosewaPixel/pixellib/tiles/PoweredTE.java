@@ -5,7 +5,7 @@ import com.EmosewaPixel.pixellib.recipes.EnergyMachineRecipe;
 import com.EmosewaPixel.pixellib.recipes.EnergyRecipeList;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -14,12 +14,12 @@ import net.minecraftforge.energy.IEnergyStorage;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class TEPowered extends AbstractTERecipeBased<EnergyMachineRecipe> implements IEnergyStorage {
+public class PoweredTE extends AbstractRecipeBasedTE<EnergyMachineRecipe> implements IEnergyStorage {
     protected int energy = 0;
     protected int maxPower;
     protected int maxPowerIn;
 
-    public TEPowered(TileEntityType type, EnergyRecipeList recipeList, int maxPower, int maxPowerIn) {
+    public PoweredTE(TileEntityType type, EnergyRecipeList recipeList, int maxPower, int maxPowerIn) {
         super(type, recipeList);
         setCurrentRecipe(EnergyMachineRecipe.EMPTY);
         this.maxPower = maxPower;
@@ -117,7 +117,7 @@ public class TEPowered extends AbstractTERecipeBased<EnergyMachineRecipe> implem
 
     @Nonnull
     @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable EnumFacing side) {
+    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
         if (cap == CapabilityEnergy.ENERGY)
             return LazyOptional.of(() -> this).cast();
         return super.getCapability(cap, side);

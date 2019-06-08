@@ -1,15 +1,16 @@
-package com.EmosewaPixel.pixellib.tiles.guis;
+package com.EmosewaPixel.pixellib.tiles.screens;
 
-import com.EmosewaPixel.pixellib.tiles.TEFuelBased;
-import com.EmosewaPixel.pixellib.tiles.containers.ContainerMachineFuelBased;
+import com.EmosewaPixel.pixellib.tiles.FuelBasedTE;
+import com.EmosewaPixel.pixellib.tiles.containers.FuelBasedMachineContainer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 
-public class GUIFuelBasedMachine extends GUIRecipeBasedMachine<TEFuelBased> {
-    public GUIFuelBasedMachine(IInventory playerInventory, TEFuelBased te, String backGround) {
-        super(new ContainerMachineFuelBased(playerInventory, te), playerInventory, te, backGround);
+public class FuelBasedMachineScreen extends RecipeBasedMachineScreen<FuelBasedTE> {
+    public FuelBasedMachineScreen(IInventory playerInventory, FuelBasedTE te, String backGround) {
+        super(new FuelBasedMachineContainer(playerInventory, te), playerInventory, te, backGround);
     }
 
-    public GUIFuelBasedMachine(ContainerMachineFuelBased container, IInventory playerInventory, TEFuelBased te, String backGround) {
+    public FuelBasedMachineScreen(FuelBasedMachineContainer container, PlayerInventory playerInventory, FuelBasedTE te, String backGround) {
         super(container, playerInventory, te, backGround);
     }
 

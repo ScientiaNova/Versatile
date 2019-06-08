@@ -3,10 +3,10 @@ package com.EmosewaPixel.pixellib.multiblocks;
 import com.EmosewaPixel.pixellib.blocks.BlockRotateableMachine;
 import com.EmosewaPixel.pixellib.recipes.AbstractRecipeList;
 import com.EmosewaPixel.pixellib.recipes.SimpleMachineRecipe;
-import com.EmosewaPixel.pixellib.tiles.AbstractTERecipeBased;
+import com.EmosewaPixel.pixellib.tiles.AbstractRecipeBasedTE;
 import javafx.util.Pair;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.BlockPos;
 
@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public abstract class MultiblockTE<T extends SimpleMachineRecipe> extends AbstractTERecipeBased<T> {
+public abstract class MultiblockTE<T extends SimpleMachineRecipe> extends AbstractRecipeBasedTE<T> {
     protected ArrayList<IMultiblockPart> partList = new ArrayList<>();
 
     public MultiblockTE(TileEntityType type, AbstractRecipeList<T, ?> recipeList) {
@@ -26,8 +26,8 @@ public abstract class MultiblockTE<T extends SimpleMachineRecipe> extends Abstra
 
     protected boolean isValidStructure() {
         BlockPos posInPattern = null;
-        Map<BlockPos, Predicate<IBlockState>> pattern = getRotatedPattern();
-        for (Map.Entry<BlockPos, Predicate<IBlockState>> predicate : pattern.entrySet())
+        Map<BlockPos, Predicate<BlockState>> pattern = getRotatedPattern();
+        for (Map.Entry<BlockPos, Predicate<BlockState>> predicate : pattern.entrySet())
             if (predicate.getValue().test(getBlockState())) {
                 posInPattern = predicate.getKey();
                 break;
@@ -50,7 +50,7 @@ public abstract class MultiblockTE<T extends SimpleMachineRecipe> extends Abstra
         return b -> b == this.getBlockState().getBlock();
     }
 
-    protected Map<BlockPos, Predicate<IBlockState>> getRotatedPattern() {
+    protected Map<BlockPos, Predicate<BlockState>> getRotatedPattern() {
         if (getBlockState().getValues().containsKey(BlockRotateableMachine.FACING)) {
             switch (getBlockState().get(BlockRotateableMachine.FACING)) {
                 case SOUTH:

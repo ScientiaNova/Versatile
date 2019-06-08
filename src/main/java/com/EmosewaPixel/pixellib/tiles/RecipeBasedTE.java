@@ -5,8 +5,8 @@ import com.EmosewaPixel.pixellib.recipes.SimpleRecipeList;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityType;
 
-public class TERecipeBased extends AbstractTERecipeBased<SimpleMachineRecipe> {
-    public TERecipeBased(TileEntityType type, SimpleRecipeList recipeList) {
+public class RecipeBasedTE extends AbstractRecipeBasedTE<SimpleMachineRecipe> {
+    public RecipeBasedTE(TileEntityType type, SimpleRecipeList recipeList) {
         super(type, recipeList);
         setCurrentRecipe(SimpleMachineRecipe.EMPTY);
     }
