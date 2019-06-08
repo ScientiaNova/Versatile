@@ -1,4 +1,4 @@
-package com.EmosewaPixel.pixellib.tiles.containers.interfaces;
+package com.EmosewaPixel.pixellib.tiles.containers.providers;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -19,7 +19,7 @@ public abstract class AbstractMachineContainerProvider implements INamedContaine
     }
 
     @Override
-    public abstract Container createMenu(int id, PlayerInventory inventoryPlayer, PlayerEntity entityPlayer);
+    public abstract Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity playerEntity);
 
     @Override
     public ITextComponent getDisplayName() {

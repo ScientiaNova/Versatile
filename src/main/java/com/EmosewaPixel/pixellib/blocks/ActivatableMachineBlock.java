@@ -17,15 +17,15 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 import java.util.function.Supplier;
 
-public class BlockMachineActivateable extends BlockRotateableMachine {
+public class ActivatableMachineBlock extends RotatableMachineBlock {
     public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
 
-    public BlockMachineActivateable(String name, Supplier<TileEntity> te) {
+    public ActivatableMachineBlock(String name, Supplier<TileEntity> te) {
         super(name, te);
         this.setDefaultState(stateContainer.getBaseState().with(ACTIVE, false));
     }
 
-    public BlockMachineActivateable(Properties properties, String name, Supplier<TileEntity> te) {
+    public ActivatableMachineBlock(Properties properties, String name, Supplier<TileEntity> te) {
         super(properties, name, te);
         this.setDefaultState(stateContainer.getBaseState().with(ACTIVE, false));
     }

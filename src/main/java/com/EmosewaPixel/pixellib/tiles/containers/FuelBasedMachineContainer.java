@@ -6,8 +6,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.IContainerListener;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class ContainerMachineFuelBased extends ContainerMachineRecipeBased<RecipeBasedTE> {
-    public ContainerMachineFuelBased(IInventory playerInventory, FuelBasedTE te) {
+public class FuelBasedMachineContainer extends RecipeBasedMachineContainer<RecipeBasedTE> {
+    public FuelBasedMachineContainer(IInventory playerInventory, FuelBasedTE te) {
         super(playerInventory, te);
     }
 

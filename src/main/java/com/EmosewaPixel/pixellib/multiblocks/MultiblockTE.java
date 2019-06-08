@@ -1,6 +1,6 @@
 package com.EmosewaPixel.pixellib.multiblocks;
 
-import com.EmosewaPixel.pixellib.blocks.BlockRotateableMachine;
+import com.EmosewaPixel.pixellib.blocks.RotatableMachineBlock;
 import com.EmosewaPixel.pixellib.recipes.AbstractRecipeList;
 import com.EmosewaPixel.pixellib.recipes.SimpleMachineRecipe;
 import com.EmosewaPixel.pixellib.tiles.AbstractRecipeBasedTE;
@@ -51,8 +51,8 @@ public abstract class MultiblockTE<T extends SimpleMachineRecipe> extends Abstra
     }
 
     protected Map<BlockPos, Predicate<BlockState>> getRotatedPattern() {
-        if (getBlockState().getValues().containsKey(BlockRotateableMachine.FACING)) {
-            switch (getBlockState().get(BlockRotateableMachine.FACING)) {
+        if (getBlockState().getValues().containsKey(RotatableMachineBlock.FACING)) {
+            switch (getBlockState().get(RotatableMachineBlock.FACING)) {
                 case SOUTH:
                     return getPattern().getPatternMap().entrySet().stream().map(e -> new Pair<>(new BlockPos(e.getKey().getX() * -1, e.getKey().getY(), e.getKey().getZ() * -1), e.getValue())).collect(Collectors.toMap(Pair::getKey, Pair::getValue));
                 case EAST:

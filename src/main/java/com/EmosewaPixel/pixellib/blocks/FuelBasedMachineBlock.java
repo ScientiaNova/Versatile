@@ -25,15 +25,15 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import java.util.Random;
 import java.util.function.Supplier;
 
-public class BlockMachineFuelBased extends BlockRotateableMachine {
+public class FuelBasedMachineBlock extends RotatableMachineBlock {
     public static final BooleanProperty LIT = RedstoneTorchBlock.LIT;
 
-    public BlockMachineFuelBased(String name, Supplier<TileEntity> te) {
+    public FuelBasedMachineBlock(String name, Supplier<TileEntity> te) {
         super(name, te);
         this.setDefaultState(stateContainer.getBaseState().with(LIT, false));
     }
 
-    public BlockMachineFuelBased(Block.Properties properties, String name, Supplier<TileEntity> te) {
+    public FuelBasedMachineBlock(Block.Properties properties, String name, Supplier<TileEntity> te) {
         super(properties, name, te);
         this.setDefaultState(stateContainer.getBaseState().with(LIT, false));
     }

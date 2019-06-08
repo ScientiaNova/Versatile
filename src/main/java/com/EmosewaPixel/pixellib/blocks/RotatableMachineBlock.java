@@ -13,15 +13,15 @@ import net.minecraft.util.Rotation;
 
 import java.util.function.Supplier;
 
-public class BlockRotateableMachine extends BlockMachine {
+public class RotatableMachineBlock extends MachineBlock {
     public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
 
-    public BlockRotateableMachine(String name, Supplier<TileEntity> te) {
+    public RotatableMachineBlock(String name, Supplier<TileEntity> te) {
         super(name, te);
         this.setDefaultState(stateContainer.getBaseState().with(FACING, Direction.NORTH));
     }
 
-    public BlockRotateableMachine(Properties properties, String name, Supplier<TileEntity> te) {
+    public RotatableMachineBlock(Properties properties, String name, Supplier<TileEntity> te) {
         super(properties, name, te);
         this.setDefaultState(stateContainer.getBaseState().with(FACING, Direction.NORTH));
     }

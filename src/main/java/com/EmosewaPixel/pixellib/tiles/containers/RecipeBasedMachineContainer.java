@@ -11,7 +11,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class ContainerMachineRecipeBased<T extends AbstractRecipeBasedTE> extends Container {
+public class RecipeBasedMachineContainer<T extends AbstractRecipeBasedTE> extends Container {
     protected T te;
     protected IItemHandler itemHandler;
 
@@ -20,7 +20,7 @@ public class ContainerMachineRecipeBased<T extends AbstractRecipeBasedTE> extend
         return te.canInteractWith(playerIn);
     }
 
-    public ContainerMachineRecipeBased(IInventory playerInventory, T te) {
+    public RecipeBasedMachineContainer(IInventory playerInventory, T te) {
         this.te = te;
 
         te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> itemHandler = handler);

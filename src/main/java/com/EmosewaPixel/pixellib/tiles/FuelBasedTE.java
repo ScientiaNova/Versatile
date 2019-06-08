@@ -1,6 +1,6 @@
 package com.EmosewaPixel.pixellib.tiles;
 
-import com.EmosewaPixel.pixellib.blocks.BlockMachineFuelBased;
+import com.EmosewaPixel.pixellib.blocks.FuelBasedMachineBlock;
 import com.EmosewaPixel.pixellib.recipes.SimpleRecipeList;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -63,13 +63,13 @@ public class FuelBasedTE extends RecipeBasedTE {
         if (!world.isRemote) {
             if (burnTime > 0) {
                 burnTime--;
-                world.setBlockState(pos, world.getBlockState(pos).with(BlockMachineFuelBased.LIT, true));
+                world.setBlockState(pos, world.getBlockState(pos).with(FuelBasedMachineBlock.LIT, true));
                 super.tick();
             } else {
                 if (!fuel_input.getStackInSlot(0).isEmpty())
                     consumeFuel();
                 else
-                    world.setBlockState(pos, world.getBlockState(pos).with(BlockMachineFuelBased.LIT, false));
+                    world.setBlockState(pos, world.getBlockState(pos).with(FuelBasedMachineBlock.LIT, false));
             }
             markDirty();
         }
@@ -92,7 +92,7 @@ public class FuelBasedTE extends RecipeBasedTE {
                     fuel_input.extractItem(0, 1, false);
             }
         } else
-            world.setBlockState(pos, world.getBlockState(pos).with(BlockMachineFuelBased.LIT, false));
+            world.setBlockState(pos, world.getBlockState(pos).with(FuelBasedMachineBlock.LIT, false));
     }
 
     @Override

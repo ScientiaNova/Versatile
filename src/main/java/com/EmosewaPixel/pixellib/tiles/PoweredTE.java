@@ -1,6 +1,6 @@
 package com.EmosewaPixel.pixellib.tiles;
 
-import com.EmosewaPixel.pixellib.blocks.BlockMachineActivateable;
+import com.EmosewaPixel.pixellib.blocks.ActivatableMachineBlock;
 import com.EmosewaPixel.pixellib.recipes.EnergyMachineRecipe;
 import com.EmosewaPixel.pixellib.recipes.EnergyRecipeList;
 import net.minecraft.item.ItemStack;
@@ -31,9 +31,9 @@ public class PoweredTE extends AbstractRecipeBasedTE<EnergyMachineRecipe> implem
         if (!world.isRemote) {
             EnergyMachineRecipe recipe = getCurrentRecipe();
             if (!recipe.isEmpty()) {
-                world.setBlockState(pos, world.getBlockState(pos).with(BlockMachineActivateable.ACTIVE, true));
+                world.setBlockState(pos, world.getBlockState(pos).with(ActivatableMachineBlock.ACTIVE, true));
                 if (getProgress() > 0) {
-                    world.setBlockState(pos, world.getBlockState(pos).with(BlockMachineActivateable.ACTIVE, true));
+                    world.setBlockState(pos, world.getBlockState(pos).with(ActivatableMachineBlock.ACTIVE, true));
                     if (internalExtractEnergy(recipe.getEnergyPerTick(), false)) {
                         subtractProgress(1);
                         if (getProgress() == 0)
@@ -42,7 +42,7 @@ public class PoweredTE extends AbstractRecipeBasedTE<EnergyMachineRecipe> implem
                 } else
                     startWorking();
             } else {
-                world.setBlockState(pos, world.getBlockState(pos).with(BlockMachineActivateable.ACTIVE, false));
+                world.setBlockState(pos, world.getBlockState(pos).with(ActivatableMachineBlock.ACTIVE, false));
                 setProgress(0);
             }
             markDirty();

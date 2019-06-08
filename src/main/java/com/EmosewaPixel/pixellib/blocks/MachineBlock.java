@@ -24,16 +24,16 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
-public class BlockMachine extends Block implements ITileEntityProvider {
+public class MachineBlock extends Block implements ITileEntityProvider {
     private Supplier<TileEntity> te;
 
-    public BlockMachine(String name, Supplier<TileEntity> te) {
+    public MachineBlock(String name, Supplier<TileEntity> te) {
         super(Properties.create(Material.ROCK).hardnessAndResistance(3.5F));
         setRegistryName(name);
         this.te = te;
     }
 
-    public BlockMachine(Block.Properties properties, String name, Supplier<TileEntity> te) {
+    public MachineBlock(Block.Properties properties, String name, Supplier<TileEntity> te) {
         super(properties);
         setRegistryName(name);
         this.te = te;

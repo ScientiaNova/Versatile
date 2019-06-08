@@ -1,4 +1,4 @@
-package com.EmosewaPixel.pixellib.tiles.containers.interfaces;
+package com.EmosewaPixel.pixellib.tiles.containers.providers;
 
 import com.EmosewaPixel.pixellib.tiles.FuelBasedTE;
 import com.EmosewaPixel.pixellib.tiles.containers.FuelBasedMachineContainer;
@@ -14,7 +14,7 @@ public class FueledMachineContainerProvider extends MachineContainerProvider {
     }
 
     @Override
-    public Container createMenu(int id, PlayerInventory inventoryPlayer, PlayerEntity entityPlayer) {
-        return new FuelBasedMachineContainer(inventoryPlayer, (FuelBasedTE) entityPlayer.world.getTileEntity(pos));
+    public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+        return new FuelBasedMachineContainer(playerInventory, (FuelBasedTE) playerEntity.world.getTileEntity(pos));
     }
 }
