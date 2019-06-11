@@ -8,7 +8,6 @@ import com.EmosewaPixel.pixellib.materialSystem.materials.IngotMaterial;
 import com.EmosewaPixel.pixellib.materialSystem.materials.Material;
 import com.EmosewaPixel.pixellib.materialSystem.materials.MaterialRegistry;
 import net.minecraft.block.Block;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;

@@ -50,19 +50,19 @@ public class PoweredTE extends AbstractRecipeBasedTE<EnergyMachineRecipe> implem
     }
 
     public EnergyMachineRecipe getRecipeByInput() {
-        ItemStack[] stacks = new ItemStack[input.getSlots()];
-        for (int i = 0; i < input.getSlots(); i++) {
-            if (input.getStackInSlot(i).isEmpty())
+        ItemStack[] stacks = new ItemStack[getRecipeList().getMaxInputs()];
+        for (int i = 0; i < getRecipeList().getMaxInputs(); i++) {
+            if (recipeInventory.getStackInSlot(i).isEmpty())
                 return EnergyMachineRecipe.EMPTY;
-            stacks[i] = input.getStackInSlot(i);
+            stacks[i] = recipeInventory.getStackInSlot(i);
         }
 
-        ItemStack recipeInputs[] = new ItemStack[input.getSlots()];
+        ItemStack recipeInputs[] = new ItemStack[getRecipeList().getMaxInputs()];
         EnergyMachineRecipe returnRecipe;
         for (EnergyMachineRecipe recipe : getRecipeList().getReipes())
             if (recipe.isInputValid(stacks)) {
-                for (int i = 0; i < input.getSlots(); i++)
-                    recipeInputs[i] = new ItemStack(input.getStackInSlot(i).getItem(), recipe.getCountOfInputItem(input.getStackInSlot(i)));
+                for (int i = 0; i < getRecipeList().getMaxInputs(); i++)
+                    recipeInputs[i] = new ItemStack(recipeInventory.getStackInSlot(i).getItem(), recipe.getCountOfInputItem(recipeInventory.getStackInSlot(i)));
                 returnRecipe = new EnergyMachineRecipe(recipeInputs, recipe.getAllOutputs(), recipe.getTime(), recipe.getEnergyPerTick());
                 return returnRecipe;
             }

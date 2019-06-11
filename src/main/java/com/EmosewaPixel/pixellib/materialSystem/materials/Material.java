@@ -16,7 +16,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,8 +41,7 @@ public class Material {
     }
 
     public Material addTags(MaterialTag... tags) {
-        for (MaterialTag tag : tags)
-            materialTags.add(tag);
+            materialTags.addAll(Arrays.asList(tags));
         return this;
     }
 
@@ -70,7 +68,7 @@ public class Material {
     }
 
     public Material blacklistTypes(ObjectType... types) {
-            blacklist.addAll(Arrays.asList(types));
+        blacklist.addAll(Arrays.asList(types));
         return this;
     }
 

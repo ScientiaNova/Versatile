@@ -9,8 +9,6 @@ import com.EmosewaPixel.pixellib.materialSystem.types.TextureType;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.ItemTier;
 import net.minecraft.item.Items;

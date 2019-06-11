@@ -2,13 +2,14 @@ package com.EmosewaPixel.pixellib.tiles.containers;
 
 import com.EmosewaPixel.pixellib.tiles.FuelBasedTE;
 import com.EmosewaPixel.pixellib.tiles.RecipeBasedTE;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.IContainerListener;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class FuelBasedMachineContainer extends RecipeBasedMachineContainer<RecipeBasedTE> {
-    public FuelBasedMachineContainer(IInventory playerInventory, FuelBasedTE te) {
-        super(playerInventory, te);
+    public FuelBasedMachineContainer(PlayerInventory playerInventory, FuelBasedTE te, ContainerType<?> type, int id) {
+        super(playerInventory, te, type, id);
     }
 
     @Override

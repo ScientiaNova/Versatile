@@ -10,6 +10,7 @@ import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.function.Supplier;
 
 public class ShapelessRecipeSupplier implements Supplier<IRecipe> {
@@ -22,8 +23,7 @@ public class ShapelessRecipeSupplier implements Supplier<IRecipe> {
         this.name = name;
         this.group = group;
         this.output = output;
-        for (Object input : inputs)
-            this.inputs.add(input);
+        this.inputs.addAll(Arrays.asList(inputs));
     }
 
     @Override

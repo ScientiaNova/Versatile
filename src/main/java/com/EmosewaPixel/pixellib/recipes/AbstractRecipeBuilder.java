@@ -3,6 +3,7 @@ package com.EmosewaPixel.pixellib.recipes;
 import com.EmosewaPixel.pixellib.PixelLib;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class AbstractRecipeBuilder<T extends SimpleMachineRecipe, R extends AbstractRecipeBuilder<T, R>> {
@@ -32,14 +33,12 @@ public abstract class AbstractRecipeBuilder<T extends SimpleMachineRecipe, R ext
     }
 
     public R input(Object... inputs) {
-        for (Object input : inputs)
-            this.inputs.add(input);
+        this.inputs.addAll(Arrays.asList(inputs));
         return (R) this;
     }
 
     public R output(Object... outputs) {
-        for (Object output : outputs)
-            this.outputs.add(output);
+        this.outputs.addAll(Arrays.asList((outputs)));
         return (R) this;
     }
 

@@ -31,6 +31,10 @@ public abstract class AbstractRecipeList<T extends SimpleMachineRecipe, B extend
         return maxOutputs;
     }
 
+    public int getMaxRecipeSlots() {
+        return maxInputs + maxOutputs;
+    }
+
     public List<T> getReipes() {
         return recipes;
     }

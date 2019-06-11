@@ -3,6 +3,7 @@ package com.EmosewaPixel.pixellib.blocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
@@ -16,13 +17,13 @@ import java.util.function.Supplier;
 public class RotatableMachineBlock extends MachineBlock {
     public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
 
-    public RotatableMachineBlock(String name, Supplier<TileEntity> te) {
-        super(name, te);
+    public RotatableMachineBlock(String name, Supplier<TileEntity> te, ContainerType<?> containerType) {
+        super(name, te, containerType);
         this.setDefaultState(stateContainer.getBaseState().with(FACING, Direction.NORTH));
     }
 
-    public RotatableMachineBlock(Properties properties, String name, Supplier<TileEntity> te) {
-        super(properties, name, te);
+    public RotatableMachineBlock(Properties properties, String name, Supplier<TileEntity> te, ContainerType<?> containerType) {
+        super(properties, name, te, containerType);
         this.setDefaultState(stateContainer.getBaseState().with(FACING, Direction.NORTH));
     }
 

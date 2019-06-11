@@ -1,7 +1,6 @@
 package com.EmosewaPixel.pixellib.blocks;
 
 import com.EmosewaPixel.pixellib.tiles.AbstractRecipeBasedTE;
-import com.EmosewaPixel.pixellib.tiles.RecipeBasedTE;
 import com.EmosewaPixel.pixellib.tiles.containers.providers.MachineContainerProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
@@ -11,11 +10,12 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
@@ -26,17 +26,20 @@ import java.util.function.Supplier;
 
 public class MachineBlock extends Block implements ITileEntityProvider {
     private Supplier<TileEntity> te;
+    protected ContainerType<?> containerType;
 
-    public MachineBlock(String name, Supplier<TileEntity> te) {
+    public MachineBlock(String name, Supplier<TileEntity> te, @Nullable ContainerType<?> containerType) {
         super(Properties.create(Material.ROCK).hardnessAndResistance(3.5F));
         setRegistryName(name);
         this.te = te;
+        this.containerType = containerType;
     }
 
-    public MachineBlock(Block.Properties properties, String name, Supplier<TileEntity> te) {
+    public MachineBlock(Block.Properties properties, String name, Supplier<TileEntity> te, @Nullable ContainerType<?> containerType) {
         super(properties);
         setRegistryName(name);
         this.te = te;
+        this.containerType = containerType;
     }
 
     @Nullable
@@ -70,10 +73,10 @@ public class MachineBlock extends Block implements ITileEntityProvider {
     }
 
     @Override
-    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, EnumHand hand, Direction side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote)
-            if (worldIn.getTileEntity(pos) instanceof RecipeBasedTE)
-                NetworkHooks.openGui((ServerPlayerEntity) player, new MachineContainerProvider(pos, getRegistryName()), pos);
+            if (containerType != null)
+                NetworkHooks.openGui((ServerPlayerEntity) player, new MachineContainerProvider(pos, getRegistryName(), containerType), pos);
         return true;
     }
 

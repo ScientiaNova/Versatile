@@ -19,7 +19,9 @@ archivesBaseName = 'pixellib'
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: 'snapshot', version: '20190530-1.14.2'
+    mappings channel: 'snapshot', version: '20190611-1.14.2'
+
+    accessTransformer = file('src/main/resources/META-INF/pixellib_at.cfg')
 
     runs {
         client {
@@ -70,7 +72,7 @@ minecraft {
 //}
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.14.2-26.0.5'
+    minecraft 'net.minecraftforge:forge:1.14.2-26.0.16'
     //compileOnly("mezz.jei:jei-${mc_version}:${jei_version}:api")
     //compileOnly("mezz.jei:jei-${mc_version}:${jei_version}")
 }

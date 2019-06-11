@@ -1,5 +1,6 @@
 package com.EmosewaPixel.pixellib.tiles;
 
+import com.EmosewaPixel.pixellib.capabilities.ImprovedItemStackHandler;
 import com.EmosewaPixel.pixellib.recipes.AbstractRecipeList;
 import com.EmosewaPixel.pixellib.recipes.SimpleMachineRecipe;
 import net.minecraft.entity.item.ItemEntity;
@@ -11,14 +12,13 @@ import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.stream.IntStream;
 
 public abstract class AbstractRecipeBasedTE<T extends SimpleMachineRecipe> extends ProgressiveTE {
-    private int slotCount;
     private AbstractRecipeList<T, ?> recipeList;
     private T currentRecipe;
 
@@ -35,24 +35,20 @@ public abstract class AbstractRecipeBasedTE<T extends SimpleMachineRecipe> exten
     }
 
     public int getSlotCount() {
-        return slotCount;
-    }
-
-    protected void setSlotCount(int count) {
-        slotCount = count;
+        return combinedHandler.getSlots();
     }
 
     public AbstractRecipeBasedTE(TileEntityType type, AbstractRecipeList<T, ?> recipeList) {
         super(type);
-        slotCount = recipeList.getMaxInputs() + recipeList.getMaxOutputs();
         this.recipeList = recipeList;
 
-        input = new ItemStackHandler(recipeList.getMaxInputs()) {
+        recipeInventory = new ImprovedItemStackHandler(recipeList.getMaxRecipeSlots(), (Integer[]) IntStream.range(0, recipeList.getMaxInputs()).mapToObj(Integer::new).toArray(), (Integer[]) IntStream.range(recipeList.getMaxInputs(), recipeList.getMaxRecipeSlots()).mapToObj(Integer::new).toArray()) {
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                for (SimpleMachineRecipe recipe : recipeList.getReipes())
-                    if (recipe.itemBelongsInRecipe(stack))
-                        return true;
+                if (!noInputSlots.contains(slot))
+                    for (SimpleMachineRecipe recipe : recipeList.getReipes())
+                        if (recipe.itemBelongsInRecipe(stack))
+                            return true;
 
                 return false;
             }
@@ -64,24 +60,10 @@ public abstract class AbstractRecipeBasedTE<T extends SimpleMachineRecipe> exten
             }
         };
 
-        output = new ItemStackHandler(recipeList.getMaxOutputs()) {
-            @Override
-            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return false;
-            }
-
-            @Override
-            protected void onContentsChanged(int slot) {
-                markDirty();
-            }
-        };
-
-        combinedHandler = new CombinedInvWrapper(input, output);
+        combinedHandler = new CombinedInvWrapper(recipeInventory);
     }
 
-    protected ItemStackHandler input;
-
-    protected ItemStackHandler output;
+    protected ImprovedItemStackHandler recipeInventory;
 
     protected CombinedInvWrapper combinedHandler;
 
@@ -110,42 +92,33 @@ public abstract class AbstractRecipeBasedTE<T extends SimpleMachineRecipe> exten
         SimpleMachineRecipe lastRecipe = currentRecipe;
         canOutput(lastRecipe, false);
         for (int i = 0; i < recipeList.getMaxInputs(); i++)
-            input.extractItem(i, lastRecipe.getInputCount(i), false);
+            recipeInventory.extractItem(i, lastRecipe.getInputCount(i), false);
     }
 
     @Override
     public void read(CompoundNBT compound) {
         super.read(compound);
-        if (compound.contains("InputItems"))
-            input.deserializeNBT((CompoundNBT) compound.get("InputItems"));
-        if (compound.contains("OutputItems"))
-            output.deserializeNBT((CompoundNBT) compound.get("OutputItems"));
+        if (compound.contains("RecipeInventory"))
+            recipeInventory.deserializeNBT((CompoundNBT) compound.get("RecipeInventory"));
         currentRecipe = getRecipeByInput();
     }
 
     @Override
     public CompoundNBT write(CompoundNBT compound) {
         super.write(compound);
-        compound.put("InputItems", input.serializeNBT());
-        compound.put("OutputItems", output.serializeNBT());
+        compound.put("RecipeInventory", recipeInventory.serializeNBT());
         return compound;
     }
 
     public boolean canInteractWith(PlayerEntity playerIn) {
-        return playerIn.getDistanceSq(pos.add(0.5D, 0.5D, 0.5D)) <= 64D;
+        return playerIn.getDistanceSq(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D) <= 64D;
     }
 
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            if (side == null)
-                return LazyOptional.of(() -> combinedHandler).cast();
-            if (side == Direction.UP)
-                return LazyOptional.of(() -> input).cast();
-            if (side == Direction.DOWN)
-                return LazyOptional.of(() -> output).cast();
-        }
+        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+            return LazyOptional.of(() -> recipeInventory).cast();
         return LazyOptional.empty();
     }
 
@@ -156,17 +129,17 @@ public abstract class AbstractRecipeBasedTE<T extends SimpleMachineRecipe> exten
         boolean can = true;
 
         for (int i = 0; i < recipe.getAllOutputs().length; i++)
-            if (!output.insertItem(i, recipe.getOutput(i).copy(), simulate).isEmpty())
+            if (!recipeInventory.insertItem(recipeList.getMaxInputs() + i, recipe.getOutput(i).copy(), simulate).isEmpty())
                 can = false;
 
         return can;
     }
 
     public void dropInventory() {
-        for (int i = 0; i < slotCount; i++) {
+        for (int i = 0; i < combinedHandler.getSlots(); i++) {
             ItemStack stack = combinedHandler.getStackInSlot(i);
 
-            world.spawnEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), stack));
+            world.addEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), stack));
         }
     }
 

@@ -10,6 +10,7 @@ import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.function.Supplier;
 
@@ -23,8 +24,7 @@ public class ShapedRecipeSupplier implements Supplier<IRecipe> {
         this.name = name;
         this.group = group;
         this.output = output;
-        for (Object input : shape)
-            this.shape.add(input);
+            this.shape.addAll(Arrays.asList(shape));
     }
 
     @Override

@@ -1,22 +1,22 @@
 package com.EmosewaPixel.pixellib.blocks;
 
-import com.EmosewaPixel.pixellib.tiles.FuelBasedTE;
 import com.EmosewaPixel.pixellib.tiles.containers.providers.FueledMachineContainerProvider;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockRedstoneTorch;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.RedstoneTorchBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.init.Particles;
+import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -28,13 +28,13 @@ import java.util.function.Supplier;
 public class FuelBasedMachineBlock extends RotatableMachineBlock {
     public static final BooleanProperty LIT = RedstoneTorchBlock.LIT;
 
-    public FuelBasedMachineBlock(String name, Supplier<TileEntity> te) {
-        super(name, te);
+    public FuelBasedMachineBlock(String name, Supplier<TileEntity> te, ContainerType<?> containerType) {
+        super(name, te, containerType);
         this.setDefaultState(stateContainer.getBaseState().with(LIT, false));
     }
 
-    public FuelBasedMachineBlock(Block.Properties properties, String name, Supplier<TileEntity> te) {
-        super(properties, name, te);
+    public FuelBasedMachineBlock(Block.Properties properties, String name, Supplier<TileEntity> te, ContainerType<?> containerType) {
+        super(properties, name, te, containerType);
         this.setDefaultState(stateContainer.getBaseState().with(LIT, false));
     }
 
@@ -59,8 +59,8 @@ public class FuelBasedMachineBlock extends RotatableMachineBlock {
             double lvt_17_1_ = axis == Direction.Axis.X ? (double) facing.getXOffset() * 0.52D : lvt_15_1_;
             double lvt_19_1_ = rand.nextDouble() * 6.0D / 16.0D;
             double lvt_21_1_ = axis == Direction.Axis.Z ? (double) facing.getZOffset() * 0.52D : lvt_15_1_;
-            world.addParticle(Particles.SMOKE, x + lvt_17_1_, y + lvt_19_1_, z + lvt_21_1_, 0.0D, 0.0D, 0.0D);
-            world.addParticle(Particles.FLAME, x + lvt_17_1_, y + lvt_19_1_, z + lvt_21_1_, 0.0D, 0.0D, 0.0D);
+            world.addParticle(ParticleTypes.SMOKE, x + lvt_17_1_, y + lvt_19_1_, z + lvt_21_1_, 0.0D, 0.0D, 0.0D);
+            world.addParticle(ParticleTypes.FLAME, x + lvt_17_1_, y + lvt_19_1_, z + lvt_21_1_, 0.0D, 0.0D, 0.0D);
         }
     }
 
@@ -70,10 +70,10 @@ public class FuelBasedMachineBlock extends RotatableMachineBlock {
     }
 
     @Override
-    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, EnumHand hand, Direction side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (!worldIn.isRemote)
-            if (worldIn.getTileEntity(pos) instanceof FuelBasedTE)
-                NetworkHooks.openGui((ServerPlayerEntity) player, new FueledMachineContainerProvider(pos, getRegistryName()), pos);
+            if (containerType != null)
+                NetworkHooks.openGui((ServerPlayerEntity) player, new FueledMachineContainerProvider(pos, getRegistryName(), containerType), pos);
         return true;
     }
 }

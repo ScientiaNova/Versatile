@@ -2,10 +2,9 @@ package com.EmosewaPixel.pixellib.tiles.containers;
 
 import com.EmosewaPixel.pixellib.tiles.AbstractRecipeBasedTE;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.IContainerListener;
-import net.minecraft.inventory.container.Slot;
+import net.minecraft.inventory.container.*;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -20,7 +19,8 @@ public class RecipeBasedMachineContainer<T extends AbstractRecipeBasedTE> extend
         return te.canInteractWith(playerIn);
     }
 
-    public RecipeBasedMachineContainer(IInventory playerInventory, T te) {
+    public RecipeBasedMachineContainer(PlayerInventory playerInventory, T te, ContainerType<?> type, int id) {
+        super(type, id);
         this.te = te;
 
         te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> itemHandler = handler);

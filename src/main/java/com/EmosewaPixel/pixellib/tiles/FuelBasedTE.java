@@ -4,7 +4,7 @@ import com.EmosewaPixel.pixellib.blocks.FuelBasedMachineBlock;
 import com.EmosewaPixel.pixellib.recipes.SimpleRecipeList;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraft.tileentity.FurnaceTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
@@ -39,7 +39,6 @@ public class FuelBasedTE extends RecipeBasedTE {
 
     public FuelBasedTE(TileEntityType type, SimpleRecipeList list) {
         super(type, list);
-        setSlotCount(list.getMaxInputs() + 1 + list.getMaxOutputs());
 
         fuel_input = new ItemStackHandler(1) {
             @Override
@@ -53,7 +52,7 @@ public class FuelBasedTE extends RecipeBasedTE {
             }
         };
 
-        combinedHandler = new CombinedInvWrapper(input, fuel_input, output);
+        combinedHandler = new CombinedInvWrapper(recipeInventory, fuel_input);
     }
 
     public ItemStackHandler fuel_input;
@@ -79,7 +78,7 @@ public class FuelBasedTE extends RecipeBasedTE {
         if (stack.isEmpty())
             return 0;
         int rec = stack.getBurnTime();
-        return ForgeEventFactory.getItemBurnTime(stack, rec == -1 ? TileEntityFurnace.getBurnTimes().getOrDefault(stack.getItem(), 0) : rec);
+        return ForgeEventFactory.getItemBurnTime(stack, rec == -1 ? FurnaceTileEntity.getBurnTimes().getOrDefault(stack.getItem(), 0) : rec);
     }
 
     protected void consumeFuel() {
