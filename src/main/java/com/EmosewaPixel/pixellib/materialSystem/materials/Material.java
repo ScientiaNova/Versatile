@@ -30,7 +30,7 @@ public class Material {
     private IArmorMaterial armorMaterial = null;
     private ArrayList<ObjectType> blacklist = new ArrayList<>();
     private int tier;
-    private List<MaterialTag> materialTags = new ArrayList<>();
+    private List<String> materialTags = new ArrayList<>();
     private ImmutableList<MaterialStack> composition = new ImmutableList.Builder<MaterialStack>().build();
 
     public Material(String name, TextureType textureType, int color, int tier) {
@@ -40,7 +40,7 @@ public class Material {
         this.tier = tier;
     }
 
-    public Material addTags(MaterialTag... tags) {
+    public Material addTags(String... tags) {
             materialTags.addAll(Arrays.asList(tags));
         return this;
     }
@@ -69,6 +69,11 @@ public class Material {
 
     public Material blacklistTypes(ObjectType... types) {
         blacklist.addAll(Arrays.asList(types));
+        return this;
+    }
+
+    public Material setComposition(MaterialStack... stacks) {
+        this.composition.addAll(Arrays.asList(stacks));
         return this;
     }
 
@@ -109,10 +114,6 @@ public class Material {
         return composition;
     }
 
-    public void setComposition(MaterialStack... stacks) {
-        this.composition.addAll(Arrays.asList(stacks));
-    }
-
     public boolean hasBlacklisted(ObjectType type) {
         return blacklist.contains(type);
     }
@@ -121,7 +122,7 @@ public class Material {
         return tier;
     }
 
-    public boolean hasTag(MaterialTag tag) {
+    public boolean hasTag(String tag) {
         return materialTags.contains(tag);
     }
 }

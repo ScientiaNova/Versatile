@@ -2,7 +2,7 @@ package com.EmosewaPixel.pixellib;
 
 import com.EmosewaPixel.pixellib.blocks.BlockRegistry;
 import com.EmosewaPixel.pixellib.items.ItemRegistry;
-import com.EmosewaPixel.pixellib.materialSystem.materials.MaterialRegistry;
+import com.EmosewaPixel.pixellib.materialSystem.MaterialRegistry;
 import com.EmosewaPixel.pixellib.proxy.ClientProxy;
 import com.EmosewaPixel.pixellib.proxy.IModProxy;
 import com.EmosewaPixel.pixellib.proxy.ServerProxy;

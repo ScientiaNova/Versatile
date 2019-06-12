@@ -1,7 +1,11 @@
-package com.EmosewaPixel.pixellib.materialSystem.materials;
+package com.EmosewaPixel.pixellib.materialSystem;
 
 import com.EmosewaPixel.pixellib.materialSystem.lists.MaterialBlocks;
 import com.EmosewaPixel.pixellib.materialSystem.lists.MaterialItems;
+import com.EmosewaPixel.pixellib.materialSystem.materials.DustMaterial;
+import com.EmosewaPixel.pixellib.materialSystem.materials.GemMaterial;
+import com.EmosewaPixel.pixellib.materialSystem.materials.IngotMaterial;
+import com.EmosewaPixel.pixellib.materialSystem.materials.Material;
 import com.EmosewaPixel.pixellib.materialSystem.types.BlockType;
 import com.EmosewaPixel.pixellib.materialSystem.types.ItemType;
 import com.EmosewaPixel.pixellib.materialSystem.types.ObjectType;
@@ -20,9 +24,13 @@ public class MaterialRegistry {
 
     public static ObjectType DUST, INGOT, NUGGET, BLOCK, ORE, GEM;
 
-    public static MaterialTag HAS_ORE = new MaterialTag("has_ore");
-    public static MaterialTag DISABLE_SIMPLE_PROCESIING = new MaterialTag("disable_simple_processing");
-    public static MaterialTag BLOCK_FROM_4X4 = new MaterialTag("block_from_4x4");
+    public static final String HAS_ORE = "has_ore";
+    public static final String DISABLE_SIMPLE_PROCESIING = "disable_simple_processing";
+    public static final String BLOCK_FROM_4X4 = "block_from_4x4";
+    public static final String IS_GAS = "is_has";
+
+    public static final String SINGLE_TEXTURE_TYPE = "1_texture_type";
+    public static final String USES_UNREFINED_COLOR = "uses_unrefined_color";
 
     static {
         //Texture Types
@@ -54,8 +62,8 @@ public class MaterialRegistry {
         DIAMOND = new GemMaterial("diamond", PENTAGONAL, 0x34ebe3, 2).setItemTier(ItemTier.DIAMOND).setArmorMaterial(ArmorMaterial.DIAMOND).build();
         EMERALD = new GemMaterial("emerald", OCTAGONAL, 0x08ad2c, 2).addTags(HAS_ORE).build();
         REDSTONE = new DustMaterial("redstone", REGULAR, 0xfc1a19, 1).addTags(HAS_ORE).build();
-        STONE = new Material("stone", REGULAR, 0xcccccc, 0).setItemTier(ItemTier.STONE).build();
-        WOODEN = new Material("wooden", REGULAR, 0xd5bc77, -1).setItemTier(ItemTier.WOOD).build();
+        STONE = new DustMaterial("stone", REGULAR, 0xcccccc, 0).setItemTier(ItemTier.STONE).blacklistTypes(BLOCK).build();
+        WOODEN = new DustMaterial("wooden", REGULAR, 0xd5bc77, -1).setItemTier(ItemTier.WOOD).blacklistTypes(BLOCK).build();
         GLOWSTONE = new DustMaterial("glowstone", REGULAR, 0xfcbe60, 1).addTags(BLOCK_FROM_4X4).build();
         BRICK = new IngotMaterial("brick", REGULAR, 0xb55c42, 1).addTags(BLOCK_FROM_4X4).blacklistTypes(NUGGET).build();
         FLINT = new GemMaterial("flint", SHARP, 0x222020, -1).blacklistTypes(BLOCK).build();
@@ -88,6 +96,7 @@ public class MaterialRegistry {
 
         MaterialItems.addItem(QUARTZ, GEM, Items.QUARTZ);
         MaterialBlocks.addBlock(QUARTZ, BLOCK, Blocks.QUARTZ_BLOCK);
+        MaterialBlocks.addBlock(QUARTZ, ORE, Blocks.NETHER_QUARTZ_ORE);
 
         MaterialItems.addItem(REDSTONE, DUST, Items.REDSTONE);
         MaterialBlocks.addBlock(REDSTONE, BLOCK, Blocks.REDSTONE_BLOCK);

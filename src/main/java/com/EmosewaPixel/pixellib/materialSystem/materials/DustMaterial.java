@@ -13,13 +13,17 @@ import java.util.function.Supplier;
 
 public class DustMaterial extends Material {
     private HarvestTier harvestTier = null;
+    private int processingMultiplier = 1;
+    private DustMaterial refinedMaterial = null;
+    private int unrefinedColor;
 
     public DustMaterial(String name, TextureType textureType, int color, int tier) {
         super(name, textureType, color, tier);
         setHarvestProperties(1.5f * (getTier() + 1), 1.5f * (getTier() + 1));
+        unrefinedColor = color;
     }
 
-    public DustMaterial addTags(MaterialTag... tags) {
+    public DustMaterial addTags(String... tags) {
         super.addTags(tags);
         return this;
     }
@@ -64,7 +68,39 @@ public class DustMaterial extends Material {
         return this;
     }
 
+    public DustMaterial setComposition(MaterialStack... stacks) {
+        super.setComposition(stacks);
+        return this;
+    }
+
+    public DustMaterial setProccessingMultiplier(int multiplier) {
+        this.processingMultiplier = multiplier;
+        return this;
+    }
+
+    public DustMaterial setRefinedMaterial(DustMaterial material) {
+        this.refinedMaterial = material;
+        return this;
+    }
+
+    public DustMaterial setUnrefinedColor(int color) {
+        this.unrefinedColor = color;
+        return this;
+    }
+
     public HarvestTier getHarvestTier() {
         return harvestTier;
+    }
+
+    public int getProcessingMultiplier() {
+        return processingMultiplier;
+    }
+
+    public DustMaterial getRefinedMaterial() {
+        return refinedMaterial;
+    }
+
+    public int getUnrefinedColor() {
+        return unrefinedColor;
     }
 }

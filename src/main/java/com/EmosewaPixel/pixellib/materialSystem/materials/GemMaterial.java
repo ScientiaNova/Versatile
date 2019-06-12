@@ -2,6 +2,7 @@ package com.EmosewaPixel.pixellib.materialSystem.materials;
 
 import com.EmosewaPixel.pixellib.items.tools.ArmorMaterial;
 import com.EmosewaPixel.pixellib.items.tools.ItemTier;
+import com.EmosewaPixel.pixellib.materialSystem.MaterialRegistry;
 import com.EmosewaPixel.pixellib.materialSystem.types.ObjectType;
 import com.EmosewaPixel.pixellib.materialSystem.types.TextureType;
 import net.minecraft.item.IArmorMaterial;
@@ -17,7 +18,7 @@ public class GemMaterial extends DustMaterial {
         super(name, textureType, color, tier);
     }
 
-    public GemMaterial addTags(MaterialTag... tags) {
+    public GemMaterial addTags(String... tags) {
         super.addTags(tags);
         return this;
     }
@@ -67,6 +68,26 @@ public class GemMaterial extends DustMaterial {
 
     public GemMaterial blacklistTypes(ObjectType... types) {
         super.blacklistTypes(types);
+        return this;
+    }
+
+    public GemMaterial setComposition(MaterialStack... stacks) {
+        super.setComposition(stacks);
+        return this;
+    }
+
+    public GemMaterial setProccessingMultiplier(int multiplier) {
+        super.setProccessingMultiplier(multiplier);
+        return this;
+    }
+
+    public GemMaterial setRefinedMaterial(DustMaterial material) {
+        super.setRefinedMaterial(material);
+        return this;
+    }
+
+    public GemMaterial setUnrefinedColor(int color) {
+        super.setUnrefinedColor(color);
         return this;
     }
 }

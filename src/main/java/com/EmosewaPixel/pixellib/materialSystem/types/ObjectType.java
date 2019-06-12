@@ -7,16 +7,25 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 
 public class ObjectType {
     private String name;
     private Predicate<Material> requirement;
+    private List<String> tags = new ArrayList<>();
 
     public ObjectType(String name, Predicate<Material> requirement) {
         this.name = name;
         this.requirement = requirement;
         ObjTypes.add(this);
+    }
+
+    public ObjectType addTypeTag(String... tags) {
+        this.tags.addAll(Arrays.asList(tags));
+        return this;
     }
 
     public String getName() {
@@ -29,5 +38,9 @@ public class ObjectType {
 
     public Tag<Item> getTag() {
         return new ItemTags.Wrapper(new ResourceLocation("forge", name + "s"));
+    }
+
+    public boolean hasTag(String tag) {
+        return tags.contains(tag);
     }
 }

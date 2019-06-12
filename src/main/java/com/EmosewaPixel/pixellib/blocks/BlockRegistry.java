@@ -7,6 +7,7 @@ import com.EmosewaPixel.pixellib.materialSystem.lists.ObjTypes;
 import com.EmosewaPixel.pixellib.materialSystem.lists.TextureTypes;
 import com.EmosewaPixel.pixellib.materialSystem.materials.DustMaterial;
 import com.EmosewaPixel.pixellib.materialSystem.materials.IMaterialItem;
+import com.EmosewaPixel.pixellib.materialSystem.MaterialRegistry;
 import com.EmosewaPixel.pixellib.materialSystem.types.BlockType;
 import com.EmosewaPixel.pixellib.materialSystem.types.ObjectType;
 import com.EmosewaPixel.pixellib.materialSystem.types.TextureType;
@@ -35,8 +36,11 @@ public class BlockRegistry {
 
         for (ObjectType objT : ObjTypes.getAll())
             if (objT instanceof BlockType)
-                for (TextureType textureT : TextureTypes.getAll())
-                    templates.add(register(new ModBlock(Block.Properties.create(Material.IRON), "pixellib:" + textureT.toString() + "_" + objT.getName(), 0), e));
+                if (objT.hasTag(MaterialRegistry.SINGLE_TEXTURE_TYPE))
+                    templates.add(register(new ModBlock(Block.Properties.create(Material.IRON), "pixellib:" + objT.getName(), 0), e));
+                else
+                    for (TextureType textureT : TextureTypes.getAll())
+                        templates.add(register(new ModBlock(Block.Properties.create(Material.IRON), "pixellib:" + textureT.toString() + "_" + objT.getName(), 0), e));
     }
 
     public static void itemRegistry(RegistryEvent.Register<Item> e) {

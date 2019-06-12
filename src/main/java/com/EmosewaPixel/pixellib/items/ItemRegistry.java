@@ -1,5 +1,6 @@
 package com.EmosewaPixel.pixellib.items;
 
+import com.EmosewaPixel.pixellib.materialSystem.MaterialRegistry;
 import com.EmosewaPixel.pixellib.materialSystem.lists.MaterialItems;
 import com.EmosewaPixel.pixellib.materialSystem.lists.Materials;
 import com.EmosewaPixel.pixellib.materialSystem.lists.ObjTypes;
@@ -20,8 +21,11 @@ public class ItemRegistry {
 
         for (ObjectType objT : ObjTypes.getAll())
             if (objT instanceof ItemType)
-                for (TextureType textureT : TextureTypes.getAll())
-                    register(new Item(new Item.Properties()).setRegistryName("pixellib:" + textureT.toString() + "_" + objT.getName()), e);
+                if (objT.hasTag(MaterialRegistry.SINGLE_TEXTURE_TYPE))
+                    register(new Item(new Item.Properties()).setRegistryName("pixellib:" + objT.getName()), e);
+                else
+                    for (TextureType textureT : TextureTypes.getAll())
+                        register(new Item(new Item.Properties()).setRegistryName("pixellib:" + textureT.toString() + "_" + objT.getName()), e);
     }
 
     private static Item register(Item item, RegistryEvent.Register<Item> e) {
