@@ -10,13 +10,13 @@ import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.BlockPos;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public abstract class MultiblockTE<T extends SimpleMachineRecipe> extends AbstractRecipeBasedTE<T> {
-    protected ArrayList<IMultiblockPart> partList = new ArrayList<>();
+    protected List<IMultiblockPart> partList;
 
     public MultiblockTE(TileEntityType type, AbstractRecipeList<T, ?> recipeList) {
         super(type, recipeList);
@@ -25,25 +25,16 @@ public abstract class MultiblockTE<T extends SimpleMachineRecipe> extends Abstra
     abstract protected MultiblockPatternBuilder getPattern();
 
     protected boolean isValidStructure() {
-        BlockPos posInPattern = null;
+        BlockState state = getBlockState();
         Map<BlockPos, Predicate<BlockState>> pattern = getRotatedPattern();
-        for (Map.Entry<BlockPos, Predicate<BlockState>> predicate : pattern.entrySet())
-            if (predicate.getValue().test(getBlockState())) {
-                posInPattern = predicate.getKey();
-                break;
-            }
+        final BlockPos posInPattern = pattern.entrySet().stream().filter(e -> e.getValue().test(state)).map(Map.Entry::getKey).findFirst().get();
 
         if (posInPattern == null)
             return false;
 
-        for (BlockPos pos : pattern.keySet()) {
-            if (!pattern.get(pos).test(world.getBlockState(getPos().subtract(posInPattern).add(pos))))
-                return false;
-            if (world.getTileEntity(pos) instanceof IMultiblockPart)
-                partList.add((IMultiblockPart) world.getTileEntity(pos));
-        }
+        partList = pattern.keySet().stream().filter(pos -> world.getTileEntity(pos) instanceof IMultiblockPart).map(pos -> (IMultiblockPart) world.getTileEntity(pos)).collect(Collectors.toList());
 
-        return true;
+        return pattern.keySet().stream().allMatch(pos -> pattern.get(pos).test(world.getBlockState(getPos().subtract(posInPattern).add(pos))));
     }
 
     protected Predicate<Block> selfPredicate() {

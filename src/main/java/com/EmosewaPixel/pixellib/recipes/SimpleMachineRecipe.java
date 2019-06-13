@@ -1,10 +1,12 @@
 package com.EmosewaPixel.pixellib.recipes;
 
-import net.minecraft.item.Item;
+import com.google.common.collect.ImmutableList;
 import net.minecraft.item.ItemStack;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class SimpleMachineRecipe {
     private Object[] input;
@@ -44,35 +46,21 @@ public class SimpleMachineRecipe {
     }
 
     public ItemStack[] getAllOutputs() {
-        ItemStack[] outputStacks = new ItemStack[output.length];
-        for (int i = 0; i < output.length; i++)
-            if (output[i] instanceof ItemStack)
-                outputStacks[i] = (ItemStack) output[i];
-            else if (output[i] instanceof TagStack)
-                outputStacks[i] = ((TagStack) output[i]).asItemStack();
-        return outputStacks;
+        return (ItemStack[]) IntStream.range(0, output.length)
+                .mapToObj(i -> output[i] instanceof ItemStack ? output[i] : ((TagStack) output[i]).asItemStack()).toArray();
     }
 
     public List<List<ItemStack>> getInputsAsList() {
-        List<List<ItemStack>> list = new ArrayList<>();
-        for (Object stack : input) {
-            List<ItemStack> singleList = new ArrayList<>();
-            if (stack instanceof ItemStack)
-                singleList.add((ItemStack) stack);
-            else
-                for (Item stackitem : ((TagStack) stack).geTag().getAllElements())
-                    singleList.add(new ItemStack(stackitem, ((TagStack) stack).getCount()));
-            list.add(singleList);
-        }
-
-        return list;
+        return Arrays.stream(input).map(o -> {
+            if (o instanceof ItemStack)
+                return ImmutableList.of((ItemStack) o);
+            TagStack stack = (TagStack) o;
+            return stack.geTag().getAllElements().stream().map(i -> new ItemStack(i, stack.getCount())).collect(Collectors.toList());
+        }).collect(Collectors.toList());
     }
 
     public List<ItemStack> getOutputsAsList() {
-        List<ItemStack> list = new ArrayList<>();
-        for (ItemStack stack : getAllOutputs())
-            list.add(stack);
-        return list;
+        return Arrays.asList(getAllOutputs());
     }
 
     public int getTime() {
@@ -84,56 +72,33 @@ public class SimpleMachineRecipe {
     }
 
     public boolean isInputValid(ItemStack[] stacks) {
-        int matches = 0;
-
-        if (stacks.length != input.length)
+        if (stacks.length != input.length || Arrays.stream(stacks).anyMatch(ItemStack::isEmpty) ||
+                Arrays.stream(input).anyMatch(s -> s instanceof ItemStack ? ((ItemStack) s).isEmpty() : ((TagStack) s).isEmpty()))
             return false;
 
-        for (ItemStack stack : stacks) {
-            if (stack.isEmpty())
-                return false;
-            for (Object stackRec : input) {
-                if (stackRec instanceof ItemStack) {
-                    if (((ItemStack) stackRec).isEmpty())
-                        return false;
-                    if (stack.getItem() == ((ItemStack) stackRec).getItem() && stack.getCount() >= ((ItemStack) stackRec).getCount())
-                        matches++;
-                }
-                if (stackRec instanceof TagStack) {
-                    if (((TagStack) stackRec).isEmpty())
-                        return false;
-                    if (((TagStack) stackRec).geTag().contains(stack.getItem()) && stack.getCount() >= ((TagStack) stackRec).getCount())
-                        matches++;
-                }
-            }
-        }
-
-        return matches == stacks.length;
+        return stacks.length == Arrays.stream(input).map(stackRec -> Arrays.stream(stacks)
+                .filter(stack -> stackRec instanceof ItemStack ? (stack.getItem() == ((ItemStack) stackRec).getItem() && stack.getCount() >= ((ItemStack) stackRec).getCount()) : ((TagStack) stackRec).geTag().contains(stack.getItem()) && stack.getCount() >= ((TagStack) stackRec).getCount())
+                .findFirst().orElse(ItemStack.EMPTY))
+                .filter(o -> o != ItemStack.EMPTY)
+                .count();
     }
 
     public int getCountOfInputItem(ItemStack stack) {
-        for (Object input : input) {
-            if (input instanceof ItemStack) {
-                if (stack.getItem() == ((ItemStack) input).getItem())
-                    return ((ItemStack) input).getCount();
-            } else if (((TagStack) input).geTag().contains(stack.getItem()))
-                return ((TagStack) input).getCount();
-        }
-        return 0;
+        return Arrays.stream(input).filter(input -> input instanceof ItemStack ? stack.getItem() == ((ItemStack) input).getItem() : ((TagStack) input).geTag().contains(stack.getItem()))
+                .map(input -> input instanceof ItemStack ? ((ItemStack) input).getCount() : ((TagStack) input).getCount())
+                .findFirst().orElse(0);
     }
 
     public boolean itemBelongsInRecipe(ItemStack stack) {
         if (stack.isEmpty() || input == null)
             return false;
 
-        for (Object stackRec : input) {
+        return Arrays.stream(input).anyMatch(stackRec -> {
             if (stackRec instanceof ItemStack) {
-                if (((ItemStack) stackRec).getItem() == stack.getItem())
-                    return true;
-            } else if (((TagStack) stackRec).geTag().contains(stack.getItem()))
-                return true;
-        }
-        return false;
+                return ((ItemStack) stackRec).getItem() == stack.getItem();
+            } else
+                return ((TagStack) stackRec).geTag().contains(stack.getItem());
+        });
     }
 
     public boolean isEmpty() {

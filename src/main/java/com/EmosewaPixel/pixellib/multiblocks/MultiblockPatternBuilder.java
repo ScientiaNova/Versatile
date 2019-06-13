@@ -1,17 +1,16 @@
 package com.EmosewaPixel.pixellib.multiblocks;
 
-import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.Table;
-import com.google.common.collect.Tables;
+import com.google.common.collect.Streams;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Triple;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class MultiblockPatternBuilder {
     private List<List<String>> pattern = new ArrayList<>();
@@ -29,8 +28,7 @@ public class MultiblockPatternBuilder {
     }
 
     public MultiblockPatternBuilder repeat(int amount) {
-        for (int i = 0; i < amount; i++)
-            pattern.add(pattern.get(pattern.size() - 1));
+        IntStream.range(0, amount).forEach(i -> pattern.add(pattern.get(pattern.size() - 1)));
         return this;
     }
 
@@ -43,8 +41,11 @@ public class MultiblockPatternBuilder {
         finalPattern = pattern.stream().map(strings -> strings.stream().map(s -> s.chars().mapToObj(c -> (char) c).map(blockMap::get).collect(Collectors.toList())).collect(Collectors.toList())).collect(Collectors.toList());
 
         AtomicInteger index = new AtomicInteger(0);
-        patternMap = finalPattern.stream().map(l1 -> l1.stream().map(l2 -> l2.stream().collect(Collectors.toMap(l2::indexOf, Function.identity())).entrySet()).flatMap(Set::stream).collect(Tables.toTable(l1::indexOf, Map.Entry::getKey, Map.Entry::getValue, HashBasedTable::create)).cellSet()).flatMap(Set::stream).collect(Collectors.toMap(c -> new BlockPos(index.getAndIncrement(), c.getRowKey(), c.getColumnKey()), Table.Cell::getValue));
-
+        patternMap = finalPattern.stream()
+                .flatMap(l1 -> Streams.mapWithIndex(l1.stream()
+                                .flatMap(l2 -> Streams.mapWithIndex(l2.stream(), (pred, i) -> Pair.of(i, pred))),
+                        (p, i) -> Triple.of(i, p.getKey(), p.getValue())))
+                .collect(Collectors.toMap(t -> new BlockPos(index.getAndIncrement(), t.getLeft(), t.getMiddle()), Triple::getRight));
         return this;
     }
 

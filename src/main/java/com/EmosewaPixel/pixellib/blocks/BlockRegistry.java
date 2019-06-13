@@ -1,16 +1,14 @@
 package com.EmosewaPixel.pixellib.blocks;
 
 import com.EmosewaPixel.pixellib.PixelLib;
+import com.EmosewaPixel.pixellib.materialSystem.MaterialRegistry;
 import com.EmosewaPixel.pixellib.materialSystem.lists.MaterialBlocks;
 import com.EmosewaPixel.pixellib.materialSystem.lists.Materials;
 import com.EmosewaPixel.pixellib.materialSystem.lists.ObjTypes;
 import com.EmosewaPixel.pixellib.materialSystem.lists.TextureTypes;
 import com.EmosewaPixel.pixellib.materialSystem.materials.DustMaterial;
 import com.EmosewaPixel.pixellib.materialSystem.materials.IMaterialItem;
-import com.EmosewaPixel.pixellib.materialSystem.MaterialRegistry;
 import com.EmosewaPixel.pixellib.materialSystem.types.BlockType;
-import com.EmosewaPixel.pixellib.materialSystem.types.ObjectType;
-import com.EmosewaPixel.pixellib.materialSystem.types.TextureType;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
@@ -29,27 +27,24 @@ public class BlockRegistry {
     }
 
     public static void registry(RegistryEvent.Register<Block> e) {
-        for (com.EmosewaPixel.pixellib.materialSystem.materials.Material mat : Materials.getAll())
-            for (ObjectType type : ObjTypes.getAll())
-                if (mat instanceof DustMaterial && type instanceof BlockType && type.isMaterialCompatible(mat) && !MaterialBlocks.contains(mat, type) && !mat.hasBlacklisted(type))
-                    register(new MaterialBlock((DustMaterial) mat, (BlockType) type), e);
+        Materials.getAll().forEach(mat ->
+                ObjTypes.getAll().stream()
+                        .filter(type -> (mat instanceof DustMaterial && type instanceof BlockType && type.isMaterialCompatible(mat) && !MaterialBlocks.contains(mat, type) && !mat.hasBlacklisted(type)))
+                        .forEach(type -> register(new MaterialBlock((DustMaterial) mat, (BlockType) type), e))
+        );
 
-        for (ObjectType objT : ObjTypes.getAll())
-            if (objT instanceof BlockType)
-                if (objT.hasTag(MaterialRegistry.SINGLE_TEXTURE_TYPE))
-                    templates.add(register(new ModBlock(Block.Properties.create(Material.IRON), "pixellib:" + objT.getName(), 0), e));
-                else
-                    for (TextureType textureT : TextureTypes.getAll())
-                        templates.add(register(new ModBlock(Block.Properties.create(Material.IRON), "pixellib:" + textureT.toString() + "_" + objT.getName(), 0), e));
+        ObjTypes.getAll().stream().filter(objT -> objT instanceof BlockType).forEach(objT -> {
+            if (objT.hasTag(MaterialRegistry.SINGLE_TEXTURE_TYPE))
+                templates.add(register(new ModBlock(Block.Properties.create(Material.IRON), "pixellib:" + objT.getName(), 0), e));
+            else
+                TextureTypes.getAll().forEach(textureT -> templates.add(register(new ModBlock(Block.Properties.create(Material.IRON), "pixellib:" + textureT.toString() + "_" + objT.getName(), 0), e)));
+        });
     }
 
     public static void itemRegistry(RegistryEvent.Register<Item> e) {
-        for (Block block : MaterialBlocks.getAllBlocks())
-            if (block instanceof IMaterialItem)
-                registerItemBlock(block, e);
+        MaterialBlocks.getAllBlocks().stream().filter(block -> block instanceof IMaterialItem).forEach(block -> registerItemBlock(block, e));
 
-        for (Block template : templates)
-            registerItemBlock(template, e, false);
+        templates.forEach(template -> registerItemBlock(template, e, false));
     }
 
     private static Block register(Block block, RegistryEvent.Register<Block> e) {

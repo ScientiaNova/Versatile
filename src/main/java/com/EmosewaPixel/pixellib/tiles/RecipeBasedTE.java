@@ -5,6 +5,9 @@ import com.EmosewaPixel.pixellib.recipes.SimpleRecipeList;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityType;
 
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
 public class RecipeBasedTE extends AbstractRecipeBasedTE<SimpleMachineRecipe> {
     public RecipeBasedTE(TileEntityType type, SimpleRecipeList recipeList) {
         super(type, recipeList);
@@ -12,22 +15,18 @@ public class RecipeBasedTE extends AbstractRecipeBasedTE<SimpleMachineRecipe> {
     }
 
     public SimpleMachineRecipe getRecipeByInput() {
-        ItemStack[] stacks = new ItemStack[getRecipeList().getMaxInputs()];
-        for (int i = 0; i < getRecipeList().getMaxInputs(); i++) {
-            if (recipeInventory.getStackInSlot(i).isEmpty())
-                return SimpleMachineRecipe.EMPTY;
-            stacks[i] = recipeInventory.getStackInSlot(i);
-        }
+        Stream<ItemStack> stacksStream = IntStream.range(0, getRecipeList().getMaxInputs()).mapToObj(i -> recipeInventory.getStackInSlot(i));
 
-        ItemStack recipeInputs[] = new ItemStack[getRecipeList().getMaxInputs()];
-        SimpleMachineRecipe returnRecipe;
-        for (SimpleMachineRecipe recipe : getRecipeList().getReipes())
-            if (recipe.isInputValid(stacks)) {
-                for (int i = 0; i < getRecipeList().getMaxInputs(); i++)
-                    recipeInputs[i] = new ItemStack(recipeInventory.getStackInSlot(i).getItem(), recipe.getCountOfInputItem(recipeInventory.getStackInSlot(i)));
-                returnRecipe = new SimpleMachineRecipe(recipeInputs, recipe.getAllOutputs(), recipe.getTime());
-                return returnRecipe;
-            }
-        return SimpleMachineRecipe.EMPTY;
+        if (stacksStream.anyMatch(ItemStack::isEmpty))
+            return SimpleMachineRecipe.EMPTY;
+
+        SimpleMachineRecipe chosenRecipe = getRecipeList().getReipes().stream().filter(recipe -> recipe.isInputValid((ItemStack[]) stacksStream.toArray())).findFirst().get();
+
+        if (chosenRecipe == null)
+            return SimpleMachineRecipe.EMPTY;
+
+        ItemStack recipeInputs[] = (ItemStack[]) IntStream.range(0, getRecipeList().getMaxInputs())
+                .mapToObj(i -> new ItemStack(recipeInventory.getStackInSlot(i).getItem(), chosenRecipe.getCountOfInputItem(recipeInventory.getStackInSlot(i)))).toArray();
+        return new SimpleMachineRecipe(recipeInputs, chosenRecipe.getAllOutputs(), chosenRecipe.getTime());
     }
 }

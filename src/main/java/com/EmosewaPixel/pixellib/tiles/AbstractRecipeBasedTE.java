@@ -45,12 +45,7 @@ public abstract class AbstractRecipeBasedTE<T extends SimpleMachineRecipe> exten
         recipeInventory = new ImprovedItemStackHandler(recipeList.getMaxRecipeSlots(), (Integer[]) IntStream.range(0, recipeList.getMaxInputs()).mapToObj(Integer::new).toArray(), (Integer[]) IntStream.range(recipeList.getMaxInputs(), recipeList.getMaxRecipeSlots()).mapToObj(Integer::new).toArray()) {
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                if (!noInputSlots.contains(slot))
-                    for (SimpleMachineRecipe recipe : recipeList.getReipes())
-                        if (recipe.itemBelongsInRecipe(stack))
-                            return true;
-
-                return false;
+                return recipeList.getReipes().stream().anyMatch(recipe -> recipe.itemBelongsInRecipe(stack));
             }
 
             @Override
@@ -91,8 +86,8 @@ public abstract class AbstractRecipeBasedTE<T extends SimpleMachineRecipe> exten
     protected void work() {
         SimpleMachineRecipe lastRecipe = currentRecipe;
         canOutput(lastRecipe, false);
-        for (int i = 0; i < recipeList.getMaxInputs(); i++)
-            recipeInventory.extractItem(i, lastRecipe.getInputCount(i), false);
+        IntStream.range(0, recipeList.getMaxInputs()).forEach(i ->
+                recipeInventory.extractItem(i, lastRecipe.getInputCount(i), false));
     }
 
     @Override
@@ -126,21 +121,12 @@ public abstract class AbstractRecipeBasedTE<T extends SimpleMachineRecipe> exten
         if (recipe.getAllInputs() == null)
             return false;
 
-        boolean can = true;
-
-        for (int i = 0; i < recipe.getAllOutputs().length; i++)
-            if (!recipeInventory.insertItem(recipeList.getMaxInputs() + i, recipe.getOutput(i).copy(), simulate).isEmpty())
-                can = false;
-
-        return can;
+        return IntStream.range(0, recipe.getAllOutputs().length).allMatch(i -> recipeInventory.insertItem(recipeList.getMaxInputs() + i, recipe.getOutput(i).copy(), simulate).isEmpty());
     }
 
     public void dropInventory() {
-        for (int i = 0; i < combinedHandler.getSlots(); i++) {
-            ItemStack stack = combinedHandler.getStackInSlot(i);
-
-            world.addEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), stack));
-        }
+        IntStream.range(0, combinedHandler.getSlots()).forEach(i ->
+                world.addEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), combinedHandler.getStackInSlot(i))));
     }
 
     protected abstract T getRecipeByInput();

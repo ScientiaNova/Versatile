@@ -27,9 +27,7 @@ public class RecipeInjector implements IResourceManagerReloadListener {
     private static ArrayList<Supplier<IRecipe>> RECIPES = new ArrayList<>();
 
     public void onResourceManagerReload(IResourceManager manager) {
-        for (Supplier<IRecipe> recipe : RECIPES)
-            if (recipe.get() != null)
-                recipeManager.addRecipe(recipe.get());
+        RECIPES.stream().filter(s -> s.get() != null).forEach(s -> recipeManager.addRecipe(s.get()));
     }
 
     public static void addShapelessRecipe(ResourceLocation name, String group, ItemStack output, @Nonnull Object... inputs) {
@@ -59,6 +57,6 @@ public class RecipeInjector implements IResourceManagerReloadListener {
             return Ingredient.fromStacks((ItemStack) input);
         if (input instanceof Tag)
             return Ingredient.fromTag((Tag<Item>) input);
-        return null;
+        return Ingredient.EMPTY;
     }
 }

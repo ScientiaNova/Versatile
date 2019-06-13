@@ -29,9 +29,7 @@ public class ShapelessRecipeSupplier implements Supplier<IRecipe> {
     @Override
     public IRecipe get() {
         NonNullList<Ingredient> ingredients = NonNullList.create();
-        for (Object input : inputs)
-            if (RecipeInjector.getIngredient(input) != null)
-                ingredients.add(RecipeInjector.getIngredient(input));
+        inputs.stream().map(RecipeInjector::getIngredient).forEach(ingredients::add);
 
         return new ShapelessRecipe(name, group, output, ingredients);
     }

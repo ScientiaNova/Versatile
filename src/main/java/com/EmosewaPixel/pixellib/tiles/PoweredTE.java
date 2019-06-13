@@ -13,6 +13,8 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class PoweredTE extends AbstractRecipeBasedTE<EnergyMachineRecipe> implements IEnergyStorage {
     protected int energy = 0;
@@ -50,23 +52,19 @@ public class PoweredTE extends AbstractRecipeBasedTE<EnergyMachineRecipe> implem
     }
 
     public EnergyMachineRecipe getRecipeByInput() {
-        ItemStack[] stacks = new ItemStack[getRecipeList().getMaxInputs()];
-        for (int i = 0; i < getRecipeList().getMaxInputs(); i++) {
-            if (recipeInventory.getStackInSlot(i).isEmpty())
-                return EnergyMachineRecipe.EMPTY;
-            stacks[i] = recipeInventory.getStackInSlot(i);
-        }
+        Stream<ItemStack> stacksStream = IntStream.range(0, getRecipeList().getMaxInputs()).mapToObj(i -> recipeInventory.getStackInSlot(i));
 
-        ItemStack recipeInputs[] = new ItemStack[getRecipeList().getMaxInputs()];
-        EnergyMachineRecipe returnRecipe;
-        for (EnergyMachineRecipe recipe : getRecipeList().getReipes())
-            if (recipe.isInputValid(stacks)) {
-                for (int i = 0; i < getRecipeList().getMaxInputs(); i++)
-                    recipeInputs[i] = new ItemStack(recipeInventory.getStackInSlot(i).getItem(), recipe.getCountOfInputItem(recipeInventory.getStackInSlot(i)));
-                returnRecipe = new EnergyMachineRecipe(recipeInputs, recipe.getAllOutputs(), recipe.getTime(), recipe.getEnergyPerTick());
-                return returnRecipe;
-            }
-        return EnergyMachineRecipe.EMPTY;
+        if (stacksStream.anyMatch(ItemStack::isEmpty))
+            return EnergyMachineRecipe.EMPTY;
+
+        EnergyMachineRecipe chosenRecipe = getRecipeList().getReipes().stream().filter(recipe -> recipe.isInputValid((ItemStack[]) stacksStream.toArray())).findFirst().get();
+
+        if (chosenRecipe == null)
+            return EnergyMachineRecipe.EMPTY;
+
+        ItemStack recipeInputs[] = (ItemStack[]) IntStream.range(0, getRecipeList().getMaxInputs()).mapToObj(i ->
+                new ItemStack(recipeInventory.getStackInSlot(i).getItem(), chosenRecipe.getCountOfInputItem(recipeInventory.getStackInSlot(i)))).toArray();
+        return new EnergyMachineRecipe(recipeInputs, chosenRecipe.getAllOutputs(), chosenRecipe.getTime(), chosenRecipe.getEnergyPerTick());
     }
 
     @Override
@@ -84,7 +82,7 @@ public class PoweredTE extends AbstractRecipeBasedTE<EnergyMachineRecipe> implem
         return 0;
     }
 
-    public boolean internalExtractEnergy(int extract, boolean simulate) {
+    protected boolean internalExtractEnergy(int extract, boolean simulate) {
         int energyExtract = Math.min(energy, extract);
         if (!simulate) {
             if (energyExtract != extract)
