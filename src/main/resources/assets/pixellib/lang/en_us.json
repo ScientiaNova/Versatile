@@ -1,25 +1,27 @@
 {
 	"itemGroup.pixellib": "Pixel Lib",
 
-	"blocktype.storage_block.name": "Block of %s",
-	"blocktype.ore.name": "%s Ore",
+	"blocktype.storage_block": "Block of %s",
+	"blocktype.ore": "%s Ore",
 
-	"itemtype.ingot.name": "%s Ingot",
-	"itemtype.gem.name": "%s",
-	"itemtype.dust.name": "%s Dust",
-	"itemtype.nugget.name": "%s Nugget",
+	"itemtype.ingot": "%s Ingot",
+	"itemtype.gem": "%s",
+	"itemtype.dust": "%s Dust",
+	"itemtype.nugget": "%s Nugget",
 
-	"material.coal.name": "Coal",
-	"material.diamond.name": "Diamond",
-	"material.emerald.name": "Emerald",
-	"material.gold.name": "Gold",
-	"material.iron.name": "Iron",
-	"material.lapis.name": "Lapis Lazuli",
-	"material.redstone.name": "Redstone",
-	"material.stone.name": "Stone",
-	"material.quartz.name": "Nether Quartz",
-	"material.wooden.name": "Wooden",
-	"material.glowstone.name": "Glowstone",
-	"material.brick.name": "Brick",
-	"material.flint.name": "Flint"
+	"material.coal": "Coal",
+	"material.diamond": "Diamond",
+	"material.emerald": "Emerald",
+	"material.gold": "Gold",
+	"material.iron": "Iron",
+	"material.lapis": "Lapis Lazuli",
+	"material.redstone": "Redstone",
+	"material.stone": "Stone",
+	"material.quartz": "Nether Quartz",
+	"material.wooden": "Wooden",
+	"material.glowstone": "Glowstone",
+	"material.brick": "Brick",
+	"material.flint": "Flint",
+
+	"item.pixellib.wooden_dust": "Wood Pulp"
 }

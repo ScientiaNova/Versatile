@@ -103,7 +103,7 @@ public class Material {
     }
 
     public ITextComponent getTranslationKey() {
-        return new TranslationTextComponent("material." + name + ".name");
+        return new TranslationTextComponent("material." + name);
     }
 
     public Tag<Item> getTag(ObjectType type) {

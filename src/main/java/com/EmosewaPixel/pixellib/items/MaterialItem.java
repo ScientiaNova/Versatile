@@ -9,6 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.translation.LanguageMap;
 
 public class MaterialItem extends Item implements IMaterialItem {
     private Material material;
@@ -34,6 +35,9 @@ public class MaterialItem extends Item implements IMaterialItem {
 
     @Override
     public ITextComponent getDisplayName(ItemStack stack) {
-        return new TranslationTextComponent("itemtype." + type.getName() + ".name", material.getTranslationKey());
+        if (LanguageMap.getInstance().exists(getTranslationKey()))
+            return new TranslationTextComponent(getTranslationKey());
+
+        return new TranslationTextComponent("itemtype." + type.getName(), material.getTranslationKey());
     }
 }

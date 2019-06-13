@@ -25,9 +25,9 @@ public class MaterialRegistry {
     public static ObjectType DUST, INGOT, NUGGET, BLOCK, ORE, GEM;
 
     public static final String HAS_ORE = "has_ore";
-    public static final String DISABLE_SIMPLE_PROCESIING = "disable_simple_processing";
+    public static final String DISABLE_SIMPLE_PROCESSING = "disable_simple_processing";
     public static final String BLOCK_FROM_4X4 = "block_from_4x4";
-    public static final String IS_GAS = "is_has";
+    public static final String IS_GAS = "is_gas";
 
     public static final String SINGLE_TEXTURE_TYPE = "1_texture_type";
     public static final String USES_UNREFINED_COLOR = "uses_unrefined_color";
@@ -50,12 +50,12 @@ public class MaterialRegistry {
         BLOCK = new BlockType("storage_block", mat -> mat instanceof DustMaterial,
                 Block.Properties.create(net.minecraft.block.material.Material.IRON).sound(SoundType.METAL));
         ORE = new BlockType("ore", mat -> mat instanceof IngotMaterial && mat.hasTag(HAS_ORE),
-                Block.Properties.create(net.minecraft.block.material.Material.ROCK).sound(SoundType.STONE));
+                Block.Properties.create(net.minecraft.block.material.Material.ROCK).sound(SoundType.STONE)).addTypeTag(USES_UNREFINED_COLOR);
         GEM = new ItemType("gem", mat -> mat instanceof GemMaterial);
 
         //Materials
         COAL = new DustMaterial("coal", FUEL, 0x1a1a1a, 0).addTags(HAS_ORE).build();
-        IRON = new IngotMaterial("iron", ROUGH, 0xececec, 1).setItemTier(ItemTier.IRON).setArmorMaterial(ArmorMaterial.IRON).addTags(HAS_ORE).build();
+        IRON = new IngotMaterial("iron", ROUGH, -1, 1).setUnrefinedColor(0x947664).setItemTier(ItemTier.IRON).setArmorMaterial(ArmorMaterial.IRON).addTags(HAS_ORE).build();
         GOLD = new IngotMaterial("gold", SHINY, 0xfad64a, 2).setItemTier(ItemTier.GOLD).setArmorMaterial(ArmorMaterial.GOLD).addTags(HAS_ORE).build();
         LAPIS = new GemMaterial("lapis", REGULAR, 0x2351be, 0).addTags(HAS_ORE).build();
         QUARTZ = new GemMaterial("quartz", CRYSTAL, 0xe8dfd0, 0).addTags(HAS_ORE, BLOCK_FROM_4X4).build();
