@@ -6,6 +6,7 @@ import com.EmosewaPixel.pixellib.materialSystem.lists.MaterialBlocks;
 import com.EmosewaPixel.pixellib.materialSystem.lists.MaterialItems;
 import com.EmosewaPixel.pixellib.materialSystem.materials.DustMaterial;
 import com.EmosewaPixel.pixellib.materialSystem.materials.IMaterialItem;
+import com.EmosewaPixel.pixellib.resourceAddition.FakeResourcePackFinder;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
@@ -25,6 +26,10 @@ import javax.annotation.Nullable;
 
 @Mod.EventBusSubscriber(Dist.CLIENT)
 public class ClientProxy implements IModProxy {
+    public static void setup() {
+        Minecraft.getInstance().getResourcePackList().addPackFinder(new FakeResourcePackFinder());
+    }
+
     @Override
     public void enque(InterModEnqueueEvent e) {
         color();

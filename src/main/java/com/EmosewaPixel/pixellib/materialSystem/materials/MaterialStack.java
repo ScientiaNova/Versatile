@@ -13,7 +13,7 @@ public class MaterialStack {
         this(material, 1);
     }
 
-    public Material geTag() {
+    public Material getMaterial() {
         return material;
     }
 

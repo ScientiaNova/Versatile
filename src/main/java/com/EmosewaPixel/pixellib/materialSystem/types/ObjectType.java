@@ -14,6 +14,7 @@ import java.util.function.Predicate;
 
 public class ObjectType {
     private String name;
+    private int volume = 0;
     private Predicate<Material> requirement;
     private List<String> tags = new ArrayList<>();
 
@@ -28,8 +29,17 @@ public class ObjectType {
         return this;
     }
 
+    public ObjectType setBucketVolume(int mb) {
+        volume = mb;
+        return this;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public int getBucketVolume() {
+        return volume;
     }
 
     public boolean isMaterialCompatible(Material mat) {

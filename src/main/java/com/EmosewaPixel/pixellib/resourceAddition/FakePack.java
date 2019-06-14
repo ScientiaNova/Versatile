@@ -19,14 +19,14 @@ import java.util.TreeMap;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class FakePack implements IResourcePack {
+public final class FakePack implements IResourcePack {
     private static final Gson GSON = new GsonBuilder().create();
     private final String name;
     private final TreeMap<String, InputStream> root = new TreeMap<>();
     private final TreeMap<ResourceLocation, InputStream> assets = new TreeMap<>();
     private final TreeMap<ResourceLocation, InputStream> data = new TreeMap<>();
 
-    public FakePack(String name) {
+    protected FakePack(String name) {
         this.name = name;
     }
 

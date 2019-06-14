@@ -3,6 +3,7 @@ package com.EmosewaPixel.pixellib.materialSystem.materials;
 import com.EmosewaPixel.pixellib.items.tools.ArmorMaterial;
 import com.EmosewaPixel.pixellib.items.tools.ItemTier;
 import com.EmosewaPixel.pixellib.materialSystem.MaterialRegistry;
+import com.EmosewaPixel.pixellib.materialSystem.element.ElementalProperties;
 import com.EmosewaPixel.pixellib.materialSystem.types.ObjectType;
 import com.EmosewaPixel.pixellib.materialSystem.types.TextureType;
 import net.minecraft.item.IArmorMaterial;
@@ -75,6 +76,11 @@ public class IngotMaterial extends DustMaterial {
 
     public IngotMaterial setComposition(MaterialStack... stacks) {
         super.setComposition(stacks);
+        return this;
+    }
+
+    public IngotMaterial setElementalProperties(ElementalProperties properties) {
+        super.setElementalProperties(properties);
         return this;
     }
 

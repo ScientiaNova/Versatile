@@ -1,5 +1,6 @@
 package com.EmosewaPixel.pixellib.materialSystem;
 
+import com.EmosewaPixel.pixellib.materialSystem.element.ElementalProperties;
 import com.EmosewaPixel.pixellib.materialSystem.lists.MaterialBlocks;
 import com.EmosewaPixel.pixellib.materialSystem.lists.MaterialItems;
 import com.EmosewaPixel.pixellib.materialSystem.materials.DustMaterial;
@@ -44,19 +45,19 @@ public class MaterialRegistry {
         SHARP = new TextureType("sharp");
 
         //Object Types
-        DUST = new ItemType("dust", mat -> mat instanceof DustMaterial);
-        INGOT = new ItemType("ingot", mat -> mat instanceof IngotMaterial);
-        NUGGET = new ItemType("nugget", mat -> mat instanceof IngotMaterial);
+        DUST = new ItemType("dust", mat -> mat instanceof DustMaterial).setBucketVolume(144);
+        INGOT = new ItemType("ingot", mat -> mat instanceof IngotMaterial).setBucketVolume(144);
+        NUGGET = new ItemType("nugget", mat -> mat instanceof IngotMaterial).setBucketVolume(16);
         BLOCK = new BlockType("storage_block", mat -> mat instanceof DustMaterial,
-                Block.Properties.create(net.minecraft.block.material.Material.IRON).sound(SoundType.METAL));
+                Block.Properties.create(net.minecraft.block.material.Material.IRON).sound(SoundType.METAL)).setBucketVolume(1296);
         ORE = new BlockType("ore", mat -> mat instanceof IngotMaterial && mat.hasTag(HAS_ORE),
-                Block.Properties.create(net.minecraft.block.material.Material.ROCK).sound(SoundType.STONE)).addTypeTag(USES_UNREFINED_COLOR);
-        GEM = new ItemType("gem", mat -> mat instanceof GemMaterial);
+                Block.Properties.create(net.minecraft.block.material.Material.ROCK).sound(SoundType.STONE)).addTypeTag(USES_UNREFINED_COLOR).setBucketVolume(144);
+        GEM = new ItemType("gem", mat -> mat instanceof GemMaterial).setBucketVolume(144);
 
         //Materials
         COAL = new DustMaterial("coal", FUEL, 0x1a1a1a, 0).addTags(HAS_ORE).build();
-        IRON = new IngotMaterial("iron", ROUGH, -1, 1).setUnrefinedColor(0x947664).setItemTier(ItemTier.IRON).setArmorMaterial(ArmorMaterial.IRON).addTags(HAS_ORE).build();
-        GOLD = new IngotMaterial("gold", SHINY, 0xfad64a, 2).setItemTier(ItemTier.GOLD).setArmorMaterial(ArmorMaterial.GOLD).addTags(HAS_ORE).build();
+        IRON = new IngotMaterial("iron", ROUGH, -1, 1).setElementalProperties(new ElementalProperties("Fe", 26, 30)).setUnrefinedColor(0x947664).setItemTier(ItemTier.IRON).setArmorMaterial(ArmorMaterial.IRON).addTags(HAS_ORE).build();
+        GOLD = new IngotMaterial("gold", SHINY, 0xfad64a, 2).setElementalProperties(new ElementalProperties("Au", 79, 118)).setItemTier(ItemTier.GOLD).setArmorMaterial(ArmorMaterial.GOLD).addTags(HAS_ORE).build();
         LAPIS = new GemMaterial("lapis", REGULAR, 0x2351be, 0).addTags(HAS_ORE).build();
         QUARTZ = new GemMaterial("quartz", CRYSTAL, 0xe8dfd0, 0).addTags(HAS_ORE, BLOCK_FROM_4X4).build();
         DIAMOND = new GemMaterial("diamond", PENTAGONAL, 0x34ebe3, 2).setItemTier(ItemTier.DIAMOND).setArmorMaterial(ArmorMaterial.DIAMOND).build();

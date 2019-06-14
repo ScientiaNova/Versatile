@@ -2,6 +2,7 @@ package com.EmosewaPixel.pixellib.materialSystem.materials;
 
 import com.EmosewaPixel.pixellib.items.tools.ArmorMaterial;
 import com.EmosewaPixel.pixellib.items.tools.ItemTier;
+import com.EmosewaPixel.pixellib.materialSystem.element.ElementalProperties;
 import com.EmosewaPixel.pixellib.materialSystem.lists.Materials;
 import com.EmosewaPixel.pixellib.materialSystem.types.ObjectType;
 import com.EmosewaPixel.pixellib.materialSystem.types.TextureType;
@@ -32,6 +33,7 @@ public class Material {
     private int tier;
     private List<String> materialTags = new ArrayList<>();
     private ImmutableList<MaterialStack> composition = new ImmutableList.Builder<MaterialStack>().build();
+    private ElementalProperties elementalproperties = null;
 
     public Material(String name, TextureType textureType, int color, int tier) {
         this.name = name;
@@ -74,6 +76,11 @@ public class Material {
 
     public Material setComposition(MaterialStack... stacks) {
         this.composition.addAll(Arrays.asList(stacks));
+        return this;
+    }
+
+    public Material setElementalProperties(ElementalProperties properties) {
+        this.elementalproperties = properties;
         return this;
     }
 
@@ -124,5 +131,13 @@ public class Material {
 
     public boolean hasTag(String tag) {
         return materialTags.contains(tag);
+    }
+
+    public ElementalProperties getElementalproperties() {
+        return elementalproperties;
+    }
+
+    public boolean isElement() {
+        return elementalproperties != null;
     }
 }
