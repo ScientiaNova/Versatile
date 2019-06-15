@@ -1,11 +1,11 @@
 package com.EmosewaPixel.pixellib.materialSystem.element;
 
-public class ElementalProperties {
+public class Element {
     private String symbol;
     private int protons;
     private int neutrons;
 
-    public ElementalProperties(String symbol, int protons, int neutrons) {
+    public Element(String symbol, int protons, int neutrons) {
         this.symbol = symbol;
         this.protons = protons;
         this.neutrons = neutrons;
@@ -28,6 +28,6 @@ public class ElementalProperties {
     }
 
     public double getDensity() {
-        return getAtomicMass() /  22.414;
+        return getAtomicMass() / 22.414;
     }
 }

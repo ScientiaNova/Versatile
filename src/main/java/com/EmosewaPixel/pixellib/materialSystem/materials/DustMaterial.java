@@ -2,7 +2,7 @@ package com.EmosewaPixel.pixellib.materialSystem.materials;
 
 import com.EmosewaPixel.pixellib.items.tools.ArmorMaterial;
 import com.EmosewaPixel.pixellib.items.tools.ItemTier;
-import com.EmosewaPixel.pixellib.materialSystem.element.ElementalProperties;
+import com.EmosewaPixel.pixellib.materialSystem.element.Element;
 import com.EmosewaPixel.pixellib.materialSystem.types.ObjectType;
 import com.EmosewaPixel.pixellib.materialSystem.types.TextureType;
 import net.minecraft.item.IArmorMaterial;
@@ -74,8 +74,8 @@ public class DustMaterial extends Material {
         return this;
     }
 
-    public DustMaterial setElementalProperties(ElementalProperties properties) {
-        super.setElementalProperties(properties);
+    public DustMaterial setElement(Element element) {
+        super.setElement(element);
         return this;
     }
 

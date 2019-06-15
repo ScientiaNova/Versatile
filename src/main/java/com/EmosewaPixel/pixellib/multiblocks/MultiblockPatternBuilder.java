@@ -1,5 +1,6 @@
 package com.EmosewaPixel.pixellib.multiblocks;
 
+import com.EmosewaPixel.pixellib.miscUtils.StreamUtils;
 import com.google.common.collect.Streams;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
@@ -10,7 +11,6 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class MultiblockPatternBuilder {
     private List<List<String>> pattern = new ArrayList<>();
@@ -28,7 +28,7 @@ public class MultiblockPatternBuilder {
     }
 
     public MultiblockPatternBuilder repeat(int amount) {
-        IntStream.range(0, amount).forEach(i -> pattern.add(pattern.get(pattern.size() - 1)));
+        StreamUtils.repeat(amount, i -> pattern.add(pattern.get(pattern.size() - 1)));
         return this;
     }
 

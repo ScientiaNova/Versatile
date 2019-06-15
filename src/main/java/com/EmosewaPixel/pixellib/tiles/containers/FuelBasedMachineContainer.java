@@ -1,12 +1,11 @@
 package com.EmosewaPixel.pixellib.tiles.containers;
 
+import com.EmosewaPixel.pixellib.miscUtils.StreamUtils;
 import com.EmosewaPixel.pixellib.tiles.FuelBasedTE;
 import com.EmosewaPixel.pixellib.tiles.RecipeBasedTE;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.items.SlotItemHandler;
-
-import java.util.stream.IntStream;
 
 public class FuelBasedMachineContainer extends RecipeBasedMachineContainer<RecipeBasedTE> {
     public FuelBasedMachineContainer(PlayerInventory playerInventory, FuelBasedTE te, ContainerType<?> type, int id) {
@@ -15,13 +14,13 @@ public class FuelBasedMachineContainer extends RecipeBasedMachineContainer<Recip
 
     @Override
     protected void addMachineSlots() {
-        IntStream.range(0, te.getRecipeList().getMaxInputs()).forEach(i ->
+        StreamUtils.repeat(te.getRecipeList().getMaxInputs(), i ->
                 this.addSlot(new SlotItemHandler(itemHandler, i, te.getRecipeList().getMaxInputs() == 1 ? 56 : 38 + i * 18, 17))
         );
         this.addSlot(new SlotItemHandler(itemHandler, te.getRecipeList().getMaxInputs(), 56 - (te.getRecipeList().getMaxInputs() - 1) * 9, 53));
 
-        IntStream.range(0, te.getRecipeList().getMaxOutputs()).forEach(i ->
-            this.addSlot(new SlotItemHandler(itemHandler, te.getSlotCount() - i - 1, 116, te.getRecipeList().getMaxOutputs() == 1 ? 35 : 48 - i * 22))
+        StreamUtils.repeat(te.getRecipeList().getMaxOutputs(), i ->
+                this.addSlot(new SlotItemHandler(itemHandler, te.getSlotCount() - i - 1, 116, te.getRecipeList().getMaxOutputs() == 1 ? 35 : 48 - i * 22))
         );
     }
 

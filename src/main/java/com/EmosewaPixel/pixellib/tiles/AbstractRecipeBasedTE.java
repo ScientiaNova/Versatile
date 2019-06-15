@@ -1,9 +1,10 @@
 package com.EmosewaPixel.pixellib.tiles;
 
 import com.EmosewaPixel.pixellib.capabilities.ImprovedItemStackHandler;
+import com.EmosewaPixel.pixellib.miscUtils.ItemUtils;
+import com.EmosewaPixel.pixellib.miscUtils.StreamUtils;
 import com.EmosewaPixel.pixellib.recipes.AbstractRecipeList;
 import com.EmosewaPixel.pixellib.recipes.SimpleMachineRecipe;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -42,7 +43,7 @@ public abstract class AbstractRecipeBasedTE<T extends SimpleMachineRecipe> exten
         super(type);
         this.recipeList = recipeList;
 
-        recipeInventory = new ImprovedItemStackHandler(recipeList.getMaxRecipeSlots(), (Integer[]) IntStream.range(0, recipeList.getMaxInputs()).mapToObj(Integer::new).toArray(), (Integer[]) IntStream.range(recipeList.getMaxInputs(), recipeList.getMaxRecipeSlots()).mapToObj(Integer::new).toArray()) {
+        recipeInventory = new ImprovedItemStackHandler(recipeList.getMaxRecipeSlots(), StreamUtils.getArrayFromRange(0, recipeList.getMaxInputs()), StreamUtils.getArrayFromRange(recipeList.getMaxInputs(), recipeList.getMaxRecipeSlots())) {
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
                 return recipeList.getReipes().stream().anyMatch(recipe -> recipe.itemBelongsInRecipe(stack));
@@ -86,7 +87,7 @@ public abstract class AbstractRecipeBasedTE<T extends SimpleMachineRecipe> exten
     protected void work() {
         SimpleMachineRecipe lastRecipe = currentRecipe;
         canOutput(lastRecipe, false);
-        IntStream.range(0, recipeList.getMaxInputs()).forEach(i ->
+        StreamUtils.repeat(recipeList.getMaxInputs(), i ->
                 recipeInventory.extractItem(i, lastRecipe.getInputCount(i), false));
     }
 
@@ -125,8 +126,7 @@ public abstract class AbstractRecipeBasedTE<T extends SimpleMachineRecipe> exten
     }
 
     public void dropInventory() {
-        IntStream.range(0, combinedHandler.getSlots()).forEach(i ->
-                world.addEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), combinedHandler.getStackInSlot(i))));
+        StreamUtils.repeat(combinedHandler.getSlots(), i -> ItemUtils.spawnItemInWorld(world, pos, combinedHandler.getStackInSlot(i)));
     }
 
     protected abstract T getRecipeByInput();

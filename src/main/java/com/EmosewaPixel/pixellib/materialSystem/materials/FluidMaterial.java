@@ -1,7 +1,7 @@
 package com.EmosewaPixel.pixellib.materialSystem.materials;
 
 import com.EmosewaPixel.pixellib.materialSystem.MaterialRegistry;
-import com.EmosewaPixel.pixellib.materialSystem.element.ElementalProperties;
+import com.EmosewaPixel.pixellib.materialSystem.element.Element;
 import com.EmosewaPixel.pixellib.materialSystem.types.ObjectType;
 import com.EmosewaPixel.pixellib.materialSystem.types.TextureType;
 
@@ -32,8 +32,8 @@ public class FluidMaterial extends Material {
         return this;
     }
 
-    public FluidMaterial setElementalProperties(ElementalProperties properties) {
-        super.setElementalProperties(properties);
+    public FluidMaterial setElement(Element element) {
+        super.setElement(element);
         return this;
     }
 

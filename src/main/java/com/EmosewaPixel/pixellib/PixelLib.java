@@ -9,6 +9,7 @@ import com.EmosewaPixel.pixellib.proxy.ServerProxy;
 import com.EmosewaPixel.pixellib.resourceAddition.DataAddition;
 import com.EmosewaPixel.pixellib.resourceAddition.FakeDataPackFinder;
 import com.EmosewaPixel.pixellib.resourceAddition.RecipeInjector;
+import com.EmosewaPixel.pixellib.worldgen.OreGen;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -55,6 +56,7 @@ public class PixelLib {
 
     private void enqueueIMC(final InterModEnqueueEvent event) {
         proxy.enque(event);
+        OreGen.register();
     }
 
     private void processIMC(final InterModProcessEvent event) {

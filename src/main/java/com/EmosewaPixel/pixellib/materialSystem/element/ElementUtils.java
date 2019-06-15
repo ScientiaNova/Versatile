@@ -23,18 +23,18 @@ public class ElementUtils {
     }
 
     public static int getTotalProtons(Material mat) {
-        return getElementalComposition(mat).stream().mapToInt(m -> m.getMaterial().getElementalproperties().getProtons() * m.getCount()).sum();
+        return getElementalComposition(mat).stream().mapToInt(m -> m.getMaterial().getElement().getProtons() * m.getCount()).sum();
     }
 
     public static int getTotalNeutrons(Material mat) {
-        return getElementalComposition(mat).stream().mapToInt(m -> m.getMaterial().getElementalproperties().getNeutrons() * m.getCount()).sum();
+        return getElementalComposition(mat).stream().mapToInt(m -> m.getMaterial().getElement().getNeutrons() * m.getCount()).sum();
     }
 
     public static double getMolarMass(Material mat) {
-        return getElementalComposition(mat).stream().mapToDouble(m -> m.getMaterial().getElementalproperties().getAtomicMass() * m.getCount()).sum();
+        return getElementalComposition(mat).stream().mapToDouble(m -> m.getMaterial().getElement().getAtomicMass() * m.getCount()).sum();
     }
 
     public static double getTotalDensity(Material mat) {
-        return getElementalComposition(mat).stream().mapToDouble(m -> m.getMaterial().getElementalproperties().getDensity() * m.getCount()).sum();
+        return getElementalComposition(mat).stream().mapToDouble(m -> m.getMaterial().getElement().getDensity() * m.getCount()).sum();
     }
 }

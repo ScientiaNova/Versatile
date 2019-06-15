@@ -1,5 +1,6 @@
 package com.EmosewaPixel.pixellib.tiles.containers;
 
+import com.EmosewaPixel.pixellib.miscUtils.StreamUtils;
 import com.EmosewaPixel.pixellib.tiles.AbstractRecipeBasedTE;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -11,8 +12,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-
-import java.util.stream.IntStream;
 
 public class RecipeBasedMachineContainer<T extends AbstractRecipeBasedTE> extends Container {
     protected T te;
@@ -35,17 +34,17 @@ public class RecipeBasedMachineContainer<T extends AbstractRecipeBasedTE> extend
     }
 
     protected void addMachineSlots() {
-        IntStream.range(0, te.getRecipeList().getMaxInputs()).forEach(i ->
+        StreamUtils.repeat(te.getRecipeList().getMaxInputs(), i ->
                 this.addSlot(new SlotItemHandler(itemHandler, i, te.getRecipeList().getMaxInputs() == 1 ? 56 : 38 + i * 18, 35)));
 
-        IntStream.range(0, te.getRecipeList().getMaxOutputs()).forEach(i ->
+        StreamUtils.repeat(te.getRecipeList().getMaxOutputs(), i ->
                 this.addSlot(new SlotItemHandler(itemHandler, te.getSlotCount() - i - 1, 116, te.getRecipeList().getMaxOutputs() == 1 ? 35 : 48 - i * 22)));
     }
 
     private void addPlayerSlots(IInventory playerInventory) {
-        IntStream.range(0, 3).forEach(i -> IntStream.range(0, 9).forEach(j ->
+        StreamUtils.repeat(3, i -> StreamUtils.repeat(9, j ->
                 this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18))));
-        IntStream.range(0, 9).forEach(k ->
+        StreamUtils.repeat(9, k ->
                 this.addSlot(new Slot(playerInventory, k, 8 + k * 18, 142)));
     }
 

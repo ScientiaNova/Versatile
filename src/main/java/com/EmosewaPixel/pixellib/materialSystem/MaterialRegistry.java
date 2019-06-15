@@ -1,6 +1,6 @@
 package com.EmosewaPixel.pixellib.materialSystem;
 
-import com.EmosewaPixel.pixellib.materialSystem.element.ElementalProperties;
+import com.EmosewaPixel.pixellib.materialSystem.element.Element;
 import com.EmosewaPixel.pixellib.materialSystem.lists.MaterialBlocks;
 import com.EmosewaPixel.pixellib.materialSystem.lists.MaterialItems;
 import com.EmosewaPixel.pixellib.materialSystem.materials.DustMaterial;
@@ -56,8 +56,8 @@ public class MaterialRegistry {
 
         //Materials
         COAL = new DustMaterial("coal", FUEL, 0x1a1a1a, 0).addTags(HAS_ORE).build();
-        IRON = new IngotMaterial("iron", ROUGH, -1, 1).setElementalProperties(new ElementalProperties("Fe", 26, 30)).setUnrefinedColor(0x947664).setItemTier(ItemTier.IRON).setArmorMaterial(ArmorMaterial.IRON).addTags(HAS_ORE).build();
-        GOLD = new IngotMaterial("gold", SHINY, 0xfad64a, 2).setElementalProperties(new ElementalProperties("Au", 79, 118)).setItemTier(ItemTier.GOLD).setArmorMaterial(ArmorMaterial.GOLD).addTags(HAS_ORE).build();
+        IRON = new IngotMaterial("iron", ROUGH, -1, 1).setElement(new Element("Fe", 26, 30)).setUnrefinedColor(0x947664).setItemTier(ItemTier.IRON).setArmorMaterial(ArmorMaterial.IRON).addTags(HAS_ORE).build();
+        GOLD = new IngotMaterial("gold", SHINY, 0xfad64a, 2).setElement(new Element("Au", 79, 118)).setItemTier(ItemTier.GOLD).setArmorMaterial(ArmorMaterial.GOLD).addTags(HAS_ORE).build();
         LAPIS = new GemMaterial("lapis", REGULAR, 0x2351be, 0).addTags(HAS_ORE).build();
         QUARTZ = new GemMaterial("quartz", CRYSTAL, 0xe8dfd0, 0).addTags(HAS_ORE, BLOCK_FROM_4X4).build();
         DIAMOND = new GemMaterial("diamond", PENTAGONAL, 0x34ebe3, 2).setItemTier(ItemTier.DIAMOND).setArmorMaterial(ArmorMaterial.DIAMOND).build();

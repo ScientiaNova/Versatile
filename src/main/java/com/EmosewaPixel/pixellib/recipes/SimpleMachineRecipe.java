@@ -77,14 +77,14 @@ public class SimpleMachineRecipe {
             return false;
 
         return stacks.length == Arrays.stream(input).map(stackRec -> Arrays.stream(stacks)
-                .filter(stack -> stackRec instanceof ItemStack ? (stack.getItem() == ((ItemStack) stackRec).getItem() && stack.getCount() >= ((ItemStack) stackRec).getCount()) : ((TagStack) stackRec).geTag().contains(stack.getItem()) && stack.getCount() >= ((TagStack) stackRec).getCount())
+                .filter(stack -> stackRec instanceof ItemStack ? (stack.isItemEqual((ItemStack) stackRec) && stack.getCount() >= ((ItemStack) stackRec).getCount()) : ((TagStack) stackRec).geTag().contains(stack.getItem()) && stack.getCount() >= ((TagStack) stackRec).getCount())
                 .findFirst().orElse(ItemStack.EMPTY))
                 .filter(o -> o != ItemStack.EMPTY)
                 .count();
     }
 
     public int getCountOfInputItem(ItemStack stack) {
-        return Arrays.stream(input).filter(input -> input instanceof ItemStack ? stack.getItem() == ((ItemStack) input).getItem() : ((TagStack) input).geTag().contains(stack.getItem()))
+        return Arrays.stream(input).filter(input -> input instanceof ItemStack ? stack.isItemEqual((ItemStack) input) : ((TagStack) input).geTag().contains(stack.getItem()))
                 .map(input -> input instanceof ItemStack ? ((ItemStack) input).getCount() : ((TagStack) input).getCount())
                 .findFirst().orElse(0);
     }
@@ -95,7 +95,7 @@ public class SimpleMachineRecipe {
 
         return Arrays.stream(input).anyMatch(stackRec -> {
             if (stackRec instanceof ItemStack) {
-                return ((ItemStack) stackRec).getItem() == stack.getItem();
+                return ((ItemStack) stackRec).isItemEqual(stack);
             } else
                 return ((TagStack) stackRec).geTag().contains(stack.getItem());
         });

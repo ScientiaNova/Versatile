@@ -117,7 +117,7 @@ public class FuelBasedTE extends RecipeBasedTE {
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
             if (side == Direction.EAST || side == Direction.WEST || side == Direction.NORTH || side == Direction.SOUTH)
-                return LazyOptional.of(() -> this.fuel_input).cast();
+                return LazyOptional.of(() -> fuel_input).cast();
         return super.getCapability(cap, side);
     }
 }
