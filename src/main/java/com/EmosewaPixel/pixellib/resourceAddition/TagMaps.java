@@ -14,10 +14,14 @@ public class TagMaps {
         if (item instanceof Item) {
             addItemToTag(item.getObjType().getName() + "s/" + item.getMaterial().getName(), (Item) item);
             addItemToTag(item.getObjType().getName() + "s", (Item) item);
+            if (item.getMaterial().hasSecondName())
+                addItemToTag(item.getObjType().getName() + "s/" + item.getMaterial().getSecondName(), (Item) item);
         }
         if (item instanceof Block) {
             addBlockToTag(item.getObjType().getName() + "s/" + item.getMaterial().getName(), (Block) item);
             addBlockToTag(item.getObjType().getName() + "s", (Block) item);
+            if (item.getMaterial().hasSecondName())
+                addBlockToTag(item.getObjType().getName() + "s/" + item.getMaterial().getSecondName(), (Block) item);
         }
     }
 

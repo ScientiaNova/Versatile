@@ -50,7 +50,7 @@ public class Elements {
 
     public static final Element VANADIUM = new Element("V", 23, 28);
 
-    public static final Element CHROME = new Element("Cr", 24, 28);
+    public static final Element CHROMIUM = new Element("Cr", 24, 28);
 
     public static final Element MANGANESE = new Element("Mn", 25, 30);
 

@@ -84,6 +84,16 @@ public class IngotMaterial extends DustMaterial {
         return this;
     }
 
+    public IngotMaterial setSecondName(String name) {
+        super.setSecondName(name);
+        return this;
+    }
+
+    public IngotMaterial setStandardBurnTime(int time) {
+        super.setStandardBurnTime(time);
+        return this;
+    }
+
     public IngotMaterial setMeltingTemperature(int temperature) {
         meltingTemperature = temperature;
         return this;
@@ -102,8 +112,8 @@ public class IngotMaterial extends DustMaterial {
         return boilingTemperature;
     }
 
-    public IngotMaterial setProccessingMultiplier(int multiplier) {
-        super.setProccessingMultiplier(multiplier);
+    public IngotMaterial setProcessingMultiplier(int multiplier) {
+        super.setProcessingMultiplier(multiplier);
         return this;
     }
 

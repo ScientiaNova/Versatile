@@ -3,6 +3,7 @@ package com.EmosewaPixel.pixellib;
 import com.EmosewaPixel.pixellib.blocks.BlockRegistry;
 import com.EmosewaPixel.pixellib.items.ItemRegistry;
 import com.EmosewaPixel.pixellib.materialSystem.MaterialRegistry;
+import com.EmosewaPixel.pixellib.materialSystem.materials.IMaterialItem;
 import com.EmosewaPixel.pixellib.proxy.ClientProxy;
 import com.EmosewaPixel.pixellib.proxy.IModProxy;
 import com.EmosewaPixel.pixellib.proxy.ServerProxy;
@@ -11,11 +12,13 @@ import com.EmosewaPixel.pixellib.resourceAddition.FakeDataPackFinder;
 import com.EmosewaPixel.pixellib.resourceAddition.RecipeInjector;
 import com.EmosewaPixel.pixellib.worldgen.OreGen;
 import net.minecraft.block.Block;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
@@ -84,6 +87,19 @@ public class PixelLib {
         public static void onServerAboutToStart(FMLServerAboutToStartEvent e) {
             e.getServer().getResourcePacks().addPackFinder(new FakeDataPackFinder());
             e.getServer().getResourceManager().addReloadListener(new RecipeInjector(e.getServer().getRecipeManager()));
+        }
+
+        @SubscribeEvent
+        public static void fuelTime(FurnaceFuelBurnTimeEvent e) {
+            Item item = e.getItemStack().getItem();
+            if (item instanceof BlockItem) {
+                Block block = Block.getBlockFromItem(item);
+                if (block instanceof IMaterialItem)
+                    if (!((IMaterialItem) block).getObjType().hasTag(MaterialRegistry.HAS_NO_FUEL_VALUE) && ((IMaterialItem) block).getObjType().getBucketVolume() != 0)
+                        e.setBurnTime(((IMaterialItem) block).getObjType().getBucketVolume() / 144 * ((IMaterialItem) block).getMaterial().getStandardBurnTime());
+            } else if (item instanceof IMaterialItem)
+                if (!((IMaterialItem) item).getObjType().hasTag(MaterialRegistry.HAS_NO_FUEL_VALUE) && ((IMaterialItem) item).getObjType().getBucketVolume() != 0)
+                    e.setBurnTime(((IMaterialItem) item).getObjType().getBucketVolume() / 144 * ((IMaterialItem) item).getMaterial().getStandardBurnTime());
         }
     }
 }

@@ -3,6 +3,7 @@ package com.EmosewaPixel.pixellib.materialSystem.materials;
 import com.EmosewaPixel.pixellib.items.tools.ArmorMaterial;
 import com.EmosewaPixel.pixellib.items.tools.ItemTier;
 import com.EmosewaPixel.pixellib.materialSystem.MaterialRegistry;
+import com.EmosewaPixel.pixellib.materialSystem.element.Element;
 import com.EmosewaPixel.pixellib.materialSystem.types.ObjectType;
 import com.EmosewaPixel.pixellib.materialSystem.types.TextureType;
 import net.minecraft.item.IArmorMaterial;
@@ -76,8 +77,23 @@ public class GemMaterial extends DustMaterial {
         return this;
     }
 
-    public GemMaterial setProccessingMultiplier(int multiplier) {
-        super.setProccessingMultiplier(multiplier);
+    public GemMaterial setElement(Element element) {
+        super.setElement(element);
+        return this;
+    }
+
+    public GemMaterial setSecondName(String name) {
+        super.setSecondName(name);
+        return this;
+    }
+
+    public GemMaterial setStandardBurnTime(int time) {
+        super.setStandardBurnTime(time);
+        return this;
+    }
+
+    public GemMaterial setProcessingMultiplier(int multiplier) {
+        super.setProcessingMultiplier(multiplier);
         return this;
     }
 

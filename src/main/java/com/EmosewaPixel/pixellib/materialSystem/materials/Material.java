@@ -34,6 +34,8 @@ public class Material {
     private List<String> materialTags = new ArrayList<>();
     private ImmutableList<MaterialStack> composition = new ImmutableList.Builder<MaterialStack>().build();
     private Element element = null;
+    private String secondName = null;
+    private int burnTime = 0;
 
     public Material(String name, TextureType textureType, int color, int tier) {
         this.name = name;
@@ -42,45 +44,65 @@ public class Material {
         this.tier = tier;
     }
 
+    //Adds tags to the material, mainly used for generating object types and recipes for this material
     public Material addTags(String... tags) {
         materialTags.addAll(Arrays.asList(tags));
         return this;
     }
 
+    //Sets the item tier this material has the stats of
     public Material setItemTier(IItemTier tier) {
         this.itemTier = tier;
         return this;
     }
 
+    //Sets the stats used for creating tools for this material
     public Material setItemTierStats(int harvestLevelIn, int maxUsesIn, float efficiencyIn, float attackDamageIn, int enchantabilityIn, Supplier<Ingredient> repairMaterialIn) {
         return setItemTier(new ItemTier(harvestLevelIn, maxUsesIn, efficiencyIn, attackDamageIn, enchantabilityIn, repairMaterialIn));
     }
-
+    //Sets the stats used for creating armor for this material, using the material's tier as the harvest level
     public Material setItemTierStats(int maxUsesIn, float efficiencyIn, float attackDamageIn, int enchantabilityIn, Supplier<Ingredient> repairMaterialIn) {
         return setItemTier(new ItemTier(tier + 1, maxUsesIn, efficiencyIn, attackDamageIn, enchantabilityIn, repairMaterialIn));
     }
 
+    //Sets the armor material this material has the stats of
     public Material setArmorMaterial(IArmorMaterial mat) {
         this.armorMaterial = mat;
         return this;
     }
 
+    //Sets the stats used for creating armor for this material
     public Material setArmorStats(int durability, int damageRecudtiom, int enchantability, SoundEvent souldEvent, Supplier<Ingredient> repairMaterial, float toughness) {
         return setArmorMaterial(new ArmorMaterial(durability, damageRecudtiom, enchantability, souldEvent, repairMaterial, name, toughness));
     }
 
+    //Blacklists object types that shouldn't be generated for the material
     public Material blacklistTypes(ObjectType... types) {
         blacklist.addAll(Arrays.asList(types));
         return this;
     }
 
+    //Sets the material composition of the material
     public Material setComposition(MaterialStack... stacks) {
         this.composition.addAll(Arrays.asList(stacks));
         return this;
     }
 
+    //Sets the pure element the material is made of
     public Material setElement(Element element) {
         this.element = element;
+        return this;
+    }
+
+    //Sets the second names for the materials' tags
+    public Material setSecondName(String name) {
+        this.secondName = name;
+        return this;
+    }
+
+    //Sets the burn time for object types with a volume of 144mb, scales across object types
+    public Material setStandardBurnTime(int time) {
+        burnTime = time;
         return this;
     }
 
@@ -117,6 +139,10 @@ public class Material {
         return new ItemTags.Wrapper(new ResourceLocation("forge", type.getName() + "s/" + name));
     }
 
+    public Tag<Item> getSecondTag(ObjectType type) {
+        return new ItemTags.Wrapper(new ResourceLocation("forge", type.getName() + "s/" + secondName));
+    }
+
     public ImmutableList<MaterialStack> getComposition() {
         return composition;
     }
@@ -139,5 +165,17 @@ public class Material {
 
     public boolean isElement() {
         return element != null;
+    }
+
+    public String getSecondName() {
+        return secondName;
+    }
+
+    public boolean hasSecondName() {
+        return secondName != null;
+    }
+
+    public int getStandardBurnTime() {
+        return burnTime;
     }
 }

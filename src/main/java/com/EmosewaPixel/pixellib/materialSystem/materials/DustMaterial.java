@@ -79,7 +79,17 @@ public class DustMaterial extends Material {
         return this;
     }
 
-    public DustMaterial setProccessingMultiplier(int multiplier) {
+    public DustMaterial setSecondName(String name) {
+        super.setSecondName(name);
+        return this;
+    }
+
+    public DustMaterial setStandardBurnTime(int time) {
+        super.setStandardBurnTime(time);
+        return this;
+    }
+
+    public DustMaterial setProcessingMultiplier(int multiplier) {
         this.processingMultiplier = multiplier;
         return this;
     }
