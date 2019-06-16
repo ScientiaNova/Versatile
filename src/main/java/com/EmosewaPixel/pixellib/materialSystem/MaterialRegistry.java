@@ -18,6 +18,7 @@ import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.ItemTier;
 import net.minecraft.item.Items;
 
+//This class is used for registering the vanilla material and object type tags, materials and object types
 public class MaterialRegistry {
     public static TextureType ROUGH, REGULAR, SHINY, FUEL, PENTAGONAL, OCTAGONAL, CRYSTAL, SHARP;
 

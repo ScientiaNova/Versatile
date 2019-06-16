@@ -5,6 +5,7 @@ import com.EmosewaPixel.pixellib.materialSystem.materials.Material;
 import java.util.Collection;
 import java.util.HashMap;
 
+//This class contains functions for interacting with the global list of materials
 public class Materials {
     private static HashMap<String, Material> materials = new HashMap<>();
 

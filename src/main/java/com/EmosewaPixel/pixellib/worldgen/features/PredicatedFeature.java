@@ -1,6 +1,5 @@
 package com.EmosewaPixel.pixellib.worldgen.features;
 
-import com.EmosewaPixel.pixellib.worldgen.features.IPredicatedFeature;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
@@ -8,6 +7,7 @@ import net.minecraft.world.gen.feature.IFeatureConfig;
 
 import java.util.function.Predicate;
 
+//Predicated Features are Configured Features that take a Biome Predicate
 public class PredicatedFeature<F extends IFeatureConfig> extends ConfiguredFeature<F> implements IPredicatedFeature {
     private Predicate<Biome> pred;
 

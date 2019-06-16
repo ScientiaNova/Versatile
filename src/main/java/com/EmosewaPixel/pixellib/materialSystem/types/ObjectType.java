@@ -12,6 +12,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
+/*
+Object Types are objects used for generating blocks/items/fluids for certain materials.
+This is the base class that shouldn't be used for generating anything
+*/
 public class ObjectType {
     private String name;
     private int volume = 0;

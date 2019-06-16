@@ -2,16 +2,20 @@ package com.EmosewaPixel.pixellib.materialSystem.materials;
 
 import com.EmosewaPixel.pixellib.items.tools.ArmorMaterial;
 import com.EmosewaPixel.pixellib.items.tools.ItemTier;
+import com.EmosewaPixel.pixellib.materialSystem.MaterialRegistry;
 import com.EmosewaPixel.pixellib.materialSystem.element.Element;
+import com.EmosewaPixel.pixellib.materialSystem.lists.MaterialItems;
 import com.EmosewaPixel.pixellib.materialSystem.types.ObjectType;
 import com.EmosewaPixel.pixellib.materialSystem.types.TextureType;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.IItemTier;
+import net.minecraft.item.Item;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.SoundEvent;
 
 import java.util.function.Supplier;
 
+//Dust Materials are the basic solid materials for which at least a dust and block is generated
 public class DustMaterial extends Material {
     private HarvestTier harvestTier = null;
     private int processingMultiplier = 1;
@@ -47,8 +51,8 @@ public class DustMaterial extends Material {
         return this;
     }
 
-    public DustMaterial setArmorStats(int durability, int damageRecudtiom, int enchantability, SoundEvent souldEvent, Supplier<Ingredient> repairMaterial, float toughness) {
-        return setArmorMaterial(new ArmorMaterial(durability, damageRecudtiom, enchantability, souldEvent, repairMaterial, getName(), toughness));
+    public DustMaterial setArmorStats(int durability, int damageReduction, int enchantability, SoundEvent soundEvent, Supplier<Ingredient> repairMaterial, float toughness) {
+        return setArmorMaterial(new ArmorMaterial(durability, damageReduction, enchantability, soundEvent, repairMaterial, getName(), toughness));
     }
 
     public DustMaterial setHarvestTier(HarvestTier harvestTier) {
@@ -118,5 +122,9 @@ public class DustMaterial extends Material {
 
     public int getUnrefinedColor() {
         return unrefinedColor;
+    }
+
+    public Item getDefaultItem() {
+        return MaterialItems.getItem(this, MaterialRegistry.DUST);
     }
 }

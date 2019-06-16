@@ -3,6 +3,7 @@ package com.EmosewaPixel.pixellib.materialSystem.materials;
 import com.EmosewaPixel.pixellib.items.tools.ArmorMaterial;
 import com.EmosewaPixel.pixellib.items.tools.ItemTier;
 import com.EmosewaPixel.pixellib.materialSystem.element.Element;
+import com.EmosewaPixel.pixellib.materialSystem.element.Elements;
 import com.EmosewaPixel.pixellib.materialSystem.lists.Materials;
 import com.EmosewaPixel.pixellib.materialSystem.types.ObjectType;
 import com.EmosewaPixel.pixellib.materialSystem.types.TextureType;
@@ -20,9 +21,15 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
+/*
+Materials are objects used for generating items/blocks/fluids based on object types. They have a wide range of customizability.
+However, the base Materials aren't meant to be used for generating anything
+*/
 public class Material {
     private String name;
     private TextureType textureType;
@@ -33,7 +40,7 @@ public class Material {
     private int tier;
     private List<String> materialTags = new ArrayList<>();
     private ImmutableList<MaterialStack> composition = new ImmutableList.Builder<MaterialStack>().build();
-    private Element element = null;
+    private Element element = Elements.NULL;
     private String secondName = null;
     private int burnTime = 0;
 
@@ -60,6 +67,7 @@ public class Material {
     public Material setItemTierStats(int harvestLevelIn, int maxUsesIn, float efficiencyIn, float attackDamageIn, int enchantabilityIn, Supplier<Ingredient> repairMaterialIn) {
         return setItemTier(new ItemTier(harvestLevelIn, maxUsesIn, efficiencyIn, attackDamageIn, enchantabilityIn, repairMaterialIn));
     }
+
     //Sets the stats used for creating armor for this material, using the material's tier as the harvest level
     public Material setItemTierStats(int maxUsesIn, float efficiencyIn, float attackDamageIn, int enchantabilityIn, Supplier<Ingredient> repairMaterialIn) {
         return setItemTier(new ItemTier(tier + 1, maxUsesIn, efficiencyIn, attackDamageIn, enchantabilityIn, repairMaterialIn));
@@ -72,8 +80,8 @@ public class Material {
     }
 
     //Sets the stats used for creating armor for this material
-    public Material setArmorStats(int durability, int damageRecudtiom, int enchantability, SoundEvent souldEvent, Supplier<Ingredient> repairMaterial, float toughness) {
-        return setArmorMaterial(new ArmorMaterial(durability, damageRecudtiom, enchantability, souldEvent, repairMaterial, name, toughness));
+    public Material setArmorStats(int durability, int damageReduction, int enchantability, SoundEvent soundEvent, Supplier<Ingredient> repairMaterial, float toughness) {
+        return setArmorMaterial(new ArmorMaterial(durability, damageReduction, enchantability, soundEvent, repairMaterial, name, toughness));
     }
 
     //Blacklists object types that shouldn't be generated for the material
@@ -147,6 +155,15 @@ public class Material {
         return composition;
     }
 
+    public List<MaterialStack> getFullComposition() {
+        if (composition.size() == 0)
+            return Collections.singletonList(new MaterialStack(this));
+
+        return composition.stream().flatMap(ms -> ms.getMaterial().getFullComposition().stream()
+                .map(m -> new MaterialStack(m.getMaterial(), m.getCount() * ms.getCount()))
+        ).collect(Collectors.toList());
+    }
+
     public boolean hasBlacklisted(ObjectType type) {
         return blacklist.contains(type);
     }
@@ -163,8 +180,8 @@ public class Material {
         return element;
     }
 
-    public boolean isElement() {
-        return element != null;
+    public boolean isPureElement() {
+        return element != Elements.NULL;
     }
 
     public String getSecondName() {

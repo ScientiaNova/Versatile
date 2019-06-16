@@ -21,7 +21,8 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 /*
-To avoid multiple mods adding the same ores, add your ores through here.
+This class contains methods for adding ore gen.
+To avoid multiple mods adding the same ores, it's bs to add your ores through here.
 Remember to make all world gen configurable.
  */
 public class OreGen {

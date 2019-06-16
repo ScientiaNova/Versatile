@@ -14,6 +14,7 @@ import net.minecraft.util.Rotation;
 
 import java.util.function.Supplier;
 
+//Rotatable Machine Blocks are Blocks that have TEs that can be rotated horizontally
 public class RotatableMachineBlock extends MachineBlock {
     public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
 

@@ -57,7 +57,7 @@ public class PoweredTE extends AbstractRecipeBasedTE<EnergyMachineRecipe> implem
         if (stacksStream.anyMatch(ItemStack::isEmpty))
             return EnergyMachineRecipe.EMPTY;
 
-        EnergyMachineRecipe chosenRecipe = getRecipeList().getReipes().stream().filter(recipe -> recipe.isInputValid((ItemStack[]) stacksStream.toArray())).findFirst().get();
+        EnergyMachineRecipe chosenRecipe = getRecipeList().getRecipes().stream().filter(recipe -> recipe.isInputValid((ItemStack[]) stacksStream.toArray())).findFirst().get();
 
         if (chosenRecipe == null)
             return EnergyMachineRecipe.EMPTY;

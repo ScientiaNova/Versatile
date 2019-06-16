@@ -5,6 +5,7 @@ import net.minecraft.block.Block;
 
 import java.util.function.Predicate;
 
+//Block Types are Object Types used for generating Blocks
 public class BlockType extends ObjectType {
     private Block.Properties properties;
 

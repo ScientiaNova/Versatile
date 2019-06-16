@@ -9,6 +9,7 @@ import com.EmosewaPixel.pixellib.materialSystem.types.ItemType;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 
+//This class is used for generating Items for all the possible Material-Object Type combinations
 public class ItemRegistry {
     public static void registry(RegistryEvent.Register<Item> e) {
         Materials.getAll().forEach(mat ->

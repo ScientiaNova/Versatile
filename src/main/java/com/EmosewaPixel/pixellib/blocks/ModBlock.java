@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraftforge.common.ToolType;
 
+//Mod Block is used for creating a regular Block with a specified registry name and harvest level
 public class ModBlock extends Block {
     private int level;
 

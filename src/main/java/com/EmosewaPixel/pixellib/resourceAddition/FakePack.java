@@ -19,6 +19,7 @@ import java.util.TreeMap;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+//This is the fake data/resource pack used for adding data and asset JSONs
 public final class FakePack implements IResourcePack {
     private static final Gson GSON = new GsonBuilder().create();
     private final String name;

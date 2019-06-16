@@ -6,6 +6,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import java.util.Arrays;
 import java.util.List;
 
+//Improved Item Stack Handlers are Item Stack Handlers that can blacklist slots for insertion and extraction
 public class ImprovedItemStackHandler extends ItemStackHandler {
     protected List<Integer> noInputSlots;
     protected List<Integer> noOutputSlots;

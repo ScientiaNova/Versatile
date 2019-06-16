@@ -5,6 +5,7 @@ import com.EmosewaPixel.pixellib.materialSystem.element.Element;
 import com.EmosewaPixel.pixellib.materialSystem.types.ObjectType;
 import com.EmosewaPixel.pixellib.materialSystem.types.TextureType;
 
+//Fluid Materials are materials meant only for generating fluids of. NYI as forge hasn't sorted fluids out yet
 public class FluidMaterial extends Material {
     private int temperature = 373;
     private FluidMaterial boilingMaterial = null;

@@ -1,5 +1,6 @@
 package com.EmosewaPixel.pixellib.recipes;
 
+//This is a builder for Simple Machine Recipes
 public class SimpleRecipeBuilder extends AbstractRecipeBuilder<SimpleMachineRecipe, SimpleRecipeBuilder> {
     public SimpleRecipeBuilder(AbstractRecipeList<SimpleMachineRecipe, SimpleRecipeBuilder> list) {
         super(list);

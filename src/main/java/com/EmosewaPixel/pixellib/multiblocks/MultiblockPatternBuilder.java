@@ -12,6 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+//The Multiblock Pattern Builder is simply a Builder for creating multiblock patterns
 public class MultiblockPatternBuilder {
     private List<List<String>> pattern = new ArrayList<>();
     private Map<Character, Predicate<BlockState>> blockMap = new HashMap<>();

@@ -25,6 +25,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import java.util.Random;
 import java.util.function.Supplier;
 
+//Fueled Machine Blocks are Blocks that have TEs which consume fuel and can give off light
 public class FuelBasedMachineBlock extends RotatableMachineBlock {
     public static final BooleanProperty LIT = RedstoneTorchBlock.LIT;
 

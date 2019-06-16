@@ -1,5 +1,6 @@
 package com.EmosewaPixel.pixellib.recipes;
 
+//This is a builder for Energy Machine Recipes
 public class EnergyRecipeBuilder extends AbstractRecipeBuilder<EnergyMachineRecipe, EnergyRecipeBuilder> {
     private int energyPerTick;
 

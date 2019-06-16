@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Supplier;
 
+//This is used for creating Shapeless Recipe Suppliers
 public class ShapelessRecipeSupplier implements Supplier<IRecipe> {
     private ResourceLocation name;
     private String group;

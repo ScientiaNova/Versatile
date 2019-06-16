@@ -1,5 +1,6 @@
 package com.EmosewaPixel.pixellib.materialSystem.materials;
 
+//Material Stacks are ways of getting an amount of a certain Material
 public class MaterialStack {
     private Material material;
     private int count;

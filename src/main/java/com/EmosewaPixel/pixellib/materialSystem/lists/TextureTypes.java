@@ -5,6 +5,7 @@ import com.EmosewaPixel.pixellib.materialSystem.types.TextureType;
 import java.util.Collection;
 import java.util.HashMap;
 
+//This class contains functions for interacting with the global list of texture types
 public class TextureTypes {
     public static HashMap<String, TextureType> textureTypes = new HashMap<>();
 

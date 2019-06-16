@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 
+//This claass is used for registering the default data added by Pixel Lib
 public class DataAddition {
     public static void register() {
         //Tags

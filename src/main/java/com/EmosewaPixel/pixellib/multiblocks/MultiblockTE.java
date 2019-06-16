@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+//Multiblock TEs are TEs that require a multiblock structure to work
 public abstract class MultiblockTE<T extends SimpleMachineRecipe> extends AbstractRecipeBasedTE<T> {
     protected List<IMultiblockPart> partList;
 

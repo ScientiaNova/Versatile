@@ -7,20 +7,21 @@ import net.minecraft.util.SoundEvent;
 
 import java.util.function.Supplier;
 
+//This is an implementation of vanilla's IArmorMaterial so you can simply make objects of it
 public class ArmorMaterial implements IArmorMaterial {
     private final int durability;
-    private final int damageRecudtiom;
+    private final int damageReduction;
     private final int enchantability;
-    private final SoundEvent souldEvent;
+    private final SoundEvent soundEvent;
     private final Supplier<Ingredient> repairMaterial;
     private final String name;
     private final float toughness;
 
-    public ArmorMaterial(int durability, int damageRecudtiom, int enchantability, SoundEvent souldEvent, Supplier<Ingredient> repairMaterial, String name, float toughness) {
+    public ArmorMaterial(int durability, int damageReduction, int enchantability, SoundEvent soundEvent, Supplier<Ingredient> repairMaterial, String name, float toughness) {
         this.durability = durability;
-        this.damageRecudtiom = damageRecudtiom;
+        this.damageReduction = damageReduction;
         this.enchantability = enchantability;
-        this.souldEvent = souldEvent;
+        this.soundEvent = soundEvent;
         this.repairMaterial = repairMaterial;
         this.name = name;
         this.toughness = toughness;
@@ -33,7 +34,7 @@ public class ArmorMaterial implements IArmorMaterial {
 
     @Override
     public int getDamageReductionAmount(EquipmentSlotType slotIn) {
-        return damageRecudtiom;
+        return damageReduction;
     }
 
     @Override
@@ -43,7 +44,7 @@ public class ArmorMaterial implements IArmorMaterial {
 
     @Override
     public SoundEvent getSoundEvent() {
-        return souldEvent;
+        return soundEvent;
     }
 
     @Override

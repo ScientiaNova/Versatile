@@ -72,7 +72,7 @@ minecraft {
 //}
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.14.2-26.0.25'
+    minecraft "net.minecraftforge:forge:${mc_version}-26.0.32"
     //compileOnly("mezz.jei:jei-${mc_version}:${jei_version}:api")
     //compileOnly("mezz.jei:jei-${mc_version}:${jei_version}")
 }

@@ -24,6 +24,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
+//Machine Blocks are Blocks that have Tes
 public class MachineBlock extends Block implements ITileEntityProvider {
     private Supplier<TileEntity> te;
     protected ContainerType<?> containerType;

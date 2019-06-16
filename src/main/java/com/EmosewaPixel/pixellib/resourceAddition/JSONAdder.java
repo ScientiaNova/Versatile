@@ -5,6 +5,7 @@ import net.minecraft.util.ResourceLocation;
 
 import java.util.HashMap;
 
+//This class contains functions that mods can use to add JSONs to the fake data and resource pack
 public class JSONAdder {
     protected static HashMap<ResourceLocation, JsonElement> ASSETS = new HashMap<>();
     protected static HashMap<ResourceLocation, JsonElement> DATA = new HashMap<>();

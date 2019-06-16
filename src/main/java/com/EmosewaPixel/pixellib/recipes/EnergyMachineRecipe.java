@@ -1,5 +1,6 @@
 package com.EmosewaPixel.pixellib.recipes;
 
+//Energy Machine Recipes are Machine Recipes that take power
 public class EnergyMachineRecipe extends SimpleMachineRecipe {
     private int energyPerTick;
     public static EnergyMachineRecipe EMPTY = new EnergyMachineRecipe(null, null, 0, 0);

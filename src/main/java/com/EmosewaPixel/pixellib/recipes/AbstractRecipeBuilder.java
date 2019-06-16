@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+//Recipe Builders are builders used for easily creating Machine Recipes
 public abstract class AbstractRecipeBuilder<T extends SimpleMachineRecipe, R extends AbstractRecipeBuilder<T, R>> {
     private AbstractRecipeList<T, R> recipeList;
     private List<Object> inputs = new ArrayList<>();

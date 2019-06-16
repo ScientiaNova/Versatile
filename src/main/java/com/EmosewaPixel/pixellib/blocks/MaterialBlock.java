@@ -11,6 +11,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.util.text.translation.LanguageMap;
 
+//Material Blocks are Blocks that have a Material and Object Type
 public class MaterialBlock extends ModBlock implements IMaterialItem {
     private DustMaterial material;
     private ObjectType type;

@@ -5,6 +5,7 @@ import com.EmosewaPixel.pixellib.materialSystem.types.ObjectType;
 import java.util.Collection;
 import java.util.HashMap;
 
+//This class contains functions for interacting with the global list of object types
 public class ObjTypes {
     private static HashMap<String, ObjectType> objTypes = new HashMap<>();
 

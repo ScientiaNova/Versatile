@@ -14,6 +14,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+//This is used for creating Shaped Recipe Suppliers
 public class ShapedRecipeSupplier implements Supplier<IRecipe> {
     private ResourceLocation name;
     private String group;

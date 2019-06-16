@@ -11,6 +11,7 @@ import net.minecraft.world.gen.feature.IFeatureConfig;
 
 import java.util.Random;
 
+//Dimension Features are Configured Features that only work in a specific Dimension
 public class DimensionFeature<F extends IFeatureConfig> extends ConfiguredFeature<F> {
     private DimensionType dim;
 

@@ -20,7 +20,7 @@ public class RecipeBasedTE extends AbstractRecipeBasedTE<SimpleMachineRecipe> {
         if (stacksStream.anyMatch(ItemStack::isEmpty))
             return SimpleMachineRecipe.EMPTY;
 
-        SimpleMachineRecipe chosenRecipe = getRecipeList().getReipes().stream().filter(recipe -> recipe.isInputValid((ItemStack[]) stacksStream.toArray())).findFirst().get();
+        SimpleMachineRecipe chosenRecipe = getRecipeList().getRecipes().stream().filter(recipe -> recipe.isInputValid((ItemStack[]) stacksStream.toArray())).findFirst().get();
 
         if (chosenRecipe == null)
             return SimpleMachineRecipe.EMPTY;

@@ -6,6 +6,7 @@ import com.google.common.collect.MultimapBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 
+//This class contains functions used for adding Item and Block Tags to the fake data pack
 public class TagMaps {
     protected static ListMultimap<String, Item> ITEM_TAGS = MultimapBuilder.treeKeys().arrayListValues().build();
     protected static ListMultimap<String, Block> BLOCK_TAGS = MultimapBuilder.treeKeys().arrayListValues().build();

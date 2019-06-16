@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+//Simple Machine Recipes are the most basic Machine Recipes, only having inputs, outputs and a processing time
 public class SimpleMachineRecipe {
     private Object[] input;
     private Object[] output;

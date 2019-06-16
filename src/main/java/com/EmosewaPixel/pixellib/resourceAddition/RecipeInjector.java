@@ -17,6 +17,7 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.function.Supplier;
 
+//This class contains functions used for adding recipes that get injected on world load
 public class RecipeInjector implements IResourceManagerReloadListener {
     private RecipeManager recipeManager;
 

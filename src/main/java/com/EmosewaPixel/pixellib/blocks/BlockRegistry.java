@@ -19,6 +19,7 @@ import net.minecraftforge.event.RegistryEvent;
 
 import java.util.ArrayList;
 
+//This class is used for generating Blocks for all the possible Material-Object Type combinations
 public class BlockRegistry {
     private static ArrayList<Block> templates = new ArrayList<>();
 

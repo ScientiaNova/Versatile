@@ -1,6 +1,9 @@
 package com.EmosewaPixel.pixellib.materialSystem.element;
 
+//This class contains all the elements of the periodic table and a few common isotopes
 public class Elements {
+    public static final Element NULL = new Element("?", 0, 0);
+
     public static final Element HYDROGEN = new Element("H", 1, 0);
     public static final Isotope DEUTERIUM = new Isotope("D", HYDROGEN, 2);
     public static final Isotope TRITIUM = new Isotope("T", HYDROGEN, 3);
@@ -32,7 +35,7 @@ public class Elements {
 
     public static final Element SILICON = new Element("Si", 14, 14);
 
-    public static final Element PHOSPHOROUS = new Element("P", 15, 16);
+    public static final Element PHOSPHORUS = new Element("P", 15, 16);
 
     public static final Element SULFUR = new Element("S", 16, 16);
 
@@ -156,7 +159,7 @@ public class Elements {
 
     public static final Element OSMIUM = new Element("os", 76, 114);
 
-    public static final Element IRIDIUM = new Element("Ir", 77,  115);
+    public static final Element IRIDIUM = new Element("Ir", 77, 115);
 
     public static final Element PLATINUM = new Element("Pt", 78, 117);
 

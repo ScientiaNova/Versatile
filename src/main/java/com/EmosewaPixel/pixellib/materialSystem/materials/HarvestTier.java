@@ -1,5 +1,6 @@
 package com.EmosewaPixel.pixellib.materialSystem.materials;
 
+//Harvest Tiers contain the stats for breaking blocks
 public class HarvestTier {
     private float hardness;
     private float resistance;

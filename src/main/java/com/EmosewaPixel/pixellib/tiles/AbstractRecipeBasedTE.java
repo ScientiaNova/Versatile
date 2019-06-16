@@ -46,7 +46,7 @@ public abstract class AbstractRecipeBasedTE<T extends SimpleMachineRecipe> exten
         recipeInventory = new ImprovedItemStackHandler(recipeList.getMaxRecipeSlots(), StreamUtils.getArrayFromRange(0, recipeList.getMaxInputs()), StreamUtils.getArrayFromRange(recipeList.getMaxInputs(), recipeList.getMaxRecipeSlots())) {
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return recipeList.getReipes().stream().anyMatch(recipe -> recipe.itemBelongsInRecipe(stack));
+                return recipeList.getRecipes().stream().anyMatch(recipe -> recipe.itemBelongsInRecipe(stack));
             }
 
             @Override

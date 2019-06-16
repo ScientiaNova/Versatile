@@ -11,6 +11,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.util.text.translation.LanguageMap;
 
+//Material Items are Items that have a Material and Object Type
 public class MaterialItem extends Item implements IMaterialItem {
     private Material material;
     private ObjectType type;

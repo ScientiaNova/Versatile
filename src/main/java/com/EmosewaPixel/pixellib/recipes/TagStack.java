@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.tags.Tag;
 
+//Tag Stacks are a way of getting an amount of a certain Item Tag. They're meant to be used in Machine Recipes
 public class TagStack {
     private Tag<Item> tag;
     private int count;

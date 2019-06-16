@@ -5,6 +5,10 @@ import net.minecraft.util.ResourceLocation;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+Recipe Lists are objects used for storing recipes with a maximum amount of inputs and outputs.
+Recipe Lists are intertwined with Recipe Builders and the Machine Recipes themselves
+*/
 public abstract class AbstractRecipeList<T extends SimpleMachineRecipe, B extends AbstractRecipeBuilder<T, B>> {
     private ArrayList<T> recipes = new ArrayList<>();
     private ResourceLocation name;
@@ -35,7 +39,7 @@ public abstract class AbstractRecipeList<T extends SimpleMachineRecipe, B extend
         return maxInputs + maxOutputs;
     }
 
-    public List<T> getReipes() {
+    public List<T> getRecipes() {
         return recipes;
     }
 

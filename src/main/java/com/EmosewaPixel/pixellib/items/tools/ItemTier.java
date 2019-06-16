@@ -5,6 +5,7 @@ import net.minecraft.item.crafting.Ingredient;
 
 import java.util.function.Supplier;
 
+//This is an implementation of vanilla's IItemTier so you can simply make objects of it
 public class ItemTier implements IItemTier {
     private final int harvestLevel;
     private final int maxUses;

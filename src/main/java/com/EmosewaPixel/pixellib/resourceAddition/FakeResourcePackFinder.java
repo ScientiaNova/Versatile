@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourcePackType;
 
 import java.util.Map;
 
+//This is used for providing the fake resource pack
 public class FakeResourcePackFinder implements IPackFinder {
     @Override
     public <T extends ResourcePackInfo> void addPackInfosToMap(Map<String, T> nameToPackMap, ResourcePackInfo.IFactory<T> packInfoFactory) {

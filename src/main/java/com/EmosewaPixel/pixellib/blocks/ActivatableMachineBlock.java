@@ -19,6 +19,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
+//Activatable Machine Blocks are Blocks that can TEs which can have an active state
 public class ActivatableMachineBlock extends RotatableMachineBlock {
     public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
 

@@ -1,5 +1,6 @@
 package com.EmosewaPixel.pixellib.materialSystem.element;
 
+//An isotope is an element with a different amount of neutrons, both in irl and here
 public class Isotope extends Element {
     private Element standardIsotope;
 
