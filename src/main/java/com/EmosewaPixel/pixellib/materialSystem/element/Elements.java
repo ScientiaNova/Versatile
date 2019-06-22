@@ -23,7 +23,7 @@ public class Elements {
 
     public static final Element OXYGEN = new Element("O", 8, 8);
 
-    public static final Element FLOURINE = new Element("F", 9, 10);
+    public static final Element FLUORINE = new Element("F", 9, 10);
 
     public static final Element NEON = new Element("Ne", 10, 10);
 
@@ -183,7 +183,7 @@ public class Elements {
 
     public static final Element RADIUM = new Element("Ra", 88, 138);
 
-    public static final Element ACTANIUM = new Element("Ac", 89, 138);
+    public static final Element ACTINIUM = new Element("Ac", 89, 138);
 
     public static final Element THORIUM = new Element("Th", 90, 142);
 
@@ -195,11 +195,11 @@ public class Elements {
 
     public static final Element PLUTONIUM = new Element("Pu", 94, 150);
 
-    public static final Element AMERCIUM = new Element("Am", 95, 148);
+    public static final Element AMERICIUM = new Element("Am", 95, 148);
 
     public static final Element CURIUM = new Element("Cm", 96, 151);
 
-    public static final Element BERKILIUM = new Element("Bk", 97, 150);
+    public static final Element BERKELIUM = new Element("Bk", 97, 150);
 
     public static final Element CALIFORNIUM = new Element("Cf", 98, 153);
 
