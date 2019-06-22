@@ -1,0 +1,33 @@
+
+{
+	"itemGroup.pixellib": "Pixel Lib",
+
+	"blocktype.storage_block": "Blok %s",
+	"blocktype.ore": "Ruda %s",
+
+	"itemtype.ingot": "Sztabka %s",
+	"itemtype.gem": "%s",
+	"itemtype.dust": "Pył %s",
+	"itemtype.nugget": "Bryłka %s",
+
+	"material.coal": "Węgielowy",
+	"material.charcoal": "Węgielowy drzewny",
+	"material.diamond": "Diamentowy",
+	"material.emerald": "Szmaragdowy",
+	"material.gold": "Złoty",
+	"material.iron": "Żelazny",
+	"material.lapis": "Lazuryt",
+	"material.redstone": "Redstone'owy",
+	"material.stone": "Kamienny",
+	"material.quartz": "Kwarcowy",
+	"material.wooden": "Drewniany",
+	"material.glowstone": "Jasnogłazowy",
+	"material.brick": "Cegłowy",
+	"material.nether_brick": "Nether cegłowy",
+	"material.flint": "Krzemienny",
+	"material.water": "Wodny",
+	"material.lava": "Lawny",
+
+
+	"item.pixellib.wooden_dust": "Ścier drzewny"
+}
