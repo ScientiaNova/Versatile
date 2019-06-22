@@ -4,6 +4,7 @@ import com.EmosewaPixel.pixellib.materialSystem.materials.IMaterialItem;
 import com.EmosewaPixel.pixellib.materialSystem.materials.Material;
 import com.EmosewaPixel.pixellib.materialSystem.types.ObjectType;
 import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
 import net.minecraft.block.Block;
 
 import java.util.Collection;
@@ -27,6 +28,18 @@ public class MaterialBlocks {
     public static void addBlock(IMaterialItem item) {
         if (item instanceof Block)
             addBlock(item.getMaterial(), item.getObjType(), (Block) item);
+    }
+
+    public static Table.Cell<Material, ObjectType, Block> getBlockCell(Block block) {
+        return materialBlocks.cellSet().stream().filter(c -> c.getValue() == block).findFirst().get();
+    }
+
+    public static Material getBlockMaterial(Block block) {
+        return getBlockCell(block).getRowKey();
+    }
+
+    public static ObjectType getBlockObjType(Block block) {
+        return getBlockCell(block).getColumnKey();
     }
 
     public static Collection<Block> getAllBlocks() {

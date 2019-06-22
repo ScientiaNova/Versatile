@@ -22,7 +22,11 @@
 	"material.wooden": "Wooden",
 	"material.glowstone": "Glowstone",
 	"material.brick": "Brick",
+	"material.nether_brick": "Nether Brick",
 	"material.flint": "Flint",
+	"material.water": "Water",
+	"material.lava": "Lava",
+
 
 	"item.pixellib.wooden_dust": "Wood Pulp"
 }

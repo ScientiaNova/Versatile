@@ -3,10 +3,7 @@ package com.EmosewaPixel.pixellib.materialSystem;
 import com.EmosewaPixel.pixellib.materialSystem.element.Elements;
 import com.EmosewaPixel.pixellib.materialSystem.lists.MaterialBlocks;
 import com.EmosewaPixel.pixellib.materialSystem.lists.MaterialItems;
-import com.EmosewaPixel.pixellib.materialSystem.materials.DustMaterial;
-import com.EmosewaPixel.pixellib.materialSystem.materials.GemMaterial;
-import com.EmosewaPixel.pixellib.materialSystem.materials.IngotMaterial;
-import com.EmosewaPixel.pixellib.materialSystem.materials.Material;
+import com.EmosewaPixel.pixellib.materialSystem.materials.*;
 import com.EmosewaPixel.pixellib.materialSystem.types.BlockType;
 import com.EmosewaPixel.pixellib.materialSystem.types.ItemType;
 import com.EmosewaPixel.pixellib.materialSystem.types.ObjectType;
@@ -20,9 +17,9 @@ import net.minecraft.item.Items;
 
 //This class is used for registering the vanilla material and object type tags, materials and object types
 public class MaterialRegistry {
-    public static TextureType ROUGH, REGULAR, SHINY, FUEL, PENTAGONAL, OCTAGONAL, CRYSTAL, SHARP;
+    public static TextureType ROUGH, REGULAR, SHINY, FUEL, PENTAGONAL, OCTAGONAL, CRYSTAL, SHARP, TRANSPARENT_FLUID, OPAQUE_FLUID;
 
-    public static Material IRON, GOLD, LAPIS, QUARTZ, DIAMOND, EMERALD, REDSTONE, STONE, WOODEN, COAL, GLOWSTONE, BRICK, FLINT, CHARCOAL;
+    public static Material IRON, GOLD, LAPIS, QUARTZ, DIAMOND, EMERALD, REDSTONE, STONE, WOODEN, COAL, GLOWSTONE, BRICK, FLINT, CHARCOAL, NETHER_BRICK, WATER, LAVA;
 
     public static ObjectType DUST, INGOT, NUGGET, BLOCK, ORE, GEM;
 
@@ -45,6 +42,8 @@ public class MaterialRegistry {
         OCTAGONAL = new TextureType("octagonal");
         CRYSTAL = new TextureType("crystal");
         SHARP = new TextureType("sharp");
+        TRANSPARENT_FLUID = new TextureType("transparent");
+        OPAQUE_FLUID = new TextureType("opaque");
 
         //Object Types
         DUST = new ItemType("dust", mat -> mat instanceof DustMaterial).setBucketVolume(144);
@@ -64,14 +63,17 @@ public class MaterialRegistry {
         GOLD = new IngotMaterial("gold", SHINY, 0xfad64a, 2).setElement(Elements.GOLD).setItemTier(ItemTier.GOLD).setArmorMaterial(ArmorMaterial.GOLD).addTags(HAS_ORE).build();
         LAPIS = new GemMaterial("lapis", REGULAR, 0x2351be, 0).addTags(HAS_ORE).build();
         QUARTZ = new GemMaterial("quartz", CRYSTAL, 0xe8dfd0, 0).addTags(HAS_ORE, BLOCK_FROM_4X4).build();
-        DIAMOND = new GemMaterial("diamond", PENTAGONAL, 0x34ebe3, 2).setItemTier(ItemTier.DIAMOND).setArmorMaterial(ArmorMaterial.DIAMOND).build();
+        DIAMOND = new GemMaterial("diamond", PENTAGONAL, 0x34ebe3, 2).setElement(Elements.CARBON).setItemTier(ItemTier.DIAMOND).setArmorMaterial(ArmorMaterial.DIAMOND).build();
         EMERALD = new GemMaterial("emerald", OCTAGONAL, 0x08ad2c, 2).addTags(HAS_ORE).build();
         REDSTONE = new DustMaterial("redstone", REGULAR, 0xfc1a19, 1).addTags(HAS_ORE).build();
         STONE = new DustMaterial("stone", REGULAR, 0xcccccc, 0).setItemTier(ItemTier.STONE).blacklistTypes(BLOCK).build();
         WOODEN = new DustMaterial("wooden", REGULAR, 0xd5bc77, -1).setStandardBurnTime(200).setItemTier(ItemTier.WOOD).blacklistTypes(BLOCK).build();
         GLOWSTONE = new DustMaterial("glowstone", REGULAR, 0xfcbe60, 1).addTags(BLOCK_FROM_4X4).build();
         BRICK = new IngotMaterial("brick", REGULAR, 0xb55c42, 1).addTags(BLOCK_FROM_4X4).blacklistTypes(NUGGET).build();
+        NETHER_BRICK = new IngotMaterial("nether_brick", REGULAR, 0x472a30, 1).addTags(BLOCK_FROM_4X4).blacklistTypes(NUGGET).build();
         FLINT = new GemMaterial("flint", SHARP, 0x222020, -1).blacklistTypes(BLOCK).build();
+        WATER = new FluidMaterial("water", TRANSPARENT_FLUID, 0x3e4ac6).build();
+        LAVA = new FluidMaterial("lava", OPAQUE_FLUID, 0xc54c13).build();
 
         MaterialItems.addItem(COAL, GEM, Items.COAL);
         MaterialBlocks.addBlock(COAL, BLOCK, Blocks.COAL_BLOCK);
@@ -114,6 +116,9 @@ public class MaterialRegistry {
 
         MaterialItems.addItem(BRICK, INGOT, Items.BRICK);
         MaterialBlocks.addBlock(BRICK, BLOCK, Blocks.BRICKS);
+
+        MaterialItems.addItem(NETHER_BRICK, INGOT, Items.NETHER_BRICK);
+        MaterialBlocks.addBlock(NETHER_BRICK, BLOCK, Blocks.NETHER_BRICKS);
 
         MaterialItems.addItem(FLINT, GEM, Items.FLINT);
     }
