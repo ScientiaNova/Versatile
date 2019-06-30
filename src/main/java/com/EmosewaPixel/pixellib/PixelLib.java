@@ -9,7 +9,6 @@ import com.EmosewaPixel.pixellib.proxy.IModProxy;
 import com.EmosewaPixel.pixellib.proxy.ServerProxy;
 import com.EmosewaPixel.pixellib.resourceAddition.DataAddition;
 import com.EmosewaPixel.pixellib.resourceAddition.FakeDataPackFinder;
-import com.EmosewaPixel.pixellib.resourceAddition.RecipeInjector;
 import com.EmosewaPixel.pixellib.worldgen.OreGen;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
@@ -53,8 +52,8 @@ public class PixelLib {
         new MaterialRegistry();
     }
 
-    private void clientSetup(final FMLClientSetupEvent eventi) {
-        ClientProxy.setup();
+    private void clientSetup(final FMLClientSetupEvent event) {
+        ClientProxy.addModelJsons();
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event) {
@@ -86,7 +85,6 @@ public class PixelLib {
         @SubscribeEvent
         public static void onServerAboutToStart(FMLServerAboutToStartEvent e) {
             e.getServer().getResourcePacks().addPackFinder(new FakeDataPackFinder());
-            e.getServer().getResourceManager().addReloadListener(new RecipeInjector(e.getServer().getRecipeManager()));
         }
 
         @SubscribeEvent

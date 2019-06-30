@@ -26,21 +26,21 @@ public class DataAddition {
         Materials.getAll().stream().filter(mat -> mat instanceof IngotMaterial).forEach(mat -> {
             if (mat.hasTag(MaterialRegistry.BLOCK_FROM_4X4)) {
                 if (MaterialBlocks.getBlock(mat, MaterialRegistry.BLOCK) instanceof IMaterialItem)
-                    RecipeInjector.addShapedRecipe(location(mat.getName() + "_block"), new ItemStack(MaterialBlocks.getBlock(mat, MaterialRegistry.BLOCK)), "II", "II", 'I', mat.getTag(MaterialRegistry.INGOT));
+                    RecipeMaker.addShapedRecipe(location(mat.getName() + "_block"), new ItemStack(MaterialBlocks.getBlock(mat, MaterialRegistry.BLOCK)), "II", "II", 'I', mat.getTag(MaterialRegistry.INGOT));
                 if (MaterialItems.getItem(mat, MaterialRegistry.INGOT) instanceof IMaterialItem)
-                    RecipeInjector.addShapelessRecipe(location(mat.getName() + "_ingot_from_block"), mat.getName() + "_ingot", new ItemStack(MaterialItems.getItem(mat, MaterialRegistry.INGOT), 4), mat.getTag(MaterialRegistry.BLOCK));
+                    RecipeMaker.addShapelessRecipe(location(mat.getName() + "_ingot_from_block"), mat.getName() + "_ingot", new ItemStack(MaterialItems.getItem(mat, MaterialRegistry.INGOT), 4), mat.getTag(MaterialRegistry.BLOCK));
             } else {
                 if (MaterialBlocks.getBlock(mat, MaterialRegistry.BLOCK) instanceof IMaterialItem)
-                    RecipeInjector.addShapedRecipe(location(mat.getName() + "_block"), new ItemStack(MaterialBlocks.getBlock(mat, MaterialRegistry.BLOCK)), "III", "III", "III", 'I', mat.getTag(MaterialRegistry.INGOT));
+                    RecipeMaker.addShapedRecipe(location(mat.getName() + "_block"), new ItemStack(MaterialBlocks.getBlock(mat, MaterialRegistry.BLOCK)), "III", "III", "III", 'I', mat.getTag(MaterialRegistry.INGOT));
                 if (MaterialItems.getItem(mat, MaterialRegistry.INGOT) instanceof IMaterialItem)
-                    RecipeInjector.addShapelessRecipe(location(mat.getName() + "_ingot_from_block"), mat.getName() + "_ingot", new ItemStack(MaterialItems.getItem(mat, MaterialRegistry.INGOT), 9), mat.getTag(MaterialRegistry.BLOCK));
+                    RecipeMaker.addShapelessRecipe(location(mat.getName() + "_ingot_from_block"), mat.getName() + "_ingot", new ItemStack(MaterialItems.getItem(mat, MaterialRegistry.INGOT), 9), mat.getTag(MaterialRegistry.BLOCK));
             }
             if (MaterialItems.getItem(mat, MaterialRegistry.INGOT) instanceof IMaterialItem && MaterialItems.contains(mat, MaterialRegistry.NUGGET))
-                RecipeInjector.addShapedRecipe(location(mat.getName() + "ingot_from_nuggets"), mat.getName() + "_ingot", new ItemStack(MaterialItems.getItem(mat, MaterialRegistry.INGOT)), "NNN", "NNN", "NNN", 'N', mat.getTag(MaterialRegistry.NUGGET));
+                RecipeMaker.addShapedRecipe(location(mat.getName() + "ingot_from_nuggets"), mat.getName() + "_ingot", new ItemStack(MaterialItems.getItem(mat, MaterialRegistry.INGOT)), "NNN", "NNN", "NNN", 'N', mat.getTag(MaterialRegistry.NUGGET));
             if (!mat.hasTag(MaterialRegistry.DISABLE_SIMPLE_PROCESSING))
-                RecipeInjector.addFurnaceRecipe(location(mat.getName() + "_ingot"), mat.getTag(MaterialRegistry.DUST), new ItemStack(MaterialItems.getItem(mat, MaterialRegistry.INGOT)));
+                RecipeMaker.addFurnaceRecipe(location(mat.getName() + "_ingot"), mat.getTag(MaterialRegistry.DUST), MaterialItems.getItem(mat, MaterialRegistry.INGOT));
             if (MaterialItems.getItem(mat, MaterialRegistry.NUGGET) instanceof IMaterialItem)
-                RecipeInjector.addShapelessRecipe(location(mat.getName() + "_nuggets"), new ItemStack(MaterialItems.getItem(mat, MaterialRegistry.NUGGET), 9), mat.getTag(MaterialRegistry.INGOT));
+                RecipeMaker.addShapelessRecipe(location(mat.getName() + "_nuggets"), new ItemStack(MaterialItems.getItem(mat, MaterialRegistry.NUGGET), 9), mat.getTag(MaterialRegistry.INGOT));
         });
     }
 

@@ -18,6 +18,6 @@ public class FakeResourcePackFinder implements IPackFinder {
             return pack;
         }, packInfoFactory, ResourcePackInfo.Priority.BOTTOM);
         if (packInfo != null)
-            nameToPackMap.put("fake:pixellib", packInfo);
+            nameToPackMap.put("fake_client:pixellib", packInfo);
     }
 }

@@ -19,11 +19,11 @@ public class FakeDataPackFinder implements IPackFinder {
             FakePack pack = new FakePack("fake_server:pixellib");
 
             TagMaps.ITEM_TAGS.asMap().forEach((name, items) -> {
-                Tag<Item> tag = Tag.Builder.<Item>create().addAll(items).build(new ResourceLocation("forge", name));
+                Tag<Item> tag = Tag.Builder.<Item>create().add(items.toArray(new Item[items.size()])).build(new ResourceLocation("forge", name));
                 pack.putJSON(ResourcePackType.SERVER_DATA, new ResourceLocation("forge", "tags/items/" + name + ".json"), tag.serialize(ForgeRegistries.ITEMS::getKey));
             });
             TagMaps.BLOCK_TAGS.asMap().forEach((name, blocks) -> {
-                Tag<Block> tag = Tag.Builder.<Block>create().addAll(blocks).build(new ResourceLocation("forge", name));
+                Tag<Block> tag = Tag.Builder.<Block>create().add(blocks.toArray(new Block[blocks.size()])).build(new ResourceLocation("forge", name));
                 pack.putJSON(ResourcePackType.SERVER_DATA, new ResourceLocation("forge", "tags/blocks/" + name + ".json"), tag.serialize(ForgeRegistries.BLOCKS::getKey));
             });
 
@@ -32,6 +32,6 @@ public class FakeDataPackFinder implements IPackFinder {
             return pack;
         }, packInfoFactory, ResourcePackInfo.Priority.BOTTOM);
         if (packInfo != null)
-            nameToPackMap.put("fake:pixellib", packInfo);
+            nameToPackMap.put("fake_server:pixellib", packInfo);
     }
 }

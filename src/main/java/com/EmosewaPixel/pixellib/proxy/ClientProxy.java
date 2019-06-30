@@ -6,13 +6,17 @@ import com.EmosewaPixel.pixellib.materialSystem.lists.MaterialBlocks;
 import com.EmosewaPixel.pixellib.materialSystem.lists.MaterialItems;
 import com.EmosewaPixel.pixellib.materialSystem.materials.DustMaterial;
 import com.EmosewaPixel.pixellib.materialSystem.materials.IMaterialItem;
+import com.EmosewaPixel.pixellib.materialSystem.types.ObjectType;
 import com.EmosewaPixel.pixellib.resourceAddition.FakeResourcePackFinder;
+import com.EmosewaPixel.pixellib.resourceAddition.JSONAdder;
+import com.google.gson.JsonObject;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IEnviromentBlockReader;
 import net.minecraftforge.api.distmarker.Dist;
@@ -26,12 +30,19 @@ import javax.annotation.Nullable;
 
 @Mod.EventBusSubscriber(Dist.CLIENT)
 public class ClientProxy implements IModProxy {
-    public static void setup() {
-        Minecraft.getInstance().getResourcePackList().addPackFinder(new FakeResourcePackFinder());
+    public static void addModelJsons() {
+        MaterialItems.getAllItems().stream().filter(i -> i instanceof IMaterialItem).forEach(i -> {
+            ResourceLocation registryName = i.getRegistryName();
+            ObjectType type = ((IMaterialItem) i).getObjType();
+            JsonObject model = new JsonObject();
+            model.addProperty("parent", registryName.getNamespace() + ":" + (type.hasTag(MaterialRegistry.SINGLE_TEXTURE_TYPE) ? type.getName() : ((IMaterialItem) i).getMaterial().getTextureType().toString() + "_" + type.getName()));
+            JSONAdder.addAssetsJSON(new ResourceLocation(registryName.getNamespace(), "models/item/" + registryName.getPath() + ".json"), model);
+        });
     }
 
     @Override
     public void enque(InterModEnqueueEvent e) {
+        Minecraft.getInstance().getResourcePackList().addPackFinder(new FakeResourcePackFinder());
         color();
     }
 

@@ -2,7 +2,12 @@ package com.EmosewaPixel.pixellib.blocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.storage.loot.LootContext;
 import net.minecraftforge.common.ToolType;
+
+import java.util.Collections;
+import java.util.List;
 
 //Mod Block is used for creating a regular Block with a specified registry name and harvest level
 public class ModBlock extends Block {
@@ -22,5 +27,10 @@ public class ModBlock extends Block {
     @Override
     public int getHarvestLevel(BlockState state) {
         return level;
+    }
+
+    @Override
+    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+        return Collections.singletonList(new ItemStack(this));
     }
 }
