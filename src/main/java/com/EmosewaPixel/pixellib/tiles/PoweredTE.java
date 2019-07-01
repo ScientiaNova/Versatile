@@ -13,6 +13,8 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -62,9 +64,19 @@ public class PoweredTE extends AbstractRecipeBasedTE<EnergyMachineRecipe> implem
         if (chosenRecipe == null)
             return EnergyMachineRecipe.EMPTY;
 
-        ItemStack recipeInputs[] = (ItemStack[]) IntStream.range(0, getRecipeList().getMaxInputs()).mapToObj(i ->
-                new ItemStack(recipeInventory.getStackInSlot(i).getItem(), chosenRecipe.getCountOfInputItem(recipeInventory.getStackInSlot(i)))).toArray();
-        return new EnergyMachineRecipe(recipeInputs, chosenRecipe.getAllOutputs(), chosenRecipe.getTime(), chosenRecipe.getEnergyPerTick());
+        List<Integer> recipeIndexes = IntStream.range(0, getRecipeList().getMaxInputs())
+                .map(i -> chosenRecipe.getIndexOfInput(recipeInventory.getStackInSlot(i))).boxed().collect(Collectors.toList());
+
+        if (recipeIndexes.contains(-1))
+            return EnergyMachineRecipe.EMPTY;
+
+        return new EnergyMachineRecipe(
+                IntStream.range(0, getRecipeList().getMaxInputs()).mapToObj(i -> new ItemStack(recipeInventory.getStackInSlot(i).getItem(), chosenRecipe.getCountOfInput(recipeIndexes.get(i)))).toArray(),
+                (Float[]) recipeIndexes.stream().map(chosenRecipe::getConsumeChance).toArray(),
+                chosenRecipe.getAllOutputs(),
+                chosenRecipe.getOutputChances(),
+                chosenRecipe.getTime(),
+                chosenRecipe.getEnergyPerTick());
     }
 
     @Override

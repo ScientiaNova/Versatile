@@ -12,13 +12,17 @@ import java.util.stream.IntStream;
 public class SimpleMachineRecipe {
     private Object[] input;
     private Object[] output;
+    private Float[] consumeChances;
+    private Float[] outputChances;
     private int time;
-    public static final SimpleMachineRecipe EMPTY = new SimpleMachineRecipe(null, null, 0);
+    public static final SimpleMachineRecipe EMPTY = new SimpleMachineRecipe(new Object[0], new Float[0], new Object[0], new Float[0], 0);
 
-    public SimpleMachineRecipe(Object[] input, Object[] output, int time) {
+    public SimpleMachineRecipe(Object[] input, Float[] consumeChances, Object[] output, Float[] outputChances, int time) {
         this.input = input;
         this.output = output;
         this.time = time;
+        this.consumeChances = consumeChances;
+        this.outputChances = outputChances;
     }
 
     public Object getInput(int index) {
@@ -49,6 +53,19 @@ public class SimpleMachineRecipe {
     public ItemStack[] getAllOutputs() {
         return (ItemStack[]) IntStream.range(0, output.length)
                 .mapToObj(i -> output[i] instanceof ItemStack ? output[i] : ((TagStack) output[i]).asItemStack()).toArray();
+    }
+
+    public Float getConsumeChance(int index) {
+        return consumeChances[index];
+    }
+
+
+    public Float getOutputChance(int index) {
+        return outputChances[index];
+    }
+
+    public Float[] getOutputChances() {
+        return outputChances;
     }
 
     public List<List<ItemStack>> getInputsAsList() {
@@ -84,10 +101,16 @@ public class SimpleMachineRecipe {
                 .count();
     }
 
-    public int getCountOfInputItem(ItemStack stack) {
-        return Arrays.stream(input).filter(input -> input instanceof ItemStack ? stack.isItemEqual((ItemStack) input) : ((TagStack) input).geTag().contains(stack.getItem()))
-                .map(input -> input instanceof ItemStack ? ((ItemStack) input).getCount() : ((TagStack) input).getCount())
-                .findFirst().orElse(0);
+    public int getCountOfInput(int index) {
+        Object o = input[index];
+        return o instanceof ItemStack ? ((ItemStack) o).getCount() : ((TagStack) o).getCount();
+    }
+
+    public int getIndexOfInput(ItemStack stack) {
+        Object o = Arrays.stream(input).filter(input -> input instanceof ItemStack ? stack.isItemEqual((ItemStack) input) : ((TagStack) input).geTag().contains(stack.getItem())).findFirst().get();
+        if (o == null)
+            return -1;
+        return Arrays.asList(input).indexOf(o);
     }
 
     public boolean itemBelongsInRecipe(ItemStack stack) {

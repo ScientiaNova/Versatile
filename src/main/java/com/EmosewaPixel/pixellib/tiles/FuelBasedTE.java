@@ -82,7 +82,7 @@ public class FuelBasedTE extends RecipeBasedTE {
     }
 
     protected void consumeFuel() {
-        if (!getCurrentRecipe().isEmpty() && canOutput(getCurrentRecipe(), true)) {
+        if (!getCurrentRecipe().isEmpty() && canOutput(getCurrentRecipe())) {
             burnTime = maxBurnTime = getItemBurnTime(fuel_input.getStackInSlot(0));
             if (burnTime > 0) {
                 if (fuel_input.getStackInSlot(0).hasContainerItem())

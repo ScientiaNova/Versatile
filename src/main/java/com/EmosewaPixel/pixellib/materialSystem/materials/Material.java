@@ -116,7 +116,7 @@ public class Material {
 
     public Material build() {
         Materials.add(this);
-        return this;
+        return Materials.get(name);
     }
 
     public String getName() {
@@ -194,5 +194,28 @@ public class Material {
 
     public int getStandardBurnTime() {
         return burnTime;
+    }
+
+    public ArrayList<ObjectType> getTypeBlacklist() {
+        return blacklist;
+    }
+
+    public List<String> getMaterialTags() {
+        return materialTags;
+    }
+
+    public void merge(Material mat) {
+        if (mat.getItemTier() != null)
+            itemTier = mat.getItemTier();
+        if (mat.getArmorMaterial() != null)
+            armorMaterial = mat.getArmorMaterial();
+        blacklist.addAll(mat.getTypeBlacklist());
+        materialTags.addAll(mat.getMaterialTags());
+        if (mat.isPureElement())
+            element = mat.getElement();
+        if (mat.getSecondName() != null)
+            secondName = mat.getSecondName();
+        if (mat.getStandardBurnTime() != 0)
+            burnTime = mat.getStandardBurnTime();
     }
 }

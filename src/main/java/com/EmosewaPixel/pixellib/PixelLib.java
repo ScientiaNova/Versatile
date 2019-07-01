@@ -3,6 +3,7 @@ package com.EmosewaPixel.pixellib;
 import com.EmosewaPixel.pixellib.blocks.BlockRegistry;
 import com.EmosewaPixel.pixellib.items.ItemRegistry;
 import com.EmosewaPixel.pixellib.materialSystem.MaterialRegistry;
+import com.EmosewaPixel.pixellib.materialSystem.lists.MaterialItems;
 import com.EmosewaPixel.pixellib.materialSystem.materials.IMaterialItem;
 import com.EmosewaPixel.pixellib.proxy.ClientProxy;
 import com.EmosewaPixel.pixellib.proxy.IModProxy;
@@ -18,6 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
@@ -38,7 +40,7 @@ public class PixelLib {
     public static ItemGroup main = new ItemGroup(ModId) {
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(BlockRegistry.getGroupIcon());
+            return new ItemStack(MaterialItems.getAllItems().stream().filter(i -> i instanceof IMaterialItem).findFirst().get());
         }
     };
 
@@ -50,10 +52,11 @@ public class PixelLib {
         MinecraftForge.EVENT_BUS.register(this);
 
         new MaterialRegistry();
+
+        proxy.init();
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {
-        ClientProxy.addModelJsons();
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event) {
@@ -69,14 +72,19 @@ public class PixelLib {
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = ModId)
     public static class RegistryEvents {
         @SubscribeEvent
+        public static void onBlockRegistry(final RegistryEvent.Register<Block> e) {
+            BlockRegistry.registry(e);
+        }
+
+        @SubscribeEvent
         public static void onItemRegistry(final RegistryEvent.Register<Item> e) {
             ItemRegistry.registry(e);
             BlockRegistry.itemRegistry(e);
         }
 
-        @SubscribeEvent
-        public static void onBlockRegistry(final RegistryEvent.Register<Block> e) {
-            BlockRegistry.registry(e);
+        @SubscribeEvent(priority = EventPriority.LOWEST)
+        public static void onLateItemRegistry(final RegistryEvent.Register<Item> e) {
+            ClientProxy.addModelJsons();
         }
     }
 

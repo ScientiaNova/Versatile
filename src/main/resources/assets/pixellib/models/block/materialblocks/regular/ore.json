@@ -1,0 +1,7 @@
+{
+  "parent":"pixellib:block/overlayed_colored_block",
+  "textures": {
+    "all": "block/stone",
+    "overlay": "pixellib:block/ore"
+  }
+}

@@ -101,7 +101,7 @@ public final class FakePack implements IResourcePack {
     @Nullable
     @Override
     public <T> T getMetadata(IMetadataSectionSerializer<T> deserializer) throws IOException {
-        return deserializer.deserialize((JsonObject) new JsonParser().parse("{\"pack_format\":4,\"description\":\"Expert Mode Core's injected resources\"}"));
+        return deserializer.deserialize((JsonObject) new JsonParser().parse("{\"pack_format\":4,\"description\":\"PixelLib's injected resources\"}"));
     }
 
     @Override

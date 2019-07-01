@@ -17,6 +17,7 @@ import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Random;
 import java.util.stream.IntStream;
 
 public abstract class AbstractRecipeBasedTE<T extends SimpleMachineRecipe> extends ProgressiveTE {
@@ -80,15 +81,18 @@ public abstract class AbstractRecipeBasedTE<T extends SimpleMachineRecipe> exten
 
     protected void startWorking() {
         if (!currentRecipe.isEmpty())
-            if (canOutput(currentRecipe, true))
+            if (canOutput(currentRecipe))
                 setProgress(currentRecipe.getTime() - 1);
     }
 
     protected void work() {
         SimpleMachineRecipe lastRecipe = currentRecipe;
-        canOutput(lastRecipe, false);
-        StreamUtils.repeat(recipeList.getMaxInputs(), i ->
-                recipeInventory.extractItem(i, lastRecipe.getInputCount(i), false));
+        output(lastRecipe);
+        Random rand = new Random();
+        StreamUtils.repeat(recipeList.getMaxInputs(), i -> {
+            if (lastRecipe.getOutputChance(i) >= rand.nextFloat())
+                recipeInventory.extractItem(i, lastRecipe.getInputCount(i), false);
+        });
     }
 
     @Override
@@ -118,11 +122,19 @@ public abstract class AbstractRecipeBasedTE<T extends SimpleMachineRecipe> exten
         return LazyOptional.empty();
     }
 
-    protected boolean canOutput(SimpleMachineRecipe recipe, boolean simulate) {
+    protected boolean canOutput(SimpleMachineRecipe recipe) {
         if (recipe.getAllInputs() == null)
             return false;
 
-        return IntStream.range(0, recipe.getAllOutputs().length).allMatch(i -> recipeInventory.insertItem(recipeList.getMaxInputs() + i, recipe.getOutput(i).copy(), simulate).isEmpty());
+        return IntStream.range(0, recipe.getAllOutputs().length).allMatch(i -> recipeInventory.insertItem(recipeList.getMaxInputs() + i, recipe.getOutput(i).copy(), true).isEmpty());
+    }
+
+    protected void output(SimpleMachineRecipe recipe) {
+        Random rand = new Random();
+        IntStream.range(0, recipe.getAllOutputs().length).forEach(i -> {
+            if (recipe.getOutputChance(i) >= rand.nextFloat())
+                recipeInventory.insertItem(recipeList.getMaxInputs() + i, recipe.getOutput(i).copy(), true);
+        });
     }
 
     public void dropInventory() {

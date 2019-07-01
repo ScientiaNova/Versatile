@@ -25,7 +25,6 @@ public class ObjectType {
     public ObjectType(String name, Predicate<Material> requirement) {
         this.name = name;
         this.requirement = requirement;
-        ObjTypes.add(this);
     }
 
     public ObjectType addTypeTag(String... tags) {
@@ -33,9 +32,24 @@ public class ObjectType {
         return this;
     }
 
+    public ObjectType andRequires(Predicate<Material> requirement) {
+        this.requirement = this.requirement.and(requirement);
+        return this;
+    }
+
+    public ObjectType orRequires(Predicate<Material> requirement) {
+        this.requirement = this.requirement.or(requirement);
+        return this;
+    }
+
     public ObjectType setBucketVolume(int mb) {
         volume = mb;
         return this;
+    }
+
+    public ObjectType build() {
+        ObjTypes.add(this);
+        return ObjTypes.get(name);
     }
 
     public String getName() {
@@ -50,11 +64,22 @@ public class ObjectType {
         return requirement.test(mat);
     }
 
-    public Tag<Item> getTag() {
+    public Tag<Item> getItemTag() {
         return new ItemTags.Wrapper(new ResourceLocation("forge", name + "s"));
     }
 
     public boolean hasTag(String tag) {
         return tags.contains(tag);
+    }
+
+    public List<String> getTypeTags() {
+        return tags;
+    }
+
+    public void merge(ObjectType type) {
+        if (type.getBucketVolume() != 0)
+        volume = type.getBucketVolume();
+        orRequires(type::isMaterialCompatible);
+        tags.addAll(type.getTypeTags());
     }
 }

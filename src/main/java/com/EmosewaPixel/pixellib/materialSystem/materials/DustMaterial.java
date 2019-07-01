@@ -21,6 +21,8 @@ public class DustMaterial extends Material {
     private int processingMultiplier = 1;
     private DustMaterial refinedMaterial = null;
     private int unrefinedColor;
+    private int meltingTemperature = 0;
+    private int boilingTemperature = 0;
 
     public DustMaterial(String name, TextureType textureType, int color, int tier) {
         super(name, textureType, color, tier);
@@ -108,6 +110,16 @@ public class DustMaterial extends Material {
         return this;
     }
 
+    public DustMaterial setMeltingTemperature(int temperature) {
+        meltingTemperature = temperature;
+        return this;
+    }
+
+    public DustMaterial setBoilingTemperature(int temperature) {
+        boilingTemperature = temperature;
+        return this;
+    }
+
     public HarvestTier getHarvestTier() {
         return harvestTier;
     }
@@ -126,5 +138,29 @@ public class DustMaterial extends Material {
 
     public Item getDefaultItem() {
         return MaterialItems.getItem(this, MaterialRegistry.DUST);
+    }
+
+    public int getMeltingTemperature() {
+        return meltingTemperature;
+    }
+
+    public int getBoilingTemperature() {
+        return boilingTemperature;
+    }
+
+    public void merge(DustMaterial mat) {
+        super.merge(mat);
+        if (mat.getHarvestTier() != null)
+            harvestTier = mat.getHarvestTier();
+        if (mat.getProcessingMultiplier() > processingMultiplier)
+            processingMultiplier = mat.getProcessingMultiplier();
+        if (mat.getRefinedMaterial() != null)
+            refinedMaterial = mat.getRefinedMaterial();
+        if (mat.getUnrefinedColor() != mat.getColor())
+            unrefinedColor = mat.getUnrefinedColor();
+        if (mat.getMeltingTemperature() != 0)
+            meltingTemperature = mat.getMeltingTemperature();
+        if (mat.getBoilingTemperature() != 0)
+            boilingTemperature = mat.getBoilingTemperature();
     }
 }

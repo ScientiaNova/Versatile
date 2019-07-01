@@ -56,4 +56,12 @@ public class FluidMaterial extends Material {
     public FluidMaterial getBoilingMaterial() {
         return boilingMaterial;
     }
+
+    public void merge(FluidMaterial mat) {
+        super.merge(mat);
+        if (mat.getTemperature() != 373)
+            temperature = mat.getTemperature();
+        if (mat.getBoilingMaterial() != null)
+            boilingMaterial = mat.getBoilingMaterial();
+    }
 }

@@ -6,6 +6,7 @@ import com.EmosewaPixel.pixellib.materialSystem.lists.MaterialBlocks;
 import com.EmosewaPixel.pixellib.materialSystem.lists.MaterialItems;
 import com.EmosewaPixel.pixellib.materialSystem.materials.DustMaterial;
 import com.EmosewaPixel.pixellib.materialSystem.materials.IMaterialItem;
+import com.EmosewaPixel.pixellib.materialSystem.types.BlockType;
 import com.EmosewaPixel.pixellib.materialSystem.types.ObjectType;
 import com.EmosewaPixel.pixellib.resourceAddition.FakeResourcePackFinder;
 import com.EmosewaPixel.pixellib.resourceAddition.JSONAdder;
@@ -13,15 +14,12 @@ import com.google.gson.JsonObject;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IEnviromentBlockReader;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
@@ -30,44 +28,37 @@ import javax.annotation.Nullable;
 
 @Mod.EventBusSubscriber(Dist.CLIENT)
 public class ClientProxy implements IModProxy {
+    @Override
+    public void init() {
+        Minecraft.getInstance().getResourcePackList().addPackFinder(new FakeResourcePackFinder());
+    }
+
     public static void addModelJsons() {
         MaterialItems.getAllItems().stream().filter(i -> i instanceof IMaterialItem).forEach(i -> {
             ResourceLocation registryName = i.getRegistryName();
             ObjectType type = ((IMaterialItem) i).getObjType();
             JsonObject model = new JsonObject();
-            model.addProperty("parent", registryName.getNamespace() + ":" + (type.hasTag(MaterialRegistry.SINGLE_TEXTURE_TYPE) ? type.getName() : ((IMaterialItem) i).getMaterial().getTextureType().toString() + "_" + type.getName()));
+            model.addProperty("parent", registryName.getNamespace() + ":item/materialitems/" + (type.hasTag(MaterialRegistry.SINGLE_TEXTURE_TYPE) ? type.getName() : ((IMaterialItem) i).getMaterial().getTextureType().toString() + "/" + type.getName()));
             JSONAdder.addAssetsJSON(new ResourceLocation(registryName.getNamespace(), "models/item/" + registryName.getPath() + ".json"), model);
+        });
+
+        MaterialBlocks.getAllBlocks().stream().filter(b -> b instanceof IMaterialItem).forEach(b -> {
+            ResourceLocation registryName = b.getRegistryName();
+            ObjectType type = ((IMaterialItem) b).getObjType();
+            JsonObject model = new JsonObject();
+            model.addProperty("parent", registryName.getNamespace() + ":block/materialblocks/" + (type.hasTag(MaterialRegistry.SINGLE_TEXTURE_TYPE) ? type.getName() : ((IMaterialItem) b).getMaterial().getTextureType().toString() + "/" + type.getName()));
+            JSONAdder.addAssetsJSON(new ResourceLocation(registryName.getNamespace(), "models/item/" + registryName.getPath() + ".json"), model);
+            JSONAdder.addAssetsJSON(new ResourceLocation(registryName.getNamespace(), "blockstates/" + registryName.getPath() + ".json"), ((BlockType) type).getBlockstateJson((IMaterialItem) b));
         });
     }
 
     @Override
     public void enque(InterModEnqueueEvent e) {
-        Minecraft.getInstance().getResourcePackList().addPackFinder(new FakeResourcePackFinder());
         color();
     }
 
     @Override
     public void process(InterModProcessEvent e) {
-    }
-
-    @SubscribeEvent
-    public static void onModelBaking(ModelBakeEvent e) {
-        MaterialItems.getAllItems().stream().filter(item -> item instanceof IMaterialItem).forEach(item -> {
-            if (((IMaterialItem) item).getObjType().hasTag(MaterialRegistry.SINGLE_TEXTURE_TYPE))
-                e.getModelRegistry().put(new ModelResourceLocation(item.getRegistryName(), "inventory"), e.getModelRegistry().get(new ModelResourceLocation("pixellib:" + ((IMaterialItem) item).getObjType().getName(), "inventory")));
-            else
-                e.getModelRegistry().put(new ModelResourceLocation(item.getRegistryName(), "inventory"), e.getModelRegistry().get(new ModelResourceLocation("pixellib:" + ((IMaterialItem) item).getMaterial().getTextureType().toString() + "_" + ((IMaterialItem) item).getObjType().getName(), "inventory")));
-        });
-
-        MaterialBlocks.getAllBlocks().stream().filter(block -> block instanceof IMaterialItem).forEach(block -> {
-            if (((IMaterialItem) block).getObjType().hasTag(MaterialRegistry.SINGLE_TEXTURE_TYPE)) {
-                e.getModelRegistry().put(new ModelResourceLocation(block.getRegistryName(), ""), e.getModelRegistry().get(new ModelResourceLocation("pixellib:" + ((IMaterialItem) block).getObjType().getName(), "")));
-                e.getModelRegistry().put(new ModelResourceLocation(block.getRegistryName(), "inventory"), e.getModelRegistry().get(new ModelResourceLocation("pixellib:" + ((IMaterialItem) block).getObjType().getName(), "inventory")));
-            } else {
-                e.getModelRegistry().put(new ModelResourceLocation(block.getRegistryName(), ""), e.getModelRegistry().get(new ModelResourceLocation("pixellib:" + ((IMaterialItem) block).getMaterial().getTextureType().toString() + "_" + ((IMaterialItem) block).getObjType().getName(), "")));
-                e.getModelRegistry().put(new ModelResourceLocation(block.getRegistryName(), "inventory"), e.getModelRegistry().get(new ModelResourceLocation("pixellib:" + ((IMaterialItem) block).getMaterial().getTextureType().toString() + "_" + ((IMaterialItem) block).getObjType().getName(), "inventory")));
-            }
-        });
     }
 
     private void color() {

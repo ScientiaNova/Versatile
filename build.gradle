@@ -58,23 +58,21 @@ minecraft {
     }
 }
 
-//repositories {
-//    maven {
-//        // location of the maven that hosts JEI files
-//        name = "Progwml6 maven"
-//        url = "https://dvs1.progwml6.com/files/maven/"
-//    }
-//    maven {
-//        // location of a maven mirror for JEI files, as a fallback
-//        name = "ModMaven"
-//        url = "https://modmaven.k-4u.nl"
-//    }
-//}
+repositories {
+    maven {
+        name = "Progwml6 maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
+    }
+    maven {
+        name = "ModMaven"
+        url = "https://modmaven.k-4u.nl"
+    }
+}
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${mc_version}-27.0.16"
-    //compileOnly("mezz.jei:jei-1.14.2:${jei_version}:api")
-    //compileOnly("mezz.jei:jei-1.14.2:${jei_version}")
+    minecraft "net.minecraftforge:forge:${mc_version}-27.0.17"
+    //compileOnly fg.deobf("mezz.jei:jei-1.14.2:${jei_version}:api")
+    //runtimeOnly fg.deobf("mezz.jei:jei-1.14.2:${jei_version}")
 }
 
 jar {

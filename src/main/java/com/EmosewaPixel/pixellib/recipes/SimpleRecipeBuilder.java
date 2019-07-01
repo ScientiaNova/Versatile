@@ -9,7 +9,7 @@ public class SimpleRecipeBuilder extends AbstractRecipeBuilder<SimpleMachineReci
     @Override
     public SimpleMachineRecipe build() {
         if (getInputs().size() <= getRecipeList().getMaxInputs() && getOutputs().size() <= getRecipeList().getMaxOutputs())
-            return new SimpleMachineRecipe(getInputs().toArray(), getOutputs().toArray(), getTime());
+            return new SimpleMachineRecipe(getInputs().toArray(), getConsumeChances().toArray(new Float[getConsumeChances().size()]), getOutputs().toArray(), getOutputChances().toArray(new Float[getOutputChances().size()]), getTime());
         return SimpleMachineRecipe.EMPTY;
     }
 }

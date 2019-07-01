@@ -10,7 +10,10 @@ public class ObjTypes {
     private static HashMap<String, ObjectType> objTypes = new HashMap<>();
 
     public static void add(ObjectType type) {
-        objTypes.put(type.getName(), type);
+        if (objTypes.get(type.getName()) != null)
+            objTypes.get(type.getName()).merge(type);
+        else
+            objTypes.put(type.getName(), type);
     }
 
     public static ObjectType get(String name) {

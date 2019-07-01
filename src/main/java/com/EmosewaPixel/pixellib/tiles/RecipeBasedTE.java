@@ -5,6 +5,8 @@ import com.EmosewaPixel.pixellib.recipes.SimpleRecipeList;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityType;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -25,8 +27,17 @@ public class RecipeBasedTE extends AbstractRecipeBasedTE<SimpleMachineRecipe> {
         if (chosenRecipe == null)
             return SimpleMachineRecipe.EMPTY;
 
-        ItemStack recipeInputs[] = (ItemStack[]) IntStream.range(0, getRecipeList().getMaxInputs())
-                .mapToObj(i -> new ItemStack(recipeInventory.getStackInSlot(i).getItem(), chosenRecipe.getCountOfInputItem(recipeInventory.getStackInSlot(i)))).toArray();
-        return new SimpleMachineRecipe(recipeInputs, chosenRecipe.getAllOutputs(), chosenRecipe.getTime());
+        List<Integer> recipeIndexes = IntStream.range(0, getRecipeList().getMaxInputs())
+                .map(i -> chosenRecipe.getIndexOfInput(recipeInventory.getStackInSlot(i))).boxed().collect(Collectors.toList());
+
+        if (recipeIndexes.contains(-1))
+            return SimpleMachineRecipe.EMPTY;
+
+        return new SimpleMachineRecipe(
+                IntStream.range(0, getRecipeList().getMaxInputs()).mapToObj(i -> new ItemStack(recipeInventory.getStackInSlot(i).getItem(), chosenRecipe.getCountOfInput(recipeIndexes.get(i)))).toArray(),
+                (Float[]) recipeIndexes.stream().map(chosenRecipe::getConsumeChance).toArray(),
+                chosenRecipe.getAllOutputs(),
+                chosenRecipe.getOutputChances(),
+                chosenRecipe.getTime());
     }
 }

@@ -3,10 +3,10 @@ package com.EmosewaPixel.pixellib.recipes;
 //Energy Machine Recipes are Machine Recipes that take power
 public class EnergyMachineRecipe extends SimpleMachineRecipe {
     private int energyPerTick;
-    public static EnergyMachineRecipe EMPTY = new EnergyMachineRecipe(null, null, 0, 0);
+    public static EnergyMachineRecipe EMPTY = new EnergyMachineRecipe(new Object[0], new Float[0], new Object[0], new Float[0], 0, 0);
 
-    public EnergyMachineRecipe(Object[] input, Object[] output, int time, int energyperTick) {
-        super(input, output, time);
+    public EnergyMachineRecipe(Object[] input, Float[] consumeChances, Object[] output, Float[] outputChances, int time, int energyperTick) {
+        super(input, consumeChances, output, outputChances, time);
         this.energyPerTick = energyperTick;
     }
 

@@ -10,7 +10,10 @@ public class Materials {
     private static HashMap<String, Material> materials = new HashMap<>();
 
     public static void add(Material mat) {
-        materials.put(mat.getName(), mat);
+        if (materials.get(mat.getName()) != null)
+            materials.get(mat.getName()).merge(mat);
+        else
+            materials.put(mat.getName(), mat);
     }
 
     public static Material get(String name) {

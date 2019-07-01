@@ -17,9 +17,6 @@ import java.util.function.Supplier;
 
 //Ingot Materials are the solid materials that, above all else, have ingots
 public class IngotMaterial extends DustMaterial {
-    private int meltingTemperature;
-    private int boilingTemperature;
-
     public IngotMaterial(String name, TextureType textureType, int color, int tier) {
         super(name, textureType, color, tier);
     }
@@ -98,21 +95,13 @@ public class IngotMaterial extends DustMaterial {
     }
 
     public IngotMaterial setMeltingTemperature(int temperature) {
-        meltingTemperature = temperature;
+        super.setMeltingTemperature(temperature);
         return this;
     }
 
     public IngotMaterial setBoilingTemperature(int temperature) {
-        boilingTemperature = temperature;
+        super.setBoilingTemperature(temperature);
         return this;
-    }
-
-    public int getMeltingTemperature() {
-        return meltingTemperature;
-    }
-
-    public int getBoilingTemperature() {
-        return boilingTemperature;
     }
 
     public IngotMaterial setProcessingMultiplier(int multiplier) {

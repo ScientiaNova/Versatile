@@ -46,15 +46,15 @@ public class MaterialRegistry {
         OPAQUE_FLUID = new TextureType("opaque");
 
         //Object Types
-        DUST = new ItemType("dust", mat -> mat instanceof DustMaterial).setBucketVolume(144);
-        INGOT = new ItemType("ingot", mat -> mat instanceof IngotMaterial).setBucketVolume(144);
-        NUGGET = new ItemType("nugget", mat -> mat instanceof IngotMaterial).setBucketVolume(16);
+        DUST = new ItemType("dust", mat -> mat instanceof DustMaterial).setBucketVolume(144).build();
+        INGOT = new ItemType("ingot", mat -> mat instanceof IngotMaterial).setBucketVolume(144).build();
+        NUGGET = new ItemType("nugget", mat -> mat instanceof IngotMaterial).setBucketVolume(16).build();
         BLOCK = new BlockType("storage_block", mat -> mat instanceof DustMaterial,
-                Block.Properties.create(net.minecraft.block.material.Material.IRON).sound(SoundType.METAL)).setBucketVolume(1296);
+                Block.Properties.create(net.minecraft.block.material.Material.IRON).sound(SoundType.METAL)).setBucketVolume(1296).build();
         ORE = new BlockType("ore", mat -> mat instanceof IngotMaterial && mat.hasTag(HAS_ORE),
                 Block.Properties.create(net.minecraft.block.material.Material.ROCK).sound(SoundType.STONE)).addTypeTag(USES_UNREFINED_COLOR)
-                .setBucketVolume(144).addTypeTag(HAS_NO_FUEL_VALUE);
-        GEM = new ItemType("gem", mat -> mat instanceof GemMaterial).setBucketVolume(144);
+                .setBucketVolume(144).addTypeTag(HAS_NO_FUEL_VALUE).build();
+        GEM = new ItemType("gem", mat -> mat instanceof GemMaterial).setBucketVolume(144).build();
 
         //Materials
         COAL = new DustMaterial("coal", FUEL, 0x1a1a1a, 0).setStandardBurnTime(1600).setElement(Elements.CARBON).addTags(HAS_ORE).build();

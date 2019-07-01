@@ -20,7 +20,7 @@ public class EnergyRecipeBuilder extends AbstractRecipeBuilder<EnergyMachineReci
     @Override
     public EnergyMachineRecipe build() {
         if (getInputs().size() <= getRecipeList().getMaxInputs() && getOutputs().size() <= getRecipeList().getMaxOutputs())
-            return new EnergyMachineRecipe(getInputs().toArray(), getOutputs().toArray(), getTime(), energyPerTick);
+            return new EnergyMachineRecipe(getInputs().toArray(), getConsumeChances().toArray(new Float[getConsumeChances().size()]), getOutputs().toArray(), getOutputChances().toArray(new Float[getOutputChances().size()]), getTime(), energyPerTick);
         return EnergyMachineRecipe.EMPTY;
     }
 }
