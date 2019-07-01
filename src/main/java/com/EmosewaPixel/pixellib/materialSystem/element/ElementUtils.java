@@ -1,5 +1,6 @@
 package com.EmosewaPixel.pixellib.materialSystem.element;
 
+import com.EmosewaPixel.pixellib.materialSystem.materials.CompoundType;
 import com.EmosewaPixel.pixellib.materialSystem.materials.Material;
 import com.EmosewaPixel.pixellib.materialSystem.materials.MaterialStack;
 import com.EmosewaPixel.pixellib.miscUtils.StreamUtils;
@@ -8,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.DoubleStream;
 
 //This class contains functions used for determining the elemental properties of compounds
 public class ElementUtils {
@@ -33,6 +35,7 @@ public class ElementUtils {
     }
 
     public static double getTotalDensity(Material mat) {
-        return getElementalComposition(mat).stream().mapToDouble(m -> m.getElement().getDensity() * m.getCount()).sum();
+        DoubleStream stream = getElementalComposition(mat).stream().mapToDouble(m -> m.getElement().getDensity() * m.getCount());
+        return mat.getCompoundType() == CompoundType.CHEMICAL ? stream.sum() : stream.average().getAsDouble();
     }
 }

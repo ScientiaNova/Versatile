@@ -43,6 +43,7 @@ public class Material {
     private Element element = Elements.NULL;
     private String secondName = null;
     private int burnTime = 0;
+    private CompoundType compoundType = CompoundType.CHEMICAL;
 
     public Material(String name, TextureType textureType, int color, int tier) {
         this.name = name;
@@ -111,6 +112,12 @@ public class Material {
     //Sets the burn time for object types with a volume of 144mb, scales across object types
     public Material setStandardBurnTime(int time) {
         burnTime = time;
+        return this;
+    }
+
+    //Sets the compound type of the material
+    public Material setCompoundType(CompoundType type) {
+        compoundType = type;
         return this;
     }
 
@@ -202,6 +209,10 @@ public class Material {
 
     public List<String> getMaterialTags() {
         return materialTags;
+    }
+
+    public CompoundType getCompoundType() {
+        return compoundType;
     }
 
     public void merge(Material mat) {

@@ -69,6 +69,10 @@ public class RecipeMaker {
         addFurnaceRecipe(name, input, output, 200, 0.1f);
     }
 
+    public static void removeRecipe(ResourceLocation name) {
+        JSONAdder.addDataJSON(new ResourceLocation(name.getNamespace(), "recipes/" + name.getPath() + ".json"), new JsonObject());
+    }
+
     public static JsonObject inputToJsn(Object obj) {
         JsonObject json = new JsonObject();
         if (obj instanceof Item)

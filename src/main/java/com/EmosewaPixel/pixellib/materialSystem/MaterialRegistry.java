@@ -69,8 +69,8 @@ public class MaterialRegistry {
         STONE = new DustMaterial("stone", REGULAR, 0xcccccc, 0).setItemTier(ItemTier.STONE).blacklistTypes(BLOCK).build();
         WOODEN = new DustMaterial("wooden", REGULAR, 0xd5bc77, -1).setStandardBurnTime(200).setItemTier(ItemTier.WOOD).blacklistTypes(BLOCK).build();
         GLOWSTONE = new DustMaterial("glowstone", REGULAR, 0xfcbe60, 1).addTags(BLOCK_FROM_4X4).build();
-        BRICK = new IngotMaterial("brick", REGULAR, 0xb55c42, 1).addTags(BLOCK_FROM_4X4).blacklistTypes(NUGGET).build();
-        NETHER_BRICK = new IngotMaterial("nether_brick", REGULAR, 0x472a30, 1).addTags(BLOCK_FROM_4X4).blacklistTypes(NUGGET).build();
+        BRICK = new IngotMaterial("brick", REGULAR, 0xb55c42, 1).addTags(BLOCK_FROM_4X4).blacklistTypes(NUGGET).setCompoundType(CompoundType.CHEMICAL).build();
+        NETHER_BRICK = new IngotMaterial("nether_brick", REGULAR, 0x472a30, 1).addTags(BLOCK_FROM_4X4).blacklistTypes(NUGGET).setCompoundType(CompoundType.CHEMICAL).build();
         FLINT = new GemMaterial("flint", SHARP, 0x222020, -1).blacklistTypes(BLOCK).build();
         WATER = new FluidMaterial("water", TRANSPARENT_FLUID, 0x3e4ac6).build();
         LAVA = new FluidMaterial("lava", OPAQUE_FLUID, 0xc54c13).build();

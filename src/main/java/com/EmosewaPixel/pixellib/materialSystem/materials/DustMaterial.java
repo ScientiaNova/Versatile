@@ -95,6 +95,11 @@ public class DustMaterial extends Material {
         return this;
     }
 
+    public DustMaterial setCompoundType(CompoundType type) {
+        super.setCompoundType(type);
+        return this;
+    }
+
     public DustMaterial setProcessingMultiplier(int multiplier) {
         this.processingMultiplier = multiplier;
         return this;

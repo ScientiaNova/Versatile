@@ -19,6 +19,7 @@ import java.util.function.Supplier;
 public class IngotMaterial extends DustMaterial {
     public IngotMaterial(String name, TextureType textureType, int color, int tier) {
         super(name, textureType, color, tier);
+        setCompoundType(CompoundType.ALLOY);
     }
 
     public IngotMaterial addTags(String... tags) {
@@ -91,6 +92,11 @@ public class IngotMaterial extends DustMaterial {
 
     public IngotMaterial setStandardBurnTime(int time) {
         super.setStandardBurnTime(time);
+        return this;
+    }
+
+    public IngotMaterial setCompoundType(CompoundType type) {
+        super.setCompoundType(type);
         return this;
     }
 

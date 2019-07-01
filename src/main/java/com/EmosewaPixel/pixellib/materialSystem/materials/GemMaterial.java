@@ -94,6 +94,11 @@ public class GemMaterial extends DustMaterial {
         return this;
     }
 
+    public GemMaterial setCompoundType(CompoundType type) {
+        super.setCompoundType(type);
+        return this;
+    }
+
     public GemMaterial setProcessingMultiplier(int multiplier) {
         super.setProcessingMultiplier(multiplier);
         return this;

@@ -38,6 +38,11 @@ public class FluidMaterial extends Material {
         return this;
     }
 
+    public FluidMaterial setCompoundType(CompoundType type) {
+        super.setCompoundType(type);
+        return this;
+    }
+
     public FluidMaterial setTemperature(int temperature) {
         this.temperature = temperature;
         return this;
