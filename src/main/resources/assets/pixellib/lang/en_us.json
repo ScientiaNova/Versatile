@@ -24,9 +24,11 @@
 	"material.brick": "Brick",
 	"material.nether_brick": "Nether Brick",
 	"material.flint": "Flint",
+	"material.obsidian": "Obsidian",
+	"material.bone": "Bone",
+	"material.blaze": "Blaze",
 	"material.water": "Water",
 	"material.lava": "Lava",
-
 
 	"item.pixellib.wooden_dust": "Wood Pulp"
 }

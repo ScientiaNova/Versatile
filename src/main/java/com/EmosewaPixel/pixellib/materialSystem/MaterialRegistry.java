@@ -19,7 +19,7 @@ import net.minecraft.item.Items;
 public class MaterialRegistry {
     public static TextureType ROUGH, REGULAR, SHINY, FUEL, PENTAGONAL, OCTAGONAL, CRYSTAL, SHARP, TRANSPARENT_FLUID, OPAQUE_FLUID;
 
-    public static Material IRON, GOLD, LAPIS, QUARTZ, DIAMOND, EMERALD, REDSTONE, STONE, WOODEN, COAL, GLOWSTONE, BRICK, FLINT, CHARCOAL, NETHER_BRICK, WATER, LAVA;
+    public static Material IRON, GOLD, LAPIS, QUARTZ, DIAMOND, EMERALD, REDSTONE, STONE, WOODEN, COAL, GLOWSTONE, BRICK, FLINT, CHARCOAL, NETHER_BRICK, WATER, LAVA, BONE, BLAZE, OBSIDIAN;
 
     public static ObjectType DUST, INGOT, NUGGET, BLOCK, ORE, GEM;
 
@@ -27,10 +27,11 @@ public class MaterialRegistry {
     public static final String DISABLE_SIMPLE_PROCESSING = "disable_simple_processing";
     public static final String BLOCK_FROM_4X4 = "block_from_4x4";
     public static final String IS_GAS = "is_gas";
+    public static final String HAS_NO_FUEL_VALUE = "has_no_fuel_value";
+    public static final String ROD_TO_3_DUST = "rod_to_3_dust";
 
     public static final String SINGLE_TEXTURE_TYPE = "1_texture_type";
     public static final String USES_UNREFINED_COLOR = "uses_unrefined_color";
-    public static final String HAS_NO_FUEL_VALUE = "has_no_fuel_value";
 
     static {
         //Texture Types
@@ -66,12 +67,15 @@ public class MaterialRegistry {
         DIAMOND = new GemMaterial("diamond", PENTAGONAL, 0x34ebe3, 2).setElement(Elements.CARBON).setItemTier(ItemTier.DIAMOND).setArmorMaterial(ArmorMaterial.DIAMOND).build();
         EMERALD = new GemMaterial("emerald", OCTAGONAL, 0x08ad2c, 2).addTags(HAS_ORE).build();
         REDSTONE = new DustMaterial("redstone", REGULAR, 0xfc1a19, 1).addTags(HAS_ORE).build();
-        STONE = new DustMaterial("stone", REGULAR, 0xcccccc, 0).setItemTier(ItemTier.STONE).blacklistTypes(BLOCK).build();
-        WOODEN = new DustMaterial("wooden", REGULAR, 0xd5bc77, -1).setStandardBurnTime(200).setItemTier(ItemTier.WOOD).blacklistTypes(BLOCK).build();
+        STONE = new DustMaterial("stone", REGULAR, 0xb1b0ae, 0).setItemTier(ItemTier.STONE).blacklistTypes(BLOCK).build();
+        WOODEN = new DustMaterial("wooden", REGULAR, 0x87672c, -1).setStandardBurnTime(200).setItemTier(ItemTier.WOOD).blacklistTypes(BLOCK).build();
         GLOWSTONE = new DustMaterial("glowstone", REGULAR, 0xfcbe60, 1).addTags(BLOCK_FROM_4X4).build();
         BRICK = new IngotMaterial("brick", REGULAR, 0xb55c42, 1).addTags(BLOCK_FROM_4X4).blacklistTypes(NUGGET).setCompoundType(CompoundType.CHEMICAL).build();
         NETHER_BRICK = new IngotMaterial("nether_brick", REGULAR, 0x472a30, 1).addTags(BLOCK_FROM_4X4).blacklistTypes(NUGGET).setCompoundType(CompoundType.CHEMICAL).build();
-        FLINT = new GemMaterial("flint", SHARP, 0x222020, -1).blacklistTypes(BLOCK).build();
+        FLINT = new GemMaterial("flint", SHARP, 0x222020, 0).blacklistTypes(BLOCK).build();
+        OBSIDIAN = new DustMaterial("obsidian", REGULAR, 0x3c2a53, 3).blacklistTypes(BLOCK).build();
+        BONE = new DustMaterial("bone", REGULAR, 0xfcfaed, 0).addTags(ROD_TO_3_DUST).build();
+        BLAZE = new DustMaterial("bone", REGULAR, 0xffc20c, 0).addTags(ROD_TO_3_DUST).build();
         WATER = new FluidMaterial("water", TRANSPARENT_FLUID, 0x3e4ac6).build();
         LAVA = new FluidMaterial("lava", OPAQUE_FLUID, 0xc54c13).build();
 
@@ -121,5 +125,10 @@ public class MaterialRegistry {
         MaterialBlocks.addBlock(NETHER_BRICK, BLOCK, Blocks.NETHER_BRICKS);
 
         MaterialItems.addItem(FLINT, GEM, Items.FLINT);
+
+        MaterialItems.addItem(BONE, DUST, Items.BONE_MEAL);
+        MaterialBlocks.addBlock(BONE, BLOCK, Blocks.BONE_BLOCK);
+
+        MaterialItems.addItem(BLAZE, DUST, Items.BLAZE_POWDER);
     }
 }

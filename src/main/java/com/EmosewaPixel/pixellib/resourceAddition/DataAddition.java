@@ -19,8 +19,16 @@ public class DataAddition {
         MaterialBlocks.getAllBlocks().stream().filter(block -> block instanceof IMaterialItem).forEach(block -> TagMaps.addMatItemToTag((IMaterialItem) block));
         TagMaps.addItemToTag("gems/coal", Items.COAL);
         TagMaps.addItemToTag("gems", Items.COAL);
-        TagMaps.addBlockToTag("storage_block/brick", Blocks.BRICKS);
-        TagMaps.addBlockToTag("storage_block/nether_brick", Blocks.NETHER_BRICKS);
+        TagMaps.addBlockToTag("storage_blocks/brick", Blocks.BRICKS);
+        TagMaps.addBlockToTag("storage_blocks/nether_brick", Blocks.NETHER_BRICKS);
+        TagMaps.addBlockToTag("storage_blocks/bone", Blocks.BONE_BLOCK);
+        TagMaps.addBlockToTag("storage_blocks", Blocks.BRICKS);
+        TagMaps.addBlockToTag("storage_blocks", Blocks.NETHER_BRICKS);
+        TagMaps.addBlockToTag("storage_blocks", Blocks.BONE_BLOCK);
+        TagMaps.addItemToTag("dusts/bone", Items.BONE_MEAL);
+        TagMaps.addItemToTag("dusts/blaze", Items.BLAZE_POWDER);
+        TagMaps.addItemToTag("dusts", Items.BONE_MEAL);
+        TagMaps.addItemToTag("dusts", Items.BLAZE_POWDER);
 
         //Recipes
         Materials.getAll().stream().filter(mat -> mat instanceof IngotMaterial).forEach(mat -> {
