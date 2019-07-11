@@ -17,7 +17,7 @@ import net.minecraft.item.Items;
 
 //This class is used for registering the vanilla material and object type tags, materials and object types
 public class MaterialRegistry {
-    public static TextureType ROUGH, REGULAR, SHINY, FUEL, PENTAGONAL, OCTAGONAL, CRYSTAL, SHARP, TRANSPARENT_FLUID, OPAQUE_FLUID;
+    public static TextureType ROUGH, REGULAR, SHINY, FUEL, PENTAGONAL, OCTAGONAL, CRYSTAL, SHARP, FINE, TRANSPARENT_FLUID, OPAQUE_FLUID;
 
     public static Material IRON, GOLD, LAPIS, QUARTZ, DIAMOND, EMERALD, REDSTONE, STONE, WOODEN, COAL, GLOWSTONE, BRICK, FLINT, CHARCOAL, NETHER_BRICK, WATER, LAVA, BONE, BLAZE, OBSIDIAN;
 
@@ -43,6 +43,7 @@ public class MaterialRegistry {
         OCTAGONAL = new TextureType("octagonal");
         CRYSTAL = new TextureType("crystal");
         SHARP = new TextureType("sharp");
+        FINE = new TextureType("fine");
         TRANSPARENT_FLUID = new TextureType("transparent");
         OPAQUE_FLUID = new TextureType("opaque");
 
@@ -58,8 +59,8 @@ public class MaterialRegistry {
         GEM = new ItemType("gem", mat -> mat instanceof GemMaterial).setBucketVolume(144).build();
 
         //Materials
-        COAL = new DustMaterial("coal", FUEL, 0x1a1a1a, 0).setStandardBurnTime(1600).setElement(Elements.CARBON).addTags(HAS_ORE).build();
-        CHARCOAL = new DustMaterial("charcoal", FUEL, 0x443e33, 0).setStandardBurnTime(1600).setElement(Elements.CARBON).build();
+        COAL = new GemMaterial("coal", FUEL, 0x1a1a1a, 0).setStandardBurnTime(1600).setElement(Elements.CARBON).addTags(HAS_ORE).build();
+        CHARCOAL = new GemMaterial("charcoal", FUEL, 0x443e33, 0).setStandardBurnTime(1600).setElement(Elements.CARBON).build();
         IRON = new IngotMaterial("iron", ROUGH, -1, 1).setElement(Elements.IRON).setUnrefinedColor(0x947664).setItemTier(ItemTier.IRON).setArmorMaterial(ArmorMaterial.IRON).addTags(HAS_ORE).build();
         GOLD = new IngotMaterial("gold", SHINY, 0xfad64a, 2).setElement(Elements.GOLD).setItemTier(ItemTier.GOLD).setArmorMaterial(ArmorMaterial.GOLD).addTags(HAS_ORE).build();
         LAPIS = new GemMaterial("lapis", REGULAR, 0x2351be, 0).addTags(HAS_ORE).build();
@@ -67,8 +68,8 @@ public class MaterialRegistry {
         DIAMOND = new GemMaterial("diamond", PENTAGONAL, 0x34ebe3, 2).setElement(Elements.CARBON).setItemTier(ItemTier.DIAMOND).setArmorMaterial(ArmorMaterial.DIAMOND).build();
         EMERALD = new GemMaterial("emerald", OCTAGONAL, 0x08ad2c, 2).addTags(HAS_ORE).build();
         REDSTONE = new DustMaterial("redstone", REGULAR, 0xfc1a19, 1).addTags(HAS_ORE).build();
-        STONE = new DustMaterial("stone", REGULAR, 0xb1b0ae, 0).setItemTier(ItemTier.STONE).blacklistTypes(BLOCK).build();
-        WOODEN = new DustMaterial("wooden", REGULAR, 0x87672c, -1).setStandardBurnTime(200).setItemTier(ItemTier.WOOD).blacklistTypes(BLOCK).build();
+        STONE = new DustMaterial("stone", FINE, 0xb1b0ae, 0).setItemTier(ItemTier.STONE).build();
+        WOODEN = new DustMaterial("wooden", FINE, 0x87672c, -1).setStandardBurnTime(200).setItemTier(ItemTier.WOOD).build();
         GLOWSTONE = new DustMaterial("glowstone", REGULAR, 0xfcbe60, 1).addTags(BLOCK_FROM_4X4).build();
         BRICK = new IngotMaterial("brick", REGULAR, 0xb55c42, 1).addTags(BLOCK_FROM_4X4).blacklistTypes(NUGGET).setCompoundType(CompoundType.CHEMICAL).build();
         NETHER_BRICK = new IngotMaterial("nether_brick", REGULAR, 0x472a30, 1).addTags(BLOCK_FROM_4X4).blacklistTypes(NUGGET).setCompoundType(CompoundType.CHEMICAL).build();

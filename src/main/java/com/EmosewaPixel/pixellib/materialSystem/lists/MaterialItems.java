@@ -10,8 +10,8 @@ import net.minecraft.item.Item;
 import java.util.Collection;
 
 //This class contains functions for interacting with the global list of material items
-public class MaterialItems {
-    private static HashBasedTable<Material, ObjectType, Item> materialItems = HashBasedTable.create();
+public final class MaterialItems {
+    private static final HashBasedTable<Material, ObjectType, Item> materialItems = HashBasedTable.create();
 
     public static Item getItem(Material material, ObjectType type) {
         return materialItems.get(material, type);

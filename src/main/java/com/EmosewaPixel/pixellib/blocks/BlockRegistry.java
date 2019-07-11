@@ -34,14 +34,10 @@ public class BlockRegistry {
     }
 
     private static void registerItemBlock(Block block, RegistryEvent.Register<Item> e) {
-        registerItemBlock(block, e, true);
-    }
-
-    private static void registerItemBlock(Block block, RegistryEvent.Register<Item> e, boolean withGroup) {
-        e.getRegistry().register(new BlockItem(block, withGroup ? new Item.Properties().group(PixelLib.main) : new Item.Properties()) {
+        e.getRegistry().register(new BlockItem(block, new Item.Properties().group(PixelLib.main)) {
             @Override
             public ITextComponent getDisplayName(ItemStack stack) {
-                return getBlock().getNameTextComponent();
+                return block.getNameTextComponent();
             }
         }.setRegistryName(block.getRegistryName()));
     }

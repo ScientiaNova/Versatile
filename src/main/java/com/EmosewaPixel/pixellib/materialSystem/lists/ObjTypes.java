@@ -6,8 +6,8 @@ import java.util.Collection;
 import java.util.HashMap;
 
 //This class contains functions for interacting with the global list of object types
-public class ObjTypes {
-    private static HashMap<String, ObjectType> objTypes = new HashMap<>();
+public final class ObjTypes {
+    private static final HashMap<String, ObjectType> objTypes = new HashMap<>();
 
     public static void add(ObjectType type) {
         if (objTypes.get(type.getName()) != null)

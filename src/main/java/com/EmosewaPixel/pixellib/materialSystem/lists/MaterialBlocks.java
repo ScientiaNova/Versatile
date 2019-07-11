@@ -10,8 +10,8 @@ import net.minecraft.block.Block;
 import java.util.Collection;
 
 //This class contains functions for interacting with the global list of material blocks
-public class MaterialBlocks {
-    private static HashBasedTable<Material, ObjectType, Block> materialBlocks = HashBasedTable.create();
+public final class MaterialBlocks {
+    private static final HashBasedTable<Material, ObjectType, Block> materialBlocks = HashBasedTable.create();
 
     public static Block getBlock(Material material, ObjectType type) {
         return materialBlocks.get(material, type);

@@ -6,8 +6,8 @@ import java.util.Collection;
 import java.util.HashMap;
 
 //This class contains functions for interacting with the global list of materials
-public class Materials {
-    private static HashMap<String, Material> materials = new HashMap<>();
+public final class Materials {
+    private static final HashMap<String, Material> materials = new HashMap<>();
 
     public static void add(Material mat) {
         if (materials.get(mat.getName()) != null)

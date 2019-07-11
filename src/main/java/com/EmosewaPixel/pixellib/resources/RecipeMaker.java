@@ -70,7 +70,10 @@ public class RecipeMaker {
     }
 
     public static void removeRecipe(ResourceLocation name) {
-        JSONAdder.addDataJSON(new ResourceLocation(name.getNamespace(), "recipes/" + name.getPath() + ".json"), new JsonObject());
+        if (JSONAdder.DATA.containsKey(name))
+            JSONAdder.DATA.remove(name);
+        else
+            JSONAdder.addDataJSON(new ResourceLocation(name.getNamespace(), "recipes/" + name.getPath() + ".json"), new JsonObject());
     }
 
     public static JsonObject inputToJsn(Object obj) {

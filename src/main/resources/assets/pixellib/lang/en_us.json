@@ -30,5 +30,7 @@
 	"material.water": "Water",
 	"material.lava": "Lava",
 
-	"item.pixellib.wooden_dust": "Wood Pulp"
+	"item.pixellib.wooden_dust": "Sawdust",
+	"block.pixellib.wooden_storage_block": "Block of Sawdust",
+	"block.pixellib.stone_storage_block": "Block of Stone Dust"
 }
