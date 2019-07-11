@@ -2,6 +2,8 @@ package com.EmosewaPixel.pixellib.materialsystem.materials.utility;
 
 import com.EmosewaPixel.pixellib.materialsystem.materials.Material;
 
+import java.util.function.Supplier;
+
 /*
 Transition Materials are materials that can't exist in a regular state and when used in recipes turn in another Material and as such they can't be
 used for generating items/blocks/fluids.
@@ -10,17 +12,17 @@ and as such you'd have the Hydrogen replaced with Hydrogen Gas and every other m
  */
 
 public class TransitionMaterial extends Material {
-    private Material endMaterial;
+    private Supplier<Material> endMaterial;
     private int neededAmount;
 
-    public TransitionMaterial(String name, Material becomes, int neededAmount) {
+    public TransitionMaterial(String name, Supplier<Material> becomes, int neededAmount) {
         super(name, null, -1, -1);
         endMaterial = becomes;
         this.neededAmount = neededAmount;
     }
 
     public Material getEndMaterial() {
-        return endMaterial;
+        return endMaterial.get();
     }
 
     public int getNeededAmount() {
