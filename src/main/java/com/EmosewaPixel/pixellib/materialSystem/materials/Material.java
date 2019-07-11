@@ -7,7 +7,6 @@ import com.EmosewaPixel.pixellib.materialsystem.element.Elements;
 import com.EmosewaPixel.pixellib.materialsystem.lists.Materials;
 import com.EmosewaPixel.pixellib.materialsystem.types.ObjectType;
 import com.EmosewaPixel.pixellib.materialsystem.types.TextureType;
-import com.google.common.collect.ImmutableList;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
@@ -39,7 +38,7 @@ public class Material {
     private ArrayList<ObjectType> blacklist = new ArrayList<>();
     private int tier;
     private List<String> materialTags = new ArrayList<>();
-    private ImmutableList<MaterialStack> composition = new ImmutableList.Builder<MaterialStack>().build();
+    private List<MaterialStack> composition = new ArrayList<>();
     private Element element = Elements.NULL;
     private String secondName = null;
     private int burnTime = 0;
@@ -93,7 +92,7 @@ public class Material {
 
     //Sets the material composition of the material
     public Material setComposition(MaterialStack... stacks) {
-        this.composition.addAll(Arrays.asList(stacks));
+        this.composition = Arrays.asList(stacks);
         return this;
     }
 
@@ -158,7 +157,7 @@ public class Material {
         return new ItemTags.Wrapper(new ResourceLocation("forge", type.getName() + "s/" + secondName));
     }
 
-    public ImmutableList<MaterialStack> getComposition() {
+    public List<MaterialStack> getComposition() {
         return composition;
     }
 
