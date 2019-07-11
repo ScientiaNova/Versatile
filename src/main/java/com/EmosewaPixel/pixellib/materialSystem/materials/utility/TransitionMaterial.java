@@ -19,12 +19,10 @@ public class TransitionMaterial extends Material {
         this.neededAmount = neededAmount;
     }
 
-    //Sets the material this material transitions to
     public Material getEndMaterial() {
         return endMaterial;
     }
 
-    //Sets the amount of this material needed to get the end material
     public int getNeededAmount() {
         return neededAmount;
     }
