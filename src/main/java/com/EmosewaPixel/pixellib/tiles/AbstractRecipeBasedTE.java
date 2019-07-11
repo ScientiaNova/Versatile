@@ -1,8 +1,8 @@
 package com.EmosewaPixel.pixellib.tiles;
 
 import com.EmosewaPixel.pixellib.capabilities.ImprovedItemStackHandler;
-import com.EmosewaPixel.pixellib.miscUtils.ItemUtils;
-import com.EmosewaPixel.pixellib.miscUtils.StreamUtils;
+import com.EmosewaPixel.pixellib.miscutils.ItemUtils;
+import com.EmosewaPixel.pixellib.miscutils.StreamUtils;
 import com.EmosewaPixel.pixellib.recipes.AbstractRecipeList;
 import com.EmosewaPixel.pixellib.recipes.SimpleMachineRecipe;
 import net.minecraft.entity.player.PlayerEntity;

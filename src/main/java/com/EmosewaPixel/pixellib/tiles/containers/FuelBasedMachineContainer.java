@@ -1,6 +1,6 @@
 package com.EmosewaPixel.pixellib.tiles.containers;
 
-import com.EmosewaPixel.pixellib.miscUtils.StreamUtils;
+import com.EmosewaPixel.pixellib.miscutils.StreamUtils;
 import com.EmosewaPixel.pixellib.tiles.FuelBasedTE;
 import com.EmosewaPixel.pixellib.tiles.RecipeBasedTE;
 import net.minecraft.entity.player.PlayerInventory;

@@ -1,13 +1,13 @@
-package com.EmosewaPixel.pixellib.materialSystem;
+package com.EmosewaPixel.pixellib.materialsystem;
 
-import com.EmosewaPixel.pixellib.materialSystem.element.Elements;
-import com.EmosewaPixel.pixellib.materialSystem.lists.MaterialBlocks;
-import com.EmosewaPixel.pixellib.materialSystem.lists.MaterialItems;
-import com.EmosewaPixel.pixellib.materialSystem.materials.*;
-import com.EmosewaPixel.pixellib.materialSystem.types.BlockType;
-import com.EmosewaPixel.pixellib.materialSystem.types.ItemType;
-import com.EmosewaPixel.pixellib.materialSystem.types.ObjectType;
-import com.EmosewaPixel.pixellib.materialSystem.types.TextureType;
+import com.EmosewaPixel.pixellib.materialsystem.element.Elements;
+import com.EmosewaPixel.pixellib.materialsystem.lists.MaterialBlocks;
+import com.EmosewaPixel.pixellib.materialsystem.lists.MaterialItems;
+import com.EmosewaPixel.pixellib.materialsystem.materials.*;
+import com.EmosewaPixel.pixellib.materialsystem.types.BlockType;
+import com.EmosewaPixel.pixellib.materialsystem.types.ItemType;
+import com.EmosewaPixel.pixellib.materialsystem.types.ObjectType;
+import com.EmosewaPixel.pixellib.materialsystem.types.TextureType;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;

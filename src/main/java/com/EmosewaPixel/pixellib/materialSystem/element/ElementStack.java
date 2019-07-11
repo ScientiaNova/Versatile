@@ -1,6 +1,6 @@
-package com.EmosewaPixel.pixellib.materialSystem.element;
+package com.EmosewaPixel.pixellib.materialsystem.element;
 
-import com.EmosewaPixel.pixellib.materialSystem.materials.MaterialStack;
+import com.EmosewaPixel.pixellib.materialsystem.materials.MaterialStack;
 
 //Elements Stacks are ways of getting an amount of a certain Element
 public class ElementStack {

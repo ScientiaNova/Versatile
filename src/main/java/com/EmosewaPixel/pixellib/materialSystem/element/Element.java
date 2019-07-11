@@ -1,4 +1,4 @@
-package com.EmosewaPixel.pixellib.materialSystem.element;
+package com.EmosewaPixel.pixellib.materialsystem.element;
 
 /*
 Elements are objects with a few properties, that can be assigned to materials. They're mainly meant to be used for tech mods.

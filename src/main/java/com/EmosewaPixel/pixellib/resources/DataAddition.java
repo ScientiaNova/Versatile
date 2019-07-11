@@ -1,11 +1,11 @@
-package com.EmosewaPixel.pixellib.resourceAddition;
+package com.EmosewaPixel.pixellib.resources;
 
-import com.EmosewaPixel.pixellib.materialSystem.MaterialRegistry;
-import com.EmosewaPixel.pixellib.materialSystem.lists.MaterialBlocks;
-import com.EmosewaPixel.pixellib.materialSystem.lists.MaterialItems;
-import com.EmosewaPixel.pixellib.materialSystem.lists.Materials;
-import com.EmosewaPixel.pixellib.materialSystem.materials.IMaterialItem;
-import com.EmosewaPixel.pixellib.materialSystem.materials.IngotMaterial;
+import com.EmosewaPixel.pixellib.materialsystem.MaterialRegistry;
+import com.EmosewaPixel.pixellib.materialsystem.lists.MaterialBlocks;
+import com.EmosewaPixel.pixellib.materialsystem.lists.MaterialItems;
+import com.EmosewaPixel.pixellib.materialsystem.lists.Materials;
+import com.EmosewaPixel.pixellib.materialsystem.materials.IMaterialItem;
+import com.EmosewaPixel.pixellib.materialsystem.materials.IngotMaterial;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;

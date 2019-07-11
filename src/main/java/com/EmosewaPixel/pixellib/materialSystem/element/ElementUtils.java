@@ -1,9 +1,9 @@
-package com.EmosewaPixel.pixellib.materialSystem.element;
+package com.EmosewaPixel.pixellib.materialsystem.element;
 
-import com.EmosewaPixel.pixellib.materialSystem.materials.CompoundType;
-import com.EmosewaPixel.pixellib.materialSystem.materials.Material;
-import com.EmosewaPixel.pixellib.materialSystem.materials.MaterialStack;
-import com.EmosewaPixel.pixellib.miscUtils.StreamUtils;
+import com.EmosewaPixel.pixellib.materialsystem.materials.CompoundType;
+import com.EmosewaPixel.pixellib.materialsystem.materials.Material;
+import com.EmosewaPixel.pixellib.materialsystem.materials.MaterialStack;
+import com.EmosewaPixel.pixellib.miscutils.StreamUtils;
 
 import java.util.Collections;
 import java.util.List;

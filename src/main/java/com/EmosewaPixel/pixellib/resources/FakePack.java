@@ -1,4 +1,4 @@
-package com.EmosewaPixel.pixellib.resourceAddition;
+package com.EmosewaPixel.pixellib.resources;
 
 import com.google.gson.*;
 import net.minecraft.resources.IResourcePack;

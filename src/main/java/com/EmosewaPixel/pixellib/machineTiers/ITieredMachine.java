@@ -1,4 +1,4 @@
-package com.EmosewaPixel.pixellib.machineTiers;
+package com.EmosewaPixel.pixellib.machinetiers;
 
 //This interface implemented by the Blocks of tiered machines
 public interface ITieredMachine {

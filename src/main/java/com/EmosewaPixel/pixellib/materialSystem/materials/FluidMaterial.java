@@ -1,9 +1,9 @@
-package com.EmosewaPixel.pixellib.materialSystem.materials;
+package com.EmosewaPixel.pixellib.materialsystem.materials;
 
-import com.EmosewaPixel.pixellib.materialSystem.MaterialRegistry;
-import com.EmosewaPixel.pixellib.materialSystem.element.Element;
-import com.EmosewaPixel.pixellib.materialSystem.types.ObjectType;
-import com.EmosewaPixel.pixellib.materialSystem.types.TextureType;
+import com.EmosewaPixel.pixellib.materialsystem.MaterialRegistry;
+import com.EmosewaPixel.pixellib.materialsystem.element.Element;
+import com.EmosewaPixel.pixellib.materialsystem.types.ObjectType;
+import com.EmosewaPixel.pixellib.materialsystem.types.TextureType;
 
 //Fluid Materials are materials meant only for generating fluids of. NYI as forge hasn't sorted fluids out yet
 public class FluidMaterial extends Material {
@@ -43,11 +43,13 @@ public class FluidMaterial extends Material {
         return this;
     }
 
+    //Sets the temperature of the fluid. This is used when the fluid doesn't exist in room temperature
     public FluidMaterial setTemperature(int temperature) {
         this.temperature = temperature;
         return this;
     }
 
+    //Sets the material that's gotten when this material boils. The boiling temperature is determined by that material's temperature
     public FluidMaterial setBoilingMaterial(FluidMaterial boilingMaterial) {
         if (!this.hasTag(MaterialRegistry.IS_GAS))
             this.boilingMaterial = boilingMaterial;

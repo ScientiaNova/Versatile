@@ -1,6 +1,6 @@
-package com.EmosewaPixel.pixellib.materialSystem.materials.utility;
+package com.EmosewaPixel.pixellib.materialsystem.materials.utility;
 
-import com.EmosewaPixel.pixellib.materialSystem.materials.Material;
+import com.EmosewaPixel.pixellib.materialsystem.materials.Material;
 
 /*
 Transition Materials are materials that can't exist in a regular state and when used in recipes turn in another Material and as such they can't be
@@ -9,20 +9,22 @@ For example, if you're generating decomposition recipes and a material contains 
 and as such you'd have the Hydrogen replaced with Hydrogen Gas and every other material stack in the recipe would be multiplied by the needed amount for that conversion
  */
 
-public class TransitionMaterials extends Material {
+public class TransitionMaterial extends Material {
     private Material endMaterial;
     private int neededAmount;
 
-    public TransitionMaterials(String name, Material becomes, int neededAmount) {
+    public TransitionMaterial(String name, Material becomes, int neededAmount) {
         super(name, null, -1, -1);
         endMaterial = becomes;
         this.neededAmount = neededAmount;
     }
 
+    //Sets the material this material transitions to
     public Material getEndMaterial() {
         return endMaterial;
     }
 
+    //Sets the amount of this material needed to get the end material
     public int getNeededAmount() {
         return neededAmount;
     }

@@ -1,4 +1,4 @@
-package com.EmosewaPixel.pixellib.miscUtils;
+package com.EmosewaPixel.pixellib.miscutils;
 
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;

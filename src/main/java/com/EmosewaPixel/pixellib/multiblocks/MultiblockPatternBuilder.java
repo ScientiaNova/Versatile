@@ -1,6 +1,6 @@
 package com.EmosewaPixel.pixellib.multiblocks;
 
-import com.EmosewaPixel.pixellib.miscUtils.StreamUtils;
+import com.EmosewaPixel.pixellib.miscutils.StreamUtils;
 import com.google.common.collect.Streams;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;

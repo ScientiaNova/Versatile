@@ -1,6 +1,6 @@
-package com.EmosewaPixel.pixellib.resourceAddition;
+package com.EmosewaPixel.pixellib.resources;
 
-import com.EmosewaPixel.pixellib.materialSystem.materials.IMaterialItem;
+import com.EmosewaPixel.pixellib.materialsystem.materials.IMaterialItem;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.MultimapBuilder;
 import net.minecraft.block.Block;

@@ -1,4 +1,4 @@
-package com.EmosewaPixel.pixellib.materialSystem.materials;
+package com.EmosewaPixel.pixellib.materialsystem.materials;
 
 //Harvest Tiers contain the stats for breaking blocks
 public class HarvestTier {

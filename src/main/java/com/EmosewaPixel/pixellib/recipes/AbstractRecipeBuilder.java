@@ -1,7 +1,7 @@
 package com.EmosewaPixel.pixellib.recipes;
 
 import com.EmosewaPixel.pixellib.PixelLib;
-import com.EmosewaPixel.pixellib.miscUtils.StreamUtils;
+import com.EmosewaPixel.pixellib.miscutils.StreamUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;

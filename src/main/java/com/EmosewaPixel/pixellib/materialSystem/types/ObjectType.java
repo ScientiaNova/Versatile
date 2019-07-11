@@ -1,7 +1,7 @@
-package com.EmosewaPixel.pixellib.materialSystem.types;
+package com.EmosewaPixel.pixellib.materialsystem.types;
 
-import com.EmosewaPixel.pixellib.materialSystem.lists.ObjTypes;
-import com.EmosewaPixel.pixellib.materialSystem.materials.Material;
+import com.EmosewaPixel.pixellib.materialsystem.lists.ObjTypes;
+import com.EmosewaPixel.pixellib.materialsystem.materials.Material;
 import net.minecraft.item.Item;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;

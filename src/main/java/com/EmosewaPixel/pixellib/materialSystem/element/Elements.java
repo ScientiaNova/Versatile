@@ -1,4 +1,4 @@
-package com.EmosewaPixel.pixellib.materialSystem.element;
+package com.EmosewaPixel.pixellib.materialsystem.element;
 
 //This class contains all the elements of the periodic table and a few common isotopes
 public class Elements {

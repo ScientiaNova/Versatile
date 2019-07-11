@@ -1,6 +1,6 @@
-package com.EmosewaPixel.pixellib.materialSystem.types;
+package com.EmosewaPixel.pixellib.materialsystem.types;
 
-import com.EmosewaPixel.pixellib.materialSystem.lists.TextureTypes;
+import com.EmosewaPixel.pixellib.materialsystem.lists.TextureTypes;
 
 //Texture Types determine which sets of textures Material use for Object Types
 public class TextureType {

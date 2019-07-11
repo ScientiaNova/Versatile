@@ -1,9 +1,9 @@
 package com.EmosewaPixel.pixellib.items;
 
-import com.EmosewaPixel.pixellib.materialSystem.lists.MaterialItems;
-import com.EmosewaPixel.pixellib.materialSystem.lists.Materials;
-import com.EmosewaPixel.pixellib.materialSystem.lists.ObjTypes;
-import com.EmosewaPixel.pixellib.materialSystem.types.ItemType;
+import com.EmosewaPixel.pixellib.materialsystem.lists.MaterialItems;
+import com.EmosewaPixel.pixellib.materialsystem.lists.Materials;
+import com.EmosewaPixel.pixellib.materialsystem.lists.ObjTypes;
+import com.EmosewaPixel.pixellib.materialsystem.types.ItemType;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 

@@ -1,4 +1,4 @@
-package com.EmosewaPixel.pixellib.materialSystem.materials;
+package com.EmosewaPixel.pixellib.materialsystem.materials;
 
 /*
 This is used to determine whether a compound material is an alloy or chemical compound. This is quite important for tech mods that add electrolysis and centrifuging

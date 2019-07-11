@@ -1,6 +1,6 @@
-package com.EmosewaPixel.pixellib.materialSystem.types;
+package com.EmosewaPixel.pixellib.materialsystem.types;
 
-import com.EmosewaPixel.pixellib.materialSystem.materials.Material;
+import com.EmosewaPixel.pixellib.materialsystem.materials.Material;
 
 import java.util.function.Predicate;
 

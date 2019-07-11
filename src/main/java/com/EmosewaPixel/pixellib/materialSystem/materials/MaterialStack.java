@@ -1,4 +1,4 @@
-package com.EmosewaPixel.pixellib.materialSystem.materials;
+package com.EmosewaPixel.pixellib.materialsystem.materials;
 
 //Material Stacks are ways of getting an amount of a certain Material
 public class MaterialStack {

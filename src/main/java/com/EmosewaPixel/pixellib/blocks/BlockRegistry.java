@@ -1,12 +1,12 @@
 package com.EmosewaPixel.pixellib.blocks;
 
 import com.EmosewaPixel.pixellib.PixelLib;
-import com.EmosewaPixel.pixellib.materialSystem.lists.MaterialBlocks;
-import com.EmosewaPixel.pixellib.materialSystem.lists.Materials;
-import com.EmosewaPixel.pixellib.materialSystem.lists.ObjTypes;
-import com.EmosewaPixel.pixellib.materialSystem.materials.DustMaterial;
-import com.EmosewaPixel.pixellib.materialSystem.materials.IMaterialItem;
-import com.EmosewaPixel.pixellib.materialSystem.types.BlockType;
+import com.EmosewaPixel.pixellib.materialsystem.lists.MaterialBlocks;
+import com.EmosewaPixel.pixellib.materialsystem.lists.Materials;
+import com.EmosewaPixel.pixellib.materialsystem.lists.ObjTypes;
+import com.EmosewaPixel.pixellib.materialsystem.materials.DustMaterial;
+import com.EmosewaPixel.pixellib.materialsystem.materials.IMaterialItem;
+import com.EmosewaPixel.pixellib.materialsystem.types.BlockType;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;

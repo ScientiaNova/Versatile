@@ -1,12 +1,12 @@
-package com.EmosewaPixel.pixellib.materialSystem.materials;
+package com.EmosewaPixel.pixellib.materialsystem.materials;
 
 import com.EmosewaPixel.pixellib.items.tools.ArmorMaterial;
 import com.EmosewaPixel.pixellib.items.tools.ItemTier;
-import com.EmosewaPixel.pixellib.materialSystem.MaterialRegistry;
-import com.EmosewaPixel.pixellib.materialSystem.element.Element;
-import com.EmosewaPixel.pixellib.materialSystem.lists.MaterialItems;
-import com.EmosewaPixel.pixellib.materialSystem.types.ObjectType;
-import com.EmosewaPixel.pixellib.materialSystem.types.TextureType;
+import com.EmosewaPixel.pixellib.materialsystem.MaterialRegistry;
+import com.EmosewaPixel.pixellib.materialsystem.element.Element;
+import com.EmosewaPixel.pixellib.materialsystem.lists.MaterialItems;
+import com.EmosewaPixel.pixellib.materialsystem.types.ObjectType;
+import com.EmosewaPixel.pixellib.materialsystem.types.TextureType;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
@@ -105,21 +105,25 @@ public class DustMaterial extends Material {
         return this;
     }
 
+    //Sets the material that's gotten when refining this material
     public DustMaterial setRefinedMaterial(DustMaterial material) {
         this.refinedMaterial = material;
         return this;
     }
 
+    //The color used by unrefined object types, such as ores
     public DustMaterial setUnrefinedColor(int color) {
         this.unrefinedColor = color;
         return this;
     }
 
+    //Sets the melting temperature of the material
     public DustMaterial setMeltingTemperature(int temperature) {
         meltingTemperature = temperature;
         return this;
     }
 
+    //Sets the boiling temperature of the material
     public DustMaterial setBoilingTemperature(int temperature) {
         boilingTemperature = temperature;
         return this;

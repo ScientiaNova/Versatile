@@ -1,10 +1,10 @@
 package com.EmosewaPixel.pixellib.items;
 
 import com.EmosewaPixel.pixellib.PixelLib;
-import com.EmosewaPixel.pixellib.materialSystem.lists.MaterialItems;
-import com.EmosewaPixel.pixellib.materialSystem.materials.IMaterialItem;
-import com.EmosewaPixel.pixellib.materialSystem.materials.Material;
-import com.EmosewaPixel.pixellib.materialSystem.types.ObjectType;
+import com.EmosewaPixel.pixellib.materialsystem.lists.MaterialItems;
+import com.EmosewaPixel.pixellib.materialsystem.materials.IMaterialItem;
+import com.EmosewaPixel.pixellib.materialsystem.materials.Material;
+import com.EmosewaPixel.pixellib.materialsystem.types.ObjectType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;

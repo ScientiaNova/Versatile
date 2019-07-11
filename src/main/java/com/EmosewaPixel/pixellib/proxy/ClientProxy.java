@@ -1,15 +1,15 @@
 package com.EmosewaPixel.pixellib.proxy;
 
 import com.EmosewaPixel.pixellib.items.MaterialItem;
-import com.EmosewaPixel.pixellib.materialSystem.MaterialRegistry;
-import com.EmosewaPixel.pixellib.materialSystem.lists.MaterialBlocks;
-import com.EmosewaPixel.pixellib.materialSystem.lists.MaterialItems;
-import com.EmosewaPixel.pixellib.materialSystem.materials.DustMaterial;
-import com.EmosewaPixel.pixellib.materialSystem.materials.IMaterialItem;
-import com.EmosewaPixel.pixellib.materialSystem.types.BlockType;
-import com.EmosewaPixel.pixellib.materialSystem.types.ObjectType;
-import com.EmosewaPixel.pixellib.resourceAddition.FakeResourcePackFinder;
-import com.EmosewaPixel.pixellib.resourceAddition.JSONAdder;
+import com.EmosewaPixel.pixellib.materialsystem.MaterialRegistry;
+import com.EmosewaPixel.pixellib.materialsystem.lists.MaterialBlocks;
+import com.EmosewaPixel.pixellib.materialsystem.lists.MaterialItems;
+import com.EmosewaPixel.pixellib.materialsystem.materials.DustMaterial;
+import com.EmosewaPixel.pixellib.materialsystem.materials.IMaterialItem;
+import com.EmosewaPixel.pixellib.materialsystem.types.BlockType;
+import com.EmosewaPixel.pixellib.materialsystem.types.ObjectType;
+import com.EmosewaPixel.pixellib.resources.FakeResourcePackFinder;
+import com.EmosewaPixel.pixellib.resources.JSONAdder;
 import com.google.gson.JsonObject;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

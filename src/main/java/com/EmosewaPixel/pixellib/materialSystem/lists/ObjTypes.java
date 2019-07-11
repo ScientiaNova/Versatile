@@ -1,6 +1,6 @@
-package com.EmosewaPixel.pixellib.materialSystem.lists;
+package com.EmosewaPixel.pixellib.materialsystem.lists;
 
-import com.EmosewaPixel.pixellib.materialSystem.types.ObjectType;
+import com.EmosewaPixel.pixellib.materialsystem.types.ObjectType;
 
 import java.util.Collection;
 import java.util.HashMap;

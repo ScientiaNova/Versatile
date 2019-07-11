@@ -1,4 +1,4 @@
-package com.EmosewaPixel.pixellib.resourceAddition;
+package com.EmosewaPixel.pixellib.resources;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;

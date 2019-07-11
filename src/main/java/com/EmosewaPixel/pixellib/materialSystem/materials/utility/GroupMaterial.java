@@ -1,7 +1,7 @@
-package com.EmosewaPixel.pixellib.materialSystem.materials.utility;
+package com.EmosewaPixel.pixellib.materialsystem.materials.utility;
 
-import com.EmosewaPixel.pixellib.materialSystem.materials.Material;
-import com.EmosewaPixel.pixellib.materialSystem.materials.MaterialStack;
+import com.EmosewaPixel.pixellib.materialsystem.materials.Material;
+import com.EmosewaPixel.pixellib.materialsystem.materials.MaterialStack;
 
 /*
 Group Materials are a way of grouping together materials. They can't be used for generating items/blocks/fluids and they're only meant to be used as components

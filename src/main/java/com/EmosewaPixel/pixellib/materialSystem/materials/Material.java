@@ -1,12 +1,12 @@
-package com.EmosewaPixel.pixellib.materialSystem.materials;
+package com.EmosewaPixel.pixellib.materialsystem.materials;
 
 import com.EmosewaPixel.pixellib.items.tools.ArmorMaterial;
 import com.EmosewaPixel.pixellib.items.tools.ItemTier;
-import com.EmosewaPixel.pixellib.materialSystem.element.Element;
-import com.EmosewaPixel.pixellib.materialSystem.element.Elements;
-import com.EmosewaPixel.pixellib.materialSystem.lists.Materials;
-import com.EmosewaPixel.pixellib.materialSystem.types.ObjectType;
-import com.EmosewaPixel.pixellib.materialSystem.types.TextureType;
+import com.EmosewaPixel.pixellib.materialsystem.element.Element;
+import com.EmosewaPixel.pixellib.materialsystem.element.Elements;
+import com.EmosewaPixel.pixellib.materialsystem.lists.Materials;
+import com.EmosewaPixel.pixellib.materialsystem.types.ObjectType;
+import com.EmosewaPixel.pixellib.materialsystem.types.TextureType;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.IItemTier;

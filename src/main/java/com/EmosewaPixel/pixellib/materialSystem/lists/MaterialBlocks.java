@@ -1,8 +1,8 @@
-package com.EmosewaPixel.pixellib.materialSystem.lists;
+package com.EmosewaPixel.pixellib.materialsystem.lists;
 
-import com.EmosewaPixel.pixellib.materialSystem.materials.IMaterialItem;
-import com.EmosewaPixel.pixellib.materialSystem.materials.Material;
-import com.EmosewaPixel.pixellib.materialSystem.types.ObjectType;
+import com.EmosewaPixel.pixellib.materialsystem.materials.IMaterialItem;
+import com.EmosewaPixel.pixellib.materialsystem.materials.Material;
+import com.EmosewaPixel.pixellib.materialsystem.types.ObjectType;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import net.minecraft.block.Block;
