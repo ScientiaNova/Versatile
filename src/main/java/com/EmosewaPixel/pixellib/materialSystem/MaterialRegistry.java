@@ -74,7 +74,7 @@ public class MaterialRegistry {
         BRICK = new IngotMaterial("brick", REGULAR, 0xb55c42, 1).addTags(BLOCK_FROM_4X4).blacklistTypes(NUGGET).setCompoundType(CompoundType.CHEMICAL).build();
         NETHER_BRICK = new IngotMaterial("nether_brick", REGULAR, 0x472a30, 1).addTags(BLOCK_FROM_4X4).blacklistTypes(NUGGET).setCompoundType(CompoundType.CHEMICAL).build();
         FLINT = new GemMaterial("flint", SHARP, 0x222020, 0).blacklistTypes(BLOCK).build();
-        OBSIDIAN = new DustMaterial("obsidian", REGULAR, 0x3c2a53, 3).blacklistTypes(BLOCK).build();
+        OBSIDIAN = new DustMaterial("obsidian", FINE, 0x3c2a53, 3).build();
         BONE = new DustMaterial("bone", REGULAR, 0xfcfaed, 0).addTags(ROD_TO_3_DUST).build();
         BLAZE = new DustMaterial("bone", REGULAR, 0xffc20c, 0).addTags(ROD_TO_3_DUST).build();
         WATER = new FluidMaterial("water", TRANSPARENT_FLUID, 0x3e4ac6).build();

@@ -1,7 +1,11 @@
 package com.EmosewaPixel.pixellib.resources;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import net.minecraft.resources.IResourcePack;
+import net.minecraft.resources.ResourcePack;
 import net.minecraft.resources.ResourcePackType;
 import net.minecraft.resources.data.IMetadataSectionSerializer;
 import net.minecraft.util.ResourceLocation;
@@ -29,6 +33,7 @@ public final class FakePack implements IResourcePack {
 
     protected FakePack(String name) {
         this.name = name;
+        putJSON(ResourcePackType.CLIENT_RESOURCES, new ResourceLocation("pack.mcmeta"), new JsonParser().parse("{\"pack_format\":4,\"description\":\"PixelLib's injected resources\"}"));
     }
 
     public FakePack putInputStream(ResourcePackType type, ResourceLocation location, InputStream stream) {
@@ -82,7 +87,7 @@ public final class FakePack implements IResourcePack {
                 filter(location -> location.getPath().startsWith(pathIn)).filter(location -> {
             String path = location.getPath();
             int lastSlash = path.lastIndexOf('/');
-            return filter.test(path.substring(lastSlash < 0 ? 0 : lastSlash, path.length()));
+            return filter.test(path.substring(lastSlash < 0 ? 0 : lastSlash));
         }).collect(Collectors.toList());
     }
 
@@ -95,13 +100,12 @@ public final class FakePack implements IResourcePack {
     @Override
     public Set<String> getResourceNamespaces(ResourcePackType type) {
         Map<ResourceLocation, InputStream> map = type == ResourcePackType.CLIENT_RESOURCES ? assets : data;
-        return map.keySet().stream().map(location->location.getNamespace()).collect(Collectors.toSet());
+        return map.keySet().stream().map(location -> location.getNamespace()).collect(Collectors.toSet());
     }
 
     @Nullable
-    @Override
-    public <T> T getMetadata(IMetadataSectionSerializer<T> deserializer) throws IOException {
-        return deserializer.deserialize((JsonObject) new JsonParser().parse("{\"pack_format\":4,\"description\":\"PixelLib's injected resources\"}"));
+    public <T> T getMetadata(IMetadataSectionSerializer<T> deserializer) {
+        return ResourcePack.getResourceMetadata(deserializer, assets.get(new ResourceLocation("pack.mcmeta")));
     }
 
     @Override
@@ -110,7 +114,7 @@ public final class FakePack implements IResourcePack {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() {
     }
 
     @Override

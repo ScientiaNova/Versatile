@@ -5,6 +5,7 @@ import com.EmosewaPixel.pixellib.items.ItemRegistry;
 import com.EmosewaPixel.pixellib.materialsystem.MaterialRegistry;
 import com.EmosewaPixel.pixellib.materialsystem.lists.MaterialItems;
 import com.EmosewaPixel.pixellib.materialsystem.materials.IMaterialItem;
+import com.EmosewaPixel.pixellib.materialsystem.types.ObjectType;
 import com.EmosewaPixel.pixellib.proxy.ClientProxy;
 import com.EmosewaPixel.pixellib.proxy.IModProxy;
 import com.EmosewaPixel.pixellib.proxy.ServerProxy;
@@ -100,9 +101,11 @@ public class PixelLib {
             Item item = e.getItemStack().getItem();
             if (item instanceof BlockItem) {
                 Block block = Block.getBlockFromItem(item);
-                if (block instanceof IMaterialItem)
-                    if (!((IMaterialItem) block).getObjType().hasTag(MaterialRegistry.HAS_NO_FUEL_VALUE) && ((IMaterialItem) block).getObjType().getBucketVolume() != 0)
-                        e.setBurnTime(((IMaterialItem) block).getObjType().getBucketVolume() / 144 * ((IMaterialItem) block).getMaterial().getStandardBurnTime());
+                if (block instanceof IMaterialItem) {
+                    ObjectType type = ((IMaterialItem) block).getObjType();
+                    if (!type.hasTag(MaterialRegistry.HAS_NO_FUEL_VALUE) && ((IMaterialItem) block).getObjType().getBucketVolume() != 0)
+                        e.setBurnTime((type.getBucketVolume() / 144 + type.getBucketVolume() / 1296) * ((IMaterialItem) block).getMaterial().getStandardBurnTime());
+                }
             } else if (item instanceof IMaterialItem)
                 if (!((IMaterialItem) item).getObjType().hasTag(MaterialRegistry.HAS_NO_FUEL_VALUE) && ((IMaterialItem) item).getObjType().getBucketVolume() != 0)
                     e.setBurnTime(((IMaterialItem) item).getObjType().getBucketVolume() / 144 * ((IMaterialItem) item).getMaterial().getStandardBurnTime());
