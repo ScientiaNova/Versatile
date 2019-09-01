@@ -116,6 +116,6 @@ public class GemMaterial extends DustMaterial {
 
 
     public Item getDefaultItem() {
-        return MaterialItems.getItem(this, MaterialRegistry.GEM);
+        return MaterialItems.INSTANCE.getItem(this, MaterialRegistry.GEM);
     }
 }

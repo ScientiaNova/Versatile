@@ -29,7 +29,7 @@ public class MultiblockPatternBuilder {
     }
 
     public MultiblockPatternBuilder repeat(int amount) {
-        StreamUtils.repeat(amount, i -> pattern.add(pattern.get(pattern.size() - 1)));
+        StreamUtils.INSTANCE.repeat(amount, i -> pattern.add(pattern.get(pattern.size() - 1)));
         return this;
     }
 

@@ -21,7 +21,7 @@ public class RecipeMaker {
         Arrays.stream(inputs).map(RecipeMaker::inputToJsn).forEach(ingredients::add);
         recipe.add("ingredients", ingredients);
         recipe.add("result", stackToJson(output));
-        JSONAdder.addDataJSON(new ResourceLocation(name.getNamespace(), "recipes/" + name.getPath() + ".json"), recipe);
+        JSONAdder.INSTANCE.addDataJSON(new ResourceLocation(name.getNamespace(), "recipes/" + name.getPath() + ".json"), recipe);
     }
 
     public static void addShapelessRecipe(ResourceLocation name, ItemStack output, @Nonnull Object... inputs) {
@@ -48,7 +48,7 @@ public class RecipeMaker {
         }
         recipe.add("key", key);
         recipe.add("result", stackToJson(output));
-        JSONAdder.addDataJSON(new ResourceLocation(name.getNamespace(), "recipes/" + name.getPath() + ".json"), recipe);
+        JSONAdder.INSTANCE.addDataJSON(new ResourceLocation(name.getNamespace(), "recipes/" + name.getPath() + ".json"), recipe);
     }
 
     public static void addShapedRecipe(ResourceLocation name, ItemStack output, @Nonnull Object... shape) {
@@ -62,7 +62,7 @@ public class RecipeMaker {
         recipe.addProperty("result", output.getRegistryName().toString());
         recipe.addProperty("cookingtime", cookTime);
         recipe.addProperty("experience", xp);
-        JSONAdder.addDataJSON(new ResourceLocation(name.getNamespace(), "recipes/" + name.getPath() + ".json"), recipe);
+        JSONAdder.INSTANCE.addDataJSON(new ResourceLocation(name.getNamespace(), "recipes/" + name.getPath() + ".json"), recipe);
     }
 
     public static void addFurnaceRecipe(ResourceLocation name, Object input, Item output) {

@@ -1,7 +1,7 @@
-package com.EmosewaPixel.pixellib.materialsystem.materials.utility;
+package com.EmosewaPixel.pixellib.materialsystem.materials.utility
 
-import com.EmosewaPixel.pixellib.materialsystem.materials.Material;
-import com.EmosewaPixel.pixellib.materialsystem.materials.MaterialStack;
+import com.EmosewaPixel.pixellib.materialsystem.materials.Material
+import com.EmosewaPixel.pixellib.materialsystem.materials.MaterialStack
 
 /*
 Group Materials are a way of grouping together materials. They can't be used for generating items/blocks/fluids and they're only meant to be used as components
@@ -11,13 +11,9 @@ For example, you'd make a Hydroxide Group consisting of Oxygen and Hydrogen, a S
 a Carbonate Group consisting of Carbon Monoxide and Oxygen Gas, etc.
 Using a group instead of a group components in a material's composition lets mods like Formula Tooltips properly display the composition
  */
-public class GroupMaterial extends Material {
-    public GroupMaterial(String name) {
-        super(name, null, -1, -1);
-    }
-
-    public GroupMaterial setComposition(MaterialStack... stacks) {
-        super.setComposition(stacks);
-        return this;
+class GroupMaterial(name: String) : Material(name, null, -1, -1) {
+    override fun setComposition(vararg stacks: MaterialStack): GroupMaterial {
+        super.setComposition(*stacks)
+        return this
     }
 }

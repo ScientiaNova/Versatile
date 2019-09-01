@@ -21,7 +21,7 @@ public class BlockType extends ObjectType {
             JsonObject states = new JsonObject();
             JsonObject variants = new JsonObject();
             JsonObject variant = new JsonObject();
-            variant.addProperty("model", "pixellib:block/materialblocks/" + (hasTag(MaterialRegistry.SINGLE_TEXTURE_TYPE) ? getName() : i.getMaterial().getTextureType().toString() + "/" + getName()));
+            variant.addProperty("model", "pixellib:block/materialblocks/" + (hasTag(MaterialRegistry.SINGLE_TEXTURE_TYPE) ? getName() : i.getMat().getTextureType().toString() + "/" + getName()));
             variants.add("", variant);
             states.add("variants", variants);
             return states;

@@ -146,7 +146,7 @@ public class DustMaterial extends Material {
     }
 
     public Item getDefaultItem() {
-        return MaterialItems.getItem(this, MaterialRegistry.DUST);
+        return MaterialItems.INSTANCE.getItem(this, MaterialRegistry.DUST);
     }
 
     public int getMeltingTemperature() {

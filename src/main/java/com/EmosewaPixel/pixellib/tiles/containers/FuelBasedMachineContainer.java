@@ -14,12 +14,12 @@ public class FuelBasedMachineContainer extends RecipeBasedMachineContainer<Recip
 
     @Override
     protected void addMachineSlots() {
-        StreamUtils.repeat(te.getRecipeList().getMaxInputs(), i ->
+        StreamUtils.INSTANCE.repeat(te.getRecipeList().getMaxInputs(), i ->
                 this.addSlot(new SlotItemHandler(itemHandler, i, te.getRecipeList().getMaxInputs() == 1 ? 56 : 38 + i * 18, 17))
         );
         this.addSlot(new SlotItemHandler(itemHandler, te.getRecipeList().getMaxInputs(), 56 - (te.getRecipeList().getMaxInputs() - 1) * 9, 53));
 
-        StreamUtils.repeat(te.getRecipeList().getMaxOutputs(), i ->
+        StreamUtils.INSTANCE.repeat(te.getRecipeList().getMaxOutputs(), i ->
                 this.addSlot(new SlotItemHandler(itemHandler, te.getSlotCount() - i - 1, 116, te.getRecipeList().getMaxOutputs() == 1 ? 35 : 48 - i * 22))
         );
     }

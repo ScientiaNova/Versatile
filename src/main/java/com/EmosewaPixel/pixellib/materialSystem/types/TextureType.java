@@ -8,7 +8,7 @@ public class TextureType {
 
     public TextureType(String name) {
         this.name = name;
-        TextureTypes.add(this);
+        TextureTypes.INSTANCE.add(this);
     }
 
     public String toString() {

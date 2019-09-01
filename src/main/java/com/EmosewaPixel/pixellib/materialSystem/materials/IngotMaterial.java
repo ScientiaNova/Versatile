@@ -126,6 +126,6 @@ public class IngotMaterial extends DustMaterial {
     }
 
     public Item getDefaultItem() {
-        return MaterialItems.getItem(this, MaterialRegistry.INGOT);
+        return MaterialItems.INSTANCE.getItem(this, MaterialRegistry.INGOT);
     }
 }

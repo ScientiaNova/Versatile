@@ -34,17 +34,17 @@ public class RecipeBasedMachineContainer<T extends AbstractRecipeBasedTE> extend
     }
 
     protected void addMachineSlots() {
-        StreamUtils.repeat(te.getRecipeList().getMaxInputs(), i ->
+        StreamUtils.INSTANCE.repeat(te.getRecipeList().getMaxInputs(), i ->
                 this.addSlot(new SlotItemHandler(itemHandler, i, te.getRecipeList().getMaxInputs() == 1 ? 56 : 38 + i * 18, 35)));
 
-        StreamUtils.repeat(te.getRecipeList().getMaxOutputs(), i ->
+        StreamUtils.INSTANCE.repeat(te.getRecipeList().getMaxOutputs(), i ->
                 this.addSlot(new SlotItemHandler(itemHandler, te.getSlotCount() - i - 1, 116, te.getRecipeList().getMaxOutputs() == 1 ? 35 : 48 - i * 22)));
     }
 
     private void addPlayerSlots(IInventory playerInventory) {
-        StreamUtils.repeat(3, i -> StreamUtils.repeat(9, j ->
+        StreamUtils.INSTANCE.repeat(3, i -> StreamUtils.INSTANCE.repeat(9, j ->
                 this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18))));
-        StreamUtils.repeat(9, k ->
+        StreamUtils.INSTANCE.repeat(9, k ->
                 this.addSlot(new Slot(playerInventory, k, 8 + k * 18, 142)));
     }
 

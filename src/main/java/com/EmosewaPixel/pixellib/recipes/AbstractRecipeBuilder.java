@@ -46,7 +46,7 @@ public abstract class AbstractRecipeBuilder<T extends SimpleMachineRecipe, R ext
 
     public R input(Object... inputs) {
         this.inputs.addAll(Arrays.asList(inputs));
-        StreamUtils.repeat(inputs.length, i -> consumeChances.add(1f));
+        StreamUtils.INSTANCE.repeat(inputs.length, i -> consumeChances.add(1f));
         return (R) this;
     }
 
@@ -58,13 +58,13 @@ public abstract class AbstractRecipeBuilder<T extends SimpleMachineRecipe, R ext
 
     public R notConsumable(Object... inputs) {
         this.inputs.addAll(Arrays.asList(inputs));
-        StreamUtils.repeat(inputs.length, i -> consumeChances.add(0f));
+        StreamUtils.INSTANCE.repeat(inputs.length, i -> consumeChances.add(0f));
         return (R) this;
     }
 
     public R output(Object... outputs) {
         this.outputs.addAll(Arrays.asList((outputs)));
-        StreamUtils.repeat(outputs.length, i -> outputChances.add(1.0f));
+        StreamUtils.INSTANCE.repeat(outputs.length, i -> outputChances.add(1.0f));
         return (R) this;
     }
 

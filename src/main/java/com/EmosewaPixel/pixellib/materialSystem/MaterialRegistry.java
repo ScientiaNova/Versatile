@@ -80,56 +80,56 @@ public class MaterialRegistry {
         WATER = new FluidMaterial("water", TRANSPARENT_FLUID, 0x3e4ac6).build();
         LAVA = new FluidMaterial("lava", OPAQUE_FLUID, 0xc54c13).build();
 
-        MaterialItems.addItem(COAL, GEM, Items.COAL);
-        MaterialBlocks.addBlock(COAL, BLOCK, Blocks.COAL_BLOCK);
-        MaterialBlocks.addBlock(COAL, ORE, Blocks.COAL_ORE);
+        MaterialItems.INSTANCE.addItem(COAL, GEM, Items.COAL);
+        MaterialBlocks.INSTANCE.addBlock(COAL, BLOCK, Blocks.COAL_BLOCK);
+        MaterialBlocks.INSTANCE.addBlock(COAL, ORE, Blocks.COAL_ORE);
 
-        MaterialItems.addItem(CHARCOAL, GEM, Items.CHARCOAL);
+        MaterialItems.INSTANCE.addItem(CHARCOAL, GEM, Items.CHARCOAL);
 
-        MaterialItems.addItem(IRON, INGOT, Items.IRON_INGOT);
-        MaterialItems.addItem(IRON, NUGGET, Items.IRON_NUGGET);
-        MaterialBlocks.addBlock(IRON, BLOCK, Blocks.IRON_BLOCK);
-        MaterialBlocks.addBlock(IRON, ORE, Blocks.IRON_ORE);
+        MaterialItems.INSTANCE.addItem(IRON, INGOT, Items.IRON_INGOT);
+        MaterialItems.INSTANCE.addItem(IRON, NUGGET, Items.IRON_NUGGET);
+        MaterialBlocks.INSTANCE.addBlock(IRON, BLOCK, Blocks.IRON_BLOCK);
+        MaterialBlocks.INSTANCE.addBlock(IRON, ORE, Blocks.IRON_ORE);
 
-        MaterialItems.addItem(GOLD, INGOT, Items.GOLD_INGOT);
-        MaterialItems.addItem(GOLD, NUGGET, Items.GOLD_NUGGET);
-        MaterialBlocks.addBlock(GOLD, BLOCK, Blocks.GOLD_BLOCK);
-        MaterialBlocks.addBlock(GOLD, ORE, Blocks.GOLD_ORE);
+        MaterialItems.INSTANCE.addItem(GOLD, INGOT, Items.GOLD_INGOT);
+        MaterialItems.INSTANCE.addItem(GOLD, NUGGET, Items.GOLD_NUGGET);
+        MaterialBlocks.INSTANCE.addBlock(GOLD, BLOCK, Blocks.GOLD_BLOCK);
+        MaterialBlocks.INSTANCE.addBlock(GOLD, ORE, Blocks.GOLD_ORE);
 
-        MaterialItems.addItem(LAPIS, GEM, Items.LAPIS_LAZULI);
-        MaterialBlocks.addBlock(LAPIS, BLOCK, Blocks.LAPIS_BLOCK);
-        MaterialBlocks.addBlock(LAPIS, ORE, Blocks.LAPIS_ORE);
+        MaterialItems.INSTANCE.addItem(LAPIS, GEM, Items.LAPIS_LAZULI);
+        MaterialBlocks.INSTANCE.addBlock(LAPIS, BLOCK, Blocks.LAPIS_BLOCK);
+        MaterialBlocks.INSTANCE.addBlock(LAPIS, ORE, Blocks.LAPIS_ORE);
 
-        MaterialItems.addItem(DIAMOND, GEM, Items.DIAMOND);
-        MaterialBlocks.addBlock(DIAMOND, BLOCK, Blocks.DIAMOND_BLOCK);
-        MaterialBlocks.addBlock(DIAMOND, ORE, Blocks.DIAMOND_ORE);
+        MaterialItems.INSTANCE.addItem(DIAMOND, GEM, Items.DIAMOND);
+        MaterialBlocks.INSTANCE.addBlock(DIAMOND, BLOCK, Blocks.DIAMOND_BLOCK);
+        MaterialBlocks.INSTANCE.addBlock(DIAMOND, ORE, Blocks.DIAMOND_ORE);
 
-        MaterialItems.addItem(EMERALD, GEM, Items.EMERALD);
-        MaterialBlocks.addBlock(EMERALD, BLOCK, Blocks.EMERALD_BLOCK);
-        MaterialBlocks.addBlock(EMERALD, ORE, Blocks.EMERALD_ORE);
+        MaterialItems.INSTANCE.addItem(EMERALD, GEM, Items.EMERALD);
+        MaterialBlocks.INSTANCE.addBlock(EMERALD, BLOCK, Blocks.EMERALD_BLOCK);
+        MaterialBlocks.INSTANCE.addBlock(EMERALD, ORE, Blocks.EMERALD_ORE);
 
-        MaterialItems.addItem(QUARTZ, GEM, Items.QUARTZ);
-        MaterialBlocks.addBlock(QUARTZ, BLOCK, Blocks.QUARTZ_BLOCK);
-        MaterialBlocks.addBlock(QUARTZ, ORE, Blocks.NETHER_QUARTZ_ORE);
+        MaterialItems.INSTANCE.addItem(QUARTZ, GEM, Items.QUARTZ);
+        MaterialBlocks.INSTANCE.addBlock(QUARTZ, BLOCK, Blocks.QUARTZ_BLOCK);
+        MaterialBlocks.INSTANCE.addBlock(QUARTZ, ORE, Blocks.NETHER_QUARTZ_ORE);
 
-        MaterialItems.addItem(REDSTONE, DUST, Items.REDSTONE);
-        MaterialBlocks.addBlock(REDSTONE, BLOCK, Blocks.REDSTONE_BLOCK);
-        MaterialBlocks.addBlock(REDSTONE, ORE, Blocks.REDSTONE_ORE);
+        MaterialItems.INSTANCE.addItem(REDSTONE, DUST, Items.REDSTONE);
+        MaterialBlocks.INSTANCE.addBlock(REDSTONE, BLOCK, Blocks.REDSTONE_BLOCK);
+        MaterialBlocks.INSTANCE.addBlock(REDSTONE, ORE, Blocks.REDSTONE_ORE);
 
-        MaterialItems.addItem(GLOWSTONE, DUST, Items.GLOWSTONE_DUST);
-        MaterialBlocks.addBlock(GLOWSTONE, BLOCK, Blocks.GLOWSTONE);
+        MaterialItems.INSTANCE.addItem(GLOWSTONE, DUST, Items.GLOWSTONE_DUST);
+        MaterialBlocks.INSTANCE.addBlock(GLOWSTONE, BLOCK, Blocks.GLOWSTONE);
 
-        MaterialItems.addItem(BRICK, INGOT, Items.BRICK);
-        MaterialBlocks.addBlock(BRICK, BLOCK, Blocks.BRICKS);
+        MaterialItems.INSTANCE.addItem(BRICK, INGOT, Items.BRICK);
+        MaterialBlocks.INSTANCE.addBlock(BRICK, BLOCK, Blocks.BRICKS);
 
-        MaterialItems.addItem(NETHER_BRICK, INGOT, Items.NETHER_BRICK);
-        MaterialBlocks.addBlock(NETHER_BRICK, BLOCK, Blocks.NETHER_BRICKS);
+        MaterialItems.INSTANCE.addItem(NETHER_BRICK, INGOT, Items.NETHER_BRICK);
+        MaterialBlocks.INSTANCE.addBlock(NETHER_BRICK, BLOCK, Blocks.NETHER_BRICKS);
 
-        MaterialItems.addItem(FLINT, GEM, Items.FLINT);
+        MaterialItems.INSTANCE.addItem(FLINT, GEM, Items.FLINT);
 
-        MaterialItems.addItem(BONE, DUST, Items.BONE_MEAL);
-        MaterialBlocks.addBlock(BONE, BLOCK, Blocks.BONE_BLOCK);
+        MaterialItems.INSTANCE.addItem(BONE, DUST, Items.BONE_MEAL);
+        MaterialBlocks.INSTANCE.addBlock(BONE, BLOCK, Blocks.BONE_BLOCK);
 
-        MaterialItems.addItem(BLAZE, DUST, Items.BLAZE_POWDER);
+        MaterialItems.INSTANCE.addItem(BLAZE, DUST, Items.BLAZE_POWDER);
     }
 }

@@ -17,8 +17,8 @@ import net.minecraft.util.ResourceLocation;
 public class DataAddition {
     public static void register() {
         //Tags
-        MaterialItems.getAllItems().stream().filter(item -> item instanceof IMaterialItem).forEach(item -> TagMaps.addMatItemToTag((IMaterialItem) item));
-        MaterialBlocks.getAllBlocks().stream().filter(block -> block instanceof IMaterialItem).forEach(block -> TagMaps.addMatItemToTag((IMaterialItem) block));
+        MaterialItems.getAll().stream().filter(item -> item instanceof IMaterialItem).forEach(item -> TagMaps.addMatItemToTag((IMaterialItem) item));
+        MaterialBlocks.getAll().stream().filter(block -> block instanceof IMaterialItem).forEach(block -> TagMaps.addMatItemToTag((IMaterialItem) block));
         TagMaps.addItemToTag("gems/coal", Items.COAL);
         TagMaps.addItemToTag("gems/charcoal", Items.CHARCOAL);
         TagMaps.addItemToTag("gems", Items.COAL);

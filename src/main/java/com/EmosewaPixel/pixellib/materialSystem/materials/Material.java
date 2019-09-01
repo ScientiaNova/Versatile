@@ -121,8 +121,8 @@ public class Material {
     }
 
     public Material build() {
-        Materials.add(this);
-        return Materials.get(name);
+        Materials.INSTANCE.add(this);
+        return Materials.INSTANCE.get(name);
     }
 
     public String getName() {

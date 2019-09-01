@@ -1,6 +1,6 @@
-modLoader="javafml" #mandatory
-loaderVersion="[27,)"
-issueTrackerURL="http://my.issue.tracker/" #optional
+modLoader="kotlinfml"
+loaderVersion="[1,)"
+issueTrackerURL="https://github.com/EmosewaPixel/PixelLib/issues"
 [[mods]]
 modId="pixellib"
 version="${file.jarVersion}"
@@ -10,18 +10,18 @@ description="A library mod for easily adding some new things"
 [[dependencies.pixellib]]
     modId="forge"
     mandatory=true
-    versionRange="[27,)"
+    versionRange="[28,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.pixellib]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.14.3]"
+    versionRange="[1.14.,]"
     ordering="NONE"
     side="BOTH"
 [[dependencies.pixellib]]
     modId="jei"
     mandatory=false
-    versionRange="[6.0.0.2,)"
+    versionRange="[6.0.0.8,)"
     ordering="AFTER"
     side="BOTH"

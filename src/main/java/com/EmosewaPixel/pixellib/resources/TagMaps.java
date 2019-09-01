@@ -13,16 +13,16 @@ public class TagMaps {
 
     public static void addMatItemToTag(IMaterialItem item) {
         if (item instanceof Item) {
-            addItemToTag(item.getObjType().getName() + "s/" + item.getMaterial().getName(), (Item) item);
+            addItemToTag(item.getObjType().getName() + "s/" + item.getMat().getName(), (Item) item);
             addItemToTag(item.getObjType().getName() + "s", (Item) item);
-            if (item.getMaterial().hasSecondName())
-                addItemToTag(item.getObjType().getName() + "s/" + item.getMaterial().getSecondName(), (Item) item);
+            if (item.getMat().hasSecondName())
+                addItemToTag(item.getObjType().getName() + "s/" + item.getMat().getSecondName(), (Item) item);
         }
         if (item instanceof Block) {
-            addBlockToTag(item.getObjType().getName() + "s/" + item.getMaterial().getName(), (Block) item);
+            addBlockToTag(item.getObjType().getName() + "s/" + item.getMat().getName(), (Block) item);
             addBlockToTag(item.getObjType().getName() + "s", (Block) item);
-            if (item.getMaterial().hasSecondName())
-                addBlockToTag(item.getObjType().getName() + "s/" + item.getMaterial().getSecondName(), (Block) item);
+            if (item.getMat().hasSecondName())
+                addBlockToTag(item.getObjType().getName() + "s/" + item.getMat().getSecondName(), (Block) item);
         }
     }
 
