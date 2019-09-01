@@ -11,7 +11,7 @@ import net.minecraft.util.text.TranslationTextComponent
 import net.minecraft.util.text.translation.LanguageMap
 
 //Material Items are Items that have a Material and Object Type
-class MaterialItem(override val mat: Material, override val objType: ObjectType) : Item(Item.Properties().group(PixelLib.main)), IMaterialItem {
+class MaterialItem(override val mat: Material, override val objType: ObjectType) : Item(Properties().group(PixelLib.main)), IMaterialItem {
 
     init {
         setRegistryName("pixellib:" + mat.name + "_" + objType.name)

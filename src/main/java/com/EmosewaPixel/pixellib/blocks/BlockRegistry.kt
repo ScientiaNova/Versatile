@@ -11,21 +11,20 @@ import net.minecraft.block.Block
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-import net.minecraft.util.text.ITextComponent
 import net.minecraftforge.event.RegistryEvent
 
 //This class is used for generating Blocks for all the possible Material-Object Type combinations
 object BlockRegistry {
     fun registry(e: RegistryEvent.Register<Block>) {
         Materials.getAll().forEach { mat ->
-            ObjTypes.getAll().stream()
-                    .filter { type -> mat is DustMaterial && type is BlockType && type.isMaterialCompatible(mat) && !MaterialBlocks.contains(mat, type) && !mat.hasBlacklisted(type) }
+            ObjTypes.getAll()
+                    .filter { type -> mat is DustMaterial && type is BlockType && type.isMaterialCompatible(mat) && !MaterialBlocks.contains(mat, type) && type !in mat.typeBlacklist }
                     .forEach { type -> register(MaterialBlock(mat as DustMaterial, type as BlockType), e) }
         }
     }
 
     fun itemRegistry(e: RegistryEvent.Register<Item>) {
-        MaterialBlocks.getAll().stream().filter { it is IMaterialItem }.forEach { block -> registerItemBlock(block, e) }
+        MaterialBlocks.getAll().filterIsInstance<IMaterialItem>().forEach { registerItemBlock(it as Block, e) }
     }
 
     private fun register(block: Block, e: RegistryEvent.Register<Block>): Block {
@@ -34,10 +33,8 @@ object BlockRegistry {
     }
 
     private fun registerItemBlock(block: Block, e: RegistryEvent.Register<Item>) {
-        e.registry.register(object : BlockItem(block, Item.Properties().group(PixelLib.main)) {
-            override fun getDisplayName(stack: ItemStack): ITextComponent {
-                return block.nameTextComponent
-            }
+        e.registry.register(object : BlockItem(block, Properties().group(PixelLib.main)) {
+            override fun getDisplayName(stack: ItemStack) = block.nameTextComponent
         }.setRegistryName(block.registryName!!))
     }
 }

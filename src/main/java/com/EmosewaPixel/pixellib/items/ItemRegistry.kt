@@ -11,8 +11,8 @@ import net.minecraftforge.event.RegistryEvent
 object ItemRegistry {
     fun registry(e: RegistryEvent.Register<Item>) {
         Materials.getAll().forEach { mat ->
-            ObjTypes.getAll().stream()
-                    .filter { type -> type is ItemType && type.isMaterialCompatible(mat) && !MaterialItems.contains(mat, type) && !mat.hasBlacklisted(type) }
+            ObjTypes.getAll()
+                    .filter { type -> type is ItemType && type.isMaterialCompatible(mat) && !MaterialItems.contains(mat, type) && type !in mat.typeBlacklist }
                     .forEach { type -> register(MaterialItem(mat, type), e) }
         }
     }

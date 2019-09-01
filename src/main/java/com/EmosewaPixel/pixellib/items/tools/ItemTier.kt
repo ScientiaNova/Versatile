@@ -7,7 +7,6 @@ import java.util.function.Supplier
 
 //This is an implementation of vanilla's IItemTier so you can simply make objects of it
 class ItemTier(private val harvestLevel: Int, private val maxUses: Int, private val efficiency: Float, private val attackDamage: Float, private val enchantability: Int, private val repairMaterial: Supplier<Ingredient>) : IItemTier {
-
     override fun getMaxUses() = this.maxUses
 
     override fun getEfficiency() = this.efficiency

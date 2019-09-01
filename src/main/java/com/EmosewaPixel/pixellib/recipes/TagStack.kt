@@ -10,7 +10,5 @@ data class TagStack @JvmOverloads constructor(var tag: Tag<Item>, var count: Int
     val isEmpty: Boolean
         get() = count == 0
 
-    fun asItemStack(): ItemStack {
-        return ItemStack(tag.allElements.stream().findFirst().orElse(Items.AIR), count)
-    }
+    fun asItemStack() = ItemStack(tag.allElements.first() ?: Items.AIR, count)
 }

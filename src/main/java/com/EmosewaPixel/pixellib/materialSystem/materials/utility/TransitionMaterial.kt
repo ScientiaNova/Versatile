@@ -9,6 +9,10 @@ For example, if you're generating decomposition recipes and a material contains 
 and as such you'd have the Hydrogen replaced with Hydrogen Gas and every other material stack in the recipe would be multiplied by the needed amount for that conversion
  */
 
-class TransitionMaterial(name: String, private val endMaterial: () -> Material, val neededAmount: Int) : Material(name, null, -1, -1) {
-    fun getEndMaterial(): Material = endMaterial.invoke()
+class TransitionMaterial(name: String, private val endMaterialFun: () -> Material, val neededAmount: Int) : Material(name, null, -1, -1) {
+    val endMaterial: Material
+        get() = endMaterialFun.invoke()
+
+    @JvmName("invokeTransition")
+    operator fun invoke(builder: TransitionMaterial.() -> Unit) = builder(this)
 }

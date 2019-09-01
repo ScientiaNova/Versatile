@@ -10,12 +10,7 @@ object ObjTypes {
     fun getAll() = objTypes.values
 
     @JvmStatic
-    fun add(type: ObjectType) {
-        if (type.name in objTypes)
-            objTypes[type.name]!!.merge(type)
-        else
-            objTypes[type.name] = type
-    }
+    fun add(type: ObjectType) = if (type.name in objTypes) objTypes[type.name]!!.merge(type) else objTypes[type.name] = type
 
     @JvmStatic
     operator fun get(name: String): ObjectType? = objTypes[name]

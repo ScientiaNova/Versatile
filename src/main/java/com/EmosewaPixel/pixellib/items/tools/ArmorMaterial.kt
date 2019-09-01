@@ -19,7 +19,6 @@ class ArmorMaterial(private val durability: Int, private val damageReduction: In
 
     override fun getRepairMaterial() = repairMaterial.get()
 
-
     override fun getName() = name
 
     override fun getToughness() = toughness
