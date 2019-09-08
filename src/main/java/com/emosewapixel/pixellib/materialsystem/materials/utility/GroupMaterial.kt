@@ -10,7 +10,7 @@ For example, you'd make a Hydroxide Group consisting of Oxygen and Hydrogen, a S
 a Carbonate Group consisting of Carbon Monoxide and Oxygen Gas, etc.
 Using a group instead of a group components in a material's composition lets mods like Formula Tooltips properly display the composition
  */
-open class GroupMaterial(name: String) : Material(name, null, -1, -1) {
+open class GroupMaterial(name: String) : Material(name, "", -1, -1) {
     @JvmName("invokeGroup")
     operator fun invoke(builder: GroupMaterial.() -> Unit) = builder(this)
 }

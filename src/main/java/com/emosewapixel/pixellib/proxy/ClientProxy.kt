@@ -78,7 +78,7 @@ fun addModelJSONs() {
         val registryName = (i as Item).registryName
         val type = (i as IMaterialItem).objType
         val model = JsonObject()
-        model.addProperty("parent", registryName!!.namespace + ":item/materialitems/" + if (MaterialRegistry.SINGLE_TEXTURE_TYPE in type.typeTags) type.name else (i as IMaterialItem).mat.textureType.toString() + "/" + type.name)
+        model.addProperty("parent", registryName!!.namespace + ":item/materialitems/" + if (MaterialRegistry.SINGLE_TEXTURE_TYPE in type.typeTags) type.name else (i as IMaterialItem).mat.textureType + "/" + type.name)
         JSONAdder.addAssetsJSON(ResourceLocation(registryName.namespace, "models/item/" + registryName.path + ".json"), model)
     }
 
@@ -86,7 +86,7 @@ fun addModelJSONs() {
         val registryName = (b as Block).registryName
         val type = (b as IMaterialItem).objType
         val model = JsonObject()
-        model.addProperty("parent", registryName!!.namespace + ":block/materialblocks/" + if (MaterialRegistry.SINGLE_TEXTURE_TYPE in type.typeTags) type.name else (b as IMaterialItem).mat.textureType.toString() + "/" + type.name)
+        model.addProperty("parent", registryName!!.namespace + ":block/materialblocks/" + if (MaterialRegistry.SINGLE_TEXTURE_TYPE in type.typeTags) type.name else (b as IMaterialItem).mat.textureType + "/" + type.name)
         JSONAdder.addAssetsJSON(ResourceLocation(registryName.namespace, "models/item/" + registryName.path + ".json"), model)
         JSONAdder.addAssetsJSON(ResourceLocation(registryName.namespace, "blockstates/" + registryName.path + ".json"), (type as BlockType).getBlockStateJson(b as IMaterialItem))
     }

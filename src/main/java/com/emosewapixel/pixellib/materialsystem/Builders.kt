@@ -6,28 +6,27 @@ import com.emosewapixel.pixellib.materialsystem.materials.utility.TransitionMate
 import com.emosewapixel.pixellib.materialsystem.types.BlockType
 import com.emosewapixel.pixellib.materialsystem.types.ItemType
 import com.emosewapixel.pixellib.materialsystem.types.ObjectType
-import com.emosewapixel.pixellib.materialsystem.types.TextureType
 import net.minecraft.block.Block
 
-fun dustMaterial(name: String, textureType: TextureType?, color: Int, tier: Int, builder: DustMaterial.() -> Unit): Material {
+fun dustMaterial(name: String, textureType: String, color: Int, tier: Int, builder: DustMaterial.() -> Unit): Material {
     val mat = DustMaterial(name, textureType, color, tier)
     mat(builder)
     return mat.build()
 }
 
-fun gemMaterial(name: String, textureType: TextureType?, color: Int, tier: Int, builder: GemMaterial.() -> Unit): Material {
+fun gemMaterial(name: String, textureType: String, color: Int, tier: Int, builder: GemMaterial.() -> Unit): Material {
     val mat = GemMaterial(name, textureType, color, tier)
     mat(builder)
     return mat.build()
 }
 
-fun ingotMaterial(name: String, textureType: TextureType?, color: Int, tier: Int, builder: IngotMaterial.() -> Unit): Material {
+fun ingotMaterial(name: String, textureType: String, color: Int, tier: Int, builder: IngotMaterial.() -> Unit): Material {
     val mat = IngotMaterial(name, textureType, color, tier)
     mat(builder)
     return mat.build()
 }
 
-fun fluidMaterial(name: String, textureType: TextureType?, color: Int, tier: Int = 0, builder: FluidMaterial.() -> Unit): Material {
+fun fluidMaterial(name: String, textureType: String, color: Int, tier: Int = 0, builder: FluidMaterial.() -> Unit): Material {
     val mat = FluidMaterial(name, textureType, color, tier)
     mat(builder)
     return mat.build()

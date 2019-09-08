@@ -2,11 +2,10 @@ package com.emosewapixel.pixellib.materialsystem.materials
 
 import com.emosewapixel.pixellib.materialsystem.MaterialRegistry
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialItems
-import com.emosewapixel.pixellib.materialsystem.types.TextureType
 import net.minecraft.item.Item
 
 //Dust Materials are the basic solid materials for which at least a dust and block is generated
-open class DustMaterial(name: String, textureType: TextureType?, color: Int, tier: Int) : Material(name, textureType, color, tier) {
+open class DustMaterial(name: String, textureType: String, color: Int, tier: Int) : Material(name, textureType, color, tier) {
     var harvestTier: HarvestTier? = null
     var processingMultiplier = 1
     var refinedMaterial: DustMaterial? = null

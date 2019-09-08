@@ -6,7 +6,6 @@ import com.emosewapixel.pixellib.materialsystem.lists.MaterialBlocks
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialItems
 import com.emosewapixel.pixellib.materialsystem.materials.*
 import com.emosewapixel.pixellib.materialsystem.types.ObjectType
-import com.emosewapixel.pixellib.materialsystem.types.TextureType
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.block.SoundType
@@ -27,28 +26,17 @@ object MaterialRegistry {
     const val USES_UNREFINED_COLOR = "uses_unrefined_color"
 
     //Texture Types
-    @JvmField
-    val ROUGH = TextureType("rough")
-    @JvmField
-    val REGULAR = TextureType("regular")
-    @JvmField
-    val SHINY = TextureType("shiny")
-    @JvmField
-    val FUEL = TextureType("fuel")
-    @JvmField
-    val PENTAGONAL = TextureType("pentagonal")
-    @JvmField
-    val OCTAGONAL = TextureType("octagonal")
-    @JvmField
-    val CRYSTAL = TextureType("crystal")
-    @JvmField
-    val SHARP = TextureType("sharp")
-    @JvmField
-    val FINE = TextureType("fine")
-    @JvmField
-    val TRANSPARENT_FLUID = TextureType("transparent")
-    @JvmField
-    val OPAQUE_FLUID = TextureType("opaque")
+    const val ROUGH = "rough"
+    const val REGULAR = "regular"
+    const val SHINY = "shiny"
+    const val FUEL = "fuel"
+    const val PENTAGONAL = "pentagonal"
+    const val OCTAGONAL = "octagonal"
+    const val CRYSTAL = "crystal"
+    const val SHARP = "sharp"
+    const val FINE = "fine"
+    const val TRANSPARENT_FLUID = "transparent"
+    const val OPAQUE_FLUID = "opaque"
 
     //Object Types
     @JvmField

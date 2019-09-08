@@ -12,7 +12,7 @@ class BlockType(name: String, requirement: (Material) -> Boolean, val properties
         val states = JsonObject()
         val variants = JsonObject()
         val variant = JsonObject()
-        variant.addProperty("model", "pixellib:block/materialblocks/" + if (MaterialRegistry.SINGLE_TEXTURE_TYPE in typeTags) name else it.mat.textureType.toString() + "/" + name)
+        variant.addProperty("model", "pixellib:block/materialblocks/" + if (MaterialRegistry.SINGLE_TEXTURE_TYPE in typeTags) name else it.mat.textureType + "/" + name)
         variants.add("", variant)
         states.add("variants", variants)
         states

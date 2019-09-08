@@ -4,7 +4,6 @@ import com.emosewapixel.pixellib.materialsystem.element.Elements
 import com.emosewapixel.pixellib.materialsystem.lists.Materials
 import com.emosewapixel.pixellib.materialsystem.materials.utility.MaterialStack
 import com.emosewapixel.pixellib.materialsystem.types.ObjectType
-import com.emosewapixel.pixellib.materialsystem.types.TextureType
 import net.minecraft.item.IArmorMaterial
 import net.minecraft.item.IItemTier
 import net.minecraft.tags.ItemTags
@@ -18,12 +17,12 @@ import java.util.*
 Materials are objects used for generating items/blocks/fluids based on object types. They have a wide range of customizability.
 However, the base Materials aren't meant to be used for generating anything
 */
-open class Material constructor(val name: String, val textureType: TextureType?, val color: Int, val tier: Int) {
+open class Material constructor(val name: String, val textureType: String, val color: Int, val tier: Int) {
     var itemTier: IItemTier? = null
     var armorMaterial: IArmorMaterial? = null
     val typeBlacklist = ArrayList<ObjectType>()
     val materialTags = ArrayList<String>()
-    var composition = mutableListOf<MaterialStack>()
+    var composition = listOf<MaterialStack>()
     var element = Elements.NULL
     var secondName: String? = null
     var standardBurnTime = 0
