@@ -8,7 +8,6 @@ import com.emosewapixel.pixellib.materialsystem.types.ItemType
 import com.emosewapixel.pixellib.materialsystem.types.ObjectType
 import com.emosewapixel.pixellib.materialsystem.types.TextureType
 import net.minecraft.block.Block
-import java.util.function.Predicate
 
 fun dustMaterial(name: String, textureType: TextureType?, color: Int, tier: Int, builder: DustMaterial.() -> Unit): Material {
     val mat = DustMaterial(name, textureType, color, tier)
@@ -46,13 +45,13 @@ fun transitionMaterial(name: String, endMaterial: () -> Material, neededAmount: 
     return mat.build()
 }
 
-fun itemType(name: String, requirement: Predicate<Material>, builder: ObjectType.() -> Unit): ObjectType {
+fun itemType(name: String, requirement: (Material) -> Boolean, builder: ObjectType.() -> Unit): ObjectType {
     val type = ItemType(name, requirement)
     type(builder)
     return type.build()
 }
 
-fun blockType(name: String, requirement: Predicate<Material>, properties: Block.Properties, builder: BlockType.() -> Unit): ObjectType {
+fun blockType(name: String, requirement: (Material) -> Boolean, properties: Block.Properties, builder: BlockType.() -> Unit): ObjectType {
     val type = BlockType(name, requirement, properties)
     type(builder)
     return type.build()

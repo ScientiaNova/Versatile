@@ -6,13 +6,12 @@ import net.minecraft.item.Item
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.Tag
 import net.minecraft.util.ResourceLocation
-import java.util.function.Predicate
 
 /*
 Object Types are objects used for generating blocks/items/fluids for certain materials.
 This is the base class that shouldn't be used for generating anything
 */
-open class ObjectType(val name: String, var requirement: Predicate<Material>) {
+open class ObjectType(val name: String, var requirement: (Material) -> Boolean) {
     var bucketVolume = 0
     val typeTags = mutableListOf<String>()
 
@@ -26,12 +25,12 @@ open class ObjectType(val name: String, var requirement: Predicate<Material>) {
         return ObjTypes[name]!!
     }
 
-    fun isMaterialCompatible(mat: Material) = requirement.test(mat)
+    fun isMaterialCompatible(mat: Material) = requirement(mat)
 
     open fun merge(type: ObjectType) {
         if (type.bucketVolume != 0)
             bucketVolume = type.bucketVolume
-        requirement = requirement.or { type.isMaterialCompatible(it) }
+        requirement = { requirement(it) || type.isMaterialCompatible(it) }
         this.typeTags.addAll(type.typeTags)
     }
 }

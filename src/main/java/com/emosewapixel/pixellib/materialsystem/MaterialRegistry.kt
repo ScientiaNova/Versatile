@@ -1,190 +1,203 @@
 package com.emosewapixel.pixellib.materialsystem
 
+import com.emosewapixel.pixellib.PixelLib
 import com.emosewapixel.pixellib.materialsystem.element.Elements
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialBlocks
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialItems
-import com.emosewapixel.pixellib.materialsystem.materials.CompoundType
-import com.emosewapixel.pixellib.materialsystem.materials.DustMaterial
-import com.emosewapixel.pixellib.materialsystem.materials.GemMaterial
-import com.emosewapixel.pixellib.materialsystem.materials.IngotMaterial
+import com.emosewapixel.pixellib.materialsystem.materials.*
+import com.emosewapixel.pixellib.materialsystem.types.ObjectType
 import com.emosewapixel.pixellib.materialsystem.types.TextureType
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.block.SoundType
-import net.minecraft.block.material.Material
 import net.minecraft.item.ArmorMaterial
 import net.minecraft.item.ItemTier
 import net.minecraft.item.Items
-import java.util.function.Predicate
 
 //This class is used for registering the vanilla material and object type tags, materials and object types
 object MaterialRegistry {
     //Material Tags
-    @JvmStatic
-    val HAS_ORE = "has_ore"
-    @JvmStatic
-    val DISABLE_SIMPLE_PROCESSING = "disable_simple_processing"
-    @JvmStatic
-    val BLOCK_FROM_4X4 = "block_from_4x4"
-    @JvmStatic
-    val IS_GAS = "is_gas"
-    @JvmStatic
-    val HAS_NO_FUEL_VALUE = "has_no_fuel_value"
-    @JvmStatic
-    val ROD_TO_3_DUST = "rod_to_3_dust"
-    @JvmStatic
-    val SINGLE_TEXTURE_TYPE = "1_texture_type"
-    @JvmStatic
-    val USES_UNREFINED_COLOR = "uses_unrefined_color"
+    const val HAS_ORE = "has_ore"
+    const val DISABLE_SIMPLE_PROCESSING = "disable_simple_processing"
+    const val BLOCK_FROM_4X4 = "block_from_4x4"
+    const val IS_GAS = "is_gas"
+    const val HAS_NO_FUEL_VALUE = "has_no_fuel_value"
+    const val ROD_TO_3_DUST = "rod_to_3_dust"
+    const val SINGLE_TEXTURE_TYPE = "1_texture_type"
+    const val USES_UNREFINED_COLOR = "uses_unrefined_color"
 
     //Texture Types
-    @JvmStatic
+    @JvmField
     val ROUGH = TextureType("rough")
-    @JvmStatic
+    @JvmField
     val REGULAR = TextureType("regular")
-    @JvmStatic
+    @JvmField
     val SHINY = TextureType("shiny")
-    @JvmStatic
+    @JvmField
     val FUEL = TextureType("fuel")
-    @JvmStatic
+    @JvmField
     val PENTAGONAL = TextureType("pentagonal")
-    @JvmStatic
+    @JvmField
     val OCTAGONAL = TextureType("octagonal")
-    @JvmStatic
+    @JvmField
     val CRYSTAL = TextureType("crystal")
-    @JvmStatic
+    @JvmField
     val SHARP = TextureType("sharp")
-    @JvmStatic
+    @JvmField
     val FINE = TextureType("fine")
-    @JvmStatic
+    @JvmField
     val TRANSPARENT_FLUID = TextureType("transparent")
-    @JvmStatic
+    @JvmField
     val OPAQUE_FLUID = TextureType("opaque")
 
     //Object Types
-    @JvmStatic
-    val DUST = itemType("dust", Predicate { it is DustMaterial }) {
+    @JvmField
+    val DUST = itemType("dust", { it is DustMaterial }) {
         bucketVolume = 144
     }
-    @JvmStatic
-    val GEM = itemType("gem", Predicate { it is GemMaterial }) {
+    @JvmField
+    val GEM = itemType("gem", { it is GemMaterial }) {
         bucketVolume = 144
     }
-    @JvmStatic
-    val INGOT = itemType("ingot", Predicate { it is IngotMaterial }) {
+    @JvmField
+    val INGOT = itemType("ingot", { it is IngotMaterial }) {
         bucketVolume = 144
     }
-    @JvmStatic
-    val NUGGET = itemType("nugget", Predicate { it is IngotMaterial }) {
+    @JvmField
+    val NUGGET = itemType("nugget", { it is IngotMaterial }) {
         bucketVolume = 16
     }
-    @JvmStatic
-    val BLOCK = blockType("storage_block", Predicate { it is DustMaterial },
-            Block.Properties.create(Material.IRON).sound(SoundType.METAL)) {
+    @JvmField
+    val BLOCK: ObjectType = blockType("storage_block", { it is DustMaterial },
+            Block.Properties.create(net.minecraft.block.material.Material.IRON).sound(SoundType.METAL)) {
         bucketVolume = 1296
     }
-    @JvmStatic
-    val ORE = blockType("ore", Predicate { it is IngotMaterial && HAS_ORE in it.materialTags },
-            Block.Properties.create(Material.ROCK).sound(SoundType.STONE)) {
-        typeTags += listOf(USES_UNREFINED_COLOR, HAS_NO_FUEL_VALUE)
-        bucketVolume = 144
-    }
+    @JvmField
+    val ORE: ObjectType
 
     //Materials
-    @JvmStatic
-    val BRICK = ingotMaterial("brick", REGULAR, 0xb55c42, 1) {
-        materialTags += BLOCK_FROM_4X4
-        typeBlacklist += NUGGET
-        compoundType = CompoundType.CHEMICAL
-    }
-    @JvmStatic
-    val NETHER_BRICK = ingotMaterial("nether_brick", REGULAR, 0x472a30, 1) {
-        materialTags += BLOCK_FROM_4X4
-        typeBlacklist += NUGGET
-        compoundType = CompoundType.CHEMICAL
-    }
-    @JvmStatic
-    val IRON = ingotMaterial("iron", ROUGH, -1, 1) {
-        element = Elements.IRON
-        unrefinedColor = 0x947664
-        itemTier = ItemTier.IRON
-        armorMaterial = ArmorMaterial.IRON
-        materialTags += HAS_ORE
-    }
-    @JvmStatic
-    val GOLD = ingotMaterial("gold", SHINY, 0xfad64a, 2) {
-        element = Elements.GOLD
-        itemTier = ItemTier.GOLD
-        armorMaterial = ArmorMaterial.GOLD
-        materialTags += HAS_ORE
-    }
-    @JvmStatic
-    val COAL = gemMaterial("coal", FUEL, 0x1a1a1a, 0) {
-        standardBurnTime = 1666
-        element = Elements.CARBON
-        materialTags += HAS_ORE
-    }
-    @JvmStatic
-    val CHARCOAL = gemMaterial("charcoal", FUEL, 0x443e33, 0) {
-        standardBurnTime = 1666
-        element = Elements.CARBON
-    }
-    @JvmStatic
-    val FLINT = gemMaterial("flint", SHARP, 0x222020, 0) {
-        typeBlacklist += BLOCK
-    }
-    @JvmStatic
-    val LAPIS = gemMaterial("lapis", REGULAR, 0x2351be, 0) {
-        materialTags += HAS_ORE
-    }
-    @JvmStatic
-    val QUARTZ = gemMaterial("quartz", CRYSTAL, 0xe8dfd0, 0) {
-        materialTags += listOf(HAS_ORE, BLOCK_FROM_4X4)
-    }
-    @JvmStatic
-    val DIAMOND = gemMaterial("diamond", PENTAGONAL, 0x34ebe3, 2) {
-        element = Elements.CARBON
-        itemTier = ItemTier.DIAMOND
-        armorMaterial = ArmorMaterial.DIAMOND
-        materialTags += HAS_ORE
-    }
-    @JvmStatic
-    val EMERALD = gemMaterial("emerald", OCTAGONAL, 0x08ad2c, 2) {
-        materialTags += HAS_ORE
-    }
-    @JvmStatic
-    val WOODEN = dustMaterial("wooden", FINE, 0x87672c, -1) {
-        standardBurnTime = 200
-        itemTier = ItemTier.WOOD
-    }
-    @JvmStatic
-    val STONE = dustMaterial("stone", FINE, 0xb1b0ae, 0) {
-        itemTier = ItemTier.STONE
-    }
-    @JvmStatic
-    val BONE = dustMaterial("bone", REGULAR, 0xfcfaed, 0) {
-        materialTags += ROD_TO_3_DUST
-    }
-    @JvmStatic
-    val BLAZE = dustMaterial("bone", REGULAR, 0xffc20c, 0) {
-        materialTags += ROD_TO_3_DUST
-    }
-    @JvmStatic
-    val REDSTONE = dustMaterial("redstone", REGULAR, 0xfc1a19, 1) {
-        materialTags += HAS_ORE
-    }
-    @JvmStatic
-    val GLOWSTONE = dustMaterial("glowstone", REGULAR, 0xfcbe60, 1) {
-        materialTags += BLOCK_FROM_4X4
-    }
-    @JvmStatic
-    val OBSIDIAN = dustMaterial("obsidian", FINE, 0x3c2a53, 3) {}
-    @JvmStatic
-    val WATER = fluidMaterial("water", TRANSPARENT_FLUID, 0x3e4ac6) {}
-    @JvmStatic
-    val LAVA = fluidMaterial("lava", OPAQUE_FLUID, 0xc54c13) {}
+    @JvmField
+    val BRICK: Material
+    @JvmField
+    val NETHER_BRICK: Material
+    @JvmField
+    val IRON: Material
+    @JvmField
+    val GOLD: Material
+    @JvmField
+    val COAL: Material
+    @JvmField
+    val CHARCOAL: Material
+    @JvmField
+    val FLINT: Material
+    @JvmField
+    val LAPIS: Material
+    @JvmField
+    val QUARTZ: Material
+    @JvmField
+    val DIAMOND: Material
+    @JvmField
+    val EMERALD: Material
+    @JvmField
+    val WOODEN: Material
+    @JvmField
+    val STONE: Material
+    @JvmField
+    val BONE: Material
+    @JvmField
+    val BLAZE: Material
+    @JvmField
+    val REDSTONE: Material
+    @JvmField
+    val GLOWSTONE: Material
+    @JvmField
+    val OBSIDIAN: Material
+    @JvmField
+    val WATER: Material
+    @JvmField
+    val LAVA: Material
 
     init {
+        PixelLib.LOGGER.debug("Registering Materials")
+        ORE = blockType("ore", { it is IngotMaterial && HAS_ORE in it.materialTags },
+                Block.Properties.create(net.minecraft.block.material.Material.ROCK).sound(SoundType.STONE)) {
+            typeTags += listOf(USES_UNREFINED_COLOR, HAS_NO_FUEL_VALUE)
+            bucketVolume = 144
+        }
+
+        BRICK = ingotMaterial("brick", REGULAR, 0xb55c42, 1) {
+            materialTags += BLOCK_FROM_4X4
+            typeBlacklist += NUGGET
+            compoundType = CompoundType.CHEMICAL
+        }
+        NETHER_BRICK = ingotMaterial("nether_brick", REGULAR, 0x472a30, 1) {
+            materialTags += BLOCK_FROM_4X4
+            typeBlacklist += NUGGET
+            compoundType = CompoundType.CHEMICAL
+        }
+        IRON = ingotMaterial("iron", ROUGH, -1, 1) {
+            element = Elements.IRON
+            unrefinedColor = 0x947664
+            itemTier = ItemTier.IRON
+            armorMaterial = ArmorMaterial.IRON
+            materialTags += HAS_ORE
+        }
+        GOLD = ingotMaterial("gold", SHINY, 0xfad64a, 2) {
+            element = Elements.GOLD
+            itemTier = ItemTier.GOLD
+            armorMaterial = ArmorMaterial.GOLD
+            materialTags += HAS_ORE
+        }
+        COAL = gemMaterial("coal", FUEL, 0x1a1a1a, 0) {
+            standardBurnTime = 1666
+            element = Elements.CARBON
+            materialTags += HAS_ORE
+        }
+        CHARCOAL = gemMaterial("charcoal", FUEL, 0x443e33, 0) {
+            standardBurnTime = 1666
+            element = Elements.CARBON
+        }
+        FLINT = gemMaterial("flint", SHARP, 0x222020, 0) {
+            typeBlacklist += BLOCK
+        }
+        LAPIS = gemMaterial("lapis", REGULAR, 0x2351be, 0) {
+            materialTags += HAS_ORE
+        }
+        QUARTZ = gemMaterial("quartz", CRYSTAL, 0xe8dfd0, 0) {
+            materialTags += listOf(HAS_ORE, BLOCK_FROM_4X4)
+        }
+        DIAMOND = gemMaterial("diamond", PENTAGONAL, 0x34ebe3, 2) {
+            element = Elements.CARBON
+            itemTier = ItemTier.DIAMOND
+            armorMaterial = ArmorMaterial.DIAMOND
+            materialTags += HAS_ORE
+        }
+        EMERALD = gemMaterial("emerald", OCTAGONAL, 0x08ad2c, 2) {
+            materialTags += HAS_ORE
+        }
+        WOODEN = dustMaterial("wooden", FINE, 0x87672c, -1) {
+            standardBurnTime = 200
+            itemTier = ItemTier.WOOD
+        }
+        STONE = dustMaterial("stone", FINE, 0xb1b0ae, 0) {
+            itemTier = ItemTier.STONE
+        }
+        BONE = dustMaterial("bone", REGULAR, 0xfcfaed, 0) {
+            materialTags += ROD_TO_3_DUST
+        }
+        BLAZE = dustMaterial("blaze", REGULAR, 0xffc20c, 0) {
+            materialTags += ROD_TO_3_DUST
+        }
+        REDSTONE = dustMaterial("redstone", REGULAR, 0xfc1a19, 1) {
+            materialTags += HAS_ORE
+        }
+        GLOWSTONE = dustMaterial("glowstone", REGULAR, 0xfcbe60, 1) {
+            materialTags += BLOCK_FROM_4X4
+        }
+        OBSIDIAN = dustMaterial("obsidian", FINE, 0x3c2a53, 3) {}
+        WATER = fluidMaterial("water", TRANSPARENT_FLUID, 0x3e4ac6) {}
+        LAVA = fluidMaterial("lava", OPAQUE_FLUID, 0xc54c13) {}
+
         MaterialItems.addItem(COAL, GEM, Items.COAL)
         MaterialBlocks.addBlock(COAL, BLOCK, Blocks.COAL_BLOCK)
         MaterialBlocks.addBlock(COAL, ORE, Blocks.COAL_ORE)

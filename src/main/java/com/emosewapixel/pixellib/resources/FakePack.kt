@@ -17,7 +17,7 @@ import java.util.*
 import java.util.function.Predicate
 
 //This is the fake data/resource pack used for adding data and asset JSONs
-class FakePack constructor(private val name: String) : IResourcePack {
+internal class FakePack constructor(private val name: String) : IResourcePack {
     private val root = TreeMap<String, InputStream>()
     private val assets = TreeMap<ResourceLocation, InputStream>()
     private val data = TreeMap<ResourceLocation, InputStream>()

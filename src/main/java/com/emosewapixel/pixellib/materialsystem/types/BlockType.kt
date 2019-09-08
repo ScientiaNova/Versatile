@@ -5,10 +5,9 @@ import com.emosewapixel.pixellib.materialsystem.materials.IMaterialItem
 import com.emosewapixel.pixellib.materialsystem.materials.Material
 import com.google.gson.JsonObject
 import net.minecraft.block.Block
-import java.util.function.Predicate
 
 //Block Types are Object Types used for generating Blocks
-class BlockType(name: String, requirement: Predicate<Material>, val properties: Block.Properties) : ObjectType(name, requirement) {
+class BlockType(name: String, requirement: (Material) -> Boolean, val properties: Block.Properties) : ObjectType(name, requirement) {
     var blockstateFun: (IMaterialItem) -> JsonObject = {
         val states = JsonObject()
         val variants = JsonObject()

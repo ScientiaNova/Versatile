@@ -50,6 +50,8 @@ object PixelLib {
         FMLKotlinModLoadingContext.get().modEventBus.addListener<InterModEnqueueEvent> { this.enqueueIMC(it) }
         FMLKotlinModLoadingContext.get().modEventBus.addListener<InterModProcessEvent> { this.processIMC(it) }
 
+        MaterialRegistry
+
         proxy.init()
     }
 
