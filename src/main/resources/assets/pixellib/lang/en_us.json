@@ -33,5 +33,7 @@
 	"item.pixellib.wooden_dust": "Sawdust",
 	"block.pixellib.wooden_storage_block": "Block of Sawdust",
 	"block.pixellib.stone_storage_block": "Block of Stone Dust",
-	"block.pixellib.obsidian_storage_block": "Block of Obsidian Dust"
+	"block.pixellib.obsidian_storage_block": "Block of Obsidian Dust",
+
+	"command.materialitem.error": "That is not a material item"
 }

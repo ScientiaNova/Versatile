@@ -1,6 +1,7 @@
 package com.emosewapixel.pixellib
 
 import com.emosewapixel.pixellib.blocks.BlockRegistry
+import com.emosewapixel.pixellib.commands.MaterialItemCommand
 import com.emosewapixel.pixellib.items.ItemRegistry
 import com.emosewapixel.pixellib.materialsystem.MaterialRegistry
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialItems
@@ -28,6 +29,7 @@ import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent
 import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import java.util.function.Supplier
@@ -85,6 +87,11 @@ object RegistryEvents {
 object GameEvents {
     @SubscribeEvent
     fun onServerAboutToStart(e: FMLServerAboutToStartEvent) = e.server.resourcePacks.addPackFinder(FakeDataPackFinder())
+
+    @SubscribeEvent
+    fun onServerStart(e: FMLServerStartingEvent) {
+        MaterialItemCommand(e.commandDispatcher)
+    }
 
     @SubscribeEvent
     fun fuelTime(e: FurnaceFuelBurnTimeEvent) {

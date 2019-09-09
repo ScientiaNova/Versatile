@@ -18,7 +18,10 @@ object MaterialItems {
     fun getItem(material: Material, type: ObjectType): Item? = materialItems.get(material, type)
 
     @JvmStatic
-    fun contains(material: Material, type: ObjectType) =  getItem(material, type) != null
+    fun contains(material: Material, type: ObjectType) = getItem(material, type) != null
+
+    @JvmStatic
+    operator fun contains(item: Item) = item in materialItems.values()
 
     @JvmStatic
     fun addItem(mat: Material, type: ObjectType, item: Item) = materialItems.put(mat, type, item)
@@ -33,8 +36,8 @@ object MaterialItems {
     fun getItemCell(item: Item): Table.Cell<Material, ObjectType, Item>? = materialItems.cellSet().first { it.value === item }
 
     @JvmStatic
-    fun getItemMaterial(item: Item): Material? = getItemCell(item)?.rowKey
+    fun getItemMaterial(item: Item): Material? = if (item is IMaterialItem) item.mat else getItemCell(item)?.rowKey
 
     @JvmStatic
-    fun getItemObjType(item: Item): ObjectType? = getItemCell(item)?.columnKey
+    fun getItemObjType(item: Item): ObjectType? = if (item is IMaterialItem) item.objType else  getItemCell(item)?.columnKey
 }
