@@ -1,5 +1,6 @@
 package com.emosewapixel.pixellib.proxy
 
+import com.emosewapixel.pixellib.extensions.json
 import com.emosewapixel.pixellib.items.MaterialItem
 import com.emosewapixel.pixellib.materialsystem.MaterialRegistry
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialBlocks
@@ -9,7 +10,6 @@ import com.emosewapixel.pixellib.materialsystem.materials.IMaterialItem
 import com.emosewapixel.pixellib.materialsystem.types.BlockType
 import com.emosewapixel.pixellib.resources.FakeResourcePackFinder
 import com.emosewapixel.pixellib.resources.JSONAdder
-import com.google.gson.JsonObject
 import net.alexwells.kottle.KotlinEventBusSubscriber
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
@@ -74,20 +74,22 @@ object ClientProxy : IModProxy {
 }
 
 fun addModelJSONs() {
-    MaterialItems.getAll().filterIsInstance<IMaterialItem>().forEach { i ->
-        val registryName = (i as Item).registryName
-        val type = (i as IMaterialItem).objType
-        val model = JsonObject()
-        model.addProperty("parent", registryName!!.namespace + ":item/materialitems/" + if (MaterialRegistry.SINGLE_TEXTURE_TYPE in type.typeTags) type.name else (i as IMaterialItem).mat.textureType + "/" + type.name)
+    MaterialItems.getAll().filterIsInstance<IMaterialItem>().forEach {
+        val registryName = (it as Item).registryName!!
+        val type = (it as IMaterialItem).objType
+        val model = json {
+            "parent" to registryName.namespace + ":item/materialitems/" + if (MaterialRegistry.SINGLE_TEXTURE_TYPE in type.typeTags) type.name else "${(it as IMaterialItem).mat.textureType}/${type.name}"
+        }
         JSONAdder.addAssetsJSON(ResourceLocation(registryName.namespace, "models/item/" + registryName.path + ".json"), model)
     }
 
-    MaterialBlocks.getAll().filterIsInstance<IMaterialItem>().forEach { b ->
-        val registryName = (b as Block).registryName
-        val type = (b as IMaterialItem).objType
-        val model = JsonObject()
-        model.addProperty("parent", registryName!!.namespace + ":block/materialblocks/" + if (MaterialRegistry.SINGLE_TEXTURE_TYPE in type.typeTags) type.name else (b as IMaterialItem).mat.textureType + "/" + type.name)
+    MaterialBlocks.getAll().filterIsInstance<IMaterialItem>().forEach {
+        val registryName = (it as Block).registryName!!
+        val type = (it as IMaterialItem).objType
+        val model = json {
+            "parent" to registryName.namespace+":block/materialblocks/"+if (MaterialRegistry.SINGLE_TEXTURE_TYPE in type.typeTags) type.name else "${(it as IMaterialItem).mat.textureType}/${type.name}"
+        }
         JSONAdder.addAssetsJSON(ResourceLocation(registryName.namespace, "models/item/" + registryName.path + ".json"), model)
-        JSONAdder.addAssetsJSON(ResourceLocation(registryName.namespace, "blockstates/" + registryName.path + ".json"), (type as BlockType).getBlockStateJson(b as IMaterialItem))
+        JSONAdder.addAssetsJSON(ResourceLocation(registryName.namespace, "blockstates/" + registryName.path + ".json"), (type as BlockType).getBlockStateJson(it as IMaterialItem))
     }
 }

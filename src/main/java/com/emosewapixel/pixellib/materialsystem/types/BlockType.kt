@@ -1,5 +1,6 @@
 package com.emosewapixel.pixellib.materialsystem.types
 
+import com.emosewapixel.pixellib.extensions.json
 import com.emosewapixel.pixellib.materialsystem.MaterialRegistry
 import com.emosewapixel.pixellib.materialsystem.materials.IMaterialItem
 import com.emosewapixel.pixellib.materialsystem.materials.Material
@@ -9,13 +10,13 @@ import net.minecraft.block.Block
 //Block Types are Object Types used for generating Blocks
 class BlockType(name: String, requirement: (Material) -> Boolean, val properties: Block.Properties) : ObjectType(name, requirement) {
     var blockstateFun: (IMaterialItem) -> JsonObject = {
-        val states = JsonObject()
-        val variants = JsonObject()
-        val variant = JsonObject()
-        variant.addProperty("model", "pixellib:block/materialblocks/" + if (MaterialRegistry.SINGLE_TEXTURE_TYPE in typeTags) name else it.mat.textureType + "/" + name)
-        variants.add("", variant)
-        states.add("variants", variants)
-        states
+        json {
+            "variants" {
+                "" {
+                    "model" to "pixellib:block/materialblocks/" + if (MaterialRegistry.SINGLE_TEXTURE_TYPE in typeTags) name else "${it.mat.textureType}/$name"
+                }
+            }
+        }
     }
 
     @JvmName("invokeBlock")

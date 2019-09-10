@@ -1,5 +1,6 @@
 package com.emosewapixel.pixellib.commands
 
+import com.emosewapixel.pixellib.extensions.does
 import com.emosewapixel.pixellib.extensions.literal
 import com.emosewapixel.pixellib.extensions.register
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialBlocks
@@ -23,14 +24,13 @@ class MaterialItemCommand(dispatcher: CommandDispatcher<CommandSource>) {
                     it.entity is ServerPlayerEntity
                 }
                 literal("name") {
-                    executes {
-                        val item = it.source.asPlayer().heldItemMainhand.item
+                    does {
+                        val item = source.asPlayer().heldItemMainhand.item
                         when {
-                            item in MaterialItems -> it.source.sendFeedback(MaterialItems.getItemMaterial(item)!!.translationKey, false)
-                            item is BlockItem && Block.getBlockFromItem(item) in MaterialBlocks -> it.source.sendFeedback(MaterialBlocks.getBlockMaterial(Block.getBlockFromItem(item))!!.translationKey, false)
-                            else -> it.source.sendErrorMessage(TranslationTextComponent("command.materialitem.error"))
+                            item in MaterialItems -> source.sendFeedback(MaterialItems.getItemMaterial(item)!!.translationKey, false)
+                            item is BlockItem && Block.getBlockFromItem(item) in MaterialBlocks -> source.sendFeedback(MaterialBlocks.getBlockMaterial(Block.getBlockFromItem(item))!!.translationKey, false)
+                            else -> source.sendErrorMessage(TranslationTextComponent("command.materialitem.error"))
                         }
-                        0
                     }
                 }
             }
@@ -39,14 +39,13 @@ class MaterialItemCommand(dispatcher: CommandDispatcher<CommandSource>) {
                     it.entity is ServerPlayerEntity
                 }
                 literal("name") {
-                    executes {
-                        val item = it.source.asPlayer().heldItemMainhand.item
+                    does {
+                        val item = source.asPlayer().heldItemMainhand.item
                         when {
-                            item in MaterialItems -> it.source.sendFeedback(StringTextComponent((MaterialItems.getItemObjType(item)!!).name.normalFormat()), false)
-                            item is BlockItem && Block.getBlockFromItem(item) in MaterialBlocks -> it.source.sendFeedback(StringTextComponent(MaterialBlocks.getBlockObjType(Block.getBlockFromItem(item))!!.name.normalFormat()), false)
-                            else -> it.source.sendErrorMessage(TranslationTextComponent("command.materialitem.error"))
+                            item in MaterialItems -> source.sendFeedback(StringTextComponent((MaterialItems.getItemObjType(item)!!).name.normalFormat()), false)
+                            item is BlockItem && Block.getBlockFromItem(item) in MaterialBlocks -> source.sendFeedback(StringTextComponent(MaterialBlocks.getBlockObjType(Block.getBlockFromItem(item))!!.name.normalFormat()), false)
+                            else -> source.sendErrorMessage(TranslationTextComponent("command.materialitem.error"))
                         }
-                        0
                     }
                 }
             }
