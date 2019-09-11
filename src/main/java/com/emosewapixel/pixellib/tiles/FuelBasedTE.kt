@@ -1,6 +1,9 @@
 package com.emosewapixel.pixellib.tiles
 
 import com.emosewapixel.pixellib.blocks.FuelBasedMachineBlock
+import com.emosewapixel.pixellib.extensions.isHorizontal
+import com.emosewapixel.pixellib.extensions.nbt
+import com.emosewapixel.pixellib.extensions.plusAssign
 import com.emosewapixel.pixellib.recipes.SimpleMachineRecipe
 import com.emosewapixel.pixellib.recipes.SimpleRecipeList
 import net.minecraft.item.ItemStack
@@ -19,12 +22,12 @@ open class FuelBasedTE(type: TileEntityType<*>, list: SimpleRecipeList) : Recipe
     var burnTime = 0
     var maxBurnTime = 0
 
-    var fuel_input: ItemStackHandler
+    var fuelInput: ItemStackHandler
 
     override var currentRecipe: SimpleMachineRecipe = SimpleMachineRecipe.EMPTY
 
     init {
-        fuel_input = object : ItemStackHandler(1) {
+        fuelInput = object : ItemStackHandler(1) {
             override fun isItemValid(slot: Int, stack: ItemStack) = getItemBurnTime(stack) > 0
 
             override fun onContentsChanged(slot: Int) {
@@ -32,7 +35,7 @@ open class FuelBasedTE(type: TileEntityType<*>, list: SimpleRecipeList) : Recipe
             }
         }
 
-        combinedHandler = CombinedInvWrapper(recipeInventory, fuel_input)
+        combinedHandler = CombinedInvWrapper(recipeInventory, fuelInput)
     }
 
     override fun tick() {
@@ -42,7 +45,7 @@ open class FuelBasedTE(type: TileEntityType<*>, list: SimpleRecipeList) : Recipe
                 world!!.setBlockState(pos, world!!.getBlockState(pos).with(FuelBasedMachineBlock.LIT, true))
                 super.tick()
             } else {
-                if (!fuel_input.getStackInSlot(0).isEmpty)
+                if (!fuelInput.getStackInSlot(0).isEmpty)
                     consumeFuel()
                 else
                     world!!.setBlockState(pos, world!!.getBlockState(pos).with(FuelBasedMachineBlock.LIT, false))
@@ -60,13 +63,13 @@ open class FuelBasedTE(type: TileEntityType<*>, list: SimpleRecipeList) : Recipe
 
     protected fun consumeFuel() {
         if (!currentRecipe.isEmpty && canOutput(currentRecipe)) {
-            maxBurnTime = getItemBurnTime(fuel_input.getStackInSlot(0))
+            maxBurnTime = getItemBurnTime(fuelInput.getStackInSlot(0))
             burnTime = maxBurnTime
             if (burnTime > 0) {
-                if (fuel_input.getStackInSlot(0).hasContainerItem())
-                    fuel_input.setStackInSlot(0, fuel_input.getStackInSlot(0).containerItem)
+                if (fuelInput.getStackInSlot(0).hasContainerItem())
+                    fuelInput.setStackInSlot(0, fuelInput.getStackInSlot(0).containerItem)
                 else
-                    fuel_input.extractItem(0, 1, false)
+                    fuelInput.extractItem(0, 1, false)
             }
         } else
             world!!.setBlockState(pos, world!!.getBlockState(pos).with(FuelBasedMachineBlock.LIT, false))
@@ -74,24 +77,23 @@ open class FuelBasedTE(type: TileEntityType<*>, list: SimpleRecipeList) : Recipe
 
     override fun read(compound: CompoundNBT) {
         super.read(compound)
-        if (compound.contains("FuelItems"))
-            fuel_input.deserializeNBT((compound.get("FuelItems") as CompoundNBT?)!!)
+        if ("FuelItems" in compound)
+            fuelInput.deserializeNBT((compound["FuelItems"] as CompoundNBT?)!!)
         burnTime = compound.getInt("BurnTime")
         maxBurnTime = compound.getInt("MaxBurnTime")
     }
 
     override fun write(compound: CompoundNBT): CompoundNBT {
-        super.write(compound)
-        compound.put("FuelItems", fuel_input.serializeNBT())
-        compound.putInt("BurnTime", burnTime)
-        compound.putInt("MaxBurnTime", maxBurnTime)
+        super.write(compound) += nbt {
+            "FuelItems" to fuelInput
+            "BurnTime" to burnTime
+            "MaxBurnTime" to maxBurnTime
+        }
         return compound
     }
 
-    override fun <T> getCapability(cap: Capability<T>, side: Direction?): LazyOptional<T> {
-        if (cap === CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-            if (side == Direction.EAST || side == Direction.WEST || side == Direction.NORTH || side == Direction.SOUTH)
-                return LazyOptional.of { fuel_input }.cast()
-        return super.getCapability(cap, side)
-    }
+    override fun <T> getCapability(cap: Capability<T>, side: Direction?): LazyOptional<T> =
+            if (cap === CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && side.isHorizontal())
+                LazyOptional.of { fuelInput }.cast()
+            else super.getCapability(cap, side)
 }

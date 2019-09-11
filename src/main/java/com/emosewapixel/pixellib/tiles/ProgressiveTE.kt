@@ -1,5 +1,6 @@
 package com.emosewapixel.pixellib.tiles
 
+import com.emosewapixel.pixellib.extensions.plusAssign
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.tileentity.ITickableTileEntity
 import net.minecraft.tileentity.TileEntity
@@ -19,8 +20,7 @@ open class ProgressiveTE(type: TileEntityType<*>) : TileEntity(type), ITickableT
     }
 
     override fun write(compound: CompoundNBT): CompoundNBT {
-        super.write(compound)
-        compound.putInt("Progress", progress)
+        super.write(compound) += "Progress" to progress
         return compound
     }
 

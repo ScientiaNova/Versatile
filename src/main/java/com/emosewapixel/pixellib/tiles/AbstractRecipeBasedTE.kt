@@ -1,6 +1,7 @@
 package com.emosewapixel.pixellib.tiles
 
 import com.emosewapixel.pixellib.capabilities.ImprovedItemStackHandler
+import com.emosewapixel.pixellib.extensions.plusAssign
 import com.emosewapixel.pixellib.miscutils.getArrayFromRange
 import com.emosewapixel.pixellib.miscutils.spawnItemInWorld
 import com.emosewapixel.pixellib.recipes.AbstractRecipeList
@@ -73,8 +74,7 @@ abstract class AbstractRecipeBasedTE<T : SimpleMachineRecipe>(type: TileEntityTy
     }
 
     override fun write(compound: CompoundNBT): CompoundNBT {
-        super.write(compound)
-        compound.put("RecipeInventory", recipeInventory.serializeNBT())
+        super.write(compound) += "RecipeInventory" to recipeInventory
         return compound
     }
 
