@@ -5,7 +5,7 @@ import com.emosewapixel.pixellib.commands.MaterialItemCommand
 import com.emosewapixel.pixellib.items.ItemRegistry
 import com.emosewapixel.pixellib.materialsystem.MaterialRegistry
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialItems
-import com.emosewapixel.pixellib.materialsystem.materials.IMaterialItem
+import com.emosewapixel.pixellib.materialsystem.materials.IMaterialObject
 import com.emosewapixel.pixellib.proxy.ClientProxy
 import com.emosewapixel.pixellib.proxy.IModProxy
 import com.emosewapixel.pixellib.proxy.ServerProxy
@@ -45,7 +45,7 @@ object PixelLib {
 
     @JvmField
     val main: ItemGroup = object : ItemGroup(ModId) {
-        override fun createIcon() = ItemStack(MaterialItems.getAll().filterIsInstance<IMaterialItem>().first() as Item)
+        override fun createIcon() = ItemStack(MaterialItems.getAll().filterIsInstance<IMaterialObject>().first() as Item)
     }
 
     init {
@@ -98,13 +98,13 @@ object GameEvents {
         val item = e.itemStack.item
         if (item is BlockItem) {
             val block = Block.getBlockFromItem(item)
-            if (block is IMaterialItem) {
-                val type = (block as IMaterialItem).objType
-                if (MaterialRegistry.HAS_NO_FUEL_VALUE !in type.typeTags && (block as IMaterialItem).objType.bucketVolume != 0)
-                    e.burnTime = (type.bucketVolume / 144 + type.bucketVolume / 1296) * (block as IMaterialItem).mat.standardBurnTime
+            if (block is IMaterialObject) {
+                val type = (block as IMaterialObject).objType
+                if (MaterialRegistry.HAS_NO_FUEL_VALUE !in type.typeTags && (block as IMaterialObject).objType.bucketVolume != 0)
+                    e.burnTime = (type.bucketVolume / 144 + type.bucketVolume / 1296) * (block as IMaterialObject).mat.standardBurnTime
             }
-        } else if (item is IMaterialItem)
-            if (MaterialRegistry.HAS_NO_FUEL_VALUE !in (item as IMaterialItem).objType.typeTags && (item as IMaterialItem).objType.bucketVolume != 0)
-                e.burnTime = (item as IMaterialItem).objType.bucketVolume / 144 * (item as IMaterialItem).mat.standardBurnTime
+        } else if (item is IMaterialObject)
+            if (MaterialRegistry.HAS_NO_FUEL_VALUE !in (item as IMaterialObject).objType.typeTags && (item as IMaterialObject).objType.bucketVolume != 0)
+                e.burnTime = (item as IMaterialObject).objType.bucketVolume / 144 * (item as IMaterialObject).mat.standardBurnTime
     }
 }

@@ -1,6 +1,6 @@
 package com.emosewapixel.pixellib.resources
 
-import com.emosewapixel.pixellib.materialsystem.materials.IMaterialItem
+import com.emosewapixel.pixellib.materialsystem.materials.IMaterialObject
 import com.google.common.collect.ListMultimap
 import com.google.common.collect.MultimapBuilder
 import net.minecraft.block.Block
@@ -15,7 +15,7 @@ object TagMaps {
     val BLOCK_TAGS: ListMultimap<String, Block> = MultimapBuilder.treeKeys().arrayListValues().build<String, Block>()
 
     @JvmStatic
-    fun addMatItemToTag(item: IMaterialItem) {
+    fun addMatItemToTag(item: IMaterialObject) {
         if (item is Item) {
             addItemToTag(item.objType.name + "s/" + item.mat.name, item as Item)
             addItemToTag(item.objType.name + "s", item as Item)

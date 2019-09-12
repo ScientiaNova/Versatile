@@ -76,7 +76,7 @@ repositories {
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:$mc_version-28.0.81"
+    minecraft "net.minecraftforge:forge:$mc_version-28.1.0"
     compile "kottle:Kottle:$kottle_version"
     mod "kottle:Kottle:$kottle_version"
     compileOnly fg.deobf("mezz.jei:jei-$mc_version:$jei_version:api")

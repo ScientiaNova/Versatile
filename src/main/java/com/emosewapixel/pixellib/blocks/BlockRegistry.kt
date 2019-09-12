@@ -5,7 +5,7 @@ import com.emosewapixel.pixellib.materialsystem.lists.MaterialBlocks
 import com.emosewapixel.pixellib.materialsystem.lists.Materials
 import com.emosewapixel.pixellib.materialsystem.lists.ObjTypes
 import com.emosewapixel.pixellib.materialsystem.materials.DustMaterial
-import com.emosewapixel.pixellib.materialsystem.materials.IMaterialItem
+import com.emosewapixel.pixellib.materialsystem.materials.IMaterialObject
 import com.emosewapixel.pixellib.materialsystem.types.BlockType
 import net.minecraft.block.Block
 import net.minecraft.item.BlockItem
@@ -23,7 +23,7 @@ object BlockRegistry {
         }
     }
 
-    fun itemRegistry(e: RegistryEvent.Register<Item>) = MaterialBlocks.getAll().filterIsInstance<IMaterialItem>().forEach { registerItemBlock(it as Block, e) }
+    fun itemRegistry(e: RegistryEvent.Register<Item>) = MaterialBlocks.getAll().filterIsInstance<IMaterialObject>().forEach { registerItemBlock(it as Block, e) }
 
     private fun register(block: Block, e: RegistryEvent.Register<Block>): Block {
         e.registry.register(block)

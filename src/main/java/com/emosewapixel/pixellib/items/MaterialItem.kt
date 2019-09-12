@@ -2,7 +2,7 @@ package com.emosewapixel.pixellib.items
 
 import com.emosewapixel.pixellib.PixelLib
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialItems
-import com.emosewapixel.pixellib.materialsystem.materials.IMaterialItem
+import com.emosewapixel.pixellib.materialsystem.materials.IMaterialObject
 import com.emosewapixel.pixellib.materialsystem.materials.Material
 import com.emosewapixel.pixellib.materialsystem.types.ObjectType
 import net.minecraft.item.Item
@@ -11,7 +11,7 @@ import net.minecraft.util.text.TranslationTextComponent
 import net.minecraft.util.text.translation.LanguageMap
 
 //Material Items are Items that have a Material and Object Type
-open class MaterialItem(override val mat: Material, override val objType: ObjectType) : Item(Properties().group(PixelLib.main)), IMaterialItem {
+open class MaterialItem(override val mat: Material, override val objType: ObjectType) : Item(Properties().group(PixelLib.main)), IMaterialObject {
     init {
         setRegistryName("pixellib:" + mat.name + "_" + objType.name)
         MaterialItems.addItem(this)

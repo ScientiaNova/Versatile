@@ -1,6 +1,6 @@
 package com.emosewapixel.pixellib.materialsystem.lists
 
-import com.emosewapixel.pixellib.materialsystem.materials.IMaterialItem
+import com.emosewapixel.pixellib.materialsystem.materials.IMaterialObject
 import com.emosewapixel.pixellib.materialsystem.materials.Material
 import com.emosewapixel.pixellib.materialsystem.types.ObjectType
 import com.google.common.collect.HashBasedTable
@@ -27,7 +27,7 @@ object MaterialItems {
     fun addItem(mat: Material, type: ObjectType, item: Item) = materialItems.put(mat, type, item)
 
     @JvmStatic
-    fun addItem(item: IMaterialItem) {
+    fun addItem(item: IMaterialObject) {
         if (item is Item)
             addItem(item.mat, item.objType, item as Item)
     }
@@ -36,8 +36,8 @@ object MaterialItems {
     fun getItemCell(item: Item): Table.Cell<Material, ObjectType, Item>? = materialItems.cellSet().first { it.value === item }
 
     @JvmStatic
-    fun getItemMaterial(item: Item): Material? = if (item is IMaterialItem) item.mat else getItemCell(item)?.rowKey
+    fun getItemMaterial(item: Item): Material? = if (item is IMaterialObject) item.mat else getItemCell(item)?.rowKey
 
     @JvmStatic
-    fun getItemObjType(item: Item): ObjectType? = if (item is IMaterialItem) item.objType else  getItemCell(item)?.columnKey
+    fun getItemObjType(item: Item): ObjectType? = if (item is IMaterialObject) item.objType else  getItemCell(item)?.columnKey
 }

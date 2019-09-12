@@ -18,7 +18,6 @@ open class IngotMaterial(name: String, textureType: String, color: Int, tier: In
         compoundType = CompoundType.ALLOY
     }
 
-
     @JvmName("invokeIngot")
     operator fun invoke(builder: IngotMaterial.() -> Unit) = builder(this)
 
