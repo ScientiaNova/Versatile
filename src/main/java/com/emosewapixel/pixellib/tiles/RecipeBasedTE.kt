@@ -22,10 +22,12 @@ open class RecipeBasedTE(type: TileEntityType<*>, recipeList: SimpleRecipeList) 
                     .map { chosenRecipe.getIndexOfInput(recipeInventory.getStackInSlot(it)) }
 
             return if (recipeIndexes.contains(-1)) SimpleMachineRecipe.EMPTY else SimpleMachineRecipe(
-                    (0 until recipeList.maxInputs).map { ItemStack(recipeInventory.getStackInSlot(it).item, chosenRecipe.getCountOfInput(recipeIndexes[it])) }.toTypedArray(),
+                    (0 until recipeList.maxInputs).map { ItemStack(recipeInventory.getStackInSlot(it).item, chosenRecipe.getInputCount(recipeIndexes[it])) }.toTypedArray(),
                     recipeIndexes.map { chosenRecipe.getConsumeChance(it) }.toTypedArray(),
+                    chosenRecipe.fluidInputs,
                     chosenRecipe.outputs,
                     chosenRecipe.outputChances,
+                    chosenRecipe.fluidOutputs,
                     chosenRecipe.time)
         }
 }

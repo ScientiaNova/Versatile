@@ -1,0 +1,7 @@
+{
+  "parent":"item/generated",
+  "textures": {
+    "layer0":"pixellib:item/fluid_gas_bucket_base",
+    "layer1":"pixellib:item/fluid_gas_bucket_overlay"
+  }
+}

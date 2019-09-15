@@ -1,9 +1,10 @@
 package com.emosewapixel.pixellib.recipes
 
 import net.minecraft.item.ItemStack
+import net.minecraftforge.fluids.FluidStack
 
 //Simple Machine Recipes are the most basic Machine Recipes, only having inputs, outputs and a processing time
-open class SimpleMachineRecipe(val inputs: Array<Any>, val consumeChances: Array<Float>, val outputs: Array<Any>, val outputChances: Array<Float>, var time: Int) {
+open class SimpleMachineRecipe(val inputs: Array<Any>, val consumeChances: Array<Float>, val fluidInputs: Array<FluidStack>, val outputs: Array<Any>, val outputChances: Array<Float>, val fluidOutputs: Array<FluidStack>, var time: Int) {
     val outputStacks: List<ItemStack>
         get() = outputs.map { if (it is ItemStack) it else (it as TagStack).asItemStack() }
 
@@ -19,13 +20,6 @@ open class SimpleMachineRecipe(val inputs: Array<Any>, val consumeChances: Array
         get() = this === EMPTY
 
     fun getInput(index: Int) = inputs[index]
-
-    fun getInputCount(index: Int): Int {
-        val obj = getInput(index)
-        if (obj is ItemStack)
-            return obj.count
-        return if (obj is TagStack) obj.count else 0
-    }
 
     fun getOutput(index: Int) = when (outputs[index]) {
         is ItemStack -> outputs[index] as ItemStack
@@ -46,10 +40,13 @@ open class SimpleMachineRecipe(val inputs: Array<Any>, val consumeChances: Array
                     .filter { !it.isEmpty }
                     .count()
 
-
-    fun getCountOfInput(index: Int): Int {
+    fun getInputCount(index: Int): Int {
         val o = inputs[index]
-        return if (o is ItemStack) o.count else (o as TagStack).count
+        return when (o) {
+            is ItemStack -> o.count
+            is TagStack -> o.count
+            else -> 0
+        }
     }
 
     fun getIndexOfInput(stack: ItemStack) =
@@ -67,6 +64,6 @@ open class SimpleMachineRecipe(val inputs: Array<Any>, val consumeChances: Array
 
     companion object {
         @JvmField
-        val EMPTY = SimpleMachineRecipe(arrayOf(), arrayOf(), arrayOf(), arrayOf(), 0)
+        val EMPTY = SimpleMachineRecipe(arrayOf(), arrayOf(), arrayOf(), arrayOf(), arrayOf(), arrayOf(), 0)
     }
 }

@@ -7,7 +7,8 @@ object Materials {
     private val materials = hashMapOf<String, Material>()
 
     @JvmStatic
-    fun getAll() = materials.values
+    val all: Collection<Material>
+        get() = materials.values
 
     @JvmStatic
     fun add(mat: Material) = if (mat in materials.values) materials[mat.name]!!.merge(mat) else materials[mat.name] = mat

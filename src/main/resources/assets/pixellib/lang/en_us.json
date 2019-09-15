@@ -9,6 +9,9 @@
 	"itemtype.dust": "%s Dust",
 	"itemtype.nugget": "%s Nugget",
 
+	"fluidtype.fluid": "%s",
+	"fluidtype.molten": "Molten %s",
+
 	"material.coal": "Coal",
 	"material.charcoal": "Charcoal",
 	"material.diamond": "Diamond",
@@ -35,5 +38,13 @@
 	"block.pixellib.stone_storage_block": "Block of Stone Dust",
 	"block.pixellib.obsidian_storage_block": "Block of Obsidian Dust",
 
-	"command.materialitem.error": "That is not a material item"
+	"container.bucket": "Bucket of %s",
+
+	"death.attack.hot_fluid": "%1$s tried to swim in a hot fluid",
+	"death.attack.hot_fluid.player": "%1$s tried to swim in a hot fluid to escape %2$s",
+	"death.attack.acid": "%1$s tried to swim in acid",
+	"death.attack.acid.player": "%1$s tried to swim in acid to escape %2$s",
+
+	"command.materialitem.error": "That is not a material item",
+	"command.fluidcontainer.error": "That is not a fluid container item"
 }

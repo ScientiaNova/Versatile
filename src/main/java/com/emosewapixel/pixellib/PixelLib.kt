@@ -1,11 +1,14 @@
 package com.emosewapixel.pixellib
 
 import com.emosewapixel.pixellib.blocks.BlockRegistry
+import com.emosewapixel.pixellib.commands.FluidContainerCommand
 import com.emosewapixel.pixellib.commands.MaterialItemCommand
+import com.emosewapixel.pixellib.fluids.FluidRegistry
 import com.emosewapixel.pixellib.items.ItemRegistry
 import com.emosewapixel.pixellib.materialsystem.MaterialRegistry
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialItems
 import com.emosewapixel.pixellib.materialsystem.materials.IMaterialObject
+import com.emosewapixel.pixellib.materialsystem.types.FluidType
 import com.emosewapixel.pixellib.proxy.ClientProxy
 import com.emosewapixel.pixellib.proxy.IModProxy
 import com.emosewapixel.pixellib.proxy.ServerProxy
@@ -16,7 +19,7 @@ import com.emosewapixel.pixellib.worldgen.OreGen
 import net.alexwells.kottle.FMLKotlinModLoadingContext
 import net.alexwells.kottle.KotlinEventBusSubscriber
 import net.minecraft.block.Block
-import net.minecraft.item.BlockItem
+import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemStack
@@ -44,8 +47,8 @@ object PixelLib {
     private val proxy = DistExecutor.runForDist<IModProxy>({ Supplier { ClientProxy } }, { Supplier { ServerProxy } })
 
     @JvmField
-    val main: ItemGroup = object : ItemGroup(ModId) {
-        override fun createIcon() = ItemStack(MaterialItems.getAll().filterIsInstance<IMaterialObject>().first() as Item)
+    val MAIN: ItemGroup = object : ItemGroup(ModId) {
+        override fun createIcon() = ItemStack(MaterialItems.all.filterIsInstance<IMaterialObject>().first() as Item)
     }
 
     init {
@@ -71,13 +74,20 @@ object PixelLib {
 @KotlinEventBusSubscriber(bus = KotlinEventBusSubscriber.Bus.MOD, modid = PixelLib.ModId)
 object RegistryEvents {
     @SubscribeEvent
-    fun onBlockRegistry(e: RegistryEvent.Register<Block>) = BlockRegistry.registry(e)
+    fun onBlockRegistry(e: RegistryEvent.Register<Block>) {
+        BlockRegistry.registerBlocks(e)
+        FluidRegistry.registerBlocks(e)
+    }
 
     @SubscribeEvent
     fun onItemRegistry(e: RegistryEvent.Register<Item>) {
-        ItemRegistry.registry(e)
-        BlockRegistry.itemRegistry(e)
+        ItemRegistry.registerItems(e)
+        BlockRegistry.registerItems(e)
+        FluidRegistry.registerItems(e)
     }
+
+    @SubscribeEvent
+    fun onFluidRegistry(e: RegistryEvent.Register<Fluid>) = FluidRegistry.registerFluids(e)
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     fun onLateItemRegistry(e: RegistryEvent.Register<Item>) = addModelJSONs()
@@ -91,20 +101,14 @@ object GameEvents {
     @SubscribeEvent
     fun onServerStart(e: FMLServerStartingEvent) {
         MaterialItemCommand(e.commandDispatcher)
+        FluidContainerCommand(e.commandDispatcher)
     }
 
     @SubscribeEvent
     fun fuelTime(e: FurnaceFuelBurnTimeEvent) {
         val item = e.itemStack.item
-        if (item is BlockItem) {
-            val block = Block.getBlockFromItem(item)
-            if (block is IMaterialObject) {
-                val type = (block as IMaterialObject).objType
-                if (MaterialRegistry.HAS_NO_FUEL_VALUE !in type.typeTags && (block as IMaterialObject).objType.bucketVolume != 0)
-                    e.burnTime = (type.bucketVolume / 144 + type.bucketVolume / 1296) * (block as IMaterialObject).mat.standardBurnTime
-            }
-        } else if (item is IMaterialObject)
-            if (MaterialRegistry.HAS_NO_FUEL_VALUE !in (item as IMaterialObject).objType.typeTags && (item as IMaterialObject).objType.bucketVolume != 0)
-                e.burnTime = (item as IMaterialObject).objType.bucketVolume / 144 * (item as IMaterialObject).mat.standardBurnTime
+        if (item is IMaterialObject)
+            if (!item.objType.hasTag(MaterialRegistry.HAS_NO_FUEL_VALUE) && item.objType.bucketVolume != 0)
+                e.burnTime = if (item.objType is FluidType) item.objType.bucketVolume / 1000 else item.objType.bucketVolume / 144 * item.mat.standardBurnTime
     }
 }

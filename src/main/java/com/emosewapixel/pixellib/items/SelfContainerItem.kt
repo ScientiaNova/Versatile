@@ -5,7 +5,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 
 //Self Container Items are items that don't get used up in crafting recipes
-open class SelfContainerItem(name: String) : Item(Item.Properties().group(PixelLib.main)) {
+open class SelfContainerItem(name: String) : Item(Item.Properties().group(PixelLib.MAIN)) {
     init {
         setRegistryName(name)
     }

@@ -1,53 +1,46 @@
 package com.emosewapixel.pixellib.recipes
 
 import com.emosewapixel.pixellib.PixelLib
-import java.util.*
+import net.minecraft.item.ItemStack
+import net.minecraftforge.fluids.FluidStack
 
 //Recipe Builders are builders used for easily creating Machine Recipes
 abstract class AbstractRecipeBuilder<T : SimpleMachineRecipe, R : AbstractRecipeBuilder<T, R>>(protected val recipeList: AbstractRecipeList<T, R>) {
-    protected val inputs = ArrayList<Any>()
-    protected val consumeChances = ArrayList<Float>()
-    protected val outputs = ArrayList<Any>()
-    protected val outputChances = ArrayList<Float>()
-    protected var time = 0
-        private set
+    protected val inputs = mutableListOf<Pair<Any, Float>>()
+    val fluidInputs = mutableListOf<FluidStack>()
+    protected val outputs = mutableListOf<Pair<Any, Float>>()
+    val fluidOutputs = mutableListOf<FluidStack>()
+    var time = 0
+
+    operator fun MutableList<Pair<Any, Float>>.plusAssign(stack: ItemStack): Unit = plusAssign(stack to 1f)
+    operator fun MutableList<Pair<Any, Float>>.plusAssign(stack: TagStack): Unit = plusAssign(stack to 1f)
 
     fun input(vararg inputs: Any): R {
-        this.inputs.addAll(listOf(*inputs))
-        repeat(inputs.size) { consumeChances.add(1f) }
+        this.inputs += (listOf(*inputs)).map { it to 1f }
         return this as R
     }
 
     fun potentiallyConsumable(input: Any, consumeChance: Float): R {
-        this.inputs.add(input)
-        consumeChances.add(consumeChance)
-        return this as R
-    }
-
-    fun notConsumable(vararg inputs: Any): R {
-        this.inputs.addAll(listOf(*inputs))
-        repeat(inputs.size) { consumeChances.add(0f) }
+        this.inputs += input to consumeChance
         return this as R
     }
 
     fun output(vararg outputs: Any): R {
-        this.outputs.addAll(listOf(*outputs))
-        repeat(outputs.size) { outputChances.add(1.0f) }
+        this.outputs += (listOf(*outputs)).map { it to 1f }
         return this as R
     }
 
     fun chancedOutput(output: Any, chance: Float): R {
-        this.outputs.add(output)
-        outputChances.add(chance)
+        this.inputs += output to chance
         return this as R
     }
 
-    fun time(amount: Int): R {
+    infix fun time(amount: Int): R {
         time = amount
         return this as R
     }
 
-    abstract fun build(): T
+    protected abstract fun build(): T
 
     fun buildAndRegister() {
         if (!build().isEmpty)

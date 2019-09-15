@@ -29,10 +29,12 @@ open class PoweredTE(type: TileEntityType<*>, recipeList: EnergyRecipeList, prot
             val recipeIndices = (0 until recipeList.maxInputs).map { chosenRecipe.getIndexOfInput(recipeInventory.getStackInSlot(it)) }
 
             return if (recipeIndices.contains(-1)) EnergyMachineRecipe.EMPTY else EnergyMachineRecipe(
-                    (0 until recipeList.maxInputs).map { ItemStack(recipeInventory.getStackInSlot(it).item, chosenRecipe.getCountOfInput(recipeIndices[it])) }.toTypedArray(),
+                    (0 until recipeList.maxInputs).map { ItemStack(recipeInventory.getStackInSlot(it).item, chosenRecipe.getInputCount(recipeIndices[it])) }.toTypedArray(),
                     recipeIndices.map { chosenRecipe.getConsumeChance(it) }.toTypedArray(),
+                    chosenRecipe.fluidInputs,
                     chosenRecipe.outputs,
                     chosenRecipe.outputChances,
+                    chosenRecipe.fluidOutputs,
                     chosenRecipe.time,
                     chosenRecipe.energyPerTick)
         }
@@ -68,9 +70,7 @@ open class PoweredTE(type: TileEntityType<*>, recipeList: EnergyRecipeList, prot
         return energyReceived
     }
 
-    override fun extractEnergy(maxExtract: Int, simulate: Boolean): Int {
-        return 0
-    }
+    override fun extractEnergy(maxExtract: Int, simulate: Boolean) = 0
 
     protected fun internalExtractEnergy(extract: Int, simulate: Boolean): Boolean {
         val energyExtract = energy.coerceAtMost(extract)
@@ -83,21 +83,13 @@ open class PoweredTE(type: TileEntityType<*>, recipeList: EnergyRecipeList, prot
         return energyExtract == extract
     }
 
-    override fun getEnergyStored(): Int {
-        return energy
-    }
+    override fun getEnergyStored() = energy
 
-    override fun getMaxEnergyStored(): Int {
-        return maxPower
-    }
+    override fun getMaxEnergyStored() = maxPower
 
-    override fun canExtract(): Boolean {
-        return false
-    }
+    override fun canExtract() = false
 
-    override fun canReceive(): Boolean {
-        return true
-    }
+    override fun canReceive() = true
 
     override fun <T> getCapability(cap: Capability<T>, side: Direction?): LazyOptional<T> =
             if (cap === CapabilityEnergy.ENERGY) LazyOptional.of { this }.cast() else super.getCapability(cap, side)

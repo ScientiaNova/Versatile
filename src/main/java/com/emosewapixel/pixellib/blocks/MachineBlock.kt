@@ -5,7 +5,6 @@ import com.emosewapixel.pixellib.tiles.containers.providers.MachineContainerProv
 import net.minecraft.block.Block
 import net.minecraft.block.BlockRenderType
 import net.minecraft.block.BlockState
-import net.minecraft.block.ITileEntityProvider
 import net.minecraft.block.material.Material
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.ServerPlayerEntity
@@ -23,12 +22,12 @@ import net.minecraftforge.fml.network.NetworkHooks
 import java.util.function.Supplier
 
 //Machine Blocks are Blocks that have Tes
-open class MachineBlock @JvmOverloads constructor(properties: Properties = Properties.create(Material.ROCK).hardnessAndResistance(3.5f), name: String, private var te: Supplier<TileEntity>, protected val containerType: ContainerType<*>?) : Block(properties), ITileEntityProvider {
+open class MachineBlock @JvmOverloads constructor(properties: Properties = Properties.create(Material.ROCK).hardnessAndResistance(3.5f), name: String, private var te: Supplier<TileEntity>, protected val containerType: ContainerType<*>?) : Block(properties) {
     init {
         setRegistryName(name)
     }
 
-    override fun createNewTileEntity(world: IBlockReader): TileEntity? = te.get()
+    override fun createTileEntity(state: BlockState?, world: IBlockReader?): TileEntity? = te.get()
 
     override fun getHarvestTool(state: BlockState?): ToolType = ToolType.PICKAXE
 

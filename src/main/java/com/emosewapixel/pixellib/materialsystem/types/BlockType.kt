@@ -1,14 +1,18 @@
 package com.emosewapixel.pixellib.materialsystem.types
 
+import com.emosewapixel.pixellib.blocks.MaterialBlock
+import com.emosewapixel.pixellib.blocks.MaterialBlockItem
 import com.emosewapixel.pixellib.extensions.json
 import com.emosewapixel.pixellib.materialsystem.MaterialRegistry
 import com.emosewapixel.pixellib.materialsystem.materials.IMaterialObject
 import com.emosewapixel.pixellib.materialsystem.materials.Material
 import com.google.gson.JsonObject
 import net.minecraft.block.Block
+import net.minecraft.item.Item
+import net.minecraft.util.text.TranslationTextComponent
 
 //Block Types are Object Types used for generating Blocks
-class BlockType(name: String, requirement: (Material) -> Boolean, val properties: Block.Properties) : ObjectType(name, requirement) {
+class BlockType @JvmOverloads constructor(name: String, requirement: (Material) -> Boolean, val properties: Block.Properties, constructor: (Material, BlockType) -> Block = ::MaterialBlock, val itemConstructor: (Material, BlockType) -> Item = ::MaterialBlockItem) : ObjectType<Block, BlockType>(name, requirement, constructor) {
     var blockstateFun: (IMaterialObject) -> JsonObject = {
         json {
             "variants" {
@@ -19,8 +23,7 @@ class BlockType(name: String, requirement: (Material) -> Boolean, val properties
         }
     }
 
-    @JvmName("invokeBlock")
-    operator fun invoke(builder: BlockType.() -> Unit) = builder(this)
+    override fun localize(mat: Material) = TranslationTextComponent("blocktype.$name", mat.localizedName)
 
     fun getBlockStateJson(item: IMaterialObject) = blockstateFun(item)
 }

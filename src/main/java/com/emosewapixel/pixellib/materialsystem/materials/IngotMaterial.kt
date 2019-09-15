@@ -12,7 +12,7 @@ import java.util.function.Supplier
 //Ingot Materials are the solid materials that, above all else, have ingots
 open class IngotMaterial(name: String, textureType: String, color: Int, tier: Int) : DustMaterial(name, textureType, color, tier) {
     override val defaultItem: Item?
-        get() = MaterialItems.getItem(this, MaterialRegistry.INGOT)
+        get() = MaterialItems.get(this, MaterialRegistry.INGOT)
 
     init {
         compoundType = CompoundType.ALLOY
@@ -22,7 +22,7 @@ open class IngotMaterial(name: String, textureType: String, color: Int, tier: In
     operator fun invoke(builder: IngotMaterial.() -> Unit) = builder(this)
 
     fun itemTier(harvestLevelIn: Int, maxUsesIn: Int, efficiencyIn: Float, attackDamageIn: Float, enchantabilityIn: Int) =
-            ItemTier(harvestLevelIn, maxUsesIn, efficiencyIn, attackDamageIn, enchantabilityIn, Supplier { Ingredient.fromTag(getTag(MaterialRegistry.INGOT)) })
+            ItemTier(harvestLevelIn, maxUsesIn, efficiencyIn, attackDamageIn, enchantabilityIn, Supplier { Ingredient.fromTag(getItemTag(MaterialRegistry.INGOT)) })
 
-    fun armorMaterial(durability: Int, damageReduction: Int, enchantability: Int, soundEvent: SoundEvent, toughness: Float) = ArmorMaterial(durability, damageReduction, enchantability, soundEvent, Supplier { Ingredient.fromTag(getTag(MaterialRegistry.INGOT)) }, name, toughness)
+    fun armorMaterial(durability: Int, damageReduction: Int, enchantability: Int, soundEvent: SoundEvent, toughness: Float) = ArmorMaterial(durability, damageReduction, enchantability, soundEvent, Supplier { Ingredient.fromTag(getItemTag(MaterialRegistry.INGOT)) }, name, toughness)
 }

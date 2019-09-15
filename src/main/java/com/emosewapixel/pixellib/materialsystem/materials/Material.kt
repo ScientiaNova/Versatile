@@ -6,6 +6,7 @@ import com.emosewapixel.pixellib.materialsystem.materials.utility.MaterialStack
 import com.emosewapixel.pixellib.materialsystem.types.ObjectType
 import net.minecraft.item.IArmorMaterial
 import net.minecraft.item.IItemTier
+import net.minecraft.tags.FluidTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.ITextComponent
@@ -20,15 +21,16 @@ However, the base Materials aren't meant to be used for generating anything
 open class Material constructor(val name: String, val textureType: String, val color: Int, val tier: Int) {
     var itemTier: IItemTier? = null
     var armorMaterial: IArmorMaterial? = null
-    val typeBlacklist = ArrayList<ObjectType>()
+    val typeBlacklist = ArrayList<ObjectType<*, *>>()
     val materialTags = ArrayList<String>()
     var composition = listOf<MaterialStack>()
     var element = Elements.NULL
-    var secondName: String? = null
+    var secondName = name
     var standardBurnTime = 0
     var compoundType = CompoundType.CHEMICAL
+    var harvestTier = harvestTier(1.5f * (tier + 1), 1.5f * (tier + 1))
 
-    val translationKey: ITextComponent
+    val localizedName: ITextComponent
         get() = TranslationTextComponent("material.$name")
 
     val fullComposition: List<MaterialStack>
@@ -47,13 +49,20 @@ open class Material constructor(val name: String, val textureType: String, val c
         return Materials[name]!!
     }
 
-    fun hasTag(tag: String) = tag in materialTags
+    infix fun hasTag(tag: String) = tag in materialTags
 
-    fun hasSecondName() = secondName != name
+    val hasSecondName
+        get() = secondName != name
 
-    fun getTag(type: ObjectType) = ItemTags.Wrapper(ResourceLocation("forge", type.name + "s/" + name))
+    fun getItemTag(type: ObjectType<*, *>) = ItemTags.Wrapper(ResourceLocation("forge", type.name + "s/" + name))
 
-    fun getSecondTag(type: ObjectType) = ItemTags.Wrapper(ResourceLocation("forge", type.name + "s/" + secondName))
+    fun getFluidTag(type: ObjectType<*, *>) = FluidTags.Wrapper(ResourceLocation("forge", (if (this !is FluidMaterial) type.name + "_" else "") + name))
+
+    fun getSecondItemTag(type: ObjectType<*, *>) = ItemTags.Wrapper(ResourceLocation("forge", type.name + "s/" + secondName))
+
+    fun getSecondFluidTag(type: ObjectType<*, *>) = FluidTags.Wrapper(ResourceLocation("forge", (if (this !is FluidMaterial) type.name + "_" else "") + secondName))
+
+    fun harvestTier(hardness: Float, resistance: Float) = HarvestTier(hardness, resistance, tier)
 
     open fun merge(mat: Material) {
         if (mat.itemTier != null)
