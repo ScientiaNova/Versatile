@@ -17,7 +17,7 @@ import net.minecraft.world.World
 
 class MaterialFluidBlock(override val mat: Material, override val objType: FluidType) : FlowingFluidBlock({ MaterialFluids[mat, objType] }, Properties.from(Blocks.WATER)), IMaterialObject {
     init {
-        setRegistryName("pixellib:${if (mat is FluidMaterial) "" else "${objType.name}_"}${mat.name}")
+        registryName = objType.buildRegistryName(mat)
         MaterialBlocks.addBlock(this)
     }
 

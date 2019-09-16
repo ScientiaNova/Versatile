@@ -42,45 +42,45 @@ object DataAddition {
             if (mat.javaClass == DustMaterial::class.java)
                 if (mat.hasTag(MaterialRegistry.BLOCK_FROM_4X4)) {
                     if (hasMaterialBlock)
-                        RecipeMaker.addShapedRecipe(location(mat.name + "_block"), output = ItemStack(MaterialBlocks[mat, MaterialRegistry.BLOCK]!!), shape = *arrayOf("II", "II", 'I', mat.getItemTag(MaterialRegistry.DUST)))
-                    if (MaterialItems.get(mat, MaterialRegistry.DUST) is IMaterialObject || hasMaterialBlock)
-                        RecipeMaker.addShapelessRecipe(location(mat.name + "_dust_from_block"), mat.name + "_dust", ItemStack(MaterialItems.get(mat, MaterialRegistry.DUST)!!, 4), mat.getItemTag(MaterialRegistry.BLOCK))
+                        RecipeMaker.addShapedRecipe(location(mat.name + "_block"), output = ItemStack(MaterialBlocks[mat, MaterialRegistry.BLOCK]!!), shape = *arrayOf("II", "II", 'I', mat.getTag(MaterialRegistry.DUST)))
+                    if (MaterialItems[mat, MaterialRegistry.DUST] is IMaterialObject || hasMaterialBlock)
+                        RecipeMaker.addShapelessRecipe(location(mat.name + "_dust_from_block"), mat.name + "_dust", ItemStack(MaterialItems.get(mat, MaterialRegistry.DUST)!!, 4), mat.getTag(MaterialRegistry.BLOCK))
                 } else {
                     if (hasMaterialBlock)
-                        RecipeMaker.addShapedRecipe(location(mat.name + "_dust"), output = ItemStack(MaterialBlocks[mat, MaterialRegistry.BLOCK]!!), shape = *arrayOf("III", "III", "III", 'I', mat.getItemTag(MaterialRegistry.DUST)))
-                    if (MaterialItems.get(mat, MaterialRegistry.DUST) is IMaterialObject || hasMaterialBlock)
-                        RecipeMaker.addShapelessRecipe(location(mat.name + "_dust_from_block"), mat.name + "_dust", ItemStack(MaterialItems.get(mat, MaterialRegistry.DUST)!!, 9), mat.getItemTag(MaterialRegistry.BLOCK))
+                        RecipeMaker.addShapedRecipe(location(mat.name + "_dust"), output = ItemStack(MaterialBlocks[mat, MaterialRegistry.BLOCK]!!), shape = *arrayOf("III", "III", "III", 'I', mat.getTag(MaterialRegistry.DUST)))
+                    if (MaterialItems[mat, MaterialRegistry.DUST] is IMaterialObject || hasMaterialBlock)
+                        RecipeMaker.addShapelessRecipe(location(mat.name + "_dust_from_block"), mat.name + "_dust", ItemStack(MaterialItems.get(mat, MaterialRegistry.DUST)!!, 9), mat.getTag(MaterialRegistry.BLOCK))
                 }
             if (mat is GemMaterial)
                 if (mat.hasTag(MaterialRegistry.BLOCK_FROM_4X4)) {
                     if (hasMaterialBlock)
-                        RecipeMaker.addShapedRecipe(location(mat.name + "_block"), output = ItemStack(MaterialBlocks[mat, MaterialRegistry.BLOCK]!!), shape = *arrayOf("II", "II", 'I', mat.getItemTag(MaterialRegistry.GEM)))
-                    if (MaterialItems.get(mat, MaterialRegistry.GEM) is IMaterialObject || hasMaterialBlock)
-                        RecipeMaker.addShapelessRecipe(location(mat.name + "_gem_from_block"), mat.name + "_gem", ItemStack(MaterialItems.get(mat, MaterialRegistry.GEM)!!, 4), mat.getItemTag(MaterialRegistry.BLOCK))
+                        RecipeMaker.addShapedRecipe(location(mat.name + "_block"), output = ItemStack(MaterialBlocks[mat, MaterialRegistry.BLOCK]!!), shape = *arrayOf("II", "II", 'I', mat.getTag(MaterialRegistry.GEM)))
+                    if (MaterialItems[mat, MaterialRegistry.GEM] is IMaterialObject || hasMaterialBlock)
+                        RecipeMaker.addShapelessRecipe(location(mat.name + "_gem_from_block"), mat.name + "_gem", ItemStack(MaterialItems.get(mat, MaterialRegistry.GEM)!!, 4), mat.getTag(MaterialRegistry.BLOCK))
                 } else {
                     if (hasMaterialBlock)
-                        RecipeMaker.addShapedRecipe(location(mat.name + "_block"), output = ItemStack(MaterialBlocks[mat, MaterialRegistry.BLOCK]!!), shape = *arrayOf("III", "III", "III", 'I', mat.getItemTag(MaterialRegistry.GEM)))
-                    if (MaterialItems.get(mat, MaterialRegistry.GEM) is IMaterialObject || hasMaterialBlock)
-                        RecipeMaker.addShapelessRecipe(location(mat.name + "_gem_from_block"), mat.name + "_gem", ItemStack(MaterialItems.get(mat, MaterialRegistry.GEM)!!, 9), mat.getItemTag(MaterialRegistry.BLOCK))
+                        RecipeMaker.addShapedRecipe(location(mat.name + "_block"), output = ItemStack(MaterialBlocks[mat, MaterialRegistry.BLOCK]!!), shape = *arrayOf("III", "III", "III", 'I', mat.getTag(MaterialRegistry.GEM)))
+                    if (MaterialItems[mat, MaterialRegistry.GEM] is IMaterialObject || hasMaterialBlock)
+                        RecipeMaker.addShapelessRecipe(location(mat.name + "_gem_from_block"), mat.name + "_gem", ItemStack(MaterialItems.get(mat, MaterialRegistry.GEM)!!, 9), mat.getTag(MaterialRegistry.BLOCK))
                 }
             if (mat is IngotMaterial) {
                 if (mat.hasTag(MaterialRegistry.BLOCK_FROM_4X4)) {
                     if (hasMaterialBlock)
-                        RecipeMaker.addShapedRecipe(location(mat.name + "_block"), output = ItemStack(MaterialBlocks[mat, MaterialRegistry.BLOCK]!!), shape = *arrayOf("II", "II", 'I', mat.getItemTag(MaterialRegistry.INGOT)))
+                        RecipeMaker.addShapedRecipe(location(mat.name + "_block"), output = ItemStack(MaterialBlocks[mat, MaterialRegistry.BLOCK]!!), shape = *arrayOf("II", "II", 'I', mat.getTag(MaterialRegistry.INGOT)))
                     if (MaterialItems.get(mat, MaterialRegistry.INGOT) is IMaterialObject || hasMaterialBlock)
-                        RecipeMaker.addShapelessRecipe(location(mat.name + "_ingot_from_block"), mat.name + "_ingot", ItemStack(MaterialItems.get(mat, MaterialRegistry.INGOT)!!, 4), mat.getItemTag(MaterialRegistry.BLOCK))
+                        RecipeMaker.addShapelessRecipe(location(mat.name + "_ingot_from_block"), mat.name + "_ingot", ItemStack(MaterialItems.get(mat, MaterialRegistry.INGOT)!!, 4), mat.getTag(MaterialRegistry.BLOCK))
                 } else {
                     if (hasMaterialBlock)
-                        RecipeMaker.addShapedRecipe(location(mat.name + "_block"), output = ItemStack(MaterialBlocks[mat, MaterialRegistry.BLOCK]!!), shape = *arrayOf("III", "III", "III", 'I', mat.getItemTag(MaterialRegistry.INGOT)))
+                        RecipeMaker.addShapedRecipe(location(mat.name + "_block"), output = ItemStack(MaterialBlocks[mat, MaterialRegistry.BLOCK]!!), shape = *arrayOf("III", "III", "III", 'I', mat.getTag(MaterialRegistry.INGOT)))
                     if (MaterialItems.get(mat, MaterialRegistry.INGOT) is IMaterialObject || hasMaterialBlock)
-                        RecipeMaker.addShapelessRecipe(location(mat.name + "_ingot_from_block"), mat.name + "_ingot", ItemStack(MaterialItems.get(mat, MaterialRegistry.INGOT)!!, 9), mat.getItemTag(MaterialRegistry.BLOCK))
+                        RecipeMaker.addShapelessRecipe(location(mat.name + "_ingot_from_block"), mat.name + "_ingot", ItemStack(MaterialItems.get(mat, MaterialRegistry.INGOT)!!, 9), mat.getTag(MaterialRegistry.BLOCK))
                 }
                 if (MaterialItems.get(mat, MaterialRegistry.INGOT) is IMaterialObject && MaterialItems.contains(mat, MaterialRegistry.NUGGET))
-                    RecipeMaker.addShapedRecipe(location(mat.name + "ingot_from_nuggets"), mat.name + "_ingot", ItemStack(MaterialItems.get(mat, MaterialRegistry.INGOT)!!), shape = *arrayOf("NNN", "NNN", "NNN", 'N', mat.getItemTag(MaterialRegistry.NUGGET)))
+                    RecipeMaker.addShapedRecipe(location(mat.name + "ingot_from_nuggets"), mat.name + "_ingot", ItemStack(MaterialItems.get(mat, MaterialRegistry.INGOT)!!), shape = *arrayOf("NNN", "NNN", "NNN", 'N', mat.getTag(MaterialRegistry.NUGGET)))
                 if (!mat.hasTag(MaterialRegistry.DISABLE_SIMPLE_PROCESSING))
-                    RecipeMaker.addFurnaceRecipe(location(mat.name + "_ingot"), mat.getItemTag(MaterialRegistry.DUST), MaterialItems.get(mat, MaterialRegistry.INGOT)!!)
+                    RecipeMaker.addFurnaceRecipe(location(mat.name + "_ingot"), mat.getTag(MaterialRegistry.DUST), MaterialItems.get(mat, MaterialRegistry.INGOT)!!)
                 if (MaterialItems.get(mat, MaterialRegistry.NUGGET) is IMaterialObject)
-                    RecipeMaker.addShapelessRecipe(location(mat.name + "_nuggets"), output = ItemStack(MaterialItems.get(mat, MaterialRegistry.NUGGET)!!, 9), inputs = *arrayOf(mat.getItemTag(MaterialRegistry.INGOT)))
+                    RecipeMaker.addShapelessRecipe(location(mat.name + "_nuggets"), output = ItemStack(MaterialItems.get(mat, MaterialRegistry.NUGGET)!!, 9), inputs = *arrayOf(mat.getTag(MaterialRegistry.INGOT)))
             }
         }
     }

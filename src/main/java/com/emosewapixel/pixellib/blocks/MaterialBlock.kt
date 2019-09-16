@@ -9,7 +9,7 @@ import net.minecraft.util.text.TranslationTextComponent
 import net.minecraft.util.text.translation.LanguageMap
 
 //Material Blocks are Blocks that have a Material and Object Type
-class MaterialBlock(override val mat: Material, override val objType: BlockType) : ModBlock(objType.properties.hardnessAndResistance(mat.harvestTier.hardness, mat.harvestTier.resistance), "pixellib:${mat.name}_${objType.name}", mat.harvestTier.harvestLevel), IMaterialObject {
+class MaterialBlock(override val mat: Material, override val objType: BlockType) : ModBlock(objType.properties.hardnessAndResistance(mat.harvestTier.hardness, mat.harvestTier.resistance), objType.buildRegistryName(mat).toString(), mat.harvestTier.harvestLevel), IMaterialObject {
     init {
         MaterialBlocks.addBlock(this)
     }

@@ -16,6 +16,9 @@ abstract class ObjectType<O, T : ObjectType<O, T>>(val name: String, var require
     var bucketVolume = 0
     val typeTags = mutableListOf<String>()
     val indexBlackList = mutableListOf<Int>()
+    val extraProperties = mutableMapOf<String, Any>()
+    var buildRegistryName: (Material) -> ResourceLocation = { ResourceLocation("pixellib:${it.name}_$name") }
+    var buildTagName: (String) -> String = { "${name}s/$it" }
 
     val itemTag: Tag<Item>
         get() = ItemTags.Wrapper(ResourceLocation("forge", name + "s"))
@@ -26,10 +29,7 @@ abstract class ObjectType<O, T : ObjectType<O, T>>(val name: String, var require
 
     infix fun hasTag(tag: String) = tag in typeTags
 
-    fun build(): ObjectType<*, *> {
-        ObjTypes.add(this)
-        return ObjTypes[name]!!
-    }
+    override fun toString() = name
 
     fun isMaterialCompatible(mat: Material) = requirement(mat)
 
@@ -37,6 +37,12 @@ abstract class ObjectType<O, T : ObjectType<O, T>>(val name: String, var require
         if (type.bucketVolume != 0)
             bucketVolume = type.bucketVolume
         requirement = { requirement(it) || type.requirement(it) }
-        this.typeTags.addAll(type.typeTags)
+        typeTags.addAll(type.typeTags)
+        extraProperties.putAll(type.extraProperties)
+    }
+
+    fun build(): ObjectType<*, *> {
+        ObjTypes.add(this)
+        return ObjTypes[name]!!
     }
 }

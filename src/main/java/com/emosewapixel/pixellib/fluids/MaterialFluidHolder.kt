@@ -3,7 +3,6 @@ package com.emosewapixel.pixellib.fluids
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialBlocks
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialFluids
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialItems
-import com.emosewapixel.pixellib.materialsystem.materials.FluidMaterial
 import com.emosewapixel.pixellib.materialsystem.materials.IMaterialObject
 import com.emosewapixel.pixellib.materialsystem.materials.Material
 import com.emosewapixel.pixellib.materialsystem.types.FluidType
@@ -30,7 +29,7 @@ class MaterialFluidHolder(override val mat: Material, override val objType: Flui
         override val objType = this@MaterialFluidHolder.objType
 
         init {
-            setRegistryName("pixellib:${if (mat is FluidMaterial) "" else "${objType.name}_"}${mat.name}")
+            registryName = objType.buildRegistryName(mat)
         }
 
         override fun isEquivalentTo(fluid: Fluid) = fluid in mat.getFluidTag(objType).allElements || fluid in mat.getSecondFluidTag(objType).allElements
@@ -41,7 +40,8 @@ class MaterialFluidHolder(override val mat: Material, override val objType: Flui
         override val objType = this@MaterialFluidHolder.objType
 
         init {
-            setRegistryName("pixellib:flowing_${if (mat is FluidMaterial) "" else "${objType.name}_"}${mat.name}")
+            val reg = objType.buildRegistryName(mat)
+            setRegistryName("${reg.namespace}:flowing_${reg.path}")
         }
 
         override fun isEquivalentTo(fluid: Fluid) = fluid in mat.getFluidTag(objType).allElements || fluid in mat.getSecondFluidTag(objType).allElements

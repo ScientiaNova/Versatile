@@ -5,6 +5,7 @@ issueTrackerURL="https://github.com/EmosewaPixel/PixelLib/issues"
 modId="pixellib"
 version="${file.jarVersion}"
 displayName="Pixel Lib"
+logoFile="pixellib.png"
 authors="TheEmosewaPixel"
 description="A library mod for easily adding some new things"
 [[dependencies.pixellib]]

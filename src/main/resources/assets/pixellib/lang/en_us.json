@@ -34,9 +34,9 @@
 	"material.lava": "Lava",
 
 	"item.pixellib.wooden_dust": "Sawdust",
-	"block.pixellib.wooden_storage_block": "Block of Sawdust",
-	"block.pixellib.stone_storage_block": "Block of Stone Dust",
-	"block.pixellib.obsidian_storage_block": "Block of Obsidian Dust",
+	"block.pixellib.wooden_block": "Block of Sawdust",
+	"block.pixellib.stone_block": "Block of Stone Dust",
+	"block.pixellib.obsidian_block": "Block of Obsidian Dust",
 
 	"container.bucket": "Bucket of %s",
 

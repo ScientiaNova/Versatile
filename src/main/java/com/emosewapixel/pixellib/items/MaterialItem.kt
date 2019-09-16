@@ -13,7 +13,7 @@ import net.minecraft.util.text.translation.LanguageMap
 //Material Items are Items that have a Material and Object Type
 class MaterialItem(override val mat: Material, override val objType: ItemType) : Item(Properties().group(PixelLib.MAIN)), IMaterialObject {
     init {
-        setRegistryName("pixellib:${mat.name}_${objType.name}")
+        registryName = objType.buildRegistryName(mat)
         MaterialItems.addItem(this)
     }
 

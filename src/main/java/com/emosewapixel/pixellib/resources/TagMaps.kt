@@ -1,6 +1,5 @@
 package com.emosewapixel.pixellib.resources
 
-import com.emosewapixel.pixellib.materialsystem.materials.FluidMaterial
 import com.emosewapixel.pixellib.materialsystem.materials.IMaterialObject
 import com.google.common.collect.ListMultimap
 import com.google.common.collect.MultimapBuilder
@@ -23,21 +22,21 @@ object TagMaps {
     fun addMatItemToTag(obj: IMaterialObject) {
         when (obj) {
             is Item -> {
-                addItemToTag(obj.objType.name + "s/" + obj.mat.name, obj)
+                addItemToTag(obj.objType.buildTagName(obj.mat.name), obj)
                 addItemToTag(obj.objType.name + "s", obj)
                 if (obj.mat.hasSecondName)
-                    addItemToTag(obj.objType.name + "s/" + obj.mat.secondName, obj)
+                    addItemToTag(obj.objType.buildTagName(obj.mat.secondName), obj)
             }
             is Block -> {
-                addBlockToTag(obj.objType.name + "s/" + obj.mat.name, obj)
+                addBlockToTag(obj.objType.buildTagName(obj.mat.name), obj)
                 addBlockToTag(obj.objType.name + "s", obj)
                 if (obj.mat.hasSecondName)
-                    addBlockToTag(obj.objType.name + "s/" + obj.mat.secondName, obj)
+                    addBlockToTag(obj.objType.buildTagName(obj.mat.secondName), obj)
             }
             is Fluid -> {
-                addFluidToTag((if (obj.mat !is FluidMaterial) obj.objType.name + "_" else "") + obj.mat.name, obj)
+                addFluidToTag(obj.objType.buildTagName(obj.mat.name), obj)
                 if (obj.mat.hasSecondName)
-                    addFluidToTag((if (obj.mat !is FluidMaterial) obj.objType.name + "_" else "") + obj.mat.secondName, obj)
+                    addFluidToTag(obj.objType.buildTagName(obj.mat.secondName), obj)
             }
         }
     }

@@ -61,6 +61,7 @@ object MaterialRegistry {
     @JvmField
     val BLOCK = blockType("storage_block", { it is DustMaterial },
             Block.Properties.create(net.minecraft.block.material.Material.IRON).sound(SoundType.METAL)) {
+        buildRegistryName = { ResourceLocation("pixellib:${it.name}_block") }
         bucketVolume = 1296
     }
     @JvmField
@@ -74,9 +75,13 @@ object MaterialRegistry {
     val FLUID = fluidType("fluid", { it is FluidMaterial }) {
         locationBase = "minecraft:block/water"
         overlayTexture = ResourceLocation("minecraft", "block/water_overlay")
+        buildRegistryName = { ResourceLocation("pixellib:${it.name}") }
+        buildTagName = String::toString
     }
     @JvmField
     val MOLTEN_FLUID = fluidType("molten", { it is DustMaterial && it.meltingTemperature > 0 }) {
+        buildRegistryName = { ResourceLocation("pixellib:molten_${it.name}") }
+        buildTagName = { "molten_$it" }
         emptySound = SoundEvents.ITEM_BUCKET_EMPTY_LAVA
         fillSound = SoundEvents.ITEM_BUCKET_FILL_LAVA
     }

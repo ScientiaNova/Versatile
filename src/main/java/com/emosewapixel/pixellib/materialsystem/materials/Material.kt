@@ -29,6 +29,7 @@ open class Material constructor(val name: String, val textureType: String, val c
     var standardBurnTime = 0
     var compoundType = CompoundType.CHEMICAL
     var harvestTier = harvestTier(1.5f * (tier + 1), 1.5f * (tier + 1))
+    val extraProperties = mutableMapOf<String, Any>()
 
     val localizedName: ITextComponent
         get() = TranslationTextComponent("material.$name")
@@ -44,38 +45,41 @@ open class Material constructor(val name: String, val textureType: String, val c
 
     operator fun invoke(builder: Material.() -> Unit) = builder(this)
 
-    fun build(): Material {
-        Materials.add(this)
-        return Materials[name]!!
-    }
-
     infix fun hasTag(tag: String) = tag in materialTags
 
-    val hasSecondName
-        get() = secondName != name
-
-    fun getItemTag(type: ObjectType<*, *>) = ItemTags.Wrapper(ResourceLocation("forge", type.name + "s/" + name))
-
-    fun getFluidTag(type: ObjectType<*, *>) = FluidTags.Wrapper(ResourceLocation("forge", (if (this !is FluidMaterial) type.name + "_" else "") + name))
-
-    fun getSecondItemTag(type: ObjectType<*, *>) = ItemTags.Wrapper(ResourceLocation("forge", type.name + "s/" + secondName))
-
-    fun getSecondFluidTag(type: ObjectType<*, *>) = FluidTags.Wrapper(ResourceLocation("forge", (if (this !is FluidMaterial) type.name + "_" else "") + secondName))
-
-    fun harvestTier(hardness: Float, resistance: Float) = HarvestTier(hardness, resistance, tier)
+    override fun toString() = name
 
     open fun merge(mat: Material) {
         if (mat.itemTier != null)
             itemTier = mat.itemTier
         if (mat.armorMaterial != null)
             armorMaterial = mat.armorMaterial
-        typeBlacklist.addAll(mat.typeBlacklist)
-        materialTags.addAll(mat.materialTags)
         if (mat.isPureElement)
             element = mat.element
-        if (mat.secondName != null)
+        if (mat.hasSecondName)
             secondName = mat.secondName
         if (mat.standardBurnTime != 0)
             standardBurnTime = mat.standardBurnTime
+        typeBlacklist.addAll(mat.typeBlacklist)
+        materialTags.addAll(mat.materialTags)
+        extraProperties.putAll(mat.extraProperties)
     }
+
+    fun build(): Material {
+        Materials.add(this)
+        return Materials[name]!!
+    }
+
+    val hasSecondName
+        get() = secondName != name
+
+    fun getTag(type: ObjectType<*, *>) = ItemTags.Wrapper(ResourceLocation("forge", type.buildTagName(name)))
+
+    fun getFluidTag(type: ObjectType<*, *>) = FluidTags.Wrapper(ResourceLocation("forge", type.buildTagName(name)))
+
+    fun getSecondItemTag(type: ObjectType<*, *>) = ItemTags.Wrapper(ResourceLocation("forge", type.buildTagName(name)))
+
+    fun getSecondFluidTag(type: ObjectType<*, *>) = FluidTags.Wrapper(ResourceLocation("forge", type.buildTagName(name)))
+
+    fun harvestTier(hardness: Float, resistance: Float) = HarvestTier(hardness, resistance, tier)
 }
