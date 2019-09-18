@@ -6,6 +6,7 @@ import com.emosewapixel.pixellib.materialsystem.lists.MaterialBlocks
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialFluids
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialItems
 import com.emosewapixel.pixellib.materialsystem.materials.*
+import com.emosewapixel.pixellib.materialsystem.types.ObjectType.Companion.getUnrefinedColor
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.block.SoundType
@@ -26,7 +27,6 @@ object MaterialRegistry {
     const val HAS_NO_FUEL_VALUE = "has_no_fuel_value"
     const val ROD_TO_3_DUST = "rod_to_3_dust"
     const val SINGLE_TEXTURE_TYPE = "1_texture_type"
-    const val USES_UNREFINED_COLOR = "uses_unrefined_color"
 
     //Texture Types
     const val ROUGH = "rough"
@@ -38,8 +38,7 @@ object MaterialRegistry {
     const val CRYSTAL = "crystal"
     const val SHARP = "sharp"
     const val FINE = "fine"
-    const val TRANSPARENT_FLUID = "transparent"
-    const val OPAQUE_FLUID = "opaque"
+    const val FLUID_TT = "fluid"
 
     //Object Types
     @JvmField
@@ -67,13 +66,15 @@ object MaterialRegistry {
     @JvmField
     val ORE = blockType("ore", { it is IngotMaterial && it.hasTag(HAS_ORE) },
             Block.Properties.create(net.minecraft.block.material.Material.ROCK).sound(SoundType.STONE)) {
-        typeTags += listOf(USES_UNREFINED_COLOR, HAS_NO_FUEL_VALUE)
+        typeTags += HAS_NO_FUEL_VALUE
+        color = ::getUnrefinedColor
         indexBlackList += 1
         bucketVolume = 144
     }
     @JvmField
     val FLUID = fluidType("fluid", { it is FluidMaterial }) {
         locationBase = "minecraft:block/water"
+        fluidColor = { color(it) or ((it as? FluidMaterial)?.alpha?.shl(24) ?: 0xFF000000.toInt()) }
         overlayTexture = ResourceLocation("minecraft", "block/water_overlay")
         buildRegistryName = { ResourceLocation("pixellib:${it.name}") }
         buildTagName = String::toString
@@ -180,9 +181,9 @@ object MaterialRegistry {
     @JvmField
     val OBSIDIAN = dustMaterial("obsidian", FINE, 0x3c2a53, 3)
     @JvmField
-    val WATER = fluidMaterial("water", TRANSPARENT_FLUID, 0x3e4ac6)
+    val WATER = fluidMaterial("water", FLUID_TT, 0x3e4ac6)
     @JvmField
-    val LAVA = fluidMaterial("lava", OPAQUE_FLUID, 0xc54c13)
+    val LAVA = fluidMaterial("lava", FLUID_TT, 0xc54c13)
 
     init {
         MaterialItems.addItem(COAL, GEM, Items.COAL)

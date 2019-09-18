@@ -20,7 +20,7 @@ object DataAddition {
         //Tags
         MaterialItems.all.filterIsInstance<IMaterialObject>().forEach { TagMaps.addMatItemToTag(it) }
         MaterialBlocks.all.filterIsInstance<IMaterialObject>().forEach { TagMaps.addMatItemToTag(it) }
-        MaterialFluids.all.filterIsInstance<IMaterialObject>().forEach { TagMaps.addMatItemToTag(it) }
+        MaterialFluids.all.flatMap { listOf(it.stillFluid, it.flowingFluid) }.filterIsInstance<IMaterialObject>().forEach { TagMaps.addMatItemToTag(it) }
         TagMaps.addItemToTag("gems/coal", Items.COAL)
         TagMaps.addItemToTag("gems/charcoal", Items.CHARCOAL)
         TagMaps.addItemToTag("gems", Items.COAL)

@@ -29,6 +29,9 @@ class MaterialFluidBlock(override val mat: Material, override val objType: Fluid
                 entity.attackEntityFrom(FluidDamageSources.HOT_FLUID, temp / 350f)
         }
         if (mat is FluidMaterial && mat.pH != 7f)
-            entity.attackEntityFrom(FluidDamageSources.ACID, (if (mat.pH > 7) mat.pH - 7 else 7 - mat.pH) / 2f)
+            if (mat.pH > 7)
+                entity.attackEntityFrom(FluidDamageSources.BASE, mat.pH - 7)
+            else
+                entity.attackEntityFrom(FluidDamageSources.ACID, 7 - mat.pH)
     }
 }

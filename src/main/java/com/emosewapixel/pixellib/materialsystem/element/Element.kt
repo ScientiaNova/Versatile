@@ -9,5 +9,5 @@ open class Element(val symbol: String, val protons: Int, val neutrons: Int) {
         get() = protons * 1.00782458 + neutrons * 1.008664
 
     val density: Double
-        get() = atomicMass / 22.414
+        get() = atomicMass / 22.414 * 1000
 }

@@ -13,7 +13,7 @@ import net.minecraft.util.text.TranslationTextComponent
 
 //Block Types are Object Types used for generating Blocks
 class BlockType @JvmOverloads constructor(name: String, requirement: (Material) -> Boolean, val properties: Block.Properties, constructor: (Material, BlockType) -> Block = ::MaterialBlock, val itemConstructor: (Material, BlockType) -> Item = ::MaterialBlockItem) : ObjectType<Block, BlockType>(name, requirement, constructor) {
-    var blockstateFun: (IMaterialObject) -> JsonObject = {
+    var buildBlockStateJson: (IMaterialObject) -> JsonObject = {
         json {
             "variants" {
                 "" {
@@ -24,6 +24,4 @@ class BlockType @JvmOverloads constructor(name: String, requirement: (Material) 
     }
 
     override fun localize(mat: Material) = TranslationTextComponent("blocktype.$name", mat.localizedName)
-
-    fun getBlockStateJson(item: IMaterialObject) = blockstateFun(item)
 }

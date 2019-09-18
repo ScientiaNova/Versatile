@@ -93,7 +93,7 @@ open class FuelBasedTE(type: TileEntityType<*>, list: SimpleRecipeList) : Recipe
     }
 
     override fun <T> getCapability(cap: Capability<T>, side: Direction?): LazyOptional<T> =
-            if (cap === CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && side.isHorizontal())
+            if (cap === CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && side.isHorizontal)
                 LazyOptional.of { fuelInput }.cast()
             else super.getCapability(cap, side)
 }

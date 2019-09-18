@@ -44,6 +44,8 @@
 	"death.attack.hot_fluid.player": "%1$s tried to swim in a hot fluid to escape %2$s",
 	"death.attack.acid": "%1$s tried to swim in acid",
 	"death.attack.acid.player": "%1$s tried to swim in acid to escape %2$s",
+	"death.attack.base": "%1$s tried to swim in a base",
+	"death.attack.base.player": "%1$s tried to swim in a base to escape %2$s",
 
 	"command.materialitem.error": "That is not a material item",
 	"command.fluidcontainer.error": "That is not a fluid container item"

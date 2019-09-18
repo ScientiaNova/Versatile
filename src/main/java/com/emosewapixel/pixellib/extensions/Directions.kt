@@ -2,6 +2,5 @@ package com.emosewapixel.pixellib.extensions
 
 import net.minecraft.util.Direction
 
-private val horizontal = listOf(Direction.EAST, Direction.WEST, Direction.NORTH, Direction.SOUTH)
-
-fun Direction?.isHorizontal() = this in horizontal
+val Direction?.isHorizontal get() = this in Direction.Plane.HORIZONTAL
+val Direction?.isVertical get() = this in Direction.Plane.VERTICAL

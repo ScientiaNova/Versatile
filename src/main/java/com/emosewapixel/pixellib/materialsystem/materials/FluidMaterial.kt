@@ -4,6 +4,7 @@ package com.emosewapixel.pixellib.materialsystem.materials
 open class FluidMaterial @JvmOverloads constructor(name: String, textureType: String, color: Int, tier: Int = 0) : Material(name, textureType, color, tier) {
     var temperature = 300
     var boilingMaterial: FluidMaterial? = null
+    var alpha = 0xFF
     var pH = 7f
         set(value) {
             field = if (value > 14) 14f

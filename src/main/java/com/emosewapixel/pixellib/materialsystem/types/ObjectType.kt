@@ -1,6 +1,7 @@
 package com.emosewapixel.pixellib.materialsystem.types
 
 import com.emosewapixel.pixellib.materialsystem.lists.ObjTypes
+import com.emosewapixel.pixellib.materialsystem.materials.DustMaterial
 import com.emosewapixel.pixellib.materialsystem.materials.Material
 import net.minecraft.item.Item
 import net.minecraft.tags.ItemTags
@@ -19,6 +20,7 @@ abstract class ObjectType<O, T : ObjectType<O, T>>(val name: String, var require
     val extraProperties = mutableMapOf<String, Any>()
     var buildRegistryName: (Material) -> ResourceLocation = { ResourceLocation("pixellib:${it.name}_$name") }
     var buildTagName: (String) -> String = { "${name}s/$it" }
+    var color: (Material) -> Int = Material::color
 
     val itemTag: Tag<Item>
         get() = ItemTags.Wrapper(ResourceLocation("forge", name + "s"))
@@ -44,5 +46,10 @@ abstract class ObjectType<O, T : ObjectType<O, T>>(val name: String, var require
     fun build(): ObjectType<*, *> {
         ObjTypes.add(this)
         return ObjTypes[name]!!
+    }
+
+    companion object {
+        @JvmStatic
+        fun getUnrefinedColor(mat: Material) = (mat as? DustMaterial)?.unrefinedColor ?: mat.color
     }
 }

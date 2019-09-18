@@ -3,10 +3,11 @@ package com.emosewapixel.pixellib.proxy
 import com.emosewapixel.pixellib.extensions.json
 import com.emosewapixel.pixellib.materialsystem.MaterialRegistry
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialBlocks
+import com.emosewapixel.pixellib.materialsystem.lists.MaterialFluids
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialItems
-import com.emosewapixel.pixellib.materialsystem.materials.DustMaterial
 import com.emosewapixel.pixellib.materialsystem.materials.IMaterialObject
 import com.emosewapixel.pixellib.materialsystem.types.BlockType
+import com.emosewapixel.pixellib.materialsystem.types.FluidType
 import com.emosewapixel.pixellib.resources.FakeResourcePackFinder
 import com.emosewapixel.pixellib.resources.JSONAdder
 import net.alexwells.kottle.KotlinEventBusSubscriber
@@ -43,11 +44,9 @@ object ClientProxy : IModProxy {
             Minecraft.getInstance().itemColors.register(IItemColor { stack: ItemStack, index ->
                 val sItem = stack.item as IMaterialObject
                 if (index !in sItem.objType.indexBlackList)
-                    return@IItemColor if (MaterialRegistry.USES_UNREFINED_COLOR in sItem.objType.typeTags && sItem.mat is DustMaterial)
-                        (sItem.mat as DustMaterial).unrefinedColor
-                    else
-                        sItem.mat.color
-                -1
+                    sItem.objType.color(sItem.mat)
+                else
+                    -1
             }, item)
         }
 
@@ -56,11 +55,9 @@ object ClientProxy : IModProxy {
             Minecraft.getInstance().blockColors.register(IBlockColor { state: BlockState, _, _, index: Int ->
                 val sBlock = state.block as IMaterialObject
                 if (index !in sBlock.objType.indexBlackList)
-                    return@IBlockColor if (MaterialRegistry.USES_UNREFINED_COLOR in sBlock.objType.typeTags && sBlock.mat is DustMaterial)
-                        (sBlock.mat as DustMaterial).unrefinedColor
-                    else
-                        sBlock.mat.color
-                -1
+                    sBlock.objType.color(sBlock.mat)
+                else
+                    -1
             }, block)
         }
     }
@@ -79,7 +76,7 @@ fun addModelJSONs() {
             }
             is BucketItem -> {
                 val model = json {
-                    "parent" to registryName.namespace + ":item/materialitems/" + (if (MaterialRegistry.SINGLE_TEXTURE_TYPE in type.typeTags) type.name else "${it.mat.textureType}/${type.name}") + (if (it.mat.hasTag(MaterialRegistry.IS_GAS)) "_gas" else "") + "_bucket"
+                    "parent" to registryName.namespace + ":item/materialitems/" + (if (MaterialRegistry.SINGLE_TEXTURE_TYPE in type.typeTags) type.name else "${it.mat.textureType}/${type.name}") + (if ((it.objType as FluidType).gaseousFun(it.mat)) "_gas" else "") + "_bucket"
                 }
                 JSONAdder.addAssetsJSON(ResourceLocation(registryName.namespace, "models/item/" + registryName.path + ".json"), model)
             }
@@ -95,6 +92,12 @@ fun addModelJSONs() {
     MaterialBlocks.all.filter { it is IMaterialObject && it !is FlowingFluidBlock }.forEach {
         val registryName = it.registryName!!
         val type = (it as IMaterialObject).objType
-        JSONAdder.addAssetsJSON(ResourceLocation(registryName.namespace, "blockstates/" + registryName.path + ".json"), (type as BlockType).getBlockStateJson(it))
+        JSONAdder.addAssetsJSON(ResourceLocation(registryName.namespace, "blockstates/" + registryName.path + ".json"), (type as BlockType).buildBlockStateJson(it))
+    }
+
+    MaterialFluids.all.filterIsInstance<IMaterialObject>().forEach {
+        val type = it.objType
+        val registryName = it.objType.buildRegistryName(it.mat)
+        JSONAdder.addAssetsJSON(ResourceLocation(registryName.namespace, "blockstates/" + registryName.path + ".json"), (type as FluidType).buildBlockStateJson(it))
     }
 }
