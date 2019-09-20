@@ -22,7 +22,7 @@ archivesBaseName = 'pixellib'
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = compileKotlin.kotlinOptions.jvmTarget = compileTestKotlin.kotlinOptions.jvmTarget = '1.8'
 
 minecraft {
-    mappings channel: 'snapshot', version: '20190918-1.14.3'
+    mappings channel: 'snapshot', version: '20190920-1.14.3'
 
     accessTransformer = file('src/main/resources/META-INF/pixellib_at.cfg')
 

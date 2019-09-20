@@ -1,4 +1,4 @@
-package com.emosewapixel.pixellib.capabilities
+package com.emosewapixel.pixellib.machines.capabilities
 
 import net.minecraft.item.ItemStack
 import net.minecraftforge.items.ItemStackHandler

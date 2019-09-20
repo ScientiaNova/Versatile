@@ -1,4 +1,4 @@
-package com.emosewapixel.pixellib.recipes
+package com.emosewapixel.pixellib.machines.recipes
 
 import net.minecraftforge.fluids.FluidStack
 

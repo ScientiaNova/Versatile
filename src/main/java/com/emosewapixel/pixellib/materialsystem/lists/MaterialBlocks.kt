@@ -36,7 +36,7 @@ object MaterialBlocks {
     fun <O> addBlock(item: O) where O : IMaterialObject, O : Block = materialBlocks.put(item.mat, item.objType, item)
 
     @JvmStatic
-    fun getBlockCell(block: Block): Table.Cell<Material, ObjectType<*, *>, Block>? = materialBlocks.cellSet().first { it.value === block }
+    fun getBlockCell(block: Block): Table.Cell<Material, ObjectType<*, *>, Block>? = materialBlocks.cellSet().firstOrNull { it.value === block }
 
     @JvmStatic
     fun getBlockMaterial(block: Block): Material? = if (block is IMaterialObject) block.mat else getBlockCell(block)?.rowKey

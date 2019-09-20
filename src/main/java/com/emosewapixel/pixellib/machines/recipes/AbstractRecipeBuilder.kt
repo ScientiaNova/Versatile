@@ -1,4 +1,4 @@
-package com.emosewapixel.pixellib.recipes
+package com.emosewapixel.pixellib.machines.recipes
 
 import com.emosewapixel.pixellib.PixelLib
 import net.minecraft.item.ItemStack

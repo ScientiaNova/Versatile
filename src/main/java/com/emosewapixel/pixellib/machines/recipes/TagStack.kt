@@ -1,4 +1,4 @@
-package com.emosewapixel.pixellib.recipes
+package com.emosewapixel.pixellib.machines.recipes
 
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
@@ -10,5 +10,5 @@ data class TagStack @JvmOverloads constructor(var tag: Tag<Item>, var count: Int
     val isEmpty: Boolean
         get() = count == 0
 
-    fun asItemStack() = ItemStack(tag.allElements.first() ?: Items.AIR, count)
+    fun asItemStack() = ItemStack(tag.allElements.firstOrNull() ?: Items.AIR, count)
 }

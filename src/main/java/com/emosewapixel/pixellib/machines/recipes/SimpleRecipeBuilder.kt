@@ -1,4 +1,4 @@
-package com.emosewapixel.pixellib.recipes
+package com.emosewapixel.pixellib.machines.recipes
 
 //This is a builder for Simple Machine Recipes
 class SimpleRecipeBuilder(list: AbstractRecipeList<SimpleMachineRecipe, SimpleRecipeBuilder>) : AbstractRecipeBuilder<SimpleMachineRecipe, SimpleRecipeBuilder>(list) {

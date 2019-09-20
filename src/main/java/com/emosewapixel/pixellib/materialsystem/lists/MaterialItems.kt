@@ -31,7 +31,7 @@ object MaterialItems {
     fun <O> addItem(item: O) where O : IMaterialObject, O : Item = addItem(item.mat, item.objType, item)
 
     @JvmStatic
-    fun getItemCell(item: Item): Table.Cell<Material, ObjectType<*, *>, Item>? = materialItems.cellSet().first { it.value === item }
+    fun getItemCell(item: Item): Table.Cell<Material, ObjectType<*, *>, Item>? = materialItems.cellSet().firstOrNull { it.value === item }
 
     @JvmStatic
     fun getItemMaterial(item: Item): Material? = if (item is IMaterialObject) item.mat else getItemCell(item)?.rowKey

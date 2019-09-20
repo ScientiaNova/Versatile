@@ -44,7 +44,7 @@ object MaterialFluids {
     fun <O> addFluidPair(fluidPair: O) where O : IMaterialObject, O : IFluidPairHolder = materialFluids.put(fluidPair.mat, fluidPair.objType, fluidPair)
 
     @JvmStatic
-    fun getFluidCell(fluid: FlowingFluid): Table.Cell<Material, ObjectType<*, *>, IFluidPairHolder>? = materialFluids.cellSet().first { it.value?.still === fluid }
+    fun getFluidCell(fluid: FlowingFluid): Table.Cell<Material, ObjectType<*, *>, IFluidPairHolder>? = materialFluids.cellSet().firstOrNull { it.value?.still === fluid }
 
     @JvmStatic
     fun getFluidMaterial(fluid: FlowingFluid): Material? = if (fluid is IMaterialObject) fluid.mat else getFluidCell(fluid)?.rowKey

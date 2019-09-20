@@ -1,7 +1,7 @@
 package com.emosewapixel.pixellib.jei
 
-import com.emosewapixel.pixellib.recipes.AbstractRecipeList
-import com.emosewapixel.pixellib.recipes.SimpleMachineRecipe
+import com.emosewapixel.pixellib.machines.recipes.AbstractRecipeList
+import com.emosewapixel.pixellib.machines.recipes.SimpleMachineRecipe
 import mezz.jei.api.constants.VanillaTypes
 import mezz.jei.api.gui.drawable.IDrawable
 import mezz.jei.api.gui.drawable.IDrawableAnimated

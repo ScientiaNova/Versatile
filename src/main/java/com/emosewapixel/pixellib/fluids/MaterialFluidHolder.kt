@@ -6,17 +6,10 @@ import com.emosewapixel.pixellib.materialsystem.lists.MaterialItems
 import com.emosewapixel.pixellib.materialsystem.materials.IMaterialObject
 import com.emosewapixel.pixellib.materialsystem.materials.Material
 import com.emosewapixel.pixellib.materialsystem.types.FluidType
-import net.minecraft.block.BlockState
 import net.minecraft.block.FlowingFluidBlock
 import net.minecraft.fluid.FlowingFluid
 import net.minecraft.fluid.Fluid
-import net.minecraft.fluid.IFluidState
 import net.minecraft.item.BucketItem
-import net.minecraft.util.Direction
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.IBlockReader
-import net.minecraft.world.IWorld
-import net.minecraft.world.IWorldReader
 import net.minecraftforge.fluids.ForgeFlowingFluid
 
 class MaterialFluidHolder(override val mat: Material, override val objType: FluidType) : IMaterialObject, IFluidPairHolder {
@@ -50,9 +43,6 @@ class MaterialFluidHolder(override val mat: Material, override val objType: Flui
             val reg = objType.buildRegistryName(mat)
             setRegistryName("${reg.namespace}:flowing_${reg.path}")
         }
-
-        override fun func_215665_a(state: IFluidState, world: IBlockReader, pos: BlockPos, fluidIn: Fluid, direction: Direction) =
-                direction == (if (objType.gaseousFun(mat)) Direction.UP else Direction.DOWN) && !isEquivalentTo(fluidIn)
 
         override fun isEquivalentTo(fluid: Fluid) = fluid in mat.getFluidTag(objType).allElements || fluid in mat.getSecondFluidTag(objType).allElements
     }

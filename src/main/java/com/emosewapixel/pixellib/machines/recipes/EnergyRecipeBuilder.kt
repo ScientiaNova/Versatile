@@ -1,4 +1,4 @@
-package com.emosewapixel.pixellib.recipes
+package com.emosewapixel.pixellib.machines.recipes
 
 //This is a builder for Energy Machine Recipes
 class EnergyRecipeBuilder(list: AbstractRecipeList<EnergyMachineRecipe, EnergyRecipeBuilder>) : AbstractRecipeBuilder<EnergyMachineRecipe, EnergyRecipeBuilder>(list) {

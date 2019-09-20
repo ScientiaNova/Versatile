@@ -1,4 +1,4 @@
-package com.emosewapixel.pixellib.recipes
+package com.emosewapixel.pixellib.machines.recipes
 
 import net.minecraft.item.ItemStack
 import net.minecraftforge.fluids.FluidStack
@@ -34,7 +34,7 @@ open class SimpleMachineRecipe(val inputs: Array<Any>, val consumeChances: Array
     fun isInputValid(stacks: Array<ItemStack>) =
             if (stacks.size != inputs.size || stacks.any { it.isEmpty } || inputs.any { if (it is ItemStack) it.isEmpty else (it as TagStack).isEmpty }) false
             else stacks.size == inputs.map { stackRec ->
-                stacks.first { stack -> if (stackRec is ItemStack) stack.isItemEqual(stackRec) && stack.count >= stackRec.count else (stackRec as TagStack).tag.contains(stack.item) && stack.count >= stackRec.count }
+                stacks.firstOrNull { stack -> if (stackRec is ItemStack) stack.isItemEqual(stackRec) && stack.count >= stackRec.count else (stackRec as TagStack).tag.contains(stack.item) && stack.count >= stackRec.count }
                         ?: ItemStack.EMPTY
             }
                     .filter { !it.isEmpty }
@@ -50,7 +50,7 @@ open class SimpleMachineRecipe(val inputs: Array<Any>, val consumeChances: Array
     }
 
     fun getIndexOfInput(stack: ItemStack) =
-            listOf(*inputs).indexOf(inputs.first { input -> if (input is ItemStack) stack.isItemEqual(input) else (input as TagStack).tag.contains(stack.item) }
+            listOf(*inputs).indexOf(inputs.firstOrNull { input -> if (input is ItemStack) stack.isItemEqual(input) else (input as TagStack).tag.contains(stack.item) }
                     ?: -1)
 
     fun itemBelongsInRecipe(stack: ItemStack) =
