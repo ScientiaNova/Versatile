@@ -1,6 +1,7 @@
 package com.emosewapixel.pixellib.machines
 
 import com.emosewapixel.pixellib.extensions.plusAssign
+import com.emosewapixel.pixellib.machines.gui.layout.GUIBook
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.tileentity.ITickableTileEntity
@@ -16,10 +17,16 @@ class BaseTileEntity(type: TileEntityType<*>) : TileEntity(type), ITickableTileE
     val block
         get() = blockState.block as? IMachineBlock
 
+    val guiLayout = block?.guiLayout?.invoke() ?: GUIBook()
+
     val properties = block?.properties?.mapValues { (_, value) -> value() }?.toMutableMap() ?: mutableMapOf()
 
     override fun tick() {
         block?.tick?.invoke(this)
+    }
+
+    fun update() {
+        block?.update?.invoke(this)
     }
 
     override fun serializeNBT(): CompoundNBT {

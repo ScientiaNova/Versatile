@@ -8,6 +8,8 @@ interface IMachineBlock {
 
     val tick: BaseTileEntity.() -> Unit
 
+    val update: BaseTileEntity.() -> Unit
+
     val serializeNBT: BaseTileEntity.() -> CompoundNBT
 
     val deserializeNBT: BaseTileEntity.(CompoundNBT) -> Unit

@@ -5,6 +5,7 @@ import com.emosewapixel.pixellib.commands.FluidContainerCommand
 import com.emosewapixel.pixellib.commands.MaterialItemCommand
 import com.emosewapixel.pixellib.fluids.FluidRegistry
 import com.emosewapixel.pixellib.items.ItemRegistry
+import com.emosewapixel.pixellib.machines.packets.NetworkHandler
 import com.emosewapixel.pixellib.materialsystem.MaterialRegistry
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialItems
 import com.emosewapixel.pixellib.materialsystem.materials.IMaterialObject
@@ -29,6 +30,7 @@ import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.DistExecutor
 import net.minecraftforge.fml.common.Mod
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent
 import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent
@@ -52,12 +54,17 @@ object PixelLib {
     }
 
     init {
-        FMLKotlinModLoadingContext.get().modEventBus.addListener<InterModEnqueueEvent> { this.enqueueIMC(it) }
-        FMLKotlinModLoadingContext.get().modEventBus.addListener<InterModProcessEvent> { this.processIMC(it) }
+        FMLKotlinModLoadingContext.get().modEventBus.addListener(this::commonSetup)
+        FMLKotlinModLoadingContext.get().modEventBus.addListener(this::enqueueIMC)
+        FMLKotlinModLoadingContext.get().modEventBus.addListener(this::processIMC)
 
         MaterialRegistry
 
         proxy.init()
+    }
+
+    private fun commonSetup(event: FMLCommonSetupEvent) {
+        NetworkHandler
     }
 
     private fun enqueueIMC(event: InterModEnqueueEvent) {
