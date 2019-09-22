@@ -17,7 +17,7 @@ open class ImprovedItemStackHandler @JvmOverloads constructor(slots: Int, val no
 
     override fun isItemValid(slot: Int, itemStack: ItemStack) = slot !in noInputSlots
 
-    override fun extractItem(slot: Int, amount: Int, simulate: Boolean) = if (noOutputSlots.contains(slot)) ItemStack.EMPTY else super.extractItem(slot, amount, simulate)
+    override fun extractItem(slot: Int, amount: Int, simulate: Boolean) = if (slot in noOutputSlots) ItemStack.EMPTY else super.extractItem(slot, amount, simulate)
 
     operator fun get(slot: Int) = stacks[slot]
 }

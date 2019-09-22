@@ -24,7 +24,7 @@ interface IGUIComponent {
 
     @OnlyIn(Dist.CLIENT)
     fun drawInForeground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
-        if (tooltips.isNotEmpty())
+        if (tooltips.isNotEmpty() && isSelected(mouseX - screen.guiLeft, mouseY - screen.guiTop))
             screen.renderTooltip(tooltips, mouseX, mouseY)
     }
 

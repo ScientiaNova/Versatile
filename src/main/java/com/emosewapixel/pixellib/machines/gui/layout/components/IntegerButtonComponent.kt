@@ -8,7 +8,7 @@ class IntegerButtonComponent(val property: String, val textures: List<ResourceLo
     override val tooltips = mutableListOf<String>()
 
     override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
-        val value = screen.container.clientProperties[property] as? Int ?: 0
+        val value = screen.container.te.properties[property] as? Int ?: 0
         screen.minecraft.textureManager.bindTexture(textures[value])
         screen.blit(screen.guiLeft + x, screen.guiTop + y, 0, 0, width, height)
     }
@@ -16,9 +16,8 @@ class IntegerButtonComponent(val property: String, val textures: List<ResourceLo
     override fun isSelected(mouseX: Int, mouseY: Int) = x < mouseX && mouseX < x + width && y < mouseY && mouseY < y + height
 
     override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int, screen: BaseScreen): Boolean {
-        val properties = screen.container.clientProperties
-        val value = (properties[property] as? Int) ?: 0
-        properties[property] = if (value + 1 < textures.size) value + 1 else 0
+        val value = (screen.container.te.properties[property] as? Int) ?: 0
+        screen.container.clientProperties[property] = if (value + 1 < textures.size) value + 1 else 0
         return true
     }
 }
