@@ -21,6 +21,7 @@ abstract class ObjectType<O, T : ObjectType<O, T>>(val name: String, var require
     var buildRegistryName: (Material) -> ResourceLocation = { ResourceLocation("pixellib:${it.name}_$name") }
     var buildTagName: (String) -> String = { "${name}s/$it" }
     var color: (Material) -> Int = Material::color
+    var densityMultiplier = 1
 
     val itemTag: Tag<Item>
         get() = ItemTags.Wrapper(ResourceLocation("forge", name + "s"))

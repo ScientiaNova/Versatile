@@ -27,6 +27,6 @@ object ElementUtils {
     @JvmStatic
     fun getTotalDensity(mat: Material): Double {
         val list = getElementalComposition(mat).map { (element, count) -> element.density * count }
-        return if (mat.compoundType === CompoundType.CHEMICAL) list.sum() else list.average()
+        return (if (mat.compoundType === CompoundType.CHEMICAL) list.sum() else list.average()) * mat.densityMultiplier
     }
 }

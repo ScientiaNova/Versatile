@@ -6,6 +6,8 @@ import com.emosewapixel.pixellib.extensions.greenF
 import com.emosewapixel.pixellib.extensions.redF
 import com.emosewapixel.pixellib.machines.gui.BaseScreen
 import com.emosewapixel.pixellib.machines.gui.layout.IGUIComponent
+import com.emosewapixel.pixellib.machines.packets.NetworkHandler
+import com.emosewapixel.pixellib.machines.packets.UpdateIntegerPacket
 import com.mojang.blaze3d.platform.GlStateManager
 import net.minecraft.util.ResourceLocation
 
@@ -26,7 +28,9 @@ class ColorButtonComponent(val property: String, val texture: ResourceLocation, 
     override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int, screen: BaseScreen): Boolean {
         val properties = screen.container.te.properties
         val value = (properties[property] as? Int) ?: 0
-        screen.container.clientProperties[property] = if (value + 1 < colors.size) value + 1 else 0
+        val newValue = if (value + 1 < colors.size) value + 1 else 0
+        screen.container.clientProperties[property] = newValue
+        NetworkHandler.CHANNEL.sendToServer(UpdateIntegerPacket(screen.container.te.pos, property, newValue))
         return true
     }
 }

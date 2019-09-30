@@ -5,7 +5,7 @@ import com.emosewapixel.pixellib.extensions.blueF
 import com.emosewapixel.pixellib.extensions.greenF
 import com.emosewapixel.pixellib.extensions.redF
 import com.emosewapixel.pixellib.machines.packets.NetworkHandler
-import com.emosewapixel.pixellib.machines.packets.ReopenGUIPacket
+import com.emosewapixel.pixellib.machines.packets.OpenGUIPacket
 import com.mojang.blaze3d.platform.GlStateManager
 import net.minecraft.client.gui.AbstractGui
 import net.minecraft.client.gui.screen.inventory.ContainerScreen
@@ -24,13 +24,11 @@ class BaseScreen(container: BaseContainer, playerInv: PlayerInventory, title: IT
     val itemRenderer: ItemRenderer
         get() = super.itemRenderer
 
-    override fun drawGuiContainerBackgroundLayer(partialTicks: Float, mouseX: Int, mouseY: Int) {
-        container.guiPage.components.forEach { it.drawInBackground(mouseX, mouseY, this) }
-    }
+    override fun drawGuiContainerBackgroundLayer(partialTicks: Float, mouseX: Int, mouseY: Int) =
+            container.guiPage.components.forEach { it.drawInBackground(mouseX, mouseY, this) }
 
-    override fun drawGuiContainerForegroundLayer(mouseX: Int, mouseY: Int) {
-        container.guiPage.components.forEach { it.drawInForeground(mouseX, mouseY, this) }
-    }
+    override fun drawGuiContainerForegroundLayer(mouseX: Int, mouseY: Int) =
+            container.guiPage.components.forEach { it.drawInForeground(mouseX, mouseY, this) }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, clickType: Int) =
             container.guiPage.components.asSequence().filter { it.isSelected(mouseX.toInt() - guiLeft, mouseY.toInt() - guiTop) }.map { it.onMouseClicked(mouseX, mouseY, clickType, this) }.firstOrNull()
@@ -50,7 +48,7 @@ class BaseScreen(container: BaseContainer, playerInv: PlayerInventory, title: IT
     override fun render(mouseX: Int, mouseY: Int, partialTicks: Float) {
         if (container.guiPage != container.te.guiLayout.current) {
             onClose()
-            NetworkHandler.CHANNEL.sendToServer(ReopenGUIPacket(container.te.pos, container.type))
+            NetworkHandler.CHANNEL.sendToServer(OpenGUIPacket(container.te.pos, container.type))
             return
         }
         super.render(mouseX, mouseY, partialTicks)

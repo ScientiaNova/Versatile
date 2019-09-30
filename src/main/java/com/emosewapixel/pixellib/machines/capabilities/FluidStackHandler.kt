@@ -1,17 +1,16 @@
 package com.emosewapixel.pixellib.machines.capabilities
 
 import net.minecraftforge.fluids.FluidStack
-import net.minecraftforge.fluids.IFluidTank
 import net.minecraftforge.fluids.capability.IFluidHandler
 
-class FluidStackHandler @JvmOverloads constructor(val tanks: List<IFluidTank>, val noOutputTanks: Array<Int> = emptyArray(), val noInputTanks: Array<Int> = emptyArray()) : IFluidHandler {
-    val inputTanks: List<IFluidTank>
+class FluidStackHandler @JvmOverloads constructor(val tanks: List<IMutableFluidTank>, val noOutputTanks: Array<Int> = emptyArray(), val noInputTanks: Array<Int> = emptyArray()) : IFluidHandler, IMutableFluidHandler {
+    constructor(tanks: List<IMutableFluidTank>, noOutput: IntRange, noInput: IntRange) : this(tanks, noOutput.toList().toTypedArray(), noInput.toList().toTypedArray())
+
+    val inputTanks: List<IMutableFluidTank>
         get() = tanks.filterIndexed { index, _ -> index !in noInputTanks }
 
-    val outputTanks: List<IFluidTank>
+    val outputTanks: List<IMutableFluidTank>
         get() = tanks.filterIndexed { index, _ -> index !in noOutputTanks }
-
-    constructor(tanks: List<IFluidTank>, noOutput: IntRange, noInput: IntRange) : this(tanks, noOutput.toList().toTypedArray(), noInput.toList().toTypedArray())
 
     override fun drain(resource: FluidStack?, action: IFluidHandler.FluidAction): FluidStack {
         if (resource == null || resource.isEmpty)
@@ -45,6 +44,10 @@ class FluidStackHandler @JvmOverloads constructor(val tanks: List<IFluidTank>, v
     }
 
     override fun getFluidInTank(tank: Int) = tanks[tank].fluid
+
+    override fun setFluidInTank(tank: Int, stack: FluidStack) {
+        tanks[tank].fluid = stack
+    }
 
     override fun getTanks() = tanks.size
 

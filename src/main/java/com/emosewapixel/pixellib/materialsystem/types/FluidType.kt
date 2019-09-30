@@ -49,7 +49,7 @@ class FluidType(name: String, requirement: (Material) -> Boolean, fluidConstruct
     var luminosityFun: (Material) -> Int = { min(15, (temperatureFun(it) - 500) / 50) }
     var gaseousFun: (Material) -> Boolean = { it.hasTag(MaterialRegistry.IS_GAS) }
     var densityFun: (Material) -> Int = {
-        val density = ElementUtils.getTotalDensity(it).toInt()
+        val density = ElementUtils.getTotalDensity(it).toInt() * densityMultiplier
         if (gaseousFun(it))
             -density
         else

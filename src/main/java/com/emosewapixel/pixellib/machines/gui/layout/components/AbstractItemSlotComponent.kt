@@ -1,10 +1,15 @@
 package com.emosewapixel.pixellib.machines.gui.layout.components
 
+import com.emosewapixel.pixellib.machines.gui.BaseContainer
 import com.emosewapixel.pixellib.machines.gui.BaseScreen
 import com.emosewapixel.pixellib.machines.gui.layout.ISlotComponent
+import com.emosewapixel.pixellib.machines.packets.NetworkHandler
+import com.emosewapixel.pixellib.machines.packets.UpdateItemStackPacket
 import net.minecraft.client.gui.AbstractGui
+import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.util.ResourceLocation
+import net.minecraftforge.fml.network.PacketDistributor
 import net.minecraftforge.items.IItemHandler
 
 abstract class AbstractItemSlotComponent(val property: String, override val x: Int, override val y: Int, override val texture: ResourceLocation) : ISlotComponent {
@@ -33,4 +38,9 @@ abstract class AbstractItemSlotComponent(val property: String, override val x: I
     }
 
     abstract override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int, screen: BaseScreen): Boolean
+
+    override fun detectAndSendChanges(container: BaseContainer) {
+        if ((container.te.properties[property] as? IItemHandler)?.getStackInSlot(slotIndex) != (container.clientProperties[property] as? IItemHandler)?.getStackInSlot(slotIndex))
+            NetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with { container.playerInv.player as ServerPlayerEntity }, UpdateItemStackPacket(container.te.pos, property, slotIndex, (container.te.properties[property] as IItemHandler).getStackInSlot(slotIndex)))
+    }
 }

@@ -15,10 +15,22 @@ object NetworkHandler {
             .simpleChannel()
 
     init {
-        CHANNEL.messageBuilder(ReopenGUIPacket::class.java, 0)
+        CHANNEL.messageBuilder(OpenGUIPacket::class.java, 0)
+                .encoder(OpenGUIPacket::encode)
+                .decoder(OpenGUIPacket.Companion::decode)
+                .consumer(OpenGUIPacket.Companion::processPacket)
+                .add()
+
+        CHANNEL.messageBuilder(ReopenGUIPacket::class.java, 1)
                 .encoder(ReopenGUIPacket::encode)
                 .decoder(ReopenGUIPacket.Companion::decode)
                 .consumer(ReopenGUIPacket.Companion::processPacket)
+                .add()
+
+        CHANNEL.messageBuilder(ChangePagePacket::class.java, 2)
+                .encoder(ChangePagePacket::encode)
+                .decoder(ChangePagePacket.Companion::decode)
+                .consumer(ChangePagePacket.Companion::processPacket)
                 .add()
     }
 }
