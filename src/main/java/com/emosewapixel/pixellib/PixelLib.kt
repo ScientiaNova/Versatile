@@ -54,9 +54,9 @@ object PixelLib {
     }
 
     init {
-        FMLKotlinModLoadingContext.get().modEventBus.addListener(this::commonSetup)
-        FMLKotlinModLoadingContext.get().modEventBus.addListener(this::enqueueIMC)
-        FMLKotlinModLoadingContext.get().modEventBus.addListener(this::processIMC)
+        FMLKotlinModLoadingContext.get().modEventBus.addListener<FMLCommonSetupEvent> { commonSetup(it) }
+        FMLKotlinModLoadingContext.get().modEventBus.addListener<InterModEnqueueEvent> { enqueueIMC(it) }
+        FMLKotlinModLoadingContext.get().modEventBus.addListener<InterModProcessEvent> { processIMC(it) }
 
         MaterialRegistry
 
