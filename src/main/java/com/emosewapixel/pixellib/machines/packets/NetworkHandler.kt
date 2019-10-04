@@ -32,5 +32,40 @@ object NetworkHandler {
                 .decoder(ChangePagePacket.Companion::decode)
                 .consumer(ChangePagePacket.Companion::processPacket)
                 .add()
+
+
+        CHANNEL.messageBuilder(UpdateBooleanPacket::class.java, 3)
+                .encoder(UpdateBooleanPacket::encode)
+                .decoder(UpdateBooleanPacket.Companion::decode)
+                .consumer(UpdateBooleanPacket.Companion::processPacket)
+                .add()
+
+
+        CHANNEL.messageBuilder(UpdateIntPacket::class.java, 4)
+                .encoder(UpdateIntPacket::encode)
+                .decoder(UpdateIntPacket.Companion::decode)
+                .consumer(UpdateIntPacket.Companion::processPacket)
+                .add()
+
+
+        CHANNEL.messageBuilder(UpdateItemStackPacket::class.java, 5)
+                .encoder(UpdateItemStackPacket::encode)
+                .decoder(UpdateItemStackPacket.Companion::decode)
+                .consumer(UpdateItemStackPacket.Companion::processPacket)
+                .add()
+
+
+        CHANNEL.messageBuilder(UpdateFluidStackPacket::class.java, 6)
+                .encoder(UpdateFluidStackPacket::encode)
+                .decoder(UpdateFluidStackPacket.Companion::decode)
+                .consumer(UpdateFluidStackPacket.Companion::processPacket)
+                .add()
+
+
+        CHANNEL.messageBuilder(UpdateRecipeTimePacket::class.java, 7)
+                .encoder(UpdateRecipeTimePacket::encode)
+                .decoder(UpdateRecipeTimePacket.Companion::decode)
+                .consumer(UpdateRecipeTimePacket.Companion::processPacket)
+                .add()
     }
 }

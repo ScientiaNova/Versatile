@@ -9,7 +9,7 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraft.tileentity.TileEntityType
 import net.minecraft.util.Direction
 import net.minecraftforge.common.capabilities.Capability
-import net.minecraftforge.common.capabilities.ICapabilitySerializable
+import net.minecraftforge.common.capabilities.ICapabilityProvider
 import net.minecraftforge.common.util.LazyOptional
 
 
@@ -43,7 +43,7 @@ class BaseTileEntity(type: TileEntityType<*>) : TileEntity(type), ITickableTileE
     }
 
     override fun <T> getCapability(cap: Capability<T>, side: Direction?) =
-            properties.values.asSequence().filterIsInstance<ICapabilitySerializable<*>>().map { it.getCapability(cap, side) }.firstOrNull { it.isPresent }
+            properties.values.asSequence().filterIsInstance<ICapabilityProvider>().map { it.getCapability(cap, side) }.firstOrNull(LazyOptional<*>::isPresent)
                     ?: LazyOptional.empty()
 
     fun canInteractWith(playerIn: PlayerEntity) = playerIn.getDistanceSq(pos.x + 0.5, pos.y + 0.5, pos.z + 0.5) <= 64

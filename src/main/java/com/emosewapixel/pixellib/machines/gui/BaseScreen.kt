@@ -7,7 +7,6 @@ import com.emosewapixel.pixellib.extensions.redF
 import com.emosewapixel.pixellib.machines.packets.NetworkHandler
 import com.emosewapixel.pixellib.machines.packets.OpenGUIPacket
 import com.mojang.blaze3d.platform.GlStateManager
-import net.minecraft.client.gui.AbstractGui
 import net.minecraft.client.gui.screen.inventory.ContainerScreen
 import net.minecraft.client.renderer.ItemRenderer
 import net.minecraft.entity.player.PlayerInventory
@@ -71,7 +70,7 @@ class BaseScreen(container: BaseContainer, playerInv: PlayerInventory, title: IT
         GlStateManager.enableBlend()
         val color = stack.fluid.attributes.color
         GlStateManager.color4f(color.redF, color.greenF, color.blueF, color.alphaF)
-        AbstractGui.blit(x + 1, y + 1, super.blitOffset, width - 2, height - 2, sprite)
+        blit(x + 1, y + 1, super.blitOffset, width - 2, height - 2, sprite)
         GlStateManager.disableBlend()
         if (stack.amount / 1000 > 0) {
             val s = (stack.amount / 1000).toString()

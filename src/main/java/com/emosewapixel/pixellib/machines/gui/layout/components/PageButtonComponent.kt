@@ -6,19 +6,18 @@ import com.emosewapixel.pixellib.machines.gui.layout.IGUIComponent
 import com.emosewapixel.pixellib.machines.packets.ChangePagePacket
 import com.emosewapixel.pixellib.machines.packets.NetworkHandler
 import com.emosewapixel.pixellib.machines.packets.ReopenGUIPacket
+import net.minecraft.client.gui.AbstractGui
+import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.entity.player.ServerPlayerEntity
-import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fml.network.PacketDistributor
 
-class PageButtonComponent(val texture: ResourceLocation, val page: Int, override val x: Int, override val y: Int) : IGUIComponent {
+class PageButtonComponent(val texture: TextureAtlasSprite, val page: Int, override val x: Int, override val y: Int) : IGUIComponent {
     override val tooltips = mutableListOf<String>()
     var width = 16
     var height = 16
 
-    override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
-        screen.minecraft.textureManager.bindTexture(texture)
-        screen.blit(screen.guiLeft + x, screen.guiTop + y, 0, 0, width, height)
-    }
+    override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) =
+            AbstractGui.blit(screen.guiLeft + x, screen.guiTop + y, screen.blitOffset, width, height, texture)
 
     override fun isSelected(mouseX: Int, mouseY: Int) = x < mouseX && mouseX < x + width && y < mouseY && mouseY < y + height
 

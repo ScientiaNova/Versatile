@@ -2,9 +2,11 @@ package com.emosewapixel.pixellib.machines.gui.layout.components
 
 import com.emosewapixel.pixellib.machines.gui.BaseScreen
 import com.emosewapixel.pixellib.machines.gui.layout.IGUIComponent
+import net.minecraft.client.gui.AbstractGui
+import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.util.ResourceLocation
 
-class ProgressBarComponent(val backgroundText: ResourceLocation, val fillTexture: ResourceLocation, val current: BaseScreen.() -> Int, val max: BaseScreen.() -> Int) : IGUIComponent {
+class ProgressBarComponent(val backGroundTex: TextureAtlasSprite, val fillTexture: ResourceLocation, val current: BaseScreen.() -> Int, val max: BaseScreen.() -> Int) : IGUIComponent {
     override val tooltips = mutableListOf<String>()
     var direction = Direction2D.RIGHT
     override var x = 79
@@ -13,8 +15,7 @@ class ProgressBarComponent(val backgroundText: ResourceLocation, val fillTexture
     var height = 16
 
     override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
-        screen.minecraft.textureManager.bindTexture(backgroundText)
-        screen.blit(screen.guiLeft + x, screen.guiTop + y, 0, 0, width, height)
+        AbstractGui.blit(screen.guiLeft + x, screen.guiTop + y, screen.blitOffset, width, height, backGroundTex)
         screen.minecraft.textureManager.bindTexture(fillTexture)
         val current = (max(screen).toDouble() / current(screen) * when (direction) {
             Direction2D.RIGHT, Direction2D.LEFT -> width

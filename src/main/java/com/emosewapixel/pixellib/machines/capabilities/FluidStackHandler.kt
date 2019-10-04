@@ -1,10 +1,17 @@
 package com.emosewapixel.pixellib.machines.capabilities
 
+import net.minecraft.util.Direction
+import net.minecraftforge.common.capabilities.Capability
+import net.minecraftforge.common.capabilities.ICapabilityProvider
+import net.minecraftforge.common.util.LazyOptional
 import net.minecraftforge.fluids.FluidStack
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler
 import net.minecraftforge.fluids.capability.IFluidHandler
 
-class FluidStackHandler @JvmOverloads constructor(val tanks: List<IMutableFluidTank>, val noOutputTanks: Array<Int> = emptyArray(), val noInputTanks: Array<Int> = emptyArray()) : IFluidHandler, IMutableFluidHandler {
+class FluidStackHandler @JvmOverloads constructor(val tanks: List<IMutableFluidTank>, val noOutputTanks: Array<Int> = emptyArray(), val noInputTanks: Array<Int> = emptyArray()) : IFluidHandler, IMutableFluidHandler, ICapabilityProvider {
     constructor(tanks: List<IMutableFluidTank>, noOutput: IntRange, noInput: IntRange) : this(tanks, noOutput.toList().toTypedArray(), noInput.toList().toTypedArray())
+
+    constructor(capacity: Int, inputCount: Int, outputCount: Int) : this((0 until inputCount + outputCount).map { MutableFluidTank(capacity) }, 0 until inputCount, inputCount until inputCount + outputCount)
 
     val inputTanks: List<IMutableFluidTank>
         get() = tanks.filterIndexed { index, _ -> index !in noInputTanks }
@@ -52,4 +59,10 @@ class FluidStackHandler @JvmOverloads constructor(val tanks: List<IMutableFluidT
     override fun getTanks() = tanks.size
 
     override fun isFluidValid(tank: Int, stack: FluidStack) = inputTanks.any { it.isFluidValid(stack) }
+
+    override fun <T> getCapability(cap: Capability<T>, side: Direction?): LazyOptional<T> =
+            if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+                LazyOptional.of { this }.cast()
+            else
+                LazyOptional.empty()
 }

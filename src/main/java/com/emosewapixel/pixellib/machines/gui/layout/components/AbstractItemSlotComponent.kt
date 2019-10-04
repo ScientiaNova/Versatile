@@ -6,20 +6,20 @@ import com.emosewapixel.pixellib.machines.gui.layout.ISlotComponent
 import com.emosewapixel.pixellib.machines.packets.NetworkHandler
 import com.emosewapixel.pixellib.machines.packets.UpdateItemStackPacket
 import net.minecraft.client.gui.AbstractGui
+import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.item.ItemStack
-import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fml.network.PacketDistributor
 import net.minecraftforge.items.IItemHandler
 
-abstract class AbstractItemSlotComponent(val property: String, override val x: Int, override val y: Int, override val texture: ResourceLocation) : ISlotComponent {
+abstract class AbstractItemSlotComponent(val property: String, override val x: Int, override val y: Int, override val texture: TextureAtlasSprite) : ISlotComponent {
     override val tooltips = mutableListOf<String>()
     override var width = 18
     override var height = 18
     var slotIndex = 0
 
     override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
-        screen.minecraft.textureManager.bindTexture(texture)
+        AbstractGui.blit(screen.guiLeft + x, screen.guiTop + y, screen.blitOffset, width, height, texture)
         val stack = (screen.container.te.properties[property] as? IItemHandler)?.getStackInSlot(slotIndex)
                 ?: ItemStack.EMPTY
         if (!stack.isEmpty)

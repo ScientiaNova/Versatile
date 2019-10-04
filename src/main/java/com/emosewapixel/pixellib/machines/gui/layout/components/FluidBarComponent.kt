@@ -3,10 +3,10 @@ package com.emosewapixel.pixellib.machines.gui.layout.components
 import com.emosewapixel.pixellib.machines.gui.BaseScreen
 import com.emosewapixel.pixellib.machines.gui.layout.IGUIComponent
 import net.minecraft.client.gui.AbstractGui
-import net.minecraft.util.ResourceLocation
+import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraftforge.fluids.capability.IFluidHandler
 
-class FluidBarComponent(val backgroundText: ResourceLocation, val property: String) : IGUIComponent {
+class FluidBarComponent(val backGroundText: TextureAtlasSprite, val property: String) : IGUIComponent {
     override val tooltips = mutableListOf<String>()
     var direction = Direction2D.RIGHT
     override var x = 79
@@ -16,8 +16,7 @@ class FluidBarComponent(val backgroundText: ResourceLocation, val property: Stri
     var height = 16
 
     override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
-        screen.minecraft.textureManager.bindTexture(backgroundText)
-        screen.blit(screen.guiLeft + x, screen.guiTop + y, 0, 0, width, height)
+        AbstractGui.blit(screen.guiLeft + x, screen.guiTop + y, screen.blitOffset, width, height, backGroundText)
         val tank = (screen.container.te.properties[property] as? IFluidHandler)
         val currentSize = (tank?.getTankCapacity(tankId) ?: 0) / (tank?.getFluidInTank(tankId)?.amount
                 ?: 1) * when (direction) {

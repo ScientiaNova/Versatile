@@ -3,15 +3,15 @@ package com.emosewapixel.pixellib.machines.gui.layout.components
 import com.emosewapixel.pixellib.machines.gui.BaseScreen
 import com.emosewapixel.pixellib.machines.gui.layout.ISlotComponent
 import net.minecraft.client.gui.AbstractGui
-import net.minecraft.util.ResourceLocation
+import net.minecraft.client.renderer.texture.TextureAtlasSprite
 
-class PlayerSlotComponent(val slotIndex: Int, override val x: Int, override val y: Int, override val texture: ResourceLocation) : ISlotComponent {
+class PlayerSlotComponent(val slotIndex: Int, override val x: Int, override val y: Int, override val texture: TextureAtlasSprite) : ISlotComponent {
     override val tooltips = mutableListOf<String>()
     override var width = 18
     override var height = 18
 
     override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
-        screen.minecraft.textureManager.bindTexture(texture)
+        AbstractGui.blit(screen.guiLeft + x, screen.guiTop + y, screen.blitOffset, width, height, texture)
         val stack = screen.container.playerInv.getStackInSlot(slotIndex)
         if (!stack.isEmpty)
             screen.drawItemStack(stack, screen.guiLeft + x, screen.guiTop + y)

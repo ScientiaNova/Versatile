@@ -3,20 +3,19 @@ package com.emosewapixel.pixellib.machines.gui.layout.components
 import com.emosewapixel.pixellib.machines.gui.BaseScreen
 import com.emosewapixel.pixellib.machines.gui.layout.ISlotComponent
 import net.minecraft.client.gui.AbstractGui
-import net.minecraft.util.ResourceLocation
+import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.fluids.FluidStack
 import net.minecraftforge.fluids.capability.IFluidHandler
 
-class FluidSlotCompoment(val property: String, override val x: Int, override val y: Int, override val texture: ResourceLocation) : ISlotComponent {
+class FluidSlotCompoment(val property: String, override val x: Int, override val y: Int, override val texture: TextureAtlasSprite) : ISlotComponent {
     override val tooltips = mutableListOf<String>()
     override var width = 18
     override var height = 18
     var tankId = 0
 
     override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
-        screen.minecraft.textureManager.bindTexture(texture)
-        screen.blit(screen.guiLeft + x, screen.guiTop + y, 0, 0, width, height)
+        AbstractGui.blit(screen.guiLeft + x, screen.guiTop + y, screen.blitOffset, width, height, texture)
         val fluid = (screen.container.te.properties[property] as? IFluidHandler)?.getFluidInTank(tankId)
                 ?: FluidStack.EMPTY
         if (!fluid.isEmpty)
