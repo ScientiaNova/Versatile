@@ -1,7 +1,7 @@
 package com.emosewapixel.pixellib.proxy
 
 import com.emosewapixel.pixellib.extensions.json
-import com.emosewapixel.pixellib.materialsystem.MaterialRegistry
+import com.emosewapixel.pixellib.materialsystem.addition.MaterialRegistry
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialBlocks
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialFluids
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialItems

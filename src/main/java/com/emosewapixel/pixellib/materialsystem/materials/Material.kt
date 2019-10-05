@@ -18,10 +18,11 @@ import java.util.*
 Materials are objects used for generating items/blocks/fluids based on object types. They have a wide range of customizability.
 However, the base Materials aren't meant to be used for generating anything
 */
-open class Material constructor(val name: String, val textureType: String, val color: Int, val tier: Int) {
+open class Material(val name: String, val textureType: String, val color: Int, val tier: Int) {
     var itemTier: IItemTier? = null
     var armorMaterial: IArmorMaterial? = null
     val typeBlacklist = ArrayList<ObjectType<*, *>>()
+    val invertedBlacklist = false
     val materialTags = ArrayList<String>()
     var composition = listOf<MaterialStack>()
     var element = Elements.NULL

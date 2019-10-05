@@ -14,7 +14,7 @@ object BlockRegistry {
 
     fun registerBlocks(e: RegistryEvent.Register<Block>) {
         Materials.all.forEach { mat ->
-            ObjTypes.all.filter { type -> type is BlockType && type.isMaterialCompatible(mat) && !MaterialBlocks.contains(mat, type) && type !in mat.typeBlacklist }
+            ObjTypes.all.filter { type -> type is BlockType && type.isMaterialCompatible(mat) && !MaterialBlocks.contains(mat, type) && if (mat.invertedBlacklist) type in mat.typeBlacklist else type !in mat.typeBlacklist }
                     .forEach { type ->
                         e.registry.register((type as BlockType).objectConstructor(mat, type))
                         items += type.itemConstructor(mat, type)

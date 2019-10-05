@@ -5,7 +5,7 @@ import com.emosewapixel.pixellib.fluids.IFluidPairHolder
 import com.emosewapixel.pixellib.fluids.MaterialBucketItem
 import com.emosewapixel.pixellib.fluids.MaterialFluidBlock
 import com.emosewapixel.pixellib.fluids.MaterialFluidHolder
-import com.emosewapixel.pixellib.materialsystem.MaterialRegistry
+import com.emosewapixel.pixellib.materialsystem.addition.MaterialRegistry
 import com.emosewapixel.pixellib.materialsystem.element.ElementUtils
 import com.emosewapixel.pixellib.materialsystem.materials.DustMaterial
 import com.emosewapixel.pixellib.materialsystem.materials.FluidMaterial

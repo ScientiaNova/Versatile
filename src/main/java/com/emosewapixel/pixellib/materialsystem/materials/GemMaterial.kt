@@ -2,7 +2,7 @@ package com.emosewapixel.pixellib.materialsystem.materials
 
 import com.emosewapixel.pixellib.items.tools.ArmorMaterial
 import com.emosewapixel.pixellib.items.tools.ItemTier
-import com.emosewapixel.pixellib.materialsystem.MaterialRegistry
+import com.emosewapixel.pixellib.materialsystem.addition.MaterialRegistry
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialItems
 import net.minecraft.item.Item
 import net.minecraft.item.crafting.Ingredient
@@ -12,7 +12,7 @@ import java.util.function.Supplier
 //Gem Materials are materials for which, above all, gems are generated
 open class GemMaterial(name: String, textureType: String, color: Int, tier: Int) : DustMaterial(name, textureType, color, tier) {
     override val defaultItem: Item?
-        get() = MaterialItems.get(this, MaterialRegistry.GEM)
+        get() = MaterialItems[this, MaterialRegistry.GEM]
 
     @JvmName("invokeGem")
     operator fun invoke(builder: GemMaterial.() -> Unit) = builder(this)

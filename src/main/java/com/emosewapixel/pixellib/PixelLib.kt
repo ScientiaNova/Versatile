@@ -6,7 +6,8 @@ import com.emosewapixel.pixellib.commands.MaterialItemCommand
 import com.emosewapixel.pixellib.fluids.FluidRegistry
 import com.emosewapixel.pixellib.items.ItemRegistry
 import com.emosewapixel.pixellib.machines.packets.NetworkHandler
-import com.emosewapixel.pixellib.materialsystem.MaterialRegistry
+import com.emosewapixel.pixellib.materialsystem.addition.MaterialRegistry
+import com.emosewapixel.pixellib.materialsystem.addition.MaterialRegistryInitializer
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialItems
 import com.emosewapixel.pixellib.materialsystem.materials.IMaterialObject
 import com.emosewapixel.pixellib.materialsystem.types.FluidType
@@ -58,8 +59,6 @@ object PixelLib {
         FMLKotlinModLoadingContext.get().modEventBus.addListener<InterModEnqueueEvent> { enqueueIMC(it) }
         FMLKotlinModLoadingContext.get().modEventBus.addListener<InterModProcessEvent> { processIMC(it) }
 
-        MaterialRegistry
-
         proxy.init()
     }
 
@@ -80,6 +79,11 @@ object PixelLib {
 
 @KotlinEventBusSubscriber(bus = KotlinEventBusSubscriber.Bus.MOD, modid = PixelLib.ModId)
 object RegistryEvents {
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    fun onEarlyBlockRegistry(e: RegistryEvent.Register<Block>) {
+        MaterialRegistryInitializer
+    }
+
     @SubscribeEvent
     fun onBlockRegistry(e: RegistryEvent.Register<Block>) {
         BlockRegistry.registerBlocks(e)

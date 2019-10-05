@@ -1,4 +1,4 @@
-package com.emosewapixel.pixellib.materialsystem
+package com.emosewapixel.pixellib.materialsystem.addition
 
 import com.emosewapixel.pixellib.fluids.FluidPairHolder
 import com.emosewapixel.pixellib.materialsystem.element.Elements
@@ -10,14 +10,17 @@ import com.emosewapixel.pixellib.materialsystem.types.ObjectType.Companion.getUn
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.block.SoundType
+import net.minecraft.block.material.Material
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.ArmorMaterial
 import net.minecraft.item.ItemTier
 import net.minecraft.item.Items
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.SoundEvents
+import net.minecraftforge.eventbus.api.EventPriority
 
 //This class is used for registering the vanilla material and object type tags, materials and object types
+@MaterialRegistryClass(EventPriority.HIGH)
 object MaterialRegistry {
     //Material Tags
     const val HAS_ORE = "has_ore"
@@ -59,13 +62,13 @@ object MaterialRegistry {
     }
     @JvmField
     val BLOCK = blockType("storage_block", { it is DustMaterial },
-            Block.Properties.create(net.minecraft.block.material.Material.IRON).sound(SoundType.METAL)) {
+            Block.Properties.create(Material.IRON).sound(SoundType.METAL)) {
         buildRegistryName = { ResourceLocation("pixellib:${it.name}_block") }
         bucketVolume = 1296
     }
     @JvmField
     val ORE = blockType("ore", { it is IngotMaterial && it.hasTag(HAS_ORE) },
-            Block.Properties.create(net.minecraft.block.material.Material.ROCK).sound(SoundType.STONE)) {
+            Block.Properties.create(Material.ROCK).sound(SoundType.STONE)) {
         typeTags += HAS_NO_FUEL_VALUE
         color = ::getUnrefinedColor
         indexBlackList += 1

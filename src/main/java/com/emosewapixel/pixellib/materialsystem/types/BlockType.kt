@@ -3,7 +3,7 @@ package com.emosewapixel.pixellib.materialsystem.types
 import com.emosewapixel.pixellib.blocks.MaterialBlock
 import com.emosewapixel.pixellib.blocks.MaterialBlockItem
 import com.emosewapixel.pixellib.extensions.json
-import com.emosewapixel.pixellib.materialsystem.MaterialRegistry
+import com.emosewapixel.pixellib.materialsystem.addition.MaterialRegistry
 import com.emosewapixel.pixellib.materialsystem.materials.IMaterialObject
 import com.emosewapixel.pixellib.materialsystem.materials.Material
 import com.google.gson.JsonObject

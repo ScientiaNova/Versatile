@@ -1,4 +1,4 @@
-package com.emosewapixel.pixellib.materialsystem
+package com.emosewapixel.pixellib.materialsystem.addition
 
 import com.emosewapixel.pixellib.blocks.MaterialBlock
 import com.emosewapixel.pixellib.blocks.MaterialBlockItem
