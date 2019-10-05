@@ -51,9 +51,9 @@ class FluidType(name: String, requirement: (Material) -> Boolean, fluidConstruct
     var densityFun: (Material) -> Int = {
         val density = ElementUtils.getTotalDensity(it).toInt() * densityMultiplier
         if (gaseousFun(it))
-            -density
+            -density.toInt()
         else
-            density
+            density.toInt()
     }
     var viscosityFun: (Material) -> Int = { ElementUtils.getTotalDensity(it).toInt() }
 

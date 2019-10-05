@@ -68,6 +68,12 @@ fun itemType(name: String, requirement: (Material) -> Boolean, constructor: (Mat
     return type.build()
 }
 
+fun itemType(name: String, requirement: (Material) -> Boolean, builder: ItemType.() -> Unit): ObjectType<*, *> {
+    val type = ItemType(name, requirement)
+    type(builder)
+    return type.build()
+}
+
 @JvmOverloads
 fun blockType(name: String, requirement: (Material) -> Boolean, properties: Block.Properties, constructor: (Material, BlockType) -> Block = ::MaterialBlock, itemConstructor: (Material, BlockType) -> Item = ::MaterialBlockItem, builder: BlockType.() -> Unit = { }): ObjectType<*, *> {
     val type = BlockType(name, requirement, properties, constructor, itemConstructor)
@@ -75,9 +81,21 @@ fun blockType(name: String, requirement: (Material) -> Boolean, properties: Bloc
     return type.build()
 }
 
+fun blockType(name: String, requirement: (Material) -> Boolean, properties: Block.Properties, builder: BlockType.() -> Unit): ObjectType<*, *> {
+    val type = BlockType(name, requirement, properties)
+    type(builder)
+    return type.build()
+}
+
 @JvmOverloads
 fun fluidType(name: String, requirement: (Material) -> Boolean, fluidConstructor: (Material, FluidType) -> IFluidPairHolder = ::MaterialFluidHolder, blockConstructor: (Material, FluidType) -> FlowingFluidBlock = ::MaterialFluidBlock, bucketConstructor: (Material, FluidType) -> BucketItem = ::MaterialBucketItem, builder: FluidType.() -> Unit = { }): ObjectType<*, *> {
     val type = FluidType(name, requirement, fluidConstructor, blockConstructor, bucketConstructor)
+    type(builder)
+    return type.build()
+}
+
+fun fluidType(name: String, requirement: (Material) -> Boolean, builder: FluidType.() -> Unit): ObjectType<*, *> {
+    val type = FluidType(name, requirement)
     type(builder)
     return type.build()
 }

@@ -1,5 +1,7 @@
 package com.emosewapixel.pixellib.resources
 
+import com.emosewapixel.pixellib.extensions.JsonBuilder
+import com.emosewapixel.pixellib.extensions.toResLoc
 import com.google.gson.JsonElement
 import net.minecraft.util.ResourceLocation
 
@@ -17,7 +19,19 @@ object JSONAdder {
     }
 
     @JvmStatic
+    fun addAssetsJSON(location: ResourceLocation, json: JsonBuilder.() -> Unit) = addDataJSON(location, com.emosewapixel.pixellib.extensions.json(json))
+
+    @JvmStatic
+    fun addAssetsJSON(location: String, json: JsonBuilder.() -> Unit) = addAssetsJSON(location.toResLoc(), json)
+
+    @JvmStatic
     fun addDataJSON(location: ResourceLocation, json: JsonElement) {
         DATA[location] = json
     }
+
+    @JvmStatic
+    fun addDataJSON(location: ResourceLocation, json: JsonBuilder.() -> Unit) = addDataJSON(location, com.emosewapixel.pixellib.extensions.json(json))
+
+    @JvmStatic
+    fun addDataJSON(location: String, json: JsonBuilder.() -> Unit) = addDataJSON(location.toResLoc(), json)
 }

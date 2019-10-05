@@ -1,5 +1,6 @@
 package com.emosewapixel.pixellib.resources
 
+import com.emosewapixel.pixellib.extensions.JsonBuilder
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonElement
 import com.google.gson.JsonParser
@@ -39,6 +40,8 @@ internal class FakePack constructor(private val name: String) : IResourcePack {
     fun putString(type: ResourcePackType, location: ResourceLocation, string: String) = putBytes(type, location, string.toByteArray())
 
     fun putJSON(type: ResourcePackType, location: ResourceLocation, json: JsonElement) = putString(type, location, GSON.toJson(json))
+
+    fun putJSON(type: ResourcePackType, location: ResourceLocation, json: JsonBuilder.() -> Unit) = putString(type, location, GSON.toJson(com.emosewapixel.pixellib.extensions.json(json)))
 
     @Throws(IOException::class)
     override fun getRootResourceStream(fileName: String): InputStream {

@@ -24,6 +24,11 @@ class JsonBuilder(builder: JsonBuilder.() -> Unit) {
         properties.forEach(arr::add)
         result.add(this, arr)
     }
+    infix fun String.to(properties: Array<JsonElement>) {
+        val arr = JsonArray()
+        properties.forEach(arr::add)
+        result.add(this, arr)
+    }
 
     operator fun String.invoke(builder: JsonBuilder.() -> Unit) = result.add(this, JsonBuilder(builder).result)
 }

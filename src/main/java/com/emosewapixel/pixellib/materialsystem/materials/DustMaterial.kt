@@ -23,7 +23,7 @@ open class DustMaterial(name: String, textureType: String, color: Int, tier: Int
         if (mat is DustMaterial) {
             if (mat.processingMultiplier > processingMultiplier)
                 processingMultiplier = mat.processingMultiplier
-            if (mat.refinedMaterial != this)
+            if (mat.refinedMaterial != mat)
                 refinedMaterial = mat.refinedMaterial
             if (mat.unrefinedColor != mat.color)
                 unrefinedColor = mat.unrefinedColor

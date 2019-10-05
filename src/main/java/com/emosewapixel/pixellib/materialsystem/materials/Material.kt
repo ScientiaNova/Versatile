@@ -31,7 +31,7 @@ open class Material(val name: String, val textureType: String, val color: Int, v
     var compoundType = CompoundType.CHEMICAL
     var harvestTier = harvestTier(1.5f * (tier + 1), 1.5f * (tier + 1))
     val extraProperties = mutableMapOf<String, Any>()
-    var densityMultiplier = 1
+    var densityMultiplier = 1f
 
     val localizedName: ITextComponent
         get() = TranslationTextComponent("material.$name")
