@@ -19,18 +19,18 @@ class FakeDataPackFinder : IPackFinder {
             val pack = FakePack("fake_server:pixellib")
 
             TagMaps.ITEM_TAGS.asMap().forEach { (name, items) ->
-                val tag = Tag.Builder.create<Item>().add(*items.toTypedArray()).build(ResourceLocation("forge", name))
-                pack.putJSON(ResourcePackType.SERVER_DATA, ResourceLocation("forge", "tags/items/$name.json"), tag.serialize { ForgeRegistries.ITEMS.getKey(it) })
+                val tag = Tag.Builder.create<Item>().add(*items.toTypedArray()).build(name)
+                pack.putJSON(ResourcePackType.SERVER_DATA, ResourceLocation(name.namespace, "tags/items/${name.path}.json"), tag.serialize { ForgeRegistries.ITEMS.getKey(it) })
             }
 
             TagMaps.BLOCK_TAGS.asMap().forEach { (name, blocks) ->
-                val tag = Tag.Builder.create<Block>().add(*blocks.toTypedArray()).build(ResourceLocation("forge", name))
-                pack.putJSON(ResourcePackType.SERVER_DATA, ResourceLocation("forge", "tags/blocks/$name.json"), tag.serialize { ForgeRegistries.BLOCKS.getKey(it) })
+                val tag = Tag.Builder.create<Block>().add(*blocks.toTypedArray()).build(name)
+                pack.putJSON(ResourcePackType.SERVER_DATA, ResourceLocation(name.namespace, "tags/blocks/${name.path}.json"), tag.serialize { ForgeRegistries.BLOCKS.getKey(it) })
             }
 
             TagMaps.FLUID_TAGS.asMap().forEach { (name, fluids) ->
-                val tag = Tag.Builder.create<Fluid>().add(*fluids.toTypedArray()).build(ResourceLocation("forge", name))
-                pack.putJSON(ResourcePackType.SERVER_DATA, ResourceLocation("forge", "tags/fluids/$name.json"), tag.serialize { ForgeRegistries.FLUIDS.getKey(it) })
+                val tag = Tag.Builder.create<Fluid>().add(*fluids.toTypedArray()).build(name)
+                pack.putJSON(ResourcePackType.SERVER_DATA, ResourceLocation(name.namespace, "tags/fluids/${name.path}.json"), tag.serialize { ForgeRegistries.FLUIDS.getKey(it) })
             }
 
             JSONAdder.DATA.forEach { (location, jsonElement) -> pack.putJSON(ResourcePackType.SERVER_DATA, location, jsonElement) }

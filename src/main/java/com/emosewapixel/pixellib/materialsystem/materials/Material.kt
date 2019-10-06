@@ -8,7 +8,6 @@ import net.minecraft.item.IArmorMaterial
 import net.minecraft.item.IItemTier
 import net.minecraft.tags.FluidTags
 import net.minecraft.tags.ItemTags
-import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.ITextComponent
 import net.minecraft.util.text.TranslationTextComponent
 import java.util.*
@@ -75,13 +74,13 @@ open class Material(val name: String, val textureType: String, val color: Int, v
     val hasSecondName
         get() = secondName != name
 
-    fun getTag(type: ObjectType<*, *>) = ItemTags.Wrapper(ResourceLocation("forge", type.buildTagName(name)))
+    fun getTag(type: ObjectType<*, *>) = ItemTags.Wrapper(type.buildTagName(name))
 
-    fun getFluidTag(type: ObjectType<*, *>) = FluidTags.Wrapper(ResourceLocation("forge", type.buildTagName(name)))
+    fun getFluidTag(type: ObjectType<*, *>) = FluidTags.Wrapper(type.buildTagName(name))
 
-    fun getSecondItemTag(type: ObjectType<*, *>) = ItemTags.Wrapper(ResourceLocation("forge", type.buildTagName(name)))
+    fun getSecondItemTag(type: ObjectType<*, *>) = ItemTags.Wrapper(type.buildTagName(name))
 
-    fun getSecondFluidTag(type: ObjectType<*, *>) = FluidTags.Wrapper(ResourceLocation("forge", type.buildTagName(name)))
+    fun getSecondFluidTag(type: ObjectType<*, *>) = FluidTags.Wrapper(type.buildTagName(name))
 
     fun harvestTier(hardness: Float, resistance: Float) = HarvestTier(hardness, resistance, tier)
 }

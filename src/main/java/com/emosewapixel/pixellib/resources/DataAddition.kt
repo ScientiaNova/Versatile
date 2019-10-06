@@ -21,20 +21,20 @@ object DataAddition {
         MaterialItems.all.filterIsInstance<IMaterialObject>().forEach { TagMaps.addMatItemToTag(it) }
         MaterialBlocks.all.filterIsInstance<IMaterialObject>().forEach { TagMaps.addMatItemToTag(it) }
         MaterialFluids.all.flatMap { listOf(it.stillFluid, it.flowingFluid) }.filterIsInstance<IMaterialObject>().forEach { TagMaps.addMatItemToTag(it) }
-        TagMaps.addItemToTag("gems/coal", Items.COAL)
-        TagMaps.addItemToTag("gems/charcoal", Items.CHARCOAL)
-        TagMaps.addItemToTag("gems", Items.COAL)
-        TagMaps.addItemToTag("gems", Items.CHARCOAL)
-        TagMaps.addBlockToTag("storage_blocks/brick", Blocks.BRICKS)
-        TagMaps.addBlockToTag("storage_blocks/nether_brick", Blocks.NETHER_BRICKS)
-        TagMaps.addBlockToTag("storage_blocks/bone", Blocks.BONE_BLOCK)
-        TagMaps.addBlockToTag("storage_blocks", Blocks.BRICKS)
-        TagMaps.addBlockToTag("storage_blocks", Blocks.NETHER_BRICKS)
-        TagMaps.addBlockToTag("storage_blocks", Blocks.BONE_BLOCK)
-        TagMaps.addItemToTag("dusts/bone", Items.BONE_MEAL)
-        TagMaps.addItemToTag("dusts/blaze", Items.BLAZE_POWDER)
-        TagMaps.addItemToTag("dusts", Items.BONE_MEAL)
-        TagMaps.addItemToTag("dusts", Items.BLAZE_POWDER)
+        TagMaps.addItemToTag("forge:gems/coal", Items.COAL)
+        TagMaps.addItemToTag("forge:gems/charcoal", Items.CHARCOAL)
+        TagMaps.addItemToTag("forge:gems", Items.COAL)
+        TagMaps.addItemToTag("forge:gems", Items.CHARCOAL)
+        TagMaps.addBlockToTag("forge:storage_blocks/brick", Blocks.BRICKS)
+        TagMaps.addBlockToTag("forge:storage_blocks/nether_brick", Blocks.NETHER_BRICKS)
+        TagMaps.addBlockToTag("forge:storage_blocks/bone", Blocks.BONE_BLOCK)
+        TagMaps.addBlockToTag("forge:storage_blocks", Blocks.BRICKS)
+        TagMaps.addBlockToTag("forge:storage_blocks", Blocks.NETHER_BRICKS)
+        TagMaps.addBlockToTag("forge:storage_blocks", Blocks.BONE_BLOCK)
+        TagMaps.addItemToTag("forge:dusts/bone", Items.BONE_MEAL)
+        TagMaps.addItemToTag("forge:dusts/blaze", Items.BLAZE_POWDER)
+        TagMaps.addItemToTag("forge:dusts", Items.BONE_MEAL)
+        TagMaps.addItemToTag("forge:dusts", Items.BLAZE_POWDER)
 
         //Recipes
         Materials.all.filterIsInstance<DustMaterial>().forEach { mat ->

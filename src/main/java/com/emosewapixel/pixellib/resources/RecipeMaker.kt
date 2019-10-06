@@ -4,6 +4,7 @@ import com.emosewapixel.pixellib.extensions.json
 import com.emosewapixel.pixellib.extensions.toJson
 import com.emosewapixel.pixellib.extensions.toResLoc
 import com.google.gson.JsonObject
+import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.tags.Tag
@@ -48,15 +49,54 @@ object RecipeMaker {
     fun addShapedRecipe(name: String, output: ItemStack, vararg shape: Any) = addShapedRecipe(name.toResLoc(), output, shape)
 
     @JvmStatic
-    @JvmOverloads
-    fun addFurnaceRecipe(name: ResourceLocation, input: Any, output: Item, cookTime: Int = 200, xp: Float = 0.1f) =
+    fun addCookingRecipe(type: String, name: ResourceLocation, input: Any, output: Item, cookTime: Int, xp: Float) =
             JSONAdder.addDataJSON(ResourceLocation(name.namespace, "recipes/" + name.path + ".json")) {
-                "type" to "minecraft:smelting"
+                "type" to type
                 "ingredient" to inputToJson(input)
                 "result" to output.registryName!!.toString()
                 "cookingtime" to cookTime
                 "experience" to xp
             }
+
+    @JvmStatic
+    @JvmOverloads
+    fun addFurnaceRecipe(name: ResourceLocation, input: Any, output: Item, cookTime: Int = 200, xp: Float = 0.1f) =
+            addCookingRecipe("minecraft:smelting", name, input, output, cookTime, xp)
+
+    @JvmStatic
+    @JvmOverloads
+    fun addFurnaceRecipe(name: String, input: Any, output: Item, cookTime: Int = 200, xp: Float = 0.1f) =
+            addFurnaceRecipe(name.toResLoc(), input, output, cookTime, xp)
+
+    @JvmStatic
+    @JvmOverloads
+    fun addBlastingRecipe(name: ResourceLocation, input: Any, output: Item, cookTime: Int = 100, xp: Float = 0f) =
+            addCookingRecipe("minecraft:blasting", name, input, output, cookTime, xp)
+
+    @JvmStatic
+    @JvmOverloads
+    fun addBlastingRecipe(name: String, input: Any, output: Item, cookTime: Int = 200, xp: Float = 0.1f) =
+            addBlastingRecipe(name.toResLoc(), input, output, cookTime, xp)
+
+    @JvmStatic
+    @JvmOverloads
+    fun addSmokerRecipe(name: ResourceLocation, input: Any, output: Item, cookTime: Int = 100, xp: Float = 0f) =
+            addCookingRecipe("minecraft:smoking", name, input, output, cookTime, xp)
+
+    @JvmStatic
+    @JvmOverloads
+    fun addSmokerRecipe(name: String, input: Any, output: Item, cookTime: Int = 200, xp: Float = 0.1f) =
+            addSmokerRecipe(name.toResLoc(), input, output, cookTime, xp)
+
+    @JvmStatic
+    @JvmOverloads
+    fun addCampfireRecipe(name: ResourceLocation, input: Any, output: Item, cookTime: Int = 600, xp: Float = 0.35f) =
+            addCookingRecipe("minecraft:campfire_cooking", name, input, output, cookTime, xp)
+
+    @JvmStatic
+    @JvmOverloads
+    fun addCampfireRecipe(name: String, input: Any, output: Item, cookTime: Int = 200, xp: Float = 0.1f) =
+            addCampfireRecipe(name.toResLoc(), input, output, cookTime, xp)
 
     @JvmStatic
     fun removeRecipe(name: ResourceLocation) {
@@ -70,6 +110,7 @@ object RecipeMaker {
     fun inputToJson(obj: Any) = json {
         when (obj) {
             is Item -> "item" to obj.registryName!!.toString()
+            is Block -> "item" to obj.registryName!!.toString()
             is Tag<*> -> "tag" to obj.id.toString()
         }
     }

@@ -15,9 +15,7 @@ import net.minecraft.world.gen.feature.OreFeatureConfig
 import net.minecraft.world.gen.placement.IPlacementConfig
 import net.minecraft.world.gen.placement.Placement
 import net.minecraftforge.registries.ForgeRegistries
-
-import java.util.HashMap
-import java.util.function.Predicate
+import java.util.*
 
 /*
 This class contains methods for adding ore gen.
@@ -35,11 +33,11 @@ object OreGen {
         ORE_MAP[block] = DimensionFeature(Feature.DECORATED, DecoratedFeatureConfig(Feature.ORE, OreFeatureConfig(fillerBlockType, block.defaultState, veinSize), placement, placementConfig), dim)
     }
 
-    fun <P : IPlacementConfig> addToOreGen(block: Block, pred: Predicate<Biome>, fillerBlockType: OreFeatureConfig.FillerBlockType, veinSize: Int, placement: Placement<P>, placementConfig: P) {
+    fun <P : IPlacementConfig> addToOreGen(block: Block, pred: (Biome) -> Boolean, fillerBlockType: OreFeatureConfig.FillerBlockType, veinSize: Int, placement: Placement<P>, placementConfig: P) {
         ORE_MAP[block] = PredicatedFeature(pred, Feature.DECORATED, DecoratedFeatureConfig(Feature.ORE, OreFeatureConfig(fillerBlockType, block.defaultState, veinSize), placement, placementConfig))
     }
 
-    fun <P : IPlacementConfig> addToOreGen(block: Block, pred: Predicate<Biome>, fillerBlockType: OreFeatureConfig.FillerBlockType, veinSize: Int, placement: Placement<P>, placementConfig: P, dim: DimensionType) {
+    fun <P : IPlacementConfig> addToOreGen(block: Block, pred: (Biome) -> Boolean, fillerBlockType: OreFeatureConfig.FillerBlockType, veinSize: Int, placement: Placement<P>, placementConfig: P, dim: DimensionType) {
         ORE_MAP[block] = PredicatedDimensionFeature(pred, Feature.DECORATED, DecoratedFeatureConfig(Feature.ORE, OreFeatureConfig(fillerBlockType, block.defaultState, veinSize), placement, placementConfig), dim)
     }
 

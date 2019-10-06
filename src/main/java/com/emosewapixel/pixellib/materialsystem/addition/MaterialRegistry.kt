@@ -1,5 +1,6 @@
 package com.emosewapixel.pixellib.materialsystem.addition
 
+import com.emosewapixel.pixellib.extensions.toResLoc
 import com.emosewapixel.pixellib.fluids.FluidPairHolder
 import com.emosewapixel.pixellib.materialsystem.element.Elements
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialBlocks
@@ -80,12 +81,12 @@ object MaterialRegistry {
         fluidColor = { color(it) or ((it as? FluidMaterial)?.alpha?.shl(24) ?: 0xFF000000.toInt()) }
         overlayTexture = ResourceLocation("minecraft", "block/water_overlay")
         buildRegistryName = { ResourceLocation("pixellib:${it.name}") }
-        buildTagName = String::toString
+        buildTagName = String::toResLoc
     }
     @JvmField
     val MOLTEN_FLUID = fluidType("molten", { it is DustMaterial && it.meltingTemperature > 0 }) {
         buildRegistryName = { ResourceLocation("pixellib:molten_${it.name}") }
-        buildTagName = { "molten_$it" }
+        buildTagName = { "forge:molten_$it".toResLoc() }
         emptySound = SoundEvents.ITEM_BUCKET_EMPTY_LAVA
         fillSound = SoundEvents.ITEM_BUCKET_FILL_LAVA
     }
@@ -242,6 +243,11 @@ object MaterialRegistry {
         MaterialItems.addItem(BLAZE, DUST, Items.BLAZE_POWDER)
 
         MaterialFluids.addFluidPair(WATER, FLUID, FluidPairHolder(Fluids.WATER, Fluids.FLOWING_WATER))
+        MaterialBlocks.addBlock(WATER, FLUID, Blocks.WATER)
+        MaterialItems.addItem(WATER, FLUID, Items.WATER_BUCKET)
+
         MaterialFluids.addFluidPair(LAVA, FLUID, FluidPairHolder(Fluids.LAVA, Fluids.FLOWING_LAVA))
+        MaterialBlocks.addBlock(LAVA, FLUID, Blocks.LAVA)
+        MaterialItems.addItem(LAVA, FLUID, Items.LAVA_BUCKET)
     }
 }

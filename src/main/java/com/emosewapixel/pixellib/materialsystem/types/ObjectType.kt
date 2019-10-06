@@ -19,7 +19,7 @@ abstract class ObjectType<O, T : ObjectType<O, T>>(val name: String, var require
     val indexBlackList = mutableListOf<Int>()
     val extraProperties = mutableMapOf<String, Any>()
     var buildRegistryName: (Material) -> ResourceLocation = { ResourceLocation("pixellib:${it.name}_$name") }
-    var buildTagName: (String) -> String = { "${name}s/$it" }
+    var buildTagName: (String) -> ResourceLocation = { ResourceLocation("forge", "${name}s/$it") }
     var color: (Material) -> Int = Material::color
     var densityMultiplier = 1f
 
