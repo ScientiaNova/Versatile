@@ -22,10 +22,22 @@ object MaterialFluids {
         get() = materialFluids.values()
 
     @JvmStatic
-    operator fun get(material: Material, type: ObjectType<*, *>): FlowingFluid? = materialFluids.get(material, type)?.still
+    fun getPair(material: Material, type: ObjectType<*, *>): IFluidPairHolder? = materialFluids.get(material, type)
 
     @JvmStatic
-    fun getPair(material: Material, type: ObjectType<*, *>): IFluidPairHolder? = materialFluids.get(material, type)
+    fun getPair(material: Material): MutableMap<ObjectType<*, *>, IFluidPairHolder>? = materialFluids.row(material)
+
+    @JvmStatic
+    fun getPair(type: ObjectType<*, *>): MutableMap<Material, IFluidPairHolder>? = materialFluids.column(type)
+
+    @JvmStatic
+    operator fun get(material: Material, type: ObjectType<*, *>): FlowingFluid? = getPair(material, type)?.still
+
+    @JvmStatic
+    operator fun get(material: Material): Map<ObjectType<*, *>, FlowingFluid>? = getPair(material)?.mapValues { (_, v) -> v.still }
+
+    @JvmStatic
+    operator fun get(type: ObjectType<*, *>): Map<Material, FlowingFluid>? = getPair(type)?.mapValues { (_, v) -> v.still }
 
     @JvmStatic
     fun contains(material: Material, type: ObjectType<*, *>) = get(material, type) != null

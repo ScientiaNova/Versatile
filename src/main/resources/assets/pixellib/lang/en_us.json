@@ -51,5 +51,7 @@
 	"death.attack.base.player": "%1$s tried to swim in a base to escape %2$s",
 
 	"command.materialitem.error": "That is not a material item",
+	"command.material.error": "No material exists with the name",
+	"command.objtype.error": "No object type exists with that name",
 	"command.fluidcontainer.error": "That is not a fluid container item"
 }

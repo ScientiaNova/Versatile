@@ -2,7 +2,8 @@ package com.emosewapixel.pixellib
 
 import com.emosewapixel.pixellib.blocks.BlockRegistry
 import com.emosewapixel.pixellib.commands.FluidContainerCommand
-import com.emosewapixel.pixellib.commands.MaterialItemCommand
+import com.emosewapixel.pixellib.commands.MaterialCommand
+import com.emosewapixel.pixellib.commands.ObjTypeCommand
 import com.emosewapixel.pixellib.fluids.FluidRegistry
 import com.emosewapixel.pixellib.items.ItemRegistry
 import com.emosewapixel.pixellib.machines.packets.NetworkHandler
@@ -111,7 +112,8 @@ object GameEvents {
 
     @SubscribeEvent
     fun onServerStart(e: FMLServerStartingEvent) {
-        MaterialItemCommand(e.commandDispatcher)
+        MaterialCommand(e.commandDispatcher)
+        ObjTypeCommand(e.commandDispatcher)
         FluidContainerCommand(e.commandDispatcher)
     }
 

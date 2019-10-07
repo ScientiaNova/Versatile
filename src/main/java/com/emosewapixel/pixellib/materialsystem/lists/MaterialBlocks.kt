@@ -20,6 +20,12 @@ object MaterialBlocks {
     operator fun get(material: Material, type: ObjectType<*, *>): Block? = materialBlocks.get(material, type)
 
     @JvmStatic
+    operator fun get(material: Material): MutableMap<ObjectType<*, *>, Block>? = materialBlocks.row(material)
+
+    @JvmStatic
+    operator fun get(type: ObjectType<*, *>): MutableMap<Material, Block>? = materialBlocks.column(type)
+
+    @JvmStatic
     fun contains(material: Material, type: ObjectType<*, *>) = get(material, type) != null
 
     @JvmStatic
