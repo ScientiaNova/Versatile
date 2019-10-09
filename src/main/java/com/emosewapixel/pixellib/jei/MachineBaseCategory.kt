@@ -34,7 +34,7 @@ abstract class MachineBaseCategory(helper: IGuiHelper, icon: Item, protected var
     override fun getIcon() = icon
 
     override fun setIngredients(recipe: SimpleMachineRecipe, ingredients: IIngredients) {
-        ingredients.setInputLists(VanillaTypes.ITEM, recipe.inputsAsLists)
+        ingredients.setInputLists(VanillaTypes.ITEM, recipe.inputStackLists)
         ingredients.setOutputs(VanillaTypes.ITEM, recipe.outputStacks)
     }
 

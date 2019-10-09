@@ -1,13 +1,16 @@
 package com.emosewapixel.pixellib.machines.recipes
 
+import com.emosewapixel.pixellib.machines.recipes.utility.WeightedMap
+import com.emosewapixel.pixellib.machines.recipes.utility.recipecomponents.IRecipeStack
+import net.minecraft.item.ItemStack
 import net.minecraftforge.fluids.FluidStack
 
 //Energy Machine Recipes are Machine Recipes that take power
-class EnergyMachineRecipe(inputs: Array<Any>, consumeChances: Array<Float>, fluidInputs: Array<FluidStack>, outputs: Array<Any>, outputChances: Array<Float>, fluidOutputs: Array<FluidStack>, time: Int, var energyPerTick: Int) : SimpleMachineRecipe(inputs, consumeChances, fluidInputs, outputs, outputChances, fluidOutputs, time) {
+class EnergyMachineRecipe(inputs: Array<Pair<IRecipeStack<ItemStack>, Float>>, fluidInputs: Array<Pair<IRecipeStack<FluidStack>, Float>>, outputs: Array<WeightedMap<IRecipeStack<ItemStack>>>, fluidOutputs: Array<WeightedMap<IRecipeStack<FluidStack>>>, time: Int, var energyPerTick: Int) : SimpleMachineRecipe(inputs, fluidInputs, outputs, fluidOutputs, time) {
     override val isEmpty = this === EMPTY
 
     companion object {
         @JvmField
-        var EMPTY = EnergyMachineRecipe(arrayOf(), arrayOf(), arrayOf(), arrayOf(), arrayOf(), arrayOf(), 0, 0)
+        var EMPTY = EnergyMachineRecipe(emptyArray(), emptyArray(), emptyArray(), emptyArray(), 0, 0)
     }
 }
