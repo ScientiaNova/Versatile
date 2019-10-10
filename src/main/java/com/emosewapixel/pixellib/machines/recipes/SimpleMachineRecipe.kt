@@ -2,6 +2,7 @@ package com.emosewapixel.pixellib.machines.recipes
 
 import com.emosewapixel.pixellib.machines.recipes.utility.WeightedMap
 import com.emosewapixel.pixellib.machines.recipes.utility.recipecomponents.IRecipeStack
+import com.emosewapixel.pixellib.machines.recipes.utility.MachineInput
 import net.minecraft.item.ItemStack
 import net.minecraftforge.fluids.FluidStack
 
@@ -16,6 +17,18 @@ open class SimpleMachineRecipe(val inputs: Array<Pair<IRecipeStack<ItemStack>, F
     val inputStackLists: List<List<ItemStack>>
         get() = inputs.map { it.first.stacks }
 
+    val fluidInputStackLists: List<List<FluidStack>>
+        get() = fluidInputs.map { it.first.stacks }
+
+    val inputItemRecipeStacks
+        get() = inputs.map(Pair<IRecipeStack<ItemStack>, Float>::first)
+
+    val inputFluidRecipeStacks
+        get() = fluidInputs.map(Pair<IRecipeStack<FluidStack>, Float>::first)
+
+    val inputRecipeStacks: List<IRecipeStack<*>>
+        get() = inputItemRecipeStacks + inputFluidRecipeStacks
+
     open val isEmpty: Boolean
         get() = this === EMPTY
 
@@ -25,8 +38,32 @@ open class SimpleMachineRecipe(val inputs: Array<Pair<IRecipeStack<ItemStack>, F
 
     fun getInputCount(index: Int) = inputs[index].first.count
 
-    fun itemBelongsInRecipe(stack: ItemStack) = if (stack.isEmpty) false else inputs.any { recipe ->
-        recipe.first.stacks.any(stack::isItemEqual)
+    open fun matches(input: MachineInput): Boolean {
+        if (input.items.size == inputs.size && input.fluids.size == fluidInputs.size) {
+            val recipeItemStacks = inputItemRecipeStacks.toMutableList()
+            if (input.items.all { item ->
+                        val match = recipeItemStacks.firstOrNull { it.matches(item) }
+                        if (match == null)
+                            false
+                        else {
+                            recipeItemStacks.remove(match)
+                            true
+                        }
+                    }) {
+                val recipeFluidStacks = inputFluidRecipeStacks.toMutableList()
+                if (input.fluids.all { fluid ->
+                            val match = recipeFluidStacks.firstOrNull { it.matches(fluid) }
+                            if (match == null)
+                                false
+                            else {
+                                recipeFluidStacks.remove(match)
+                                true
+                            }
+                        })
+                    return true
+            }
+        }
+        return false
     }
 
     companion object {

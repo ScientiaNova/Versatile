@@ -9,6 +9,8 @@ interface IRecipeStack<T> {
     val stacks: List<T>
 
     fun matches(other: T): Boolean
+
+    override fun toString(): String
 }
 
 fun IRecipeStack<ItemStack>.toIngredient() = Ingredient.fromStacks(*stacks.toTypedArray())

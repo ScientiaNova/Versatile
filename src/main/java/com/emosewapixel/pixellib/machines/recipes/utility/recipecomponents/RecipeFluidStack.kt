@@ -9,6 +9,8 @@ class RecipeFluidStack(val stack: FluidStack) : IRecipeStack<FluidStack> {
 
     override fun matches(other: FluidStack) = stack.isFluidEqual(other) && count <= other.amount
 
+    override fun toString() = "fluid:" + stack.fluid.registryName
+
     companion object {
         @JvmField
         val EMPTY = RecipeFluidStack(FluidStack.EMPTY)

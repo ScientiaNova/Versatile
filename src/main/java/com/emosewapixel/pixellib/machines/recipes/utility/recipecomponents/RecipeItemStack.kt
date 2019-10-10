@@ -9,6 +9,8 @@ class RecipeItemStack(val stack: ItemStack) : IRecipeStack<ItemStack> {
 
     override fun matches(other: ItemStack) = stack.isItemEqual(other) && count <= other.count
 
+    override fun toString() = "item:" + stack.item.registryName
+
     companion object {
         @JvmField
         val EMPTY = RecipeItemStack(ItemStack.EMPTY)

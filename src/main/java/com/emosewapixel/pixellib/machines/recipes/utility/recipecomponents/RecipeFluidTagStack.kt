@@ -13,6 +13,8 @@ class RecipeFluidTagStack(stack: TagStack<Fluid>) : IRecipeStack<FluidStack> {
         get() = tag.allElements.map { FluidStack(it, count) }
 
     override fun matches(other: FluidStack) = count <= other.amount && other.fluid in tag
+
+    override fun toString() = "fluid_tag:" + tag.id
 }
 
 operator fun MutableCollection<IRecipeStack<FluidStack>>.plusAssign(stack: TagStack<Fluid>) = plusAssign(RecipeFluidTagStack(stack))

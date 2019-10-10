@@ -14,11 +14,14 @@ open class ImprovedItemStackHandler @JvmOverloads constructor(slots: Int, val no
 
     constructor(inputCount: Int, outputCount: Int) : this(inputCount + outputCount, 0 until inputCount, inputCount until inputCount + outputCount)
 
-    val inputSlots: List<ItemStack>
-        get() = stacks.filterIndexed { index, _ -> index !in noInputSlots }
+    val stacks
+        get() = super.stacks
 
-    val outputSlots: List<ItemStack>
-        get() = stacks.filterIndexed { index, _ -> index !in noOutputSlots }
+    val inputStacks: List<ItemStack>
+        get() = super.stacks.filterIndexed { index, _ -> index !in noInputSlots }
+
+    val outputStacks: List<ItemStack>
+        get() = super.stacks.filterIndexed { index, _ -> index !in noOutputSlots }
 
     override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean) = if (!isItemValid(slot, stack)) stack else super.insertItem(slot, stack, simulate)
 
@@ -26,7 +29,7 @@ open class ImprovedItemStackHandler @JvmOverloads constructor(slots: Int, val no
 
     override fun extractItem(slot: Int, amount: Int, simulate: Boolean) = if (slot in noOutputSlots) ItemStack.EMPTY else super.extractItem(slot, amount, simulate)
 
-    operator fun get(slot: Int) = stacks[slot]
+    operator fun get(slot: Int) = super.stacks[slot]
 
     override fun <T> getCapability(cap: Capability<T>, side: Direction?): LazyOptional<T> =
             if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)

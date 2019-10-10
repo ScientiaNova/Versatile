@@ -13,6 +13,8 @@ class RecipeItemTagStack(stack: TagStack<Item>) : IRecipeStack<ItemStack> {
         get() = tag.allElements.map { ItemStack(it, count) }
 
     override fun matches(other: ItemStack) = count <= other.count && other.item in tag
+
+    override fun toString() = "item_tag:" + tag.id
 }
 
 operator fun MutableCollection<IRecipeStack<ItemStack>>.plusAssign(stack: TagStack<Item>) = plusAssign(RecipeItemTagStack(stack))
