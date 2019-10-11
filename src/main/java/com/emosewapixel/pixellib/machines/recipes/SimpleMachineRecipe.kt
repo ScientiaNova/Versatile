@@ -39,31 +39,35 @@ open class SimpleMachineRecipe(val inputs: Array<Pair<IRecipeStack<ItemStack>, F
     fun getInputCount(index: Int) = inputs[index].first.count
 
     open fun matches(input: MachineInput): Boolean {
-        if (input.items.size == inputs.size && input.fluids.size == fluidInputs.size) {
-            val recipeItemStacks = inputItemRecipeStacks.toMutableList()
-            if (input.items.all { item ->
-                        val match = recipeItemStacks.firstOrNull { it.matches(item) }
-                        if (match == null)
-                            false
-                        else {
-                            recipeItemStacks.remove(match)
-                            true
-                        }
-                    }) {
-                val recipeFluidStacks = inputFluidRecipeStacks.toMutableList()
-                if (input.fluids.all { fluid ->
-                            val match = recipeFluidStacks.firstOrNull { it.matches(fluid) }
-                            if (match == null)
-                                false
-                            else {
-                                recipeFluidStacks.remove(match)
-                                true
-                            }
-                        })
-                    return true
+        val sizesMatch = input.items.size == inputs.size && input.fluids.size == fluidInputs.size
+        if (!sizesMatch) return false
+        
+        // fluids first because there's less options for this
+        val recipeFluidStacks = inputFluidRecipeStacks.toMutableList()
+        val fluidsMatch = input.fluids.all { fluid ->
+            val match = recipeFluidStacks.firstOrNull { it.matches(fluid) }
+            if (match == null) {
+                false
+            } else {
+                recipeFluidStacks.remove(match)
+                true
             }
         }
-        return false
+        if (!fluidsMatch) return false
+        
+        val recipeItemStacks = inputItemRecipeStacks.toMutableList()
+        val itemsMatch = input.items.all { item ->
+            val match = recipeItemStacks.firstOrNull { it.matches(item) }
+            if (match == null) {
+                false
+            } else {
+                recipeItemStacks.remove(match)
+                true
+            }
+        }
+        if (!itemsMatch) return false
+        
+        return true
     }
 
     companion object {
