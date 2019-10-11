@@ -132,11 +132,20 @@ abstract class AbstractRecipeBuilder<T : SimpleMachineRecipe, R : AbstractRecipe
         return this as R
     }
 
+    open val canBuild
+        get() = (inputs.isNotEmpty() || fluidInputs.isNotEmpty())
+                && (outputs.isNotEmpty() || fluidOutputs.isNotEmpty())
+                && inputs.size <= recipeList.maxInputs
+                && fluidInputs.size <= recipeList.maxFluidInputs
+                && outputs.size <= recipeList.maxOutputs
+                && fluidOutputs.size <= recipeList.maxFluidOutputs
+
     protected abstract fun build(): T
 
-    fun buildAndRegister() {
-        if (!build().isEmpty)
-            recipeList.add(build())
+    open fun buildAndRegister() {
+        val rec = build()
+        if (!rec.isEmpty)
+            recipeList.add(rec)
         else
             PixelLib.LOGGER.error("Recipe with output {} is empty", outputs)
     }

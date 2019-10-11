@@ -8,9 +8,11 @@ import net.minecraftforge.fluids.FluidStack
 
 operator fun ItemStack.component1(): Item = item
 operator fun ItemStack.component2() = count
+val ItemStack.isNotEmpty get() = !isEmpty
 
 operator fun FluidStack.component1(): Fluid = fluid
 operator fun FluidStack.component2() = amount
+val FluidStack.isNotEmpty get() = !isEmpty
 
 
 fun Item.toStack(count: Int = 1) = ItemStack(this, count)

@@ -51,7 +51,12 @@ abstract class AbstractRecipeList<T : SimpleMachineRecipe, B : AbstractRecipeBui
 
     open fun remove(recipe: T) {
         recipes.remove(recipe)
-        recipe.inputRecipeStacks.forEach { inputMap.remove(it.toString()) }
+        recipe.inputRecipeStacks.forEach {
+            val list = inputMap[it.toString()]
+            list?.remove(recipe)
+            if (list?.isEmpty() == true)
+                inputMap.remove(it.toString())
+        }
     }
 
     abstract fun recipeBuilder(): B

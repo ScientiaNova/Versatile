@@ -9,5 +9,8 @@ class EnergyRecipeBuilder(list: AbstractRecipeList<EnergyMachineRecipe, EnergyRe
         return this
     }
 
-    override fun build() = EnergyMachineRecipe(inputs.toTypedArray(), fluidInputs.toTypedArray(), outputs.toTypedArray(), fluidOutputs.toTypedArray(), time, energyPerTick)
+    override fun build() = if (canBuild)
+        EnergyMachineRecipe(inputs.toTypedArray(), fluidInputs.toTypedArray(), outputs.toTypedArray(), fluidOutputs.toTypedArray(), time, energyPerTick)
+    else
+        EnergyMachineRecipe.EMPTY
 }

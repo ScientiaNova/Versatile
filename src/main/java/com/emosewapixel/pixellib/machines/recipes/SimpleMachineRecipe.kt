@@ -1,5 +1,6 @@
 package com.emosewapixel.pixellib.machines.recipes
 
+import com.emosewapixel.pixellib.extensions.isNotEmpty
 import com.emosewapixel.pixellib.machines.recipes.utility.WeightedMap
 import com.emosewapixel.pixellib.machines.recipes.utility.recipecomponents.IRecipeStack
 import com.emosewapixel.pixellib.machines.recipes.utility.MachineInput
@@ -39,12 +40,15 @@ open class SimpleMachineRecipe(val inputs: Array<Pair<IRecipeStack<ItemStack>, F
     fun getInputCount(index: Int) = inputs[index].first.count
 
     open fun matches(input: MachineInput): Boolean {
-        val sizesMatch = input.items.size == inputs.size && input.fluids.size == fluidInputs.size
+        val inputItems = input.items.filter(ItemStack::isNotEmpty)
+        val inputFluids = input.fluids.filter(FluidStack::isNotEmpty)
+
+        val sizesMatch = inputItems.size == inputs.size && inputFluids.size == fluidInputs.size
         if (!sizesMatch) return false
         
         // fluids first because there's less options for this
         val recipeFluidStacks = inputFluidRecipeStacks.toMutableList()
-        val fluidsMatch = input.fluids.all { fluid ->
+        val fluidsMatch = inputFluids.all { fluid ->
             val match = recipeFluidStacks.firstOrNull { it.matches(fluid) }
             if (match == null) {
                 false
@@ -56,7 +60,7 @@ open class SimpleMachineRecipe(val inputs: Array<Pair<IRecipeStack<ItemStack>, F
         if (!fluidsMatch) return false
         
         val recipeItemStacks = inputItemRecipeStacks.toMutableList()
-        val itemsMatch = input.items.all { item ->
+        val itemsMatch = inputItems.all { item ->
             val match = recipeItemStacks.firstOrNull { it.matches(item) }
             if (match == null) {
                 false
