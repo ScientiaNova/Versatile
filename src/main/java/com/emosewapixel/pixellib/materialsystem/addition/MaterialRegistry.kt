@@ -2,7 +2,7 @@ package com.emosewapixel.pixellib.materialsystem.addition
 
 import com.emosewapixel.pixellib.extensions.toResLoc
 import com.emosewapixel.pixellib.fluids.FluidPairHolder
-import com.emosewapixel.pixellib.materialsystem.element.Elements
+import com.emosewapixel.pixellib.materialsystem.elements.ElementRegistry
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialBlocks
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialFluids
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialItems
@@ -106,7 +106,7 @@ object MaterialRegistry {
     }
     @JvmField
     val IRON = ingotMaterial("iron", ROUGH, -1, 1) {
-        element = Elements.IRON
+        element = ElementRegistry.IRON
         unrefinedColor = 0x947664
         itemTier = ItemTier.IRON
         armorMaterial = ArmorMaterial.IRON
@@ -116,7 +116,7 @@ object MaterialRegistry {
     }
     @JvmField
     val GOLD = ingotMaterial("gold", SHINY, 0xfad64a, 2) {
-        element = Elements.GOLD
+        element = ElementRegistry.GOLD
         itemTier = ItemTier.GOLD
         armorMaterial = ArmorMaterial.GOLD
         meltingTemperature = 1064
@@ -126,13 +126,13 @@ object MaterialRegistry {
     @JvmField
     val COAL = gemMaterial("coal", FUEL, 0x1a1a1a, 0) {
         standardBurnTime = 1600
-        element = Elements.CARBON
+        element = ElementRegistry.CARBON
         materialTags += HAS_ORE
     }
     @JvmField
     val CHARCOAL = gemMaterial("charcoal", FUEL, 0x443e33, 0) {
         standardBurnTime = 1600
-        element = Elements.CARBON
+        element = ElementRegistry.CARBON
     }
     @JvmField
     val FLINT = gemMaterial("flint", SHARP, 0x222020, 0) {
@@ -148,7 +148,7 @@ object MaterialRegistry {
     }
     @JvmField
     val DIAMOND = gemMaterial("diamond", PENTAGONAL, 0x34ebe3, 2) {
-        element = Elements.CARBON
+        element = ElementRegistry.CARBON
         itemTier = ItemTier.DIAMOND
         armorMaterial = ArmorMaterial.DIAMOND
         materialTags += HAS_ORE

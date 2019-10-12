@@ -13,6 +13,7 @@ object BlockRegistry {
     private val items = mutableListOf<Item>()
 
     fun registerBlocks(e: RegistryEvent.Register<Block>) {
+        MaterialBlocks.additionSuppliers.cellSet().forEach { MaterialBlocks.addBlock(it.rowKey!!, it.columnKey!!, it.value!!.get()) }
         Materials.all.forEach { mat ->
             ObjTypes.all.filter { type -> type is BlockType && type.isMaterialCompatible(mat) && !MaterialBlocks.contains(mat, type) && if (mat.invertedBlacklist) type in mat.typeBlacklist else type !in mat.typeBlacklist }
                     .forEach { type ->

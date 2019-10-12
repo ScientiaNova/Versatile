@@ -8,6 +8,7 @@ import net.minecraftforge.forgespi.language.ModFileScanData
 import org.objectweb.asm.Type
 
 object MaterialRegistryInitializer {
+    @JvmStatic
     val instances = mutableListOf<Any>()
 
     init {

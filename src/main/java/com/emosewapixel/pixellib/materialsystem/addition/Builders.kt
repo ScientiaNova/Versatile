@@ -10,6 +10,8 @@ import com.emosewapixel.pixellib.items.MaterialItem
 import com.emosewapixel.pixellib.materialsystem.materials.*
 import com.emosewapixel.pixellib.materialsystem.materials.utility.GroupMaterial
 import com.emosewapixel.pixellib.materialsystem.materials.utility.TransitionMaterial
+import com.emosewapixel.pixellib.materialsystem.materials.utility.ct.MaterialRequirement
+import com.emosewapixel.pixellib.materialsystem.materials.utility.ct.MaterialSupplier
 import com.emosewapixel.pixellib.materialsystem.types.BlockType
 import com.emosewapixel.pixellib.materialsystem.types.FluidType
 import com.emosewapixel.pixellib.materialsystem.types.ItemType
@@ -56,46 +58,48 @@ fun groupMaterial(name: String, builder: GroupMaterial.() -> Unit = { }): Materi
 
 @JvmOverloads
 fun transitionMaterial(name: String, endMaterial: () -> Material, neededAmount: Int, builder: TransitionMaterial.() -> Unit = { }): Material {
-    val mat = TransitionMaterial(name, endMaterial, neededAmount)
+    val mat = TransitionMaterial(name, object : MaterialSupplier {
+        override fun get() = endMaterial()
+    }, neededAmount)
     mat(builder)
     return mat.build()
 }
 
 @JvmOverloads
 fun itemType(name: String, requirement: (Material) -> Boolean, constructor: (Material, ItemType) -> Item = ::MaterialItem, builder: ItemType.() -> Unit = { }): ObjectType<*, *> {
-    val type = ItemType(name, requirement, constructor)
+    val type = ItemType(name, MaterialRequirement { requirement(it) }, constructor)
     type(builder)
     return type.build()
 }
 
 fun itemType(name: String, requirement: (Material) -> Boolean, builder: ItemType.() -> Unit): ObjectType<*, *> {
-    val type = ItemType(name, requirement)
+    val type = ItemType(name, MaterialRequirement { requirement(it) })
     type(builder)
     return type.build()
 }
 
 @JvmOverloads
 fun blockType(name: String, requirement: (Material) -> Boolean, properties: Block.Properties, constructor: (Material, BlockType) -> Block = ::MaterialBlock, itemConstructor: (Material, BlockType) -> Item = ::MaterialBlockItem, builder: BlockType.() -> Unit = { }): ObjectType<*, *> {
-    val type = BlockType(name, requirement, properties, constructor, itemConstructor)
+    val type = BlockType(name, MaterialRequirement { requirement(it) }, properties, constructor, itemConstructor)
     type(builder)
     return type.build()
 }
 
 fun blockType(name: String, requirement: (Material) -> Boolean, properties: Block.Properties, builder: BlockType.() -> Unit): ObjectType<*, *> {
-    val type = BlockType(name, requirement, properties)
+    val type = BlockType(name, MaterialRequirement { requirement(it) }, properties)
     type(builder)
     return type.build()
 }
 
 @JvmOverloads
 fun fluidType(name: String, requirement: (Material) -> Boolean, fluidConstructor: (Material, FluidType) -> IFluidPairHolder = ::MaterialFluidHolder, blockConstructor: (Material, FluidType) -> FlowingFluidBlock = ::MaterialFluidBlock, bucketConstructor: (Material, FluidType) -> BucketItem = ::MaterialBucketItem, builder: FluidType.() -> Unit = { }): ObjectType<*, *> {
-    val type = FluidType(name, requirement, fluidConstructor, blockConstructor, bucketConstructor)
+    val type = FluidType(name, MaterialRequirement { requirement(it) }, fluidConstructor, blockConstructor, bucketConstructor)
     type(builder)
     return type.build()
 }
 
 fun fluidType(name: String, requirement: (Material) -> Boolean, builder: FluidType.() -> Unit): ObjectType<*, *> {
-    val type = FluidType(name, requirement)
+    val type = FluidType(name, MaterialRequirement { requirement(it) })
     type(builder)
     return type.build()
 }

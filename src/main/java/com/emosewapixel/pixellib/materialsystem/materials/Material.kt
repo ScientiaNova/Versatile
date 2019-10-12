@@ -1,6 +1,7 @@
 package com.emosewapixel.pixellib.materialsystem.materials
 
-import com.emosewapixel.pixellib.materialsystem.element.Elements
+import com.blamejared.crafttweaker.api.annotations.ZenRegister
+import com.emosewapixel.pixellib.materialsystem.elements.ElementRegistry
 import com.emosewapixel.pixellib.materialsystem.lists.Materials
 import com.emosewapixel.pixellib.materialsystem.materials.utility.MaterialStack
 import com.emosewapixel.pixellib.materialsystem.types.ObjectType
@@ -10,26 +11,58 @@ import net.minecraft.tags.FluidTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.util.text.ITextComponent
 import net.minecraft.util.text.TranslationTextComponent
+import org.openzen.zencode.java.ZenCodeType
 import java.util.*
-
 
 /*
 Materials are objects used for generating items/blocks/fluids based on object types. They have a wide range of customizability.
 However, the base Materials aren't meant to be used for generating anything
 */
-open class Material(val name: String, val textureType: String, val color: Int, val tier: Int) {
+@ZenRegister
+@ZenCodeType.Name("pixellib.materialsystem.materials.Material")
+open class Material @ZenCodeType.Constructor
+constructor(@ZenCodeType.Field val name: String,
+            @ZenCodeType.Field val textureType: String,
+            @ZenCodeType.Field val color: Int,
+            @ZenCodeType.Field val tier: Int) {
+
+    @ZenCodeType.Field
     var itemTier: IItemTier? = null
+
+    @ZenCodeType.Field
     var armorMaterial: IArmorMaterial? = null
+
     val typeBlacklist = ArrayList<ObjectType<*, *>>()
+        @ZenCodeType.Getter get
+
     val invertedBlacklist = false
+        @ZenCodeType.Getter get
+
     val materialTags = ArrayList<String>()
+        @ZenCodeType.Getter get
+
+    @ZenCodeType.Field
     var composition = listOf<MaterialStack>()
-    var element = Elements.NULL
+
+    @ZenCodeType.Field
+    var element = ElementRegistry.NULL
+
+    @ZenCodeType.Field
     var secondName = name
+
+    @ZenCodeType.Field
     var standardBurnTime = 0
+
+    @ZenCodeType.Field
     var compoundType = CompoundType.CHEMICAL
+
+    @ZenCodeType.Field
     var harvestTier = harvestTier(1.5f * (tier + 1), 1.5f * (tier + 1))
+
     val extraProperties = mutableMapOf<String, Any>()
+        @ZenCodeType.Getter get
+
+    @ZenCodeType.Field
     var densityMultiplier = 1f
 
     val localizedName: ITextComponent
@@ -42,12 +75,14 @@ open class Material(val name: String, val textureType: String, val color: Int, v
         }
 
     val isPureElement: Boolean
-        get() = element !== Elements.NULL
+        get() = element !== ElementRegistry.NULL
 
     operator fun invoke(builder: Material.() -> Unit) = builder(this)
 
+    @ZenCodeType.Method
     infix fun hasTag(tag: String) = tag in materialTags
 
+    @ZenCodeType.Method
     override fun toString() = name
 
     open fun merge(mat: Material) {
@@ -66,6 +101,7 @@ open class Material(val name: String, val textureType: String, val color: Int, v
         extraProperties.putAll(mat.extraProperties)
     }
 
+    @ZenCodeType.Method
     fun build(): Material {
         Materials.add(this)
         return Materials[name]!!
@@ -74,13 +110,21 @@ open class Material(val name: String, val textureType: String, val color: Int, v
     val hasSecondName
         get() = secondName != name
 
+    @ZenCodeType.Getter
     fun getTag(type: ObjectType<*, *>) = ItemTags.Wrapper(type.buildTagName(name))
 
+    @ZenCodeType.Getter
     fun getFluidTag(type: ObjectType<*, *>) = FluidTags.Wrapper(type.buildTagName(name))
 
+    @ZenCodeType.Getter
     fun getSecondItemTag(type: ObjectType<*, *>) = ItemTags.Wrapper(type.buildTagName(name))
 
+    @ZenCodeType.Getter
     fun getSecondFluidTag(type: ObjectType<*, *>) = FluidTags.Wrapper(type.buildTagName(name))
 
+    @ZenCodeType.Method
     fun harvestTier(hardness: Float, resistance: Float) = HarvestTier(hardness, resistance, tier)
+
+    @ZenCodeType.Operator(ZenCodeType.OperatorType.MUL)
+    operator fun times(count: Int) = MaterialStack(this, count)
 }

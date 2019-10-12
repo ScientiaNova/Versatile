@@ -1,16 +1,18 @@
 package com.emosewapixel.pixellib.materialsystem.types
 
+import com.blamejared.crafttweaker.api.annotations.ZenRegister
 import com.emosewapixel.pixellib.extensions.json
 import com.emosewapixel.pixellib.fluids.IFluidPairHolder
 import com.emosewapixel.pixellib.fluids.MaterialBucketItem
 import com.emosewapixel.pixellib.fluids.MaterialFluidBlock
 import com.emosewapixel.pixellib.fluids.MaterialFluidHolder
 import com.emosewapixel.pixellib.materialsystem.addition.MaterialRegistry
-import com.emosewapixel.pixellib.materialsystem.element.ElementUtils
+import com.emosewapixel.pixellib.materialsystem.elements.ElementUtils
 import com.emosewapixel.pixellib.materialsystem.materials.DustMaterial
 import com.emosewapixel.pixellib.materialsystem.materials.FluidMaterial
 import com.emosewapixel.pixellib.materialsystem.materials.IMaterialObject
 import com.emosewapixel.pixellib.materialsystem.materials.Material
+import com.emosewapixel.pixellib.materialsystem.materials.utility.ct.MaterialRequirement
 import com.google.gson.JsonObject
 import net.minecraft.block.FlowingFluidBlock
 import net.minecraft.fluid.Fluids
@@ -19,15 +21,23 @@ import net.minecraft.util.ResourceLocation
 import net.minecraft.util.SoundEvent
 import net.minecraft.util.SoundEvents
 import net.minecraft.util.text.TranslationTextComponent
+import org.openzen.zencode.java.ZenCodeType
 import kotlin.math.min
 
-class FluidType(name: String, requirement: (Material) -> Boolean, fluidConstructor: (Material, FluidType) -> IFluidPairHolder = ::MaterialFluidHolder, val blockConstructor: (Material, FluidType) -> FlowingFluidBlock = ::MaterialFluidBlock, val bucketConstructor: (Material, FluidType) -> BucketItem = ::MaterialBucketItem) : ObjectType<IFluidPairHolder, FluidType>(name, requirement, fluidConstructor) {
+@ZenRegister
+@ZenCodeType.Name("pixellib.materialsystem.types.FluidType")
+class FluidType @JvmOverloads @ZenCodeType.Constructor constructor(name: String, requirement: MaterialRequirement, fluidConstructor: (Material, FluidType) -> IFluidPairHolder = ::MaterialFluidHolder, val blockConstructor: (Material, FluidType) -> FlowingFluidBlock = ::MaterialFluidBlock, val bucketConstructor: (Material, FluidType) -> BucketItem = ::MaterialBucketItem) : ObjectType<IFluidPairHolder, FluidType>(name, requirement, fluidConstructor) {
     override fun localize(mat: Material) = TranslationTextComponent("fluidtype.$name", mat.localizedName)
 
     var overlayTexture: ResourceLocation? = null
+
     var fillSound: SoundEvent = SoundEvents.ITEM_BUCKET_FILL
+
     var emptySound: SoundEvent = SoundEvents.ITEM_BUCKET_EMPTY
+
+    @ZenCodeType.Field
     var locationBase = "pixellib:fluid/$name"
+
     var fluidColor: (Material) -> Int = { color(it) or 0xFF000000.toInt() }
 
     var buildBlockStateJson: (IMaterialObject) -> JsonObject = {

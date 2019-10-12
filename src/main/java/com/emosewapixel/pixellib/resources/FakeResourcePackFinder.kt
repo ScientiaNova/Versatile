@@ -7,7 +7,7 @@ import net.minecraft.resources.ResourcePackType
 import java.util.function.Supplier
 
 //This is used for providing the fake resource pack
-class FakeResourcePackFinder : IPackFinder {
+object FakeResourcePackFinder : IPackFinder {
     override fun <T : ResourcePackInfo> addPackInfosToMap(nameToPackMap: MutableMap<String, T>, packInfoFactory: ResourcePackInfo.IFactory<T>) {
         val packInfo = ResourcePackInfo.createResourcePack("fake_client:pixellib", true, Supplier<IResourcePack> {
             val pack = FakePack("fake_client:pixellib")

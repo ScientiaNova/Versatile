@@ -67,20 +67,20 @@ repositories {
         url = "https://dvs1.progwml6.com/files/maven/"
     }
     maven {
-        name = "ModMaven"
-        url = "https://modmaven.k-4u.nl"
+        url 'https://minecraft.curseforge.com/api/maven/'
     }
     maven {
-        url 'https://minecraft.curseforge.com/api/maven/'
+        url "https://maven.blamejared.com/"
     }
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:$mc_version-28.1.0"
+    minecraft "net.minecraftforge:forge:$mc_version-28.1.44"
     compile "kottle:Kottle:$kottle_version"
     mod "kottle:Kottle:$kottle_version"
     compileOnly fg.deobf("mezz.jei:jei-$mc_version:$jei_version:api")
     compile fg.deobf("mezz.jei:jei-$mc_version:$jei_version")
+    compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker:1.14.4-5.0.0.85")
 }
 
 jar {

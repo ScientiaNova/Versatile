@@ -1,4 +1,4 @@
-package com.emosewapixel.pixellib.jei
+package com.emosewapixel.pixellib.integration.jei
 
 import com.emosewapixel.pixellib.machines.recipes.AbstractRecipeList
 import com.emosewapixel.pixellib.machines.recipes.SimpleMachineRecipe

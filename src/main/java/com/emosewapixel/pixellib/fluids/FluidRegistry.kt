@@ -1,6 +1,7 @@
 package com.emosewapixel.pixellib.fluids
 
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialBlocks
+import com.emosewapixel.pixellib.materialsystem.lists.MaterialFluids
 import com.emosewapixel.pixellib.materialsystem.lists.Materials
 import com.emosewapixel.pixellib.materialsystem.lists.ObjTypes
 import com.emosewapixel.pixellib.materialsystem.types.FluidType
@@ -28,5 +29,8 @@ object FluidRegistry {
 
     fun registerItems(e: RegistryEvent.Register<Item>) = items.forEach { e.registry.register(it) }
 
-    fun registerFluids(e: RegistryEvent.Register<Fluid>) = fluids.forEach { e.registry.register(it) }
+    fun registerFluids(e: RegistryEvent.Register<Fluid>) {
+        MaterialFluids.additionSuppliers.cellSet().forEach { MaterialFluids.addFluidPair(it.rowKey!!, it.columnKey!!, it.value!!.get()) }
+        fluids.forEach { e.registry.register(it) }
+    }
 }

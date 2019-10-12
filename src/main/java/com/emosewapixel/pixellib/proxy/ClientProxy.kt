@@ -10,7 +10,6 @@ import com.emosewapixel.pixellib.materialsystem.types.BlockType
 import com.emosewapixel.pixellib.materialsystem.types.FluidType
 import com.emosewapixel.pixellib.resources.FakeResourcePackFinder
 import com.emosewapixel.pixellib.resources.JSONAdder
-import net.alexwells.kottle.KotlinEventBusSubscriber
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.FlowingFluidBlock
@@ -22,14 +21,12 @@ import net.minecraft.item.BucketItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.util.ResourceLocation
-import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent
 
-@KotlinEventBusSubscriber(Dist.CLIENT)
 object ClientProxy : IModProxy {
     override fun init() {
-        Minecraft.getInstance().resourcePackList.addPackFinder(FakeResourcePackFinder())
+        Minecraft.getInstance().resourcePackList.addPackFinder(FakeResourcePackFinder)
     }
 
     override fun enque(e: InterModEnqueueEvent) {

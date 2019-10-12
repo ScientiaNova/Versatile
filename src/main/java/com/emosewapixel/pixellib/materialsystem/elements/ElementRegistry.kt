@@ -1,7 +1,7 @@
-package com.emosewapixel.pixellib.materialsystem.element
+package com.emosewapixel.pixellib.materialsystem.elements
 
 //This class contains all the elements of the periodic table and a few common isotopes
-object Elements {
+object ElementRegistry {
     @JvmField
     val NULL = Element("?", 0, 0)
 

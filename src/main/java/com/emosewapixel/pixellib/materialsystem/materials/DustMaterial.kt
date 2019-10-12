@@ -1,19 +1,28 @@
 package com.emosewapixel.pixellib.materialsystem.materials
 
+import com.blamejared.crafttweaker.api.annotations.ZenRegister
 import com.emosewapixel.pixellib.materialsystem.addition.MaterialRegistry
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialItems
 import net.minecraft.item.Item
+import org.openzen.zencode.java.ZenCodeType
 
 //Dust Materials are the basic solid materials for which at least a dust and block is generated
+@ZenRegister
+@ZenCodeType.Name("pixellib.materialsystem.materials.DustMaterial")
 open class DustMaterial(name: String, textureType: String, color: Int, tier: Int) : Material(name, textureType, color, tier) {
+    @ZenCodeType.Field
     var processingMultiplier = 1
+    @ZenCodeType.Field
     var refinedMaterial = this
+    @ZenCodeType.Field
     var meltingTemperature = 0
+    @ZenCodeType.Field
     var boilingTemperature = 0
+    @ZenCodeType.Field
     var unrefinedColor: Int = color
 
     open val defaultItem: Item?
-        get() = MaterialItems[this, MaterialRegistry.DUST]
+        @ZenCodeType.Getter get() = MaterialItems[this, MaterialRegistry.DUST]
 
     @JvmName("invokeDust")
     operator fun invoke(builder: DustMaterial.() -> Unit) = builder(this)

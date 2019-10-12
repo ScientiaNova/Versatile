@@ -16,6 +16,7 @@ import net.minecraft.util.ResourceLocation
 
 //This claass is used for registering the default data added by Pixel Lib
 object DataAddition {
+    @JvmStatic
     fun register() {
         //Tags
         MaterialItems.all.filterIsInstance<IMaterialObject>().forEach { TagMaps.addMatItemToTag(it) }

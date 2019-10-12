@@ -1,9 +1,13 @@
 package com.emosewapixel.pixellib.materialsystem.materials.utility
 
+import com.blamejared.crafttweaker.api.annotations.ZenRegister
 import com.emosewapixel.pixellib.materialsystem.materials.Material
+import org.openzen.zencode.java.ZenCodeType
 
 //Material Stacks are ways of getting an amount of a certain Material
-data class MaterialStack @JvmOverloads constructor(val material: Material, var count: Int = 1) {
+@ZenRegister
+@ZenCodeType.Name("pixellib.materialsystem.materials.utility.MaterialStack")
+data class MaterialStack @JvmOverloads constructor(@ZenCodeType.Field var material: Material, @ZenCodeType.Field var count: Int = 1) {
     val isEmpty: Boolean
-        get() = count == 0
+        @ZenCodeType.Getter get() = count == 0
 }

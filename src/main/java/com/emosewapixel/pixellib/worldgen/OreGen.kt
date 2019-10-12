@@ -25,22 +25,27 @@ Remember to make all world gen configurable.
 object OreGen {
     private val ORE_MAP = HashMap<Block, ConfiguredFeature<*>>()
 
+    @JvmStatic
     fun <P : IPlacementConfig> addToOreGen(block: Block, fillerBlockType: OreFeatureConfig.FillerBlockType, veinSize: Int, placement: Placement<P>, placementConfig: P) {
         ORE_MAP[block] = ConfiguredFeature(Feature.DECORATED, DecoratedFeatureConfig(Feature.ORE, OreFeatureConfig(fillerBlockType, block.defaultState, veinSize), placement, placementConfig))
     }
 
+    @JvmStatic
     fun <P : IPlacementConfig> addToOreGen(block: Block, fillerBlockType: OreFeatureConfig.FillerBlockType, veinSize: Int, placement: Placement<P>, placementConfig: P, dim: DimensionType) {
         ORE_MAP[block] = DimensionFeature(Feature.DECORATED, DecoratedFeatureConfig(Feature.ORE, OreFeatureConfig(fillerBlockType, block.defaultState, veinSize), placement, placementConfig), dim)
     }
 
+    @JvmStatic
     fun <P : IPlacementConfig> addToOreGen(block: Block, pred: (Biome) -> Boolean, fillerBlockType: OreFeatureConfig.FillerBlockType, veinSize: Int, placement: Placement<P>, placementConfig: P) {
         ORE_MAP[block] = PredicatedFeature(pred, Feature.DECORATED, DecoratedFeatureConfig(Feature.ORE, OreFeatureConfig(fillerBlockType, block.defaultState, veinSize), placement, placementConfig))
     }
 
+    @JvmStatic
     fun <P : IPlacementConfig> addToOreGen(block: Block, pred: (Biome) -> Boolean, fillerBlockType: OreFeatureConfig.FillerBlockType, veinSize: Int, placement: Placement<P>, placementConfig: P, dim: DimensionType) {
         ORE_MAP[block] = PredicatedDimensionFeature(pred, Feature.DECORATED, DecoratedFeatureConfig(Feature.ORE, OreFeatureConfig(fillerBlockType, block.defaultState, veinSize), placement, placementConfig), dim)
     }
 
+    @JvmStatic
     fun register() {
         ForgeRegistries.BIOMES.forEach { biome ->
             ORE_MAP.values.forEach { ore ->

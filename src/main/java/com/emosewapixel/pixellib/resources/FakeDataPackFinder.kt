@@ -13,7 +13,7 @@ import net.minecraftforge.registries.ForgeRegistries
 import java.util.function.Supplier
 
 //This is used for providing the fake data pack
-class FakeDataPackFinder : IPackFinder {
+object FakeDataPackFinder : IPackFinder {
     override fun <T : ResourcePackInfo> addPackInfosToMap(nameToPackMap: MutableMap<String, T>, packInfoFactory: ResourcePackInfo.IFactory<T>) {
         val packInfo = ResourcePackInfo.createResourcePack("fake_server:pixellib", true, Supplier<IResourcePack> {
             val pack = FakePack("fake_server:pixellib")

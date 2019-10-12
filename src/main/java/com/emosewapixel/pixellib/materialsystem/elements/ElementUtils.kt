@@ -1,4 +1,4 @@
-package com.emosewapixel.pixellib.materialsystem.element
+package com.emosewapixel.pixellib.materialsystem.elements
 
 import com.emosewapixel.pixellib.materialsystem.materials.CompoundType
 import com.emosewapixel.pixellib.materialsystem.materials.Material
@@ -12,7 +12,7 @@ object ElementUtils {
 
         val map = mat.fullComposition.groupBy { it.material.element }.mapValues { (_, value) -> value.map { it.count }.sum() }
 
-        return if (Elements.NULL in map) listOf(ElementStack(Elements.NULL)) else map.entries.map { ElementStack(it.key, it.value) }
+        return if (ElementRegistry.NULL in map) listOf(ElementStack(ElementRegistry.NULL)) else map.entries.map { ElementStack(it.key, it.value) }
     }
 
     @JvmStatic

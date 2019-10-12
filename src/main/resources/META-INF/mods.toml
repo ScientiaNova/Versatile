@@ -1,5 +1,5 @@
-modLoader="kotlinfml"
-loaderVersion="[1,)"
+modLoader="javafml"
+loaderVersion="[28,)"
 issueTrackerURL="https://github.com/EmosewaPixel/PixelLib/issues"
 [[mods]]
 modId="pixellib"
