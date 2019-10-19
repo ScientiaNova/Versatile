@@ -9,7 +9,7 @@ import com.emosewapixel.pixellib.items.ItemRegistry;
 import com.emosewapixel.pixellib.items.MaterialItem;
 import com.emosewapixel.pixellib.machines.packets.NetworkHandler;
 import com.emosewapixel.pixellib.materialsystem.addition.MaterialRegistryInitializer;
-import com.emosewapixel.pixellib.materialsystem.addition.PLMaterialRegistry;
+import com.emosewapixel.pixellib.materialsystem.addition.BaseMaterials;
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialItems;
 import com.emosewapixel.pixellib.materialsystem.materials.IMaterialObject;
 import com.emosewapixel.pixellib.materialsystem.types.FluidType;
@@ -122,7 +122,7 @@ public final class PixelLib {
 		public static void fuelTime(FurnaceFuelBurnTimeEvent e) {
 			Item item = e.getItemStack().getItem();
 			if (item instanceof IMaterialObject)
-				if (!((IMaterialObject) item).getObjType().hasTag(PLMaterialRegistry.HAS_NO_FUEL_VALUE) && ((IMaterialObject) item).getObjType().getBucketVolume() != 0)
+				if (!((IMaterialObject) item).getObjType().hasTag(BaseMaterials.HAS_NO_FUEL_VALUE) && ((IMaterialObject) item).getObjType().getBucketVolume() != 0)
 					e.setBurnTime(((IMaterialObject) item).getObjType() instanceof FluidType ? ((IMaterialObject) item).getObjType().getBucketVolume() / 1000 : ((IMaterialObject) item).getObjType().getBucketVolume() / 144 * ((IMaterialObject) item).getMat().getStandardBurnTime());
 		}
 	}

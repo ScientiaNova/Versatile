@@ -1,7 +1,7 @@
 package com.emosewapixel.pixellib.proxy
 
 import com.emosewapixel.pixellib.extensions.json
-import com.emosewapixel.pixellib.materialsystem.addition.PLMaterialRegistry
+import com.emosewapixel.pixellib.materialsystem.addition.BaseMaterials
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialBlocks
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialFluids
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialItems
@@ -67,19 +67,19 @@ fun addModelJSONs() {
         when (it) {
             is BlockItem -> {
                 val model = json {
-                    "parent" to registryName.namespace + ":block/materialblocks/" + if (PLMaterialRegistry.SINGLE_TEXTURE_TYPE in type.typeTags) type.name else "${it.mat.textureType}/${type.name}"
+                    "parent" to registryName.namespace + ":block/materialblocks/" + if (BaseMaterials.SINGLE_TEXTURE_TYPE in type.typeTags) type.name else "${it.mat.textureType}/${type.name}"
                 }
                 JSONAdder.addAssetsJSON(ResourceLocation(registryName.namespace, "models/item/" + registryName.path + ".json"), model)
             }
             is BucketItem -> {
                 val model = json {
-                    "parent" to registryName.namespace + ":item/materialitems/" + (if (PLMaterialRegistry.SINGLE_TEXTURE_TYPE in type.typeTags) type.name else "${it.mat.textureType}/${type.name}") + (if ((it.objType as FluidType).gaseousFun(it.mat)) "_gas" else "") + "_bucket"
+                    "parent" to registryName.namespace + ":item/materialitems/" + (if (BaseMaterials.SINGLE_TEXTURE_TYPE in type.typeTags) type.name else "${it.mat.textureType}/${type.name}") + (if ((it.objType as FluidType).gaseousFun(it.mat)) "_gas" else "") + "_bucket"
                 }
                 JSONAdder.addAssetsJSON(ResourceLocation(registryName.namespace, "models/item/" + registryName.path + ".json"), model)
             }
             else -> {
                 val model = json {
-                    "parent" to registryName.namespace + ":item/materialitems/" + if (PLMaterialRegistry.SINGLE_TEXTURE_TYPE in type.typeTags) type.name else "${it.mat.textureType}/${type.name}"
+                    "parent" to registryName.namespace + ":item/materialitems/" + if (BaseMaterials.SINGLE_TEXTURE_TYPE in type.typeTags) type.name else "${it.mat.textureType}/${type.name}"
                 }
                 JSONAdder.addAssetsJSON(ResourceLocation(registryName.namespace, "models/item/" + registryName.path + ".json"), model)
             }

@@ -6,7 +6,7 @@ import com.emosewapixel.pixellib.fluids.IFluidPairHolder
 import com.emosewapixel.pixellib.fluids.MaterialBucketItem
 import com.emosewapixel.pixellib.fluids.MaterialFluidBlock
 import com.emosewapixel.pixellib.fluids.MaterialFluidHolder
-import com.emosewapixel.pixellib.materialsystem.addition.PLMaterialRegistry
+import com.emosewapixel.pixellib.materialsystem.addition.BaseMaterials
 import com.emosewapixel.pixellib.materialsystem.elements.ElementUtils
 import com.emosewapixel.pixellib.materialsystem.materials.DustMaterial
 import com.emosewapixel.pixellib.materialsystem.materials.FluidMaterial
@@ -44,7 +44,7 @@ class FluidType @JvmOverloads @ZenCodeType.Constructor constructor(name: String,
         json {
             "variants" {
                 "" {
-                    "model" to "pixellib:block/materialblocks/" + if (PLMaterialRegistry.SINGLE_TEXTURE_TYPE in typeTags) name else "${it.mat.textureType}/$name"
+                    "model" to "pixellib:block/materialblocks/" + if (BaseMaterials.SINGLE_TEXTURE_TYPE in typeTags) name else "${it.mat.textureType}/$name"
                 }
             }
         }
@@ -57,7 +57,7 @@ class FluidType @JvmOverloads @ZenCodeType.Constructor constructor(name: String,
         }
     }
     var luminosityFun: (Material) -> Int = { min(15, (temperatureFun(it) - 500) / 50) }
-    var gaseousFun: (Material) -> Boolean = { it.hasTag(PLMaterialRegistry.IS_GAS) }
+    var gaseousFun: (Material) -> Boolean = { it.hasTag(BaseMaterials.IS_GAS) }
     var densityFun: (Material) -> Int = {
         val density = ElementUtils.getTotalDensity(it).toInt() * densityMultiplier
         if (gaseousFun(it))
@@ -69,7 +69,7 @@ class FluidType @JvmOverloads @ZenCodeType.Constructor constructor(name: String,
 
     init {
         bucketVolume = 1000
-        typeTags += PLMaterialRegistry.SINGLE_TEXTURE_TYPE
+        typeTags += BaseMaterials.SINGLE_TEXTURE_TYPE
         indexBlackList += 0
     }
 }

@@ -22,7 +22,7 @@ import net.minecraftforge.eventbus.api.EventPriority
 
 //This class is used for registering the vanilla material and object type tags, materials and object types
 @MaterialRegistry(EventPriority.HIGH)
-object PLMaterialRegistry {
+object BaseMaterials {
     //Material Tags
     const val HAS_ORE = "has_ore"
     const val DISABLE_SIMPLE_PROCESSING = "disable_simple_processing"
