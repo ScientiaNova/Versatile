@@ -24,5 +24,6 @@ open class Element @ZenCodeType.Constructor constructor(@ZenCodeType.Field val s
     @ZenCodeType.Operator(ZenCodeType.OperatorType.MUL)
     operator fun times(count: Int) = ElementStack(this, count)
 
+    @JvmOverloads
     fun toStack(count: Int = 1) = ElementStack(this, count)
 }

@@ -16,3 +16,6 @@ data class TagStack<T> @JvmOverloads constructor(var tag: Tag<T>, var count: Int
 
 fun TagStack<Item>.asItemStack() = ItemStack(tag.allElements.firstOrNull() ?: Items.AIR, count)
 fun TagStack<Fluid>.asFluidStack() = FluidStack(tag.allElements.firstOrNull() ?: Fluids.EMPTY, count)
+
+fun <T> Tag<T>.toStack(count: Int = 1) = TagStack(this, count)
+operator fun <T> Tag<T>.times(count: Int) = TagStack(this, count)

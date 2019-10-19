@@ -8,9 +8,9 @@ import org.openzen.zencode.java.ZenCodeType
 @ZenCodeType.Name("pixellib.materialsystem.elements.ElementStack")
 data class ElementStack @JvmOverloads constructor(val element: Element, var count: Int = 1) {
     val isEmpty: Boolean
-        @ZenCodeType.Getter get() = this == EMPTY || element == ElementRegistry.NULL || count == 0
+        @ZenCodeType.Getter get() = this == EMPTY || element == BaseElements.NULL || count == 0
 
     companion object {
-        val EMPTY = ElementStack(ElementRegistry.NULL, 0)
+        val EMPTY = BaseElements.NULL * 0
     }
 }

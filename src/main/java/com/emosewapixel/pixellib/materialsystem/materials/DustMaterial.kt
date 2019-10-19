@@ -1,7 +1,7 @@
 package com.emosewapixel.pixellib.materialsystem.materials
 
 import com.blamejared.crafttweaker.api.annotations.ZenRegister
-import com.emosewapixel.pixellib.materialsystem.addition.MaterialRegistry
+import com.emosewapixel.pixellib.materialsystem.addition.PLMaterialRegistry
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialItems
 import net.minecraft.item.Item
 import org.openzen.zencode.java.ZenCodeType
@@ -22,7 +22,7 @@ open class DustMaterial(name: String, textureType: String, color: Int, tier: Int
     var unrefinedColor: Int = color
 
     open val defaultItem: Item?
-        @ZenCodeType.Getter get() = MaterialItems[this, MaterialRegistry.DUST]
+        @ZenCodeType.Getter get() = MaterialItems[this, PLMaterialRegistry.DUST]
 
     @JvmName("invokeDust")
     operator fun invoke(builder: DustMaterial.() -> Unit) = builder(this)

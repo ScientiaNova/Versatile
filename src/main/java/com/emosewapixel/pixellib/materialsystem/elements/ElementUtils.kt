@@ -8,11 +8,11 @@ object ElementUtils {
     @JvmStatic
     fun getElementalComposition(mat: Material): List<ElementStack> {
         if (mat.composition.isEmpty())
-            return listOf(ElementStack(mat.element))
+            return listOf(mat.element.toStack())
 
         val map = mat.fullComposition.groupBy { it.material.element }.mapValues { (_, value) -> value.map { it.count }.sum() }
 
-        return if (ElementRegistry.NULL in map) listOf(ElementStack(ElementRegistry.NULL)) else map.entries.map { ElementStack(it.key, it.value) }
+        return if (BaseElements.NULL in map) listOf(ElementStack.EMPTY) else map.entries.map { it.key * it.value }
     }
 
     @JvmStatic

@@ -1,7 +1,7 @@
 package com.emosewapixel.pixellib.materialsystem.materials
 
 import com.blamejared.crafttweaker.api.annotations.ZenRegister
-import com.emosewapixel.pixellib.materialsystem.elements.ElementRegistry
+import com.emosewapixel.pixellib.materialsystem.elements.BaseElements
 import com.emosewapixel.pixellib.materialsystem.lists.Materials
 import com.emosewapixel.pixellib.materialsystem.materials.utility.MaterialStack
 import com.emosewapixel.pixellib.materialsystem.types.ObjectType
@@ -45,7 +45,7 @@ constructor(@ZenCodeType.Field val name: String,
     var composition = listOf<MaterialStack>()
 
     @ZenCodeType.Field
-    var element = ElementRegistry.NULL
+    var element = BaseElements.NULL
 
     @ZenCodeType.Field
     var secondName = name
@@ -69,13 +69,13 @@ constructor(@ZenCodeType.Field val name: String,
         get() = TranslationTextComponent("material.$name")
 
     val fullComposition: List<MaterialStack>
-        get() = if (composition.isEmpty()) listOf(MaterialStack(this)) else composition.flatMap { (material, count) ->
+        get() = if (composition.isEmpty()) listOf(this.toStack()) else composition.flatMap { (material, count) ->
             material.fullComposition
-                    .map { (material1, count1) -> MaterialStack(material1, count1 * count) }
+                    .map { (material1, count1) -> material1 * (count1 * count) }
         }
 
     val isPureElement: Boolean
-        get() = element !== ElementRegistry.NULL
+        get() = element !== BaseElements.NULL
 
     operator fun invoke(builder: Material.() -> Unit) = builder(this)
 
@@ -127,4 +127,7 @@ constructor(@ZenCodeType.Field val name: String,
 
     @ZenCodeType.Operator(ZenCodeType.OperatorType.MUL)
     operator fun times(count: Int) = MaterialStack(this, count)
+
+    @JvmOverloads
+    fun toStack(count: Int = 1) = MaterialStack(this, count)
 }

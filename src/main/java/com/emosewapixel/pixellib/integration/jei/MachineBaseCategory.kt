@@ -1,5 +1,6 @@
 package com.emosewapixel.pixellib.integration.jei
 
+import com.emosewapixel.pixellib.extensions.toStack
 import com.emosewapixel.pixellib.machines.recipes.AbstractRecipeList
 import com.emosewapixel.pixellib.machines.recipes.SimpleMachineRecipe
 import mezz.jei.api.constants.VanillaTypes
@@ -17,7 +18,7 @@ import java.lang.reflect.ParameterizedType
 abstract class MachineBaseCategory(helper: IGuiHelper, icon: Item, protected var list: AbstractRecipeList<*, *>) : IRecipeCategory<SimpleMachineRecipe> {
     abstract var backGround: IDrawable
 
-    private val icon: IDrawable = helper.createDrawableIngredient(ItemStack(icon))
+    private val icon: IDrawable = helper.createDrawableIngredient(icon.toStack())
 
     protected var arrow: IDrawableAnimated = helper.drawableBuilder(Constants.RECIPE_GUI_VANILLA, 82, 128, 24, 17)
             .buildAnimated(200, IDrawableAnimated.StartDirection.LEFT, false)

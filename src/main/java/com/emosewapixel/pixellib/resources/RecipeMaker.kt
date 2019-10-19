@@ -14,7 +14,7 @@ import net.minecraft.util.ResourceLocation
 object RecipeMaker {
     @JvmStatic
     fun addShapelessRecipe(name: ResourceLocation, group: String, output: ItemStack, vararg inputs: Any) =
-            JSONAdder.addDataJSON(ResourceLocation(name.namespace, "recipes/" + name.path + ".json")) {
+            JSONAdder.addDataJSON(ResourceLocation(name.namespace, "recipes/${name.path}.json")) {
                 "type" to "minecraft:crafting_shapeless"
                 "group" to group
                 "ingredients" to inputs.map { inputToJson(it) }
@@ -22,20 +22,19 @@ object RecipeMaker {
             }
 
     @JvmStatic
-    fun addShapelessRecipe(name: ResourceLocation, output: ItemStack, vararg inputs: Any) = addShapelessRecipe(name, "", output, inputs)
+    fun addShapelessRecipe(name: ResourceLocation, output: ItemStack, vararg inputs: Any) = addShapelessRecipe(name, "", output, *inputs)
 
     @JvmStatic
-    fun addShapelessRecipe(name: String, output: ItemStack, vararg inputs: Any) = addShapelessRecipe(name.toResLoc(), output, inputs)
+    fun addShapelessRecipe(name: String, output: ItemStack, vararg inputs: Any) = addShapelessRecipe(name.toResLoc(), output, *inputs)
 
     @JvmStatic
     fun addShapedRecipe(name: ResourceLocation, group: String, output: ItemStack, vararg shape: Any) =
-            JSONAdder.addDataJSON(ResourceLocation(name.namespace, "recipes/" + name.path + ".json")) {
+            JSONAdder.addDataJSON(ResourceLocation(name.namespace, "recipes/${name.path}.json")) {
                 "type" to "minecraft:crafting_shaped"
                 "group" to group
-                val end = listOf(*shape)
-                "pattern" to end.takeWhile { it is String }.map { (it as String).toJson() }
+                "pattern" to shape.takeWhile { it is String }.map { (it as String).toJson() }
                 "key" {
-                    end.dropWhile { it is String }.zipWithNext().filterIndexed { index, _ -> index % 2 == 0 }.forEach {
+                    shape.dropWhile { it is String }.zipWithNext().filterIndexed { index, _ -> index % 2 == 0 }.forEach {
                         it.first.toString() to inputToJson(it.second)
                     }
                 }
@@ -43,10 +42,10 @@ object RecipeMaker {
             }
 
     @JvmStatic
-    fun addShapedRecipe(name: ResourceLocation, output: ItemStack, vararg shape: Any) = addShapedRecipe(name, "", output, shape)
+    fun addShapedRecipe(name: ResourceLocation, output: ItemStack, vararg shape: Any) = addShapedRecipe(name, "", output, *shape)
 
     @JvmStatic
-    fun addShapedRecipe(name: String, output: ItemStack, vararg shape: Any) = addShapedRecipe(name.toResLoc(), output, shape)
+    fun addShapedRecipe(name: String, output: ItemStack, vararg shape: Any) = addShapedRecipe(name.toResLoc(), output, *shape)
 
     @JvmStatic
     fun addCookingRecipe(type: String, name: ResourceLocation, input: Any, output: Item, cookTime: Int, xp: Float) =

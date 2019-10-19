@@ -8,8 +8,8 @@ import com.emosewapixel.pixellib.fluids.FluidRegistry;
 import com.emosewapixel.pixellib.items.ItemRegistry;
 import com.emosewapixel.pixellib.items.MaterialItem;
 import com.emosewapixel.pixellib.machines.packets.NetworkHandler;
-import com.emosewapixel.pixellib.materialsystem.addition.MaterialRegistry;
 import com.emosewapixel.pixellib.materialsystem.addition.MaterialRegistryInitializer;
+import com.emosewapixel.pixellib.materialsystem.addition.PLMaterialRegistry;
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialItems;
 import com.emosewapixel.pixellib.materialsystem.materials.IMaterialObject;
 import com.emosewapixel.pixellib.materialsystem.types.FluidType;
@@ -17,7 +17,7 @@ import com.emosewapixel.pixellib.proxy.ClientProxy;
 import com.emosewapixel.pixellib.proxy.ClientProxyKt;
 import com.emosewapixel.pixellib.proxy.IModProxy;
 import com.emosewapixel.pixellib.proxy.ServerProxy;
-import com.emosewapixel.pixellib.resources.DataAddition;
+import com.emosewapixel.pixellib.resources.BaseDataAddition;
 import com.emosewapixel.pixellib.resources.FakeDataPackFinder;
 import com.emosewapixel.pixellib.worldgen.OreGen;
 import net.minecraft.block.Block;
@@ -74,14 +74,14 @@ public final class PixelLib {
 	
 	private void processIMC(InterModProcessEvent e) {
 		proxy.process(e);
-		DataAddition.register();
+		BaseDataAddition.register();
 	}
 	
 	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = PixelLib.ModId)
 	public static final class RegistryEvents {
 		@SubscribeEvent(priority = EventPriority.HIGHEST)
 		public static void onEarlyBlockRegistry(RegistryEvent.Register<Block> e) {
-			MaterialRegistryInitializer.getInstances();
+			MaterialRegistryInitializer.INSTANCE.getInstances();
 		}
 		
 		@SubscribeEvent(priority = EventPriority.LOWEST)
@@ -122,7 +122,7 @@ public final class PixelLib {
 		public static void fuelTime(FurnaceFuelBurnTimeEvent e) {
 			Item item = e.getItemStack().getItem();
 			if (item instanceof IMaterialObject)
-				if (!((IMaterialObject) item).getObjType().hasTag(MaterialRegistry.HAS_NO_FUEL_VALUE) && ((IMaterialObject) item).getObjType().getBucketVolume() != 0)
+				if (!((IMaterialObject) item).getObjType().hasTag(PLMaterialRegistry.HAS_NO_FUEL_VALUE) && ((IMaterialObject) item).getObjType().getBucketVolume() != 0)
 					e.setBurnTime(((IMaterialObject) item).getObjType() instanceof FluidType ? ((IMaterialObject) item).getObjType().getBucketVolume() / 1000 : ((IMaterialObject) item).getObjType().getBucketVolume() / 144 * ((IMaterialObject) item).getMat().getStandardBurnTime());
 		}
 	}

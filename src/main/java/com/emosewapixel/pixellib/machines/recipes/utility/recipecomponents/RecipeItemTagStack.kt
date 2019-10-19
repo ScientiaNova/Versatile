@@ -10,7 +10,7 @@ class RecipeItemTagStack(stack: TagStack<Item>) : IRecipeStack<ItemStack> {
     override val count = stack.count
 
     override val stacks
-        get() = tag.allElements.map { ItemStack(it, count) }
+        get() = tag.allElements.map { it to count }
 
     override fun matches(other: ItemStack) = count <= other.count && other.item in tag
 

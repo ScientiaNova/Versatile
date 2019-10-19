@@ -4,7 +4,7 @@ import com.blamejared.crafttweaker.api.annotations.ZenRegister
 import com.emosewapixel.pixellib.blocks.MaterialBlock
 import com.emosewapixel.pixellib.blocks.MaterialBlockItem
 import com.emosewapixel.pixellib.extensions.json
-import com.emosewapixel.pixellib.materialsystem.addition.MaterialRegistry
+import com.emosewapixel.pixellib.materialsystem.addition.PLMaterialRegistry
 import com.emosewapixel.pixellib.materialsystem.materials.IMaterialObject
 import com.emosewapixel.pixellib.materialsystem.materials.Material
 import com.emosewapixel.pixellib.materialsystem.materials.utility.ct.MaterialRequirement
@@ -22,7 +22,7 @@ class BlockType @JvmOverloads @ZenCodeType.Constructor constructor(name: String,
         json {
             "variants" {
                 "" {
-                    "model" to "pixellib:block/materialblocks/" + if (MaterialRegistry.SINGLE_TEXTURE_TYPE in typeTags) name else "${it.mat.textureType}/$name"
+                    "model" to "pixellib:block/materialblocks/" + if (PLMaterialRegistry.SINGLE_TEXTURE_TYPE in typeTags) name else "${it.mat.textureType}/$name"
                 }
             }
         }
