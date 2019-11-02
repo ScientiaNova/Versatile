@@ -15,9 +15,11 @@ import net.minecraftforge.fluids.FluidStack
 abstract class AbstractRecipeBuilder<T : SimpleMachineRecipe, R : AbstractRecipeBuilder<T, R>>(protected val recipeList: AbstractRecipeList<T, R>) {
     val inputs = mutableListOf<Pair<IRecipeStack<ItemStack>, Float>>()
     val fluidInputs = mutableListOf<Pair<IRecipeStack<FluidStack>, Float>>()
-    val outputs = mutableListOf<WeightedMap<IRecipeStack<ItemStack>>>()
-    val fluidOutputs = mutableListOf<WeightedMap<IRecipeStack<FluidStack>>>()
+    val outputs = mutableListOf<WeightedMap<out IRecipeStack<ItemStack>>>()
+    val fluidOutputs = mutableListOf<WeightedMap<out IRecipeStack<FluidStack>>>()
     var time = 0
+
+    operator fun <S> MutableCollection<Pair<S, Float>>.plusAssign(type: S) = plusAssign(type to 1f)
 
     fun input(vararg inputs: IRecipeStack<ItemStack>): R {
         this.inputs += (listOf(*inputs)).map { it to 1f }
@@ -62,7 +64,7 @@ abstract class AbstractRecipeBuilder<T : SimpleMachineRecipe, R : AbstractRecipe
     fun potentiallyConsumable(input: TagStack<Fluid>, consumeChance: Float) = potentiallyConsumable(RecipeFluidTagStack(input), consumeChance)
 
     fun output(vararg outputs: IRecipeStack<ItemStack>): R {
-        this.outputs += (listOf(*outputs))
+        this.outputs += listOf(*outputs)
         return this as R
     }
 
@@ -92,7 +94,7 @@ abstract class AbstractRecipeBuilder<T : SimpleMachineRecipe, R : AbstractRecipe
 
     @JvmName("fluidOutput")
     fun output(vararg outputs: IRecipeStack<FluidStack>): R {
-        this.fluidOutputs += (listOf(*outputs))
+        this.fluidOutputs += listOf(*outputs)
         return this as R
     }
 

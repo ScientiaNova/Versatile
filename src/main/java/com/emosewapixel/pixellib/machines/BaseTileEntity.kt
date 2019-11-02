@@ -17,7 +17,7 @@ class BaseTileEntity(type: TileEntityType<*>) : TileEntity(type), ITickableTileE
     val block
         get() = blockState.block as? IMachineBlock
 
-    val guiLayout = block?.guiLayout?.invoke() ?: GUIBook()
+    val guiLayout = block?.guiLayout?.invoke(this) ?: GUIBook()
 
     val properties = block?.properties?.mapValues { (_, value) -> value() }?.toMutableMap() ?: mutableMapOf()
 

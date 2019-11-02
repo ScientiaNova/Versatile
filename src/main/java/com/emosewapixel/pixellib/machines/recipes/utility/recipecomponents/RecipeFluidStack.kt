@@ -1,5 +1,7 @@
 package com.emosewapixel.pixellib.machines.recipes.utility.recipecomponents
 
+import com.emosewapixel.pixellib.extensions.toStack
+import net.minecraft.fluid.Fluid
 import net.minecraftforge.fluids.FluidStack
 
 class RecipeFluidStack(val stack: FluidStack) : IRecipeStack<FluidStack> {
@@ -18,3 +20,5 @@ class RecipeFluidStack(val stack: FluidStack) : IRecipeStack<FluidStack> {
 }
 
 operator fun MutableCollection<IRecipeStack<FluidStack>>.plusAssign(stack: FluidStack) = plusAssign(RecipeFluidStack(stack))
+fun Fluid.toRStack(count: Int = 1000) = RecipeFluidStack(this.toStack(count))
+fun FluidStack.r() = RecipeFluidStack(this)

@@ -4,7 +4,7 @@ import com.emosewapixel.pixellib.machines.gui.layout.GUIBook
 import net.minecraft.nbt.CompoundNBT
 
 interface IMachineBlock {
-    val properties: Map<String, () -> Any>
+    val properties: Map<String, BaseTileEntity.() -> Any>
 
     val tick: BaseTileEntity.() -> Unit
 
@@ -14,5 +14,5 @@ interface IMachineBlock {
 
     val deserializeNBT: BaseTileEntity.(CompoundNBT) -> Unit
 
-    val guiLayout: () -> GUIBook
+    val guiLayout: BaseTileEntity.() -> GUIBook
 }
