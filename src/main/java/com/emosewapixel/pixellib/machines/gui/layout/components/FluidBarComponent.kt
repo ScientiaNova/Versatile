@@ -1,12 +1,20 @@
 package com.emosewapixel.pixellib.machines.gui.layout.components
 
+import com.emosewapixel.pixellib.machines.capabilities.IMutableFluidTank
+import com.emosewapixel.pixellib.machines.gui.BaseContainer
 import com.emosewapixel.pixellib.machines.gui.BaseScreen
-import com.emosewapixel.pixellib.machines.gui.layout.IGUIComponent
+import com.emosewapixel.pixellib.machines.gui.layout.IInteractableGUIComponent
+import com.emosewapixel.pixellib.machines.packets.NetworkHandler
+import com.emosewapixel.pixellib.machines.packets.UpdateFluidTankPacket
 import net.minecraft.client.gui.AbstractGui
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
+import net.minecraft.entity.player.ServerPlayerEntity
+import net.minecraftforge.api.distmarker.Dist
+import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.fluids.capability.IFluidHandler
+import net.minecraftforge.fml.network.PacketDistributor
 
-class FluidBarComponent(val backGroundText: TextureAtlasSprite, val property: String) : IGUIComponent {
+class FluidBarComponent(val backGroundText: TextureAtlasSprite, val property: String) : IInteractableGUIComponent {
     override val tooltips = mutableListOf<String>()
     var direction = Direction2D.RIGHT
     override var x = 79
@@ -15,6 +23,7 @@ class FluidBarComponent(val backGroundText: TextureAtlasSprite, val property: St
     var width = 24
     var height = 16
 
+    @OnlyIn(Dist.CLIENT)
     override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
         AbstractGui.blit(screen.guiLeft + x, screen.guiTop + y, screen.blitOffset, width, height, backGroundText)
         val tank = (screen.container.te.properties[property] as? IFluidHandler)
@@ -35,5 +44,14 @@ class FluidBarComponent(val backGroundText: TextureAtlasSprite, val property: St
         }
     }
 
+    @OnlyIn(Dist.CLIENT)
     override fun isSelected(mouseX: Int, mouseY: Int) = x < mouseX && mouseX < x + width && y < mouseY && mouseY < y + height
+
+    override fun detectAndSendChanges(container: BaseContainer) {
+        val serverProperty = (container.te.properties[property] as? IMutableFluidTank)?.fluid
+        if (serverProperty != (container.clientProperties[property] as? IMutableFluidTank)?.fluid) {
+            (container.clientProperties[property] as? IMutableFluidTank)?.fluid = serverProperty!!
+            NetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with { container.playerInv.player as ServerPlayerEntity }, UpdateFluidTankPacket(container.te.pos, property, serverProperty))
+        }
+    }
 }

@@ -20,6 +20,7 @@ class LabelComponent(override val x: Int, override val y: Int, val text: String)
         }
     }
 
+    @OnlyIn(Dist.CLIENT)
     override fun isSelected(mouseX: Int, mouseY: Int): Boolean {
         val font = Minecraft.getInstance().fontRenderer
         return x < mouseX && mouseX < x + font.getStringWidth(text) && y < mouseY && mouseY < x + 10

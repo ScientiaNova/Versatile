@@ -1,6 +1,7 @@
 package com.emosewapixel.pixellib.machines.gui
 
 import com.emosewapixel.pixellib.machines.BaseTileEntity
+import com.emosewapixel.pixellib.machines.gui.layout.IInteractableGUIComponent
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.container.Container
@@ -12,5 +13,5 @@ class BaseContainer(id: Int, val playerInv: PlayerInventory, val te: BaseTileEnt
 
     override fun canInteractWith(playerIn: PlayerEntity) = te.canInteractWith(playerIn)
 
-    override fun detectAndSendChanges() = guiPage.components.forEach { it.detectAndSendChanges(this) }
+    override fun detectAndSendChanges() = guiPage.components.forEach { if (it is IInteractableGUIComponent) it.detectAndSendChanges(this) }
 }

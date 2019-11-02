@@ -8,7 +8,7 @@ import net.minecraftforge.fluids.FluidStack
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler
 import net.minecraftforge.fluids.capability.IFluidHandler
 
-class FluidStackHandler @JvmOverloads constructor(val tanks: List<IMutableFluidTank>, val noOutputTanks: Array<Int> = emptyArray(), val noInputTanks: Array<Int> = emptyArray()) : IFluidHandler, IMutableFluidHandler, ICapabilityProvider {
+class FluidStackHandler @JvmOverloads constructor(val tanks: List<IMutableFluidTank>, val noOutputTanks: Array<Int> = emptyArray(), val noInputTanks: Array<Int> = emptyArray()) : IFluidHandlerModifiable, ICapabilityProvider {
     constructor(tanks: List<IMutableFluidTank>, noOutput: IntRange, noInput: IntRange) : this(tanks, noOutput.toList().toTypedArray(), noInput.toList().toTypedArray())
 
     constructor(capacity: Int, inputCount: Int, outputCount: Int) : this((0 until inputCount + outputCount).map { MutableFluidTank(capacity) }, 0 until inputCount, inputCount until inputCount + outputCount)

@@ -62,10 +62,11 @@ object NetworkHandler {
                 .add()
 
 
-        CHANNEL.messageBuilder(UpdateRecipeTimePacket::class.java, 7)
-                .encoder(UpdateRecipeTimePacket::encode)
-                .decoder(UpdateRecipeTimePacket.Companion::decode)
-                .consumer(UpdateRecipeTimePacket.Companion::processPacket)
+
+        CHANNEL.messageBuilder(UpdateFluidTankPacket::class.java, 7)
+                .encoder(UpdateFluidTankPacket::encode)
+                .decoder(UpdateFluidTankPacket.Companion::decode)
+                .consumer(UpdateFluidTankPacket.Companion::processPacket)
                 .add()
     }
 }

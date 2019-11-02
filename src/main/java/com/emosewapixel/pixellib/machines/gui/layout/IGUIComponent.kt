@@ -1,6 +1,5 @@
 package com.emosewapixel.pixellib.machines.gui.layout
 
-import com.emosewapixel.pixellib.machines.gui.BaseContainer
 import com.emosewapixel.pixellib.machines.gui.BaseScreen
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
@@ -30,8 +29,4 @@ interface IGUIComponent {
 
     @OnlyIn(Dist.CLIENT)
     fun isSelected(mouseX: Int, mouseY: Int): Boolean
-
-    fun detectAndSendChanges(container: BaseContainer) {
-
-    }
 }

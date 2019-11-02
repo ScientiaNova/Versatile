@@ -9,8 +9,11 @@ import net.minecraft.client.gui.AbstractGui
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.item.ItemStack
+import net.minecraftforge.api.distmarker.Dist
+import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.fml.network.PacketDistributor
 import net.minecraftforge.items.IItemHandler
+import net.minecraftforge.items.IItemHandlerModifiable
 
 abstract class AbstractItemSlotComponent(val property: String, override val x: Int, override val y: Int, override val texture: TextureAtlasSprite) : ISlotComponent {
     override val tooltips = mutableListOf<String>()
@@ -18,6 +21,7 @@ abstract class AbstractItemSlotComponent(val property: String, override val x: I
     override var height = 18
     var slotIndex = 0
 
+    @OnlyIn(Dist.CLIENT)
     override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
         AbstractGui.blit(screen.guiLeft + x, screen.guiTop + y, screen.blitOffset, width, height, texture)
         val stack = (screen.container.te.properties[property] as? IItemHandler)?.getStackInSlot(slotIndex)
@@ -26,6 +30,7 @@ abstract class AbstractItemSlotComponent(val property: String, override val x: I
             screen.drawItemStack(stack, screen.guiLeft + x, screen.guiTop + y)
     }
 
+    @OnlyIn(Dist.CLIENT)
     override fun drawInForeground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
         if (isSelected(mouseX - screen.guiLeft, mouseY - screen.guiTop)) {
             AbstractGui.fill(screen.guiLeft + x + 1, screen.guiTop + y + 1, width - 2, height - 2, 0xFFFFF)
@@ -37,10 +42,14 @@ abstract class AbstractItemSlotComponent(val property: String, override val x: I
         }
     }
 
+    @OnlyIn(Dist.CLIENT)
     abstract override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int, screen: BaseScreen): Boolean
 
     override fun detectAndSendChanges(container: BaseContainer) {
-        if ((container.te.properties[property] as? IItemHandler)?.getStackInSlot(slotIndex) != (container.clientProperties[property] as? IItemHandler)?.getStackInSlot(slotIndex))
-            NetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with { container.playerInv.player as ServerPlayerEntity }, UpdateItemStackPacket(container.te.pos, property, slotIndex, (container.te.properties[property] as IItemHandler).getStackInSlot(slotIndex)))
+        val serverProperty = (container.te.properties[property] as? IItemHandler)?.getStackInSlot(slotIndex) ?: ItemStack.EMPTY
+        if (serverProperty != (container.clientProperties[property] as? IItemHandler)?.getStackInSlot(slotIndex)) {
+            (container.clientProperties[property] as? IItemHandlerModifiable)?.setStackInSlot(slotIndex, serverProperty)
+            NetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with { container.playerInv.player as ServerPlayerEntity }, UpdateItemStackPacket(container.te.pos, property, slotIndex, serverProperty))
+        }
     }
 }

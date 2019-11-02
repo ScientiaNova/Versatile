@@ -2,7 +2,7 @@ package com.emosewapixel.pixellib.machines.gui.layout
 
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 
-interface ISlotComponent : IGUIComponent {
+interface ISlotComponent : IInteractableGUIComponent {
     val width: Int
     val height: Int
     val texture: TextureAtlasSprite
