@@ -22,11 +22,11 @@ interface IGUIComponent {
     fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen)
 
     @OnlyIn(Dist.CLIENT)
+    fun isSelected(mouseX: Int, mouseY: Int): Boolean
+
+    @OnlyIn(Dist.CLIENT)
     fun drawInForeground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
         if (tooltips.isNotEmpty() && isSelected(mouseX - screen.guiLeft, mouseY - screen.guiTop))
             screen.renderTooltip(tooltips, mouseX, mouseY)
     }
-
-    @OnlyIn(Dist.CLIENT)
-    fun isSelected(mouseX: Int, mouseY: Int): Boolean
 }

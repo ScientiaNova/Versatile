@@ -13,6 +13,7 @@ import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.fluids.FluidStack
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler
 import net.minecraftforge.fluids.capability.IFluidHandler
 import net.minecraftforge.fml.network.PacketDistributor
 
@@ -32,11 +33,6 @@ class FluidSlotComponent(val property: String, override val x: Int, override val
     }
 
     @OnlyIn(Dist.CLIENT)
-    override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int, screen: BaseScreen): Boolean {
-        return true
-    }
-
-    @OnlyIn(Dist.CLIENT)
     override fun drawInForeground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
         if (isSelected(mouseX - screen.guiLeft, mouseY - screen.guiTop)) {
             AbstractGui.fill(screen.guiLeft + x + 1, screen.guiTop + y + 1, width - 2, height - 2, 0xFFFFF)
@@ -48,6 +44,18 @@ class FluidSlotComponent(val property: String, override val x: Int, override val
             else
                 screen.renderTooltip(mutableListOf(fluid.fluid.attributes.getDisplayName(fluid).string, "${fluid.amount}mb/${handler!!.getTankCapacity(tankId)}mb", TranslationTextComponent("gui.tooltip.tank_empty").string), mouseX, mouseY)
         }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int, screen: BaseScreen): Boolean {
+        val fluidHandler = screen.container.te.properties[property] as? IFluidHandlerModifiable
+        val playerInv = screen.container.playerInv
+        val heldStack = playerInv.itemStack
+        heldStack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).ifPresent {
+            val itemTanks = (0 until it.tanks).map { index -> index to it.getFluidInTank(index) }
+            TODO()
+        }
+        return true
     }
 
     override fun detectAndSendChanges(container: BaseContainer) {
