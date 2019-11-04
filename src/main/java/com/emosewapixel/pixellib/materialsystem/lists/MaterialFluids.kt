@@ -57,7 +57,7 @@ object MaterialFluids {
 
     @JvmStatic
     @ZenCodeType.Method
-    fun contains(material: Material, type: ObjectType<*, *>) = get(material, type) != null
+    fun contains(material: Material, type: ObjectType<*, *>) = materialFluids.contains(material, type)
 
     @JvmStatic
     @ZenCodeType.Operator(ZenCodeType.OperatorType.CONTAINS)

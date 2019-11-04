@@ -8,8 +8,7 @@ import org.openzen.zencode.java.ZenCodeType
 @ZenRegister
 @ZenCodeType.Name("pixellib.materialsystem.materials.TransitionMaterial")
 open class TransitionMaterial constructor(name: String, private val endMaterialFun: MaterialSupplier, @ZenCodeType.Field val neededAmount: Int) : Material(name, "", -1, -1) {
-    val endMaterial: Material
-        @ZenCodeType.Getter get() = endMaterialFun.get()
+    val endMaterial @ZenCodeType.Getter get() = endMaterialFun.get()
 
     @JvmName("invokeTransition")
     operator fun invoke(builder: TransitionMaterial.() -> Unit) = builder(this)

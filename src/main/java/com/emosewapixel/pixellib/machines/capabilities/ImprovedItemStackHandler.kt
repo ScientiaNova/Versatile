@@ -14,14 +14,11 @@ open class ImprovedItemStackHandler @JvmOverloads constructor(slots: Int, val no
 
     constructor(inputCount: Int, outputCount: Int) : this(inputCount + outputCount, 0 until inputCount, inputCount until inputCount + outputCount)
 
-    val stacks
-        get() = super.stacks
+    val stacks get() = super.stacks
 
-    val inputStacks: List<ItemStack>
-        get() = super.stacks.filterIndexed { index, _ -> index !in noInputSlots }
+    val inputStacks get() = super.stacks.filterIndexed { index, _ -> index !in noInputSlots }
 
-    val outputStacks: List<ItemStack>
-        get() = super.stacks.filterIndexed { index, _ -> index !in noOutputSlots }
+    val outputStacks get() = super.stacks.filterIndexed { index, _ -> index !in noOutputSlots }
 
     override fun isItemValid(slot: Int, itemStack: ItemStack) = slot !in noInputSlots
 

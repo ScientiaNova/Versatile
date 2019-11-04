@@ -31,9 +31,7 @@ class BaseTileEntity(type: TileEntityType<*>) : TileEntity(type), ITickableTileE
 
     override fun serializeNBT(): CompoundNBT {
         val nbt = super.serializeNBT()
-        val b = block?.serializeNBT?.invoke(this)
-        if (b != null)
-            nbt += b
+        block?.serializeNBT?.invoke(this)?.let(nbt::merge)
         return nbt
     }
 

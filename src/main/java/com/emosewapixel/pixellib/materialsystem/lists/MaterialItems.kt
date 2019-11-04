@@ -39,7 +39,7 @@ object MaterialItems {
 
     @JvmStatic
     @ZenCodeType.Method
-    fun contains(material: Material, type: ObjectType<*, *>) = get(material, type) != null
+    fun contains(material: Material, type: ObjectType<*, *>) = materialItems.contains(material, type)
 
     @JvmStatic
     @ZenCodeType.Operator(ZenCodeType.OperatorType.CONTAINS)

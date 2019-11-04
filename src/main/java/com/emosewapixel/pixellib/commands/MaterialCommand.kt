@@ -43,8 +43,7 @@ class MaterialCommand(dispatcher: CommandDispatcher<CommandSource>) {
                     does {
                         fun Material.sendHierarchy(level: Int = 0) {
                             source.sendFeedback(StringTextComponent((if (level > 0) " ".repeat(level - 1) + "-" else "") + localizedName.formattedText), false)
-                            if (composition.isNotEmpty())
-                                composition.forEach { it.material.sendHierarchy(level + 1) }
+                            composition.forEach { it.material.sendHierarchy(level + 1) }
                         }
                         Materials[StringArgumentType.getString(this, "name")]?.sendHierarchy()
                                 ?: source.sendErrorMessage(TranslationTextComponent("command.material.error"))
@@ -52,32 +51,29 @@ class MaterialCommand(dispatcher: CommandDispatcher<CommandSource>) {
                 }
                 literal("items") {
                     does {
-                        val mat = Materials[StringArgumentType.getString(this, "name")]
-                        if (mat != null) {
-                            MaterialItems[mat]?.values?.forEach {
-                                source.sendFeedback(it.registryName!!.toString().toComponent(), false)
-                            } ?: source.sendErrorMessage(TranslationTextComponent("command.material.error"))
-                        } else source.sendErrorMessage(TranslationTextComponent("command.material.error"))
+                        Materials[StringArgumentType.getString(this, "name")]?.let {
+                            MaterialItems[it]?.values?.forEach { item ->
+                                source.sendFeedback(item.registryName!!.toString().toComponent(), false)
+                            }
+                        } ?: source.sendErrorMessage(TranslationTextComponent("command.material.error"))
                     }
                 }
                 literal("blocks") {
                     does {
-                        val mat = Materials[StringArgumentType.getString(this, "name")]
-                        if (mat != null) {
-                            MaterialBlocks[mat]?.values?.forEach {
-                                source.sendFeedback(it.registryName!!.toString().toComponent(), false)
-                            } ?: source.sendErrorMessage(TranslationTextComponent("command.material.error"))
-                        } else source.sendErrorMessage(TranslationTextComponent("command.material.error"))
+                        Materials[StringArgumentType.getString(this, "name")]?.let {
+                            MaterialBlocks[it]?.values?.forEach { block ->
+                                source.sendFeedback(block.registryName!!.toString().toComponent(), false)
+                            }
+                        } ?: source.sendErrorMessage(TranslationTextComponent("command.material.error"))
                     }
                 }
                 literal("fluids") {
                     does {
-                        val mat = Materials[StringArgumentType.getString(this, "name")]
-                        if (mat != null) {
-                            MaterialFluids[mat]?.values?.forEach {
-                                source.sendFeedback(it.registryName!!.toString().toComponent(), false)
-                            } ?: source.sendErrorMessage(TranslationTextComponent("command.material.error"))
-                        } else source.sendErrorMessage(TranslationTextComponent("command.material.error"))
+                        Materials[StringArgumentType.getString(this, "name")]?.let {
+                            MaterialFluids[it]?.values?.forEach { fluid ->
+                                source.sendFeedback(fluid.registryName!!.toString().toComponent(), false)
+                            }
+                        } ?: source.sendErrorMessage(TranslationTextComponent("command.material.error"))
                     }
                 }
             }

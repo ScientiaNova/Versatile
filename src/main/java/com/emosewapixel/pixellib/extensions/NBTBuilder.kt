@@ -47,44 +47,28 @@ operator fun CompoundNBT.plusAssign(other: CompoundNBT) {
 }
 
 @JvmName("plusInt")
-operator fun CompoundNBT.plusAssign(pair: Pair<String, Int>) {
-    putInt(pair.first, pair.second)
-}
+operator fun CompoundNBT.plusAssign(pair: Pair<String, Int>) = putInt(pair.first, pair.second)
 
 @JvmName("plusFloat")
-operator fun CompoundNBT.plusAssign(pair: Pair<String, Float>) {
-    putFloat(pair.first, pair.second)
-}
+operator fun CompoundNBT.plusAssign(pair: Pair<String, Float>) = putFloat(pair.first, pair.second)
 
 @JvmName("plusDouble")
-operator fun CompoundNBT.plusAssign(pair: Pair<String, Double>) {
-    putDouble(pair.first, pair.second)
-}
+operator fun CompoundNBT.plusAssign(pair: Pair<String, Double>) = putDouble(pair.first, pair.second)
 
 @JvmName("plusByte")
-operator fun CompoundNBT.plusAssign(pair: Pair<String, Byte>) {
-    putByte(pair.first, pair.second)
-}
+operator fun CompoundNBT.plusAssign(pair: Pair<String, Byte>) = putByte(pair.first, pair.second)
 
 @JvmName("plusShort")
-operator fun CompoundNBT.plusAssign(pair: Pair<String, Short>) {
-    putShort(pair.first, pair.second)
-}
+operator fun CompoundNBT.plusAssign(pair: Pair<String, Short>) = putShort(pair.first, pair.second)
 
 @JvmName("plusBoolean")
-operator fun CompoundNBT.plusAssign(pair: Pair<String, Boolean>) {
-    putBoolean(pair.first, pair.second)
-}
+operator fun CompoundNBT.plusAssign(pair: Pair<String, Boolean>) = putBoolean(pair.first, pair.second)
 
 @JvmName("plusLong")
-operator fun CompoundNBT.plusAssign(pair: Pair<String, Long>) {
-    putLong(pair.first, pair.second)
-}
+operator fun CompoundNBT.plusAssign(pair: Pair<String, Long>) = putLong(pair.first, pair.second)
 
 @JvmName("plusString")
-operator fun CompoundNBT.plusAssign(pair: Pair<String, String>) {
-    putString(pair.first, pair.second)
-}
+operator fun CompoundNBT.plusAssign(pair: Pair<String, String>) = putString(pair.first, pair.second)
 
 @JvmName("plusNBT")
 operator fun CompoundNBT.plusAssign(pair: Pair<String, INBT>) {

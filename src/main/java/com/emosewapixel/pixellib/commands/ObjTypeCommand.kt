@@ -39,40 +39,36 @@ class ObjTypeCommand(dispatcher: CommandDispatcher<CommandSource>) {
             argument("name", StringArgumentType.word()) {
                 literal("tag") {
                     does {
-                        val type = ObjTypes[StringArgumentType.getString(this, "name")]
-                        if (type != null) {
-                            source.sendFeedback(type.itemTag.id.toString().toComponent(), false)
-                        } else source.sendErrorMessage(TranslationTextComponent("command.objtype.error"))
+                        ObjTypes[StringArgumentType.getString(this, "name")]?.let {
+                            source.sendFeedback(it.itemTag.id.toString().toComponent(), false)
+                        } ?: source.sendErrorMessage(TranslationTextComponent("command.objtype.error"))
                     }
                 }
                 literal("items") {
                     does {
-                        val type = ObjTypes[StringArgumentType.getString(this, "name")]
-                        if (type != null) {
-                            MaterialItems[type]?.values?.forEach {
-                                source.sendFeedback(it.registryName!!.toString().toComponent(), false)
-                            } ?: source.sendErrorMessage(TranslationTextComponent("command.objtype.error"))
-                        } else source.sendErrorMessage(TranslationTextComponent("command.objtype.error"))
+                        ObjTypes[StringArgumentType.getString(this, "name")]?.let {
+                            MaterialItems[it]?.values?.forEach { item ->
+                                source.sendFeedback(item.registryName!!.toString().toComponent(), false)
+                            }
+                        } ?: source.sendErrorMessage(TranslationTextComponent("command.objtype.error"))
                     }
                 }
                 literal("blocks") {
                     does {
-                        val type = ObjTypes[StringArgumentType.getString(this, "name")]
-                        if (type != null) {
-                            MaterialBlocks[type]?.values?.forEach {
-                                source.sendFeedback(it.registryName!!.toString().toComponent(), false)
-                            } ?: source.sendErrorMessage(TranslationTextComponent("command.objtype.error"))
-                        } else source.sendErrorMessage(TranslationTextComponent("command.objtype.error"))
+                        ObjTypes[StringArgumentType.getString(this, "name")]?.let {
+                            MaterialBlocks[it]?.values?.forEach { block ->
+                                source.sendFeedback(block.registryName!!.toString().toComponent(), false)
+                            }
+                        } ?: source.sendErrorMessage(TranslationTextComponent("command.objtype.error"))
                     }
                 }
                 literal("fluids") {
                     does {
-                        val type = ObjTypes[StringArgumentType.getString(this, "name")]
-                        if (type != null) {
-                            MaterialFluids[type]?.values?.forEach {
-                                source.sendFeedback(it.registryName!!.toString().toComponent(), false)
-                            } ?: source.sendErrorMessage(TranslationTextComponent("command.objtype.error"))
-                        } else source.sendErrorMessage(TranslationTextComponent("command.objtype.error"))
+                        ObjTypes[StringArgumentType.getString(this, "name")]?.let {
+                            MaterialFluids[it]?.values?.forEach { fluid ->
+                                source.sendFeedback(fluid.registryName!!.toString().toComponent(), false)
+                            }
+                        } ?: source.sendErrorMessage(TranslationTextComponent("command.objtype.error"))
                     }
                 }
             }

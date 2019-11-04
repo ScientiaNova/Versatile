@@ -15,7 +15,7 @@ import java.util.function.Supplier
 //This is used for providing the fake data pack
 object FakeDataPackFinder : IPackFinder {
     override fun <T : ResourcePackInfo> addPackInfosToMap(nameToPackMap: MutableMap<String, T>, packInfoFactory: ResourcePackInfo.IFactory<T>) {
-        val packInfo = ResourcePackInfo.createResourcePack("fake_server:pixellib", true, Supplier<IResourcePack> {
+        ResourcePackInfo.createResourcePack("fake_server:pixellib", true, Supplier<IResourcePack> {
             val pack = FakePack("fake_server:pixellib")
 
             TagMaps.ITEM_TAGS.asMap().forEach { (name, items) ->
@@ -36,8 +36,8 @@ object FakeDataPackFinder : IPackFinder {
             JSONAdder.DATA.forEach { (location, jsonElement) -> pack.putJSON(ResourcePackType.SERVER_DATA, location, jsonElement) }
 
             pack
-        }, packInfoFactory, ResourcePackInfo.Priority.BOTTOM)
-        if (packInfo != null)
-            nameToPackMap["fake_server:pixellib"] = packInfo
+        }, packInfoFactory, ResourcePackInfo.Priority.BOTTOM)?.let {
+            nameToPackMap["fake_server:pixellib"] = it
+        }
     }
 }

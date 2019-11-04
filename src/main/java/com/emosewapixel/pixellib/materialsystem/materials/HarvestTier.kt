@@ -9,4 +9,5 @@ import org.openzen.zencode.java.ZenCodeType
 data class HarvestTier @ZenCodeType.Constructor constructor(
         @ZenCodeType.Field val hardness: Float,
         @ZenCodeType.Field val resistance: Float,
-        @ZenCodeType.Field val harvestLevel: Int)
+        @ZenCodeType.Field val harvestLevel: Int
+)

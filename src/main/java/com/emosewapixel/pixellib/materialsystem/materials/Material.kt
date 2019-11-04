@@ -70,8 +70,7 @@ constructor(@ZenCodeType.Field val name: String,
 
     val fullComposition: List<MaterialStack>
         get() = if (composition.isEmpty()) listOf(this.toStack()) else composition.flatMap { (material, count) ->
-            material.fullComposition
-                    .map { (material1, count1) -> material1 * (count1 * count) }
+            material.fullComposition.map { (material1, count1) -> material1 * (count1 * count) }
         }
 
     val isPureElement: Boolean

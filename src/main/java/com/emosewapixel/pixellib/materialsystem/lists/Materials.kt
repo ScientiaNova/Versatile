@@ -19,7 +19,7 @@ object Materials {
         @ZenCodeType.Getter get() = materials.values
 
     @JvmStatic
-    fun add(mat: Material) = if (mat in materials.values) materials[mat.name]!!.merge(mat) else materials[mat.name] = mat
+    fun add(mat: Material) = materials[mat.name]?.merge(mat) ?: materials.put(mat.name, mat)
 
     @JvmStatic
     @ZenCodeType.Operator(ZenCodeType.OperatorType.INDEXGET)

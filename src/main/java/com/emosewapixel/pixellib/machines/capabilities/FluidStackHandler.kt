@@ -16,11 +16,9 @@ open class FluidStackHandler @JvmOverloads constructor(val count: Int, val capac
 
     val tanks = MutableList(count) { FluidStack.EMPTY }
 
-    val inputTanks: List<FluidStack>
-        get() = tanks.filterIndexed { index, _ -> index !in noInputTanks }
+    val inputTanks get() = tanks.filterIndexed { index, _ -> index !in noInputTanks }
 
-    val outputTanks: List<FluidStack>
-        get() = tanks.filterIndexed { index, _ -> index !in noOutputTanks }
+    val outputTanks get() = tanks.filterIndexed { index, _ -> index !in noOutputTanks }
 
     override fun drain(resource: FluidStack?, action: IFluidHandler.FluidAction): FluidStack {
         if (resource == null || resource.isEmpty)

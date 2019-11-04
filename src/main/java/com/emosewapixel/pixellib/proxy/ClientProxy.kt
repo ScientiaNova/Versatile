@@ -37,25 +37,23 @@ object ClientProxy : IModProxy {
 
     private fun color() {
         MaterialItems.all.filterIsInstance<IMaterialObject>().forEach {
-            val item = it as Item
             Minecraft.getInstance().itemColors.register(IItemColor { stack: ItemStack, index ->
                 val sItem = stack.item as IMaterialObject
                 if (index !in sItem.objType.indexBlackList)
                     sItem.objType.color(sItem.mat)
                 else
                     -1
-            }, item)
+            }, it as Item)
         }
 
         MaterialBlocks.all.filterIsInstance<IMaterialObject>().forEach {
-            val block = it as Block
             Minecraft.getInstance().blockColors.register(IBlockColor { state: BlockState, _, _, index: Int ->
                 val sBlock = state.block as IMaterialObject
                 if (index !in sBlock.objType.indexBlackList)
                     sBlock.objType.color(sBlock.mat)
                 else
                     -1
-            }, block)
+            }, it as Block)
         }
     }
 }

@@ -5,7 +5,6 @@ import com.emosewapixel.pixellib.items.tools.ArmorMaterial
 import com.emosewapixel.pixellib.items.tools.ItemTier
 import com.emosewapixel.pixellib.materialsystem.addition.BaseMaterials
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialItems
-import net.minecraft.item.Item
 import net.minecraft.item.crafting.Ingredient
 import net.minecraft.util.SoundEvent
 import org.openzen.zencode.java.ZenCodeType
@@ -15,8 +14,7 @@ import java.util.function.Supplier
 @ZenRegister
 @ZenCodeType.Name("pixellib.materialsystem.materials.IngotMaterial")
 open class IngotMaterial @ZenCodeType.Constructor constructor(name: String, textureType: String, color: Int, tier: Int) : DustMaterial(name, textureType, color, tier) {
-    override val defaultItem: Item?
-        get() = MaterialItems[this, BaseMaterials.INGOT]
+    override val defaultItem get() = MaterialItems[this, BaseMaterials.INGOT]
 
     init {
         compoundType = CompoundType.ALLOY

@@ -19,7 +19,7 @@ object ObjTypes {
         @ZenCodeType.Getter get() = objTypes.values
 
     @JvmStatic
-    fun add(type: ObjectType<*, *>) = if (type.name in objTypes) objTypes[type.name]!!.merge(type) else objTypes[type.name] = type
+    fun add(type: ObjectType<*, *>) = objTypes[type.name]?.merge(type) ?: objTypes.put(type.name, type)
 
     @JvmStatic
     @ZenCodeType.Operator(ZenCodeType.OperatorType.INDEXGET)
