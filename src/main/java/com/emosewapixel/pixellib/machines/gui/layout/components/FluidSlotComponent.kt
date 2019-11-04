@@ -1,5 +1,8 @@
 package com.emosewapixel.pixellib.machines.gui.layout.components
 
+import com.emosewapixel.pixellib.extensions.isNotEmpty
+import com.emosewapixel.pixellib.extensions.times
+import com.emosewapixel.pixellib.items.ItemStackHolder
 import com.emosewapixel.pixellib.machines.capabilities.IFluidHandlerModifiable
 import com.emosewapixel.pixellib.machines.gui.BaseContainer
 import com.emosewapixel.pixellib.machines.gui.BaseScreen
@@ -9,6 +12,7 @@ import com.emosewapixel.pixellib.machines.packets.UpdateFluidStackPacket
 import net.minecraft.client.gui.AbstractGui
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.entity.player.ServerPlayerEntity
+import net.minecraft.item.ItemStack
 import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
@@ -48,12 +52,74 @@ class FluidSlotComponent(val property: String, override val x: Int, override val
 
     @OnlyIn(Dist.CLIENT)
     override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int, screen: BaseScreen): Boolean {
-        val fluidHandler = screen.container.te.properties[property] as? IFluidHandlerModifiable
+        val slotTank = screen.container.te.properties[property] as? IFluidHandlerModifiable
         val playerInv = screen.container.playerInv
         val heldStack = playerInv.itemStack
-        heldStack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).ifPresent {
-            val itemTanks = (0 until it.tanks).map { index -> index to it.getFluidInTank(index) }
-            TODO()
+        heldStack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).ifPresent { handler ->
+            val itemTanks = (0 until handler.tanks).map { index -> index to handler.getFluidInTank(index) }
+            when (slotTank?.getFluidInTank(tankId)?.isEmpty) {
+                //Filling Tank, Emptying Container
+                true -> {
+                    val capacity = slotTank.getTankCapacity(tankId)
+                    itemTanks.firstOrNull { it.second.isNotEmpty && slotTank.isFluidValid(tankId, it.second) }?.second?.fluid?.let { fluid ->
+                        val totalAmount = itemTanks.filter { it.second.fluid == fluid }.map { it.second.amount }.sum()
+                        val stackCount = heldStack.count
+                        val totalInStack = totalAmount * stackCount
+                        val fullyConsumed: Int
+                        val leftOver: Int
+                        if (capacity >= totalInStack) {
+                            fullyConsumed = stackCount
+                            leftOver = 0
+                        } else {
+                            fullyConsumed = totalInStack / totalAmount
+                            leftOver = totalInStack % totalAmount
+                        }
+                        val resultStack = ItemStackHolder()
+                        var extraStack = ItemStack.EMPTY
+                        val fullyConsumedAmount = fullyConsumed * stackCount
+                        val fullyConsumedStack = fluid * fullyConsumedAmount
+                        if (fullyConsumed != 0 && handler.drain(fullyConsumedStack, IFluidHandler.FluidAction.SIMULATE).amount == fullyConsumedAmount) {
+                            slotTank.setFluidInTank(tankId, fullyConsumedStack)
+                            val copy = heldStack.copy()
+                            copy.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).ifPresent {
+                                it.drain(fullyConsumedStack, IFluidHandler.FluidAction.EXECUTE)
+                            }
+                            resultStack.changeOrAdd(copy)
+                            heldStack.shrink(fullyConsumed)
+                        }
+                        val leftOverStack = fluid * leftOver
+                        if (leftOver != 0 && handler.drain(leftOverStack, IFluidHandler.FluidAction.SIMULATE).amount == leftOver) {
+                            if (slotTank.getFluidInTank(tankId).isEmpty)
+                                slotTank.setFluidInTank(tankId, leftOverStack)
+                            else slotTank.getFluidInTank(tankId).amount += leftOver
+                            val copy = heldStack.copy()
+                            copy.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).ifPresent {
+                                it.drain(leftOverStack, IFluidHandler.FluidAction.EXECUTE)
+                            }
+                            extraStack = resultStack.changeOrAdd(copy)
+                            heldStack.shrink(1)
+                        }
+                        if (heldStack.isEmpty) {
+                            playerInv.itemStack = resultStack.stack.copy()
+                            if (extraStack.isNotEmpty)
+                                playerInv.addItemStackToInventory(extraStack)
+                        } else {
+                            if (resultStack.isNotEmpty)
+                                playerInv.addItemStackToInventory(resultStack.stack.copy())
+                            if (extraStack.isNotEmpty)
+                                playerInv.addItemStackToInventory(extraStack)
+                        }
+                    }
+                }
+                false -> {
+                    //Emptying Tank, Filling Container
+                    if (itemTanks.all { it.second.isEmpty }) {
+                        
+                    } else {
+
+                    }
+                }
+            }
         }
         return true
     }
