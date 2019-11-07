@@ -1,7 +1,6 @@
 package com.emosewapixel.pixellib.machines.gui.layout.components
 
 import com.emosewapixel.pixellib.machines.gui.BaseScreen
-import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.item.ItemStack
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
@@ -9,7 +8,7 @@ import net.minecraftforge.items.IItemHandlerModifiable
 import org.lwjgl.glfw.GLFW
 import kotlin.math.ceil
 
-class ItemSlotComponent(property: String, x: Int, y: Int, texture: TextureAtlasSprite) : AbstractItemSlotComponent(property, x, y, texture) {
+class ItemSlotComponent(property: String, x: Int, y: Int) : AbstractItemSlotComponent(property, x, y) {
     @OnlyIn(Dist.CLIENT)
     override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int, screen: BaseScreen): Boolean {
         val itemHandler = screen.container.te.properties[property] as? IItemHandlerModifiable

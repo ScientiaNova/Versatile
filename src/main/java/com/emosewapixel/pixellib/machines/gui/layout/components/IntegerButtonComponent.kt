@@ -3,23 +3,23 @@ package com.emosewapixel.pixellib.machines.gui.layout.components
 import com.emosewapixel.pixellib.machines.gui.BaseContainer
 import com.emosewapixel.pixellib.machines.gui.BaseScreen
 import com.emosewapixel.pixellib.machines.gui.layout.IInteractableGUIComponent
+import com.emosewapixel.pixellib.machines.gui.textures.GUITexture
 import com.emosewapixel.pixellib.machines.packets.NetworkHandler
 import com.emosewapixel.pixellib.machines.packets.UpdateIntPacket
-import net.minecraft.client.gui.AbstractGui
-import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.fml.network.PacketDistributor
 
-class IntegerButtonComponent(val property: String, val textures: List<TextureAtlasSprite>, override val x: Int, override val y: Int, val width: Int, val height: Int) : IInteractableGUIComponent {
+class IntegerButtonComponent(val property: String, val textures: List<GUITexture>, override val x: Int, override val y: Int) : IInteractableGUIComponent {
     override val tooltips = mutableListOf<String>()
+    var width = 16
+    var height = 16
 
     @OnlyIn(Dist.CLIENT)
     override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
         val value = screen.container.te.properties[property] as? Int ?: 0
-        AbstractGui.blit(screen.guiLeft + x, screen.guiTop + y, screen.blitOffset, width, height, textures[value])
-
+        textures.getOrNull(value)?.render(screen.guiLeft + x, screen.guiTop + y, width, height)
     }
 
     @OnlyIn(Dist.CLIENT)

@@ -7,25 +7,26 @@ import com.emosewapixel.pixellib.extensions.redF
 import com.emosewapixel.pixellib.machines.gui.BaseContainer
 import com.emosewapixel.pixellib.machines.gui.BaseScreen
 import com.emosewapixel.pixellib.machines.gui.layout.IInteractableGUIComponent
+import com.emosewapixel.pixellib.machines.gui.textures.GUITexture
 import com.emosewapixel.pixellib.machines.packets.NetworkHandler
 import com.emosewapixel.pixellib.machines.packets.UpdateIntPacket
 import com.mojang.blaze3d.platform.GlStateManager
-import net.minecraft.client.gui.AbstractGui
-import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.fml.network.PacketDistributor
 
-class ColorButtonComponent(val property: String, val texture: TextureAtlasSprite, val colors: IntArray, override val x: Int, override val y: Int, val width: Int, val height: Int) : IInteractableGUIComponent {
+class ColorButtonComponent(val property: String, val texture: GUITexture, val colors: IntArray, override val x: Int, override val y: Int) : IInteractableGUIComponent {
     override val tooltips = mutableListOf<String>()
+    var width = 16
+    var height = 16
 
     @OnlyIn(Dist.CLIENT)
     override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
         GlStateManager.enableBlend()
         val color = colors[screen.container.te.properties[property] as? Int ?: 0]
         GlStateManager.color4f(color.redF, color.greenF, color.blueF, color.alphaF)
-        AbstractGui.blit(screen.guiLeft + x, screen.guiTop + y, screen.blitOffset, width, height, texture)
+        texture.render(screen.guiLeft + x, screen.guiTop + y, width, height)
         GlStateManager.disableBlend()
     }
 

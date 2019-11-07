@@ -4,22 +4,23 @@ import com.emosewapixel.pixellib.extensions.insertItem
 import com.emosewapixel.pixellib.machines.gui.BaseContainer
 import com.emosewapixel.pixellib.machines.gui.BaseScreen
 import com.emosewapixel.pixellib.machines.gui.layout.ISlotComponent
+import com.emosewapixel.pixellib.machines.gui.textures.BaseTextures
 import net.minecraft.client.gui.AbstractGui
-import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.item.ItemStack
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import org.lwjgl.glfw.GLFW
 import kotlin.math.ceil
 
-class PlayerSlotComponent(val slotIndex: Int, override val x: Int, override val y: Int, override val texture: TextureAtlasSprite) : ISlotComponent {
+class PlayerSlotComponent(val slotIndex: Int, override val x: Int, override val y: Int) : ISlotComponent {
+    override val texture = BaseTextures.ITEM_SLOT
     override val tooltips = mutableListOf<String>()
     override var width = 18
     override var height = 18
 
     @OnlyIn(Dist.CLIENT)
     override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
-        AbstractGui.blit(screen.guiLeft + x, screen.guiTop + y, screen.blitOffset, width, height, texture)
+        texture.render(screen.guiLeft + x, screen.guiTop + y, width, height)
         val stack = screen.container.playerInv.getStackInSlot(slotIndex)
         if (!stack.isEmpty)
             screen.drawItemStack(stack, screen.guiLeft + x, screen.guiTop + y)

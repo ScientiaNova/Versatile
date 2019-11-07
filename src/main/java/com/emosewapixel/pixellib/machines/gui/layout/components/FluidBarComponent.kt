@@ -4,28 +4,27 @@ import com.emosewapixel.pixellib.machines.capabilities.IMutableFluidTank
 import com.emosewapixel.pixellib.machines.gui.BaseContainer
 import com.emosewapixel.pixellib.machines.gui.BaseScreen
 import com.emosewapixel.pixellib.machines.gui.layout.IInteractableGUIComponent
+import com.emosewapixel.pixellib.machines.gui.textures.Direction2D
+import com.emosewapixel.pixellib.machines.gui.textures.GUITexture
 import com.emosewapixel.pixellib.machines.packets.NetworkHandler
 import com.emosewapixel.pixellib.machines.packets.UpdateFluidTankPacket
 import net.minecraft.client.gui.AbstractGui
-import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.fluids.capability.IFluidHandler
 import net.minecraftforge.fml.network.PacketDistributor
 
-class FluidBarComponent(val backGroundText: TextureAtlasSprite, val property: String) : IInteractableGUIComponent {
+class FluidBarComponent(val property: String, val backGroundText: GUITexture, override val x: Int, override val y: Int) : IInteractableGUIComponent {
     override val tooltips = mutableListOf<String>()
     var direction = Direction2D.RIGHT
-    override var x = 79
-    override var y = 34
     val tankId = 0
     var width = 24
     var height = 16
 
     @OnlyIn(Dist.CLIENT)
     override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
-        AbstractGui.blit(screen.guiLeft + x, screen.guiTop + y, screen.blitOffset, width, height, backGroundText)
+        backGroundText.render(screen.guiLeft + x, screen.guiTop + y, width, height)
         val tank = (screen.container.te.properties[property] as? IFluidHandler)
         val currentSize = (tank?.getTankCapacity(tankId) ?: 0) / (tank?.getFluidInTank(tankId)?.amount
                 ?: 1) * when (direction) {

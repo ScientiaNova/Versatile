@@ -7,10 +7,10 @@ import com.emosewapixel.pixellib.machines.capabilities.IFluidHandlerModifiable
 import com.emosewapixel.pixellib.machines.gui.BaseContainer
 import com.emosewapixel.pixellib.machines.gui.BaseScreen
 import com.emosewapixel.pixellib.machines.gui.layout.ISlotComponent
+import com.emosewapixel.pixellib.machines.gui.textures.BaseTextures
 import com.emosewapixel.pixellib.machines.packets.NetworkHandler
 import com.emosewapixel.pixellib.machines.packets.UpdateFluidStackPacket
 import net.minecraft.client.gui.AbstractGui
-import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.util.text.TranslationTextComponent
@@ -21,7 +21,8 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler
 import net.minecraftforge.fluids.capability.IFluidHandler
 import net.minecraftforge.fml.network.PacketDistributor
 
-class FluidSlotComponent(val property: String, override val x: Int, override val y: Int, override val texture: TextureAtlasSprite) : ISlotComponent {
+class FluidSlotComponent(val property: String, override val x: Int, override val y: Int) : ISlotComponent {
+    override var texture = BaseTextures.FLUID_SLOT
     override val tooltips = mutableListOf<String>()
     override var width = 18
     override var height = 18
@@ -29,7 +30,7 @@ class FluidSlotComponent(val property: String, override val x: Int, override val
 
     @OnlyIn(Dist.CLIENT)
     override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
-        AbstractGui.blit(screen.guiLeft + x, screen.guiTop + y, screen.blitOffset, width, height, texture)
+        texture.render(screen.guiLeft + x, screen.guiTop + y, width, height)
         val fluid = (screen.container.te.properties[property] as? IFluidHandler)?.getFluidInTank(tankId)
                 ?: FluidStack.EMPTY
         if (!fluid.isEmpty)

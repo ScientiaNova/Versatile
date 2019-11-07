@@ -3,16 +3,15 @@ package com.emosewapixel.pixellib.machines.gui.layout.components
 import com.emosewapixel.pixellib.machines.gui.BaseContainer
 import com.emosewapixel.pixellib.machines.gui.BaseScreen
 import com.emosewapixel.pixellib.machines.gui.layout.IInteractableGUIComponent
+import com.emosewapixel.pixellib.machines.gui.textures.GUITexture
 import com.emosewapixel.pixellib.machines.packets.NetworkHandler
 import com.emosewapixel.pixellib.machines.packets.UpdateBooleanPacket
-import net.minecraft.client.gui.AbstractGui
-import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.fml.network.PacketDistributor
 
-class BooleanButtonComponent(val property: String, val onTex: TextureAtlasSprite, val offTex: TextureAtlasSprite, override val x: Int, override val y: Int) : IInteractableGUIComponent {
+class BooleanButtonComponent(val property: String, val onTex: GUITexture, val offTex: GUITexture, override val x: Int, override val y: Int) : IInteractableGUIComponent {
     override val tooltips = mutableListOf<String>()
     var width = 16
     var height = 16
@@ -20,8 +19,7 @@ class BooleanButtonComponent(val property: String, val onTex: TextureAtlasSprite
     @OnlyIn(Dist.CLIENT)
     override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
         val bool = screen.container.te.properties[property] as? Boolean ?: false
-        AbstractGui.blit(screen.guiLeft + x, screen.guiTop + y, screen.blitOffset, width, height, if (bool) onTex else offTex)
-
+        if (bool) onTex.render(screen.guiLeft + x, screen.guiTop + y, width, height) else offTex.render(screen.guiLeft + x, screen.guiTop + y, width, height)
     }
 
     @OnlyIn(Dist.CLIENT)

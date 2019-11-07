@@ -6,7 +6,7 @@ import net.minecraft.client.Minecraft
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 
-class LabelComponent(override val x: Int, override val y: Int, val text: String) : IGUIComponent {
+class LabelComponent(val text: String, override val x: Int, override val y: Int) : IGUIComponent {
     override val tooltips = mutableListOf<String>()
     var location = LabelLocation.START
     var color = 0x404040
