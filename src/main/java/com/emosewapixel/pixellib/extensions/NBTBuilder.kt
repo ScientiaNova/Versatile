@@ -3,7 +3,9 @@ package com.emosewapixel.pixellib.extensions
 import net.minecraft.nbt.ByteArrayNBT
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.nbt.INBT
+import net.minecraft.nbt.ListNBT
 import net.minecraftforge.common.util.INBTSerializable
+import net.minecraftforge.fluids.FluidStack
 import java.util.*
 
 class NBTBuilder(builder: NBTBuilder.() -> Unit) {
@@ -35,8 +37,11 @@ class NBTBuilder(builder: NBTBuilder.() -> Unit) {
     @JvmName("toLongArray")
     infix fun String.to(property: MutableList<Long>) = result.putLongArray(this, property)
 
+    infix fun String.to(property: FluidStack) = result.put(this, property.writeToNBT(CompoundNBT()))
+
     infix fun String.to(property: INBT) = result.put(this, property)
     infix fun String.to(property: INBTSerializable<*>) = result.put(this, property.serializeNBT())
+    infix fun String.to(property: Collection<INBT>) = result.put(this, property.toListNBT())
     operator fun String.invoke(builder: NBTBuilder.() -> Unit) = result.put(this, NBTBuilder(builder).result)
 }
 
@@ -78,4 +83,10 @@ operator fun CompoundNBT.plusAssign(pair: Pair<String, INBT>) {
 @JvmName("plusSerializable")
 operator fun CompoundNBT.plusAssign(pair: Pair<String, INBTSerializable<*>>) {
     put(pair.first, pair.second.serializeNBT())
+}
+
+fun Collection<INBT>.toListNBT(): ListNBT {
+    val list = ListNBT()
+    this.forEach { list.add(it) }
+    return list
 }
