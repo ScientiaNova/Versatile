@@ -1,9 +1,9 @@
 package com.emosewapixel.pixellib.machines.gui.layout.components
 
-import com.emosewapixel.pixellib.extensions.alphaF
-import com.emosewapixel.pixellib.extensions.blueF
-import com.emosewapixel.pixellib.extensions.greenF
-import com.emosewapixel.pixellib.extensions.redF
+import com.emosewapixel.ktlib.extensions.alphaF
+import com.emosewapixel.ktlib.extensions.blueF
+import com.emosewapixel.ktlib.extensions.greenF
+import com.emosewapixel.ktlib.extensions.redF
 import com.emosewapixel.pixellib.machines.gui.BaseContainer
 import com.emosewapixel.pixellib.machines.gui.BaseScreen
 import com.emosewapixel.pixellib.machines.gui.layout.IInteractableGUIComponent
@@ -16,7 +16,7 @@ import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.fml.network.PacketDistributor
 
-class ColorButtonComponent(val property: String, val texture: GUITexture, val colors: IntArray, override val x: Int, override val y: Int) : IInteractableGUIComponent {
+open class ColorButtonComponent(val property: String, val texture: GUITexture, val colors: IntArray, override val x: Int, override val y: Int) : IInteractableGUIComponent {
     override val tooltips = mutableListOf<String>()
     var width = 16
     var height = 16

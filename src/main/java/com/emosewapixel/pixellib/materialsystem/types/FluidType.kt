@@ -1,7 +1,7 @@
 package com.emosewapixel.pixellib.materialsystem.types
 
 import com.blamejared.crafttweaker.api.annotations.ZenRegister
-import com.emosewapixel.pixellib.extensions.json
+import com.emosewapixel.ktlib.extensions.json
 import com.emosewapixel.pixellib.fluids.IFluidPairHolder
 import com.emosewapixel.pixellib.fluids.MaterialBucketItem
 import com.emosewapixel.pixellib.fluids.MaterialFluidBlock

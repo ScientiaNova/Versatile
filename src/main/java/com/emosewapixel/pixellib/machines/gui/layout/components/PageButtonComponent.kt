@@ -12,7 +12,7 @@ import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.fml.network.PacketDistributor
 
-class PageButtonComponent(val page: Int, val texture: GUITexture, override val x: Int, override val y: Int) : IInteractableGUIComponent {
+open class PageButtonComponent(val page: Int, val texture: GUITexture, override val x: Int, override val y: Int) : IInteractableGUIComponent {
     override val tooltips = mutableListOf<String>()
     var width = 16
     var height = 16

@@ -1,7 +1,7 @@
 package com.emosewapixel.pixellib.machines.packets
 
-import com.emosewapixel.pixellib.extensions.readFluidStack
-import com.emosewapixel.pixellib.extensions.writeFluidStack
+import com.emosewapixel.ktlib.extensions.readFluidStack
+import com.emosewapixel.ktlib.extensions.writeFluidStack
 import com.emosewapixel.pixellib.machines.BaseTileEntity
 import com.emosewapixel.pixellib.machines.capabilities.IFluidHandlerModifiable
 import com.emosewapixel.pixellib.machines.gui.BaseContainer

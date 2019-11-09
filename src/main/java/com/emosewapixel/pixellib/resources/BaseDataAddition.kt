@@ -1,7 +1,7 @@
 package com.emosewapixel.pixellib.resources
 
-import com.emosewapixel.pixellib.extensions.times
-import com.emosewapixel.pixellib.extensions.toStack
+import com.emosewapixel.ktlib.extensions.times
+import com.emosewapixel.ktlib.extensions.toStack
 import com.emosewapixel.pixellib.materialsystem.addition.BaseMaterials
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialBlocks
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialFluids

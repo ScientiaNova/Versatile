@@ -1,9 +1,9 @@
 package com.emosewapixel.pixellib.machines.gui
 
-import com.emosewapixel.pixellib.extensions.alphaF
-import com.emosewapixel.pixellib.extensions.blueF
-import com.emosewapixel.pixellib.extensions.greenF
-import com.emosewapixel.pixellib.extensions.redF
+import com.emosewapixel.ktlib.extensions.alphaF
+import com.emosewapixel.ktlib.extensions.blueF
+import com.emosewapixel.ktlib.extensions.greenF
+import com.emosewapixel.ktlib.extensions.redF
 import com.emosewapixel.pixellib.machines.packets.NetworkHandler
 import com.emosewapixel.pixellib.machines.packets.OpenGUIPacket
 import com.mojang.blaze3d.platform.GlStateManager

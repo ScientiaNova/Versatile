@@ -3,7 +3,7 @@ package com.emosewapixel.pixellib.materialsystem.types
 import com.blamejared.crafttweaker.api.annotations.ZenRegister
 import com.emosewapixel.pixellib.blocks.MaterialBlock
 import com.emosewapixel.pixellib.blocks.MaterialBlockItem
-import com.emosewapixel.pixellib.extensions.json
+import com.emosewapixel.ktlib.extensions.json
 import com.emosewapixel.pixellib.materialsystem.addition.BaseMaterials
 import com.emosewapixel.pixellib.materialsystem.materials.IMaterialObject
 import com.emosewapixel.pixellib.materialsystem.materials.Material

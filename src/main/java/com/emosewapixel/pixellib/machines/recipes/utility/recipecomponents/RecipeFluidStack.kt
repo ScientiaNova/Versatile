@@ -1,6 +1,6 @@
 package com.emosewapixel.pixellib.machines.recipes.utility.recipecomponents
 
-import com.emosewapixel.pixellib.extensions.toStack
+import com.emosewapixel.ktlib.extensions.toStack
 import net.minecraft.fluid.Fluid
 import net.minecraftforge.fluids.FluidStack
 

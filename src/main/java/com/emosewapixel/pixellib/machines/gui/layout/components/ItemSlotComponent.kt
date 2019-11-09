@@ -8,7 +8,7 @@ import net.minecraftforge.items.IItemHandlerModifiable
 import org.lwjgl.glfw.GLFW
 import kotlin.math.ceil
 
-class ItemSlotComponent(property: String, x: Int, y: Int) : AbstractItemSlotComponent(property, x, y) {
+open class ItemSlotComponent(property: String, x: Int, y: Int) : AbstractItemSlotComponent(property, x, y) {
     @OnlyIn(Dist.CLIENT)
     override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int, screen: BaseScreen): Boolean {
         val itemHandler = screen.container.te.properties[property] as? IItemHandlerModifiable

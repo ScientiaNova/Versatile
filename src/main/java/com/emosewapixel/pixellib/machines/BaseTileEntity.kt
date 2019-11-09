@@ -1,6 +1,6 @@
 package com.emosewapixel.pixellib.machines
 
-import com.emosewapixel.pixellib.extensions.plusAssign
+import com.emosewapixel.ktlib.extensions.plusAssign
 import com.emosewapixel.pixellib.machines.gui.layout.GUIBook
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.CompoundNBT

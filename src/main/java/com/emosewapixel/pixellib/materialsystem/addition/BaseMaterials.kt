@@ -1,6 +1,6 @@
 package com.emosewapixel.pixellib.materialsystem.addition
 
-import com.emosewapixel.pixellib.extensions.toResLoc
+import com.emosewapixel.ktlib.extensions.toResLoc
 import com.emosewapixel.pixellib.fluids.FluidPairHolder
 import com.emosewapixel.pixellib.materialsystem.elements.BaseElements
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialBlocks

@@ -15,7 +15,7 @@ import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.fluids.capability.IFluidHandler
 import net.minecraftforge.fml.network.PacketDistributor
 
-class FluidBarComponent(val property: String, val backGroundText: GUITexture, override val x: Int, override val y: Int) : IInteractableGUIComponent {
+open class FluidBarComponent(val property: String, val backGroundText: GUITexture, override val x: Int, override val y: Int) : IInteractableGUIComponent {
     override val tooltips = mutableListOf<String>()
     var direction = Direction2D.RIGHT
     val tankId = 0

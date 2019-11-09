@@ -6,7 +6,7 @@ import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.items.IItemHandlerModifiable
 import org.lwjgl.glfw.GLFW
 
-class GhostItemSlotComponent(property: String, x: Int, y: Int) : AbstractItemSlotComponent(property, x, y) {
+open class GhostItemSlotComponent(property: String, x: Int, y: Int) : AbstractItemSlotComponent(property, x, y) {
     @OnlyIn(Dist.CLIENT)
     override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int, screen: BaseScreen): Boolean {
         val itemHandler = screen.container.te.properties[property] as? IItemHandlerModifiable

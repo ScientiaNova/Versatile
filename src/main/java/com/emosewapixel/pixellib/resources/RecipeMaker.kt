@@ -1,8 +1,8 @@
 package com.emosewapixel.pixellib.resources
 
-import com.emosewapixel.pixellib.extensions.json
-import com.emosewapixel.pixellib.extensions.toJson
-import com.emosewapixel.pixellib.extensions.toResLoc
+import com.emosewapixel.ktlib.extensions.json
+import com.emosewapixel.ktlib.extensions.toJson
+import com.emosewapixel.ktlib.extensions.toResLoc
 import com.google.gson.JsonObject
 import net.minecraft.block.Block
 import net.minecraft.item.Item

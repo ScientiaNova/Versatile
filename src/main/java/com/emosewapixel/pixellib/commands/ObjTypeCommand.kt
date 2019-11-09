@@ -1,6 +1,6 @@
 package com.emosewapixel.pixellib.commands
 
-import com.emosewapixel.pixellib.extensions.*
+import com.emosewapixel.ktlib.extensions.*
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialBlocks
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialFluids
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialItems

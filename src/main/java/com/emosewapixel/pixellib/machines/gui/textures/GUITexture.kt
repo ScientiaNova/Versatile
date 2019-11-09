@@ -1,6 +1,6 @@
 package com.emosewapixel.pixellib.machines.gui.textures
 
-import com.emosewapixel.pixellib.extensions.toResLoc
+import com.emosewapixel.ktlib.extensions.toResLoc
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats

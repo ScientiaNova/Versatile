@@ -11,7 +11,7 @@ import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.fml.network.PacketDistributor
 
-class IntegerButtonComponent(val property: String, val textures: List<GUITexture>, override val x: Int, override val y: Int) : IInteractableGUIComponent {
+open class IntegerButtonComponent(val property: String, val textures: List<GUITexture>, override val x: Int, override val y: Int) : IInteractableGUIComponent {
     override val tooltips = mutableListOf<String>()
     var width = 16
     var height = 16

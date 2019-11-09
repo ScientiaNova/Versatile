@@ -1,7 +1,7 @@
 package com.emosewapixel.pixellib.machines.capabilities
 
-import com.emosewapixel.pixellib.extensions.nbt
-import com.emosewapixel.pixellib.extensions.times
+import com.emosewapixel.ktlib.extensions.nbt
+import com.emosewapixel.ktlib.extensions.times
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.util.Direction
 import net.minecraftforge.common.capabilities.Capability

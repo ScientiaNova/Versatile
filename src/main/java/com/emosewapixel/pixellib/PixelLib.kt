@@ -54,9 +54,9 @@ object PixelLib {
     private val proxy = DistExecutor.runForDist<IModProxy>({ Supplier { ClientProxy } }, { Supplier { ServerProxy } })
 
     init {
-        KtModLoadingContext.get().modEventBus.addListener<FMLCommonSetupEvent> { this.commonSetup() }
-        KtModLoadingContext.get().modEventBus.addListener<InterModEnqueueEvent> { this.enqueueIMC(it) }
-        KtModLoadingContext.get().modEventBus.addListener<InterModProcessEvent> { this.processIMC(it) }
+        KtModLoadingContext.get().modEventBus.addListener<FMLCommonSetupEvent> { commonSetup() }
+        KtModLoadingContext.get().modEventBus.addListener<InterModEnqueueEvent> { enqueueIMC(it) }
+        KtModLoadingContext.get().modEventBus.addListener<InterModProcessEvent> { processIMC(it) }
 
         proxy.init()
     }

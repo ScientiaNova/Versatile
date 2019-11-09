@@ -1,7 +1,7 @@
 package com.emosewapixel.pixellib.machines.gui.layout.components
 
-import com.emosewapixel.pixellib.extensions.isNotEmpty
-import com.emosewapixel.pixellib.extensions.times
+import com.emosewapixel.ktlib.extensions.isNotEmpty
+import com.emosewapixel.ktlib.extensions.times
 import com.emosewapixel.pixellib.items.ItemStackHolder
 import com.emosewapixel.pixellib.machines.capabilities.IFluidHandlerModifiable
 import com.emosewapixel.pixellib.machines.gui.BaseContainer
@@ -21,7 +21,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler
 import net.minecraftforge.fluids.capability.IFluidHandler
 import net.minecraftforge.fml.network.PacketDistributor
 
-class FluidSlotComponent(val property: String, override val x: Int, override val y: Int) : ISlotComponent {
+open class FluidSlotComponent(val property: String, override val x: Int, override val y: Int) : ISlotComponent {
     override var texture = BaseTextures.FLUID_SLOT
     override val tooltips = mutableListOf<String>()
     override var width = 18

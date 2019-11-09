@@ -1,6 +1,6 @@
 package com.emosewapixel.pixellib.machines.gui.layout.components
 
-import com.emosewapixel.pixellib.extensions.insertItem
+import com.emosewapixel.ktlib.extensions.insertItem
 import com.emosewapixel.pixellib.machines.gui.BaseContainer
 import com.emosewapixel.pixellib.machines.gui.BaseScreen
 import com.emosewapixel.pixellib.machines.gui.layout.ISlotComponent
@@ -12,7 +12,7 @@ import net.minecraftforge.api.distmarker.OnlyIn
 import org.lwjgl.glfw.GLFW
 import kotlin.math.ceil
 
-class PlayerSlotComponent(val slotIndex: Int, override val x: Int, override val y: Int) : ISlotComponent {
+open class PlayerSlotComponent(val slotIndex: Int, override val x: Int, override val y: Int) : ISlotComponent {
     override val texture = BaseTextures.ITEM_SLOT
     override val tooltips = mutableListOf<String>()
     override var width = 18

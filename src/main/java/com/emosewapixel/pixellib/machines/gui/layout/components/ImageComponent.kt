@@ -7,7 +7,7 @@ import com.emosewapixel.pixellib.machines.gui.textures.GUITexture
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 
-class ImageComponent : IGUIComponent {
+open class ImageComponent : IGUIComponent {
     var texture: GUITexture = BaseTextures.BACKGROUND
     override val tooltips = mutableListOf<String>()
     override var x = 0
