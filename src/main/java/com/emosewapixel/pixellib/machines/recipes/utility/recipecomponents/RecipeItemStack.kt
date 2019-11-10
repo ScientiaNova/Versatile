@@ -1,6 +1,6 @@
 package com.emosewapixel.pixellib.machines.recipes.utility.recipecomponents
 
-import com.emosewapixel.ktlib.extensions.toStack
+import com.emosewapixel.pixellib.extensions.toStack
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 

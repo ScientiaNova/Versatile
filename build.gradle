@@ -70,9 +70,14 @@ repositories {
     }
 }
 
+configurations {
+    mod
+}
+
 dependencies {
     minecraft "net.minecraftforge:forge:$mc_version-28.1.87"
-    compileOnly files("libs/KtLib-$mc_version-1.0.0-deobf.jar")
+    compile "kottle:Kottle:$kottle_version"
+    mod "kottle:Kottle:$kottle_version"
     compileOnly fg.deobf("mezz.jei:jei-$mc_version:$jei_version:api")
     compile fg.deobf("mezz.jei:jei-$mc_version:$jei_version")
     compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-$mc_version:$ct_version")
@@ -90,6 +95,20 @@ jar {
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
+}
+
+task installMods(type: Copy, dependsOn: "deinstallMods") {
+    from { configurations.mod }
+    include "**/*.jar"
+    into file("run/mods")
+}
+
+task deinstallMods(type: Delete) {
+    delete fileTree(dir: "run/mods", include: "*.jar")
+}
+
+project.afterEvaluate {
+    project.tasks['prepareRuns'].dependsOn(project.tasks['installMods'])
 }
 
 def reobfFile = file("$buildDir/reobfJar/output.jar")

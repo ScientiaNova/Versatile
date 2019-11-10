@@ -1,6 +1,6 @@
 package com.emosewapixel.pixellib.machines.recipes.utility
 
-import com.emosewapixel.ktlib.extensions.times
+import com.emosewapixel.pixellib.extensions.times
 import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.Item

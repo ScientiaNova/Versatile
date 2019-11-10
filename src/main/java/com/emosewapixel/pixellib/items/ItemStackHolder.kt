@@ -1,7 +1,7 @@
 package com.emosewapixel.pixellib.items
 
-import com.emosewapixel.ktlib.extensions.isNotEmpty
-import com.emosewapixel.ktlib.extensions.times
+import com.emosewapixel.pixellib.extensions.isNotEmpty
+import com.emosewapixel.pixellib.extensions.times
 import net.minecraft.item.ItemStack
 
 class ItemStackHolder @JvmOverloads constructor(var stack: ItemStack = ItemStack.EMPTY) {

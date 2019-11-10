@@ -1,7 +1,5 @@
 package com.emosewapixel.pixellib
 
-import com.emosewapixel.ktlib.lang.KtModLoadingContext
-import com.emosewapixel.ktlib.lang.events.KtEventBusSubscriber
 import com.emosewapixel.pixellib.blocks.BlockRegistry
 import com.emosewapixel.pixellib.commands.FluidContainerCommand
 import com.emosewapixel.pixellib.commands.MaterialCommand
@@ -22,6 +20,8 @@ import com.emosewapixel.pixellib.proxy.addModelJSONs
 import com.emosewapixel.pixellib.resources.BaseDataAddition
 import com.emosewapixel.pixellib.resources.FakeDataPackFinder
 import com.emosewapixel.pixellib.worldgen.OreGen
+import net.alexwells.kottle.FMLKotlinModLoadingContext
+import net.alexwells.kottle.KotlinEventBusSubscriber
 import net.minecraft.block.Block
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
@@ -54,9 +54,9 @@ object PixelLib {
     private val proxy = DistExecutor.runForDist<IModProxy>({ Supplier { ClientProxy } }, { Supplier { ServerProxy } })
 
     init {
-        KtModLoadingContext.get().modEventBus.addListener<FMLCommonSetupEvent> { commonSetup() }
-        KtModLoadingContext.get().modEventBus.addListener<InterModEnqueueEvent> { enqueueIMC(it) }
-        KtModLoadingContext.get().modEventBus.addListener<InterModProcessEvent> { processIMC(it) }
+        FMLKotlinModLoadingContext.get().modEventBus.addListener<FMLCommonSetupEvent> { this.commonSetup() }
+        FMLKotlinModLoadingContext.get().modEventBus.addListener<InterModEnqueueEvent> { this.enqueueIMC(it) }
+        FMLKotlinModLoadingContext.get().modEventBus.addListener<InterModProcessEvent> { this.processIMC(it) }
 
         proxy.init()
     }
@@ -75,7 +75,7 @@ object PixelLib {
         BaseDataAddition.register()
     }
 
-    @KtEventBusSubscriber(bus = KtEventBusSubscriber.Bus.MOD, modid = ModId)
+    @KotlinEventBusSubscriber(bus = KotlinEventBusSubscriber.Bus.MOD, modid = ModId)
     object RegistryEvents {
         @SubscribeEvent(priority = EventPriority.HIGHEST)
         fun onEarlyBlockRegistry(e: RegistryEvent.Register<Block>) {
@@ -100,7 +100,7 @@ object PixelLib {
         fun onLateFluidRegistry(e: RegistryEvent.Register<Fluid>) = FluidRegistry.registerFluids(e)
     }
 
-    @KtEventBusSubscriber(bus = KtEventBusSubscriber.Bus.FORGE, modid = ModId)
+    @KotlinEventBusSubscriber(bus = KotlinEventBusSubscriber.Bus.FORGE, modid = ModId)
     object GameEvents {
         @SubscribeEvent(priority = EventPriority.HIGH)
         fun onServerAboutToStart(e: FMLServerAboutToStartEvent) = e.server.resourcePacks.addPackFinder(FakeDataPackFinder)

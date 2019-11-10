@@ -1,6 +1,6 @@
 package com.emosewapixel.pixellib.integration.jei
 
-import com.emosewapixel.ktlib.extensions.toStack
+import com.emosewapixel.pixellib.extensions.toStack
 import com.emosewapixel.pixellib.machines.recipes.AbstractRecipeList
 import com.emosewapixel.pixellib.machines.recipes.SimpleMachineRecipe
 import mezz.jei.api.constants.VanillaTypes

@@ -1,7 +1,7 @@
 package com.emosewapixel.pixellib.machines.gui.layout.components
 
-import com.emosewapixel.ktlib.extensions.isNotEmpty
-import com.emosewapixel.ktlib.extensions.times
+import com.emosewapixel.pixellib.extensions.isNotEmpty
+import com.emosewapixel.pixellib.extensions.times
 import com.emosewapixel.pixellib.items.ItemStackHolder
 import com.emosewapixel.pixellib.machines.capabilities.IFluidHandlerModifiable
 import com.emosewapixel.pixellib.machines.gui.BaseContainer

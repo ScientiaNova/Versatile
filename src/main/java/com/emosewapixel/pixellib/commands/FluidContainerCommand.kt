@@ -1,8 +1,8 @@
 package com.emosewapixel.pixellib.commands
 
-import com.emosewapixel.ktlib.extensions.does
-import com.emosewapixel.ktlib.extensions.literal
-import com.emosewapixel.ktlib.extensions.register
+import com.emosewapixel.pixellib.extensions.does
+import com.emosewapixel.pixellib.extensions.literal
+import com.emosewapixel.pixellib.extensions.register
 import com.mojang.brigadier.CommandDispatcher
 import net.minecraft.command.CommandSource
 import net.minecraft.entity.player.ServerPlayerEntity

@@ -1,6 +1,6 @@
 package com.emosewapixel.pixellib.machines.gui.layout.components
 
-import com.emosewapixel.ktlib.extensions.insertItem
+import com.emosewapixel.pixellib.extensions.insertItem
 import com.emosewapixel.pixellib.machines.gui.BaseContainer
 import com.emosewapixel.pixellib.machines.gui.BaseScreen
 import com.emosewapixel.pixellib.machines.gui.layout.ISlotComponent

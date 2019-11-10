@@ -1,4 +1,4 @@
-modLoader="ktlib"
+modLoader="kotlinfml"
 loaderVersion="[1,)"
 issueTrackerURL="https://github.com/EmosewaPixel/PixelLib/issues"
 [[mods]]

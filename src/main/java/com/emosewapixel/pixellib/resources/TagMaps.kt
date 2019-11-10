@@ -1,6 +1,6 @@
 package com.emosewapixel.pixellib.resources
 
-import com.emosewapixel.ktlib.extensions.toResLoc
+import com.emosewapixel.pixellib.extensions.toResLoc
 import com.emosewapixel.pixellib.materialsystem.materials.IMaterialObject
 import com.google.common.collect.ListMultimap
 import com.google.common.collect.MultimapBuilder

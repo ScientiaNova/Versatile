@@ -1,6 +1,6 @@
 package com.emosewapixel.pixellib.machines.recipes
 
-import com.emosewapixel.ktlib.extensions.isNotEmpty
+import com.emosewapixel.pixellib.extensions.isNotEmpty
 import com.emosewapixel.pixellib.machines.recipes.utility.MachineInput
 import com.emosewapixel.pixellib.machines.recipes.utility.WeightedMap
 import com.emosewapixel.pixellib.machines.recipes.utility.recipecomponents.IRecipeStack
