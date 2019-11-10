@@ -1,6 +1,7 @@
 package com.emosewapixel.pixellib.machines.packets
 
 import com.emosewapixel.pixellib.machines.BaseTileEntity
+import com.emosewapixel.pixellib.machines.properties.IBooleanProperty
 import net.minecraft.client.Minecraft
 import net.minecraft.network.PacketBuffer
 import net.minecraft.util.math.BlockPos
@@ -24,7 +25,7 @@ class UpdateBooleanPacket(val pos: BlockPos, val property: String, val value: Bo
                         { Supplier { Minecraft.getInstance().world.getTileEntity(packet.pos) as? BaseTileEntity } },
                         { Supplier { context.get().sender?.world?.getTileEntity(packet.pos) as? BaseTileEntity } }
                 )
-                te?.properties?.set(packet.property, packet.value)
+                (te?.properties?.get(packet.property) as? IBooleanProperty)?.bool = packet.value
             }
         }
     }

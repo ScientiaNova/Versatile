@@ -33,13 +33,11 @@ object NetworkHandler {
                 .consumer(ChangePagePacket.Companion::processPacket)
                 .add()
 
-
         CHANNEL.messageBuilder(UpdateBooleanPacket::class.java, 3)
                 .encoder(UpdateBooleanPacket::encode)
                 .decoder(UpdateBooleanPacket.Companion::decode)
                 .consumer(UpdateBooleanPacket.Companion::processPacket)
                 .add()
-
 
         CHANNEL.messageBuilder(UpdateIntPacket::class.java, 4)
                 .encoder(UpdateIntPacket::encode)
@@ -47,26 +45,16 @@ object NetworkHandler {
                 .consumer(UpdateIntPacket.Companion::processPacket)
                 .add()
 
-
         CHANNEL.messageBuilder(UpdateItemStackPacket::class.java, 5)
                 .encoder(UpdateItemStackPacket::encode)
                 .decoder(UpdateItemStackPacket.Companion::decode)
                 .consumer(UpdateItemStackPacket.Companion::processPacket)
                 .add()
 
-
         CHANNEL.messageBuilder(UpdateFluidStackPacket::class.java, 6)
                 .encoder(UpdateFluidStackPacket::encode)
                 .decoder(UpdateFluidStackPacket.Companion::decode)
                 .consumer(UpdateFluidStackPacket.Companion::processPacket)
-                .add()
-
-
-
-        CHANNEL.messageBuilder(UpdateFluidTankPacket::class.java, 7)
-                .encoder(UpdateFluidTankPacket::encode)
-                .decoder(UpdateFluidTankPacket.Companion::decode)
-                .consumer(UpdateFluidTankPacket.Companion::processPacket)
                 .add()
     }
 }

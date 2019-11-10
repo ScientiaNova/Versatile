@@ -1,8 +1,15 @@
 package com.emosewapixel.pixellib.machines.recipes
 
+import com.emosewapixel.pixellib.machines.capabilities.FluidStackHandler
+import com.emosewapixel.pixellib.machines.capabilities.ImprovedItemStackHandler
+import com.emosewapixel.pixellib.machines.gui.layout.GUIPage
+import com.emosewapixel.pixellib.machines.properties.implementations.FluidInventoryProperty
+import com.emosewapixel.pixellib.machines.properties.implementations.ItemInventoryProperty
 import com.emosewapixel.pixellib.machines.recipes.utility.MachineInput
+import net.minecraft.block.Block
 import net.minecraft.item.ItemStack
 import net.minecraft.util.ResourceLocation
+import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.fluids.FluidStack
 
 /*
@@ -11,26 +18,28 @@ Recipe Lists are intertwined with Recipe Builders and the Machine Recipes themse
 */
 abstract class AbstractRecipeList<T : SimpleMachineRecipe, B : AbstractRecipeBuilder<T, B>>(val name: ResourceLocation, val maxInputs: Int, val maxFluidInputs: Int, val maxOutputs: Int, val maxFluidOutputs: Int) {
     val recipes = mutableListOf<T>()
+    val blocksImplementing = mutableListOf<Block>()
     protected val inputMap = mutableMapOf<String, MutableSet<T>>()
+    open val localizedName = TranslationTextComponent("recipe_list.$name")
+    open val genJEIPage = true
 
-    val maxRecipeSlots: Int
-        get() = maxInputs + maxOutputs
+    val maxRecipeSlots = maxInputs + maxOutputs
 
-    val maxRecipeTanks: Int
-        get() = maxFluidInputs + maxFluidOutputs
+    val maxRecipeTanks = maxFluidInputs + maxFluidOutputs
 
-    open fun isInRecipe(stack: ItemStack) = itemKeys.flatMap { it(stack) }.any { it in inputMap }
+    init {
+        RecipeLists += this
+    }
 
-    open fun isInRecipe(stack: FluidStack) = fluidKeys.flatMap { it(stack) }.any { it in inputMap }
+    open fun isInRecipe(stack: ItemStack) = itemKeys.flatMap { it(stack) }.any(inputMap::contains)
+
+    open fun isInRecipe(stack: FluidStack) = fluidKeys.flatMap { it(stack) }.any(inputMap::contains)
 
     open fun add(recipe: T) {
         recipes.add(recipe)
         recipe.inputRecipeStacks.forEach {
             val key = it.toString()
-            if (key in inputMap)
-                inputMap[key]?.add(recipe)
-            else
-                inputMap[key] = mutableSetOf(recipe)
+            inputMap[key]?.add(recipe) ?: inputMap.put(key, mutableSetOf(recipe))
         }
     }
 
@@ -57,6 +66,10 @@ abstract class AbstractRecipeList<T : SimpleMachineRecipe, B : AbstractRecipeBui
             if (list?.isEmpty() == true)
                 inputMap.remove(it.toString())
         }
+    }
+
+    open fun createPage(items: ItemInventoryProperty = ItemInventoryProperty(ImprovedItemStackHandler(maxInputs, maxOutputs)), fluids: FluidInventoryProperty = FluidInventoryProperty(FluidStackHandler(maxFluidInputs, maxFluidOutputs))) = GUIPage {
+
     }
 
     abstract fun recipeBuilder(): B

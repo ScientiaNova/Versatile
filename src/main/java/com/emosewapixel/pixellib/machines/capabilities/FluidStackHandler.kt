@@ -3,17 +3,12 @@ package com.emosewapixel.pixellib.machines.capabilities
 import com.emosewapixel.pixellib.extensions.nbt
 import com.emosewapixel.pixellib.extensions.times
 import net.minecraft.nbt.CompoundNBT
-import net.minecraft.util.Direction
-import net.minecraftforge.common.capabilities.Capability
-import net.minecraftforge.common.capabilities.ICapabilityProvider
 import net.minecraftforge.common.util.Constants
 import net.minecraftforge.common.util.INBTSerializable
-import net.minecraftforge.common.util.LazyOptional
 import net.minecraftforge.fluids.FluidStack
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler
 import net.minecraftforge.fluids.capability.IFluidHandler
 
-open class FluidStackHandler @JvmOverloads constructor(val count: Int, val capacity: Int = 10000, val noOutputTanks: Array<Int> = emptyArray(), val noInputTanks: Array<Int> = emptyArray()) : IFluidHandlerModifiable, ICapabilityProvider, INBTSerializable<CompoundNBT> {
+open class FluidStackHandler @JvmOverloads constructor(val count: Int, val capacity: Int = 10000, val noOutputTanks: Array<Int> = emptyArray(), val noInputTanks: Array<Int> = emptyArray()) : IFluidHandlerModifiable, INBTSerializable<CompoundNBT> {
     constructor(tanks: Int, capacity: Int = 10000, noOutput: IntRange, noInput: IntRange) : this(tanks, capacity, noOutput.toList().toTypedArray(), noInput.toList().toTypedArray())
 
     constructor(capacity: Int = 10000, inputCount: Int, outputCount: Int) : this(inputCount + outputCount, capacity, 0 until inputCount, inputCount until inputCount + outputCount)
@@ -97,10 +92,4 @@ open class FluidStackHandler @JvmOverloads constructor(val count: Int, val capac
                 tanks[tankId] = FluidStack.loadFluidStackFromNBT(it)
         }
     }
-
-    override fun <T> getCapability(cap: Capability<T>, side: Direction?): LazyOptional<T> =
-            if (cap == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
-                LazyOptional.of { this }.cast()
-            else
-                LazyOptional.empty()
 }

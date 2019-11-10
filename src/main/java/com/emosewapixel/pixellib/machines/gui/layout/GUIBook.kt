@@ -8,9 +8,7 @@ class GUIBook {
     lateinit var current: GUIPage
 
     fun page(builder: GUIPage.() -> Unit) {
-        val page = GUIPage()
-        page.builder()
-        pages += page
+        pages += GUIPage(builder)
     }
 }
 

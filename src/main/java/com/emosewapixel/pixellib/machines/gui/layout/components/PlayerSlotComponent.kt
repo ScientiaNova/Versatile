@@ -1,7 +1,6 @@
 package com.emosewapixel.pixellib.machines.gui.layout.components
 
 import com.emosewapixel.pixellib.extensions.insertItem
-import com.emosewapixel.pixellib.machines.gui.BaseContainer
 import com.emosewapixel.pixellib.machines.gui.BaseScreen
 import com.emosewapixel.pixellib.machines.gui.layout.ISlotComponent
 import com.emosewapixel.pixellib.machines.gui.textures.BaseTextures
@@ -78,6 +77,4 @@ open class PlayerSlotComponent(val slotIndex: Int, override val x: Int, override
         }
         return true
     }
-
-    override fun detectAndSendChanges(container: BaseContainer) {}
 }

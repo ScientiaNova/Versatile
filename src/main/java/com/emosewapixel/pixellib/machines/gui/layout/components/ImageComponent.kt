@@ -12,8 +12,8 @@ open class ImageComponent : IGUIComponent {
     override val tooltips = mutableListOf<String>()
     override var x = 0
     override var y = 0
-    var width = 176
-    var height = 166
+    override var width = 176
+    override var height = 166
 
     @OnlyIn(Dist.CLIENT)
     override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) = texture.render(screen.guiLeft + x, screen.guiTop + y, width, height)

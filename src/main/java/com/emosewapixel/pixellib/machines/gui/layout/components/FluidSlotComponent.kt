@@ -3,25 +3,20 @@ package com.emosewapixel.pixellib.machines.gui.layout.components
 import com.emosewapixel.pixellib.extensions.isNotEmpty
 import com.emosewapixel.pixellib.extensions.times
 import com.emosewapixel.pixellib.items.ItemStackHolder
-import com.emosewapixel.pixellib.machines.capabilities.IFluidHandlerModifiable
-import com.emosewapixel.pixellib.machines.gui.BaseContainer
 import com.emosewapixel.pixellib.machines.gui.BaseScreen
+import com.emosewapixel.pixellib.machines.gui.layout.IPropertyGUIComponent
 import com.emosewapixel.pixellib.machines.gui.layout.ISlotComponent
 import com.emosewapixel.pixellib.machines.gui.textures.BaseTextures
-import com.emosewapixel.pixellib.machines.packets.NetworkHandler
-import com.emosewapixel.pixellib.machines.packets.UpdateFluidStackPacket
+import com.emosewapixel.pixellib.machines.properties.IFluidHandlerProperty
 import net.minecraft.client.gui.AbstractGui
-import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
-import net.minecraftforge.fluids.FluidStack
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler
 import net.minecraftforge.fluids.capability.IFluidHandler
-import net.minecraftforge.fml.network.PacketDistributor
 
-open class FluidSlotComponent(val property: String, override val x: Int, override val y: Int) : ISlotComponent {
+open class FluidSlotComponent(override val property: IFluidHandlerProperty, override val x: Int, override val y: Int) : ISlotComponent, IPropertyGUIComponent {
     override var texture = BaseTextures.FLUID_SLOT
     override val tooltips = mutableListOf<String>()
     override var width = 18
@@ -31,8 +26,7 @@ open class FluidSlotComponent(val property: String, override val x: Int, overrid
     @OnlyIn(Dist.CLIENT)
     override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
         texture.render(screen.guiLeft + x, screen.guiTop + y, width, height)
-        val fluid = (screen.container.te.properties[property] as? IFluidHandler)?.getFluidInTank(tankId)
-                ?: FluidStack.EMPTY
+        val fluid = property.handler.getFluidInTank(tankId)
         if (!fluid.isEmpty)
             screen.drawFluidStack(fluid, screen.guiLeft + x, screen.guiTop + y, width, height)
     }
@@ -41,26 +35,25 @@ open class FluidSlotComponent(val property: String, override val x: Int, overrid
     override fun drawInForeground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
         if (isSelected(mouseX - screen.guiLeft, mouseY - screen.guiTop)) {
             AbstractGui.fill(screen.guiLeft + x + 1, screen.guiTop + y + 1, width - 2, height - 2, 0xFFFFF)
-            val handler = screen.container.te.properties[property] as? IFluidHandler
-            val fluid = handler?.getFluidInTank(tankId)
-                    ?: FluidStack.EMPTY
+            val handler = property.handler
+            val fluid = handler.getFluidInTank(tankId)
             if (fluid.isEmpty)
                 screen.renderTooltip(TranslationTextComponent("gui.tooltip.tank_fill").string, mouseX, mouseY)
             else
-                screen.renderTooltip(mutableListOf(fluid.fluid.attributes.getDisplayName(fluid).string, "${fluid.amount}mb/${handler!!.getTankCapacity(tankId)}mb", TranslationTextComponent("gui.tooltip.tank_empty").string), mouseX, mouseY)
+                screen.renderTooltip(mutableListOf(fluid.fluid.attributes.getDisplayName(fluid).string, "${fluid.amount}mb/${handler.getTankCapacity(tankId)}mb", TranslationTextComponent("gui.tooltip.tank_empty").string), mouseX, mouseY)
         }
     }
 
     @OnlyIn(Dist.CLIENT)
     override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int, screen: BaseScreen): Boolean {
-        val slotTank = screen.container.te.properties[property] as? IFluidHandlerModifiable
+        val slotTank = property.handler
         val playerInv = screen.container.playerInv
         val heldStack = playerInv.itemStack
         heldStack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).ifPresent { handler ->
             val itemTanks = (0 until handler.tanks).map { index -> index to handler.getFluidInTank(index) }
-            val stackInSelected = slotTank?.getFluidInTank(tankId)
+            val stackInSelected = slotTank.getFluidInTank(tankId)
             val stackCount = heldStack.count
-            when (stackInSelected?.isEmpty) {
+            when (stackInSelected.isEmpty) {
                 //Filling Tank, Emptying Container
                 true -> {
                     val capacity = slotTank.getTankCapacity(tankId)
@@ -210,14 +203,5 @@ open class FluidSlotComponent(val property: String, override val x: Int, overrid
             }
         }
         return true
-    }
-
-    override fun detectAndSendChanges(container: BaseContainer) {
-        val serverProperty = (container.te.properties[property] as? IFluidHandler)?.getFluidInTank(tankId)
-                ?: FluidStack.EMPTY
-        if (serverProperty != (container.clientProperties[property] as? IFluidHandler)?.getFluidInTank(tankId)) {
-            (container.clientProperties[property] as? IFluidHandlerModifiable)?.setFluidInTank(tankId, serverProperty)
-            NetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with { container.playerInv.player as ServerPlayerEntity }, UpdateFluidStackPacket(container.te.pos, property, tankId, serverProperty))
-        }
     }
 }

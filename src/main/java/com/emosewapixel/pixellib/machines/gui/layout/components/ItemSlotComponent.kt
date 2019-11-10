@@ -1,21 +1,21 @@
 package com.emosewapixel.pixellib.machines.gui.layout.components
 
 import com.emosewapixel.pixellib.machines.gui.BaseScreen
+import com.emosewapixel.pixellib.machines.properties.IItemHandlerProperty
 import net.minecraft.item.ItemStack
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
-import net.minecraftforge.items.IItemHandlerModifiable
 import org.lwjgl.glfw.GLFW
 import kotlin.math.ceil
 
-open class ItemSlotComponent(property: String, x: Int, y: Int) : AbstractItemSlotComponent(property, x, y) {
+open class ItemSlotComponent(property: IItemHandlerProperty, x: Int, y: Int) : AbstractItemSlotComponent(property, x, y) {
     @OnlyIn(Dist.CLIENT)
     override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int, screen: BaseScreen): Boolean {
-        val itemHandler = screen.container.te.properties[property] as? IItemHandlerModifiable
+        val itemHandler = property.handler
         val playerInv = screen.container.playerInv
         val heldStack = playerInv.itemStack
         if (heldStack.isEmpty) {
-            if (itemHandler?.getStackInSlot(slotIndex)?.isEmpty == false) {
+            if (!itemHandler.getStackInSlot(slotIndex).isEmpty) {
                 val stack = itemHandler.getStackInSlot(slotIndex)
                 when (clickType) {
                     GLFW.GLFW_MOUSE_BUTTON_LEFT -> {
@@ -32,7 +32,7 @@ open class ItemSlotComponent(property: String, x: Int, y: Int) : AbstractItemSlo
                             playerInv.itemStack = stack.copy()
                 }
             }
-        } else if (itemHandler?.isItemValid(slotIndex, heldStack) == true)
+        } else if (itemHandler.isItemValid(slotIndex, heldStack))
             when (itemHandler.getStackInSlot(slotIndex).isEmpty) {
                 true -> when (clickType) {
                     GLFW.GLFW_MOUSE_BUTTON_LEFT ->

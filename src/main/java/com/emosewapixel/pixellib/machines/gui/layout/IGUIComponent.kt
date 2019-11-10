@@ -7,6 +7,8 @@ import net.minecraftforge.api.distmarker.OnlyIn
 interface IGUIComponent {
     val x: Int
     val y: Int
+    val width: Int
+    val height: Int
     val tooltips: MutableList<String>
 
     @OnlyIn(Dist.CLIENT)

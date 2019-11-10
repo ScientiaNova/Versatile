@@ -2,35 +2,45 @@ package com.emosewapixel.pixellib.machines.gui.layout
 
 import com.emosewapixel.pixellib.machines.gui.layout.components.*
 import com.emosewapixel.pixellib.machines.gui.textures.GUITexture
+import com.emosewapixel.pixellib.machines.properties.*
+import com.emosewapixel.pixellib.machines.properties.implementations.UpdatePageProperty
 
-class GUIPage {
+class GUIPage(builder: (GUIPage) -> Unit) {
     val components = mutableListOf<IGUIComponent>()
 
-    fun boolButton(property: String, onTex: GUITexture, offTex: GUITexture, x: Int, y: Int, builder: BooleanButtonComponent.() -> Unit) {
+    init {
+        builder(this)
+    }
+
+    val width get() = if (components.isEmpty()) 0 else components.map { it.x + it.width }.max()!! - components.map(IGUIComponent::x).min()!!
+
+    val height get() = if (components.isEmpty()) 0 else components.map { it.y + it.height }.max()!! - components.map(IGUIComponent::y).min()!!
+
+    fun boolButton(property: IBooleanProperty, onTex: GUITexture, offTex: GUITexture, x: Int, y: Int, builder: BooleanButtonComponent.() -> Unit) {
         val component = BooleanButtonComponent(property, onTex, offTex, x, y)
         component.builder()
         components += component
     }
 
-    fun colorButton(property: String, tex: GUITexture, colors: IntArray, x: Int, y: Int, builder: ColorButtonComponent.() -> Unit) {
+    fun colorButton(property: IIntegerProperty, tex: GUITexture, colors: IntArray, x: Int, y: Int, builder: ColorButtonComponent.() -> Unit) {
         val component = ColorButtonComponent(property, tex, colors, x, y)
         component.builder()
         components += component
     }
 
-    fun fluidBar(property: String, backTex: GUITexture, x: Int, y: Int, builder: FluidBarComponent.() -> Unit) {
+    fun fluidBar(property: IFluidHandlerProperty, backTex: GUITexture, x: Int, y: Int, builder: FluidBarComponent.() -> Unit) {
         val component = FluidBarComponent(property, backTex, x, y)
         component.builder()
         components += component
     }
 
-    fun fluidSlot(property: String, x: Int, y: Int, builder: FluidSlotComponent.() -> Unit) {
+    fun fluidSlot(property: IFluidHandlerProperty, x: Int, y: Int, builder: FluidSlotComponent.() -> Unit) {
         val component = FluidSlotComponent(property, x, y)
         component.builder()
         components += component
     }
 
-    fun ghostItemSlot(property: String, x: Int, y: Int, builder: GhostItemSlotComponent.() -> Unit) {
+    fun ghostItemSlot(property: IItemHandlerProperty, x: Int, y: Int, builder: GhostItemSlotComponent.() -> Unit) {
         val component = GhostItemSlotComponent(property, x, y)
         component.builder()
         components += component
@@ -42,13 +52,13 @@ class GUIPage {
         components += component
     }
 
-    fun intButton(property: String, textures: List<GUITexture>, x: Int, y: Int, builder: IntegerButtonComponent.() -> Unit) {
+    fun intButton(property: IIntegerProperty, textures: List<GUITexture>, x: Int, y: Int, builder: IntegerButtonComponent.() -> Unit) {
         val component = IntegerButtonComponent(property, textures, x, y)
         component.builder()
         components += component
     }
 
-    fun itemSlot(property: String, x: Int, y: Int, builder: ItemSlotComponent.() -> Unit) {
+    fun itemSlot(property: IItemHandlerProperty, x: Int, y: Int, builder: ItemSlotComponent.() -> Unit) {
         val component = ItemSlotComponent(property, x, y)
         component.builder()
         components += component
@@ -60,8 +70,8 @@ class GUIPage {
         components += component
     }
 
-    fun pageButton(page: Int, texture: GUITexture, x: Int, y: Int, builder: PageButtonComponent.() -> Unit) {
-        val component = PageButtonComponent(page, texture, x, y)
+    fun pageButton(property: UpdatePageProperty, page: Int, texture: GUITexture, x: Int, y: Int, builder: PageButtonComponent.() -> Unit) {
+        val component = PageButtonComponent(property, page, texture, x, y)
         component.builder()
         components += component
     }
@@ -72,8 +82,8 @@ class GUIPage {
         components += component
     }
 
-    fun progressBar(property: String, maxProperty: String, builder: ProgressBarComponent.() -> Unit) {
-        val component = ProgressBarComponent(property, maxProperty)
+    fun progressBar(property: IDoubleProperty, builder: ProgressBarComponent.() -> Unit) {
+        val component = ProgressBarComponent(property)
         component.builder()
         components += component
     }

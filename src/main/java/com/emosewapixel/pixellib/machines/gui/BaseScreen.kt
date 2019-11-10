@@ -20,6 +20,7 @@ class BaseScreen(container: BaseContainer, playerInv: PlayerInventory, title: IT
         set(value) {
             super.blitOffset = value
         }
+
     val itemRenderer: ItemRenderer
         get() = super.itemRenderer
 
