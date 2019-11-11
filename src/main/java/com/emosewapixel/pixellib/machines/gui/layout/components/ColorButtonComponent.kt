@@ -7,12 +7,12 @@ import com.emosewapixel.pixellib.extensions.redF
 import com.emosewapixel.pixellib.machines.gui.BaseScreen
 import com.emosewapixel.pixellib.machines.gui.layout.IPropertyGUIComponent
 import com.emosewapixel.pixellib.machines.gui.textures.GUITexture
-import com.emosewapixel.pixellib.machines.properties.IIntegerProperty
+import com.emosewapixel.pixellib.machines.properties.IVariableProperty
 import com.mojang.blaze3d.platform.GlStateManager
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 
-open class ColorButtonComponent(override val property: IIntegerProperty, val texture: GUITexture, val colors: IntArray, override val x: Int, override val y: Int) : IPropertyGUIComponent {
+open class ColorButtonComponent(override val property: IVariableProperty<Int>, val texture: GUITexture, val colors: IntArray, override val x: Int, override val y: Int) : IPropertyGUIComponent {
     override val tooltips = mutableListOf<String>()
     override var width = 16
     override var height = 16
@@ -20,7 +20,7 @@ open class ColorButtonComponent(override val property: IIntegerProperty, val tex
     @OnlyIn(Dist.CLIENT)
     override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
         GlStateManager.enableBlend()
-        val color = property.int
+        val color = property.value
         GlStateManager.color4f(color.redF, color.greenF, color.blueF, color.alphaF)
         texture.render(screen.guiLeft + x, screen.guiTop + y, width, height)
         GlStateManager.disableBlend()
@@ -31,8 +31,8 @@ open class ColorButtonComponent(override val property: IIntegerProperty, val tex
 
     @OnlyIn(Dist.CLIENT)
     override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int, screen: BaseScreen): Boolean {
-        val value = property.int
-        property.int = if (value + 1 < colors.size) value + 1 else 0
+        val value = property.value
+        property.setValue(if (value + 1 < colors.size) value + 1 else 0)
         return true
     }
 }

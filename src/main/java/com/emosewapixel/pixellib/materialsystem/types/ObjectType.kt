@@ -50,6 +50,7 @@ constructor(@ZenCodeType.Field val name: String,
     val itemTag: Tag<Item>
         @ZenCodeType.Getter get() = ItemTags.Wrapper(ResourceLocation("forge", name + "s"))
 
+    @Suppress("UNCHECKED_CAST")
     operator fun invoke(builder: T.() -> Unit) = builder(this as T)
 
     abstract fun localize(mat: Material): ITextComponent

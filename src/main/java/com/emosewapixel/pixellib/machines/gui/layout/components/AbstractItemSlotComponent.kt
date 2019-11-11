@@ -4,12 +4,13 @@ import com.emosewapixel.pixellib.machines.gui.BaseScreen
 import com.emosewapixel.pixellib.machines.gui.layout.IPropertyGUIComponent
 import com.emosewapixel.pixellib.machines.gui.layout.ISlotComponent
 import com.emosewapixel.pixellib.machines.gui.textures.BaseTextures
-import com.emosewapixel.pixellib.machines.properties.IItemHandlerProperty
+import com.emosewapixel.pixellib.machines.properties.IValueProperty
 import net.minecraft.client.gui.AbstractGui
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
+import net.minecraftforge.items.IItemHandlerModifiable
 
-abstract class AbstractItemSlotComponent(override val property: IItemHandlerProperty, override val x: Int, override val y: Int) : ISlotComponent, IPropertyGUIComponent {
+abstract class AbstractItemSlotComponent(override val property: IValueProperty<IItemHandlerModifiable>, override val x: Int, override val y: Int) : ISlotComponent, IPropertyGUIComponent {
     override var texture = BaseTextures.ITEM_SLOT
     override val tooltips = mutableListOf<String>()
     override var width = 18
@@ -19,7 +20,7 @@ abstract class AbstractItemSlotComponent(override val property: IItemHandlerProp
     @OnlyIn(Dist.CLIENT)
     override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
         texture.render(screen.guiLeft + x, screen.guiTop + y, width, height)
-        val stack = property.handler.getStackInSlot(slotIndex)
+        val stack = property.value.getStackInSlot(slotIndex)
         if (!stack.isEmpty)
             screen.drawItemStack(stack, screen.guiLeft + x, screen.guiTop + y)
     }
@@ -28,7 +29,7 @@ abstract class AbstractItemSlotComponent(override val property: IItemHandlerProp
     override fun drawInForeground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
         if (isSelected(mouseX - screen.guiLeft, mouseY - screen.guiTop)) {
             AbstractGui.fill(screen.guiLeft + x + 1, screen.guiTop + y + 1, width - 2, height - 2, 0xFFFFF)
-            val stack = property.handler.getStackInSlot(slotIndex)
+            val stack = property.value.getStackInSlot(slotIndex)
             if (!stack.isEmpty)
                 screen.renderTooltip(stack, mouseX, mouseY)
         }

@@ -1,15 +1,18 @@
 package com.emosewapixel.pixellib.machines.properties.implementations
 
-import com.emosewapixel.pixellib.extensions.nbt
 import com.emosewapixel.pixellib.machines.capabilities.FluidStackHandler
-import com.emosewapixel.pixellib.machines.gui.BaseContainer
-import com.emosewapixel.pixellib.machines.properties.IFluidHandlerProperty
-import net.minecraft.nbt.CompoundNBT
+import com.emosewapixel.pixellib.machines.capabilities.IFluidHandlerModifiable
+import com.emosewapixel.pixellib.machines.properties.IValueProperty
+import net.minecraft.util.Direction
+import net.minecraftforge.common.capabilities.Capability
+import net.minecraftforge.common.util.LazyOptional
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler
 
-open class FluidInventoryProperty(override val handler: FluidStackHandler) : IFluidHandlerProperty {
-    override fun detectAndSendChanges(container: BaseContainer) {}
+open class FluidInventoryProperty(override val value: FluidStackHandler) : IValueProperty<IFluidHandlerModifiable> {
+    override fun copy() = FluidInventoryProperty(value)
 
-    override fun deserializeNBT(nbt: CompoundNBT) {}
-
-    override fun serializeNBT() = nbt { }
+    override fun <T> getCapability(cap: Capability<T>, side: Direction?): LazyOptional<T> =
+            if (cap === CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
+                LazyOptional.of(::value).cast()
+            else LazyOptional.empty()
 }

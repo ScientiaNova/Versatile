@@ -45,16 +45,10 @@ object NetworkHandler {
                 .consumer(UpdateIntPacket.Companion::processPacket)
                 .add()
 
-        CHANNEL.messageBuilder(UpdateItemStackPacket::class.java, 5)
-                .encoder(UpdateItemStackPacket::encode)
-                .decoder(UpdateItemStackPacket.Companion::decode)
-                .consumer(UpdateItemStackPacket.Companion::processPacket)
-                .add()
-
-        CHANNEL.messageBuilder(UpdateFluidStackPacket::class.java, 6)
-                .encoder(UpdateFluidStackPacket::encode)
-                .decoder(UpdateFluidStackPacket.Companion::decode)
-                .consumer(UpdateFluidStackPacket.Companion::processPacket)
+        CHANNEL.messageBuilder(UpdateNBTSerializableProperty::class.java, 7)
+                .encoder(UpdateNBTSerializableProperty::encode)
+                .decoder(UpdateNBTSerializableProperty.Companion::decode)
+                .consumer(UpdateNBTSerializableProperty.Companion::processPacket)
                 .add()
     }
 }

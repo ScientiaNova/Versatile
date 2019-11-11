@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack
 import net.minecraftforge.fluids.FluidStack
 
 //Recipe Builders are builders used for easily creating Machine Recipes
+@Suppress("UNCHECKED_CAST")
 abstract class AbstractRecipeBuilder<T : SimpleMachineRecipe, R : AbstractRecipeBuilder<T, R>>(protected val recipeList: AbstractRecipeList<T, R>) {
     val inputs = mutableListOf<Pair<IRecipeStack<ItemStack>, Float>>()
     val fluidInputs = mutableListOf<Pair<IRecipeStack<FluidStack>, Float>>()

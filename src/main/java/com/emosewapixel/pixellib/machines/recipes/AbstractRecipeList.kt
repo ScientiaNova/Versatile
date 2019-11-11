@@ -3,7 +3,9 @@ package com.emosewapixel.pixellib.machines.recipes
 import com.emosewapixel.pixellib.machines.capabilities.FluidStackHandler
 import com.emosewapixel.pixellib.machines.capabilities.ImprovedItemStackHandler
 import com.emosewapixel.pixellib.machines.gui.layout.GUIPage
+import com.emosewapixel.pixellib.machines.properties.IValueProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.FluidInventoryProperty
+import com.emosewapixel.pixellib.machines.properties.implementations.IncrementingDoubleProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.ItemInventoryProperty
 import com.emosewapixel.pixellib.machines.recipes.utility.MachineInput
 import net.minecraft.block.Block
@@ -68,7 +70,7 @@ abstract class AbstractRecipeList<T : SimpleMachineRecipe, B : AbstractRecipeBui
         }
     }
 
-    open fun createPage(items: ItemInventoryProperty = ItemInventoryProperty(ImprovedItemStackHandler(maxInputs, maxOutputs)), fluids: FluidInventoryProperty = FluidInventoryProperty(FluidStackHandler(maxFluidInputs, maxFluidOutputs))) = GUIPage {
+    open fun createPage(items: ItemInventoryProperty = ItemInventoryProperty(ImprovedItemStackHandler(maxInputs, maxOutputs)), fluids: FluidInventoryProperty = FluidInventoryProperty(FluidStackHandler(maxFluidInputs, maxFluidOutputs)), progressUpdater: IValueProperty<Double> = IncrementingDoubleProperty()) = GUIPage {
 
     }
 

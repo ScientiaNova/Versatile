@@ -2,6 +2,7 @@ package com.emosewapixel.pixellib.machines.gui
 
 import com.emosewapixel.pixellib.machines.BaseTileEntity
 import com.emosewapixel.pixellib.machines.gui.layout.IPropertyGUIComponent
+import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.container.Container
@@ -13,5 +14,5 @@ class BaseContainer(id: Int, val playerInv: PlayerInventory, val te: BaseTileEnt
 
     override fun canInteractWith(playerIn: PlayerEntity) = te.canInteractWith(playerIn)
 
-    override fun detectAndSendChanges() = guiPage.components.asSequence().filterIsInstance<IPropertyGUIComponent>().distinct().forEach { it.property.detectAndSendChanges(this) }
+    override fun detectAndSendChanges() = guiPage.components.asSequence().filterIsInstance<IPropertyGUIComponent>().distinct().forEach { (it.property as? ITEBoundProperty)?.detectAndSendChanges(this) }
 }

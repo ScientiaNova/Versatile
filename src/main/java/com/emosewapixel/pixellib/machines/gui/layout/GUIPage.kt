@@ -1,9 +1,12 @@
 package com.emosewapixel.pixellib.machines.gui.layout
 
+import com.emosewapixel.pixellib.machines.capabilities.IFluidHandlerModifiable
 import com.emosewapixel.pixellib.machines.gui.layout.components.*
 import com.emosewapixel.pixellib.machines.gui.textures.GUITexture
-import com.emosewapixel.pixellib.machines.properties.*
+import com.emosewapixel.pixellib.machines.properties.IValueProperty
+import com.emosewapixel.pixellib.machines.properties.IVariableProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.UpdatePageProperty
+import net.minecraftforge.items.IItemHandlerModifiable
 
 class GUIPage(builder: (GUIPage) -> Unit) {
     val components = mutableListOf<IGUIComponent>()
@@ -16,31 +19,31 @@ class GUIPage(builder: (GUIPage) -> Unit) {
 
     val height get() = if (components.isEmpty()) 0 else components.map { it.y + it.height }.max()!! - components.map(IGUIComponent::y).min()!!
 
-    fun boolButton(property: IBooleanProperty, onTex: GUITexture, offTex: GUITexture, x: Int, y: Int, builder: BooleanButtonComponent.() -> Unit) {
+    fun boolButton(property: IVariableProperty<Boolean>, onTex: GUITexture, offTex: GUITexture, x: Int, y: Int, builder: BooleanButtonComponent.() -> Unit) {
         val component = BooleanButtonComponent(property, onTex, offTex, x, y)
         component.builder()
         components += component
     }
 
-    fun colorButton(property: IIntegerProperty, tex: GUITexture, colors: IntArray, x: Int, y: Int, builder: ColorButtonComponent.() -> Unit) {
+    fun colorButton(property: IVariableProperty<Int>, tex: GUITexture, colors: IntArray, x: Int, y: Int, builder: ColorButtonComponent.() -> Unit) {
         val component = ColorButtonComponent(property, tex, colors, x, y)
         component.builder()
         components += component
     }
 
-    fun fluidBar(property: IFluidHandlerProperty, backTex: GUITexture, x: Int, y: Int, builder: FluidBarComponent.() -> Unit) {
+    fun fluidBar(property: IValueProperty<IFluidHandlerModifiable>, backTex: GUITexture, x: Int, y: Int, builder: FluidBarComponent.() -> Unit) {
         val component = FluidBarComponent(property, backTex, x, y)
         component.builder()
         components += component
     }
 
-    fun fluidSlot(property: IFluidHandlerProperty, x: Int, y: Int, builder: FluidSlotComponent.() -> Unit) {
+    fun fluidSlot(property: IValueProperty<IFluidHandlerModifiable>, x: Int, y: Int, builder: FluidSlotComponent.() -> Unit) {
         val component = FluidSlotComponent(property, x, y)
         component.builder()
         components += component
     }
 
-    fun ghostItemSlot(property: IItemHandlerProperty, x: Int, y: Int, builder: GhostItemSlotComponent.() -> Unit) {
+    fun ghostItemSlot(property: IValueProperty<IItemHandlerModifiable>, x: Int, y: Int, builder: GhostItemSlotComponent.() -> Unit) {
         val component = GhostItemSlotComponent(property, x, y)
         component.builder()
         components += component
@@ -52,13 +55,13 @@ class GUIPage(builder: (GUIPage) -> Unit) {
         components += component
     }
 
-    fun intButton(property: IIntegerProperty, textures: List<GUITexture>, x: Int, y: Int, builder: IntegerButtonComponent.() -> Unit) {
+    fun intButton(property: IVariableProperty<Int>, textures: List<GUITexture>, x: Int, y: Int, builder: IntegerButtonComponent.() -> Unit) {
         val component = IntegerButtonComponent(property, textures, x, y)
         component.builder()
         components += component
     }
 
-    fun itemSlot(property: IItemHandlerProperty, x: Int, y: Int, builder: ItemSlotComponent.() -> Unit) {
+    fun itemSlot(property: IValueProperty<IItemHandlerModifiable>, x: Int, y: Int, builder: ItemSlotComponent.() -> Unit) {
         val component = ItemSlotComponent(property, x, y)
         component.builder()
         components += component
@@ -82,7 +85,7 @@ class GUIPage(builder: (GUIPage) -> Unit) {
         components += component
     }
 
-    fun progressBar(property: IDoubleProperty, builder: ProgressBarComponent.() -> Unit) {
+    fun progressBar(property: IValueProperty<Double>, builder: ProgressBarComponent.() -> Unit) {
         val component = ProgressBarComponent(property)
         component.builder()
         components += component

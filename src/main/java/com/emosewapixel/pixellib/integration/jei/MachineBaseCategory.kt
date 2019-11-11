@@ -34,5 +34,6 @@ open class MachineBaseCategory(helper: IGuiHelper, protected var recipeList: Abs
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun getRecipeClass() = (recipeList.javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<out SimpleMachineRecipe>
 }

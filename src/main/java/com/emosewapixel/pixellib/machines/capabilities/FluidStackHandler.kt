@@ -14,7 +14,10 @@ open class FluidStackHandler @JvmOverloads constructor(val count: Int, val capac
     constructor(capacity: Int = 10000, inputCount: Int, outputCount: Int) : this(inputCount + outputCount, capacity, 0 until inputCount, inputCount until inputCount + outputCount)
 
     var tanks = MutableList(count) { FluidStack.EMPTY }
-        protected set
+        set(value) {
+            if (tanks.size == value.size)
+                field = value
+        }
 
     val inputTanks get() = tanks.filterIndexed { index, _ -> index !in noInputTanks }
 

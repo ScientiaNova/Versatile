@@ -9,7 +9,12 @@ open class ImprovedItemStackHandler @JvmOverloads constructor(slots: Int, val no
 
     constructor(inputCount: Int, outputCount: Int) : this(inputCount + outputCount, 0 until inputCount, inputCount until inputCount + outputCount)
 
-    val stacks get() = super.stacks
+    var stacks
+        get() = super.stacks
+        set(value) {
+            if (value.size == super.stacks.size)
+                super.stacks = value
+        }
 
     val inputStacks get() = super.stacks.filterIndexed { index, _ -> index !in noInputSlots }
 

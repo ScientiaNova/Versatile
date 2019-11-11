@@ -4,11 +4,11 @@ import com.emosewapixel.pixellib.machines.gui.BaseScreen
 import com.emosewapixel.pixellib.machines.gui.layout.IPropertyGUIComponent
 import com.emosewapixel.pixellib.machines.gui.textures.BaseTextures
 import com.emosewapixel.pixellib.machines.gui.textures.Direction2D
-import com.emosewapixel.pixellib.machines.properties.IDoubleProperty
+import com.emosewapixel.pixellib.machines.properties.IValueProperty
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 
-open class ProgressBarComponent(override val property: IDoubleProperty) : IPropertyGUIComponent {
+open class ProgressBarComponent(override val property: IValueProperty<Double>) : IPropertyGUIComponent {
     var backGroundTex = BaseTextures.ARROW_BACKGROUND
     var fillTexture = BaseTextures.ARROW_FOREGROUND
     override val tooltips = mutableListOf<String>()
@@ -21,7 +21,7 @@ open class ProgressBarComponent(override val property: IDoubleProperty) : IPrope
     @OnlyIn(Dist.CLIENT)
     override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
         backGroundTex.render(screen.guiLeft + x, screen.guiTop + y, width, height)
-        val current = (property.double * when (direction) {
+        val current = (property.value * when (direction) {
             Direction2D.RIGHT, Direction2D.LEFT -> width
             Direction2D.UP, Direction2D.DOWN -> height
         }).toInt()
