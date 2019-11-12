@@ -2,7 +2,7 @@ package com.emosewapixel.pixellib.machines.properties.implementations
 
 import com.emosewapixel.pixellib.machines.properties.IValueProperty
 
-class IncrementingDoubleProperty(private val increment: Double = 0.05) : IValueProperty<Double> {
+open class IncrementingDoubleProperty(private val increment: Double = 0.05) : IValueProperty<Double> {
     private var lastAccessed = System.currentTimeMillis()
 
     override var value = 0.0
@@ -14,7 +14,7 @@ class IncrementingDoubleProperty(private val increment: Double = 0.05) : IValueP
             }
             return field
         }
-        private set
+        protected set
 
     override fun copy() = IncrementingDoubleProperty(increment)
 }

@@ -19,6 +19,7 @@ class UpdateIntPacket(val pos: BlockPos, val property: String, val value: Int) {
     companion object {
         fun decode(buffer: PacketBuffer) = UpdateIntPacket(buffer.readBlockPos(), buffer.readString(), buffer.readVarInt())
 
+        @Suppress("UNCHECKED_CAST")
         fun processPacket(packet: UpdateIntPacket, context: Supplier<NetworkEvent.Context>) {
             context.get().enqueueWork {
                 val te = DistExecutor.runForDist(

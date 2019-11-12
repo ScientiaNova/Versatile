@@ -12,7 +12,7 @@ import net.minecraft.nbt.CompoundNBT
 import net.minecraftforge.fml.loading.FMLEnvironment
 import net.minecraftforge.fml.network.PacketDistributor
 
-class TEBooleanProperty(override val id: String, override val te: BaseTileEntity) : IVariableProperty<Boolean>, ITEBoundProperty {
+open class TEBooleanProperty(override val id: String, override val te: BaseTileEntity) : IVariableProperty<Boolean>, ITEBoundProperty {
     override fun setValue(new: Boolean, causeUpdate: Boolean) {
         if (causeUpdate && FMLEnvironment.dist.isClient)
             NetworkHandler.CHANNEL.sendToServer(UpdateBooleanPacket(te.pos, id, value))
@@ -20,7 +20,7 @@ class TEBooleanProperty(override val id: String, override val te: BaseTileEntity
     }
 
     override var value = false
-        private set
+        protected set
 
     override fun detectAndSendChanges(container: BaseContainer) {
         if ((container.clientProperties[id] as TEBooleanProperty).value != value) {

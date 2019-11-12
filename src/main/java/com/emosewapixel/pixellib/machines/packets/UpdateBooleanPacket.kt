@@ -19,6 +19,7 @@ class UpdateBooleanPacket(val pos: BlockPos, val property: String, val value: Bo
     companion object {
         fun decode(buffer: PacketBuffer) = UpdateBooleanPacket(buffer.readBlockPos(), buffer.readString(), buffer.readBoolean())
 
+        @Suppress("UNCHECKED_CAST")
         fun processPacket(packet: UpdateBooleanPacket, context: Supplier<NetworkEvent.Context>) {
             context.get().enqueueWork {
                 val te = DistExecutor.runForDist(

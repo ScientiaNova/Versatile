@@ -21,6 +21,7 @@ class UpdateNBTSerializableProperty(val pos: BlockPos, val property: String, val
     companion object {
         fun decode(buffer: PacketBuffer) = UpdateNBTSerializableProperty(buffer.readBlockPos(), buffer.readString(), buffer.readCompoundTag()!!)
 
+        @Suppress("UNCHECKED_CAST")
         fun processPacket(packet: UpdateNBTSerializableProperty, context: Supplier<NetworkEvent.Context>) {
             context.get().enqueueWork {
                 val te = DistExecutor.runForDist(

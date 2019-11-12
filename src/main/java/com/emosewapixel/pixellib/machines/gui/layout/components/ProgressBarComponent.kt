@@ -9,8 +9,7 @@ import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 
 open class ProgressBarComponent(override val property: IValueProperty<Double>) : IPropertyGUIComponent {
-    var backGroundTex = BaseTextures.ARROW_BACKGROUND
-    var fillTexture = BaseTextures.ARROW_FOREGROUND
+    var bar = BaseTextures.ARROW_BAR
     override val tooltips = mutableListOf<String>()
     var direction = Direction2D.RIGHT
     override var x = 79
@@ -19,19 +18,7 @@ open class ProgressBarComponent(override val property: IValueProperty<Double>) :
     override var height = 16
 
     @OnlyIn(Dist.CLIENT)
-    override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
-        backGroundTex.render(screen.guiLeft + x, screen.guiTop + y, width, height)
-        val current = (property.value * when (direction) {
-            Direction2D.RIGHT, Direction2D.LEFT -> width
-            Direction2D.UP, Direction2D.DOWN -> height
-        }).toInt()
-        when (direction) {
-            Direction2D.UP -> fillTexture.render(screen.guiLeft + x, screen.guiTop + y + height - current, width, current, vStart = current / height.toDouble())
-            Direction2D.DOWN -> fillTexture.render(screen.guiLeft + x, screen.guiTop + y, width, current, vEnd = current / height.toDouble())
-            Direction2D.LEFT -> fillTexture.render(screen.guiLeft + x + width - current, screen.guiTop + y, current, height, uStart = current / width.toDouble())
-            Direction2D.RIGHT -> fillTexture.render(screen.guiLeft + x, screen.guiTop + y, current, height, uEnd = current / width.toDouble())
-        }
-    }
+    override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) = bar.render(screen.guiLeft + x, screen.guiTop + y, width, height, property.value, direction)
 
     @OnlyIn(Dist.CLIENT)
     override fun isSelected(mouseX: Int, mouseY: Int) = x < mouseX && mouseX < x + width && y < mouseY && mouseY < y + height

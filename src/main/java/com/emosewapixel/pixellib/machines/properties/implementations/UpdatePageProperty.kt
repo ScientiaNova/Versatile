@@ -10,7 +10,7 @@ import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.nbt.CompoundNBT
 import net.minecraftforge.fml.network.PacketDistributor
 
-class UpdatePageProperty(override val id: String, override val te: BaseTileEntity) : ITEBoundProperty {
+open class UpdatePageProperty(override val id: String, override val te: BaseTileEntity) : ITEBoundProperty {
     override fun detectAndSendChanges(container: BaseContainer) {
         if (container.guiPage != container.te.guiLayout.current)
             NetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with { container.playerInv.player as ServerPlayerEntity }, ReopenGUIPacket(te.pos, container.type))

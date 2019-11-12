@@ -12,7 +12,7 @@ import net.minecraft.nbt.CompoundNBT
 import net.minecraftforge.fml.loading.FMLEnvironment
 import net.minecraftforge.fml.network.PacketDistributor
 
-class TEIntegerProperty(override val id: String, override val te: BaseTileEntity) : IVariableProperty<Int>, ITEBoundProperty {
+open class TEIntegerProperty(override val id: String, override val te: BaseTileEntity) : IVariableProperty<Int>, ITEBoundProperty {
     override fun setValue(new: Int, causeUpdate: Boolean) {
         if (causeUpdate && FMLEnvironment.dist.isClient)
             NetworkHandler.CHANNEL.sendToServer(UpdateIntPacket(te.pos, id, value))
@@ -20,7 +20,7 @@ class TEIntegerProperty(override val id: String, override val te: BaseTileEntity
     }
 
     override var value = 0
-        private set
+        protected set
 
     override fun detectAndSendChanges(container: BaseContainer) {
         if ((container.clientProperties[id] as TEIntegerProperty).value != value) {

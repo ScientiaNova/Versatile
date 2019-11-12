@@ -11,7 +11,7 @@ import mezz.jei.api.recipe.category.IRecipeCategory
 import java.lang.reflect.ParameterizedType
 
 open class MachineBaseCategory(helper: IGuiHelper, protected var recipeList: AbstractRecipeList<*, *>) : IRecipeCategory<SimpleMachineRecipe> {
-    open val backGround: IDrawable = helper.createBlankDrawable(0, 0)
+    private val background: IDrawable = helper.createBlankDrawable(0, 0)
 
     private val icon = recipeList.blocksImplementing.firstOrNull()?.let(helper::createDrawableIngredient)
 
@@ -19,7 +19,7 @@ open class MachineBaseCategory(helper: IGuiHelper, protected var recipeList: Abs
 
     override fun getTitle() = recipeList.localizedName.toString()
 
-    override fun getBackground() = backGround
+    override fun getBackground() = background
 
     override fun getIcon() = icon
 

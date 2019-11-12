@@ -3,6 +3,7 @@ package com.emosewapixel.pixellib.machines.recipes
 import com.emosewapixel.pixellib.machines.capabilities.FluidStackHandler
 import com.emosewapixel.pixellib.machines.capabilities.ImprovedItemStackHandler
 import com.emosewapixel.pixellib.machines.gui.layout.GUIPage
+import com.emosewapixel.pixellib.machines.gui.textures.ProgressBar
 import com.emosewapixel.pixellib.machines.properties.IValueProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.FluidInventoryProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.IncrementingDoubleProperty
@@ -18,7 +19,14 @@ import net.minecraftforge.fluids.FluidStack
 Recipe Lists are objects used for storing recipes with a maximum amount of inputs and outputs.
 Recipe Lists are intertwined with Recipe Builders and the Machine Recipes themselves
 */
-abstract class AbstractRecipeList<T : SimpleMachineRecipe, B : AbstractRecipeBuilder<T, B>>(val name: ResourceLocation, val maxInputs: Int, val maxFluidInputs: Int, val maxOutputs: Int, val maxFluidOutputs: Int) {
+abstract class AbstractRecipeList<T : SimpleMachineRecipe, B : AbstractRecipeBuilder<T, B>>(
+        val name: ResourceLocation,
+        val maxInputs: Int,
+        val maxFluidInputs: Int,
+        val maxOutputs: Int,
+        val maxFluidOutputs: Int,
+        val progressBar: ProgressBar
+) {
     val recipes = mutableListOf<T>()
     val blocksImplementing = mutableListOf<Block>()
     protected val inputMap = mutableMapOf<String, MutableSet<T>>()

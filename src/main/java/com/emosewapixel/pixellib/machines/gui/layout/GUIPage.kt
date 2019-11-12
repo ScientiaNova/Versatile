@@ -2,7 +2,10 @@ package com.emosewapixel.pixellib.machines.gui.layout
 
 import com.emosewapixel.pixellib.machines.capabilities.IFluidHandlerModifiable
 import com.emosewapixel.pixellib.machines.gui.layout.components.*
+import com.emosewapixel.pixellib.machines.gui.textures.AnimatedGUITexture
 import com.emosewapixel.pixellib.machines.gui.textures.GUITexture
+import com.emosewapixel.pixellib.machines.gui.textures.GUITexturePair
+import com.emosewapixel.pixellib.machines.properties.ILimitedIntegerProperty
 import com.emosewapixel.pixellib.machines.properties.IValueProperty
 import com.emosewapixel.pixellib.machines.properties.IVariableProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.UpdatePageProperty
@@ -19,13 +22,13 @@ class GUIPage(builder: (GUIPage) -> Unit) {
 
     val height get() = if (components.isEmpty()) 0 else components.map { it.y + it.height }.max()!! - components.map(IGUIComponent::y).min()!!
 
-    fun boolButton(property: IVariableProperty<Boolean>, onTex: GUITexture, offTex: GUITexture, x: Int, y: Int, builder: BooleanButtonComponent.() -> Unit) {
-        val component = BooleanButtonComponent(property, onTex, offTex, x, y)
+    fun boolButton(property: IVariableProperty<Boolean>, textures: GUITexturePair, x: Int, y: Int, builder: BooleanButtonComponent.() -> Unit) {
+        val component = BooleanButtonComponent(property, textures, x, y)
         component.builder()
         components += component
     }
 
-    fun colorButton(property: IVariableProperty<Int>, tex: GUITexture, colors: IntArray, x: Int, y: Int, builder: ColorButtonComponent.() -> Unit) {
+    fun colorButton(property: ILimitedIntegerProperty, tex: GUITexture, colors: IntArray, x: Int, y: Int, builder: ColorButtonComponent.() -> Unit) {
         val component = ColorButtonComponent(property, tex, colors, x, y)
         component.builder()
         components += component
@@ -55,7 +58,7 @@ class GUIPage(builder: (GUIPage) -> Unit) {
         components += component
     }
 
-    fun intButton(property: IVariableProperty<Int>, textures: List<GUITexture>, x: Int, y: Int, builder: IntegerButtonComponent.() -> Unit) {
+    fun intButton(property: ILimitedIntegerProperty, textures: AnimatedGUITexture, x: Int, y: Int, builder: IntegerButtonComponent.() -> Unit) {
         val component = IntegerButtonComponent(property, textures, x, y)
         component.builder()
         components += component

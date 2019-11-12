@@ -10,7 +10,7 @@ import net.minecraft.client.gui.AbstractGui
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 
-open class FluidBarComponent(override val property: IValueProperty<IFluidHandlerModifiable>, val backGroundText: GUITexture, override val x: Int, override val y: Int) : IPropertyGUIComponent {
+open class FluidBarComponent(override val property: IValueProperty<IFluidHandlerModifiable>, val backgroundText: GUITexture, override val x: Int, override val y: Int) : IPropertyGUIComponent {
     override val tooltips = mutableListOf<String>()
     override var width = 24
     override var height = 16
@@ -19,7 +19,7 @@ open class FluidBarComponent(override val property: IValueProperty<IFluidHandler
 
     @OnlyIn(Dist.CLIENT)
     override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
-        backGroundText.render(screen.guiLeft + x, screen.guiTop + y, width, height)
+        backgroundText.render(screen.guiLeft + x, screen.guiTop + y, width, height)
         val tank = property.value
         if (tank.getFluidInTank(tankId).amount == 0) return
         val currentSize = tank.getTankCapacity(tankId) / tank.getFluidInTank(tankId).amount * when (direction) {

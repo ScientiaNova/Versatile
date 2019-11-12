@@ -11,8 +11,5 @@ object BaseTextures {
     val FLUID_SLOT = GUITexture("pixellib:textures/gui/fluid_slot.png")
 
     @JvmField
-    val ARROW_BACKGROUND = GUITexture("pixellib:textures/gui/arrow_background.png")
-
-    @JvmField
-    val ARROW_FOREGROUND = GUITexture("pixellib:textures/gui/arrow_background.png")
+    val ARROW_BAR = ProgressBar(GUITexture("pixellib:textures/gui/arrow_background.png"), GUITexture("pixellib:textures/gui/arrow_background.png"))
 }
