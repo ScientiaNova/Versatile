@@ -1,6 +1,5 @@
 package com.emosewapixel.pixellib.machines.gui.layout.components
 
-import com.emosewapixel.pixellib.machines.gui.BaseScreen
 import com.emosewapixel.pixellib.machines.gui.layout.IGUIComponent
 import net.minecraft.client.Minecraft
 import net.minecraftforge.api.distmarker.Dist
@@ -20,11 +19,11 @@ open class LabelComponent(val text: String, override val x: Int, override val y:
         )
 
     @OnlyIn(Dist.CLIENT)
-    override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
-        val font = screen.minecraft.fontRenderer
+    override fun drawInBackground(mouseX: Int, mouseY: Int, xOffset: Int, yOffset: Int) {
+        val font = Minecraft.getInstance().fontRenderer
         when (location) {
-            LabelLocation.CENTER -> font.drawString(text, screen.guiLeft - font.getStringWidth(text) / 2f, y.toFloat(), color)
-            LabelLocation.START -> font.drawString(text, screen.guiLeft.toFloat(), y.toFloat(), color)
+            LabelLocation.CENTER -> font.drawString(text, xOffset - font.getStringWidth(text) / 2f, y.toFloat(), color)
+            LabelLocation.START -> font.drawString(text, yOffset.toFloat(), y.toFloat(), color)
         }
     }
 

@@ -4,7 +4,6 @@ import com.emosewapixel.pixellib.extensions.alphaF
 import com.emosewapixel.pixellib.extensions.blueF
 import com.emosewapixel.pixellib.extensions.greenF
 import com.emosewapixel.pixellib.extensions.redF
-import com.emosewapixel.pixellib.machines.gui.BaseScreen
 import com.emosewapixel.pixellib.machines.gui.layout.IPropertyGUIComponent
 import com.emosewapixel.pixellib.machines.gui.textures.GUITexture
 import com.emosewapixel.pixellib.machines.properties.ILimitedIntegerProperty
@@ -18,11 +17,11 @@ open class ColorButtonComponent(override val property: ILimitedIntegerProperty, 
     override var height = 16
 
     @OnlyIn(Dist.CLIENT)
-    override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
+    override fun drawInBackground(mouseX: Int, mouseY: Int, xOffset: Int, yOffset: Int) {
         GlStateManager.enableBlend()
-        val color = colors.getOrNull(property.value) ?: colors[0]
+        val color = colors.getOrElse(property.value) { colors[0] }
         GlStateManager.color4f(color.redF, color.greenF, color.blueF, color.alphaF)
-        texture.render(screen.guiLeft + x, screen.guiTop + y, width, height)
+        texture.render(xOffset + x, yOffset + y, width, height)
         GlStateManager.disableBlend()
     }
 
@@ -30,7 +29,7 @@ open class ColorButtonComponent(override val property: ILimitedIntegerProperty, 
     override fun isSelected(mouseX: Int, mouseY: Int) = x < mouseX && mouseX < x + width && y < mouseY && mouseY < y + height
 
     @OnlyIn(Dist.CLIENT)
-    override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int, screen: BaseScreen): Boolean {
+    override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int): Boolean {
         property.inc()
         return true
     }

@@ -4,11 +4,12 @@ import com.emosewapixel.pixellib.extensions.isNotEmpty
 import com.emosewapixel.pixellib.extensions.times
 import com.emosewapixel.pixellib.items.ItemStackHolder
 import com.emosewapixel.pixellib.machines.capabilities.IFluidHandlerModifiable
-import com.emosewapixel.pixellib.machines.gui.BaseScreen
+import com.emosewapixel.pixellib.machines.gui.GUiUtils
 import com.emosewapixel.pixellib.machines.gui.layout.IPropertyGUIComponent
 import com.emosewapixel.pixellib.machines.gui.layout.ISlotComponent
 import com.emosewapixel.pixellib.machines.gui.textures.BaseTextures
 import com.emosewapixel.pixellib.machines.properties.IValueProperty
+import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.AbstractGui
 import net.minecraft.item.ItemStack
 import net.minecraft.util.text.TranslationTextComponent
@@ -25,30 +26,30 @@ open class FluidSlotComponent(override val property: IValueProperty<IFluidHandle
     var tankId = 0
 
     @OnlyIn(Dist.CLIENT)
-    override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
-        texture.render(screen.guiLeft + x, screen.guiTop + y, width, height)
+    override fun drawInBackground(mouseX: Int, mouseY: Int, xOffset: Int, yOffset: Int) {
+        texture.render(xOffset + x, yOffset + y, width, height)
         val fluid = property.value.getFluidInTank(tankId)
         if (!fluid.isEmpty)
-            screen.drawFluidStack(fluid, screen.guiLeft + x, screen.guiTop + y, width, height)
+            GUiUtils.drawFluidStack(fluid, xOffset + x, yOffset + y, width, height)
     }
 
     @OnlyIn(Dist.CLIENT)
-    override fun drawInForeground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
-        if (isSelected(mouseX - screen.guiLeft, mouseY - screen.guiTop)) {
-            AbstractGui.fill(screen.guiLeft + x + 1, screen.guiTop + y + 1, width - 2, height - 2, 0xFFFFF)
+    override fun drawInForeground(mouseX: Int, mouseY: Int, xOffset: Int, yOffset: Int) {
+        if (isSelected(mouseX - xOffset, mouseY - yOffset)) {
+            AbstractGui.fill(xOffset + x + 1, yOffset + y + 1, width - 2, height - 2, 0xFFFFF)
             val handler = property.value
             val fluid = handler.getFluidInTank(tankId)
             if (fluid.isEmpty)
-                screen.renderTooltip(TranslationTextComponent("gui.tooltip.tank_fill").string, mouseX, mouseY)
+                GUiUtils.renderTooltip(listOf(TranslationTextComponent("gui.tooltip.tank_fill").string), mouseX, mouseY)
             else
-                screen.renderTooltip(mutableListOf(fluid.fluid.attributes.getDisplayName(fluid).string, "${fluid.amount}mb/${handler.getTankCapacity(tankId)}mb", TranslationTextComponent("gui.tooltip.tank_empty").string), mouseX, mouseY)
+                GUiUtils.renderTooltip(mutableListOf(fluid.fluid.attributes.getDisplayName(fluid).string, "${fluid.amount}mb/${handler.getTankCapacity(tankId)}mb", TranslationTextComponent("gui.tooltip.tank_empty").string), mouseX, mouseY)
         }
     }
 
     @OnlyIn(Dist.CLIENT)
-    override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int, screen: BaseScreen): Boolean {
+    override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int): Boolean {
         val slotTank = property.value
-        val playerInv = screen.container.playerInv
+        val playerInv = Minecraft.getInstance().player.inventory
         val heldStack = playerInv.itemStack
         heldStack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).ifPresent { handler ->
             val itemTanks = (0 until handler.tanks).map { index -> index to handler.getFluidInTank(index) }

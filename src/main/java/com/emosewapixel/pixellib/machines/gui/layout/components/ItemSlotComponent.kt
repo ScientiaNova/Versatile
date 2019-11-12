@@ -1,7 +1,7 @@
 package com.emosewapixel.pixellib.machines.gui.layout.components
 
-import com.emosewapixel.pixellib.machines.gui.BaseScreen
 import com.emosewapixel.pixellib.machines.properties.IValueProperty
+import net.minecraft.client.Minecraft
 import net.minecraft.item.ItemStack
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
@@ -11,9 +11,9 @@ import kotlin.math.ceil
 
 open class ItemSlotComponent(property: IValueProperty<IItemHandlerModifiable>, x: Int, y: Int) : AbstractItemSlotComponent(property, x, y) {
     @OnlyIn(Dist.CLIENT)
-    override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int, screen: BaseScreen): Boolean {
+    override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int): Boolean {
         val itemHandler = property.value
-        val playerInv = screen.container.playerInv
+        val playerInv = Minecraft.getInstance().player.inventory
         val heldStack = playerInv.itemStack
         if (heldStack.isEmpty) {
             if (!itemHandler.getStackInSlot(slotIndex).isEmpty) {

@@ -1,6 +1,5 @@
 package com.emosewapixel.pixellib.machines.gui.layout.components
 
-import com.emosewapixel.pixellib.machines.gui.BaseScreen
 import com.emosewapixel.pixellib.machines.gui.layout.IGUIComponent
 import com.emosewapixel.pixellib.machines.gui.textures.BaseTextures
 import com.emosewapixel.pixellib.machines.gui.textures.IRenderable
@@ -16,7 +15,7 @@ open class ImageComponent : IGUIComponent {
     override var height = 166
 
     @OnlyIn(Dist.CLIENT)
-    override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) = texture.render(screen.guiLeft + x, screen.guiTop + y, width, height)
+    override fun drawInBackground(mouseX: Int, mouseY: Int, xOffset: Int, yOffset: Int) = texture.render(xOffset + x, yOffset + y, width, height)
 
     @OnlyIn(Dist.CLIENT)
     override fun isSelected(mouseX: Int, mouseY: Int) = false

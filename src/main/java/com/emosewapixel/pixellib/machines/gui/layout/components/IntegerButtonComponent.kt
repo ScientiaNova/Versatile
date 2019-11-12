@@ -1,6 +1,5 @@
 package com.emosewapixel.pixellib.machines.gui.layout.components
 
-import com.emosewapixel.pixellib.machines.gui.BaseScreen
 import com.emosewapixel.pixellib.machines.gui.layout.IPropertyGUIComponent
 import com.emosewapixel.pixellib.machines.gui.textures.AnimatedGUITexture
 import com.emosewapixel.pixellib.machines.properties.ILimitedIntegerProperty
@@ -13,13 +12,13 @@ open class IntegerButtonComponent(override val property: ILimitedIntegerProperty
     override var height = 16
 
     @OnlyIn(Dist.CLIENT)
-    override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) = textures.render(screen.guiLeft + x, screen.guiTop + y, width, height, frame = property.value)
+    override fun drawInBackground(mouseX: Int, mouseY: Int, xOffset: Int, yOffset: Int) = textures.render(xOffset + x, yOffset + y, width, height, frame = property.value)
 
     @OnlyIn(Dist.CLIENT)
     override fun isSelected(mouseX: Int, mouseY: Int) = x < mouseX && mouseX < x + width && y < mouseY && mouseY < y + height
 
     @OnlyIn(Dist.CLIENT)
-    override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int, screen: BaseScreen): Boolean {
+    override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int): Boolean {
         property.inc()
         return true
     }

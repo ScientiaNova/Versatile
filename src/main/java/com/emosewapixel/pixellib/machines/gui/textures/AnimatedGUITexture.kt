@@ -29,7 +29,7 @@ data class AnimatedGUITexture @JvmOverloads constructor(val frames: List<GUIText
 
     fun render(x: Int, y: Int, width: Int, height: Int, uStart: Double = 0.0, vStart: Double = 0.0, uEnd: Double = 1.0, vEnd: Double = 1.0, frame: Int) {
         if (frames.isEmpty()) return
-        val texture = frames.getOrNull(frame) ?: frames[0]
+        val texture = frames.getOrElse(frame) { frames[0] }
         texture.render(x, y, width, height, texture.uStart * uStart, texture.vStart * vStart, texture.uEnd * uEnd, texture.vEnd * vEnd)
     }
 

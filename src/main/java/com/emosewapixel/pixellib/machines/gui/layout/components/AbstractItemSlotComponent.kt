@@ -1,6 +1,6 @@
 package com.emosewapixel.pixellib.machines.gui.layout.components
 
-import com.emosewapixel.pixellib.machines.gui.BaseScreen
+import com.emosewapixel.pixellib.machines.gui.GUiUtils
 import com.emosewapixel.pixellib.machines.gui.layout.IPropertyGUIComponent
 import com.emosewapixel.pixellib.machines.gui.layout.ISlotComponent
 import com.emosewapixel.pixellib.machines.gui.textures.BaseTextures
@@ -18,23 +18,23 @@ abstract class AbstractItemSlotComponent(override val property: IValueProperty<I
     var slotIndex = 0
 
     @OnlyIn(Dist.CLIENT)
-    override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
-        texture.render(screen.guiLeft + x, screen.guiTop + y, width, height)
+    override fun drawInBackground(mouseX: Int, mouseY: Int, xOffset: Int, yOffset: Int) {
+        texture.render(xOffset + x, yOffset + y, width, height)
         val stack = property.value.getStackInSlot(slotIndex)
         if (!stack.isEmpty)
-            screen.drawItemStack(stack, screen.guiLeft + x, screen.guiTop + y)
+            GUiUtils.drawItemStack(stack, xOffset + x, yOffset + y)
     }
 
     @OnlyIn(Dist.CLIENT)
-    override fun drawInForeground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
-        if (isSelected(mouseX - screen.guiLeft, mouseY - screen.guiTop)) {
-            AbstractGui.fill(screen.guiLeft + x + 1, screen.guiTop + y + 1, width - 2, height - 2, 0xFFFFF)
+    override fun drawInForeground(mouseX: Int, mouseY: Int, xOffset: Int, yOffset: Int) {
+        if (isSelected(mouseX - xOffset, mouseY - yOffset)) {
+            AbstractGui.fill(xOffset + x + 1, yOffset + y + 1, width - 2, height - 2, 0xFFFFF)
             val stack = property.value.getStackInSlot(slotIndex)
             if (!stack.isEmpty)
-                screen.renderTooltip(stack, mouseX, mouseY)
+                GUiUtils.renderTooltip(stack, mouseX, mouseY)
         }
     }
 
     @OnlyIn(Dist.CLIENT)
-    abstract override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int, screen: BaseScreen): Boolean
+    abstract override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int): Boolean
 }

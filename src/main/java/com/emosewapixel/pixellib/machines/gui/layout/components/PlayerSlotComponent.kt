@@ -1,9 +1,10 @@
 package com.emosewapixel.pixellib.machines.gui.layout.components
 
 import com.emosewapixel.pixellib.extensions.insertItem
-import com.emosewapixel.pixellib.machines.gui.BaseScreen
+import com.emosewapixel.pixellib.machines.gui.GUiUtils
 import com.emosewapixel.pixellib.machines.gui.layout.ISlotComponent
 import com.emosewapixel.pixellib.machines.gui.textures.BaseTextures
+import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.AbstractGui
 import net.minecraft.item.ItemStack
 import net.minecraftforge.api.distmarker.Dist
@@ -18,26 +19,26 @@ open class PlayerSlotComponent(val slotIndex: Int, override val x: Int, override
     override var height = 18
 
     @OnlyIn(Dist.CLIENT)
-    override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
-        texture.render(screen.guiLeft + x, screen.guiTop + y, width, height)
-        val stack = screen.container.playerInv.getStackInSlot(slotIndex)
+    override fun drawInBackground(mouseX: Int, mouseY: Int, xOffset: Int, yOffset: Int) {
+        texture.render(xOffset + x, yOffset + y, width, height)
+        val stack = Minecraft.getInstance().player.inventory.getStackInSlot(slotIndex)
         if (!stack.isEmpty)
-            screen.drawItemStack(stack, screen.guiLeft + x, screen.guiTop + y)
+            GUiUtils.drawItemStack(stack, xOffset + x, yOffset + y)
     }
 
     @OnlyIn(Dist.CLIENT)
-    override fun drawInForeground(mouseX: Int, mouseY: Int, screen: BaseScreen) {
-        if (isSelected(mouseX - screen.guiLeft, mouseY - screen.guiTop)) {
-            AbstractGui.fill(screen.guiLeft + x + 1, screen.guiTop + y + 1, width - 2, height - 2, 0xFFFFF)
-            val stack = screen.container.playerInv.getStackInSlot(slotIndex)
+    override fun drawInForeground(mouseX: Int, mouseY: Int, xOffset: Int, yOffset: Int) {
+        if (isSelected(mouseX - xOffset, mouseY - yOffset)) {
+            AbstractGui.fill(xOffset + x + 1, yOffset + y + 1, width - 2, height - 2, 0xFFFFF)
+            val stack = Minecraft.getInstance().player.inventory.getStackInSlot(slotIndex)
             if (!stack.isEmpty)
-                screen.renderTooltip(stack, mouseX, mouseY)
+                GUiUtils.renderTooltip(stack, mouseX, mouseY)
         }
     }
 
     @OnlyIn(Dist.CLIENT)
-    override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int, screen: BaseScreen): Boolean {
-        val playerInv = screen.container.playerInv
+    override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int): Boolean {
+        val playerInv = Minecraft.getInstance().player.inventory
         val heldStack = playerInv.itemStack
         if (heldStack.isEmpty) {
             if (!playerInv.getStackInSlot(slotIndex).isEmpty) {

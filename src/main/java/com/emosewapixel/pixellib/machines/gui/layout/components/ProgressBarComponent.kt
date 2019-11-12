@@ -1,6 +1,5 @@
 package com.emosewapixel.pixellib.machines.gui.layout.components
 
-import com.emosewapixel.pixellib.machines.gui.BaseScreen
 import com.emosewapixel.pixellib.machines.gui.layout.IPropertyGUIComponent
 import com.emosewapixel.pixellib.machines.gui.textures.BaseTextures
 import com.emosewapixel.pixellib.machines.gui.textures.Direction2D
@@ -18,7 +17,7 @@ open class ProgressBarComponent(override val property: IValueProperty<Double>) :
     override var height = 16
 
     @OnlyIn(Dist.CLIENT)
-    override fun drawInBackground(mouseX: Int, mouseY: Int, screen: BaseScreen) = bar.render(screen.guiLeft + x, screen.guiTop + y, width, height, property.value, direction)
+    override fun drawInBackground(mouseX: Int, mouseY: Int, xOffset: Int, yOffset: Int) = bar.render(xOffset + x, yOffset + y, width, height, property.value, direction)
 
     @OnlyIn(Dist.CLIENT)
     override fun isSelected(mouseX: Int, mouseY: Int) = x < mouseX && mouseX < x + width && y < mouseY && mouseY < y + height
