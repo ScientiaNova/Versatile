@@ -12,7 +12,7 @@ open class IntegerButtonComponent(override val property: ILimitedIntegerProperty
     override var height = 16
 
     @OnlyIn(Dist.CLIENT)
-    override fun drawInBackground(mouseX: Int, mouseY: Int, xOffset: Int, yOffset: Int) = textures.render(xOffset + x, yOffset + y, width, height, frame = property.value)
+    override fun drawInBackground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int) = textures.render(xOffset + x, yOffset + y, width, height, frame = property.value)
 
     @OnlyIn(Dist.CLIENT)
     override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int): Boolean {

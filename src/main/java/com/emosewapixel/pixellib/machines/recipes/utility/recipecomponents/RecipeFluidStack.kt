@@ -7,7 +7,7 @@ import net.minecraftforge.fluids.FluidStack
 class RecipeFluidStack(val stack: FluidStack) : IRecipeStack<FluidStack> {
     override val count = stack.amount
 
-    override val stacks = listOf(stack)
+    override val stacks = listOf(stack.copy())
 
     override fun matches(other: FluidStack) = stack.isFluidEqual(other) && count <= other.amount
 

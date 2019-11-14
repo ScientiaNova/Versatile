@@ -25,7 +25,7 @@ open class FluidSlotComponent(override val property: IValueProperty<IFluidHandle
     var tankId = 0
 
     @OnlyIn(Dist.CLIENT)
-    override fun drawInBackground(mouseX: Int, mouseY: Int, xOffset: Int, yOffset: Int) {
+    override fun drawInBackground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int) {
         texture.render(xOffset + x, yOffset + y, width, height)
         val fluid = property.value.getFluidInTank(tankId)
         if (!fluid.isEmpty)
@@ -33,7 +33,7 @@ open class FluidSlotComponent(override val property: IValueProperty<IFluidHandle
     }
 
     @OnlyIn(Dist.CLIENT)
-    override fun drawInForeground(mouseX: Int, mouseY: Int, xOffset: Int, yOffset: Int) {
+    override fun drawInForeground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int) {
         if (isSelected(mouseX - xOffset, mouseY - yOffset)) {
             AbstractGui.fill(xOffset + x + 1, yOffset + y + 1, width - 2, height - 2, 0xFFFFF)
             val handler = property.value

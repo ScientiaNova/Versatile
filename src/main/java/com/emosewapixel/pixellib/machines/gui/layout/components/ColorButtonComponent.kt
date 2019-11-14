@@ -17,7 +17,7 @@ open class ColorButtonComponent(override val property: ILimitedIntegerProperty, 
     override var height = 16
 
     @OnlyIn(Dist.CLIENT)
-    override fun drawInBackground(mouseX: Int, mouseY: Int, xOffset: Int, yOffset: Int) {
+    override fun drawInBackground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int) {
         GlStateManager.enableBlend()
         val color = colors.getOrElse(property.value) { colors[0] }
         GlStateManager.color4f(color.redF, color.greenF, color.blueF, color.alphaF)

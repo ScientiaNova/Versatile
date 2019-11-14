@@ -17,7 +17,7 @@ open class TEFluidInventoryProperty(value: FluidStackHandler, override val id: S
                     it.tanks.indices.any { index -> it.tanks[index] == value.tanks[index] }
                 } == false
         ) {
-            NetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with { container.playerInv.player as? ServerPlayerEntity }, UpdateNBTSerializableProperty(te.pos, id, value.serializeNBT()))
+            NetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with { container.playerInv.player as? ServerPlayerEntity }, UpdateNBTSerializableProperty(id, value.serializeNBT()))
             (container.clientProperties[id] as TEFluidInventoryProperty).value.tanks = value.tanks
         }
     }

@@ -1,5 +1,6 @@
 package com.emosewapixel.pixellib.machines.recipes.utility.recipecomponents
 
+import com.emosewapixel.pixellib.extensions.times
 import com.emosewapixel.pixellib.machines.recipes.utility.TagStack
 import com.emosewapixel.pixellib.machines.recipes.utility.toStack
 import net.minecraft.fluid.Fluid
@@ -12,7 +13,7 @@ class RecipeFluidTagStack(stack: TagStack<Fluid>) : IRecipeStack<FluidStack> {
     override val count = stack.count
 
     override val stacks
-        get() = tag.allElements.map { FluidStack(it, count) }
+        get() = tag.allElements.map { it * count }
 
     override fun matches(other: FluidStack) = count <= other.amount && other.fluid in tag
 

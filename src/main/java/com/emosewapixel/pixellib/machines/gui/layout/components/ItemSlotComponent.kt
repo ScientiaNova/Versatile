@@ -18,7 +18,7 @@ open class ItemSlotComponent(override val property: IValueProperty<IItemHandlerM
     var slotIndex = 0
 
     @OnlyIn(Dist.CLIENT)
-    override fun drawInBackground(mouseX: Int, mouseY: Int, xOffset: Int, yOffset: Int) = texture.render(xOffset + x, yOffset + y, width, height)
+    override fun drawInBackground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int) = texture.render(xOffset + x, yOffset + y, width, height)
 
     override fun setupSlot(playerInv: PlayerInventory) = ItemHandlerSlot(property.value, slotIndex, x, y)
 }

@@ -8,19 +8,19 @@ import net.minecraft.util.text.ITextComponent
 
 class BaseScreen(container: BaseContainer, playerInv: PlayerInventory, title: ITextComponent) : ContainerScreen<BaseContainer>(container, playerInv, title) {
     override fun drawGuiContainerBackgroundLayer(partialTicks: Float, mouseX: Int, mouseY: Int) =
-            container.guiPage.components.forEach { it.drawInBackground(mouseX, mouseY, guiLeft, guiTop) }
+            container.guiPage.components.forEach { it.drawInBackground(mouseX.toDouble(), mouseY.toDouble(), guiLeft, guiTop) }
 
     override fun drawGuiContainerForegroundLayer(mouseX: Int, mouseY: Int) =
-            container.guiPage.components.forEach { it.drawInForeground(mouseX, mouseY, guiLeft, guiTop) }
+            container.guiPage.components.forEach { it.drawInForeground(mouseX.toDouble(), mouseY.toDouble(), guiLeft, guiTop) }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, clickType: Int) =
-            container.guiPage.components.reversed().asSequence().filter { it.isSelected(mouseX.toInt() - guiLeft, mouseY.toInt() - guiTop) }.any { it.onMouseClicked(mouseX, mouseY, clickType) }
+            container.guiPage.components.reversed().asSequence().filter { it.isSelected(mouseX - guiLeft, mouseY - guiTop) }.any { it.onMouseClicked(mouseX, mouseY, clickType) }
 
     override fun mouseDragged(mouseX: Double, mouseY: Double, clickType: Int, lastX: Double, lastY: Double) =
-            container.guiPage.components.reversed().asSequence().filter { it.isSelected(mouseX.toInt() - guiLeft, mouseY.toInt() - guiTop) }.any { it.onMouseDragged(mouseX, mouseY, clickType) }
+            container.guiPage.components.reversed().asSequence().filter { it.isSelected(mouseX - guiLeft, mouseY - guiTop) }.any { it.onMouseDragged(mouseX, mouseY, clickType) }
 
     override fun mouseReleased(mouseX: Double, mouseY: Double, clickType: Int) =
-            container.guiPage.components.reversed().asSequence().filter { it.isSelected(mouseX.toInt() - guiLeft, mouseY.toInt() - guiTop) }.any { it.onMouseReleased(mouseX, mouseY, clickType) }
+            container.guiPage.components.reversed().asSequence().filter { it.isSelected(mouseX - guiLeft, mouseY - guiTop) }.any { it.onMouseReleased(mouseX, mouseY, clickType) }
 
     override fun render(mouseX: Int, mouseY: Int, partialTicks: Float) {
         if (container.guiPage != container.te.guiLayout.current) {

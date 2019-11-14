@@ -1,6 +1,8 @@
 package com.emosewapixel.pixellib.machines.capabilities
 
+import com.emosewapixel.pixellib.extensions.toNoNullList
 import net.minecraft.item.ItemStack
+import net.minecraft.util.NonNullList
 import net.minecraftforge.items.ItemStackHandler
 
 //Improved Item Stack Handlers are Item Stack Handlers that can blacklist slots for insertion and extraction
@@ -9,7 +11,7 @@ open class ImprovedItemStackHandler @JvmOverloads constructor(slots: Int, val no
 
     constructor(inputCount: Int, outputCount: Int) : this(inputCount + outputCount, 0 until inputCount, inputCount until inputCount + outputCount)
 
-    var stacks
+    var invStacks: NonNullList<ItemStack>
         get() = super.stacks
         set(value) {
             if (value.size == super.stacks.size)
@@ -25,4 +27,6 @@ open class ImprovedItemStackHandler @JvmOverloads constructor(slots: Int, val no
     override fun extractItem(slot: Int, amount: Int, simulate: Boolean) = if (slot in noOutputSlots) ItemStack.EMPTY else super.extractItem(slot, amount, simulate)
 
     operator fun get(slot: Int) = super.stacks[slot]
+
+    fun copy() = ImprovedItemStackHandler(slots, noOutputSlots, noInputSlots).apply { invStacks = this@ImprovedItemStackHandler.invStacks.map(ItemStack::copy).toNoNullList() }
 }

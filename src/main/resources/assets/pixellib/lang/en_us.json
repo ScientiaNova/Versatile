@@ -53,5 +53,9 @@
 	"command.materialitem.error": "That is not a material item",
 	"command.material.error": "No material exists with the name",
 	"command.objtype.error": "No object type exists with that name",
-	"command.fluidcontainer.error": "That is not a fluid container item"
+	"command.fluidcontainer.error": "That is not a fluid container item",
+
+	"recipe_stack.consume_chance": "$s% Consume Chance",
+	"recipe_stack.not_consumed": "Not Consumed",
+	"recipe_stack.output_chance": "$s% Output Chance"
 }

@@ -2,7 +2,9 @@ package com.emosewapixel.pixellib.machines.capabilities
 
 import com.emosewapixel.pixellib.extensions.nbt
 import com.emosewapixel.pixellib.extensions.times
+import com.emosewapixel.pixellib.extensions.toNoNullList
 import net.minecraft.nbt.CompoundNBT
+import net.minecraft.util.NonNullList
 import net.minecraftforge.common.util.Constants
 import net.minecraftforge.common.util.INBTSerializable
 import net.minecraftforge.fluids.FluidStack
@@ -13,7 +15,7 @@ open class FluidStackHandler @JvmOverloads constructor(val count: Int, val capac
 
     constructor(capacity: Int = 10000, inputCount: Int, outputCount: Int) : this(inputCount + outputCount, capacity, 0 until inputCount, inputCount until inputCount + outputCount)
 
-    var tanks = MutableList(count) { FluidStack.EMPTY }
+    var tanks = NonNullList.withSize(count, FluidStack.EMPTY)
         set(value) {
             if (tanks.size == value.size)
                 field = value
@@ -87,7 +89,7 @@ open class FluidStackHandler @JvmOverloads constructor(val count: Int, val capac
     }
 
     override fun deserializeNBT(nbt: CompoundNBT) {
-        if (nbt.contains("Size")) tanks = MutableList(nbt.getInt("Size")) { FluidStack.EMPTY }
+        if (nbt.contains("Size")) tanks = NonNullList.withSize(nbt.getInt("Size"), FluidStack.EMPTY)
         nbt.getList("Fluids", Constants.NBT.TAG_COMPOUND).forEach {
             val tankId = (it as CompoundNBT).getInt("Tank")
 
@@ -95,4 +97,6 @@ open class FluidStackHandler @JvmOverloads constructor(val count: Int, val capac
                 tanks[tankId] = FluidStack.loadFluidStackFromNBT(it)
         }
     }
+
+    fun copy() = FluidStackHandler(count, capacity, noOutputTanks, noInputTanks).apply { tanks = this@FluidStackHandler.tanks.map(FluidStack::copy).toNoNullList() }
 }

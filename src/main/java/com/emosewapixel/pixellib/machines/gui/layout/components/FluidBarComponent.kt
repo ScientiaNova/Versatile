@@ -17,7 +17,7 @@ open class FluidBarComponent(override val property: IValueProperty<IFluidHandler
     val tankId = 0
 
     @OnlyIn(Dist.CLIENT)
-    override fun drawInBackground(mouseX: Int, mouseY: Int, xOffset: Int, yOffset: Int) {
+    override fun drawInBackground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int) {
         backgroundText.render(xOffset + x, yOffset + y, width, height)
         val tank = property.value
         if (tank.getFluidInTank(tankId).amount == 0) return

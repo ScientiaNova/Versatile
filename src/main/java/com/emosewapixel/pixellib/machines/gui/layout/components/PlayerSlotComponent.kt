@@ -14,7 +14,7 @@ open class PlayerSlotComponent(val slotIndex: Int, override val x: Int, override
     override var height = 18
 
     @OnlyIn(Dist.CLIENT)
-    override fun drawInBackground(mouseX: Int, mouseY: Int, xOffset: Int, yOffset: Int) = texture.render(xOffset + x, yOffset + y, width, height)
+    override fun drawInBackground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int) = texture.render(xOffset + x, yOffset + y, width, height)
 
     override fun setupSlot(playerInv: PlayerInventory) = PlayerSlot(playerInv, slotIndex, (width - 16) / 2 + x, (height - 16) / 2 + y)
 }

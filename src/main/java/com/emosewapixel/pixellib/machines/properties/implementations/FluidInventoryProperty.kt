@@ -9,7 +9,7 @@ import net.minecraftforge.common.util.LazyOptional
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler
 
 open class FluidInventoryProperty(override val value: FluidStackHandler) : IValueProperty<IFluidHandlerModifiable> {
-    override fun copy() = FluidInventoryProperty(value)
+    override fun copy() = FluidInventoryProperty(value.copy())
 
     override fun <T> getCapability(cap: Capability<T>, side: Direction?): LazyOptional<T> =
             if (cap === CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)

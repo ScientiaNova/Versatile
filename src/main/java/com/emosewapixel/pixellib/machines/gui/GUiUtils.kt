@@ -7,7 +7,6 @@ import com.emosewapixel.pixellib.extensions.redF
 import com.mojang.blaze3d.platform.GlStateManager
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screen.inventory.ContainerScreen
-import net.minecraft.client.renderer.RenderHelper
 import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.item.ItemStack
 import net.minecraft.util.text.ITextComponent
@@ -47,10 +46,10 @@ object GUiUtils {
     }
 
     @JvmStatic
-    fun renderTooltip(tooltips: List<String>, x: Int, y: Int) = GuiUtils.drawHoveringText(tooltips, x, y, mc.mainWindow.scaledWidth, mc.mainWindow.scaledHeight, -1, mc.fontRenderer)
+    fun renderTooltip(tooltips: List<String>, x: Double, y: Double) = GuiUtils.drawHoveringText(tooltips, x.toInt(), y.toInt(), mc.mainWindow.scaledWidth, mc.mainWindow.scaledHeight, -1, mc.fontRenderer)
 
     @JvmStatic
-    fun renderTooltip(stack: ItemStack, x: Int, y: Int) {
+    fun renderTooltip(stack: ItemStack, x: Double, y: Double) {
         GuiUtils.preItemToolTip(stack)
         this.renderTooltip(this.getTooltipsFromItem(stack), x, y)
         GuiUtils.postItemToolTip()

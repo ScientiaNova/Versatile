@@ -21,14 +21,14 @@ interface IGUIComponent {
     fun onMouseReleased(mouseX: Double, mouseY: Double, clickType: Int): Boolean = false
 
     @OnlyIn(Dist.CLIENT)
-    fun drawInBackground(mouseX: Int, mouseY: Int, xOffset: Int, yOffset: Int)
+    fun drawInBackground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int)
 
     @OnlyIn(Dist.CLIENT)
-    fun isSelected(mouseX: Int, mouseY: Int) = x + 1 < mouseX && mouseX < x + width - 2 && y + 1 < mouseY && mouseY < y + height - 2
+    fun isSelected(mouseX: Double, mouseY: Double) = x + 1 < mouseX && mouseX < x + width - 2 && y + 1 < mouseY && mouseY < y + height - 2
 
     @OnlyIn(Dist.CLIENT)
-    fun drawInForeground(mouseX: Int, mouseY: Int, xOffset: Int, yOffset: Int) {
+    fun drawInForeground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int) {
         if (tooltips.isNotEmpty() && isSelected(mouseX - xOffset, mouseY - yOffset))
-            GUiUtils.renderTooltip(tooltips, mouseX, mouseY)
+            GUiUtils.renderTooltip(tooltips, mouseX.toInt(), mouseY.toInt())
     }
 }

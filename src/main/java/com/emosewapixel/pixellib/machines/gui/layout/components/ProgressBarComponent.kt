@@ -17,5 +17,5 @@ open class ProgressBarComponent(override val property: IValueProperty<Double>) :
     override var height = 16
 
     @OnlyIn(Dist.CLIENT)
-    override fun drawInBackground(mouseX: Int, mouseY: Int, xOffset: Int, yOffset: Int) = bar.render(xOffset + x, yOffset + y, width, height, property.value, direction)
+    override fun drawInBackground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int) = bar.render(xOffset + x, yOffset + y, width, height, property.value, direction)
 }

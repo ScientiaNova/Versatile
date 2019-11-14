@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack
 class RecipeItemStack(val stack: ItemStack) : IRecipeStack<ItemStack> {
     override val count = stack.count
 
-    override val stacks = listOf(stack)
+    override val stacks = listOf(stack.copy())
 
     override fun matches(other: ItemStack) = stack.isItemEqual(other) && count <= other.count
 
