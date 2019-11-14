@@ -10,6 +10,15 @@ class GUIBook {
     fun page(builder: GUIPage.() -> Unit) {
         pages += GUIPage(builder)
     }
+
+    operator fun GUIPage.invoke(builder: GUIPage.() -> Unit) {
+        this.builder()
+        pages += this
+    }
+
+    fun GUIPage.add() {
+        pages += this
+    }
 }
 
 fun book(builder: GUIBook.() -> Unit): () -> GUIBook = {

@@ -11,12 +11,16 @@ import com.emosewapixel.pixellib.machines.properties.IVariableProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.UpdatePageProperty
 import net.minecraftforge.items.IItemHandlerModifiable
 
-class GUIPage(builder: (GUIPage) -> Unit) {
+class GUIPage(builder: GUIPage.() -> Unit) {
     val components = mutableListOf<IGUIComponent>()
 
     init {
         builder(this)
     }
+
+    val leftMost get() = components.map(IGUIComponent::x).min() ?: 0
+
+    val topMost get() = components.map(IGUIComponent::y).min() ?: 0
 
     val width get() = if (components.isEmpty()) 0 else components.map { it.x + it.width }.max()!! - components.map(IGUIComponent::x).min()!!
 

@@ -1,5 +1,8 @@
 package com.emosewapixel.pixellib.integration.jei
 
+import com.emosewapixel.pixellib.extensions.blueF
+import com.emosewapixel.pixellib.extensions.greenF
+import com.emosewapixel.pixellib.extensions.redF
 import com.mojang.blaze3d.platform.GlStateManager
 import mezz.jei.plugins.vanilla.ingredients.fluid.FluidStackRenderer
 import net.minecraft.client.Minecraft
@@ -38,7 +41,7 @@ class GUIFluidRenderer : FluidStackRenderer(1000, false, 16, 16, null) {
         val minecraft = Minecraft.getInstance()
         minecraft.getTextureManager().bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE)
         setGLColorFromInt(color)
-        drawTextureWithMasking(xPosition.toDouble(), yPosition.toDouble(), sprite, 0, 0, 100.0)
+        drawTextureWithMasking(xPosition.toDouble(), yPosition.toDouble(), sprite)
     }
 
     private fun getStillFluidSprite(fluid: Fluid): TextureAtlasSprite {
@@ -48,29 +51,22 @@ class GUIFluidRenderer : FluidStackRenderer(1000, false, 16, 16, null) {
         return textureMapBlocks.getSprite(fluidStill)
     }
 
-    private fun setGLColorFromInt(color: Int) {
-        val red = (color shr 16 and 0xFF) / 255.0f
-        val green = (color shr 8 and 0xFF) / 255.0f
-        val blue = (color and 0xFF) / 255.0f
+    private fun setGLColorFromInt(color: Int) = GlStateManager.color4f(color.redF, color.greenF, color.blueF, 1.0f)
 
-        GlStateManager.color4f(red, green, blue, 1.0f)
-    }
-
-    private fun drawTextureWithMasking(xCoord: Double, yCoord: Double, textureSprite: TextureAtlasSprite, maskTop: Int, maskRight: Int, zLevel: Double) {
+    private fun drawTextureWithMasking(xCoord: Double, yCoord: Double, textureSprite: TextureAtlasSprite) {
         val uMin = textureSprite.minU.toDouble()
-        var uMax = textureSprite.maxU.toDouble()
+        val uMax = textureSprite.maxU.toDouble()
         val vMin = textureSprite.minV.toDouble()
-        var vMax = textureSprite.maxV.toDouble()
-        uMax -= maskRight / 16.0 * (uMax - uMin)
-        vMax -= maskTop / 16.0 * (vMax - vMin)
+        val vMax = textureSprite.maxV.toDouble()
+        val zLevel = 100.0
 
         val tessellator = Tessellator.getInstance()
         val bufferBuilder = tessellator.buffer
         bufferBuilder.begin(7, DefaultVertexFormats.POSITION_TEX)
         bufferBuilder.pos(xCoord, yCoord + 16, zLevel).tex(uMin, vMax).endVertex()
-        bufferBuilder.pos(xCoord + 16 - maskRight, yCoord + 16, zLevel).tex(uMax, vMax).endVertex()
-        bufferBuilder.pos(xCoord + 16 - maskRight, yCoord + maskTop, zLevel).tex(uMax, vMin).endVertex()
-        bufferBuilder.pos(xCoord, yCoord + maskTop, zLevel).tex(uMin, vMin).endVertex()
+        bufferBuilder.pos(xCoord + 16, yCoord + 16, zLevel).tex(uMax, vMax).endVertex()
+        bufferBuilder.pos(xCoord + 16, yCoord, zLevel).tex(uMax, vMin).endVertex()
+        bufferBuilder.pos(xCoord, yCoord, zLevel).tex(uMin, vMin).endVertex()
         tessellator.draw()
     }
 }

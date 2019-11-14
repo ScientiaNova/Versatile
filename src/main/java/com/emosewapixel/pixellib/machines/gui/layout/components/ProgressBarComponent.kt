@@ -11,9 +11,9 @@ open class ProgressBarComponent(override val property: IValueProperty<Double>) :
     var bar = BaseTextures.ARROW_BAR
     override val tooltips = mutableListOf<String>()
     var direction = Direction2D.RIGHT
-    override var x = 79
+    override var x = 77
     override var y = 34
-    override var width = 24
+    override var width = 22
     override var height = 16
 
     @OnlyIn(Dist.CLIENT)

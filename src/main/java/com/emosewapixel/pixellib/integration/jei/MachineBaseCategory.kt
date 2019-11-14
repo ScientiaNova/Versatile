@@ -21,6 +21,10 @@ open class MachineBaseCategory(helper: IGuiHelper, protected var recipeList: Abs
 
     val page = recipeList.createPage()
 
+    val xOffset = -page.leftMost
+
+    val yOffset = -page.topMost
+
     private val icon = recipeList.blocksImplementing.firstOrNull()?.let(helper::createDrawableIngredient)
 
     override fun getUid() = recipeList.name
@@ -83,8 +87,8 @@ open class MachineBaseCategory(helper: IGuiHelper, protected var recipeList: Abs
     }
 
     override fun draw(recipe: SimpleMachineRecipe, mouseX: Double, mouseY: Double) {
-        page.components.forEach { it.drawInBackground(mouseX, mouseY, 0, 0) }
-        page.components.forEach { it.drawInForeground(mouseX, mouseY, 0, 0) }
+        page.components.forEach { it.drawInBackground(mouseX, mouseY, xOffset, yOffset) }
+        page.components.forEach { it.drawInForeground(mouseX, mouseY, xOffset, yOffset) }
     }
 
     @Suppress("UNCHECKED_CAST")

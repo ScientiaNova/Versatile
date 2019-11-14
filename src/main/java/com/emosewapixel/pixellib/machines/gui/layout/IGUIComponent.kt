@@ -29,6 +29,6 @@ interface IGUIComponent {
     @OnlyIn(Dist.CLIENT)
     fun drawInForeground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int) {
         if (tooltips.isNotEmpty() && isSelected(mouseX - xOffset, mouseY - yOffset))
-            GUiUtils.renderTooltip(tooltips, mouseX.toInt(), mouseY.toInt())
+            GUiUtils.renderTooltip(tooltips, mouseX, mouseY)
     }
 }
