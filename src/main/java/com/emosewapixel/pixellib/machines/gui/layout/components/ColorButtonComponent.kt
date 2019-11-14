@@ -26,9 +26,6 @@ open class ColorButtonComponent(override val property: ILimitedIntegerProperty, 
     }
 
     @OnlyIn(Dist.CLIENT)
-    override fun isSelected(mouseX: Int, mouseY: Int) = x < mouseX && mouseX < x + width && y < mouseY && mouseY < y + height
-
-    @OnlyIn(Dist.CLIENT)
     override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int): Boolean {
         property.inc()
         return true

@@ -15,9 +15,6 @@ open class PageButtonComponent(override val property: UpdatePageProperty, val pa
     override fun drawInBackground(mouseX: Int, mouseY: Int, xOffset: Int, yOffset: Int) = texture.render(xOffset + x, yOffset + y, width, height)
 
     @OnlyIn(Dist.CLIENT)
-    override fun isSelected(mouseX: Int, mouseY: Int) = x < mouseX && mouseX < x + width && y < mouseY && mouseY < y + height
-
-    @OnlyIn(Dist.CLIENT)
     override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int): Boolean {
         property.pageId = page
         return true

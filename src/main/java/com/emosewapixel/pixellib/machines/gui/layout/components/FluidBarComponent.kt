@@ -32,7 +32,4 @@ open class FluidBarComponent(override val property: IValueProperty<IFluidHandler
             Direction2D.RIGHT -> AbstractGui.fill(xOffset + x, yOffset + y, currentSize, height, tank.getFluidInTank(tankId).fluid.attributes.color)
         }
     }
-
-    @OnlyIn(Dist.CLIENT)
-    override fun isSelected(mouseX: Int, mouseY: Int) = x < mouseX && mouseX < x + width && y < mouseY && mouseY < y + height
 }

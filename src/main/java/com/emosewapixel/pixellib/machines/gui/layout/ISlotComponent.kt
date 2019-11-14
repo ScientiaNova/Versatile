@@ -1,9 +1,8 @@
 package com.emosewapixel.pixellib.machines.gui.layout
 
-import com.emosewapixel.pixellib.machines.gui.textures.GUITexture
+import com.emosewapixel.pixellib.machines.gui.slots.IImprovedSlot
+import net.minecraft.entity.player.PlayerInventory
 
 interface ISlotComponent : IGUIComponent {
-    val texture: GUITexture
-
-    override fun isSelected(mouseX: Int, mouseY: Int) = x + 1 < mouseX && mouseX < x + width - 2 && y + 1 < mouseY && mouseY < y + height - 2
+    fun setupSlot(playerInv: PlayerInventory): IImprovedSlot
 }

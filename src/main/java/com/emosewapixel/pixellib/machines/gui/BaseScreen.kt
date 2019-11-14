@@ -14,13 +14,13 @@ class BaseScreen(container: BaseContainer, playerInv: PlayerInventory, title: IT
             container.guiPage.components.forEach { it.drawInForeground(mouseX, mouseY, guiLeft, guiTop) }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, clickType: Int) =
-            container.guiPage.components.asSequence().filter { it.isSelected(mouseX.toInt() - guiLeft, mouseY.toInt() - guiTop) }.any { it.onMouseClicked(mouseX, mouseY, clickType) }
+            container.guiPage.components.reversed().asSequence().filter { it.isSelected(mouseX.toInt() - guiLeft, mouseY.toInt() - guiTop) }.any { it.onMouseClicked(mouseX, mouseY, clickType) }
 
     override fun mouseDragged(mouseX: Double, mouseY: Double, clickType: Int, lastX: Double, lastY: Double) =
-            container.guiPage.components.asSequence().filter { it.isSelected(mouseX.toInt() - guiLeft, mouseY.toInt() - guiTop) }.any { it.onMouseDragged(mouseX, mouseY, clickType) }
+            container.guiPage.components.reversed().asSequence().filter { it.isSelected(mouseX.toInt() - guiLeft, mouseY.toInt() - guiTop) }.any { it.onMouseDragged(mouseX, mouseY, clickType) }
 
     override fun mouseReleased(mouseX: Double, mouseY: Double, clickType: Int) =
-            container.guiPage.components.asSequence().filter { it.isSelected(mouseX.toInt() - guiLeft, mouseY.toInt() - guiTop) }.any { it.onMouseReleased(mouseX, mouseY, clickType) }
+            container.guiPage.components.reversed().asSequence().filter { it.isSelected(mouseX.toInt() - guiLeft, mouseY.toInt() - guiTop) }.any { it.onMouseReleased(mouseX, mouseY, clickType) }
 
     override fun render(mouseX: Int, mouseY: Int, partialTicks: Float) {
         if (container.guiPage != container.te.guiLayout.current) {

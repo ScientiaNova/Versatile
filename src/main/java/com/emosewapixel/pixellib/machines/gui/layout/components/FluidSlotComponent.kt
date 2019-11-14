@@ -6,7 +6,6 @@ import com.emosewapixel.pixellib.items.ItemStackHolder
 import com.emosewapixel.pixellib.machines.capabilities.IFluidHandlerModifiable
 import com.emosewapixel.pixellib.machines.gui.GUiUtils
 import com.emosewapixel.pixellib.machines.gui.layout.IPropertyGUIComponent
-import com.emosewapixel.pixellib.machines.gui.layout.ISlotComponent
 import com.emosewapixel.pixellib.machines.gui.textures.BaseTextures
 import com.emosewapixel.pixellib.machines.properties.IValueProperty
 import net.minecraft.client.Minecraft
@@ -18,8 +17,8 @@ import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler
 import net.minecraftforge.fluids.capability.IFluidHandler
 
-open class FluidSlotComponent(override val property: IValueProperty<IFluidHandlerModifiable>, override val x: Int, override val y: Int) : ISlotComponent, IPropertyGUIComponent {
-    override var texture = BaseTextures.FLUID_SLOT
+open class FluidSlotComponent(override val property: IValueProperty<IFluidHandlerModifiable>, override val x: Int, override val y: Int) : IPropertyGUIComponent {
+    var texture = BaseTextures.FLUID_SLOT
     override val tooltips = mutableListOf<String>()
     override var width = 18
     override var height = 18

@@ -18,7 +18,4 @@ open class ProgressBarComponent(override val property: IValueProperty<Double>) :
 
     @OnlyIn(Dist.CLIENT)
     override fun drawInBackground(mouseX: Int, mouseY: Int, xOffset: Int, yOffset: Int) = bar.render(xOffset + x, yOffset + y, width, height, property.value, direction)
-
-    @OnlyIn(Dist.CLIENT)
-    override fun isSelected(mouseX: Int, mouseY: Int) = x < mouseX && mouseX < x + width && y < mouseY && mouseY < y + height
 }

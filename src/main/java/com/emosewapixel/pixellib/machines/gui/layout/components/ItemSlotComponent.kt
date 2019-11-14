@@ -1,57 +1,24 @@
 package com.emosewapixel.pixellib.machines.gui.layout.components
 
+import com.emosewapixel.pixellib.machines.gui.layout.IPropertyGUIComponent
+import com.emosewapixel.pixellib.machines.gui.layout.ISlotComponent
+import com.emosewapixel.pixellib.machines.gui.slots.ItemHandlerSlot
+import com.emosewapixel.pixellib.machines.gui.textures.BaseTextures
 import com.emosewapixel.pixellib.machines.properties.IValueProperty
-import net.minecraft.client.Minecraft
-import net.minecraft.item.ItemStack
+import net.minecraft.entity.player.PlayerInventory
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.items.IItemHandlerModifiable
-import org.lwjgl.glfw.GLFW
-import kotlin.math.ceil
 
-open class ItemSlotComponent(property: IValueProperty<IItemHandlerModifiable>, x: Int, y: Int) : AbstractItemSlotComponent(property, x, y) {
+open class ItemSlotComponent(override val property: IValueProperty<IItemHandlerModifiable>, override val x: Int, override val y: Int) : ISlotComponent, IPropertyGUIComponent {
+    var texture = BaseTextures.ITEM_SLOT
+    override val tooltips = mutableListOf<String>()
+    override var width = 18
+    override var height = 18
+    var slotIndex = 0
+
     @OnlyIn(Dist.CLIENT)
-    override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int): Boolean {
-        val itemHandler = property.value
-        val playerInv = Minecraft.getInstance().player.inventory
-        val heldStack = playerInv.itemStack
-        if (heldStack.isEmpty) {
-            if (!itemHandler.getStackInSlot(slotIndex).isEmpty) {
-                val stack = itemHandler.getStackInSlot(slotIndex)
-                when (clickType) {
-                    GLFW.GLFW_MOUSE_BUTTON_LEFT -> {
-                        playerInv.itemStack = stack
-                        itemHandler.setStackInSlot(slotIndex, ItemStack.EMPTY)
-                    }
-                    GLFW.GLFW_MOUSE_BUTTON_RIGHT -> {
-                        val count = ceil(stack.count / 2f).toInt()
-                        playerInv.itemStack = ItemStack(stack.item, count)
-                        stack.shrink(count)
-                    }
-                    GLFW.GLFW_MOUSE_BUTTON_MIDDLE ->
-                        if (playerInv.player.isCreative)
-                            playerInv.itemStack = stack.copy()
-                }
-            }
-        } else if (itemHandler.isItemValid(slotIndex, heldStack))
-            when (itemHandler.getStackInSlot(slotIndex).isEmpty) {
-                true -> when (clickType) {
-                    GLFW.GLFW_MOUSE_BUTTON_LEFT ->
-                        playerInv.itemStack = itemHandler.insertItem(slotIndex, heldStack, false)
-                    GLFW.GLFW_MOUSE_BUTTON_RIGHT ->
-                        if (itemHandler.insertItem(slotIndex, ItemStack(heldStack.item, 1), false).isEmpty)
-                            playerInv.itemStack.shrink(1)
-                }
-                false -> {
-                    val stack = itemHandler.getStackInSlot(slotIndex)
-                    if (stack.isItemEqual(heldStack) && stack.tag == heldStack.tag)
-                        playerInv.itemStack = itemHandler.insertItem(slotIndex, heldStack, false)
-                    else {
-                        playerInv.itemStack = stack
-                        itemHandler.setStackInSlot(slotIndex, heldStack)
-                    }
-                }
-            }
-        return true
-    }
+    override fun drawInBackground(mouseX: Int, mouseY: Int, xOffset: Int, yOffset: Int) = texture.render(xOffset + x, yOffset + y, width, height)
+
+    override fun setupSlot(playerInv: PlayerInventory) = ItemHandlerSlot(property.value, slotIndex, x, y)
 }

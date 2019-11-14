@@ -15,9 +15,6 @@ open class IntegerButtonComponent(override val property: ILimitedIntegerProperty
     override fun drawInBackground(mouseX: Int, mouseY: Int, xOffset: Int, yOffset: Int) = textures.render(xOffset + x, yOffset + y, width, height, frame = property.value)
 
     @OnlyIn(Dist.CLIENT)
-    override fun isSelected(mouseX: Int, mouseY: Int) = x < mouseX && mouseX < x + width && y < mouseY && mouseY < y + height
-
-    @OnlyIn(Dist.CLIENT)
     override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int): Boolean {
         property.inc()
         return true
