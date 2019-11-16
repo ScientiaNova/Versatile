@@ -24,7 +24,7 @@ interface IGUIComponent {
     fun drawInBackground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int)
 
     @OnlyIn(Dist.CLIENT)
-    fun isSelected(mouseX: Double, mouseY: Double) = x + 1 < mouseX && mouseX < x + width - 2 && y + 1 < mouseY && mouseY < y + height - 2
+    fun isSelected(mouseX: Double, mouseY: Double) = x < mouseX && mouseX < x + width && y < mouseY && mouseY < y + height
 
     @OnlyIn(Dist.CLIENT)
     fun drawInForeground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int) {

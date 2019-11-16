@@ -20,5 +20,7 @@ open class ItemSlotComponent(override val property: IValueProperty<IItemHandlerM
     @OnlyIn(Dist.CLIENT)
     override fun drawInBackground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int) = texture.render(xOffset + x, yOffset + y, width, height)
 
+    override fun isSelected(mouseX: Double, mouseY: Double) = x + 1 < mouseX && mouseX < x + width - 2 && y + 1 < mouseY && mouseY < y + height - 2
+
     override fun setupSlot(playerInv: PlayerInventory) = ItemHandlerSlot(property.value, slotIndex, x, y)
 }

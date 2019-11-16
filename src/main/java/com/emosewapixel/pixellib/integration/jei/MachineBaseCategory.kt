@@ -71,7 +71,7 @@ open class MachineBaseCategory<T : SimpleMachineRecipe>(helper: IGuiHelper, prot
             }
             if (it is FluidSlotComponent) {
                 val isInput = it.tankId < recipeList.maxFluidInputs
-                guiFluidStacks.init(it.tankId, isInput, GUIFluidRenderer(), it.x, it.y, 16, 16, 0, 0)
+                guiFluidStacks.init(it.tankId, isInput, GUIFluidRenderer(), it.x, it.y, 18, 18, 1, 1)
                 (if (isInput) fluidInputs.getOrNull(it.tankId) else fluidOutputs.getOrNull(it.tankId - recipeList.maxFluidInputs))?.let { ingredient ->
                     guiFluidStacks.set(it.tankId, ingredient)
                 }
@@ -100,10 +100,8 @@ open class MachineBaseCategory<T : SimpleMachineRecipe>(helper: IGuiHelper, prot
         }
     }
 
-    override fun draw(recipe: T, mouseX: Double, mouseY: Double) {
-        page.components.forEach { it.drawInBackground(mouseX, mouseY, xOffset, yOffset) }
-        page.components.forEach { it.drawInForeground(mouseX, mouseY, xOffset, yOffset) }
-    }
+    override fun draw(recipe: T, mouseX: Double, mouseY: Double) =
+            page.components.forEach { it.drawInBackground(mouseX, mouseY, xOffset, yOffset) }
 
     @Suppress("UNCHECKED_CAST")
     override fun getRecipeClass() = (recipeList.javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<T>
