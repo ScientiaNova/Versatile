@@ -2,12 +2,11 @@ modLoader="kotlinfml"
 loaderVersion="[1,)"
 issueTrackerURL="https://github.com/EmosewaPixel/PixelLib/issues"
 [[mods]]
-modId="pixellib"
+modId="pixeltest"
 version="${file.jarVersion}"
-displayName="Pixel Lib"
-logoFile="pixellib.png"
+displayName="Pixel Test"
 authors="TheEmosewaPixel"
-description="A library mod for easily adding some new things"
+description="A test mod for PixelLib"
 [[dependencies.pixellib]]
     modId="forge"
     mandatory=true

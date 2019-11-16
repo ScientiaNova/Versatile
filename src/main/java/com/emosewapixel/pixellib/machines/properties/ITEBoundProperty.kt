@@ -8,5 +8,7 @@ import net.minecraftforge.common.util.INBTSerializable
 interface ITEBoundProperty : IMachineProperty, INBTSerializable<CompoundNBT> {
     val id: String
     val te: BaseTileEntity
+    fun update() {}
+    fun tick() {}
     fun detectAndSendChanges(container: BaseContainer)
 }

@@ -21,5 +21,5 @@ class RecipeItemTagStack(stack: TagStack<Item>) : IRecipeStack<ItemStack> {
 }
 
 operator fun MutableCollection<IRecipeStack<ItemStack>>.plusAssign(stack: TagStack<Item>) = plusAssign(RecipeItemTagStack(stack))
-fun Tag<Item>.toRStack(count: Int = 1000) = RecipeItemTagStack(this.toStack(count))
+fun Tag<Item>.toRStack(count: Int = 1) = RecipeItemTagStack(this.toStack(count))
 fun TagStack<Item>.r() = RecipeItemTagStack(this)

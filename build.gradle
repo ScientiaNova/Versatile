@@ -41,6 +41,16 @@ minecraft {
             }
         }
 
+        testClient {
+            parent runs.client
+
+            mods {
+                pixeltest {
+                    source sourceSets.test
+                }
+            }
+        }
+
         server {
             workingDirectory project.file('run')
 

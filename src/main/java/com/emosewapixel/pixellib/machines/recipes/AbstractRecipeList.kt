@@ -117,8 +117,8 @@ abstract class AbstractRecipeList<T : SimpleMachineRecipe, B : AbstractRecipeBui
         }
 
         for (outputIndex in 0 until totalOutputs) {
-            val x = outputXStart + outputIndex % inputColumns * 18
-            val y = outputYStart + outputIndex / inputColumns * 18
+            val x = outputXStart + outputIndex % outputColumns * 18
+            val y = outputYStart + outputIndex / outputColumns * 18
             if (outputIndex < maxOutputs)
                 itemSlot(items, x, y) {
                     slotIndex = outputIndex + maxInputs

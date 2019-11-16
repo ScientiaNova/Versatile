@@ -20,5 +20,5 @@ class RecipeItemStack(val stack: ItemStack) : IRecipeStack<ItemStack> {
 }
 
 operator fun MutableCollection<IRecipeStack<ItemStack>>.plusAssign(stack: ItemStack) = plusAssign(RecipeItemStack(stack))
-fun Item.toRStack(count: Int = 1000) = RecipeItemStack(this.toStack(count))
+fun Item.toRStack(count: Int = 1) = RecipeItemStack(this.toStack(count))
 fun ItemStack.r() = RecipeItemStack(this)

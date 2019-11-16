@@ -39,13 +39,14 @@ import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent
 import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent
 import org.apache.logging.log4j.LogManager
+import org.apache.logging.log4j.Logger
 import java.util.function.Supplier
 
 @Mod(PixelLib.ModId)
 object PixelLib {
     const val ModId = "pixellib"
 
-    val LOGGER = LogManager.getLogger()
+    val LOGGER: Logger = LogManager.getLogger()
 
     val MAIN: ItemGroup = object : ItemGroup(ModId) {
         override fun createIcon() = ItemStack(MaterialItems.all.first { it is MaterialItem })
@@ -54,9 +55,9 @@ object PixelLib {
     private val proxy = DistExecutor.runForDist<IModProxy>({ Supplier { ClientProxy } }, { Supplier { ServerProxy } })
 
     init {
-        FMLKotlinModLoadingContext.get().modEventBus.addListener<FMLCommonSetupEvent> { this.commonSetup() }
-        FMLKotlinModLoadingContext.get().modEventBus.addListener<InterModEnqueueEvent> { this.enqueueIMC(it) }
-        FMLKotlinModLoadingContext.get().modEventBus.addListener<InterModProcessEvent> { this.processIMC(it) }
+        FMLKotlinModLoadingContext.get().modEventBus.addListener<FMLCommonSetupEvent> { commonSetup() }
+        FMLKotlinModLoadingContext.get().modEventBus.addListener<InterModEnqueueEvent> { enqueueIMC(it) }
+        FMLKotlinModLoadingContext.get().modEventBus.addListener<InterModProcessEvent> { processIMC(it) }
 
         proxy.init()
     }

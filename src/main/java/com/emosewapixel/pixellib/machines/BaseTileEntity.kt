@@ -2,6 +2,7 @@ package com.emosewapixel.pixellib.machines
 
 import com.emosewapixel.pixellib.extensions.plusAssign
 import com.emosewapixel.pixellib.machines.gui.layout.GUIBook
+import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.tileentity.ITickableTileEntity
@@ -20,13 +21,9 @@ class BaseTileEntity(type: TileEntityType<*>) : TileEntity(type), ITickableTileE
 
     val properties = block?.properties?.invoke(this)?.map { it.id to it }?.toMap() ?: mapOf()
 
-    override fun tick() {
-        block?.tick?.invoke(this)
-    }
+    override fun tick() = properties.values.forEach(ITEBoundProperty::tick)
 
-    fun update() {
-        block?.update?.invoke(this)
-    }
+    fun update() = properties.values.forEach(ITEBoundProperty::update)
 
     override fun serializeNBT(): CompoundNBT {
         val nbt = super.serializeNBT()

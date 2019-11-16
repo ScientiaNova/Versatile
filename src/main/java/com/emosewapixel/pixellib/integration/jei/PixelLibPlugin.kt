@@ -1,5 +1,6 @@
 package com.emosewapixel.pixellib.integration.jei
 
+import com.emosewapixel.pixellib.extensions.toStack
 import com.emosewapixel.pixellib.machines.recipes.AbstractRecipeList
 import com.emosewapixel.pixellib.machines.recipes.RecipeLists
 import mezz.jei.api.IModPlugin
@@ -10,7 +11,7 @@ import mezz.jei.api.registration.IRecipeRegistration
 import net.minecraft.util.ResourceLocation
 
 @JeiPlugin
-object PixelLibPlugin : IModPlugin {
+class PixelLibPlugin : IModPlugin {
     private val jeiRecipeLists get() = RecipeLists.all.filter(AbstractRecipeList<*, *>::genJEIPage)
 
     override fun getPluginUid() = ResourceLocation("pixellib", "generated")
@@ -23,7 +24,7 @@ object PixelLibPlugin : IModPlugin {
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {
         jeiRecipeLists.forEach { list ->
-            list.blocksImplementing.forEach { registration.addRecipeCatalyst(it, list.name) }
+            list.blocksImplementing.forEach { registration.addRecipeCatalyst(it.toStack(), list.name) }
         }
     }
 
