@@ -41,7 +41,7 @@ class WeightedMap<V>(other: Map<Int, V> = emptyMap()) : Map<Int, V> {
 
     override fun containsKey(key: Int) = this[key] != null
 
-    override fun containsValue(value: V) = values.contains(value)
+    override fun containsValue(value: V) = value in values
 
     override val size get() = map.size
 
@@ -50,6 +50,16 @@ class WeightedMap<V>(other: Map<Int, V> = emptyMap()) : Map<Int, V> {
     override val values get() = map.values
 
     override val entries get() = map.entries
+
+    val weightedEntries: List<Pair<Int, V>>
+        get() {
+            var counter = 0
+            return keys.zip(values) { key, value ->
+                val res = key - counter to value
+                counter = key
+                res
+            }
+        }
 }
 
 fun <K> weightedMapOf(vararg entries: Pair<Int, K>) = WeightedMap(entries.toMap())

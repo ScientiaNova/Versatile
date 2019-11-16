@@ -41,7 +41,7 @@ open class FluidSlotComponent(override val property: IValueProperty<IFluidHandle
             if (fluid.isEmpty)
                 GUiUtils.renderTooltip(listOf(TranslationTextComponent("gui.tooltip.tank_fill").string), mouseX, mouseY)
             else
-                GUiUtils.renderTooltip(mutableListOf(fluid.fluid.attributes.getDisplayName(fluid).string, "${fluid.amount}/${handler.getTankCapacity(tankId)}mb", TranslationTextComponent("gui.tooltip.tank_empty").string), mouseX, mouseY)
+                GUiUtils.renderTooltip(mutableListOf(fluid.fluid.attributes.getDisplayName(fluid).string, "${fluid.amount}/${handler.getTankCapacity(tankId)} mB", TranslationTextComponent("gui.tooltip.tank_empty").string), mouseX, mouseY)
         }
     }
 

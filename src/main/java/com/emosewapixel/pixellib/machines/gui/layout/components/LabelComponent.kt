@@ -14,8 +14,8 @@ open class LabelComponent(val text: String, override var x: Int, override var y:
     override val height = 10
     override val width
         get() = DistExecutor.runForDist(
-                { Supplier { Minecraft.getInstance().fontRenderer.getStringWidth(text) } },
-                { Supplier { text.length } }
+                { Supplier { Minecraft.getInstance().fontRenderer.getStringWidth(text) / if (location == LabelLocation.START) 1 else 2 } },
+                { Supplier { text.length / if (location == LabelLocation.START) 1 else 2 } }
         )
 
     @OnlyIn(Dist.CLIENT)

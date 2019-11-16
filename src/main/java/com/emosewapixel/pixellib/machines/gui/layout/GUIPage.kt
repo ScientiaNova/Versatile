@@ -10,8 +10,9 @@ import com.emosewapixel.pixellib.machines.properties.IValueProperty
 import com.emosewapixel.pixellib.machines.properties.IVariableProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.UpdatePageProperty
 import net.minecraftforge.items.IItemHandlerModifiable
+import kotlin.math.max
 
-class GUIPage(builder: GUIPage.() -> Unit) {
+class GUIPage(val minWidth: Int = 0, val minHeight: Int = 0, builder: GUIPage.() -> Unit) {
     val components = mutableListOf<IGUIComponent>()
 
     init {
@@ -22,9 +23,17 @@ class GUIPage(builder: GUIPage.() -> Unit) {
 
     val topMost get() = components.map(IGUIComponent::y).min() ?: 0
 
-    val width get() = if (components.isEmpty()) 0 else components.map { it.x + it.width }.max()!! - components.map(IGUIComponent::x).min()!!
+    val rightMost get() = components.map { it.x + it.width }.max() ?: 0
 
-    val height get() = if (components.isEmpty()) 0 else components.map { it.y + it.height }.max()!! - components.map(IGUIComponent::y).min()!!
+    val bottomMost get() = components.map { it.y + it.height }.max() ?: 0
+
+    val trueWidth get() = if (components.isEmpty()) 0 else components.map { it.x + it.width }.max()!! - components.map(IGUIComponent::x).min()!!
+
+    val trueHeight get() = if (components.isEmpty()) 0 else components.map { it.y + it.height }.max()!! - components.map(IGUIComponent::y).min()!!
+
+    val width get() = max(minWidth, rightMost)
+
+    val height get() = max(minHeight, bottomMost)
 
     fun boolButton(property: IVariableProperty<Boolean>, textures: GUITexturePair, x: Int, y: Int, builder: BooleanButtonComponent.() -> Unit = { }) {
         val component = BooleanButtonComponent(property, textures, x, y)
@@ -96,5 +105,15 @@ class GUIPage(builder: GUIPage.() -> Unit) {
         val component = ProgressBarComponent(property)
         component.builder()
         components += component
+    }
+
+    fun offset(x: Int, y: Int) = components.forEach {
+        it.x += x
+        it.y += y
+    }
+
+    fun GUIPage.merge(xOffset: Int, yOffset: Int) {
+        this.offset(xOffset, yOffset)
+        this@GUIPage.components += this.components
     }
 }

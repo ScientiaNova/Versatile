@@ -1,6 +1,7 @@
 package com.emosewapixel.pixellib.integration.jei
 
 import com.emosewapixel.pixellib.extensions.isNotEmpty
+import com.emosewapixel.pixellib.extensions.shorten
 import com.emosewapixel.pixellib.extensions.toStack
 import com.emosewapixel.pixellib.machines.gui.layout.components.FluidSlotComponent
 import com.emosewapixel.pixellib.machines.gui.layout.components.ItemSlotComponent
@@ -22,10 +23,6 @@ open class MachineBaseCategory<T : SimpleMachineRecipe>(helper: IGuiHelper, prot
 
     private val background: IDrawable = helper.createBlankDrawable(page.width, page.height)
 
-    val xOffset = -page.leftMost
-
-    val yOffset = -page.topMost
-
     private val icon = recipeList.blocksImplementing.firstOrNull()?.let { helper.createDrawableIngredient(it.toStack()) }
 
     override fun getUid() = recipeList.name
@@ -40,14 +37,14 @@ open class MachineBaseCategory<T : SimpleMachineRecipe>(helper: IGuiHelper, prot
         ingredients.setInputLists(VanillaTypes.ITEM, recipe.inputs.map { pair -> pair.first.stacks.filter(ItemStack::isNotEmpty).map { it.apply { orCreateTag.putFloat("consume_chance", pair.second) } } })
         ingredients.setInputLists(VanillaTypes.FLUID, recipe.fluidInputs.map { pair -> pair.first.stacks.filter(FluidStack::isNotEmpty).map { it.apply { orCreateTag.putFloat("consume_chance", pair.second) } } })
         ingredients.setOutputLists(VanillaTypes.ITEM, recipe.outputs.map { map ->
-            map.map {
-                it.value.stacks.firstOrNull()?.apply { if (isNotEmpty) orCreateTag.putDouble("output_chance", it.key / map.maxWeight.toDouble()) }
+            map.weightedEntries.map {
+                it.second.stacks.firstOrNull()?.apply { if (isNotEmpty) orCreateTag.putDouble("output_chance", it.first / map.maxWeight.toDouble()) }
                         ?: ItemStack.EMPTY
             }.filter(ItemStack::isNotEmpty)
         })
         ingredients.setOutputLists(VanillaTypes.FLUID, recipe.fluidOutputs.map { map ->
-            map.map {
-                it.value.stacks.firstOrNull()?.apply { if (isNotEmpty) orCreateTag.putDouble("output_chance", it.key / map.maxWeight.toDouble()) }
+            map.weightedEntries.map {
+                it.second.stacks.firstOrNull()?.apply { if (isNotEmpty) orCreateTag.putDouble("output_chance", it.first / map.maxWeight.toDouble()) }
                         ?: FluidStack.EMPTY
             }.filter(FluidStack::isNotEmpty)
         })
@@ -81,27 +78,29 @@ open class MachineBaseCategory<T : SimpleMachineRecipe>(helper: IGuiHelper, prot
         guiItemStacks.addTooltipCallback { _, input, stack, tooltips ->
             if (input) {
                 val consumeChance = stack.orCreateTag.getFloat("consume_chance")
-                if (consumeChance <= 0) tooltips += TranslationTextComponent("recipe_stack.not_consumed").formattedText
-                else if (consumeChance < 1) tooltips += TranslationTextComponent("recipe_stack.consume_chance", consumeChance * 100).formattedText
+                if (consumeChance <= 0) tooltips += TranslationTextComponent("extra_recipe_info.not_consumed").string
+                else if (consumeChance < 1) tooltips += TranslationTextComponent("extra_recipe_info.consume_chance", (consumeChance * 100).shorten()).string
             } else {
                 val outputChance = stack.orCreateTag.getFloat("output_chance")
-                if (outputChance < 1) tooltips += TranslationTextComponent("recipe_stack.output_chance", outputChance * 100).formattedText
+                if (outputChance < 1) tooltips += TranslationTextComponent("extra_recipe_info.output_chance", (outputChance * 100).shorten()).string
             }
         }
         guiFluidStacks.addTooltipCallback { _, input, stack, tooltips ->
             if (input) {
                 val consumeChance = stack.orCreateTag.getFloat("consume_chance")
-                if (consumeChance <= 0) tooltips += TranslationTextComponent("recipe_stack.not_consumed").formattedText
-                else if (consumeChance < 1) tooltips += TranslationTextComponent("recipe_stack.consume_chance", consumeChance * 100).formattedText
+                if (consumeChance <= 0) tooltips += TranslationTextComponent("extra_recipe_info.not_consumed").string
+                else if (consumeChance < 1) tooltips += TranslationTextComponent("extra_recipe_info.consume_chance", (consumeChance * 100).shorten()).string
             } else {
                 val outputChance = stack.orCreateTag.getFloat("output_chance")
-                if (outputChance < 1) tooltips += TranslationTextComponent("recipe_stack.output_chance", outputChance * 100).formattedText
+                if (outputChance < 1) tooltips += TranslationTextComponent("extra_recipe_info.output_chance", (outputChance * 100).shorten()).string
             }
         }
     }
 
-    override fun draw(recipe: T, mouseX: Double, mouseY: Double) =
-            page.components.forEach { it.drawInBackground(mouseX, mouseY, xOffset, yOffset) }
+    override fun draw(recipe: T, mouseX: Double, mouseY: Double) {
+        page.components.forEach { it.drawInBackground(mouseX, mouseY, 0, 0) }
+        recipeList.renderExtraInfo(page, recipe)
+    }
 
     @Suppress("UNCHECKED_CAST")
     override fun getRecipeClass() = (recipeList.javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<T>

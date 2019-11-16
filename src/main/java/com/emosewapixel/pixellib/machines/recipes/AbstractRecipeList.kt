@@ -1,5 +1,6 @@
 package com.emosewapixel.pixellib.machines.recipes
 
+import com.emosewapixel.pixellib.extensions.shorten
 import com.emosewapixel.pixellib.machines.capabilities.FluidStackHandler
 import com.emosewapixel.pixellib.machines.capabilities.ImprovedItemStackHandler
 import com.emosewapixel.pixellib.machines.gui.layout.GUIPage
@@ -10,11 +11,15 @@ import com.emosewapixel.pixellib.machines.properties.implementations.Incrementin
 import com.emosewapixel.pixellib.machines.properties.implementations.ItemInventoryProperty
 import com.emosewapixel.pixellib.machines.recipes.utility.MachineInput
 import net.minecraft.block.Block
+import net.minecraft.client.Minecraft
 import net.minecraft.item.ItemStack
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.TranslationTextComponent
+import net.minecraftforge.api.distmarker.Dist
+import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.fluids.FluidStack
 import kotlin.math.ceil
+import kotlin.math.max
 import kotlin.math.sqrt
 
 /*
@@ -80,7 +85,9 @@ abstract class AbstractRecipeList<T : SimpleMachineRecipe, B : AbstractRecipeBui
         }
     }
 
-    open fun createPage(items: ItemInventoryProperty = ItemInventoryProperty(ImprovedItemStackHandler(maxInputs, maxOutputs)), fluids: FluidInventoryProperty = FluidInventoryProperty(FluidStackHandler(maxFluidInputs, maxFluidOutputs)), progressUpdater: IValueProperty<Double> = IncrementingDoubleProperty()) = GUIPage {
+    open val extraTextRows = 1
+
+    open fun createPage(items: ItemInventoryProperty = ItemInventoryProperty(ImprovedItemStackHandler(maxInputs, maxOutputs)), fluids: FluidInventoryProperty = FluidInventoryProperty(FluidStackHandler(maxFluidInputs, maxFluidOutputs)), progressUpdater: IValueProperty<Double> = IncrementingDoubleProperty()): GUIPage {
         val totalInputs = maxInputs + maxFluidInputs
         val inputColumns = ceil(sqrt(totalInputs.toDouble())).toInt()
         val inputRows = ceil(totalInputs / inputColumns.toDouble()).toInt()
@@ -97,37 +104,46 @@ abstract class AbstractRecipeList<T : SimpleMachineRecipe, B : AbstractRecipeBui
         val progressBarY = (if (inputRows > outputRows) inputRows else outputRows) * 9 - 8
         val outputYStart = if (outputRows < inputRows) (inputRows - outputRows) * 9 else 0
 
-        for (inputIndex in 0 until totalInputs) {
-            val x = inputXStart + inputIndex % inputColumns * 18
-            val y = inputYStart + inputIndex / inputColumns * 18
-            if (inputIndex < maxInputs)
-                itemSlot(items, x, y) {
-                    slotIndex = inputIndex
-                }
-            else
-                fluidSlot(fluids, x, y) {
-                    tankId = inputIndex - maxInputs
-                }
-        }
+        return GUIPage(minHeight = max(inputRows, outputRows) * 18 + extraTextRows * 10) {
+            for (inputIndex in 0 until totalInputs) {
+                val x = inputXStart + inputIndex % inputColumns * 18
+                val y = inputYStart + inputIndex / inputColumns * 18
+                if (inputIndex < maxInputs)
+                    itemSlot(items, x, y) {
+                        slotIndex = inputIndex
+                    }
+                else
+                    fluidSlot(fluids, x, y) {
+                        tankId = inputIndex - maxInputs
+                    }
+            }
 
-        progressBar(progressUpdater) {
-            bar = progressBar
-            x = progressBarX
-            y = progressBarY
-        }
+            progressBar(progressUpdater) {
+                bar = progressBar
+                x = progressBarX
+                y = progressBarY
+            }
 
-        for (outputIndex in 0 until totalOutputs) {
-            val x = outputXStart + outputIndex % outputColumns * 18
-            val y = outputYStart + outputIndex / outputColumns * 18
-            if (outputIndex < maxOutputs)
-                itemSlot(items, x, y) {
-                    slotIndex = outputIndex + maxInputs
-                }
-            else
-                fluidSlot(fluids, x, y) {
-                    tankId = outputIndex + maxFluidInputs - maxOutputs
-                }
+            for (outputIndex in 0 until totalOutputs) {
+                val x = outputXStart + outputIndex % outputColumns * 18
+                val y = outputYStart + outputIndex / outputColumns * 18
+                if (outputIndex < maxOutputs)
+                    itemSlot(items, x, y) {
+                        slotIndex = outputIndex + maxInputs
+                    }
+                else
+                    fluidSlot(fluids, x, y) {
+                        tankId = outputIndex + maxFluidInputs - maxOutputs
+                    }
+            }
         }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    open fun renderExtraInfo(page: GUIPage, recipe: T) {
+        val time = TranslationTextComponent("extra_recipe_info.duration", (recipe.time / 20.0).shorten()).string
+        val fontRenderer = Minecraft.getInstance().fontRenderer
+        fontRenderer.drawString(time, 0f, page.height - 8f, 0x404040)
     }
 
     abstract fun recipeBuilder(): B

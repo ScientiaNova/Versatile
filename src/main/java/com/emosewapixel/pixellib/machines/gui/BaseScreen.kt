@@ -23,8 +23,8 @@ class BaseScreen(container: BaseContainer, playerInv: PlayerInventory, title: IT
             container.guiPage.components.reversed().asSequence().filter { it.isSelected(mouseX - guiLeft, mouseY - guiTop) }.any { it.onMouseReleased(mouseX, mouseY, clickType) }
 
     override fun init() {
-        xSize = container.guiPage.width
-        ySize = container.guiPage.height
+        xSize = container.guiPage.trueWidth
+        ySize = container.guiPage.trueHeight
         super.init()
     }
 

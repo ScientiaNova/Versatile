@@ -55,7 +55,10 @@
 	"command.objtype.error": "No object type exists with that name",
 	"command.fluidcontainer.error": "That is not a fluid container item",
 
-	"recipe_stack.consume_chance": "$s% Consume Chance",
-	"recipe_stack.not_consumed": "Not Consumed",
-	"recipe_stack.output_chance": "$s% Output Chance"
+	"extra_recipe_info.consume_chance": "%s%% Consume Chance",
+	"extra_recipe_info.not_consumed": "Not Consumed",
+	"extra_recipe_info.output_chance": "%s%% Output Chance",
+	"extra_recipe_info.duration": "Time: %s secs",
+	"extra_recipe_info.energy_per_tick": "Takes: %s FE/t",
+	"extra_recipe_info.total_energy": "Total: %s FE"
 }

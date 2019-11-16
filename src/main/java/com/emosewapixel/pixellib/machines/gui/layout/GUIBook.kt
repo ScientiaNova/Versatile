@@ -7,15 +7,12 @@ class GUIBook {
 
     lateinit var current: GUIPage
 
-    fun page(builder: GUIPage.() -> Unit) {
-        pages += GUIPage(builder)
+    fun page(minWidth: Int = 0, minHeight: Int = 0, builder: GUIPage.() -> Unit) {
+        pages += GUIPage(minWidth, minHeight, builder)
     }
 
     fun GUIPage.add(xOffset: Int = 0, yOffset: Int = 0, builder: GUIPage.() -> Unit = { }) {
-        this.components.forEach {
-            it.x += xOffset
-            it.y += yOffset
-        }
+        this.offset(xOffset, yOffset)
         this.builder()
         pages += this
     }
