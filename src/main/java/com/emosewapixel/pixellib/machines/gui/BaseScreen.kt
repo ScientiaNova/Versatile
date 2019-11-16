@@ -22,6 +22,12 @@ class BaseScreen(container: BaseContainer, playerInv: PlayerInventory, title: IT
     override fun mouseReleased(mouseX: Double, mouseY: Double, clickType: Int) =
             container.guiPage.components.reversed().asSequence().filter { it.isSelected(mouseX - guiLeft, mouseY - guiTop) }.any { it.onMouseReleased(mouseX, mouseY, clickType) }
 
+    override fun init() {
+        xSize = container.guiPage.width
+        ySize = container.guiPage.height
+        super.init()
+    }
+
     override fun render(mouseX: Int, mouseY: Int, partialTicks: Float) {
         if (container.guiPage != container.te.guiLayout.current) {
             onClose()

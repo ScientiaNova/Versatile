@@ -11,12 +11,12 @@ class GUIBook {
         pages += GUIPage(builder)
     }
 
-    operator fun GUIPage.invoke(builder: GUIPage.() -> Unit) {
+    fun GUIPage.add(xOffset: Int = 0, yOffset: Int = 0, builder: GUIPage.() -> Unit = { }) {
+        this.components.forEach {
+            it.x += xOffset
+            it.y += yOffset
+        }
         this.builder()
-        pages += this
-    }
-
-    fun GUIPage.add() {
         pages += this
     }
 }

@@ -6,7 +6,7 @@ import com.emosewapixel.pixellib.machines.properties.IVariableProperty
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 
-open class BooleanButtonComponent(override val property: IVariableProperty<Boolean>, val texture: GUITexturePair, override val x: Int, override val y: Int) : IPropertyGUIComponent {
+open class BooleanButtonComponent(override val property: IVariableProperty<Boolean>, val texture: GUITexturePair, override var x: Int, override var y: Int) : IPropertyGUIComponent {
     override val tooltips = mutableListOf<String>()
     override var width = 16
     override var height = 16

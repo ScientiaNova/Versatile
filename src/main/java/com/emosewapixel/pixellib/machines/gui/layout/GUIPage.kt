@@ -26,73 +26,73 @@ class GUIPage(builder: GUIPage.() -> Unit) {
 
     val height get() = if (components.isEmpty()) 0 else components.map { it.y + it.height }.max()!! - components.map(IGUIComponent::y).min()!!
 
-    fun boolButton(property: IVariableProperty<Boolean>, textures: GUITexturePair, x: Int, y: Int, builder: BooleanButtonComponent.() -> Unit) {
+    fun boolButton(property: IVariableProperty<Boolean>, textures: GUITexturePair, x: Int, y: Int, builder: BooleanButtonComponent.() -> Unit = { }) {
         val component = BooleanButtonComponent(property, textures, x, y)
         component.builder()
         components += component
     }
 
-    fun colorButton(property: ILimitedIntegerProperty, tex: GUITexture, colors: IntArray, x: Int, y: Int, builder: ColorButtonComponent.() -> Unit) {
+    fun colorButton(property: ILimitedIntegerProperty, tex: GUITexture, colors: IntArray, x: Int, y: Int, builder: ColorButtonComponent.() -> Unit = { }) {
         val component = ColorButtonComponent(property, tex, colors, x, y)
         component.builder()
         components += component
     }
 
-    fun fluidBar(property: IValueProperty<IFluidHandlerModifiable>, backTex: GUITexture, x: Int, y: Int, builder: FluidBarComponent.() -> Unit) {
+    fun fluidBar(property: IValueProperty<IFluidHandlerModifiable>, backTex: GUITexture, x: Int, y: Int, builder: FluidBarComponent.() -> Unit = { }) {
         val component = FluidBarComponent(property, backTex, x, y)
         component.builder()
         components += component
     }
 
-    fun fluidSlot(property: IValueProperty<IFluidHandlerModifiable>, x: Int, y: Int, builder: FluidSlotComponent.() -> Unit) {
+    fun fluidSlot(property: IValueProperty<IFluidHandlerModifiable>, x: Int, y: Int, builder: FluidSlotComponent.() -> Unit = { }) {
         val component = FluidSlotComponent(property, x, y)
         component.builder()
         components += component
     }
 
-    fun ghostItemSlot(property: IValueProperty<IItemHandlerModifiable>, x: Int, y: Int, builder: GhostItemSlotComponent.() -> Unit) {
+    fun ghostItemSlot(property: IValueProperty<IItemHandlerModifiable>, x: Int, y: Int, builder: GhostItemSlotComponent.() -> Unit = { }) {
         val component = GhostItemSlotComponent(property, x, y)
         component.builder()
         components += component
     }
 
-    fun image(builder: ImageComponent.() -> Unit) {
+    fun image(builder: ImageComponent.() -> Unit = { }) {
         val component = ImageComponent()
         component.builder()
         components += component
     }
 
-    fun intButton(property: ILimitedIntegerProperty, textures: AnimatedGUITexture, x: Int, y: Int, builder: IntegerButtonComponent.() -> Unit) {
+    fun intButton(property: ILimitedIntegerProperty, textures: AnimatedGUITexture, x: Int, y: Int, builder: IntegerButtonComponent.() -> Unit = { }) {
         val component = IntegerButtonComponent(property, textures, x, y)
         component.builder()
         components += component
     }
 
-    fun itemSlot(property: IValueProperty<IItemHandlerModifiable>, x: Int, y: Int, builder: ItemSlotComponent.() -> Unit) {
+    fun itemSlot(property: IValueProperty<IItemHandlerModifiable>, x: Int, y: Int, builder: ItemSlotComponent.() -> Unit = { }) {
         val component = ItemSlotComponent(property, x, y)
         component.builder()
         components += component
     }
 
-    fun label(text: String, x: Int, y: Int, builder: LabelComponent.() -> Unit) {
+    fun label(text: String, x: Int, y: Int, builder: LabelComponent.() -> Unit = { }) {
         val component = LabelComponent(text, x, y)
         component.builder()
         components += component
     }
 
-    fun pageButton(property: UpdatePageProperty, page: Int, texture: GUITexture, x: Int, y: Int, builder: PageButtonComponent.() -> Unit) {
+    fun pageButton(property: UpdatePageProperty, page: Int, texture: GUITexture, x: Int, y: Int, builder: PageButtonComponent.() -> Unit = { }) {
         val component = PageButtonComponent(property, page, texture, x, y)
         component.builder()
         components += component
     }
 
-    fun playerSlot(index: Int, x: Int, y: Int, builder: PlayerSlotComponent.() -> Unit) {
+    fun playerSlot(index: Int, x: Int, y: Int, builder: PlayerSlotComponent.() -> Unit = { }) {
         val component = PlayerSlotComponent(index, x, y)
         component.builder()
         components += component
     }
 
-    fun progressBar(property: IValueProperty<Double>, builder: ProgressBarComponent.() -> Unit) {
+    fun progressBar(property: IValueProperty<Double>, builder: ProgressBarComponent.() -> Unit = { }) {
         val component = ProgressBarComponent(property)
         component.builder()
         components += component

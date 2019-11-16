@@ -10,7 +10,7 @@ import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.items.IItemHandlerModifiable
 
-open class ItemSlotComponent(override val property: IValueProperty<IItemHandlerModifiable>, override val x: Int, override val y: Int) : ISlotComponent, IPropertyGUIComponent {
+open class ItemSlotComponent(override val property: IValueProperty<IItemHandlerModifiable>, override var x: Int, override var y: Int) : ISlotComponent, IPropertyGUIComponent {
     var texture = BaseTextures.ITEM_SLOT
     override val tooltips = mutableListOf<String>()
     override var width = 18

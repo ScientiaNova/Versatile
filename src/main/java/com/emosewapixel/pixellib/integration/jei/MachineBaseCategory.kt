@@ -16,10 +16,10 @@ import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.fluids.FluidStack
 import java.lang.reflect.ParameterizedType
 
-open class MachineBaseCategory(helper: IGuiHelper, protected var recipeList: AbstractRecipeList<*, *>) : IRecipeCategory<SimpleMachineRecipe> {
-    private val background: IDrawable = helper.createBlankDrawable(0, 0)
-
+open class MachineBaseCategory(helper: IGuiHelper, protected val recipeList: AbstractRecipeList<*, *>) : IRecipeCategory<SimpleMachineRecipe> {
     val page = recipeList.createPage()
+
+    private val background: IDrawable = helper.createBlankDrawable(page.width, page.height)
 
     val xOffset = -page.leftMost
 

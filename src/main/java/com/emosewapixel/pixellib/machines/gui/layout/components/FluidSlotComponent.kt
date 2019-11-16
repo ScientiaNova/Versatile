@@ -17,7 +17,7 @@ import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler
 import net.minecraftforge.fluids.capability.IFluidHandler
 
-open class FluidSlotComponent(override val property: IValueProperty<IFluidHandlerModifiable>, override val x: Int, override val y: Int) : IPropertyGUIComponent {
+open class FluidSlotComponent(override val property: IValueProperty<IFluidHandlerModifiable>, override var x: Int, override var y: Int) : IPropertyGUIComponent {
     var texture = BaseTextures.FLUID_SLOT
     override val tooltips = mutableListOf<String>()
     override var width = 18

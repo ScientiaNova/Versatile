@@ -14,6 +14,8 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.fluids.FluidStack
+import kotlin.math.ceil
+import kotlin.math.sqrt
 
 /*
 Recipe Lists are objects used for storing recipes with a maximum amount of inputs and outputs.
@@ -79,7 +81,53 @@ abstract class AbstractRecipeList<T : SimpleMachineRecipe, B : AbstractRecipeBui
     }
 
     open fun createPage(items: ItemInventoryProperty = ItemInventoryProperty(ImprovedItemStackHandler(maxInputs, maxOutputs)), fluids: FluidInventoryProperty = FluidInventoryProperty(FluidStackHandler(maxFluidInputs, maxFluidOutputs)), progressUpdater: IValueProperty<Double> = IncrementingDoubleProperty()) = GUIPage {
+        val totalInputs = maxInputs + maxFluidInputs
+        val inputColumns = ceil(sqrt(totalInputs.toDouble())).toInt()
+        val inputRows = ceil(totalInputs / inputColumns.toDouble()).toInt()
 
+        val totalOutputs = maxOutputs + maxFluidOutputs
+        val outputColumns = ceil(sqrt(totalOutputs.toDouble())).toInt()
+        val outputRows = ceil(totalOutputs / outputColumns.toDouble()).toInt()
+
+        val inputXStart = 0
+        val progressBarX = inputColumns * 18 + 10
+        val outputXStart = progressBarX + 32
+
+        val inputYStart = if (inputRows < outputRows) (outputRows - inputRows) * 9 else 0
+        val progressBarY = (if (inputRows > outputRows) inputRows else outputRows) * 9 - 8
+        val outputYStart = if (outputRows < inputRows) (inputRows - outputRows) * 9 else 0
+
+        for (inputIndex in 0 until totalInputs) {
+            val x = inputXStart + inputIndex % inputColumns * 18
+            val y = inputYStart + inputIndex / inputColumns * 18
+            if (inputIndex < maxInputs)
+                itemSlot(items, x, y) {
+                    slotIndex = inputIndex
+                }
+            else
+                fluidSlot(fluids, x, y) {
+                    tankId = inputIndex - maxInputs
+                }
+        }
+
+        progressBar(progressUpdater) {
+            bar = progressBar
+            x = progressBarX
+            y = progressBarY
+        }
+
+        for (outputIndex in 0 until totalOutputs) {
+            val x = outputXStart + outputIndex % inputColumns * 18
+            val y = outputYStart + outputIndex / inputColumns * 18
+            if (outputIndex < maxOutputs)
+                itemSlot(items, x, y) {
+                    slotIndex = outputIndex + maxInputs
+                }
+            else
+                fluidSlot(fluids, x, y) {
+                    tankId = outputIndex + maxFluidInputs - maxOutputs
+                }
+        }
     }
 
     abstract fun recipeBuilder(): B

@@ -9,7 +9,7 @@ import net.minecraft.client.gui.AbstractGui
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 
-open class FluidBarComponent(override val property: IValueProperty<IFluidHandlerModifiable>, val backgroundText: GUITexture, override val x: Int, override val y: Int) : IPropertyGUIComponent {
+open class FluidBarComponent(override val property: IValueProperty<IFluidHandlerModifiable>, val backgroundText: GUITexture, override var x: Int, override var y: Int) : IPropertyGUIComponent {
     override val tooltips = mutableListOf<String>()
     override var width = 24
     override var height = 16

@@ -5,8 +5,8 @@ import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 
 interface IGUIComponent {
-    val x: Int
-    val y: Int
+    var x: Int
+    var y: Int
     val width: Int
     val height: Int
     val tooltips: MutableList<String>

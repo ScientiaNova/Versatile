@@ -11,7 +11,7 @@ import com.mojang.blaze3d.platform.GlStateManager
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 
-open class ColorButtonComponent(override val property: ILimitedIntegerProperty, val texture: GUITexture, val colors: IntArray, override val x: Int, override val y: Int) : IPropertyGUIComponent {
+open class ColorButtonComponent(override val property: ILimitedIntegerProperty, val texture: GUITexture, val colors: IntArray, override var x: Int, override var y: Int) : IPropertyGUIComponent {
     override val tooltips = mutableListOf<String>()
     override var width = 16
     override var height = 16
