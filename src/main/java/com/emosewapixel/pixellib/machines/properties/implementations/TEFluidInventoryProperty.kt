@@ -9,15 +9,25 @@ import com.emosewapixel.pixellib.machines.packets.UpdateNBTSerializableProperty
 import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.nbt.CompoundNBT
-import net.minecraftforge.fml.network.PacketDistributor
+import net.minecraftforge.fml.network.NetworkDirection
 
 open class TEFluidInventoryProperty(value: FluidStackHandler, override val id: String, override val te: BaseTileEntity) : FluidInventoryProperty(value), ITEBoundProperty {
+    constructor(te: BaseTileEntity, id: String, slots: Int, noOutput: IntRange, noInput: IntRange, capacity: Int = 10000) : this(
+            object : FluidStackHandler(slots, noOutput, noInput, capacity) {
+                override fun onContentsChanged(slot: Int) = te.update()
+            }, id, te
+    )
+
+    constructor(te: BaseTileEntity, id: String, inputCount: Int, outputCount: Int, capacity: Int = 10000) : this(
+            te, id, inputCount + outputCount, 0 until inputCount, inputCount until inputCount + outputCount, capacity
+    )
+
     override fun detectAndSendChanges(container: BaseContainer) {
         if ((container.clientProperties[id] as? TEFluidInventoryProperty)?.value?.let {
                     it.tanks.indices.any { index -> it.tanks[index] == value.tanks[index] }
                 } == false
         ) {
-            NetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with { container.playerInv.player as? ServerPlayerEntity }, UpdateNBTSerializableProperty(id, value.serializeNBT()))
+            NetworkHandler.CHANNEL.sendTo(UpdateNBTSerializableProperty(id, value.serializeNBT()), (container.playerInv.player as ServerPlayerEntity).connection.networkManager, NetworkDirection.PLAY_TO_CLIENT)
             (container.clientProperties[id] as TEFluidInventoryProperty).value.tanks = value.tanks
         }
     }

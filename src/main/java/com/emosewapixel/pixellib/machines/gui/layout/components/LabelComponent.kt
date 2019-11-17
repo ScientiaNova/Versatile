@@ -1,5 +1,6 @@
 package com.emosewapixel.pixellib.machines.gui.layout.components
 
+import com.emosewapixel.pixellib.machines.gui.layout.DefaultSizeConstants
 import com.emosewapixel.pixellib.machines.gui.layout.IGUIComponent
 import net.minecraft.client.Minecraft
 import net.minecraftforge.api.distmarker.Dist
@@ -11,7 +12,7 @@ open class LabelComponent(val text: String, override var x: Int, override var y:
     override val tooltips = mutableListOf<String>()
     var location = LabelLocation.START
     var color = 0x404040
-    override val height = 10
+    override val height = DefaultSizeConstants.TEXT_HEIGHT
     override val width
         get() = DistExecutor.runForDist(
                 { Supplier { Minecraft.getInstance().fontRenderer.getStringWidth(text) / if (location == LabelLocation.START) 1 else 2 } },
@@ -22,8 +23,8 @@ open class LabelComponent(val text: String, override var x: Int, override var y:
     override fun drawInBackground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int) {
         val font = Minecraft.getInstance().fontRenderer
         when (location) {
-            LabelLocation.CENTER -> font.drawString(text, xOffset - font.getStringWidth(text) / 2f, y.toFloat(), color)
-            LabelLocation.START -> font.drawString(text, yOffset.toFloat(), y.toFloat(), color)
+            LabelLocation.CENTER -> font.drawString(text, xOffset + x - font.getStringWidth(text) / 2f, yOffset + y.toFloat(), color)
+            LabelLocation.START -> font.drawString(text, xOffset + x.toFloat(), yOffset + y.toFloat(), color)
         }
     }
 

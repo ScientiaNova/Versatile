@@ -12,7 +12,6 @@ object PixelTest {
         FMLKotlinModLoadingContext.get().modEventBus.addListener<InterModProcessEvent> { processIMC() }
     }
 
-
     private fun processIMC() {
         RecipeTest
     }

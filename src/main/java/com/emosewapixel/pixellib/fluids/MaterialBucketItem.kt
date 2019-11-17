@@ -14,7 +14,7 @@ import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper
 import com.emosewapixel.pixellib.extensions.plus
 
-class MaterialBucketItem(override val mat: Material, override val objType: ObjectType<*, *>) : BucketItem({ MaterialFluids[mat, objType] }, Properties().group(PixelLib.MAIN).containerItem(Items.BUCKET).maxStackSize(0)), IMaterialObject {
+open class MaterialBucketItem(override val mat: Material, override val objType: ObjectType<*, *>) : BucketItem({ MaterialFluids[mat, objType] }, Properties().group(PixelLib.MAIN).containerItem(Items.BUCKET).maxStackSize(0)), IMaterialObject {
     init {
         registryName = objType.buildRegistryName(mat) + "_bucket"
         MaterialItems.addItem(this)

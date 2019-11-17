@@ -1,5 +1,6 @@
 package com.emosewapixel.pixellib.machines.gui
 
+import com.emosewapixel.pixellib.machines.BaseMachineRegistry
 import com.emosewapixel.pixellib.machines.BaseTileEntity
 import com.emosewapixel.pixellib.machines.gui.layout.IPropertyGUIComponent
 import com.emosewapixel.pixellib.machines.gui.layout.ISlotComponent
@@ -13,10 +14,13 @@ import net.minecraft.inventory.container.Container
 import net.minecraft.inventory.container.ContainerType
 import net.minecraft.inventory.container.Slot
 import net.minecraft.item.ItemStack
+import net.minecraft.network.PacketBuffer
 
-class BaseContainer(id: Int, val playerInv: PlayerInventory, val te: BaseTileEntity, type: ContainerType<*>) : Container(type, id) {
+open class BaseContainer(id: Int, val playerInv: PlayerInventory, val te: BaseTileEntity, type: ContainerType<*> = BaseMachineRegistry.BASE_CONTAINER) : Container(type, id) {
+    constructor(id: Int, playerInv: PlayerInventory, extraData: PacketBuffer) : this(id, playerInv, playerInv.player.world.getTileEntity(extraData.readBlockPos()) as BaseTileEntity)
+
     val guiPage = te.guiLayout.current
-    val clientProperties = te.properties.mapValues { it.value.copy() }
+    val clientProperties = te.teProperties.mapValues { it.value.copy() }
 
     init {
         guiPage.components.forEach { if (it is ISlotComponent) addSlot(it.setupSlot(playerInv) as Slot) }
@@ -24,7 +28,9 @@ class BaseContainer(id: Int, val playerInv: PlayerInventory, val te: BaseTileEnt
 
     override fun canInteractWith(playerIn: PlayerEntity) = te.canInteractWith(playerIn)
 
-    override fun detectAndSendChanges() = guiPage.components.asSequence().filterIsInstance<IPropertyGUIComponent>().distinct().forEach { (it.property as? ITEBoundProperty)?.detectAndSendChanges(this) }
+    override fun detectAndSendChanges() {
+        guiPage.components.asSequence().filterIsInstance<IPropertyGUIComponent>().distinct().forEach { (it.property as? ITEBoundProperty)?.detectAndSendChanges(this) }
+    }
 
     override fun transferStackInSlot(playerIn: PlayerEntity, index: Int): ItemStack {
         val slot = getSlot(index)

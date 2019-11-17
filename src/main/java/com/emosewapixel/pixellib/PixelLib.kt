@@ -7,6 +7,8 @@ import com.emosewapixel.pixellib.commands.ObjTypeCommand
 import com.emosewapixel.pixellib.fluids.FluidRegistry
 import com.emosewapixel.pixellib.items.ItemRegistry
 import com.emosewapixel.pixellib.items.MaterialItem
+import com.emosewapixel.pixellib.machines.BaseMachineRegistry
+import com.emosewapixel.pixellib.machines.gui.BaseScreen
 import com.emosewapixel.pixellib.machines.packets.NetworkHandler
 import com.emosewapixel.pixellib.materialsystem.addition.BaseMaterials
 import com.emosewapixel.pixellib.materialsystem.addition.MaterialRegistryInitializer
@@ -23,6 +25,7 @@ import com.emosewapixel.pixellib.worldgen.OreGen
 import net.alexwells.kottle.FMLKotlinModLoadingContext
 import net.alexwells.kottle.KotlinEventBusSubscriber
 import net.minecraft.block.Block
+import net.minecraft.client.gui.ScreenManager
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
@@ -33,6 +36,7 @@ import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.DistExecutor
 import net.minecraftforge.fml.common.Mod
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent
@@ -55,11 +59,16 @@ object PixelLib {
     private val proxy = DistExecutor.runForDist<IModProxy>({ Supplier { ClientProxy } }, { Supplier { ServerProxy } })
 
     init {
+        FMLKotlinModLoadingContext.get().modEventBus.addListener<FMLClientSetupEvent> { clientSetup() }
         FMLKotlinModLoadingContext.get().modEventBus.addListener<FMLCommonSetupEvent> { commonSetup() }
         FMLKotlinModLoadingContext.get().modEventBus.addListener<InterModEnqueueEvent> { enqueueIMC(it) }
         FMLKotlinModLoadingContext.get().modEventBus.addListener<InterModProcessEvent> { processIMC(it) }
 
         proxy.init()
+    }
+
+    private fun clientSetup() {
+        ScreenManager.registerFactory(BaseMachineRegistry.BASE_CONTAINER, ::BaseScreen)
     }
 
     private fun commonSetup() {

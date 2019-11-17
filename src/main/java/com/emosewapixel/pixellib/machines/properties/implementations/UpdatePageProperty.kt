@@ -10,14 +10,14 @@ import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.nbt.CompoundNBT
 import net.minecraftforge.fml.loading.FMLEnvironment
-import net.minecraftforge.fml.network.PacketDistributor
+import net.minecraftforge.fml.network.NetworkDirection
 
 open class UpdatePageProperty(override val te: BaseTileEntity) : ITEBoundProperty {
     override val id = ""
 
     override fun detectAndSendChanges(container: BaseContainer) {
         if (container.guiPage != container.te.guiLayout.current)
-            NetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with { container.playerInv.player as ServerPlayerEntity }, ReopenGUIPacket(te.pos, container.type))
+            NetworkHandler.CHANNEL.sendTo(ReopenGUIPacket(te.pos, container.type), (container.playerInv.player as ServerPlayerEntity).connection.networkManager, NetworkDirection.PLAY_TO_CLIENT)
     }
 
     var pageId

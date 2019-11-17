@@ -18,6 +18,7 @@ import com.emosewapixel.pixellib.materialsystem.types.ItemType
 import com.emosewapixel.pixellib.materialsystem.types.ObjectType
 import net.minecraft.block.Block
 import net.minecraft.block.FlowingFluidBlock
+import net.minecraft.item.BlockItem
 import net.minecraft.item.BucketItem
 import net.minecraft.item.Item
 
@@ -79,7 +80,7 @@ fun itemType(name: String, requirement: (Material) -> Boolean, builder: ItemType
 }
 
 @JvmOverloads
-fun blockType(name: String, requirement: (Material) -> Boolean, properties: Block.Properties, constructor: (Material, BlockType) -> Block = ::MaterialBlock, itemConstructor: (Material, BlockType) -> Item = ::MaterialBlockItem, builder: BlockType.() -> Unit = { }): ObjectType<*, *> {
+fun blockType(name: String, requirement: (Material) -> Boolean, properties: Block.Properties, constructor: (Material, BlockType) -> Block = ::MaterialBlock, itemConstructor: (Material, BlockType) -> BlockItem = ::MaterialBlockItem, builder: BlockType.() -> Unit = { }): ObjectType<*, *> {
     val type = BlockType(name, MaterialRequirement { requirement(it) }, properties, constructor, itemConstructor)
     type(builder)
     return type.build()

@@ -1,5 +1,6 @@
 package com.emosewapixel.pixellib.machines.gui.layout.components
 
+import com.emosewapixel.pixellib.machines.gui.layout.DefaultSizeConstants
 import com.emosewapixel.pixellib.machines.gui.layout.IGUIComponent
 import com.emosewapixel.pixellib.machines.gui.textures.BaseTextures
 import com.emosewapixel.pixellib.machines.gui.textures.IRenderable
@@ -11,8 +12,8 @@ open class ImageComponent : IGUIComponent {
     override val tooltips = mutableListOf<String>()
     override var x = 0
     override var y = 0
-    override var width = 176
-    override var height = 166
+    override var width = DefaultSizeConstants.BACKGROUND_WIDTH
+    override var height = DefaultSizeConstants.BACKGROUND_HEIGHT
 
     @OnlyIn(Dist.CLIENT)
     override fun drawInBackground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int) = texture.render(xOffset + x, yOffset + y, width, height)

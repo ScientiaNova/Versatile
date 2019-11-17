@@ -1,5 +1,6 @@
 package com.emosewapixel.pixellib.machines.gui
 
+import com.emosewapixel.pixellib.extensions.alphaF
 import com.emosewapixel.pixellib.extensions.blueF
 import com.emosewapixel.pixellib.extensions.greenF
 import com.emosewapixel.pixellib.extensions.redF
@@ -72,7 +73,7 @@ object GUiUtils {
     @JvmStatic
     @JvmOverloads
     fun drawTexture(location: ResourceLocation, x: Int, y: Int, width: Int, height: Int, uStart: Double = 0.0, vStart: Double = 0.0, uEnd: Double = 1.0, vEnd: Double = 1.0, z: Int = 0) {
-        Minecraft.getInstance().textureManager.bindTexture(location)
+        mc.textureManager.bindTexture(location)
         val tessellator = Tessellator.getInstance()
         val bufferbuilder = tessellator.buffer
         bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX)
@@ -81,6 +82,25 @@ object GUiUtils {
         bufferbuilder.pos((x + width).toDouble(), y.toDouble(), z.toDouble()).tex(uEnd, vStart).endVertex()
         bufferbuilder.pos(x.toDouble(), y.toDouble(), z.toDouble()).tex(uStart, vStart).endVertex()
         tessellator.draw()
+    }
+
+    fun drawColoredRectangle(color: Int, x: Int, y: Int, width: Int, height: Int, z: Int = 0) {
+        GlStateManager.disableTexture()
+        GlStateManager.enableBlend()
+
+        val tessellator = Tessellator.getInstance()
+        val bufferbuilder = tessellator.buffer
+        GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO)
+        GlStateManager.color4f(color.redF, color.greenF, color.blueF, color.alphaF)
+        bufferbuilder.begin(7, DefaultVertexFormats.POSITION)
+        bufferbuilder.pos(x.toDouble(), (y + height).toDouble(), z.toDouble()).endVertex()
+        bufferbuilder.pos((x + width).toDouble(), (y + height).toDouble(), z.toDouble()).endVertex()
+        bufferbuilder.pos((x + width).toDouble(), y.toDouble(), z.toDouble()).endVertex()
+        bufferbuilder.pos(x.toDouble(), y.toDouble(), z.toDouble()).endVertex()
+        tessellator.draw()
+
+        GlStateManager.disableBlend()
+        GlStateManager.enableTexture()
     }
 
     @JvmStatic

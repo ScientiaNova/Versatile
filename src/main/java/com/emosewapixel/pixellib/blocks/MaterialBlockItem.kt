@@ -10,7 +10,7 @@ import net.minecraft.item.BlockItem
 import net.minecraft.item.ItemStack
 import net.minecraft.util.text.ITextComponent
 
-class MaterialBlockItem(override val mat: Material, override val objType: ObjectType<*, *>) : BlockItem(MaterialBlocks[mat, objType]!!, Properties().group(PixelLib.MAIN)), IMaterialObject {
+open class MaterialBlockItem(override val mat: Material, override val objType: ObjectType<*, *>) : BlockItem(MaterialBlocks[mat, objType]!!, Properties().group(PixelLib.MAIN)), IMaterialObject {
     init {
         registryName = block.registryName
         MaterialItems.addItem(this)

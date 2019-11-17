@@ -64,6 +64,16 @@ minecraft {
                 }
             }
         }
+
+        testServer {
+            parent runs.server
+
+            mods {
+                pixeltest {
+                    source sourceSets.test
+                }
+            }
+        }
     }
 }
 

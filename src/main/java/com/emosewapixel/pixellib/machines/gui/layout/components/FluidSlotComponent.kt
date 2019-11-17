@@ -5,11 +5,11 @@ import com.emosewapixel.pixellib.extensions.times
 import com.emosewapixel.pixellib.items.ItemStackHolder
 import com.emosewapixel.pixellib.machines.capabilities.IFluidHandlerModifiable
 import com.emosewapixel.pixellib.machines.gui.GUiUtils
+import com.emosewapixel.pixellib.machines.gui.layout.DefaultSizeConstants
 import com.emosewapixel.pixellib.machines.gui.layout.IPropertyGUIComponent
 import com.emosewapixel.pixellib.machines.gui.textures.BaseTextures
 import com.emosewapixel.pixellib.machines.properties.IValueProperty
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.AbstractGui
 import net.minecraft.item.ItemStack
 import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.api.distmarker.Dist
@@ -20,8 +20,8 @@ import net.minecraftforge.fluids.capability.IFluidHandler
 open class FluidSlotComponent(override val property: IValueProperty<IFluidHandlerModifiable>, override var x: Int, override var y: Int) : IPropertyGUIComponent {
     var texture = BaseTextures.FLUID_SLOT
     override val tooltips = mutableListOf<String>()
-    override var width = 18
-    override var height = 18
+    override var width = DefaultSizeConstants.SLOT_WIDTH
+    override var height = DefaultSizeConstants.SLOT_HEIGHT
     var tankId = 0
 
     @OnlyIn(Dist.CLIENT)
@@ -35,13 +35,13 @@ open class FluidSlotComponent(override val property: IValueProperty<IFluidHandle
     @OnlyIn(Dist.CLIENT)
     override fun drawInForeground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int) {
         if (isSelected(mouseX - xOffset, mouseY - yOffset)) {
-            AbstractGui.fill(xOffset + x + 1, yOffset + y + 1, width - 2, height - 2, 0x7FFFFFFF)
+            GUiUtils.drawColoredRectangle(0x7FFFFFFF,  x + 1,  y + 1, width - 2, height - 2)
             val handler = property.value
             val fluid = handler.getFluidInTank(tankId)
             if (fluid.isEmpty)
-                GUiUtils.renderTooltip(listOf(TranslationTextComponent("gui.tooltip.tank_fill").string), mouseX, mouseY)
+                GUiUtils.renderTooltip(listOf(TranslationTextComponent("gui.tooltip.tank_fill").string), mouseX - xOffset, mouseY - yOffset)
             else
-                GUiUtils.renderTooltip(mutableListOf(fluid.fluid.attributes.getDisplayName(fluid).string, "${fluid.amount}/${handler.getTankCapacity(tankId)} mB", TranslationTextComponent("gui.tooltip.tank_empty").string), mouseX, mouseY)
+                GUiUtils.renderTooltip(mutableListOf(fluid.fluid.attributes.getDisplayName(fluid).string, "${fluid.amount}/${handler.getTankCapacity(tankId)} mB", TranslationTextComponent("gui.tooltip.tank_empty").string), mouseX - xOffset, mouseY - yOffset)
         }
     }
 

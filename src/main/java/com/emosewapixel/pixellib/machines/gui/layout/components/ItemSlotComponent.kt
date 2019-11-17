@@ -1,5 +1,6 @@
 package com.emosewapixel.pixellib.machines.gui.layout.components
 
+import com.emosewapixel.pixellib.machines.gui.layout.DefaultSizeConstants
 import com.emosewapixel.pixellib.machines.gui.layout.IPropertyGUIComponent
 import com.emosewapixel.pixellib.machines.gui.layout.ISlotComponent
 import com.emosewapixel.pixellib.machines.gui.slots.ItemHandlerSlot
@@ -13,8 +14,8 @@ import net.minecraftforge.items.IItemHandlerModifiable
 open class ItemSlotComponent(override val property: IValueProperty<IItemHandlerModifiable>, override var x: Int, override var y: Int) : ISlotComponent, IPropertyGUIComponent {
     var texture = BaseTextures.ITEM_SLOT
     override val tooltips = mutableListOf<String>()
-    override var width = 18
-    override var height = 18
+    override var width = DefaultSizeConstants.SLOT_WIDTH
+    override var height = DefaultSizeConstants.SLOT_HEIGHT
     var slotIndex = 0
 
     @OnlyIn(Dist.CLIENT)
@@ -22,5 +23,5 @@ open class ItemSlotComponent(override val property: IValueProperty<IItemHandlerM
 
     override fun isSelected(mouseX: Double, mouseY: Double) = x + 1 < mouseX && mouseX < x + width - 2 && y + 1 < mouseY && mouseY < y + height - 2
 
-    override fun setupSlot(playerInv: PlayerInventory) = ItemHandlerSlot(property.value, slotIndex, x, y)
+    override fun setupSlot(playerInv: PlayerInventory) = ItemHandlerSlot(property.value, slotIndex, x + (width - 16) / 2, y + (height - 16) / 2)
 }

@@ -24,9 +24,10 @@ class UpdateBooleanPacket(val property: String, val value: Boolean) {
                         { Supplier { Minecraft.getInstance().player.openContainer as? BaseContainer } },
                         { Supplier { context.get().sender?.openContainer as? BaseContainer } }
                 )
-                (container?.te?.properties?.get(packet.property) as? IVariableProperty<Boolean>)?.setValue(packet.value, false)
+                (container?.te?.teProperties?.get(packet.property) as? IVariableProperty<Boolean>)?.setValue(packet.value, false)
                 (container?.clientProperties?.get(packet.property) as? IVariableProperty<Boolean>)?.setValue(packet.value, false)
             }
+            context.get().packetHandled = true
         }
     }
 }

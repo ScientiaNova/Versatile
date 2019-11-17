@@ -21,8 +21,9 @@ class ReopenGUIPacket(val pos: BlockPos, val containerType: ContainerType<*>) {
             context.get().enqueueWork {
                 val player = Minecraft.getInstance().player
                 player.openContainer.onContainerClosed(player)
-                NetworkHandler.CHANNEL.sendToServer(OpenGUIPacket(packet.pos, packet.containerType))
+                NetworkHandler.CHANNEL.sendToServer(OpenGUIPacket(packet.pos))
             }
+            context.get().packetHandled = true
         }
     }
 }

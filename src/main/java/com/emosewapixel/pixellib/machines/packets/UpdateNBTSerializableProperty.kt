@@ -26,9 +26,10 @@ class UpdateNBTSerializableProperty(val property: String, val nbt: CompoundNBT) 
                         { Supplier { Minecraft.getInstance().player.openContainer as? BaseContainer } },
                         { Supplier { context.get().sender?.openContainer as? BaseContainer } }
                 )
-                ((container?.te?.properties?.get(packet.property) as? IValueProperty<*>)?.value as? INBTSerializable<CompoundNBT>)?.deserializeNBT(packet.nbt)
+                ((container?.te?.teProperties?.get(packet.property) as? IValueProperty<*>)?.value as? INBTSerializable<CompoundNBT>)?.deserializeNBT(packet.nbt)
                 ((container?.clientProperties?.get(packet.property) as? IValueProperty<*>)?.value as? INBTSerializable<CompoundNBT>)?.deserializeNBT(packet.nbt)
             }
+            context.get().packetHandled = true
         }
     }
 }

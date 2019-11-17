@@ -10,14 +10,14 @@ import com.emosewapixel.pixellib.materialsystem.materials.Material
 import com.emosewapixel.pixellib.materialsystem.materials.utility.ct.MaterialRequirement
 import com.google.gson.JsonObject
 import net.minecraft.block.Block
-import net.minecraft.item.Item
+import net.minecraft.item.BlockItem
 import net.minecraft.util.text.TranslationTextComponent
 import org.openzen.zencode.java.ZenCodeType
 
 //Block Types are Object Types used for generating Blocks
 @ZenRegister
 @ZenCodeType.Name("pixellib.materialsystem.types.BlockType")
-class BlockType @JvmOverloads @ZenCodeType.Constructor constructor(name: String, requirement: MaterialRequirement, val properties: Block.Properties, constructor: (Material, BlockType) -> Block = ::MaterialBlock, val itemConstructor: (Material, BlockType) -> Item = ::MaterialBlockItem) : ObjectType<Block, BlockType>(name, requirement, constructor) {
+class BlockType @JvmOverloads @ZenCodeType.Constructor constructor(name: String, requirement: MaterialRequirement, val properties: Block.Properties, constructor: (Material, BlockType) -> Block = ::MaterialBlock, val itemConstructor: (Material, BlockType) -> BlockItem = ::MaterialBlockItem) : ObjectType<Block, BlockType>(name, requirement, constructor) {
     var buildBlockStateJson: (IMaterialObject) -> JsonObject = {
         json {
             "variants" {

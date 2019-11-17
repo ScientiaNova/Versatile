@@ -18,9 +18,9 @@ class GUIBook {
     }
 }
 
-fun book(builder: GUIBook.() -> Unit): () -> GUIBook = {
+fun book(builder: GUIBook.() -> Unit): GUIBook {
     val book = GUIBook()
     book.builder()
     book.current = book[0]
-    book
+    return book
 }

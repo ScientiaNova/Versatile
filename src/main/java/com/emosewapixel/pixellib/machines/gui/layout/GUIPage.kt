@@ -35,6 +35,23 @@ class GUIPage(val minWidth: Int = 0, val minHeight: Int = 0, builder: GUIPage.()
 
     val height get() = max(minHeight, bottomMost)
 
+    fun addPlayerInventory(xStart: Int, yStart: Int) {
+        inventoryLabel(xStart, yStart)
+
+        val mainY = yStart + 11
+        for (index in 9..35) {
+            val x = xStart + index % 9 * 18
+            val y = mainY + index / 9 * 18 - 18
+            playerSlot(index, x, y)
+        }
+
+        val hotbarY = mainY + 58
+        for (index in 0 until 9) {
+            val x = xStart + index * 18
+            playerSlot(index, x, hotbarY)
+        }
+    }
+
     fun boolButton(property: IVariableProperty<Boolean>, textures: GUITexturePair, x: Int, y: Int, builder: BooleanButtonComponent.() -> Unit = { }) {
         val component = BooleanButtonComponent(property, textures, x, y)
         component.builder()
@@ -85,6 +102,12 @@ class GUIPage(val minWidth: Int = 0, val minHeight: Int = 0, builder: GUIPage.()
 
     fun label(text: String, x: Int, y: Int, builder: LabelComponent.() -> Unit = { }) {
         val component = LabelComponent(text, x, y)
+        component.builder()
+        components += component
+    }
+
+    fun inventoryLabel(x: Int, y: Int, builder: InventoryLabelComponent.() -> Unit = { }) {
+        val component = InventoryLabelComponent(x, y)
         component.builder()
         components += component
     }

@@ -58,7 +58,7 @@ object MaterialBlocks {
     fun addBlock(mat: Material, type: ObjectType<*, *>, block: BlockSupplier) = additionSuppliers.put(mat, type, block)
 
     @JvmStatic
-    fun <O> addBlock(item: O) where O : IMaterialObject, O : Block = materialBlocks.put(item.mat, item.objType, item)
+    fun <O> addBlock(block: O) where O : IMaterialObject, O : Block = materialBlocks.put(block.mat, block.objType, block)
 
     @JvmStatic
     fun getBlockCell(block: Block): Table.Cell<Material, ObjectType<*, *>, Block>? = materialBlocks.cellSet().firstOrNull { it.value === block }

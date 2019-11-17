@@ -24,9 +24,10 @@ class UpdateIntPacket(val property: String, val value: Int) {
                         { Supplier { Minecraft.getInstance().player.openContainer as? BaseContainer } },
                         { Supplier { context.get().sender?.openContainer as? BaseContainer } }
                 )
-                (container?.te?.properties?.get(packet.property) as? IVariableProperty<Int>)?.setValue(packet.value, false)
+                (container?.te?.teProperties?.get(packet.property) as? IVariableProperty<Int>)?.setValue(packet.value, false)
                 (container?.clientProperties?.get(packet.property) as? IVariableProperty<Int>)?.setValue(packet.value, false)
             }
+            context.get().packetHandled = true
         }
     }
 }

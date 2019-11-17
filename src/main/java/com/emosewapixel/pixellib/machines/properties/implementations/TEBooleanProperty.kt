@@ -10,6 +10,7 @@ import com.emosewapixel.pixellib.machines.properties.IVariableProperty
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.nbt.CompoundNBT
 import net.minecraftforge.fml.loading.FMLEnvironment
+import net.minecraftforge.fml.network.NetworkDirection
 import net.minecraftforge.fml.network.PacketDistributor
 
 open class TEBooleanProperty(override val id: String, override val te: BaseTileEntity) : IVariableProperty<Boolean>, ITEBoundProperty {
@@ -24,7 +25,7 @@ open class TEBooleanProperty(override val id: String, override val te: BaseTileE
 
     override fun detectAndSendChanges(container: BaseContainer) {
         if ((container.clientProperties[id] as TEBooleanProperty).value != value) {
-            NetworkHandler.CHANNEL.send(PacketDistributor.PLAYER.with { container.playerInv.player as? ServerPlayerEntity }, UpdateBooleanPacket(id, value))
+            NetworkHandler.CHANNEL.sendTo(UpdateBooleanPacket(id, value), (container.playerInv.player as ServerPlayerEntity).connection.networkManager, NetworkDirection.PLAY_TO_CLIENT)
             (container.clientProperties[id] as TEBooleanProperty).value = value
         }
     }
