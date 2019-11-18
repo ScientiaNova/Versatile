@@ -11,7 +11,6 @@ import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.nbt.CompoundNBT
 import net.minecraftforge.fml.loading.FMLEnvironment
 import net.minecraftforge.fml.network.NetworkDirection
-import net.minecraftforge.fml.network.PacketDistributor
 
 open class TEBooleanProperty(override val id: String, override val te: BaseTileEntity) : IVariableProperty<Boolean>, ITEBoundProperty {
     override fun setValue(new: Boolean, causeUpdate: Boolean) {
@@ -33,7 +32,7 @@ open class TEBooleanProperty(override val id: String, override val te: BaseTileE
     override fun copy() = TEBooleanProperty(id, te)
 
     override fun deserializeNBT(nbt: CompoundNBT?) {
-        value = nbt?.getBoolean(id) ?: false
+        if (nbt?.contains(id) == true) value = nbt.getBoolean(id)
     }
 
     override fun serializeNBT() = nbt {

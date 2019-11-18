@@ -29,7 +29,7 @@ open class BaseContainer(id: Int, val playerInv: PlayerInventory, val te: BaseTi
     override fun canInteractWith(playerIn: PlayerEntity) = te.canInteractWith(playerIn)
 
     override fun detectAndSendChanges() {
-        guiPage.components.asSequence().filterIsInstance<IPropertyGUIComponent>().distinct().forEach { (it.property as? ITEBoundProperty)?.detectAndSendChanges(this) }
+        guiPage.components.asSequence().filterIsInstance<IPropertyGUIComponent>().map { it.property as? ITEBoundProperty }.distinct().forEach { it?.detectAndSendChanges(this) }
     }
 
     override fun transferStackInSlot(playerIn: PlayerEntity, index: Int): ItemStack {

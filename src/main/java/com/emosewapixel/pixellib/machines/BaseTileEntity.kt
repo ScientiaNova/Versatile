@@ -14,9 +14,14 @@ import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.common.util.LazyOptional
 
 open class BaseTileEntity(type: TileEntityType<*> = BaseMachineRegistry.BASE_TILE_ENTITY) : TileEntity(type), ITickableTileEntity {
-    val block get() = blockState.block as? IMachineBlock
+    private var unreadTag: CompoundNBT? = null
 
-    val teProperties by lazy { block?.teProperties?.invoke(this)?.map { it.id to it }?.toMap() ?: mapOf() }
+    protected val block get() = blockState.block as? IMachineBlock
+
+    val teProperties by lazy {
+        block?.teProperties?.invoke(this)?.map { it.id to it }?.toMap().also { map -> unreadTag?.let { tag -> map?.values?.forEach { it.deserializeNBT(tag) } } }
+                ?: mapOf()
+    }
 
     val guiLayout by lazy { block?.guiLayout?.invoke(this) ?: GUIBook() }
 
@@ -26,11 +31,16 @@ open class BaseTileEntity(type: TileEntityType<*> = BaseMachineRegistry.BASE_TIL
 
     override fun write(nbt: CompoundNBT): CompoundNBT {
         teProperties.values.forEach { nbt += it.serializeNBT() }
-        return nbt
+        return super.write(nbt)
     }
 
     override fun read(nbt: CompoundNBT) {
         super.read(nbt)
+        if (world == null) unreadTag = nbt
+        else readByProperties(nbt)
+    }
+
+    open fun readByProperties(nbt: CompoundNBT) {
         teProperties.values.forEach { it.deserializeNBT(nbt) }
     }
 

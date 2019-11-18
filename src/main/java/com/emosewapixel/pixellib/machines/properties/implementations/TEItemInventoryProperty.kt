@@ -23,19 +23,17 @@ open class TEItemInventoryProperty(value: ImprovedItemStackHandler, override val
     )
 
     override fun detectAndSendChanges(container: BaseContainer) {
-        if ((container.clientProperties[id] as? TEItemInventoryProperty)?.value?.let {
-                    it.invStacks.indices.any { index -> it.invStacks[index] == value.invStacks[index] }
-                } == false
-        ) {
+        val clientHandler = (container.clientProperties[id] as TEItemInventoryProperty).value
+        if (clientHandler.invStacks.indices.any { index -> clientHandler.invStacks[index] != value.invStacks[index] }) {
             NetworkHandler.CHANNEL.sendTo(UpdateNBTSerializableProperty(id, value.serializeNBT()), (container.playerInv.player as ServerPlayerEntity).connection.networkManager, NetworkDirection.PLAY_TO_CLIENT)
-            (container.clientProperties[id] as TEItemInventoryProperty).value.invStacks = value.invStacks
+            clientHandler.invStacks = value.invStacks
         }
     }
 
     override fun copy() = TEItemInventoryProperty(value, id, te)
 
-    override fun deserializeNBT(nbt: CompoundNBT) {
-        value.deserializeNBT(nbt.getCompound(id))
+    override fun deserializeNBT(nbt: CompoundNBT?) {
+        if (nbt?.contains(id) == true) value.deserializeNBT(nbt.getCompound(id))
     }
 
     override fun serializeNBT() = nbt {

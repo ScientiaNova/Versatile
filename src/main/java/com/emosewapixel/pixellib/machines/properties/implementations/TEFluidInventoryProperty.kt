@@ -23,19 +23,17 @@ open class TEFluidInventoryProperty(value: FluidStackHandler, override val id: S
     )
 
     override fun detectAndSendChanges(container: BaseContainer) {
-        if ((container.clientProperties[id] as? TEFluidInventoryProperty)?.value?.let {
-                    it.tanks.indices.any { index -> it.tanks[index] == value.tanks[index] }
-                } == false
-        ) {
+        val clientHandler = (container.clientProperties[id] as TEFluidInventoryProperty).value
+        if (clientHandler.tanks.indices.any { index -> clientHandler.tanks[index] != value.tanks[index] }) {
             NetworkHandler.CHANNEL.sendTo(UpdateNBTSerializableProperty(id, value.serializeNBT()), (container.playerInv.player as ServerPlayerEntity).connection.networkManager, NetworkDirection.PLAY_TO_CLIENT)
-            (container.clientProperties[id] as TEFluidInventoryProperty).value.tanks = value.tanks
+            clientHandler.tanks = value.tanks
         }
     }
 
     override fun copy() = TEFluidInventoryProperty(value, id, te)
 
     override fun deserializeNBT(nbt: CompoundNBT) {
-        value.deserializeNBT(nbt.getCompound(id))
+        if (id in nbt) value.deserializeNBT(nbt.getCompound(id))
     }
 
     override fun serializeNBT() = nbt {

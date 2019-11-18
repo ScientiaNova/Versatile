@@ -15,7 +15,6 @@ object RecipeTest {
     val THIN_RECIPES = EnergyRecipeList(ResourceLocation(PixelTest.MOD_ID, "thin_test"), maxInputs = 1, maxFluidOutputs = 1)
 
     init {
-        TEST_RECIPES.blocksImplementing += Blocks.TNT
         TEST_RECIPES.build {
             inputs += Items.DIRT.toRStack(8)
             inputs += Items.COAL.toRStack()
