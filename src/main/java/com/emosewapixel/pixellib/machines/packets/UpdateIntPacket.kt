@@ -15,8 +15,10 @@ class UpdateIntPacket(val property: String, val value: Int) {
     }
 
     companion object {
+        @JvmStatic
         fun decode(buffer: PacketBuffer) = UpdateIntPacket(buffer.readString(), buffer.readVarInt())
 
+        @JvmStatic
         @Suppress("UNCHECKED_CAST")
         fun processPacket(packet: UpdateIntPacket, context: Supplier<NetworkEvent.Context>) {
             context.get().enqueueWork {

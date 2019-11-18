@@ -13,8 +13,10 @@ class OpenGUIPacket(val pos: BlockPos) {
     }
 
     companion object {
+        @JvmStatic
         fun decode(buffer: PacketBuffer) = OpenGUIPacket(buffer.readBlockPos())
 
+        @JvmStatic
         fun processPacket(packet: OpenGUIPacket, context: Supplier<NetworkEvent.Context>) {
             context.get().enqueueWork {
                 val player = context.get().sender

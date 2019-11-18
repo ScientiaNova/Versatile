@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack
 import net.minecraftforge.items.IItemHandler
 import org.lwjgl.glfw.GLFW
 
-class GhostItemSlot(handler: IItemHandler, index: Int, x: Int, y: Int) : ItemHandlerSlot(handler, index, x, y) {
+open class GhostItemSlot(handler: IItemHandler, index: Int, x: Int, y: Int) : ItemHandlerSlot(handler, index, x, y) {
     override fun onClick() = SlotLogic.Custom { slot, mouseButton, _, player ->
         val heldStack = player.inventory.itemStack
         if (heldStack.isEmpty)

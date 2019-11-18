@@ -17,8 +17,10 @@ class UpdateNBTSerializableProperty(val property: String, val nbt: CompoundNBT) 
     }
 
     companion object {
+        @JvmStatic
         fun decode(buffer: PacketBuffer) = UpdateNBTSerializableProperty(buffer.readString(), buffer.readCompoundTag()!!)
 
+        @JvmStatic
         @Suppress("UNCHECKED_CAST")
         fun processPacket(packet: UpdateNBTSerializableProperty, context: Supplier<NetworkEvent.Context>) {
             context.get().enqueueWork {

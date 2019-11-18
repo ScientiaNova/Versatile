@@ -15,8 +15,10 @@ class ReopenGUIPacket(val pos: BlockPos, val containerType: ContainerType<*>) {
     }
 
     companion object {
+        @JvmStatic
         fun decode(buffer: PacketBuffer) = ReopenGUIPacket(buffer.readBlockPos(), ForgeRegistries.CONTAINERS.getValue(buffer.readResourceLocation())!!)
 
+        @JvmStatic
         fun processPacket(packet: ReopenGUIPacket, context: Supplier<NetworkEvent.Context>) {
             context.get().enqueueWork {
                 val player = Minecraft.getInstance().player

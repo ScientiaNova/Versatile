@@ -13,14 +13,26 @@ open class BaseScreen(container: BaseContainer, playerInv: PlayerInventory, titl
     override fun drawGuiContainerForegroundLayer(mouseX: Int, mouseY: Int) =
             container.guiPage.components.forEach { it.drawInForeground(mouseX.toDouble(), mouseY.toDouble(), guiLeft, guiTop) }
 
-    override fun mouseClicked(mouseX: Double, mouseY: Double, clickType: Int) =
-            container.guiPage.components.reversed().asSequence().filter { it.isSelected(mouseX - guiLeft, mouseY - guiTop) }.any { it.onMouseClicked(mouseX, mouseY, clickType) }
+    override fun mouseClicked(mouseX: Double, mouseY: Double, clickType: Int): Boolean {
+        val componentsMatch = container.guiPage.components.reversed().asSequence()
+                .filter { it.isSelected(mouseX - guiLeft, mouseY - guiTop) }
+                .any { it.onMouseClicked(mouseX, mouseY, clickType) }
+        return if (componentsMatch) true else super.mouseClicked(mouseX, mouseY, clickType)
+    }
 
-    override fun mouseDragged(mouseX: Double, mouseY: Double, clickType: Int, lastX: Double, lastY: Double) =
-            container.guiPage.components.reversed().asSequence().filter { it.isSelected(mouseX - guiLeft, mouseY - guiTop) }.any { it.onMouseDragged(mouseX, mouseY, clickType) }
+    override fun mouseDragged(mouseX: Double, mouseY: Double, clickType: Int, lastX: Double, lastY: Double): Boolean {
+        val componentsMatch = container.guiPage.components.reversed().asSequence()
+                .filter { it.isSelected(mouseX - guiLeft, mouseY - guiTop) }
+                .any { it.onMouseDragged(mouseX, mouseY, clickType) }
+        return if (componentsMatch) true else super.mouseDragged(mouseX, mouseY, clickType, lastX, lastY)
+    }
 
-    override fun mouseReleased(mouseX: Double, mouseY: Double, clickType: Int) =
-            container.guiPage.components.reversed().asSequence().filter { it.isSelected(mouseX - guiLeft, mouseY - guiTop) }.any { it.onMouseReleased(mouseX, mouseY, clickType) }
+    override fun mouseReleased(mouseX: Double, mouseY: Double, clickType: Int): Boolean {
+        val componentsMatch = container.guiPage.components.reversed().asSequence()
+                .filter { it.isSelected(mouseX - guiLeft, mouseY - guiTop) }
+                .any { it.onMouseReleased(mouseX, mouseY, clickType) }
+        return if (componentsMatch) true else super.mouseReleased(mouseX, mouseY, clickType)
+    }
 
     override fun render(mouseX: Int, mouseY: Int, partialTicks: Float) {
         renderBackground()
@@ -32,7 +44,7 @@ open class BaseScreen(container: BaseContainer, playerInv: PlayerInventory, titl
         super.render(mouseX, mouseY, partialTicks)
         renderHoveredToolTip(mouseX, mouseY)
     }
-    
+
     override fun init() {
         xSize = container.guiPage.trueWidth
         ySize = container.guiPage.trueHeight

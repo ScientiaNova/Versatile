@@ -15,8 +15,10 @@ class UpdateBooleanPacket(val property: String, val value: Boolean) {
     }
 
     companion object {
+        @JvmStatic
         fun decode(buffer: PacketBuffer) = UpdateBooleanPacket(buffer.readString(), buffer.readBoolean())
 
+        @JvmStatic
         @Suppress("UNCHECKED_CAST")
         fun processPacket(packet: UpdateBooleanPacket, context: Supplier<NetworkEvent.Context>) {
             context.get().enqueueWork {

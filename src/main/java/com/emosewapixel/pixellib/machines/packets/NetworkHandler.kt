@@ -14,41 +14,52 @@ object NetworkHandler {
             .networkProtocolVersion(::PROTOCOL_VERSION)
             .simpleChannel()
 
+    private var packetId = 0
+        get() {
+            return field++
+        }
+
     init {
-        CHANNEL.messageBuilder(OpenGUIPacket::class.java, 0)
+        CHANNEL.messageBuilder(OpenGUIPacket::class.java, packetId)
                 .encoder(OpenGUIPacket::encode)
                 .decoder(OpenGUIPacket.Companion::decode)
                 .consumer(OpenGUIPacket.Companion::processPacket)
                 .add()
 
-        CHANNEL.messageBuilder(ReopenGUIPacket::class.java, 1)
+        CHANNEL.messageBuilder(ReopenGUIPacket::class.java, packetId)
                 .encoder(ReopenGUIPacket::encode)
                 .decoder(ReopenGUIPacket.Companion::decode)
                 .consumer(ReopenGUIPacket.Companion::processPacket)
                 .add()
 
-        CHANNEL.messageBuilder(ChangePagePacket::class.java, 2)
+        CHANNEL.messageBuilder(ChangePagePacket::class.java, packetId)
                 .encoder(ChangePagePacket::encode)
                 .decoder(ChangePagePacket.Companion::decode)
                 .consumer(ChangePagePacket.Companion::processPacket)
                 .add()
 
-        CHANNEL.messageBuilder(UpdateBooleanPacket::class.java, 3)
+        CHANNEL.messageBuilder(UpdateBooleanPacket::class.java, packetId)
                 .encoder(UpdateBooleanPacket::encode)
                 .decoder(UpdateBooleanPacket.Companion::decode)
                 .consumer(UpdateBooleanPacket.Companion::processPacket)
                 .add()
 
-        CHANNEL.messageBuilder(UpdateIntPacket::class.java, 4)
+        CHANNEL.messageBuilder(UpdateIntPacket::class.java, packetId)
                 .encoder(UpdateIntPacket::encode)
                 .decoder(UpdateIntPacket.Companion::decode)
                 .consumer(UpdateIntPacket.Companion::processPacket)
                 .add()
 
-        CHANNEL.messageBuilder(UpdateNBTSerializableProperty::class.java, 7)
+        CHANNEL.messageBuilder(UpdateNBTSerializableProperty::class.java, packetId)
                 .encoder(UpdateNBTSerializableProperty::encode)
                 .decoder(UpdateNBTSerializableProperty.Companion::decode)
                 .consumer(UpdateNBTSerializableProperty.Companion::processPacket)
+                .add()
+
+        CHANNEL.messageBuilder(UpdateHeldStackPacket::class.java, packetId)
+                .encoder(UpdateHeldStackPacket::encode)
+                .decoder(UpdateHeldStackPacket.Companion::decode)
+                .consumer(UpdateHeldStackPacket.Companion::processPacket)
                 .add()
     }
 }

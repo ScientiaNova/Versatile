@@ -11,23 +11,22 @@ interface IImprovedSlot {
 
     fun merge(slots: List<Slot>): Boolean {
         var successful = false
-        slots.forEach {
-            if (it.hasStack) {
-                val stackInCurrent = it.stack
-                if (getStack().item != stackInCurrent.item || getStack().tag != stackInCurrent.tag) return@forEach
-                val mergeCount = (it.getItemStackLimit(getStack()).coerceAtMost(stackInCurrent.maxStackSize) - stackInCurrent.count).coerceAtMost(getStack().count)
-                if (mergeCount == 0) return@forEach
-                getStack().shrink(mergeCount)
-                stackInCurrent.grow(mergeCount)
-                successful = true
-                if (getStack().isEmpty) return true
-            } else {
-                val mergeCount = it.getItemStackLimit(getStack()).coerceAtMost(getStack().count)
-                if (mergeCount == 0) return@forEach
-                it.putStack(getStack().split(mergeCount))
-                successful = true
-                if (getStack().isEmpty) return true
-            }
+        slots.filter(Slot::getHasStack).forEach {
+            val stackInCurrent = it.stack
+            if (getStack().item != stackInCurrent.item || getStack().tag != stackInCurrent.tag) return@forEach
+            val mergeCount = (it.getItemStackLimit(getStack()).coerceAtMost(stackInCurrent.maxStackSize) - stackInCurrent.count).coerceAtMost(getStack().count)
+            if (mergeCount == 0) return@forEach
+            getStack().shrink(mergeCount)
+            stackInCurrent.grow(mergeCount)
+            successful = true
+            if (getStack().isEmpty) return true
+        }
+        slots.filterNot(Slot::getHasStack).forEach {
+            val mergeCount = it.getItemStackLimit(getStack()).coerceAtMost(getStack().count)
+            if (mergeCount == 0) return@forEach
+            it.putStack(getStack().split(mergeCount))
+            successful = true
+            if (getStack().isEmpty) return true
         }
         return successful
     }

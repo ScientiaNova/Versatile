@@ -13,8 +13,10 @@ class ChangePagePacket(val pos: BlockPos, val pageId: Int) {
     }
 
     companion object {
+        @JvmStatic
         fun decode(buffer: PacketBuffer) = ChangePagePacket(buffer.readBlockPos(), buffer.readInt())
 
+        @JvmStatic
         fun processPacket(packet: ChangePagePacket, context: Supplier<NetworkEvent.Context>) {
             context.get().enqueueWork {
                 val layout = (context.get().sender?.world?.getTileEntity(packet.pos) as? BaseTileEntity)?.guiLayout

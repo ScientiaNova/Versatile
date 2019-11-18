@@ -27,6 +27,8 @@ open class ImprovedItemStackHandler @JvmOverloads constructor(slots: Int, val no
 
     override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack = if (slot in noOutputSlots) ItemStack.EMPTY else super.extractItem(slot, amount, simulate)
 
+    fun extraItemFromContainer(slot: Int, amount: Int, simulate: Boolean) = super.extractItem(slot, amount, simulate)
+
     operator fun get(slot: Int) = stacks[slot]
 
     fun copy() = ImprovedItemStackHandler(slots, noOutputSlots, noInputSlots).apply { invStacks = this@ImprovedItemStackHandler.invStacks.map(ItemStack::copy).toNoNullList() }

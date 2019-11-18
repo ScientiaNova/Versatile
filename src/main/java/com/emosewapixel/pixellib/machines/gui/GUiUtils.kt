@@ -42,7 +42,10 @@ object GUiUtils {
         val texture = mc.textureMap.getSprite(stack.fluid.attributes.stillTexture)
         val color = stack.fluid.attributes.color
         GlStateManager.color4f(color.redF, color.greenF, color.blueF, 1f)
+
         drawTexture(texture, x, y, width, height, z = 100)
+
+        GlStateManager.color4f(1f, 1f, 1f, 1f)
 
         GlStateManager.disableAlphaTest()
         GlStateManager.disableBlend()
