@@ -5,7 +5,7 @@ import com.emosewapixel.pixellib.machines.BaseTileEntity
 import com.emosewapixel.pixellib.machines.capabilities.FluidStackHandler
 import com.emosewapixel.pixellib.machines.gui.BaseContainer
 import com.emosewapixel.pixellib.machines.packets.NetworkHandler
-import com.emosewapixel.pixellib.machines.packets.UpdateNBTSerializableProperty
+import com.emosewapixel.pixellib.machines.packets.UpdateTankPacket
 import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.nbt.CompoundNBT
@@ -14,7 +14,7 @@ import net.minecraftforge.fml.network.NetworkDirection
 open class TEFluidInventoryProperty(value: FluidStackHandler, override val id: String, override val te: BaseTileEntity) : FluidInventoryProperty(value), ITEBoundProperty {
     constructor(te: BaseTileEntity, id: String, slots: Int, noOutput: IntRange, noInput: IntRange, capacity: Int = 10000) : this(
             object : FluidStackHandler(slots, noOutput, noInput, capacity) {
-                override fun onContentsChanged(slot: Int) = te.update()
+                override fun onContentsChanged(index: Int) = te.update()
             }, id, te
     )
 
@@ -23,14 +23,17 @@ open class TEFluidInventoryProperty(value: FluidStackHandler, override val id: S
     )
 
     override fun detectAndSendChanges(container: BaseContainer) {
+        if (container.te.world?.isRemote == true) return
         val clientHandler = (container.clientProperties[id] as TEFluidInventoryProperty).value
-        if (clientHandler.tanks.indices.any { index -> clientHandler.tanks[index] != value.tanks[index] }) {
-            NetworkHandler.CHANNEL.sendTo(UpdateNBTSerializableProperty(id, value.serializeNBT()), (container.playerInv.player as ServerPlayerEntity).connection.networkManager, NetworkDirection.PLAY_TO_CLIENT)
-            clientHandler.tanks = value.tanks
+        clientHandler.tanks.indices.forEach { index ->
+            if (clientHandler.tanks[index] != value.tanks[index]) {
+                NetworkHandler.CHANNEL.sendTo(UpdateTankPacket(id, index, value.tanks[index]), (container.playerInv.player as ServerPlayerEntity).connection.networkManager, NetworkDirection.PLAY_TO_CLIENT)
+                clientHandler.tanks[index] = value.tanks[index].copy()
+            }
         }
     }
 
-    override fun copy() = TEFluidInventoryProperty(value, id, te)
+    override fun copy() = TEFluidInventoryProperty(value.copy(), id, te)
 
     override fun deserializeNBT(nbt: CompoundNBT) {
         if (id in nbt) value.deserializeNBT(nbt.getCompound(id))

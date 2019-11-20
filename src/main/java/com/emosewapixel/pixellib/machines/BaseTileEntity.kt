@@ -19,7 +19,7 @@ open class BaseTileEntity(type: TileEntityType<*> = BaseMachineRegistry.BASE_TIL
     protected val block get() = blockState.block as? IMachineBlock
 
     val teProperties by lazy {
-        block?.teProperties?.invoke(this)?.map { it.id to it }?.toMap().also { map -> unreadTag?.let { tag -> map?.values?.forEach { it.deserializeNBT(tag) } } }
+        block?.teProperties?.invoke(this)?.map { it.id to it }?.toMap()?.also { map -> unreadTag?.let { tag -> map.values.forEach { it.deserializeNBT(tag) } } }
                 ?: mapOf()
     }
 

@@ -50,10 +50,16 @@ object NetworkHandler {
                 .consumer(UpdateIntPacket.Companion::processPacket)
                 .add()
 
-        CHANNEL.messageBuilder(UpdateNBTSerializableProperty::class.java, packetId)
-                .encoder(UpdateNBTSerializableProperty::encode)
-                .decoder(UpdateNBTSerializableProperty.Companion::decode)
-                .consumer(UpdateNBTSerializableProperty.Companion::processPacket)
+        CHANNEL.messageBuilder(UpdateSlotPacket::class.java, packetId)
+                .encoder(UpdateSlotPacket::encode)
+                .decoder(UpdateSlotPacket.Companion::decode)
+                .consumer(UpdateSlotPacket.Companion::processPacket)
+                .add()
+
+        CHANNEL.messageBuilder(UpdateTankPacket::class.java, packetId)
+                .encoder(UpdateTankPacket::encode)
+                .decoder(UpdateTankPacket.Companion::decode)
+                .consumer(UpdateTankPacket.Companion::processPacket)
                 .add()
 
         CHANNEL.messageBuilder(UpdateHeldStackPacket::class.java, packetId)

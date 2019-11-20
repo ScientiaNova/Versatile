@@ -11,8 +11,10 @@ import net.minecraftforge.items.IItemHandlerModifiable
 open class ItemInventoryProperty(override val value: ImprovedItemStackHandler) : IValueProperty<IItemHandlerModifiable> {
     override fun copy() = ItemInventoryProperty(value.copy())
 
+    protected val capability = LazyOptional.of(::value)
+
     override fun <T> getCapability(cap: Capability<T>, side: Direction?): LazyOptional<T> =
             if (cap === CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-                LazyOptional.of(::value).cast()
+                capability.cast()
             else LazyOptional.empty()
 }

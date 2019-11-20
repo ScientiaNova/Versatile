@@ -11,16 +11,20 @@ import java.util.function.Supplier
 
 @KotlinEventBusSubscriber(bus = KotlinEventBusSubscriber.Bus.MOD)
 object BaseMachineRegistry {
-    val BASE_CONTAINER: ContainerType<BaseContainer> = IForgeContainerType.create(::BaseContainer)
-    val BASE_TILE_ENTITY: TileEntityType<BaseTileEntity> = TileEntityType.Builder.create(Supplier { BaseTileEntity() }, *BaseTileEntity.USED_BY.toTypedArray()).build(null)
+    lateinit var BASE_CONTAINER: ContainerType<BaseContainer>
+        private set
+    lateinit var BASE_TILE_ENTITY: TileEntityType<BaseTileEntity>
+        private set
 
     @SubscribeEvent
     fun onContainerRegistry(event: RegistryEvent.Register<ContainerType<*>>) {
+        BASE_CONTAINER = IForgeContainerType.create(::BaseContainer)
         event.registry.register(BASE_CONTAINER.setRegistryName("pixellib:base_container"))
     }
 
     @SubscribeEvent
     fun onTERegistry(event: RegistryEvent.Register<TileEntityType<*>>) {
+        BASE_TILE_ENTITY = TileEntityType.Builder.create(Supplier { BaseTileEntity() }, *BaseTileEntity.USED_BY.toTypedArray()).build(null)
         event.registry.register(BASE_TILE_ENTITY.setRegistryName("pixellib:base_te"))
     }
 }

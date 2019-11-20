@@ -11,13 +11,12 @@ open class ImprovedItemStackHandler @JvmOverloads constructor(slots: Int, val no
 
     constructor(inputCount: Int, outputCount: Int) : this(inputCount + outputCount, 0 until inputCount, inputCount until inputCount + outputCount)
 
-    var invStacks: NonNullList<ItemStack>
+    constructor(stacks: NonNullList<ItemStack>, noOutputSlots: Array<Int> = emptyArray(), noInputSlots: Array<Int> = emptyArray()) : this(stacks.size, noOutputSlots, noInputSlots) {
+        super.stacks = stacks
+    }
+
+    val invStacks: NonNullList<ItemStack>
         get() = super.stacks
-        set(value) {
-            if (value.size == stacks.size)
-                for (index in stacks.indices)
-                    setStackInSlot(index, value[index])
-        }
 
     val inputStacks get() = super.stacks.filterIndexed { index, _ -> index !in noInputSlots }
 
@@ -31,5 +30,5 @@ open class ImprovedItemStackHandler @JvmOverloads constructor(slots: Int, val no
 
     operator fun get(slot: Int) = stacks[slot]
 
-    fun copy() = ImprovedItemStackHandler(slots, noOutputSlots, noInputSlots).apply { invStacks = this@ImprovedItemStackHandler.invStacks.map(ItemStack::copy).toNoNullList() }
+    fun copy() = ImprovedItemStackHandler(invStacks.map(ItemStack::copy).toNoNullList(), noOutputSlots, noInputSlots)
 }

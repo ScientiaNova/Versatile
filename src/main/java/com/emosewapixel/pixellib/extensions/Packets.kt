@@ -10,7 +10,7 @@ fun PacketBuffer.writeFluidStack(stack: FluidStack): PacketBuffer {
     else {
         writeBoolean(true)
         writeVarInt(Registry.FLUID.getId(stack.fluid))
-        writeByte(stack.amount)
+        writeInt(stack.amount)
         writeCompoundTag(stack.tag)
     }
 
@@ -19,7 +19,7 @@ fun PacketBuffer.writeFluidStack(stack: FluidStack): PacketBuffer {
 
 fun PacketBuffer.readFluidStack(): FluidStack = if (!readBoolean()) FluidStack.EMPTY else {
     val i = readVarInt()
-    val j = readByte().toInt()
+    val j = readInt()
     val fluidStack = FluidStack(Registry.FLUID.getByValue(i), j)
     fluidStack.tag = readCompoundTag()
     fluidStack

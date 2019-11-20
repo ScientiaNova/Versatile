@@ -14,7 +14,7 @@ import net.minecraftforge.fml.network.NetworkDirection
 
 open class TEBooleanProperty(override val id: String, override val te: BaseTileEntity) : IVariableProperty<Boolean>, ITEBoundProperty {
     override fun setValue(new: Boolean, causeUpdate: Boolean) {
-        if (causeUpdate && FMLEnvironment.dist.isClient)
+        if (causeUpdate && !FMLEnvironment.dist.isDedicatedServer)
             NetworkHandler.CHANNEL.sendToServer(UpdateBooleanPacket(id, value))
         value = new
     }
@@ -23,6 +23,7 @@ open class TEBooleanProperty(override val id: String, override val te: BaseTileE
         protected set
 
     override fun detectAndSendChanges(container: BaseContainer) {
+        if (container.te.world?.isRemote == true) return
         if ((container.clientProperties[id] as TEBooleanProperty).value != value) {
             NetworkHandler.CHANNEL.sendTo(UpdateBooleanPacket(id, value), (container.playerInv.player as ServerPlayerEntity).connection.networkManager, NetworkDirection.PLAY_TO_CLIENT)
             (container.clientProperties[id] as TEBooleanProperty).value = value

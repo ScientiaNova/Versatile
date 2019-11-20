@@ -11,8 +11,10 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler
 open class FluidInventoryProperty(override val value: FluidStackHandler) : IValueProperty<IFluidHandlerModifiable> {
     override fun copy() = FluidInventoryProperty(value.copy())
 
+    protected val capability = LazyOptional.of(::value)
+
     override fun <T> getCapability(cap: Capability<T>, side: Direction?): LazyOptional<T> =
             if (cap === CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
-                LazyOptional.of(::value).cast()
+                capability.cast()
             else LazyOptional.empty()
 }

@@ -11,16 +11,14 @@ import com.emosewapixel.pixellib.machines.gui.layout.IPropertyGUIComponent
 import com.emosewapixel.pixellib.machines.gui.textures.BaseTextures
 import com.emosewapixel.pixellib.machines.packets.NetworkHandler
 import com.emosewapixel.pixellib.machines.packets.UpdateHeldStackPacket
-import com.emosewapixel.pixellib.machines.packets.UpdateNBTSerializableProperty
+import com.emosewapixel.pixellib.machines.packets.UpdateTankPacket
 import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
 import com.emosewapixel.pixellib.machines.properties.IValueProperty
 import net.minecraft.client.Minecraft
 import net.minecraft.item.ItemStack
-import net.minecraft.nbt.CompoundNBT
 import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
-import net.minecraftforge.common.util.INBTSerializable
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler
 import net.minecraftforge.fluids.capability.IFluidHandler
 import kotlin.math.min
@@ -229,8 +227,7 @@ open class FluidSlotComponent(override val property: IValueProperty<IFluidHandle
     private fun updateOnServer() {
         val slotTank = property.value
         (property as? ITEBoundProperty)?.let {
-            if (slotTank is INBTSerializable<*>)
-                NetworkHandler.CHANNEL.sendToServer(UpdateNBTSerializableProperty(it.id, slotTank.serializeNBT() as CompoundNBT))
+            NetworkHandler.CHANNEL.sendToServer(UpdateTankPacket(it.id, tankId, slotTank.getFluidInTank(tankId)))
         }
     }
 }

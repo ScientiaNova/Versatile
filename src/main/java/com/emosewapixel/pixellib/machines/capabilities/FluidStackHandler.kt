@@ -18,11 +18,12 @@ open class FluidStackHandler @JvmOverloads constructor(val count: Int, val noOut
     @JvmOverloads
     constructor(inputCount: Int, outputCount: Int, capacity: Int = 10000) : this(inputCount + outputCount, 0 until inputCount, inputCount until inputCount + outputCount, capacity)
 
+    constructor(tanks: NonNullList<FluidStack>, noOutputSlots: Array<Int> = emptyArray(), noInputSlots: Array<Int> = emptyArray(), capacity: Int = 10000) : this(tanks.size, noOutputSlots, noInputSlots, capacity) {
+        this.tanks = tanks
+    }
+
     var tanks = NonNullList.withSize(count, FluidStack.EMPTY)
-        set(value) {
-            if (tanks.size == value.size)
-                field = value
-        }
+        protected set
 
     val inputTanks get() = tanks.filterIndexed { index, _ -> index !in noInputTanks }
 
@@ -114,9 +115,12 @@ open class FluidStackHandler @JvmOverloads constructor(val count: Int, val noOut
             if (tankId >= 0 && tankId < tanks.size)
                 tanks[tankId] = FluidStack.loadFluidStackFromNBT(it)
         }
+        onLoad()
     }
 
-    fun copy() = FluidStackHandler(count, noOutputTanks, noInputTanks, capacity).apply { tanks = this@FluidStackHandler.tanks.map(FluidStack::copy).toNoNullList() }
+    fun copy() = FluidStackHandler(tanks.map(FluidStack::copy).toNoNullList(), noOutputTanks, noInputTanks, capacity)
 
     open fun onContentsChanged(index: Int) {}
+
+    open fun onLoad() {}
 }
