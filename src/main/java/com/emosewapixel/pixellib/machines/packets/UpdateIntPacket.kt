@@ -22,12 +22,19 @@ class UpdateIntPacket(val property: String, val value: Int) {
         @Suppress("UNCHECKED_CAST")
         fun processPacket(packet: UpdateIntPacket, context: Supplier<NetworkEvent.Context>) {
             context.get().enqueueWork {
+                val serverSideContainer = context.get().sender?.openContainer as? BaseContainer
                 val container = DistExecutor.runForDist(
-                        { Supplier { Minecraft.getInstance().player.openContainer as? BaseContainer } },
-                        { Supplier { context.get().sender?.openContainer as? BaseContainer } }
+                        {
+                            Supplier {
+                                serverSideContainer ?: Minecraft.getInstance().player.openContainer as? BaseContainer
+                            }
+                        },
+                        { Supplier { serverSideContainer } }
                 )
-                (container?.te?.teProperties?.get(packet.property) as? IVariableProperty<Int>)?.setValue(packet.value, false)
-                (container?.clientProperties?.get(packet.property) as? IVariableProperty<Int>)?.setValue(packet.value, false)
+                (container?.te?.teProperties?.get(packet.property) as? IVariableProperty<Int>)
+                        ?.setValue(packet.value, false)
+                (container?.clientProperties?.get(packet.property) as? IVariableProperty<Int>)
+                        ?.setValue(packet.value, false)
             }
             context.get().packetHandled = true
         }

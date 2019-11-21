@@ -9,7 +9,7 @@ import net.minecraftforge.items.CapabilityItemHandler
 import net.minecraftforge.items.IItemHandlerModifiable
 
 open class ItemInventoryProperty(override val value: ImprovedItemStackHandler) : IValueProperty<IItemHandlerModifiable> {
-    override fun copy() = ItemInventoryProperty(value.copy())
+    override fun createDefault() = ItemInventoryProperty(ImprovedItemStackHandler(value.slots, value.noOutputSlots, value.noInputSlots))
 
     protected val capability = LazyOptional.of(::value)
 

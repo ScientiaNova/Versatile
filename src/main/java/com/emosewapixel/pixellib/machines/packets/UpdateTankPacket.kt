@@ -27,9 +27,14 @@ class UpdateTankPacket(val property: String, val index: Int, val stack: FluidSta
         @Suppress("UNCHECKED_CAST")
         fun processPacket(packet: UpdateTankPacket, context: Supplier<NetworkEvent.Context>) {
             context.get().enqueueWork {
+                val serverSideContainer = context.get().sender?.openContainer as? BaseContainer
                 val container = DistExecutor.runForDist(
-                        { Supplier { Minecraft.getInstance().player.openContainer as? BaseContainer } },
-                        { Supplier { context.get().sender?.openContainer as? BaseContainer } }
+                        {
+                            Supplier {
+                                serverSideContainer ?: Minecraft.getInstance().player.openContainer as? BaseContainer
+                            }
+                        },
+                        { Supplier { serverSideContainer } }
                 )
                 (container?.te?.teProperties?.get(packet.property) as? IValueProperty<IFluidHandlerModifiable>)
                         ?.value?.setFluidInTank(packet.index, packet.stack)

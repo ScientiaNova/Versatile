@@ -23,8 +23,7 @@ open class TEItemInventoryProperty(value: ImprovedItemStackHandler, override val
     )
 
     override fun detectAndSendChanges(container: BaseContainer) {
-        if (container.te.world?.isRemote == true) return
-        val clientHandler = (container.clientProperties[id] as TEItemInventoryProperty).value
+        val clientHandler = (container.clientProperties[id] as ItemInventoryProperty).value
         clientHandler.invStacks.indices.forEach { index ->
             if (!clientHandler.invStacks[index].equals(value.invStacks[index], false)) {
                 NetworkHandler.CHANNEL.sendTo(UpdateSlotPacket(id, index, value.invStacks[index]), (container.playerInv.player as ServerPlayerEntity).connection.networkManager, NetworkDirection.PLAY_TO_CLIENT)
@@ -33,7 +32,7 @@ open class TEItemInventoryProperty(value: ImprovedItemStackHandler, override val
         }
     }
 
-    override fun copy() = TEItemInventoryProperty(value.copy(), id, te)
+    override fun createDefault() = TEItemInventoryProperty(ImprovedItemStackHandler(value.slots, value.noOutputSlots, value.noInputSlots), id, te)
 
     override fun deserializeNBT(nbt: CompoundNBT?) {
         if (nbt?.contains(id) == true) value.deserializeNBT(nbt.getCompound(id))

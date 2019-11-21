@@ -20,7 +20,7 @@ open class BaseContainer(id: Int, val playerInv: PlayerInventory, val te: BaseTi
     constructor(id: Int, playerInv: PlayerInventory, extraData: PacketBuffer) : this(id, playerInv, playerInv.player.world.getTileEntity(extraData.readBlockPos()) as BaseTileEntity)
 
     val guiPage = te.guiLayout.current
-    val clientProperties = te.teProperties.mapValues { it.value.copy() }
+    val clientProperties = te.teProperties.mapValues { it.value.createDefault() }
 
     init {
         guiPage.components.forEach { if (it is ISlotComponent) addSlot(it.setupSlot(playerInv) as Slot) }
@@ -29,15 +29,19 @@ open class BaseContainer(id: Int, val playerInv: PlayerInventory, val te: BaseTi
     override fun canInteractWith(playerIn: PlayerEntity) = te.canInteractWith(playerIn)
 
     override fun detectAndSendChanges() {
-        guiPage.components.asSequence().filterIsInstance<IPropertyGUIComponent>().map { it.property as? ITEBoundProperty }.distinct().forEach { it?.detectAndSendChanges(this) }
+        if (te.world?.isRemote != false) return
+        guiPage.components.asSequence().filterIsInstance<IPropertyGUIComponent>()
+                .map { it.property as? ITEBoundProperty }.distinct()
+                .forEach { it?.detectAndSendChanges(this) }
     }
 
     override fun transferStackInSlot(playerIn: PlayerEntity, index: Int): ItemStack {
         val slot = getSlot(index)
         if (!slot.hasStack || slot !is IImprovedSlot) return ItemStack.EMPTY
         val stack = slot.stack
-        val matching = if (slot.isPlayerInventory) inventorySlots.filter { it is IImprovedSlot && !it.isPlayerInventory && it.isItemValid(stack) }
-        else inventorySlots.filter { it is IImprovedSlot && it.isPlayerInventory && it.isItemValid(stack) }.reversed()
+        val matching = if (slot.isPlayerInventory) inventorySlots.filter {
+            it is IImprovedSlot && !it.isPlayerInventory && it.isItemValid(stack)
+        } else inventorySlots.filter { it is IImprovedSlot && it.isPlayerInventory && it.isItemValid(stack) }.reversed()
         val merged = slot.merge(matching)
         if (!merged) return ItemStack.EMPTY
         if (stack.isEmpty)

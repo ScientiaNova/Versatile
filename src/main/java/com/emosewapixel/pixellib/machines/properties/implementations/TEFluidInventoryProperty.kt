@@ -23,8 +23,7 @@ open class TEFluidInventoryProperty(value: FluidStackHandler, override val id: S
     )
 
     override fun detectAndSendChanges(container: BaseContainer) {
-        if (container.te.world?.isRemote == true) return
-        val clientHandler = (container.clientProperties[id] as TEFluidInventoryProperty).value
+        val clientHandler = (container.clientProperties[id] as FluidInventoryProperty).value
         clientHandler.tanks.indices.forEach { index ->
             if (clientHandler.tanks[index] != value.tanks[index]) {
                 NetworkHandler.CHANNEL.sendTo(UpdateTankPacket(id, index, value.tanks[index]), (container.playerInv.player as ServerPlayerEntity).connection.networkManager, NetworkDirection.PLAY_TO_CLIENT)
@@ -33,7 +32,7 @@ open class TEFluidInventoryProperty(value: FluidStackHandler, override val id: S
         }
     }
 
-    override fun copy() = TEFluidInventoryProperty(value.copy(), id, te)
+    override fun createDefault() = TEFluidInventoryProperty(FluidStackHandler(value.count, value.noOutputTanks, value.noInputTanks, value.capacity), id, te)
 
     override fun deserializeNBT(nbt: CompoundNBT) {
         if (id in nbt) value.deserializeNBT(nbt.getCompound(id))

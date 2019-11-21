@@ -3,7 +3,6 @@ package com.emosewapixel.pixellib.machines.capabilities
 import com.emosewapixel.pixellib.extensions.isNotEmpty
 import com.emosewapixel.pixellib.extensions.nbt
 import com.emosewapixel.pixellib.extensions.times
-import com.emosewapixel.pixellib.extensions.toNoNullList
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.util.NonNullList
 import net.minecraftforge.common.util.Constants
@@ -117,8 +116,6 @@ open class FluidStackHandler @JvmOverloads constructor(val count: Int, val noOut
         }
         onLoad()
     }
-
-    fun copy() = FluidStackHandler(tanks.map(FluidStack::copy).toNoNullList(), noOutputTanks, noInputTanks, capacity)
 
     open fun onContentsChanged(index: Int) {}
 

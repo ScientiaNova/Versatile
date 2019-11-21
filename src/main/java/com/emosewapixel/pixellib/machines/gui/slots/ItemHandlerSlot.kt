@@ -17,6 +17,6 @@ open class ItemHandlerSlot(handler: IItemHandler, val index: Int, x: Int, y: Int
 
     override fun decrStackSize(amount: Int): ItemStack {
         val handler = itemHandler
-        return if (handler is ImprovedItemStackHandler) handler.extraItemFromContainer(index, amount, true) else super.decrStackSize(amount)
+        return if (handler is ImprovedItemStackHandler) handler.extraItemFromContainer(index, amount, false) else super.decrStackSize(amount)
     }
 }

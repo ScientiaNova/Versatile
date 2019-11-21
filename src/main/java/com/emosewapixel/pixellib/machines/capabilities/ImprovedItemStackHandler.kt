@@ -1,6 +1,5 @@
 package com.emosewapixel.pixellib.machines.capabilities
 
-import com.emosewapixel.pixellib.extensions.toNoNullList
 import net.minecraft.item.ItemStack
 import net.minecraft.util.NonNullList
 import net.minecraftforge.items.ItemStackHandler
@@ -29,6 +28,4 @@ open class ImprovedItemStackHandler @JvmOverloads constructor(slots: Int, val no
     fun extraItemFromContainer(slot: Int, amount: Int, simulate: Boolean) = super.extractItem(slot, amount, simulate)
 
     operator fun get(slot: Int) = stacks[slot]
-
-    fun copy() = ImprovedItemStackHandler(invStacks.map(ItemStack::copy).toNoNullList(), noOutputSlots, noInputSlots)
 }

@@ -23,14 +23,13 @@ open class TEBooleanProperty(override val id: String, override val te: BaseTileE
         protected set
 
     override fun detectAndSendChanges(container: BaseContainer) {
-        if (container.te.world?.isRemote == true) return
         if ((container.clientProperties[id] as TEBooleanProperty).value != value) {
             NetworkHandler.CHANNEL.sendTo(UpdateBooleanPacket(id, value), (container.playerInv.player as ServerPlayerEntity).connection.networkManager, NetworkDirection.PLAY_TO_CLIENT)
             (container.clientProperties[id] as TEBooleanProperty).value = value
         }
     }
 
-    override fun copy() = TEBooleanProperty(id, te)
+    override fun createDefault() = TEBooleanProperty(id, te)
 
     override fun deserializeNBT(nbt: CompoundNBT?) {
         if (nbt?.contains(id) == true) value = nbt.getBoolean(id)

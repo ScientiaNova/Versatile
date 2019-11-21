@@ -25,9 +25,14 @@ class UpdateSlotPacket(val property: String, val index: Int, val stack: ItemStac
         @Suppress("UNCHECKED_CAST")
         fun processPacket(packet: UpdateSlotPacket, context: Supplier<NetworkEvent.Context>) {
             context.get().enqueueWork {
+                val serverSideContainer = context.get().sender?.openContainer as? BaseContainer
                 val container = DistExecutor.runForDist(
-                        { Supplier { Minecraft.getInstance().player.openContainer as? BaseContainer } },
-                        { Supplier { context.get().sender?.openContainer as? BaseContainer } }
+                        {
+                            Supplier {
+                                serverSideContainer ?: Minecraft.getInstance().player.openContainer as? BaseContainer
+                            }
+                        },
+                        { Supplier { serverSideContainer } }
                 )
                 (container?.te?.teProperties?.get(packet.property) as? IValueProperty<IItemHandlerModifiable>)
                         ?.value?.setStackInSlot(packet.index, packet.stack)

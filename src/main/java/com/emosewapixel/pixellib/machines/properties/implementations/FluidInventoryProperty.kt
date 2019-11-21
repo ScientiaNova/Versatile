@@ -9,7 +9,7 @@ import net.minecraftforge.common.util.LazyOptional
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler
 
 open class FluidInventoryProperty(override val value: FluidStackHandler) : IValueProperty<IFluidHandlerModifiable> {
-    override fun copy() = FluidInventoryProperty(value.copy())
+    override fun createDefault() = FluidInventoryProperty(FluidStackHandler(value.count, value.noOutputTanks, value.noInputTanks, value.capacity))
 
     protected val capability = LazyOptional.of(::value)
 

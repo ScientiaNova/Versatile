@@ -28,7 +28,7 @@ open class UpdatePageProperty(override val te: BaseTileEntity) : ITEBoundPropert
                 NetworkHandler.CHANNEL.sendToServer(ChangePagePacket(te.pos, value))
         }
 
-    override fun copy() = this
+    override fun createDefault() = this
 
     override fun deserializeNBT(nbt: CompoundNBT?) {}
 

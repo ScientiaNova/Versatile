@@ -23,14 +23,13 @@ open class TEIntegerProperty(override val id: String, override val te: BaseTileE
         protected set
 
     override fun detectAndSendChanges(container: BaseContainer) {
-        if (container.te.world?.isRemote == true) return
         if ((container.clientProperties[id] as TEIntegerProperty).value != value) {
             NetworkHandler.CHANNEL.sendTo(UpdateIntPacket(id, value), (container.playerInv.player as ServerPlayerEntity).connection.networkManager, NetworkDirection.PLAY_TO_CLIENT)
             (container.clientProperties[id] as TEIntegerProperty).value = value
         }
     }
 
-    override fun copy() = TEIntegerProperty(id, te)
+    override fun createDefault() = TEIntegerProperty(id, te)
 
     override fun deserializeNBT(nbt: CompoundNBT?) {
         if (nbt?.contains(id) == true) value = nbt.getInt(id)
