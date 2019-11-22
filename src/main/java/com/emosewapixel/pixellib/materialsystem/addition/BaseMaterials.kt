@@ -6,8 +6,8 @@ import com.emosewapixel.pixellib.materialsystem.elements.BaseElements
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialBlocks
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialFluids
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialItems
-import com.emosewapixel.pixellib.materialsystem.materials.*
-import com.emosewapixel.pixellib.materialsystem.types.ObjectType.Companion.getUnrefinedColor
+import com.emosewapixel.pixellib.materialsystem.materials.BlockCompaction
+import com.emosewapixel.pixellib.materialsystem.materials.CompoundType
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.block.SoundType
@@ -23,13 +23,8 @@ import net.minecraftforge.eventbus.api.EventPriority
 //This class is used for registering the vanilla material and object type tags, materials and object types
 @MaterialRegistry(EventPriority.HIGH)
 object BaseMaterials {
-    //Material Tags
-    const val HAS_ORE = "has_ore"
-    const val DISABLE_SIMPLE_PROCESSING = "disable_simple_processing"
-    const val BLOCK_FROM_4X4 = "block_from_4x4"
-    const val IS_GAS = "is_gas"
+    //Object Type Tags
     const val HAS_NO_FUEL_VALUE = "has_no_fuel_value"
-    const val ROD_TO_3_DUST = "rod_to_3_dust"
     const val SINGLE_TEXTURE_TYPE = "1_texture_type"
 
     //Texture Types
@@ -46,45 +41,45 @@ object BaseMaterials {
 
     //Object Types
     @JvmField
-    val DUST = itemType("dust", { it is DustMaterial }) {
+    val DUST = itemType("dust", com.emosewapixel.pixellib.materialsystem.materials.Material::isDustMaterial) {
         bucketVolume = 144
     }
     @JvmField
-    val GEM = itemType("gem", { it is GemMaterial }) {
+    val GEM = itemType("gem", com.emosewapixel.pixellib.materialsystem.materials.Material::isGemMaterial) {
         bucketVolume = 144
     }
     @JvmField
-    val INGOT = itemType("ingot", { it is IngotMaterial }) {
+    val INGOT = itemType("ingot", com.emosewapixel.pixellib.materialsystem.materials.Material::isIngotMaterial) {
         bucketVolume = 144
     }
     @JvmField
-    val NUGGET = itemType("nugget", { it is IngotMaterial }) {
+    val NUGGET = itemType("nugget", com.emosewapixel.pixellib.materialsystem.materials.Material::isIngotMaterial) {
         bucketVolume = 16
     }
     @JvmField
-    val BLOCK = blockType("storage_block", { it is DustMaterial },
+    val BLOCK = blockType("storage_block", { it.isDustMaterial && it.blockCompaction != BlockCompaction.NONE },
             Block.Properties.create(Material.IRON).sound(SoundType.METAL)) {
         buildRegistryName = { ResourceLocation("pixellib:${it.name}_block") }
         bucketVolume = 1296
     }
     @JvmField
-    val ORE = blockType("ore", { it is IngotMaterial && it.hasTag(HAS_ORE) },
+    val ORE = blockType("ore", { it.isIngotMaterial && it.hasOre },
             Block.Properties.create(Material.ROCK).sound(SoundType.STONE)) {
         typeTags += HAS_NO_FUEL_VALUE
-        color = ::getUnrefinedColor
+        color = com.emosewapixel.pixellib.materialsystem.materials.Material::unrefinedColor
         indexBlackList += 1
         bucketVolume = 144
     }
     @JvmField
-    val FLUID = fluidType("fluid", { it is FluidMaterial }) {
+    val FLUID = fluidType("fluid", com.emosewapixel.pixellib.materialsystem.materials.Material::isFluidMaterial) {
         locationBase = "minecraft:block/water"
-        fluidColor = { color(it) or ((it as? FluidMaterial)?.alpha?.shl(24) ?: 0xFF000000.toInt()) }
+        fluidColor = { color(it) or (it.alpha shl 24) }
         overlayTexture = ResourceLocation("minecraft", "block/water_overlay")
         buildRegistryName = { ResourceLocation("pixellib:${it.name}") }
         buildTagName = String::toResLoc
     }
     @JvmField
-    val MOLTEN_FLUID = fluidType("molten", { it is DustMaterial && it.meltingTemperature > 0 }) {
+    val MOLTEN_FLUID = fluidType("molten", { it.isDustMaterial && it.fluidTemperature > 0 }) {
         buildRegistryName = { ResourceLocation("pixellib:molten_${it.name}") }
         buildTagName = { "forge:molten_$it".toResLoc() }
         emptySound = SoundEvents.ITEM_BUCKET_EMPTY_LAVA
@@ -93,101 +88,147 @@ object BaseMaterials {
 
     //Materials
     @JvmField
-    val BRICK = ingotMaterial("brick", REGULAR, 0xb55c42, 1) {
-        materialTags += BLOCK_FROM_4X4
+    val BRICK = ingotMaterial("brick") {
+        tier = 1
+        color = 0xb55c42
+        blockCompaction = BlockCompaction.FROM_2X2
         typeBlacklist += NUGGET
         compoundType = CompoundType.CHEMICAL
     }
     @JvmField
-    val NETHER_BRICK = ingotMaterial("nether_brick", REGULAR, 0x472a30, 1) {
-        materialTags += BLOCK_FROM_4X4
+    val NETHER_BRICK = ingotMaterial("nether_brick") {
+        tier = 1
+        color = 0x472a30
+        blockCompaction = BlockCompaction.FROM_2X2
         typeBlacklist += NUGGET
         compoundType = CompoundType.CHEMICAL
     }
     @JvmField
-    val IRON = ingotMaterial("iron", ROUGH, -1, 1) {
+    val IRON = ingotMaterial("iron") {
+        tier = 1
+        textureType = ROUGH
         element = BaseElements.IRON
         unrefinedColor = 0x947664
         itemTier = ItemTier.IRON
         armorMaterial = ArmorMaterial.IRON
-        meltingTemperature = 1538
+        fluidTemperature = 1538
         boilingTemperature = 2862
-        materialTags += HAS_ORE
+        hasOre = true
     }
     @JvmField
-    val GOLD = ingotMaterial("gold", SHINY, 0xfad64a, 2) {
+    val GOLD = ingotMaterial("gold") {
+        tier = 2
+        color = 0xfad64a
+        textureType = SHINY
         element = BaseElements.GOLD
         itemTier = ItemTier.GOLD
         armorMaterial = ArmorMaterial.GOLD
-        meltingTemperature = 1064
+        fluidTemperature = 1064
         boilingTemperature = 2700
-        materialTags += HAS_ORE
+        hasOre = true
     }
     @JvmField
-    val COAL = gemMaterial("coal", FUEL, 0x1a1a1a, 0) {
+    val COAL = gemMaterial("coal") {
+        color = 0x1a1a1a
+        textureType = FUEL
         standardBurnTime = 1600
         element = BaseElements.CARBON
-        materialTags += HAS_ORE
+        hasOre = true
     }
     @JvmField
-    val CHARCOAL = gemMaterial("charcoal", FUEL, 0x443e33, 0) {
+    val CHARCOAL = gemMaterial("charcoal") {
+        color = 0x443e33
+        textureType = FUEL
         standardBurnTime = 1600
         element = BaseElements.CARBON
     }
     @JvmField
-    val FLINT = gemMaterial("flint", SHARP, 0x222020, 0) {
-        typeBlacklist += BLOCK
+    val FLINT = gemMaterial("flint") {
+        color = 0x222020
+        textureType = SHARP
+        blockCompaction = BlockCompaction.NONE
     }
     @JvmField
-    val LAPIS = gemMaterial("lapis", REGULAR, 0x2351be, 0) {
-        materialTags += HAS_ORE
+    val LAPIS = gemMaterial("lapis") {
+        color = 0x2351be
+        hasOre = true
     }
     @JvmField
-    val QUARTZ = gemMaterial("quartz", CRYSTAL, 0xe8dfd0, 0) {
-        materialTags += listOf(HAS_ORE, BLOCK_FROM_4X4)
+    val QUARTZ = gemMaterial("quartz") {
+        color = 0xe8dfd0
+        textureType = CRYSTAL
+        blockCompaction = BlockCompaction.FROM_2X2
+        hasOre = true
     }
     @JvmField
-    val DIAMOND = gemMaterial("diamond", PENTAGONAL, 0x34ebe3, 2) {
+    val DIAMOND = gemMaterial("diamond") {
+        tier = 2
+        color = 0x34ebe3
+        textureType = PENTAGONAL
         element = BaseElements.CARBON
         itemTier = ItemTier.DIAMOND
         armorMaterial = ArmorMaterial.DIAMOND
-        materialTags += HAS_ORE
+        hasOre = true
     }
     @JvmField
-    val EMERALD = gemMaterial("emerald", OCTAGONAL, 0x08ad2c, 2) {
-        materialTags += HAS_ORE
+    val EMERALD = gemMaterial("emerald") {
+        tier = 2
+        color = 0x08ad2c
+        textureType = OCTAGONAL
+        hasOre = true
     }
     @JvmField
-    val WOODEN = dustMaterial("wooden", FINE, 0x87672c, -1) {
+    val WOODEN = dustMaterial("wooden") {
+        tier = -1
+        color = 0x87672c
+        textureType = FINE
         standardBurnTime = 200
         itemTier = ItemTier.WOOD
     }
     @JvmField
-    val STONE = dustMaterial("stone", FINE, 0xb1b0ae, 0) {
+    val STONE = dustMaterial("stone") {
+        color = 0xb1b0ae
+        textureType = FINE
         itemTier = ItemTier.STONE
     }
     @JvmField
-    val BONE = dustMaterial("bone", REGULAR, 0xfcfaed, 0) {
-        materialTags += ROD_TO_3_DUST
+    val BONE = dustMaterial("bone") {
+        color = 0xfcfaed
+        rodOutputCount = 3
     }
     @JvmField
-    val BLAZE = dustMaterial("blaze", REGULAR, 0xffc20c, 0) {
-        materialTags += ROD_TO_3_DUST
+    val BLAZE = dustMaterial("blaze") {
+        color = 0xffc20c
+        rodOutputCount = 3
     }
     @JvmField
-    val REDSTONE = dustMaterial("redstone", REGULAR, 0xfc1a19, 1) {
-        materialTags += HAS_ORE
+    val REDSTONE = dustMaterial("redstone") {
+        tier = 1
+        color = 0xfc1a19
+        hasOre = true
     }
     @JvmField
-    val GLOWSTONE = dustMaterial("glowstone", REGULAR, 0xfcbe60, 1) {
-        materialTags += BLOCK_FROM_4X4
+    val GLOWSTONE = dustMaterial("glowstone") {
+        tier = 1
+        color = 0xfcbe60
+        blockCompaction = BlockCompaction.FROM_2X2
     }
     @JvmField
-    val OBSIDIAN = dustMaterial("obsidian", FINE, 0x3c2a53, 3)
+    val OBSIDIAN = dustMaterial("obsidian") {
+        tier = 1
+        color = 0x3c2a53
+        textureType = FINE
+    }
     @JvmField
-    val WATER = fluidMaterial("water", FLUID_TT, 0x3e4ac6)
+    val WATER = fluidMaterial("water") {
+        color = 0x3e4ac6
+        textureType = FLUID_TT
+    }
     @JvmField
-    val LAVA = fluidMaterial("lava", FLUID_TT, 0xc54c13)
+    val LAVA = fluidMaterial("lava") {
+        color = 0xc54c13
+        textureType = FLUID_TT
+    }
 
     init {
         MaterialItems.addItem(COAL, GEM, Items.COAL)

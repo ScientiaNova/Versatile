@@ -2,7 +2,6 @@ package com.emosewapixel.pixellib.materialsystem.types
 
 import com.blamejared.crafttweaker.api.annotations.ZenRegister
 import com.emosewapixel.pixellib.materialsystem.lists.ObjTypes
-import com.emosewapixel.pixellib.materialsystem.materials.DustMaterial
 import com.emosewapixel.pixellib.materialsystem.materials.Material
 import com.emosewapixel.pixellib.materialsystem.materials.utility.ct.MaterialRequirement
 import net.minecraft.item.Item
@@ -75,10 +74,5 @@ constructor(@ZenCodeType.Field val name: String,
     fun build(): ObjectType<*, *> {
         ObjTypes.add(this)
         return ObjTypes[name]!!
-    }
-
-    companion object {
-        @JvmStatic
-        fun getUnrefinedColor(mat: Material) = (mat as? DustMaterial)?.unrefinedColor ?: mat.color
     }
 }

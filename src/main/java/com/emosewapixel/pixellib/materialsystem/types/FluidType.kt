@@ -8,14 +8,11 @@ import com.emosewapixel.pixellib.fluids.MaterialFluidBlock
 import com.emosewapixel.pixellib.fluids.MaterialFluidHolder
 import com.emosewapixel.pixellib.materialsystem.addition.BaseMaterials
 import com.emosewapixel.pixellib.materialsystem.elements.ElementUtils
-import com.emosewapixel.pixellib.materialsystem.materials.DustMaterial
-import com.emosewapixel.pixellib.materialsystem.materials.FluidMaterial
 import com.emosewapixel.pixellib.materialsystem.materials.IMaterialObject
 import com.emosewapixel.pixellib.materialsystem.materials.Material
 import com.emosewapixel.pixellib.materialsystem.materials.utility.ct.MaterialRequirement
 import com.google.gson.JsonObject
 import net.minecraft.block.FlowingFluidBlock
-import net.minecraft.fluid.Fluids
 import net.minecraft.item.BucketItem
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.SoundEvent
@@ -50,14 +47,11 @@ class FluidType @JvmOverloads @ZenCodeType.Constructor constructor(name: String,
         }
     }
     var temperatureFun: (Material) -> Int = {
-        when (it) {
-            is DustMaterial -> it.meltingTemperature
-            is FluidMaterial -> it.temperature
-            else -> Fluids.WATER.attributes.temperature
-        }
+        val fluidTemp = it.fluidTemperature
+        if (fluidTemp > 0) fluidTemp else 300
     }
     var luminosityFun: (Material) -> Int = { min(15, (temperatureFun(it) - 500) / 50) }
-    var gaseousFun: (Material) -> Boolean = { it.hasTag(BaseMaterials.IS_GAS) }
+    var gaseousFun: (Material) -> Boolean = Material::isGas
     var densityFun: (Material) -> Int = {
         val density = ElementUtils.getTotalDensity(it).toInt() * densityMultiplier
         if (gaseousFun(it))
