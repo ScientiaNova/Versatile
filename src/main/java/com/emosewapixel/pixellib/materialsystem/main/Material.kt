@@ -3,7 +3,7 @@ package com.emosewapixel.pixellib.materialsystem.main
 import com.blamejared.crafttweaker.api.annotations.ZenRegister
 import com.emosewapixel.pixellib.extensions.toResLoc
 import com.emosewapixel.pixellib.materialsystem.addition.BaseObjTypes
-import com.emosewapixel.pixellib.materialsystem.elements.BaseElements
+import com.emosewapixel.pixellib.materialsystem.addition.BaseElements
 import com.emosewapixel.pixellib.materialsystem.lists.Materials
 import com.emosewapixel.pixellib.materialsystem.properties.HarvestTier
 import com.emosewapixel.pixellib.materialsystem.properties.MatProperties

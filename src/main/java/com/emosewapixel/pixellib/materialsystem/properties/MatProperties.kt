@@ -2,7 +2,7 @@ package com.emosewapixel.pixellib.materialsystem.properties
 
 import com.emosewapixel.pixellib.extensions.toResLoc
 import com.emosewapixel.pixellib.materialsystem.addition.BaseTextureTypes
-import com.emosewapixel.pixellib.materialsystem.elements.BaseElements
+import com.emosewapixel.pixellib.materialsystem.addition.BaseElements
 import com.emosewapixel.pixellib.materialsystem.main.Material
 import com.emosewapixel.pixellib.materialsystem.main.ObjectType
 import net.minecraft.item.IArmorMaterial

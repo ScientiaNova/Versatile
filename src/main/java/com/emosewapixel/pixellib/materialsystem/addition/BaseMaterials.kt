@@ -6,7 +6,6 @@ import com.emosewapixel.pixellib.materialsystem.builders.dustMaterial
 import com.emosewapixel.pixellib.materialsystem.builders.fluidMaterial
 import com.emosewapixel.pixellib.materialsystem.builders.gemMaterial
 import com.emosewapixel.pixellib.materialsystem.builders.ingotMaterial
-import com.emosewapixel.pixellib.materialsystem.elements.BaseElements
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialBlocks
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialFluids
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialItems
