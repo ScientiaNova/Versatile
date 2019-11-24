@@ -1,5 +1,6 @@
 package com.emosewapixel.pixellib.materialsystem.elements
 
+import com.emosewapixel.pixellib.materialsystem.addition.BaseElements
 import com.emosewapixel.pixellib.materialsystem.properties.CompoundType
 import com.emosewapixel.pixellib.materialsystem.main.Material
 import com.emosewapixel.pixellib.materialsystem.main.ObjectType

@@ -1,6 +1,11 @@
 package com.emosewapixel.pixellib.materialsystem.addition
 
 import com.emosewapixel.pixellib.fluids.FluidPairHolder
+import com.emosewapixel.pixellib.materialsystem.annotations.MaterialRegistry
+import com.emosewapixel.pixellib.materialsystem.builders.dustMaterial
+import com.emosewapixel.pixellib.materialsystem.builders.fluidMaterial
+import com.emosewapixel.pixellib.materialsystem.builders.gemMaterial
+import com.emosewapixel.pixellib.materialsystem.builders.ingotMaterial
 import com.emosewapixel.pixellib.materialsystem.elements.BaseElements
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialBlocks
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialFluids

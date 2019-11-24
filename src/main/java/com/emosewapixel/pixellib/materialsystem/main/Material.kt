@@ -31,7 +31,7 @@ open class Material @ZenCodeType.Constructor constructor(@ZenCodeType.Field val 
 
     val typeBlacklist = ArrayList<ObjectType>()
 
-    val invertedBlacklist = false
+    var invertedBlacklist = false
 
     var composition = listOf<MaterialStack>()
 
@@ -232,7 +232,7 @@ open class Material @ZenCodeType.Constructor constructor(@ZenCodeType.Field val 
     override fun toString() = name
 
     @ZenCodeType.Method
-    fun build(): Material {
+    fun register(): Material {
         Materials.add(this)
         return Materials[name]!!
     }

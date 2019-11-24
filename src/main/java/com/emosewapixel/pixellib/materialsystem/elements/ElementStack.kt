@@ -1,6 +1,7 @@
 package com.emosewapixel.pixellib.materialsystem.elements
 
 import com.blamejared.crafttweaker.api.annotations.ZenRegister
+import com.emosewapixel.pixellib.materialsystem.addition.BaseElements
 import org.openzen.zencode.java.ZenCodeType
 
 //Elements Stacks are ways of getting an amount of a certain Element

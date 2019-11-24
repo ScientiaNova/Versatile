@@ -1,8 +1,8 @@
 package com.emosewapixel.pixellib
 
 import com.emosewapixel.pixellib.materialsystem.addition.BaseMaterials
-import com.emosewapixel.pixellib.materialsystem.addition.MaterialRegistry
-import com.emosewapixel.pixellib.materialsystem.addition.ingotMaterial
+import com.emosewapixel.pixellib.materialsystem.annotations.MaterialRegistry
+import com.emosewapixel.pixellib.materialsystem.builders.ingotMaterial
 
 @MaterialRegistry
 object TestMaterialRegistry {

@@ -32,13 +32,13 @@ class ObjectType @ZenCodeType.Constructor constructor(
 
     operator fun contains(property: ObjTypeProperty<*>) = property in properties
 
+    val indexBlackList = mutableListOf<Int>()
+
     var bucketVolume
         get() = this[ObjTypeProperties.BUCKET_VOLUME]
         set(value) {
             this[ObjTypeProperties.BUCKET_VOLUME] = value
         }
-
-    val indexBlackList = mutableListOf<Int>()
 
     var buildRegistryName
         get() = this[ObjTypeProperties.REGISTRY_NAME_FUM]

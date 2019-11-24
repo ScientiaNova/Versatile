@@ -5,7 +5,7 @@ import com.emosewapixel.pixellib.materialsystem.addition.BaseTextureTypes
 import com.emosewapixel.pixellib.materialsystem.elements.BaseElements
 import com.emosewapixel.pixellib.materialsystem.main.Material
 import com.emosewapixel.pixellib.materialsystem.main.ObjectType
-import net.minecraft.item.ArmorMaterial
+import net.minecraft.item.IArmorMaterial
 import net.minecraft.item.IItemTier
 
 object MatProperties {
@@ -22,7 +22,7 @@ object MatProperties {
     @JvmStatic
     val ITEM_TIER = MatProperty<IItemTier?>("pixellib:item_tier".toResLoc(), ::merge) { null }
     @JvmStatic
-    val ARMOR_MATERIAL = MatProperty<ArmorMaterial?>("pixellib:armor_material".toResLoc(), ::merge) { null }
+    val ARMOR_MATERIAL = MatProperty<IArmorMaterial?>("pixellib:armor_material".toResLoc(), ::merge) { null }
     @JvmStatic
     val ELEMENT = MatProperty("pixellib:element".toResLoc(), ::merge) { BaseElements.NULL }
     @JvmStatic

@@ -1,4 +1,4 @@
-package com.emosewapixel.pixellib.materialsystem.addition
+package com.emosewapixel.pixellib.materialsystem.annotations
 
 import net.minecraftforge.eventbus.api.EventPriority
 

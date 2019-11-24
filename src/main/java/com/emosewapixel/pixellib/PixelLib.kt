@@ -10,7 +10,7 @@ import com.emosewapixel.pixellib.items.MaterialItem
 import com.emosewapixel.pixellib.machines.BaseMachineRegistry
 import com.emosewapixel.pixellib.machines.gui.BaseScreen
 import com.emosewapixel.pixellib.machines.packets.NetworkHandler
-import com.emosewapixel.pixellib.materialsystem.addition.MaterialRegistryInitializer
+import com.emosewapixel.pixellib.materialsystem.annotations.MaterialRegistryInitializer
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialItems
 import com.emosewapixel.pixellib.materialsystem.main.IMaterialObject
 import com.emosewapixel.pixellib.proxy.ClientProxy

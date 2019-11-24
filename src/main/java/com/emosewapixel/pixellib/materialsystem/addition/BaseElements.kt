@@ -1,4 +1,7 @@
-package com.emosewapixel.pixellib.materialsystem.elements
+package com.emosewapixel.pixellib.materialsystem.addition
+
+import com.emosewapixel.pixellib.materialsystem.elements.Element
+import com.emosewapixel.pixellib.materialsystem.elements.Isotope
 
 //This class contains all the elements of the periodic table and a few common isotopes
 object BaseElements {

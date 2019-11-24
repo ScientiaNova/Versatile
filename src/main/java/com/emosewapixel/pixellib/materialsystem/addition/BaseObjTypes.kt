@@ -2,6 +2,9 @@ package com.emosewapixel.pixellib.materialsystem.addition
 
 import com.emosewapixel.pixellib.extensions.toResLoc
 import com.emosewapixel.pixellib.fluids.MaterialFluidAttributes
+import com.emosewapixel.pixellib.materialsystem.builders.blockType
+import com.emosewapixel.pixellib.materialsystem.builders.fluidType
+import com.emosewapixel.pixellib.materialsystem.builders.itemType
 import com.emosewapixel.pixellib.materialsystem.main.Material
 import com.emosewapixel.pixellib.materialsystem.properties.BlockCompaction
 import com.emosewapixel.pixellib.materialsystem.properties.ObjTypeProperties
@@ -17,14 +20,17 @@ object BaseObjTypes {
     @JvmField
     val DUST = itemType("dust", Material::hasDust) {
         bucketVolume = 144
+        typePriority = 1
     }
     @JvmField
     val GEM = itemType("gem", Material::isGemMaterial) {
         bucketVolume = 144
+        typePriority = 2
     }
     @JvmField
     val INGOT = itemType("ingot", Material::isIngotMaterial) {
         bucketVolume = 144
+        typePriority = 2
     }
     @JvmField
     val NUGGET = itemType("nugget", Material::isIngotMaterial) {
