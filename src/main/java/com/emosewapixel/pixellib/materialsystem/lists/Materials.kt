@@ -1,7 +1,7 @@
 package com.emosewapixel.pixellib.materialsystem.lists
 
 import com.blamejared.crafttweaker.api.annotations.ZenRegister
-import com.emosewapixel.pixellib.materialsystem.materials.Material
+import com.emosewapixel.pixellib.materialsystem.main.Material
 import org.openzen.zencode.java.ZenCodeGlobals
 import org.openzen.zencode.java.ZenCodeType
 

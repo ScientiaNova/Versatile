@@ -1,9 +1,12 @@
 package com.emosewapixel.pixellib.fluids
 
-import com.emosewapixel.pixellib.materialsystem.materials.Material
-import com.emosewapixel.pixellib.materialsystem.types.FluidType
+import com.emosewapixel.pixellib.extensions.plus
+import com.emosewapixel.pixellib.materialsystem.elements.ElementUtils
+import com.emosewapixel.pixellib.materialsystem.main.Material
+import com.emosewapixel.pixellib.materialsystem.main.ObjectType
 import net.minecraft.fluid.Fluid
 import net.minecraft.util.ResourceLocation
+import net.minecraft.util.SoundEvents
 import net.minecraft.util.text.ITextComponent
 import net.minecraft.util.text.TranslationTextComponent
 import net.minecraft.util.text.translation.LanguageMap
@@ -13,18 +16,15 @@ import net.minecraftforge.fluids.FluidStack
 class MaterialFluidAttributes(builder: FluidAttributes.Builder, fluid: Fluid, val nameFun: MaterialFluidAttributes.() -> ITextComponent) : FluidAttributes(builder, fluid) {
     override fun getDisplayName(stack: FluidStack?) = nameFun()
 
-    class Builder(mat: Material, type: FluidType) : FluidAttributes.Builder(ResourceLocation(type.locationBase + "_still"), ResourceLocation(type.locationBase + "_flow"), { builder: FluidAttributes.Builder, fluid: Fluid -> MaterialFluidAttributes(builder, fluid) { if (LanguageMap.getInstance().exists(translationKey)) TranslationTextComponent(translationKey) else type.localize(mat) } }) {
+    class Builder(mat: Material, type: ObjectType, baseLocation: ResourceLocation) : FluidAttributes.Builder(baseLocation + "_still", baseLocation + "_flow", { builder: FluidAttributes.Builder, fluid: Fluid -> MaterialFluidAttributes(builder, fluid) { if (LanguageMap.getInstance().exists(translationKey)) TranslationTextComponent(translationKey) else type.localize(mat) } }) {
         init {
-            color(type.fluidColor(mat))
-            overlay(type.overlayTexture)
-            temperature(type.temperatureFun(mat))
-            sound(type.fillSound, type.emptySound)
-            density(type.densityFun(mat))
-            luminosity(type.luminosityFun(mat))
-            viscosity(type.viscosityFun(mat))
             translationKey(type.buildRegistryName(mat).toString())
-            if (type.gaseousFun(mat))
-                gaseous()
+            color(type.color(mat) or (mat.alpha shl 24))
+            sound(SoundEvents.ITEM_BUCKET_FILL, SoundEvents.ITEM_BUCKET_EMPTY)
+            temperature(type.temperature(mat))
+            luminosity(((mat.fluidTemperature - 500) / 50).coerceIn(0, 15))
+            viscosity(ElementUtils.getTotalDensity(mat, type).toInt().let { if (type.isGas(mat)) -it else it })
+            viscosity(ElementUtils.getTotalDensity(mat, type).toInt())
         }
     }
 }

@@ -3,24 +3,21 @@ package com.emosewapixel.pixellib.fluids
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialBlocks
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialFluids
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialItems
-import com.emosewapixel.pixellib.materialsystem.materials.IMaterialObject
-import com.emosewapixel.pixellib.materialsystem.materials.Material
-import com.emosewapixel.pixellib.materialsystem.types.FluidType
+import com.emosewapixel.pixellib.materialsystem.main.IMaterialObject
+import com.emosewapixel.pixellib.materialsystem.main.Material
+import com.emosewapixel.pixellib.materialsystem.main.ObjectType
 import net.minecraft.block.FlowingFluidBlock
-import net.minecraft.fluid.FlowingFluid
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.BucketItem
 import net.minecraftforge.fluids.ForgeFlowingFluid
 
-class MaterialFluidHolder(override val mat: Material, override val objType: FluidType) : IMaterialObject, IFluidPairHolder {
-    private val attributes: ForgeFlowingFluid.Properties = ForgeFlowingFluid.Properties(::still, ::flowing, MaterialFluidAttributes.Builder(mat, objType)).block { MaterialBlocks[mat, objType] as? FlowingFluidBlock }.bucket { MaterialItems[mat, objType] as? BucketItem }
+class MaterialFluidHolder(override val mat: Material, override val objType: ObjectType) : IMaterialObject, IFluidPairHolder {
+    private val attributes: ForgeFlowingFluid.Properties = ForgeFlowingFluid.Properties(::still, ::flowing, objType.fluidAttributes(mat)).block { MaterialBlocks[mat, objType] as? FlowingFluidBlock }.bucket { MaterialItems[mat, objType] as? BucketItem }
 
-    override val still: FlowingFluid
-    override val flowing: Fluid
+    override val still = Source(attributes)
+    override val flowing = Flowing(attributes)
 
     init {
-        still = Source(attributes)
-        flowing = Flowing(attributes)
         MaterialFluids.addFluidPair(this)
     }
 

@@ -1,4 +1,4 @@
-package com.emosewapixel.pixellib.materialsystem.materials
+package com.emosewapixel.pixellib.materialsystem.properties
 
 enum class BlockCompaction {
     FROM_3X3,

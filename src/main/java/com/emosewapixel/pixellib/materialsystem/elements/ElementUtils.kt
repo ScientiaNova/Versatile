@@ -1,7 +1,8 @@
 package com.emosewapixel.pixellib.materialsystem.elements
 
-import com.emosewapixel.pixellib.materialsystem.materials.CompoundType
-import com.emosewapixel.pixellib.materialsystem.materials.Material
+import com.emosewapixel.pixellib.materialsystem.properties.CompoundType
+import com.emosewapixel.pixellib.materialsystem.main.Material
+import com.emosewapixel.pixellib.materialsystem.main.ObjectType
 
 //This class contains functions used for determining the elemental properties of compounds
 object ElementUtils {
@@ -25,8 +26,8 @@ object ElementUtils {
     fun getMolarMass(mat: Material) = getElementalComposition(mat).map { (element, count) -> element.atomicMass * count }.sum()
 
     @JvmStatic
-    fun getTotalDensity(mat: Material): Double {
+    fun getTotalDensity(mat: Material, type: ObjectType): Double {
         val list = getElementalComposition(mat).map { (element, count) -> element.density * count }
-        return (if (mat.compoundType === CompoundType.CHEMICAL) list.sum() else list.average()) * mat.densityMultiplier
+        return (if (mat.compoundType === CompoundType.CHEMICAL) list.sum() else list.average()) * type.densityMultiplier * mat.densityMultiplier
     }
 }

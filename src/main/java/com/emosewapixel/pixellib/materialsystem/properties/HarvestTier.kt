@@ -1,4 +1,4 @@
-package com.emosewapixel.pixellib.materialsystem.materials
+package com.emosewapixel.pixellib.materialsystem.properties
 
 import com.blamejared.crafttweaker.api.annotations.ZenRegister
 import org.openzen.zencode.java.ZenCodeType

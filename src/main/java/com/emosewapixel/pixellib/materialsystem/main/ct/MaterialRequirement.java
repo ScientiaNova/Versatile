@@ -1,7 +1,7 @@
-package com.emosewapixel.pixellib.materialsystem.materials.utility.ct;
+package com.emosewapixel.pixellib.materialsystem.main.ct;
 
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
-import com.emosewapixel.pixellib.materialsystem.materials.Material;
+import com.emosewapixel.pixellib.materialsystem.main.Material;
 
 import java.util.function.Predicate;
 

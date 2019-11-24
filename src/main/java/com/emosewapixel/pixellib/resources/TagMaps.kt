@@ -1,7 +1,7 @@
 package com.emosewapixel.pixellib.resources
 
 import com.emosewapixel.pixellib.extensions.toResLoc
-import com.emosewapixel.pixellib.materialsystem.materials.IMaterialObject
+import com.emosewapixel.pixellib.materialsystem.main.IMaterialObject
 import com.google.common.collect.ListMultimap
 import com.google.common.collect.MultimapBuilder
 import net.minecraft.block.Block
@@ -24,21 +24,30 @@ object TagMaps {
     fun addMatItemToTag(obj: IMaterialObject) {
         when (obj) {
             is Item -> {
-                addItemToTag(obj.objType.buildTagName(obj.mat.name), obj)
-                addItemToTag("forge:${obj.objType.name}s", obj)
-                if (obj.mat.hasSecondName)
-                    addItemToTag(obj.objType.buildTagName(obj.mat.secondName), obj)
+                val tag = obj.objType.itemTagName
+                if (tag.isNotEmpty()) {
+                    addItemToTag(tag, obj)
+                    addItemToTag("$tag/${obj.mat}", obj)
+                    if (obj.mat.hasSecondName)
+                        addItemToTag("$tag/${obj.mat.secondName}", obj)
+                }
             }
             is Block -> {
-                addBlockToTag(obj.objType.buildTagName(obj.mat.name), obj)
-                addBlockToTag("forge:${obj.objType.name}s", obj)
-                if (obj.mat.hasSecondName)
-                    addBlockToTag(obj.objType.buildTagName(obj.mat.secondName), obj)
+                val tag = obj.objType.blockTagName
+                if (tag.isNotEmpty()) {
+                    addBlockToTag(tag, obj)
+                    addBlockToTag("$tag/${obj.mat}", obj)
+                    if (obj.mat.hasSecondName)
+                        addBlockToTag("$tag/${obj.mat.secondName}", obj)
+                }
             }
             is Fluid -> {
-                addFluidToTag(obj.objType.buildTagName(obj.mat.name), obj)
-                if (obj.mat.hasSecondName)
-                    addFluidToTag(obj.objType.buildTagName(obj.mat.secondName), obj)
+                val tag = obj.objType.fluidTagName
+                if (tag.isNotEmpty()) {
+                    addFluidToTag(tag + obj.mat.name, obj)
+                    if (obj.mat.hasSecondName)
+                        addFluidToTag(tag + obj.mat.secondName, obj)
+                }
             }
         }
     }

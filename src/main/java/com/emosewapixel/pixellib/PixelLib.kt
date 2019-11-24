@@ -10,11 +10,9 @@ import com.emosewapixel.pixellib.items.MaterialItem
 import com.emosewapixel.pixellib.machines.BaseMachineRegistry
 import com.emosewapixel.pixellib.machines.gui.BaseScreen
 import com.emosewapixel.pixellib.machines.packets.NetworkHandler
-import com.emosewapixel.pixellib.materialsystem.addition.BaseMaterials
 import com.emosewapixel.pixellib.materialsystem.addition.MaterialRegistryInitializer
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialItems
-import com.emosewapixel.pixellib.materialsystem.materials.IMaterialObject
-import com.emosewapixel.pixellib.materialsystem.types.FluidType
+import com.emosewapixel.pixellib.materialsystem.main.IMaterialObject
 import com.emosewapixel.pixellib.proxy.ClientProxy
 import com.emosewapixel.pixellib.proxy.IModProxy
 import com.emosewapixel.pixellib.proxy.ServerProxy
@@ -95,14 +93,11 @@ object PixelLib {
         @SubscribeEvent(priority = EventPriority.LOWEST)
         fun onLateBlockRegistry(e: RegistryEvent.Register<Block>) {
             BlockRegistry.registerBlocks(e)
-            FluidRegistry.registerBlocks(e)
         }
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
         fun onLateItemRegistry(e: RegistryEvent.Register<Item>) {
             ItemRegistry.registerItems(e)
-            BlockRegistry.registerItems(e)
-            FluidRegistry.registerItems(e)
             addModelJSONs()
         }
 
@@ -125,9 +120,7 @@ object PixelLib {
         @SubscribeEvent
         fun fuelTime(e: FurnaceFuelBurnTimeEvent) {
             val item = e.itemStack.item
-            if (item is IMaterialObject)
-                if (!item.objType.hasTag(BaseMaterials.HAS_NO_FUEL_VALUE) && item.objType.bucketVolume != 0)
-                    e.burnTime = if (item.objType is FluidType) item.objType.bucketVolume / 1000 else item.objType.bucketVolume / 144 * item.mat.standardBurnTime
+            if (item is IMaterialObject) item.objType.burnTime(item.mat).let { if (it > 0) e.burnTime = it }
         }
     }
 }

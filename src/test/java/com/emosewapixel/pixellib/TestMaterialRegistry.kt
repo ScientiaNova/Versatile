@@ -7,7 +7,9 @@ import com.emosewapixel.pixellib.materialsystem.addition.ingotMaterial
 @MaterialRegistry
 object TestMaterialRegistry {
     @JvmField
-    val ANGMALLEN = ingotMaterial("angmallen", BaseMaterials.REGULAR, 0xe0d78a, 2) {
+    val ANGMALLEN = ingotMaterial("angmallen") {
+        tier = 2
+        color = 0xe0d78a
         composition = listOf(BaseMaterials.IRON.toStack(), BaseMaterials.GOLD.toStack())
     }
 }

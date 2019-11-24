@@ -5,7 +5,7 @@ import com.emosewapixel.pixellib.materialsystem.lists.MaterialBlocks
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialFluids
 import com.emosewapixel.pixellib.materialsystem.lists.MaterialItems
 import com.emosewapixel.pixellib.materialsystem.lists.Materials
-import com.emosewapixel.pixellib.materialsystem.materials.Material
+import com.emosewapixel.pixellib.materialsystem.main.Material
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.StringArgumentType
 import net.minecraft.command.CommandSource

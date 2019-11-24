@@ -1,30 +1,27 @@
-package com.emosewapixel.pixellib.materialsystem.materials
+package com.emosewapixel.pixellib.materialsystem.main
 
 import com.blamejared.crafttweaker.api.annotations.ZenRegister
+import com.emosewapixel.pixellib.extensions.toResLoc
+import com.emosewapixel.pixellib.materialsystem.addition.BaseObjTypes
 import com.emosewapixel.pixellib.materialsystem.elements.BaseElements
 import com.emosewapixel.pixellib.materialsystem.lists.Materials
-import com.emosewapixel.pixellib.materialsystem.materials.utility.MaterialStack
+import com.emosewapixel.pixellib.materialsystem.properties.HarvestTier
 import com.emosewapixel.pixellib.materialsystem.properties.MatProperties
 import com.emosewapixel.pixellib.materialsystem.properties.MatProperty
-import com.emosewapixel.pixellib.materialsystem.types.ObjectType
+import net.minecraft.tags.BlockTags
 import net.minecraft.tags.FluidTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.util.text.TranslationTextComponent
 import org.openzen.zencode.java.ZenCodeType
 import java.util.*
 
-/*
-Materials are objects used for generating items/blocks/fluids based on object types. They have a wide range of customizability.
-However, the base Materials aren't meant to be used for generating anything
-*/
 @ZenRegister
 @ZenCodeType.Name("pixellib.materialsystem.materials.Material")
 open class Material @ZenCodeType.Constructor constructor(@ZenCodeType.Field val name: String) {
-
-    private val properties = mutableMapOf<MatProperty<*>, Any?>()
+    val properties = mutableMapOf<MatProperty<out Any?>, Any?>()
 
     operator fun <T> set(property: MatProperty<T>, value: T) {
-        properties[property] = value
+        if (property.isValid(value)) properties[property] = value
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -32,7 +29,7 @@ open class Material @ZenCodeType.Constructor constructor(@ZenCodeType.Field val 
 
     operator fun contains(property: MatProperty<*>) = property in properties
 
-    val typeBlacklist = ArrayList<ObjectType<*, *>>()
+    val typeBlacklist = ArrayList<ObjectType>()
 
     val invertedBlacklist = false
 
@@ -192,34 +189,22 @@ open class Material @ZenCodeType.Constructor constructor(@ZenCodeType.Field val 
             this[MatProperties.ROD_OUTPUT_COUNT] = value
         }
 
-    var isDustMaterial
-        get() = this[MatProperties.IS_DUST_MATERIAL]
+    var displayType
+        get() = this[MatProperties.DISPLAY_TYPE]
         set(value) {
-            this[MatProperties.IS_DUST_MATERIAL] = value
+            this[MatProperties.DISPLAY_TYPE] = value
         }
 
-    var isIngotMaterial
-        get() = this[MatProperties.IS_INGOT_MATERIAL]
+    var hasDust
+        get() = this[MatProperties.HAS_DUST]
         set(value) {
-            this[MatProperties.IS_INGOT_MATERIAL] = value
+            this[MatProperties.HAS_DUST] = value
         }
 
-    var isGemMaterial
-        get() = this[MatProperties.IS_GEM_MATERIAL]
+    var mainItemType
+        get() = this[MatProperties.MAIN_ITEM_TYPE]
         set(value) {
-            this[MatProperties.IS_GEM_MATERIAL] = value
-        }
-
-    var isFluidMaterial
-        get() = this[MatProperties.IS_FLUID_MATERIAL]
-        set(value) {
-            this[MatProperties.IS_FLUID_MATERIAL] = value
-        }
-
-    var isGroupMaterial
-        get() = this[MatProperties.IS_GROUP_MATERIAL]
-        set(value) {
-            this[MatProperties.IS_GROUP_MATERIAL] = value
+            this[MatProperties.MAIN_ITEM_TYPE] = value
         }
 
     val localizedName get() = TranslationTextComponent("material.$name")
@@ -232,6 +217,14 @@ open class Material @ZenCodeType.Constructor constructor(@ZenCodeType.Field val 
     val hasSecondName get() = secondName != name
 
     val isPureElement get() = element !== BaseElements.NULL
+
+    val isItemMaterial get() = mainItemType != null
+
+    val isIngotMaterial: Boolean get() = mainItemType == BaseObjTypes.INGOT
+
+    val isGemMaterial: Boolean get() = mainItemType == BaseObjTypes.GEM
+
+    val isFluidMaterial get() = mainItemType == null && fluidTemperature > 0
 
     operator fun invoke(builder: Material.() -> Unit) = builder(this)
 
@@ -246,22 +239,28 @@ open class Material @ZenCodeType.Constructor constructor(@ZenCodeType.Field val 
 
     fun merge(mat: Material) {
         mat.properties.forEach { (key, value) ->
-            properties[key] = if (key !in properties) value else properties[key] ?: value
+            key.merge(properties[key], value)?.let { properties[key] = it }
         }
         typeBlacklist.addAll(mat.typeBlacklist)
     }
 
     @ZenCodeType.Getter
-    fun getItemTag(type: ObjectType<*, *>) = ItemTags.Wrapper(type.buildTagName(name))
+    fun getItemTag(type: ObjectType) = ItemTags.Wrapper("${type.itemTagName}/$name".toResLoc())
 
     @ZenCodeType.Getter
-    fun getFluidTag(type: ObjectType<*, *>) = FluidTags.Wrapper(type.buildTagName(name))
+    fun getBlockTag(type: ObjectType) = BlockTags.Wrapper("${type.blockTagName}/$name".toResLoc())
 
     @ZenCodeType.Getter
-    fun getSecondItemTag(type: ObjectType<*, *>) = ItemTags.Wrapper(type.buildTagName(name))
+    fun getFluidTag(type: ObjectType) = FluidTags.Wrapper("${type.fluidTagName}$name".toResLoc())
 
     @ZenCodeType.Getter
-    fun getSecondFluidTag(type: ObjectType<*, *>) = FluidTags.Wrapper(type.buildTagName(name))
+    fun getSecondItemTag(type: ObjectType) = ItemTags.Wrapper("${type.itemTagName}/$secondName".toResLoc())
+
+    @ZenCodeType.Getter
+    fun getSecondBlockTag(type: ObjectType) = BlockTags.Wrapper("${type.blockTagName}/$secondName".toResLoc())
+
+    @ZenCodeType.Getter
+    fun getSecondFluidTag(type: ObjectType) = FluidTags.Wrapper("${type.fluidTagName}/$secondName".toResLoc())
 
     @ZenCodeType.Method
     fun harvestTier(hardness: Float, resistance: Float) = HarvestTier(hardness, resistance, tier)
