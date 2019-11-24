@@ -24,8 +24,6 @@ sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = co
 minecraft {
     mappings channel: 'snapshot', version: '20191108-1.14.3'
 
-    accessTransformer = file('src/main/resources/META-INF/pixellib_at.cfg')
-
     runs {
         client {
             workingDirectory project.file('run')
