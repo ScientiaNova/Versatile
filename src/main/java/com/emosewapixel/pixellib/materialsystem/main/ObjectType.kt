@@ -40,7 +40,7 @@ class ObjectType @ZenCodeType.Constructor constructor(
             this[ObjTypeProperties.BUCKET_VOLUME] = value
         }
 
-    var buildRegistryName
+    var registryName
         get() = this[ObjTypeProperties.REGISTRY_NAME_FUM]
         set(value) {
             this[ObjTypeProperties.REGISTRY_NAME_FUM] = value
@@ -173,7 +173,7 @@ class ObjectType @ZenCodeType.Constructor constructor(
         requirement = MaterialRequirement { requirement.and(type.requirement).test(it) }
     }
 
-    fun build(): ObjectType {
+    fun register(): ObjectType {
         ObjTypes.add(this)
         return ObjTypes[name]!!
     }

@@ -15,7 +15,7 @@ import net.minecraft.world.World
 
 class MaterialFluidBlock(override val mat: Material, override val objType: ObjectType) : FlowingFluidBlock({ MaterialFluids[mat, objType] }, objType.blockProperties(mat)), IMaterialObject {
     init {
-        registryName = objType.buildRegistryName(mat)
+        registryName = objType.registryName(mat)
         MaterialBlocks.addBlock(this)
     }
 

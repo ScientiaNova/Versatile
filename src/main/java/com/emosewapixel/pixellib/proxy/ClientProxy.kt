@@ -64,7 +64,7 @@ fun addModelJSONs() {
 
     MaterialFluids.all.filterIsInstance<IMaterialObject>().forEach {
         val type = it.objType
-        val registryName = it.objType.buildRegistryName(it.mat)
+        val registryName = it.objType.registryName(it.mat)
         JSONAdder.addAssetsJSON(ResourceLocation(registryName.namespace, "blockstates/" + registryName.path + ".json"), type.blockStateJSON(it.mat))
     }
 }

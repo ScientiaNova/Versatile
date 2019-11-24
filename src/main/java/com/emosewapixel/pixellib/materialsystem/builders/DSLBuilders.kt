@@ -68,13 +68,13 @@ fun transitionMaterial(name: String, neededAmount: Int, endMaterial: () -> Mater
 @JvmOverloads
 fun objType(name: String, requirement: (Material) -> Boolean, builder: ObjectType.() -> Unit = { }) = ObjectType(name, MaterialRequirement { requirement(it) }).apply {
     builder()
-}.build()
+}.register()
 
 @JvmOverloads
 fun itemType(name: String, requirement: (Material) -> Boolean, builder: ObjectType.() -> Unit = { }) = ObjectType(name, MaterialRequirement { requirement(it) }).apply {
     itemConstructor = { mat -> MaterialItem(mat, this) }
     builder()
-}.build()
+}.register()
 
 @JvmOverloads
 fun blockType(name: String, requirement: (Material) -> Boolean, builder: ObjectType.() -> Unit = { }) = ObjectType(name, MaterialRequirement { requirement(it) }).apply {
@@ -86,7 +86,7 @@ fun blockType(name: String, requirement: (Material) -> Boolean, builder: ObjectT
         }
     }
     builder()
-}.build()
+}.register()
 
 @JvmOverloads
 fun fluidType(name: String, requirement: (Material) -> Boolean, builder: ObjectType.() -> Unit = { }) = ObjectType(name, MaterialRequirement { requirement(it) }).apply {
@@ -106,4 +106,4 @@ fun fluidType(name: String, requirement: (Material) -> Boolean, builder: ObjectT
         }
     }
     builder()
-}.build()
+}.register()

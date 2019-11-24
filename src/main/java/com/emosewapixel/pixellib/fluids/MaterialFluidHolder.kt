@@ -28,7 +28,7 @@ class MaterialFluidHolder(override val mat: Material, override val objType: Obje
         override val objType = this@MaterialFluidHolder.objType
 
         init {
-            registryName = objType.buildRegistryName(mat)
+            registryName = objType.registryName(mat)
         }
 
         override fun isEquivalentTo(fluid: Fluid) = fluid in mat.getFluidTag(objType).allElements || fluid in mat.getSecondFluidTag(objType).allElements
@@ -39,7 +39,7 @@ class MaterialFluidHolder(override val mat: Material, override val objType: Obje
         override val objType = this@MaterialFluidHolder.objType
 
         init {
-            val reg = objType.buildRegistryName(mat)
+            val reg = objType.registryName(mat)
             setRegistryName("${reg.namespace}:flowing_${reg.path}")
         }
 

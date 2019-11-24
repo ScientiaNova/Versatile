@@ -18,7 +18,7 @@ class MaterialFluidAttributes(builder: FluidAttributes.Builder, fluid: Fluid, va
 
     class Builder(mat: Material, type: ObjectType, baseLocation: ResourceLocation) : FluidAttributes.Builder(baseLocation + "_still", baseLocation + "_flow", { builder: FluidAttributes.Builder, fluid: Fluid -> MaterialFluidAttributes(builder, fluid) { if (LanguageMap.getInstance().exists(translationKey)) TranslationTextComponent(translationKey) else type.localize(mat) } }) {
         init {
-            translationKey(type.buildRegistryName(mat).toString())
+            translationKey(type.registryName(mat).toString())
             color(type.color(mat) or (mat.alpha shl 24))
             sound(SoundEvents.ITEM_BUCKET_FILL, SoundEvents.ITEM_BUCKET_EMPTY)
             temperature(type.temperature(mat))

@@ -66,9 +66,11 @@ open class ObjTypeBuilder(name: String, requirement: MaterialRequirement) {
 
     fun fluidPairConstructor(value: (Material, ObjectType) -> IFluidPairHolder) = property(ObjTypeProperties.FLUID_CONSTRUCTOR) { mat -> value(mat, result) }
 
-    fun fluidPropertiesFunc(value: (Material, ObjectType) -> FluidAttributes.Builder) = property(ObjTypeProperties.FLUID_ATTRIBUTES) { mat -> value(mat, result) }
+    fun fluidAttributesFunc(value: (Material, ObjectType) -> FluidAttributes.Builder) = property(ObjTypeProperties.FLUID_ATTRIBUTES) { mat -> value(mat, result) }
 
     fun typePriority(value: Int) = property(ObjTypeProperties.TYPE_PRIORITY, value)
+
+    fun buildAndRegister() = result.register()
 }
 
 class ItemTypeBuilder(name: String, requirement: MaterialRequirement) : ObjTypeBuilder(name, requirement) {

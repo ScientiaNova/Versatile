@@ -80,7 +80,7 @@ open class MaterialBuilder(name: String) {
 
     fun mainItemType(value: ObjectType) = property(MatProperties.MAIN_ITEM_TYPE, value)
 
-    fun build() = result.register()
+    fun buildAndRegister() = result.register()
 }
 
 class DustMaterialBuilder(name: String) : MaterialBuilder(name) {

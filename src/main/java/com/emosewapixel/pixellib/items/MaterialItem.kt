@@ -12,7 +12,7 @@ import net.minecraft.util.text.translation.LanguageMap
 //Material Items are Items that have a Material and Object Type
 class MaterialItem(override val mat: Material, override val objType: ObjectType) : Item(objType.itemProperties(mat)), IMaterialObject {
     init {
-        registryName = objType.buildRegistryName(mat)
+        registryName = objType.registryName(mat)
         MaterialItems.addItem(this)
     }
 

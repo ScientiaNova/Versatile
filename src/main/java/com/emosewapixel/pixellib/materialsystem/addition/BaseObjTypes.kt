@@ -38,7 +38,7 @@ object BaseObjTypes {
     }
     @JvmField
     val BLOCK = blockType("storage_block", { it.isItemMaterial && it.blockCompaction != BlockCompaction.NONE }) {
-        buildRegistryName = { ResourceLocation("pixellib:${it.name}_block") }
+        registryName = { ResourceLocation("pixellib:${it.name}_block") }
         burnTime = { it.standardBurnTime * 10 }
         bucketVolume = 1296
     }
@@ -52,7 +52,7 @@ object BaseObjTypes {
     }
     @JvmField
     val FLUID = fluidType("fluid", Material::isFluidMaterial) {
-        buildRegistryName = { ResourceLocation("pixellib:${it.name}") }
+        registryName = { ResourceLocation("pixellib:${it.name}") }
         fluidTagName = "forge:"
         fluidAttributes = { mat ->
             MaterialFluidAttributes.Builder(mat, this, "minecraft:block/water".toResLoc()).apply {
@@ -63,7 +63,7 @@ object BaseObjTypes {
     }
     @JvmField
     val MOLTEN_FLUID = fluidType("molten", { it.isItemMaterial && it.fluidTemperature > 0 }) {
-        buildRegistryName = { ResourceLocation("pixellib:molten_${it.name}") }
+        registryName = { ResourceLocation("pixellib:molten_${it.name}") }
         fluidAttributes = { mat ->
             ObjTypeProperties.FLUID_ATTRIBUTES.default(this)(mat).sound(SoundEvents.ITEM_BUCKET_FILL_LAVA, SoundEvents.ITEM_BUCKET_EMPTY_LAVA)
         }
