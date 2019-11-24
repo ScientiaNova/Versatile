@@ -42,7 +42,9 @@ class MaterialCommand(dispatcher: CommandDispatcher<CommandSource>) {
                 literal("hierarchy") {
                     does {
                         fun Material.sendHierarchy(level: Int = 0) {
-                            source.sendFeedback(StringTextComponent((if (level > 0) " ".repeat(level - 1) + "-" else "") + localizedName.formattedText), false)
+                            source.sendFeedback(StringTextComponent((if (level > 0) " ".repeat(level - 1) + "-" else "")
+                                    + localizedName.formattedText), false
+                            )
                             composition.forEach { it.material.sendHierarchy(level + 1) }
                         }
                         Materials[StringArgumentType.getString(this, "name")]?.sendHierarchy()

@@ -34,8 +34,12 @@ open class MachineBaseCategory<T : SimpleMachineRecipe>(helper: IGuiHelper, prot
     override fun getIcon() = icon
 
     override fun setIngredients(recipe: T, ingredients: IIngredients) {
-        ingredients.setInputLists(VanillaTypes.ITEM, recipe.inputs.map { pair -> pair.first.stacks.filter(ItemStack::isNotEmpty).map { it.apply { orCreateTag.putFloat("consume_chance", pair.second) } } })
-        ingredients.setInputLists(VanillaTypes.FLUID, recipe.fluidInputs.map { pair -> pair.first.stacks.filter(FluidStack::isNotEmpty).map { it.apply { orCreateTag.putFloat("consume_chance", pair.second) } } })
+        ingredients.setInputLists(VanillaTypes.ITEM, recipe.inputs.map { pair ->
+            pair.first.stacks.filter(ItemStack::isNotEmpty).map { it.apply { orCreateTag.putFloat("consume_chance", pair.second) } }
+        })
+        ingredients.setInputLists(VanillaTypes.FLUID, recipe.fluidInputs.map { pair ->
+            pair.first.stacks.filter(FluidStack::isNotEmpty).map { it.apply { orCreateTag.putFloat("consume_chance", pair.second) } }
+        })
         ingredients.setOutputLists(VanillaTypes.ITEM, recipe.outputs.map { map ->
             map.weightedEntries.map {
                 it.second.stacks.firstOrNull()?.apply { if (isNotEmpty) orCreateTag.putDouble("output_chance", it.first / map.maxWeight.toDouble()) }

@@ -25,7 +25,10 @@ fun PlayerInventory.insertItem(slot: Int, stack: ItemStack, simulate: Boolean): 
 
     if (!simulate) {
         if (existing.isEmpty)
-            this.setInventorySlotContents(slot, if (reachedLimit) ItemHandlerHelper.copyStackWithSize(stack, limit) else stack)
+            this.setInventorySlotContents(slot,
+                    if (reachedLimit) ItemHandlerHelper.copyStackWithSize(stack, limit)
+                    else stack
+            )
         else
             existing.grow(if (reachedLimit) limit else stack.count)
     }
@@ -48,7 +51,7 @@ fun PlayerInventory.extractItem(slot: Int, amount: Int, simulate: Boolean): Item
         existing
     } else {
         if (!simulate)
-            this.setInventorySlotContents(slot, ItemHandlerHelper.copyStackWithSize(existing, existing.getCount() - toExtract))
+            this.setInventorySlotContents(slot, ItemHandlerHelper.copyStackWithSize(existing, existing.count - toExtract))
 
         ItemHandlerHelper.copyStackWithSize(existing, toExtract)
     }

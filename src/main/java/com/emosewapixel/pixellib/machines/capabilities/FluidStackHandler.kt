@@ -12,10 +12,12 @@ import net.minecraftforge.fluids.capability.IFluidHandler
 
 open class FluidStackHandler @JvmOverloads constructor(val count: Int, val noOutputTanks: Array<Int> = emptyArray(), val noInputTanks: Array<Int> = emptyArray(), val capacity: Int = 10000) : IFluidHandlerModifiable, INBTSerializable<CompoundNBT> {
     @JvmOverloads
-    constructor(tanks: Int, noOutput: IntRange, noInput: IntRange, capacity: Int = 10000) : this(tanks, noOutput.toList().toTypedArray(), noInput.toList().toTypedArray(), capacity)
+    constructor(tanks: Int, noOutput: IntRange, noInput: IntRange, capacity: Int = 10000)
+            : this(tanks, noOutput.toList().toTypedArray(), noInput.toList().toTypedArray(), capacity)
 
     @JvmOverloads
-    constructor(inputCount: Int, outputCount: Int, capacity: Int = 10000) : this(inputCount + outputCount, 0 until inputCount, inputCount until inputCount + outputCount, capacity)
+    constructor(inputCount: Int, outputCount: Int, capacity: Int = 10000)
+            : this(inputCount + outputCount, 0 until inputCount, inputCount until inputCount + outputCount, capacity)
 
     constructor(tanks: NonNullList<FluidStack>, noOutputSlots: Array<Int> = emptyArray(), noInputSlots: Array<Int> = emptyArray(), capacity: Int = 10000) : this(tanks.size, noOutputSlots, noInputSlots, capacity) {
         this.tanks = tanks

@@ -7,4 +7,7 @@ import org.openzen.zencode.java.ZenCodeType
 
 @ZenRegister
 @ZenCodeType.Name("pixellib.fluids.FluidPairHolder")
-class FluidPairHolder @ZenCodeType.Constructor constructor(override val still: FlowingFluid, override val flowing: Fluid) : IFluidPairHolder
+class FluidPairHolder @ZenCodeType.Constructor constructor(
+        override val still: FlowingFluid,
+        override val flowing: Fluid
+) : IFluidPairHolder

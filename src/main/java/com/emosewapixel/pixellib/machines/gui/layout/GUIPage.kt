@@ -4,7 +4,7 @@ import com.emosewapixel.pixellib.machines.capabilities.IFluidHandlerModifiable
 import com.emosewapixel.pixellib.machines.gui.layout.components.*
 import com.emosewapixel.pixellib.machines.gui.textures.AnimatedGUITexture
 import com.emosewapixel.pixellib.machines.gui.textures.GUITexture
-import com.emosewapixel.pixellib.machines.gui.textures.GUITexturePair
+import com.emosewapixel.pixellib.machines.gui.textures.ButtonTextureGroup
 import com.emosewapixel.pixellib.machines.properties.ILimitedIntegerProperty
 import com.emosewapixel.pixellib.machines.properties.IValueProperty
 import com.emosewapixel.pixellib.machines.properties.IVariableProperty
@@ -52,7 +52,7 @@ class GUIPage(val minWidth: Int = 0, val minHeight: Int = 0, builder: GUIPage.()
         }
     }
 
-    fun boolButton(property: IVariableProperty<Boolean>, textures: GUITexturePair, x: Int, y: Int, builder: BooleanButtonComponent.() -> Unit = { }) {
+    fun boolButton(property: IVariableProperty<Boolean>, textures: ButtonTextureGroup, x: Int, y: Int, builder: BooleanButtonComponent.() -> Unit = { }) {
         val component = BooleanButtonComponent(property, textures, x, y)
         component.builder()
         components += component

@@ -41,7 +41,8 @@ internal class FakePack constructor(private val name: String) : IResourcePack {
 
     fun putJSON(type: ResourcePackType, location: ResourceLocation, json: JsonElement) = putString(type, location, GSON.toJson(json))
 
-    fun putJSON(type: ResourcePackType, location: ResourceLocation, json: JsonBuilder.() -> Unit) = putString(type, location, GSON.toJson(com.emosewapixel.pixellib.extensions.json(json)))
+    fun putJSON(type: ResourcePackType, location: ResourceLocation, json: JsonBuilder.() -> Unit) =
+            putString(type, location, GSON.toJson(com.emosewapixel.pixellib.extensions.json(json)))
 
     @Throws(IOException::class)
     override fun getRootResourceStream(fileName: String): InputStream {
@@ -50,29 +51,21 @@ internal class FakePack constructor(private val name: String) : IResourcePack {
     }
 
     @Throws(IOException::class)
-    override fun getResourceStream(type: ResourcePackType, location: ResourceLocation): InputStream {
-        val map = if (type == ResourcePackType.CLIENT_RESOURCES) assets else data
-        return map[location] ?: throw FileNotFoundException(location.toString())
-    }
+    override fun getResourceStream(type: ResourcePackType, location: ResourceLocation) =
+            (if (type == ResourcePackType.CLIENT_RESOURCES) assets else data)[location]
+                    ?: throw FileNotFoundException(location.toString())
 
-    override fun getAllResourceLocations(type: ResourcePackType, pathIn: String, maxDepth: Int, filter: Predicate<String>): Collection<ResourceLocation> {
-        val map = if (type == ResourcePackType.CLIENT_RESOURCES) assets else data
-        return map.keys.filter { StringUtils.countMatches(it.path, '/') < maxDepth && it.path.startsWith(pathIn) }.filter {
-            val path = it.path
-            val lastSlash = path.lastIndexOf('/')
-            filter.test(path.substring(if (lastSlash < 0) 0 else lastSlash))
-        }
-    }
+    override fun getAllResourceLocations(type: ResourcePackType, pathIn: String, maxDepth: Int, filter: Predicate<String>) =
+            (if (type == ResourcePackType.CLIENT_RESOURCES) assets else data).keys.filter {
+                val path = it.path
+                val lastSlash = path.lastIndexOf('/')
+                StringUtils.countMatches(path, '/') < maxDepth && path.startsWith(pathIn) && filter.test(path.substring(if (lastSlash < 0) 0 else lastSlash))
+            }
 
-    override fun resourceExists(type: ResourcePackType, location: ResourceLocation): Boolean {
-        val map = if (type == ResourcePackType.CLIENT_RESOURCES) assets else data
-        return map.containsKey(location)
-    }
+    override fun resourceExists(type: ResourcePackType, location: ResourceLocation) =
+            (if (type == ResourcePackType.CLIENT_RESOURCES) assets else data).containsKey(location)
 
-    override fun getResourceNamespaces(type: ResourcePackType): Set<String> {
-        val map = if (type == ResourcePackType.CLIENT_RESOURCES) assets else data
-        return map.keys.map { it.namespace }.toSet()
-    }
+    override fun getResourceNamespaces(type: ResourcePackType) = (if (type == ResourcePackType.CLIENT_RESOURCES) assets else data).keys.map { it.namespace }.toSet()
 
     override fun <T> getMetadata(deserializer: IMetadataSectionSerializer<T>): T? = ResourcePack.getResourceMetadata(deserializer, assets[ResourceLocation("pack.mcmeta")]!!)
 

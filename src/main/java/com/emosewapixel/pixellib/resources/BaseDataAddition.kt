@@ -10,8 +10,6 @@ import com.emosewapixel.pixellib.materialsystem.lists.Materials
 import com.emosewapixel.pixellib.materialsystem.main.IMaterialObject
 import com.emosewapixel.pixellib.materialsystem.main.Material
 import com.emosewapixel.pixellib.materialsystem.properties.BlockCompaction
-import net.minecraft.block.Blocks
-import net.minecraft.item.Items
 import net.minecraft.util.ResourceLocation
 
 //This claass is used for registering the default data added by Pixel Lib
@@ -22,20 +20,6 @@ object BaseDataAddition {
         MaterialItems.all.filterIsInstance<IMaterialObject>().forEach { TagMaps.addMatItemToTag(it) }
         MaterialBlocks.all.filterIsInstance<IMaterialObject>().forEach { TagMaps.addMatItemToTag(it) }
         MaterialFluids.all.flatMap { listOf(it.stillFluid, it.flowingFluid) }.filterIsInstance<IMaterialObject>().forEach { TagMaps.addMatItemToTag(it) }
-        TagMaps.addItemToTag("forge:gems/coal", Items.COAL)
-        TagMaps.addItemToTag("forge:gems/charcoal", Items.CHARCOAL)
-        TagMaps.addItemToTag("forge:gems", Items.COAL)
-        TagMaps.addItemToTag("forge:gems", Items.CHARCOAL)
-        TagMaps.addBlockToTag("forge:storage_blocks/brick", Blocks.BRICKS)
-        TagMaps.addBlockToTag("forge:storage_blocks/nether_brick", Blocks.NETHER_BRICKS)
-        TagMaps.addBlockToTag("forge:storage_blocks/bone", Blocks.BONE_BLOCK)
-        TagMaps.addBlockToTag("forge:storage_blocks", Blocks.BRICKS)
-        TagMaps.addBlockToTag("forge:storage_blocks", Blocks.NETHER_BRICKS)
-        TagMaps.addBlockToTag("forge:storage_blocks", Blocks.BONE_BLOCK)
-        TagMaps.addItemToTag("forge:dusts/bone", Items.BONE_MEAL)
-        TagMaps.addItemToTag("forge:dusts/blaze", Items.BLAZE_POWDER)
-        TagMaps.addItemToTag("forge:dusts", Items.BONE_MEAL)
-        TagMaps.addItemToTag("forge:dusts", Items.BLAZE_POWDER)
 
         //Recipes
         Materials.all.filter(Material::isItemMaterial).forEach { mat ->

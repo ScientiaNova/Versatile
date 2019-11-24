@@ -8,7 +8,8 @@ import net.minecraftforge.items.ItemStackHandler
 open class ImprovedItemStackHandler @JvmOverloads constructor(slots: Int, val noOutputSlots: Array<Int> = emptyArray(), val noInputSlots: Array<Int> = emptyArray()) : ItemStackHandler(slots) {
     constructor(slots: Int, noOutput: IntRange, noInput: IntRange) : this(slots, noOutput.toList().toTypedArray(), noInput.toList().toTypedArray())
 
-    constructor(inputCount: Int, outputCount: Int) : this(inputCount + outputCount, 0 until inputCount, inputCount until inputCount + outputCount)
+    constructor(inputCount: Int, outputCount: Int)
+            : this(inputCount + outputCount, 0 until inputCount, inputCount until inputCount + outputCount)
 
     constructor(stacks: NonNullList<ItemStack>, noOutputSlots: Array<Int> = emptyArray(), noInputSlots: Array<Int> = emptyArray()) : this(stacks.size, noOutputSlots, noInputSlots) {
         super.stacks = stacks

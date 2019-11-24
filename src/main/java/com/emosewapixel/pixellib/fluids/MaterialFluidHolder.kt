@@ -12,7 +12,9 @@ import net.minecraft.item.BucketItem
 import net.minecraftforge.fluids.ForgeFlowingFluid
 
 class MaterialFluidHolder(override val mat: Material, override val objType: ObjectType) : IMaterialObject, IFluidPairHolder {
-    private val attributes: ForgeFlowingFluid.Properties = ForgeFlowingFluid.Properties(::still, ::flowing, objType.fluidAttributes(mat)).block { MaterialBlocks[mat, objType] as? FlowingFluidBlock }.bucket { MaterialItems[mat, objType] as? BucketItem }
+    private val attributes: ForgeFlowingFluid.Properties = ForgeFlowingFluid.Properties(::still, ::flowing, objType.fluidAttributes(mat))
+            .block { MaterialBlocks[mat, objType] as? FlowingFluidBlock }
+            .bucket { MaterialItems[mat, objType] as? BucketItem }
 
     override val still = Source(attributes)
     override val flowing = Flowing(attributes)
