@@ -7,7 +7,6 @@ import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 
 open class PageButtonComponent(override val property: UpdatePageProperty, val page: Int, val texture: GUITexture, override var x: Int, override var y: Int) : IPropertyGUIComponent {
-    override val tooltips = mutableListOf<String>()
     override var width = 16
     override var height = 16
 

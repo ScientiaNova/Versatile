@@ -13,7 +13,6 @@ import net.minecraftforge.items.IItemHandlerModifiable
 
 open class ItemSlotComponent(override val property: IValueProperty<IItemHandlerModifiable>, override var x: Int, override var y: Int) : ISlotComponent, IPropertyGUIComponent {
     var texture = BaseTextures.ITEM_SLOT
-    override val tooltips = mutableListOf<String>()
     override var width = DefaultSizeConstants.SLOT_WIDTH
     override var height = DefaultSizeConstants.SLOT_HEIGHT
     var slotIndex = 0

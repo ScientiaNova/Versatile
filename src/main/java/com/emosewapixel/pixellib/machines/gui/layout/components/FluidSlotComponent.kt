@@ -25,7 +25,6 @@ import kotlin.math.min
 
 open class FluidSlotComponent(override val property: IValueProperty<IFluidHandlerModifiable>, override var x: Int, override var y: Int) : IPropertyGUIComponent {
     var texture = BaseTextures.FLUID_SLOT
-    override val tooltips = mutableListOf<String>()
     override var width = DefaultSizeConstants.SLOT_WIDTH
     override var height = DefaultSizeConstants.SLOT_HEIGHT
     var tankId = 0

@@ -49,7 +49,7 @@ open class RecipeBasedMachine(recipeList: AbstractRecipeList<*, *>, properties: 
 
                 val processX = (pageWidth - recipePageWidth) / 2
                 val processY = TOP_MARGIN + (pageHeight - TOP_MARGIN - recipePageHeight - 2 - INVENTORY_HEIGHT - MARGIN) / 2
-                recipePage.merge(processX - recipePage.leftMost, processY - recipePage.topMost)
+                add(recipePage, processX - recipePage.leftMost, processY - recipePage.topMost)
 
                 val inventoryX = (pageWidth - INVENTORY_WIDTH) / 2
                 val inventoryY = pageHeight - INVENTORY_HEIGHT - MARGIN

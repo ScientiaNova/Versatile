@@ -10,12 +10,6 @@ class GUIBook {
     fun page(minWidth: Int = 0, minHeight: Int = 0, builder: GUIPage.() -> Unit) {
         pages += GUIPage(minWidth, minHeight, builder)
     }
-
-    fun GUIPage.add(xOffset: Int = 0, yOffset: Int = 0, builder: GUIPage.() -> Unit = { }) {
-        this.offset(xOffset, yOffset)
-        this.builder()
-        pages += this
-    }
 }
 
 fun book(builder: GUIBook.() -> Unit): GUIBook {

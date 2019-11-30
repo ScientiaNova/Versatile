@@ -1,6 +1,5 @@
 package com.emosewapixel.pixellib.machines.gui.layout
 
-import com.emosewapixel.pixellib.machines.gui.GUiUtils
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 
@@ -9,7 +8,6 @@ interface IGUIComponent {
     var y: Int
     val width: Int
     val height: Int
-    val tooltips: MutableList<String>
 
     @OnlyIn(Dist.CLIENT)
     fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int): Boolean = false
@@ -28,7 +26,10 @@ interface IGUIComponent {
 
     @OnlyIn(Dist.CLIENT)
     fun drawInForeground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int) {
-        if (tooltips.isNotEmpty() && isSelected(mouseX - xOffset, mouseY - yOffset))
-            GUiUtils.renderTooltip(tooltips, mouseX, mouseY)
+    }
+
+    fun offset(xOffset: Int, yOffset: Int) {
+        x += xOffset
+        y += yOffset
     }
 }

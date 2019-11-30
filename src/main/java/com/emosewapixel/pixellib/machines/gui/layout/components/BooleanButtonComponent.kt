@@ -8,7 +8,6 @@ import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 
 open class BooleanButtonComponent(override val property: IVariableProperty<Boolean>, val texture: ButtonTextureGroup, override var x: Int, override var y: Int) : IPropertyGUIComponent {
-    override val tooltips = mutableListOf<String>()
     override var width = 16
     override var height = 16
 

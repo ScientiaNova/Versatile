@@ -9,7 +9,6 @@ import net.minecraftforge.api.distmarker.OnlyIn
 
 open class ImageComponent : IGUIComponent {
     var texture: IRenderable = BaseTextures.BACKGROUND
-    override val tooltips = mutableListOf<String>()
     override var x = 0
     override var y = 0
     override var width = DefaultSizeConstants.BACKGROUND_WIDTH

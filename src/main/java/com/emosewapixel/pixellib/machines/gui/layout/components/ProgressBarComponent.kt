@@ -9,7 +9,6 @@ import net.minecraftforge.api.distmarker.OnlyIn
 
 open class ProgressBarComponent(override val property: IValueProperty<Double>) : IPropertyGUIComponent {
     var bar = BaseTextures.ARROW_BAR
-    override val tooltips = mutableListOf<String>()
     var direction = Direction2D.RIGHT
     override var x = 77
     override var y = 34

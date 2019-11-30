@@ -3,6 +3,7 @@ package com.emosewapixel.pixellib.machines.recipes
 import com.emosewapixel.pixellib.extensions.shorten
 import com.emosewapixel.pixellib.machines.capabilities.FluidStackHandler
 import com.emosewapixel.pixellib.machines.capabilities.ImprovedItemStackHandler
+import com.emosewapixel.pixellib.machines.gui.layout.GUIComponentGroup
 import com.emosewapixel.pixellib.machines.gui.layout.GUIPage
 import com.emosewapixel.pixellib.machines.gui.textures.ProgressBar
 import com.emosewapixel.pixellib.machines.properties.IValueProperty
@@ -19,7 +20,6 @@ import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.fluids.FluidStack
 import kotlin.math.ceil
-import kotlin.math.max
 import kotlin.math.sqrt
 
 /*
@@ -87,7 +87,7 @@ abstract class AbstractRecipeList<T : SimpleMachineRecipe, B : AbstractRecipeBui
 
     open val extraTextRows = 1
 
-    open fun createPage(items: ItemInventoryProperty = ItemInventoryProperty(ImprovedItemStackHandler(maxInputs, maxOutputs)), fluids: FluidInventoryProperty = FluidInventoryProperty(FluidStackHandler(maxFluidInputs, maxFluidOutputs)), progressUpdater: IValueProperty<Double> = IncrementingDoubleProperty()): GUIPage {
+    open fun createPage(items: ItemInventoryProperty = ItemInventoryProperty(ImprovedItemStackHandler(maxInputs, maxOutputs)), fluids: FluidInventoryProperty = FluidInventoryProperty(FluidStackHandler(maxFluidInputs, maxFluidOutputs)), progressUpdater: IValueProperty<Double> = IncrementingDoubleProperty()): GUIComponentGroup {
         val totalInputs = maxInputs + maxFluidInputs
         val inputColumns = ceil(sqrt(totalInputs.toDouble())).toInt()
         val inputRows = ceil(totalInputs / inputColumns.toDouble()).toInt()
@@ -104,7 +104,9 @@ abstract class AbstractRecipeList<T : SimpleMachineRecipe, B : AbstractRecipeBui
         val progressBarY = (if (inputRows > outputRows) inputRows else outputRows) * 9 - 8
         val outputYStart = if (outputRows < inputRows) (inputRows - outputRows) * 9 else 0
 
-        return GUIPage(minHeight = max(inputRows, outputRows) * 18 + extraTextRows * 10) {
+        return GUIComponentGroup().apply {
+            extraHeight = extraTextRows * 10
+
             for (inputIndex in 0 until totalInputs) {
                 val x = inputXStart + inputIndex % inputColumns * 18
                 val y = inputYStart + inputIndex / inputColumns * 18

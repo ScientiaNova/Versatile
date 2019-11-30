@@ -9,7 +9,6 @@ import net.minecraftforge.fml.DistExecutor
 import java.util.function.Supplier
 
 open class LabelComponent(val text: String, override var x: Int, override var y: Int) : IGUIComponent {
-    override val tooltips = mutableListOf<String>()
     var location = LabelLocation.START
     var color = 0x404040
     override val height = DefaultSizeConstants.TEXT_HEIGHT

@@ -3,20 +3,19 @@ package com.emosewapixel.pixellib.machines.gui.layout
 import com.emosewapixel.pixellib.machines.capabilities.IFluidHandlerModifiable
 import com.emosewapixel.pixellib.machines.gui.layout.components.*
 import com.emosewapixel.pixellib.machines.gui.textures.AnimatedGUITexture
-import com.emosewapixel.pixellib.machines.gui.textures.GUITexture
 import com.emosewapixel.pixellib.machines.gui.textures.ButtonTextureGroup
+import com.emosewapixel.pixellib.machines.gui.textures.GUITexture
 import com.emosewapixel.pixellib.machines.properties.ILimitedIntegerProperty
 import com.emosewapixel.pixellib.machines.properties.IValueProperty
 import com.emosewapixel.pixellib.machines.properties.IVariableProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.UpdatePageProperty
 import net.minecraftforge.items.IItemHandlerModifiable
-import kotlin.math.max
 
-class GUIPage(val minWidth: Int = 0, val minHeight: Int = 0, builder: GUIPage.() -> Unit) {
+open class GUIPage(var extraWidth: Int = 0, var extraHeight: Int = 0, builder: GUIPage.() -> Unit = { }) {
     val components = mutableListOf<IGUIComponent>()
 
     init {
-        builder(this)
+        this.builder()
     }
 
     val leftMost get() = components.map(IGUIComponent::x).min() ?: 0
@@ -31,9 +30,15 @@ class GUIPage(val minWidth: Int = 0, val minHeight: Int = 0, builder: GUIPage.()
 
     val trueHeight get() = if (components.isEmpty()) 0 else components.map { it.y + it.height }.max()!! - components.map(IGUIComponent::y).min()!!
 
-    val width get() = max(minWidth, rightMost)
+    val width get() = rightMost + extraWidth
 
-    val height get() = max(minHeight, bottomMost)
+    val height get() = bottomMost + extraHeight
+
+    @JvmOverloads
+    fun add(component: IGUIComponent, xOffset: Int = 0, yOffset: Int = 0) {
+        component.offset(xOffset, yOffset)
+        components += component
+    }
 
     fun addPlayerInventory(xStart: Int, yStart: Int) {
         inventoryLabel(xStart, yStart)
@@ -130,13 +135,9 @@ class GUIPage(val minWidth: Int = 0, val minHeight: Int = 0, builder: GUIPage.()
         components += component
     }
 
-    fun offset(x: Int, y: Int) = components.forEach {
-        it.x += x
-        it.y += y
-    }
-
-    fun GUIPage.merge(xOffset: Int, yOffset: Int) {
-        this.offset(xOffset, yOffset)
-        this@GUIPage.components += this.components
+    fun componentGroup(builder: GUIComponentGroup.() -> Unit = { }) {
+        val component = GUIComponentGroup()
+        component.builder()
+        components += component
     }
 }

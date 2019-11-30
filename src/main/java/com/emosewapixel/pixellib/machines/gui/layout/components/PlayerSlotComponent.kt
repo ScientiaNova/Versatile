@@ -9,7 +9,6 @@ import net.minecraftforge.api.distmarker.OnlyIn
 
 open class PlayerSlotComponent(val slotIndex: Int, override var x: Int, override var y: Int) : ISlotComponent {
     val texture = BaseTextures.ITEM_SLOT
-    override val tooltips = mutableListOf<String>()
     override var width = 18
     override var height = 18
 
