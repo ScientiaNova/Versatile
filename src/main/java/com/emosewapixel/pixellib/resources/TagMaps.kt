@@ -27,26 +27,26 @@ object TagMaps {
                 val tag = obj.objType.itemTagName
                 if (tag.isNotEmpty()) {
                     addItemToTag(tag, obj)
-                    addItemToTag("$tag/${obj.mat}", obj)
-                    if (obj.mat.hasSecondName)
-                        addItemToTag("$tag/${obj.mat.secondName}", obj)
+                    obj.mat.names.forEach {
+                        addItemToTag("$tag/$it", obj)
+                    }
                 }
             }
             is Block -> {
                 val tag = obj.objType.blockTagName
                 if (tag.isNotEmpty()) {
                     addBlockToTag(tag, obj)
-                    addBlockToTag("$tag/${obj.mat}", obj)
-                    if (obj.mat.hasSecondName)
-                        addBlockToTag("$tag/${obj.mat.secondName}", obj)
+                    obj.mat.names.forEach {
+                        addBlockToTag("$tag/$it", obj)
+                    }
                 }
             }
             is Fluid -> {
                 val tag = obj.objType.fluidTagName
                 if (tag.isNotEmpty()) {
-                    addFluidToTag(tag + obj.mat.name, obj)
-                    if (obj.mat.hasSecondName)
-                        addFluidToTag(tag + obj.mat.secondName, obj)
+                    obj.mat.names.forEach {
+                        addFluidToTag(tag + it, obj)
+                    }
                 }
             }
         }

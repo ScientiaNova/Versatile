@@ -4,7 +4,7 @@ import com.blamejared.crafttweaker.api.annotations.ZenRegister
 import com.emosewapixel.pixellib.extensions.toResLoc
 import com.emosewapixel.pixellib.materialsystem.lists.ObjTypes
 import com.emosewapixel.pixellib.materialsystem.main.ct.MaterialRequirement
-import com.emosewapixel.pixellib.materialsystem.properties.ObjTypeProperties
+import com.emosewapixel.pixellib.materialsystem.addition.ObjTypeProperties
 import com.emosewapixel.pixellib.materialsystem.properties.ObjTypeProperty
 import net.minecraft.tags.ItemTags
 import net.minecraft.util.text.TranslationTextComponent
@@ -166,11 +166,12 @@ class ObjectType @ZenCodeType.Constructor constructor(
 
     fun isMaterialCompatible(mat: Material) = requirement.test(mat)
 
-    fun merge(type: ObjectType) {
+    fun merge(type: ObjectType): ObjectType {
         type.properties.forEach { (key, value) ->
             key.merge(properties[key], value)?.let { properties[key] = it }
         }
         requirement = MaterialRequirement { requirement.and(type.requirement).test(it) }
+        return this
     }
 
     fun register(): ObjectType {

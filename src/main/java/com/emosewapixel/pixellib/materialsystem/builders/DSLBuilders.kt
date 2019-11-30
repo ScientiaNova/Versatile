@@ -15,31 +15,30 @@ import com.emosewapixel.pixellib.materialsystem.main.ObjectType
 import com.emosewapixel.pixellib.materialsystem.main.ct.MaterialRequirement
 import com.emosewapixel.pixellib.materialsystem.properties.CompoundType
 import com.emosewapixel.pixellib.materialsystem.properties.DisplayType
-import com.emosewapixel.pixellib.materialsystem.properties.TransitionProperties
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.item.Item
 import net.minecraft.item.Items
 
 @JvmOverloads
-fun material(name: String, builder: Material.() -> Unit = { }) = Material(name).apply { builder() }.register()
+fun material(vararg names: String, builder: Material.() -> Unit = { }) = Material(*names).apply { builder() }.register()
 
 @JvmOverloads
-fun dustMaterial(name: String, builder: Material.() -> Unit = { }) = Material(name).apply {
+fun dustMaterial(vararg names: String, builder: Material.() -> Unit = { }) = Material(*names).apply {
     mainItemType = BaseObjTypes.DUST
     hasDust = true
     builder()
 }.register()
 
 @JvmOverloads
-fun gemMaterial(name: String, builder: Material.() -> Unit = { }) = Material(name).apply {
+fun gemMaterial(vararg names: String, builder: Material.() -> Unit = { }) = Material(*names).apply {
     mainItemType = BaseObjTypes.GEM
     hasDust = true
     builder()
 }.register()
 
 @JvmOverloads
-fun ingotMaterial(name: String, builder: Material.() -> Unit = { }) = Material(name).apply {
+fun ingotMaterial(vararg names: String, builder: Material.() -> Unit = { }) = Material(*names).apply {
     mainItemType = BaseObjTypes.INGOT
     compoundType = CompoundType.ALLOY
     hasDust = true
@@ -47,21 +46,15 @@ fun ingotMaterial(name: String, builder: Material.() -> Unit = { }) = Material(n
 }.register()
 
 @JvmOverloads
-fun fluidMaterial(name: String, builder: Material.() -> Unit = { }) = Material(name).apply {
+fun fluidMaterial(vararg names: String, builder: Material.() -> Unit = { }) = Material(*names).apply {
     textureType = BaseTextureTypes.FLUID
     fluidTemperature = 300
     builder()
 }.register()
 
 @JvmOverloads
-fun groupMaterial(name: String, builder: Material.() -> Unit = { }) = Material(name).apply {
+fun groupMaterial(vararg names: String, builder: Material.() -> Unit = { }) = Material(*names).apply {
     displayType = DisplayType.GROUP
-    builder()
-}.register()
-
-@JvmOverloads
-fun transitionMaterial(name: String, neededAmount: Int, endMaterial: () -> Material, builder: Material.() -> Unit = { }) = Material(name).apply {
-    transitionProperties = TransitionProperties(neededAmount, endMaterial)
     builder()
 }.register()
 
@@ -98,7 +91,7 @@ fun fluidType(name: String, requirement: (Material) -> Boolean, builder: ObjectT
     singleTextureType = true
     indexBlackList += 0
     bucketVolume = 1000
-    itemTagName = ""
+    itemTagName = "forge:buckets/$name"
     blockTagName = ""
     itemModel = { mat ->
         json {

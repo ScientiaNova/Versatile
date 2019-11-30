@@ -21,27 +21,41 @@ class ObjTypeCommand(dispatcher: CommandDispatcher<CommandSource>) {
             literal("get") {
                 does {
                     val item = source.asPlayer().heldItemMainhand.item
-                    if (item in MaterialItems)
-                        source.sendFeedback(MaterialItems.getItemObjType(item)!!.name.toComponent(), false)
-                    else
-                        source.sendErrorMessage(TranslationTextComponent("command.materialitem.error"))
+                    MaterialItems.getItemObjType(item)?.let {
+                        source.sendFeedback(it.name.toComponent(), false)
+                    } ?: source.sendErrorMessage(TranslationTextComponent("command.objtype.item.error"))
                 }
                 argument("item", ItemArgument()) {
                     does {
                         val item = ItemArgument.getItem(this, "item").item
-                        if (item in MaterialItems)
-                            source.sendFeedback(MaterialItems.getItemObjType(item)!!.name.toComponent(), false)
-                        else
-                            source.sendErrorMessage(TranslationTextComponent("command.materialitem.error"))
+                        MaterialItems.getItemObjType(item)?.let {
+                            source.sendFeedback(it.name.toComponent(), false)
+                        } ?: source.sendErrorMessage(TranslationTextComponent("command.objtype.item.error"))
                     }
                 }
             }
             argument("name", StringArgumentType.word()) {
                 literal("tag") {
-                    does {
-                        ObjTypes[StringArgumentType.getString(this, "name")]?.let {
-                            source.sendFeedback(it.itemTag.id.toString().toComponent(), false)
-                        } ?: source.sendErrorMessage(TranslationTextComponent("command.objtype.error"))
+                    literal("item") {
+                        does {
+                            ObjTypes[StringArgumentType.getString(this, "name")]?.let {
+                                source.sendFeedback(it.itemTagName.toComponent(), false)
+                            } ?: source.sendErrorMessage(TranslationTextComponent("command.objtype.error"))
+                        }
+                    }
+                    literal("block") {
+                        does {
+                            ObjTypes[StringArgumentType.getString(this, "name")]?.let {
+                                source.sendFeedback(it.blockTagName.toComponent(), false)
+                            } ?: source.sendErrorMessage(TranslationTextComponent("command.objtype.error"))
+                        }
+                    }
+                    literal("fluid") {
+                        does {
+                            ObjTypes[StringArgumentType.getString(this, "name")]?.let {
+                                source.sendFeedback(it.fluidTagName.toComponent(), false)
+                            } ?: source.sendErrorMessage(TranslationTextComponent("command.objtype.error"))
+                        }
                     }
                 }
                 literal("items") {

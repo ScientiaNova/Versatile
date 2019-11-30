@@ -15,7 +15,7 @@ object ObjTypes {
     val instance = this
 
     @JvmStatic
-    val all: Collection<ObjectType>
+    val all
         @ZenCodeType.Getter get() = objTypes.values
 
     @JvmStatic

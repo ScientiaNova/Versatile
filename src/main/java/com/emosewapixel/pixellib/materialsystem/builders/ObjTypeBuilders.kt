@@ -12,7 +12,7 @@ import com.emosewapixel.pixellib.items.MaterialItem
 import com.emosewapixel.pixellib.materialsystem.main.Material
 import com.emosewapixel.pixellib.materialsystem.main.ObjectType
 import com.emosewapixel.pixellib.materialsystem.main.ct.MaterialRequirement
-import com.emosewapixel.pixellib.materialsystem.properties.ObjTypeProperties
+import com.emosewapixel.pixellib.materialsystem.addition.ObjTypeProperties
 import com.emosewapixel.pixellib.materialsystem.properties.ObjTypeProperty
 import com.google.gson.JsonObject
 import net.minecraft.block.Block
@@ -101,7 +101,7 @@ class FluidTypeBuilder(name: String, requirement: MaterialRequirement) : ObjType
         singleTextureType()
         blacklistIndices(0)
         bucketVolume(1000)
-        itemTagName("")
+        itemTagName("forge:buckets/$name")
         blockTagName("")
         itemModelFunc { mat ->
             json {

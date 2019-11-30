@@ -2,11 +2,11 @@ package com.emosewapixel.pixellib.materialsystem.main
 
 import com.blamejared.crafttweaker.api.annotations.ZenRegister
 import com.emosewapixel.pixellib.extensions.toResLoc
-import com.emosewapixel.pixellib.materialsystem.addition.BaseObjTypes
 import com.emosewapixel.pixellib.materialsystem.addition.BaseElements
+import com.emosewapixel.pixellib.materialsystem.addition.BaseObjTypes
+import com.emosewapixel.pixellib.materialsystem.addition.MatProperties
 import com.emosewapixel.pixellib.materialsystem.lists.Materials
 import com.emosewapixel.pixellib.materialsystem.properties.HarvestTier
-import com.emosewapixel.pixellib.materialsystem.properties.MatProperties
 import com.emosewapixel.pixellib.materialsystem.properties.MatProperty
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.FluidTags
@@ -17,7 +17,10 @@ import java.util.*
 
 @ZenRegister
 @ZenCodeType.Name("pixellib.materialsystem.materials.Material")
-open class Material @ZenCodeType.Constructor constructor(@ZenCodeType.Field val name: String) {
+class Material @ZenCodeType.Constructor constructor(vararg names: String) {
+    val names = linkedSetOf(*names)
+    val name get() = names.first()
+
     val properties = mutableMapOf<MatProperty<out Any?>, Any?>()
 
     operator fun <T> set(property: MatProperty<T>, value: T) {
@@ -69,12 +72,6 @@ open class Material @ZenCodeType.Constructor constructor(@ZenCodeType.Field val 
         get() = this[MatProperties.ELEMENT]
         set(value) {
             this[MatProperties.ELEMENT] = value
-        }
-
-    var secondName
-        get() = this[MatProperties.SECOND_NAME]
-        set(value) {
-            this[MatProperties.SECOND_NAME] = value
         }
 
     var standardBurnTime
@@ -214,8 +211,6 @@ open class Material @ZenCodeType.Constructor constructor(@ZenCodeType.Field val 
             material.fullComposition.map { (material1, count1) -> material1 * (count1 * count) }
         }
 
-    val hasSecondName get() = secondName != name
-
     val isPureElement get() = element !== BaseElements.NULL
 
     val isItemMaterial get() = mainItemType != null
@@ -237,30 +232,41 @@ open class Material @ZenCodeType.Constructor constructor(@ZenCodeType.Field val 
         return Materials[name]!!
     }
 
-    fun merge(mat: Material) {
+    fun merge(mat: Material): Material {
+        names union mat.names
         mat.properties.forEach { (key, value) ->
             key.merge(properties[key], value)?.let { properties[key] = it }
         }
         typeBlacklist.addAll(mat.typeBlacklist)
+        return this
     }
 
-    @ZenCodeType.Getter
-    fun getItemTag(type: ObjectType) = ItemTags.Wrapper("${type.itemTagName}/$name".toResLoc())
+    @ZenCodeType.Method
+    fun getItemTags(type: ObjectType) = names.map { ItemTags.Wrapper("${type.itemTagName}/$it".toResLoc()) }
 
-    @ZenCodeType.Getter
-    fun getBlockTag(type: ObjectType) = BlockTags.Wrapper("${type.blockTagName}/$name".toResLoc())
+    @ZenCodeType.Method
+    fun getBlockTags(type: ObjectType) = names.map { BlockTags.Wrapper("${type.itemTagName}/$it".toResLoc()) }
 
-    @ZenCodeType.Getter
-    fun getFluidTag(type: ObjectType) = FluidTags.Wrapper("${type.fluidTagName}$name".toResLoc())
+    @ZenCodeType.Method
+    fun getFluidTags(type: ObjectType) = names.map { FluidTags.Wrapper("${type.itemTagName}/$it".toResLoc()) }
 
-    @ZenCodeType.Getter
-    fun getSecondItemTag(type: ObjectType) = ItemTags.Wrapper("${type.itemTagName}/$secondName".toResLoc())
+    @JvmOverloads
+    @ZenCodeType.Method
+    fun getItemTag(type: ObjectType, nameIndex: Int = 0) = getItemTags(type).let {
+        it.getOrNull(nameIndex) ?: it.first()
+    }
 
-    @ZenCodeType.Getter
-    fun getSecondBlockTag(type: ObjectType) = BlockTags.Wrapper("${type.blockTagName}/$secondName".toResLoc())
+    @JvmOverloads
+    @ZenCodeType.Method
+    fun getBlockTag(type: ObjectType, nameIndex: Int = 0) = getBlockTags(type).let {
+        it.getOrNull(nameIndex) ?: it.first()
+    }
 
-    @ZenCodeType.Getter
-    fun getSecondFluidTag(type: ObjectType) = FluidTags.Wrapper("${type.fluidTagName}/$secondName".toResLoc())
+    @JvmOverloads
+    @ZenCodeType.Method
+    fun getFluidTag(type: ObjectType, nameIndex: Int = 0) = getFluidTags(type).let {
+        it.getOrNull(nameIndex) ?: it.first()
+    }
 
     @ZenCodeType.Method
     fun harvestTier(hardness: Float, resistance: Float) = HarvestTier(hardness, resistance, tier)

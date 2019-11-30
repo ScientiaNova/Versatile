@@ -1,10 +1,9 @@
-package com.emosewapixel.pixellib.materialsystem.properties
+package com.emosewapixel.pixellib.materialsystem.addition
 
 import com.emosewapixel.pixellib.extensions.toResLoc
-import com.emosewapixel.pixellib.materialsystem.addition.BaseTextureTypes
-import com.emosewapixel.pixellib.materialsystem.addition.BaseElements
 import com.emosewapixel.pixellib.materialsystem.main.Material
 import com.emosewapixel.pixellib.materialsystem.main.ObjectType
+import com.emosewapixel.pixellib.materialsystem.properties.*
 import net.minecraft.item.IArmorMaterial
 import net.minecraft.item.IItemTier
 
@@ -25,8 +24,6 @@ object MatProperties {
     val ARMOR_MATERIAL = MatProperty<IArmorMaterial?>("pixellib:armor_material".toResLoc(), ::merge) { null }
     @JvmStatic
     val ELEMENT = MatProperty("pixellib:element".toResLoc(), ::merge) { BaseElements.NULL }
-    @JvmStatic
-    val SECOND_NAME = MatProperty("pixellib:second_name".toResLoc(), ::merge, default = Material::name)
     @JvmStatic
     val BURN_TIME = MatProperty("pixellib:burn_time".toResLoc(), ::merge) { 0 }
     @JvmStatic

@@ -23,18 +23,16 @@ class MaterialCommand(dispatcher: CommandDispatcher<CommandSource>) {
             literal("get") {
                 does {
                     val item = source.asPlayer().heldItemMainhand.item
-                    if (item in MaterialItems)
-                        source.sendFeedback(MaterialItems.getItemMaterial(item)!!.name.toComponent(), false)
-                    else
-                        source.sendErrorMessage(TranslationTextComponent("command.materialitem.error"))
+                    MaterialItems.getItemMaterial(item)?.let {
+                        source.sendFeedback(it.name.toComponent(), false)
+                    } ?: source.sendErrorMessage(TranslationTextComponent("command.material.item.error"))
                 }
                 argument("item", ItemArgument()) {
                     does {
                         val item = ItemArgument.getItem(this, "item").item
-                        if (item in MaterialItems)
-                            source.sendFeedback(MaterialItems.getItemMaterial(item)!!.name.toComponent(), false)
-                        else
-                            source.sendErrorMessage(TranslationTextComponent("command.materialitem.error"))
+                        MaterialItems.getItemMaterial(item)?.let {
+                            source.sendFeedback(it.name.toComponent(), false)
+                        } ?: source.sendErrorMessage(TranslationTextComponent("command.material.item.error"))
                     }
                 }
             }

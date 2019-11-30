@@ -15,11 +15,14 @@ object Materials {
     val instance = this
 
     @JvmStatic
-    val all: Collection<Material>
-        @ZenCodeType.Getter get() = materials.values
+    val all
+        @ZenCodeType.Getter get() = materials.values.distinct()
 
     @JvmStatic
-    fun add(mat: Material) = materials[mat.name]?.merge(mat) ?: materials.put(mat.name, mat)
+    fun add(mat: Material) {
+        val merged = mat.names.mapNotNull(this::get).distinct().fold(mat) { acc, current -> current.merge(acc) }
+        mat.names.forEach { materials[it] = merged }
+    }
 
     @JvmStatic
     @ZenCodeType.Operator(ZenCodeType.OperatorType.INDEXGET)

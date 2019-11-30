@@ -2,6 +2,7 @@ package com.emosewapixel.pixellib.materialsystem.builders
 
 import com.emosewapixel.pixellib.materialsystem.addition.BaseObjTypes
 import com.emosewapixel.pixellib.materialsystem.addition.BaseTextureTypes
+import com.emosewapixel.pixellib.materialsystem.addition.MatProperties
 import com.emosewapixel.pixellib.materialsystem.elements.Element
 import com.emosewapixel.pixellib.materialsystem.main.Material
 import com.emosewapixel.pixellib.materialsystem.main.MaterialStack
@@ -10,8 +11,8 @@ import com.emosewapixel.pixellib.materialsystem.properties.*
 import net.minecraft.item.IArmorMaterial
 import net.minecraft.item.IItemTier
 
-open class MaterialBuilder(name: String) {
-    protected val result = Material(name)
+open class MaterialBuilder(vararg names: String) {
+    protected val result = Material(*names)
 
     fun <T> property(property: MatProperty<T>, value: T) = this.also { result[property] = value }
 
@@ -32,8 +33,6 @@ open class MaterialBuilder(name: String) {
     fun armorMaterial(value: IArmorMaterial) = property(MatProperties.ARMOR_MATERIAL, value)
 
     fun element(value: Element) = property(MatProperties.ELEMENT, value)
-
-    fun secondName(value: String) = property(MatProperties.SECOND_NAME, value)
 
     fun standardBurnTime(value: Int) = property(MatProperties.BURN_TIME, value)
 
@@ -61,7 +60,9 @@ open class MaterialBuilder(name: String) {
 
     fun blockCompaction(value: BlockCompaction) = property(MatProperties.BLOCK_COMPACTION, value)
 
-    fun transitionProperties(neededAmount: Int, endMaterial: () -> Material) = property(MatProperties.TRANSITION_PROPERTIES, TransitionProperties(neededAmount, endMaterial))
+    fun transitionProperties(transitionProperties: TransitionProperties) = property(MatProperties.TRANSITION_PROPERTIES, transitionProperties)
+
+    fun transitionProperties(neededAmount: Int, endMaterial: () -> Material) = transitionProperties(TransitionProperties(neededAmount, endMaterial))
 
     @JvmOverloads
     fun hasOre(value: Boolean = true) = property(MatProperties.HAS_ORE, value)
@@ -83,21 +84,21 @@ open class MaterialBuilder(name: String) {
     fun buildAndRegister() = result.register()
 }
 
-class DustMaterialBuilder(name: String) : MaterialBuilder(name) {
+class DustMaterialBuilder(vararg names: String) : MaterialBuilder(*names) {
     init {
         mainItemType(BaseObjTypes.DUST)
         hasDust()
     }
 }
 
-class GemMaterialBuilder(name: String) : MaterialBuilder(name) {
+class GemMaterialBuilder(vararg names: String) : MaterialBuilder(*names) {
     init {
         mainItemType(BaseObjTypes.GEM)
         hasDust()
     }
 }
 
-class IngotMaterialBuilder(name: String) : MaterialBuilder(name) {
+class IngotMaterialBuilder(vararg names: String) : MaterialBuilder(*names) {
     init {
         compoundType(CompoundType.ALLOY)
         mainItemType(BaseObjTypes.INGOT)
@@ -105,21 +106,15 @@ class IngotMaterialBuilder(name: String) : MaterialBuilder(name) {
     }
 }
 
-class FluidMaterialBuilder(name: String) : MaterialBuilder(name) {
+class FluidMaterialBuilder(vararg names: String) : MaterialBuilder(*names) {
     init {
         textureType(BaseTextureTypes.FLUID)
         fluidTemperature(300)
     }
 }
 
-class GroupMaterialBuilder(name: String) : MaterialBuilder(name) {
+class GroupMaterialBuilder(vararg names: String) : MaterialBuilder(*names) {
     init {
         displayType(DisplayType.GROUP)
-    }
-}
-
-class TransitionMaterial(name: String, neededAmount: Int, toMaterial: () -> Material) : MaterialBuilder(name) {
-    init {
-        transitionProperties(neededAmount, toMaterial)
     }
 }

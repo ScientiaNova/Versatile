@@ -1,4 +1,4 @@
-package com.emosewapixel.pixellib.materialsystem.properties
+package com.emosewapixel.pixellib.materialsystem.addition
 
 import com.emosewapixel.pixellib.PixelLib
 import com.emosewapixel.pixellib.extensions.json
@@ -6,6 +6,9 @@ import com.emosewapixel.pixellib.extensions.toResLoc
 import com.emosewapixel.pixellib.fluids.IFluidPairHolder
 import com.emosewapixel.pixellib.fluids.MaterialFluidAttributes
 import com.emosewapixel.pixellib.materialsystem.main.Material
+import com.emosewapixel.pixellib.materialsystem.properties.HarvestTier
+import com.emosewapixel.pixellib.materialsystem.properties.ObjTypeProperty
+import com.emosewapixel.pixellib.materialsystem.properties.merge
 import com.google.gson.JsonObject
 import net.minecraft.block.Block
 import net.minecraft.block.SoundType

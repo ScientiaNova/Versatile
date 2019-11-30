@@ -31,7 +31,7 @@ class MaterialFluidHolder(override val mat: Material, override val objType: Obje
             registryName = objType.registryName(mat)
         }
 
-        override fun isEquivalentTo(fluid: Fluid) = fluid in mat.getFluidTag(objType).allElements || fluid in mat.getSecondFluidTag(objType).allElements
+        override fun isEquivalentTo(fluid: Fluid) = mat.getFluidTags(objType).any { fluid in it }
     }
 
     inner class Flowing(properties: Properties) : ForgeFlowingFluid.Flowing(properties), IMaterialObject {
@@ -43,6 +43,6 @@ class MaterialFluidHolder(override val mat: Material, override val objType: Obje
             setRegistryName("${reg.namespace}:flowing_${reg.path}")
         }
 
-        override fun isEquivalentTo(fluid: Fluid) = fluid in mat.getFluidTag(objType).allElements || fluid in mat.getSecondFluidTag(objType).allElements
+        override fun isEquivalentTo(fluid: Fluid) = mat.getFluidTags(objType).any { fluid in it }
     }
 }

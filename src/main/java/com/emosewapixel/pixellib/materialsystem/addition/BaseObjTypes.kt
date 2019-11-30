@@ -7,8 +7,6 @@ import com.emosewapixel.pixellib.materialsystem.builders.fluidType
 import com.emosewapixel.pixellib.materialsystem.builders.itemType
 import com.emosewapixel.pixellib.materialsystem.main.Material
 import com.emosewapixel.pixellib.materialsystem.properties.BlockCompaction
-import com.emosewapixel.pixellib.materialsystem.properties.ObjTypeProperties
-import com.emosewapixel.pixellib.materialsystem.properties.fromTier
 import net.minecraft.block.Block
 import net.minecraft.block.SoundType
 import net.minecraft.util.ResourceLocation
@@ -54,6 +52,7 @@ object BaseObjTypes {
     val FLUID = fluidType("fluid", Material::isFluidMaterial) {
         registryName = { ResourceLocation("pixellib:${it.name}") }
         fluidTagName = "forge:"
+        itemTagName = "forge:buckets"
         fluidAttributes = { mat ->
             MaterialFluidAttributes.Builder(mat, this, "minecraft:block/water".toResLoc()).apply {
                 overlay("minecraft:block/water_overlay".toResLoc())

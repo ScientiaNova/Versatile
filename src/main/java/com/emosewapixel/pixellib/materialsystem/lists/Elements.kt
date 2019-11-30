@@ -15,7 +15,7 @@ object Elements {
     val instance = this
 
     @JvmStatic
-    val all: Collection<Element>
+    val all
         @ZenCodeType.Getter get() = elements.values
 
     @JvmStatic

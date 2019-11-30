@@ -61,7 +61,8 @@ object MaterialItems {
 
     @JvmStatic
     @ZenCodeType.Method
-    fun getItemMaterial(item: Item): Material? = if (item is IMaterialObject) item.mat else getItemCell(item)?.rowKey
+    fun getItemMaterial(item: Item): Material? = if (item is IMaterialObject) item.mat else item.tags.asSequence()
+            .filter { '/' in it.path }.map { Materials[it.path.takeLastWhile { char -> char != '/' }] }.firstOrNull()
 
     @JvmStatic
     @ZenCodeType.Method
