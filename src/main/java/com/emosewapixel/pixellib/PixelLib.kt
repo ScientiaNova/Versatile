@@ -21,7 +21,6 @@ import com.emosewapixel.pixellib.resources.BaseDataAddition
 import com.emosewapixel.pixellib.resources.FakeDataPackFinder
 import com.emosewapixel.pixellib.worldgen.OreGen
 import net.alexwells.kottle.FMLKotlinModLoadingContext
-import net.alexwells.kottle.KotlinEventBusSubscriber
 import net.minecraft.block.Block
 import net.minecraft.client.gui.ScreenManager
 import net.minecraft.fluid.Fluid
@@ -83,7 +82,7 @@ object PixelLib {
         BaseDataAddition.register()
     }
 
-    @KotlinEventBusSubscriber(bus = KotlinEventBusSubscriber.Bus.MOD, modid = ModId)
+    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = ModId)
     object RegistryEvents {
         @SubscribeEvent(priority = EventPriority.HIGHEST)
         fun onEarlyBlockRegistry(e: RegistryEvent.Register<Block>) {
@@ -105,7 +104,7 @@ object PixelLib {
         fun onLateFluidRegistry(e: RegistryEvent.Register<Fluid>) = FluidRegistry.registerFluids(e)
     }
 
-    @KotlinEventBusSubscriber(bus = KotlinEventBusSubscriber.Bus.FORGE, modid = ModId)
+    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, modid = ModId)
     object GameEvents {
         @SubscribeEvent(priority = EventPriority.HIGH)
         fun onServerAboutToStart(e: FMLServerAboutToStartEvent) = e.server.resourcePacks.addPackFinder(FakeDataPackFinder)

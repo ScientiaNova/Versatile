@@ -1,15 +1,15 @@
 package com.emosewapixel.pixellib.machines
 
 import com.emosewapixel.pixellib.machines.gui.BaseContainer
-import net.alexwells.kottle.KotlinEventBusSubscriber
 import net.minecraft.inventory.container.ContainerType
 import net.minecraft.tileentity.TileEntityType
 import net.minecraftforge.common.extensions.IForgeContainerType
 import net.minecraftforge.event.RegistryEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
+import net.minecraftforge.fml.common.Mod
 import java.util.function.Supplier
 
-@KotlinEventBusSubscriber(bus = KotlinEventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 object BaseMachineRegistry {
     lateinit var BASE_CONTAINER: ContainerType<BaseContainer>
         private set

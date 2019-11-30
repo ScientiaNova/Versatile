@@ -1,15 +1,15 @@
 package com.emosewapixel.pixellib
 
 import com.emosewapixel.pixellib.machines.RecipeBasedMachine
-import net.alexwells.kottle.KotlinEventBusSubscriber
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraftforge.event.RegistryEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
+import net.minecraftforge.fml.common.Mod
 
-@KotlinEventBusSubscriber(modid = PixelTest.MOD_ID, bus = KotlinEventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = PixelTest.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 object MachineRegistry {
     val TEST_MACHINE = RecipeBasedMachine(RecipeTest.TEST_RECIPES, Block.Properties.from(Blocks.STONE))
 
