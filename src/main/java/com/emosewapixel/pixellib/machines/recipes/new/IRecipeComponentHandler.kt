@@ -1,5 +1,6 @@
 package com.emosewapixel.pixellib.machines.recipes.new
 
-interface IRecipeComponentHandler<T, C: IRecipeComponent<T>> {
-    val name: String
+interface IRecipeComponentHandler<T> {
+    val value: T
+    val pairedComponentType: Class<IRecipeComponent<T, *>>
 }
