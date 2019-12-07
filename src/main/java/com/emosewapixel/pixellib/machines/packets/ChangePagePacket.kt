@@ -20,7 +20,7 @@ class ChangePagePacket(val pos: BlockPos, val pageId: Int) {
         fun processPacket(packet: ChangePagePacket, context: Supplier<NetworkEvent.Context>) {
             context.get().enqueueWork {
                 val layout = (context.get().sender?.world?.getTileEntity(packet.pos) as? BaseTileEntity)?.guiLayout
-                layout?.current = layout?.get(packet.pageId)!!
+                layout?.current = layout?.get(packet.pageId)!!()
             }
         }
     }

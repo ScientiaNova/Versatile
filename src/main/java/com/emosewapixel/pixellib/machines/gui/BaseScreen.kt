@@ -14,24 +14,28 @@ open class BaseScreen(container: BaseContainer, playerInv: PlayerInventory, titl
             container.guiPage.components.forEach { it.drawInForeground(mouseX.toDouble(), mouseY.toDouble(), guiLeft, guiTop) }
 
     override fun mouseClicked(mouseX: Double, mouseY: Double, clickType: Int): Boolean {
-        val componentsMatch = container.guiPage.components.reversed().asSequence()
-                .filter { it.isSelected(mouseX - guiLeft, mouseY - guiTop) }
-                .any { it.onMouseClicked(mouseX, mouseY, clickType) }
+        val componentsMatch = container.guiPage.components.reversed().any { it.onMouseClicked(mouseX, mouseY, guiLeft, guiTop, clickType) }
         return if (componentsMatch) true else super.mouseClicked(mouseX, mouseY, clickType)
     }
 
     override fun mouseDragged(mouseX: Double, mouseY: Double, clickType: Int, lastX: Double, lastY: Double): Boolean {
-        val componentsMatch = container.guiPage.components.reversed().asSequence()
-                .filter { it.isSelected(mouseX - guiLeft, mouseY - guiTop) }
-                .any { it.onMouseDragged(mouseX, mouseY, clickType) }
+        val componentsMatch = container.guiPage.components.reversed().any { it.onMouseDragged(mouseX, mouseY, guiLeft, guiTop, clickType) }
         return if (componentsMatch) true else super.mouseDragged(mouseX, mouseY, clickType, lastX, lastY)
     }
 
     override fun mouseReleased(mouseX: Double, mouseY: Double, clickType: Int): Boolean {
-        val componentsMatch = container.guiPage.components.reversed().asSequence()
-                .filter { it.isSelected(mouseX - guiLeft, mouseY - guiTop) }
-                .any { it.onMouseReleased(mouseX, mouseY, clickType) }
+        val componentsMatch = container.guiPage.components.reversed().any { it.onMouseReleased(mouseX, mouseY, guiLeft, guiTop, clickType) }
         return if (componentsMatch) true else super.mouseReleased(mouseX, mouseY, clickType)
+    }
+
+    override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
+        val componentsMatch = container.guiPage.components.reversed().any { it.keyPressed(keyCode, scanCode, modifiers, guiLeft, guiTop) }
+        return if (componentsMatch) true else super.keyPressed(keyCode, scanCode, modifiers)
+    }
+
+    override fun keyReleased(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
+        val componentsMatch = container.guiPage.components.reversed().any { it.keyReleased(keyCode, scanCode, modifiers, guiLeft, guiTop) }
+        return if (componentsMatch) true else super.keyReleased(keyCode, scanCode, modifiers)
     }
 
     override fun render(mouseX: Int, mouseY: Int, partialTicks: Float) {

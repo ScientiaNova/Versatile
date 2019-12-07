@@ -19,7 +19,7 @@ open class LabelComponent(val text: String, override var x: Int, override var y:
         )
 
     @OnlyIn(Dist.CLIENT)
-    override fun drawInBackground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int) {
+    override fun drawInBackground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int, guiLeft: Int, guiTop: Int) {
         val font = Minecraft.getInstance().fontRenderer
         when (location) {
             LabelLocation.CENTER -> font.drawString(text, xOffset + x - font.getStringWidth(text) / 2f, yOffset + y.toFloat(), color)

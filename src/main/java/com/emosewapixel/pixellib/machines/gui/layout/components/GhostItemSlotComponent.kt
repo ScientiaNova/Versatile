@@ -9,7 +9,7 @@ import org.lwjgl.glfw.GLFW
 
 open class GhostItemSlotComponent(property: IValueProperty<IItemHandlerModifiable>, x: Int, y: Int) : ItemSlotComponent(property, x, y) {
     @OnlyIn(Dist.CLIENT)
-    override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int): Boolean {
+    override fun onMouseClicked(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int, clickType: Int): Boolean {
         val itemHandler = property.value
         val heldStack = Minecraft.getInstance().player.inventory.itemStack
         if (heldStack.isEmpty) {

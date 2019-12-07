@@ -2,10 +2,9 @@ package com.emosewapixel.pixellib.machines.gui
 
 import com.emosewapixel.pixellib.machines.BaseMachineRegistry
 import com.emosewapixel.pixellib.machines.BaseTileEntity
-import com.emosewapixel.pixellib.machines.gui.layout.IPropertyGUIComponent
-import com.emosewapixel.pixellib.machines.gui.layout.ISlotComponent
 import com.emosewapixel.pixellib.machines.gui.slots.IImprovedSlot
 import com.emosewapixel.pixellib.machines.gui.slots.SlotLogic
+import com.emosewapixel.pixellib.machines.properties.IMachineProperty
 import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
@@ -20,19 +19,24 @@ open class BaseContainer(id: Int, val playerInv: PlayerInventory, val te: BaseTi
     constructor(id: Int, playerInv: PlayerInventory, extraData: PacketBuffer) : this(id, playerInv, playerInv.player.world.getTileEntity(extraData.readBlockPos()) as BaseTileEntity)
 
     val guiPage = te.guiLayout.current
+    val properties = guiPage.components.fold(mutableSetOf<IMachineProperty>()) { acc, curr ->
+        acc += curr.addProperties()
+        acc
+    }
     val clientProperties = te.teProperties.mapValues { it.value.createDefault() }
 
     init {
-        guiPage.components.forEach { if (it is ISlotComponent) addSlot(it.setupSlot(playerInv) as Slot) }
+        guiPage.components.fold(mutableListOf<IImprovedSlot>()) { acc, current ->
+            acc += current.addSlots(playerInv)
+            acc
+        }.forEach { addSlot(it as Slot) }
     }
 
     override fun canInteractWith(playerIn: PlayerEntity) = te.canInteractWith(playerIn)
 
     override fun detectAndSendChanges() {
         if (te.world?.isRemote != false) return
-        guiPage.components.asSequence().filterIsInstance<IPropertyGUIComponent>()
-                .map { it.property as? ITEBoundProperty }.distinct()
-                .forEach { it?.detectAndSendChanges(this) }
+        properties.forEach { (it as? ITEBoundProperty)?.detectAndSendChanges(this) }
     }
 
     override fun transferStackInSlot(playerIn: PlayerEntity, index: Int): ItemStack {

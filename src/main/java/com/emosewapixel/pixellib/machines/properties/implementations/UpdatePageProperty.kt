@@ -20,13 +20,11 @@ open class UpdatePageProperty(override val te: BaseTileEntity) : ITEBoundPropert
             NetworkHandler.CHANNEL.sendTo(ReopenGUIPacket(te.pos, container.type), (container.playerInv.player as ServerPlayerEntity).connection.networkManager, NetworkDirection.PLAY_TO_CLIENT)
     }
 
-    var pageId
-        get() = te.guiLayout.pages.indexOf(te.guiLayout.current)
-        set(value) {
-            te.guiLayout.current = te.guiLayout.pages.getOrElse(value) { te.guiLayout.pages[0] }
-            if (FMLEnvironment.dist.isClient)
-                NetworkHandler.CHANNEL.sendToServer(ChangePagePacket(te.pos, value))
-        }
+    fun setPage(pageId: Int) {
+        te.guiLayout.current = te.guiLayout.pages.getOrElse(pageId) { te.guiLayout.pages[0] }()
+        if (FMLEnvironment.dist.isClient)
+            NetworkHandler.CHANNEL.sendToServer(ChangePagePacket(te.pos, pageId))
+    }
 
     override fun createDefault() = this
 

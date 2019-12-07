@@ -7,7 +7,7 @@ import com.emosewapixel.pixellib.machines.capabilities.FluidStackHandler
 import com.emosewapixel.pixellib.machines.capabilities.IFluidHandlerModifiable
 import com.emosewapixel.pixellib.machines.gui.GUiUtils
 import com.emosewapixel.pixellib.machines.gui.layout.DefaultSizeConstants
-import com.emosewapixel.pixellib.machines.gui.layout.IPropertyGUIComponent
+import com.emosewapixel.pixellib.machines.gui.layout.IGUIComponent
 import com.emosewapixel.pixellib.machines.gui.textures.BaseTextures
 import com.emosewapixel.pixellib.machines.packets.NetworkHandler
 import com.emosewapixel.pixellib.machines.packets.UpdateHeldStackPacket
@@ -23,14 +23,14 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler
 import net.minecraftforge.fluids.capability.IFluidHandler
 import kotlin.math.min
 
-open class FluidSlotComponent(override val property: IValueProperty<IFluidHandlerModifiable>, override var x: Int, override var y: Int) : IPropertyGUIComponent {
+open class FluidSlotComponent(val property: IValueProperty<IFluidHandlerModifiable>, override var x: Int, override var y: Int) : IGUIComponent {
     var texture = BaseTextures.FLUID_SLOT
     override var width = DefaultSizeConstants.SLOT_WIDTH
     override var height = DefaultSizeConstants.SLOT_HEIGHT
     var tankId = 0
 
     @OnlyIn(Dist.CLIENT)
-    override fun drawInBackground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int) {
+    override fun drawInBackground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int, guiLeft: Int, guiTop: Int) {
         texture.render(xOffset + x, yOffset + y, width, height)
         val fluid = property.value.getFluidInTank(tankId)
         if (!fluid.isEmpty)
@@ -38,9 +38,9 @@ open class FluidSlotComponent(override val property: IValueProperty<IFluidHandle
     }
 
     @OnlyIn(Dist.CLIENT)
-    override fun drawInForeground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int) {
+    override fun drawInForeground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int, guiLeft: Int, guiTop: Int) {
         if (isSelected(mouseX - xOffset, mouseY - yOffset)) {
-            GUiUtils.drawColoredRectangle(0x7FFFFFFF, x + 1, y + 1, width - 2, height - 2)
+            GUiUtils.drawColoredRectangle(0x7FFFFFFF, xOffset - guiLeft + x + 1,yOffset - guiTop + y + 1, width - 2, height - 2)
             val handler = property.value
             val fluid = handler.getFluidInTank(tankId)
 
@@ -49,14 +49,15 @@ open class FluidSlotComponent(override val property: IValueProperty<IFluidHandle
             else
                 listOf(fluid.fluid.attributes.getDisplayName(fluid).string, "${fluid.amount}/${handler.getTankCapacity(tankId)} mB", TranslationTextComponent("gui.tooltip.tank_empty").formattedText)
 
-            GUiUtils.renderTooltip(tooltips, mouseX - xOffset, mouseY - yOffset)
+            GUiUtils.renderTooltip(tooltips, mouseX - guiLeft, mouseY - guiTop)
         }
     }
 
     override fun isSelected(mouseX: Double, mouseY: Double) = x + 1 < mouseX && mouseX < x + width - 2 && y + 1 < mouseY && mouseY < y + height - 2
 
     @OnlyIn(Dist.CLIENT)
-    override fun onMouseClicked(mouseX: Double, mouseY: Double, clickType: Int): Boolean {
+    override fun onMouseClicked(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int, clickType: Int): Boolean {
+        if (!isSelected(mouseX - xOffset, mouseY - yOffset)) return false
         val slotTank = property.value
         val playerInv = Minecraft.getInstance().player.inventory
         val heldStack = playerInv.itemStack
@@ -229,4 +230,6 @@ open class FluidSlotComponent(override val property: IValueProperty<IFluidHandle
             NetworkHandler.CHANNEL.sendToServer(UpdateTankPacket(it.id, tankId, slotTank.getFluidInTank(tankId)))
         }
     }
+
+    override fun addProperties() = setOf(property)
 }

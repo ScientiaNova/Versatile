@@ -15,7 +15,8 @@ open class ImageComponent : IGUIComponent {
     override var height = DefaultSizeConstants.BACKGROUND_HEIGHT
 
     @OnlyIn(Dist.CLIENT)
-    override fun drawInBackground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int) = texture.render(xOffset + x, yOffset + y, width, height)
+    override fun drawInBackground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int, guiLeft: Int, guiTop: Int) =
+            texture.render(xOffset + x, yOffset + y, width, height)
 
     @OnlyIn(Dist.CLIENT)
     override fun isSelected(mouseX: Double, mouseY: Double) = false
