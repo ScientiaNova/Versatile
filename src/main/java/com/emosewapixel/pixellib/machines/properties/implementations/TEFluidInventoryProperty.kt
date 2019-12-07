@@ -1,14 +1,18 @@
 package com.emosewapixel.pixellib.machines.properties.implementations
 
+import com.emosewapixel.pixellib.extensions.getOrAddInstance
 import com.emosewapixel.pixellib.extensions.nbt
 import com.emosewapixel.pixellib.machines.BaseTileEntity
 import com.emosewapixel.pixellib.machines.capabilities.FluidStackHandler
+import com.emosewapixel.pixellib.machines.capabilities.FluidCapabilityWrapper
 import com.emosewapixel.pixellib.machines.gui.BaseContainer
 import com.emosewapixel.pixellib.machines.packets.NetworkHandler
 import com.emosewapixel.pixellib.machines.packets.UpdateTankPacket
 import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
+import com.google.common.reflect.MutableTypeToInstanceMap
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.nbt.CompoundNBT
+import net.minecraftforge.common.capabilities.ICapabilityProvider
 import net.minecraftforge.fml.network.NetworkDirection
 
 open class TEFluidInventoryProperty(value: FluidStackHandler, override val id: String, override val te: BaseTileEntity) : FluidInventoryProperty(value), ITEBoundProperty {
@@ -40,5 +44,9 @@ open class TEFluidInventoryProperty(value: FluidStackHandler, override val id: S
 
     override fun serializeNBT() = nbt {
         id to value
+    }
+
+    override fun addCapability(map: MutableTypeToInstanceMap<ICapabilityProvider>) {
+        map.getOrAddInstance(FluidCapabilityWrapper::class.java, FluidCapabilityWrapper()).addHandler(value)
     }
 }
