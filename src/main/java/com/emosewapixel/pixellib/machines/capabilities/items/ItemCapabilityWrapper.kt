@@ -1,4 +1,4 @@
-package com.emosewapixel.pixellib.machines.capabilities
+package com.emosewapixel.pixellib.machines.capabilities.items
 
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Direction

@@ -1,6 +1,6 @@
 package com.emosewapixel.pixellib.machines.gui.layout.components
 
-import com.emosewapixel.pixellib.machines.capabilities.IFluidHandlerModifiable
+import com.emosewapixel.pixellib.machines.capabilities.fluids.IFluidHandlerModifiable
 import com.emosewapixel.pixellib.machines.gui.GUiUtils
 import com.emosewapixel.pixellib.machines.gui.layout.IGUIComponent
 import com.emosewapixel.pixellib.machines.gui.textures.Direction2D

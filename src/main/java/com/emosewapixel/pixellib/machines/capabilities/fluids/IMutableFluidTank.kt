@@ -1,4 +1,4 @@
-package com.emosewapixel.pixellib.machines.capabilities
+package com.emosewapixel.pixellib.machines.capabilities.fluids
 
 import net.minecraftforge.fluids.FluidStack
 import net.minecraftforge.fluids.IFluidTank

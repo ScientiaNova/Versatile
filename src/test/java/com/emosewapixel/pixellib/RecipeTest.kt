@@ -1,8 +1,5 @@
 package com.emosewapixel.pixellib
 
-import com.emosewapixel.pixellib.machines.recipes.EnergyRecipeList
-import com.emosewapixel.pixellib.machines.recipes.SimpleRecipeList
-import com.emosewapixel.pixellib.machines.recipes.utility.plusAssign
 import com.emosewapixel.pixellib.machines.recipes.utility.recipecomponents.toRStack
 import com.emosewapixel.pixellib.machines.recipes.utility.weightedMapOf
 import net.minecraft.block.Blocks

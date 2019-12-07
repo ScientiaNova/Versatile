@@ -1,4 +1,4 @@
-package com.emosewapixel.pixellib.machines.capabilities
+package com.emosewapixel.pixellib.machines.capabilities.fluids
 
 import com.emosewapixel.pixellib.extensions.times
 import net.minecraft.fluid.Fluids

@@ -1,4 +1,4 @@
-package com.emosewapixel.pixellib.machines.recipes.new
+package com.emosewapixel.pixellib.machines.recipes
 
 open class Recipe(vararg componentHandlers: IRecipeComponentHandler<*>) {
     private val map = componentHandlers.map { it.pairedComponentType to it }.toMap()

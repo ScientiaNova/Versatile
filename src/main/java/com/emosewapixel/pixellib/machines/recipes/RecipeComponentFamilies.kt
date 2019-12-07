@@ -1,4 +1,4 @@
-package com.emosewapixel.pixellib.machines.recipes.new
+package com.emosewapixel.pixellib.machines.recipes
 
 object RecipeComponentFamilies {
     @JvmField

@@ -5,30 +5,23 @@ import com.emosewapixel.pixellib.machines.gui.layout.GUIBook
 import com.emosewapixel.pixellib.machines.gui.layout.book
 import com.emosewapixel.pixellib.machines.gui.layout.components.LabelComponent
 import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
-import com.emosewapixel.pixellib.machines.properties.implementations.FluidInventoryProperty
-import com.emosewapixel.pixellib.machines.properties.implementations.ItemInventoryProperty
-import com.emosewapixel.pixellib.machines.properties.implementations.TEFluidInventoryProperty
-import com.emosewapixel.pixellib.machines.properties.implementations.TEItemInventoryProperty
-import com.emosewapixel.pixellib.machines.recipes.AbstractRecipeList
+import com.emosewapixel.pixellib.machines.properties.implementations.IncrementingDoubleProperty
+import com.emosewapixel.pixellib.machines.recipes.MachineRecipeInterface
+import com.emosewapixel.pixellib.machines.recipes.RecipeList
 import kotlin.math.max
 
-open class RecipeBasedMachine(recipeList: AbstractRecipeList<*, *>, properties: Properties, name: String = recipeList.name.toString()) : AbstractMachineBlock(properties, name) {
+open class RecipeBasedMachine(recipeList: RecipeList, properties: Properties, name: String = recipeList.name.toString()) : AbstractMachineBlock(properties, name) {
     init {
         recipeList.blocksImplementing += this
     }
 
     override val teProperties: BaseTileEntity.() -> List<ITEBoundProperty> = {
-        listOf(
-                TEItemInventoryProperty(this, "items", recipeList.maxInputs, recipeList.maxOutputs),
-                TEFluidInventoryProperty(this, "fluids", recipeList.maxFluidInputs, recipeList.maxFluidOutputs)
-        )
+        val recipeInterface = MachineRecipeInterface(recipeList, "machine_interface", this)
+        recipeList.recipeComponents.flatMap { it.value.addDefaultProperty(recipeInterface) } + recipeInterface
     }
 
     override val guiLayout: BaseTileEntity.() -> GUIBook = {
-        val recipePage = recipeList.createPage(
-                teProperties["items"] as ItemInventoryProperty,
-                teProperties["fluids"] as FluidInventoryProperty
-        )
+        val recipePage = recipeList.createComponentGroup(teProperties["machine_interface"] as MachineRecipeInterface, IncrementingDoubleProperty())
 
         val recipePageWidth = recipePage.trueWidth
         val recipePageHeight = recipePage.trueHeight

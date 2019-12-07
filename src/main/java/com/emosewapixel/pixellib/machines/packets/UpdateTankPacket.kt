@@ -2,7 +2,7 @@ package com.emosewapixel.pixellib.machines.packets
 
 import com.emosewapixel.pixellib.extensions.readFluidStack
 import com.emosewapixel.pixellib.extensions.writeFluidStack
-import com.emosewapixel.pixellib.machines.capabilities.IFluidHandlerModifiable
+import com.emosewapixel.pixellib.machines.capabilities.fluids.IFluidHandlerModifiable
 import com.emosewapixel.pixellib.machines.gui.BaseContainer
 import com.emosewapixel.pixellib.machines.properties.IValueProperty
 import net.minecraft.client.Minecraft

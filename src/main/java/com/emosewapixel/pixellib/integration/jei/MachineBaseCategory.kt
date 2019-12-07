@@ -5,8 +5,8 @@ import com.emosewapixel.pixellib.extensions.shorten
 import com.emosewapixel.pixellib.extensions.toStack
 import com.emosewapixel.pixellib.machines.gui.layout.components.FluidSlotComponent
 import com.emosewapixel.pixellib.machines.gui.layout.components.ItemSlotComponent
-import com.emosewapixel.pixellib.machines.recipes.AbstractRecipeList
-import com.emosewapixel.pixellib.machines.recipes.SimpleMachineRecipe
+import com.emosewapixel.pixellib.machines.recipes.Recipe
+import com.emosewapixel.pixellib.machines.recipes.RecipeList
 import mezz.jei.api.constants.VanillaTypes
 import mezz.jei.api.gui.IRecipeLayout
 import mezz.jei.api.gui.drawable.IDrawable
@@ -16,10 +16,9 @@ import mezz.jei.api.recipe.category.IRecipeCategory
 import net.minecraft.item.ItemStack
 import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.fluids.FluidStack
-import java.lang.reflect.ParameterizedType
 
-open class MachineBaseCategory<T : SimpleMachineRecipe>(helper: IGuiHelper, protected val recipeList: AbstractRecipeList<T, *>) : IRecipeCategory<T> {
-    val page = recipeList.createPage()
+open class MachineBaseCategory(helper: IGuiHelper, protected val recipeList: RecipeList) : IRecipeCategory<Recipe> {
+    val page = recipeList.createComponentGroup()
 
     private val background: IDrawable = helper.createBlankDrawable(page.width, page.height)
 
@@ -33,7 +32,7 @@ open class MachineBaseCategory<T : SimpleMachineRecipe>(helper: IGuiHelper, prot
 
     override fun getIcon() = icon
 
-    override fun setIngredients(recipe: T, ingredients: IIngredients) {
+    override fun setIngredients(recipe: Recipe, ingredients: IIngredients) {
         ingredients.setInputLists(VanillaTypes.ITEM, recipe.inputs.map { pair ->
             pair.first.stacks.filter(ItemStack::isNotEmpty).map { it.apply { orCreateTag.putFloat("consume_chance", pair.second) } }
         })
@@ -54,7 +53,7 @@ open class MachineBaseCategory<T : SimpleMachineRecipe>(helper: IGuiHelper, prot
         })
     }
 
-    override fun setRecipe(layout: IRecipeLayout, recipe: T, ingredients: IIngredients) {
+    override fun setRecipe(layout: IRecipeLayout, recipe: Recipe, ingredients: IIngredients) {
         val guiItemStacks = layout.itemStacks
         val guiFluidStacks = layout.fluidStacks
         val itemInputs = ingredients.getInputs(VanillaTypes.ITEM)
@@ -101,11 +100,11 @@ open class MachineBaseCategory<T : SimpleMachineRecipe>(helper: IGuiHelper, prot
         }
     }
 
-    override fun draw(recipe: T, mouseX: Double, mouseY: Double) {
+    override fun draw(recipe: Recipe, mouseX: Double, mouseY: Double) {
         page.components.forEach { it.drawInBackground(mouseX, mouseY, 0, 0) }
         recipeList.renderExtraInfo(page, recipe)
     }
 
     @Suppress("UNCHECKED_CAST")
-    override fun getRecipeClass() = (recipeList.javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<T>
+    override fun getRecipeClass() = Recipe::class.java
 }

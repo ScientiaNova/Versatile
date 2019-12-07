@@ -3,8 +3,8 @@ package com.emosewapixel.pixellib.machines.gui.layout.components
 import com.emosewapixel.pixellib.extensions.isNotEmpty
 import com.emosewapixel.pixellib.extensions.times
 import com.emosewapixel.pixellib.items.ItemStackHolder
-import com.emosewapixel.pixellib.machines.capabilities.FluidStackHandler
-import com.emosewapixel.pixellib.machines.capabilities.IFluidHandlerModifiable
+import com.emosewapixel.pixellib.machines.capabilities.fluids.FluidStackHandler
+import com.emosewapixel.pixellib.machines.capabilities.fluids.IFluidHandlerModifiable
 import com.emosewapixel.pixellib.machines.gui.GUiUtils
 import com.emosewapixel.pixellib.machines.gui.layout.DefaultSizeConstants
 import com.emosewapixel.pixellib.machines.gui.layout.IGUIComponent

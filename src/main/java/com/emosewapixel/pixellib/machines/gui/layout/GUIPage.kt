@@ -1,6 +1,6 @@
 package com.emosewapixel.pixellib.machines.gui.layout
 
-import com.emosewapixel.pixellib.machines.capabilities.IFluidHandlerModifiable
+import com.emosewapixel.pixellib.machines.capabilities.fluids.IFluidHandlerModifiable
 import com.emosewapixel.pixellib.machines.gui.layout.components.*
 import com.emosewapixel.pixellib.machines.gui.textures.AnimatedGUITexture
 import com.emosewapixel.pixellib.machines.gui.textures.ButtonTextureGroup

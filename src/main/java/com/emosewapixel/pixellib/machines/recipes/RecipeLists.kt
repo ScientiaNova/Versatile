@@ -4,7 +4,7 @@ import com.emosewapixel.pixellib.extensions.toResLoc
 import net.minecraft.util.ResourceLocation
 
 object RecipeLists {
-    private val map = mutableMapOf<ResourceLocation, AbstractRecipeList<*, *>>()
+    private val map = mutableMapOf<ResourceLocation, RecipeList>()
 
     @JvmStatic
     operator fun get(key: ResourceLocation) = map[key]
@@ -13,7 +13,7 @@ object RecipeLists {
     operator fun get(key: String) = map[key.toResLoc()]
 
     @JvmStatic
-    operator fun plusAssign(list: AbstractRecipeList<*, *>) {
+    operator fun plusAssign(list: RecipeList) {
         map[list.name] = list
     }
 

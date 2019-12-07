@@ -1,4 +1,4 @@
-package com.emosewapixel.pixellib.machines.recipes.new
+package com.emosewapixel.pixellib.machines.recipes
 
 import com.emosewapixel.pixellib.extensions.nbt
 import com.emosewapixel.pixellib.machines.BaseTileEntity

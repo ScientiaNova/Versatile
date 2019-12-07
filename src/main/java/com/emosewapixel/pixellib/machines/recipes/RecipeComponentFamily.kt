@@ -1,3 +1,3 @@
-package com.emosewapixel.pixellib.machines.recipes.new
+package com.emosewapixel.pixellib.machines.recipes
 
 data class RecipeComponentFamily(val name: String, val io: IOType)
