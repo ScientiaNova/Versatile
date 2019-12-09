@@ -67,5 +67,17 @@ object NetworkHandler {
                 .decoder(UpdateHeldStackPacket.Companion::decode)
                 .consumer(UpdateHeldStackPacket.Companion::processPacket)
                 .add()
+
+        CHANNEL.messageBuilder(UpdateEnergyPacket::class.java, packetId)
+                .encoder(UpdateEnergyPacket::encode)
+                .decoder(UpdateEnergyPacket.Companion::decode)
+                .consumer(UpdateEnergyPacket.Companion::processPacket)
+                .add()
+
+        CHANNEL.messageBuilder(UpdateRecipePacket::class.java, packetId)
+                .encoder(UpdateRecipePacket::encode)
+                .decoder(UpdateRecipePacket.Companion::decode)
+                .consumer(UpdateRecipePacket.Companion::processPacket)
+                .add()
     }
 }

@@ -3,10 +3,9 @@ package com.emosewapixel.pixellib.machines
 import com.emosewapixel.pixellib.machines.gui.layout.DefaultSizeConstants
 import com.emosewapixel.pixellib.machines.gui.layout.GUIBook
 import com.emosewapixel.pixellib.machines.gui.layout.book
-import com.emosewapixel.pixellib.machines.gui.layout.components.LabelComponent
+import com.emosewapixel.pixellib.machines.gui.layout.components.still.LabelComponent
 import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
-import com.emosewapixel.pixellib.machines.properties.implementations.IncrementingDoubleProperty
-import com.emosewapixel.pixellib.machines.recipes.MachineRecipeInterface
+import com.emosewapixel.pixellib.machines.properties.implementations.TERecipeProperty
 import com.emosewapixel.pixellib.machines.recipes.RecipeList
 import kotlin.math.max
 
@@ -16,12 +15,14 @@ open class RecipeBasedMachine(recipeList: RecipeList, properties: Properties, na
     }
 
     override val teProperties: BaseTileEntity.() -> List<ITEBoundProperty> = {
-        val recipeInterface = MachineRecipeInterface(recipeList, "machine_interface", this)
-        recipeList.recipeComponents.flatMap { it.value.addDefaultProperty(recipeInterface) } + recipeInterface
+        recipeList.recipeComponents.values.fold(mutableListOf<ITEBoundProperty>(TERecipeProperty(recipeList, "recipe", this))) { list, component ->
+            component.addDefaultProperty(this, list)
+            list
+        }
     }
 
     override val guiLayout: BaseTileEntity.() -> GUIBook = {
-        val recipePage = recipeList.createComponentGroup(teProperties["machine_interface"] as MachineRecipeInterface, IncrementingDoubleProperty())
+        val recipePage = recipeList.createComponentGroup(this)
 
         val recipePageWidth = recipePage.trueWidth
         val recipePageHeight = recipePage.trueHeight

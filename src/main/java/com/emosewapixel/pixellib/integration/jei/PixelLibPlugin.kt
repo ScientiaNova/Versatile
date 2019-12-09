@@ -29,6 +29,6 @@ class PixelLibPlugin : IModPlugin {
     }
 
     override fun registerRecipes(registration: IRecipeRegistration) {
-        jeiRecipeLists.forEach { registration.addRecipes(it.recipes, it.name) }
+        jeiRecipeLists.forEach { registration.addRecipes(it.getRecipes().values, it.name) }
     }
 }

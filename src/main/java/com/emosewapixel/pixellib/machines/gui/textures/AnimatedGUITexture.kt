@@ -2,7 +2,7 @@ package com.emosewapixel.pixellib.machines.gui.textures
 
 import net.minecraft.util.ResourceLocation
 
-data class AnimatedGUITexture @JvmOverloads constructor(val frames: List<GUITexture>, val tickDelay: Int = 1) : IRenderable {
+data class AnimatedGUITexture @JvmOverloads constructor(val frames: List<GUITexture>, val tickDelay: Int = 1) : IDrawable {
     @JvmOverloads
     constructor(location: ResourceLocation, frameCount: Int, tickDelay: Int = 1) : this(framesFromTexture(location, frameCount), tickDelay)
 
@@ -24,13 +24,13 @@ data class AnimatedGUITexture @JvmOverloads constructor(val frames: List<GUIText
         }
         private set
 
-    override fun render(x: Int, y: Int, width: Int, height: Int, uStart: Double, vStart: Double, uEnd: Double, vEnd: Double) =
-            render(x, y, width, height, uStart, vStart, uEnd, vEnd, currentFrame)
+    override fun draw(x: Int, y: Int, width: Int, height: Int, uStart: Double, vStart: Double, uEnd: Double, vEnd: Double) =
+            draw(x, y, width, height, uStart, vStart, uEnd, vEnd, currentFrame)
 
-    fun render(x: Int, y: Int, width: Int, height: Int, uStart: Double = 0.0, vStart: Double = 0.0, uEnd: Double = 1.0, vEnd: Double = 1.0, frame: Int) {
+    fun draw(x: Int, y: Int, width: Int, height: Int, uStart: Double = 0.0, vStart: Double = 0.0, uEnd: Double = 1.0, vEnd: Double = 1.0, frame: Int) {
         if (frames.isEmpty()) return
         val texture = frames.getOrElse(frame) { frames[0] }
-        texture.render(x, y, width, height, texture.uStart * uStart, texture.vStart * vStart, texture.uEnd * uEnd, texture.vEnd * vEnd)
+        texture.draw(x, y, width, height, texture.uStart * uStart, texture.vStart * vStart, texture.uEnd * uEnd, texture.vEnd * vEnd)
     }
 
     companion object {

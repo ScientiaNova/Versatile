@@ -6,7 +6,7 @@ import net.minecraft.entity.player.PlayerInventory
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 
-open class GUIComponentGroup : GUIPage(), IGUIComponent {
+open class GUIComponentGroup @JvmOverloads constructor(extraWidth: Int = 0, extraHeight: Int = 0) : GUIPage(extraWidth, extraHeight), IGUIComponent {
     override var x = 0
     override var y = 0
 
@@ -57,4 +57,6 @@ open class GUIComponentGroup : GUIPage(), IGUIComponent {
         acc += curr.addProperties()
         acc
     }
+
+    override fun unwrap() = components.flatMap { it.unwrap().map { base -> OffsetGUIComponent(base.component, base.xOffset + x, base.yOffset + y) } }
 }

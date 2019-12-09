@@ -35,6 +35,17 @@ object GUiUtils {
     }
 
     @JvmStatic
+    fun drawTransparentItemStack(stack: ItemStack, x: Int, y: Int) {
+        val itemRenderer = mc.itemRenderer
+        GlStateManager.translatef(0.0f, 0.0f, 32.0f)
+        itemRenderer.zLevel = 200.0f
+        itemRenderer.renderItemAndEffectIntoGUI(stack, x, y)
+        GlStateManager.colorMask(true, true, true, false)
+        drawColoredRectangle(0x7f7f7f80, x, y, 16, 16)
+        itemRenderer.zLevel = 0.0f
+    }
+
+    @JvmStatic
     fun drawFluidStack(stack: FluidStack, x: Int, y: Int, width: Int, height: Int) {
         GlStateManager.enableBlend()
         GlStateManager.enableAlphaTest()
@@ -57,6 +68,25 @@ object GUiUtils {
             fontRenderer.drawStringWithShadow(string, x + width + 1f - fontRenderer.getStringWidth(string), y + height - 7f, 16777215)
             GlStateManager.enableDepthTest()
         }
+    }
+
+    @JvmStatic
+    fun drawTransparentFluidStack(stack: FluidStack, x: Int, y: Int, width: Int, height: Int) {
+        GlStateManager.enableBlend()
+        GlStateManager.enableAlphaTest()
+
+        val texture = mc.textureMap.getSprite(stack.fluid.attributes.stillTexture)
+        val color = stack.fluid.attributes.color
+        GlStateManager.color4f(color.redF, color.greenF, color.blueF, 1f)
+
+        drawTexture(texture, x, y, width, height, z = 100)
+        GlStateManager.colorMask(true, true, true, false)
+        drawColoredRectangle(0x7f7f7f80, x, y, 16, 16)
+
+        GlStateManager.color4f(1f, 1f, 1f, 1f)
+
+        GlStateManager.disableAlphaTest()
+        GlStateManager.disableBlend()
     }
 
     @JvmStatic

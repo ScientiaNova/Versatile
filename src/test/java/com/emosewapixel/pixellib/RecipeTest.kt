@@ -1,31 +1,35 @@
 package com.emosewapixel.pixellib
 
-import com.emosewapixel.pixellib.machines.recipes.utility.recipecomponents.toRStack
-import com.emosewapixel.pixellib.machines.recipes.utility.weightedMapOf
+import com.emosewapixel.pixellib.machines.recipes.Recipe
+import com.emosewapixel.pixellib.machines.recipes.RecipeList
+import com.emosewapixel.pixellib.machines.recipes.components.EnergyPerTickComponent
+import com.emosewapixel.pixellib.machines.recipes.components.EnergyPerTickHandler
+import com.emosewapixel.pixellib.machines.recipes.components.TimeComponent
+import com.emosewapixel.pixellib.machines.recipes.components.TimeHandler
+import com.emosewapixel.pixellib.machines.recipes.components.ingredients.fluids.FluidOutputsComponent
+import com.emosewapixel.pixellib.machines.recipes.components.ingredients.fluids.FluidOutputsHandler
+import com.emosewapixel.pixellib.machines.recipes.components.ingredients.items.ItemInputsComponent
+import com.emosewapixel.pixellib.machines.recipes.components.ingredients.items.ItemInputsHandler
+import com.emosewapixel.pixellib.machines.recipes.components.ingredients.recipestacks.IRecipeStack
+import com.emosewapixel.pixellib.machines.recipes.components.ingredients.recipestacks.toRStack
+import com.emosewapixel.pixellib.machines.recipes.components.ingredients.utility.WeightedMap
+import com.emosewapixel.pixellib.machines.recipes.components.ingredients.utility.weightedMapOf
 import net.minecraft.block.Blocks
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.Items
 import net.minecraft.util.ResourceLocation
+import net.minecraftforge.fluids.FluidStack
 
 object RecipeTest {
-    val TEST_RECIPES = SimpleRecipeList(ResourceLocation(PixelTest.MOD_ID, "test"), maxInputs = 8, maxFluidInputs = 1, maxOutputs = 4)
-    val THIN_RECIPES = EnergyRecipeList(ResourceLocation(PixelTest.MOD_ID, "thin_test"), maxInputs = 1, maxFluidOutputs = 1)
+    val THIN_RECIPES = RecipeList(ResourceLocation(PixelTest.MOD_ID, "thin_test"), ItemInputsComponent(1), FluidOutputsComponent(1), TimeComponent, EnergyPerTickComponent(100))
 
     init {
-        TEST_RECIPES.build {
-            inputs += Items.DIRT.toRStack(8)
-            inputs += Items.COAL.toRStack()
-            fluidInputs += Fluids.WATER.toRStack()
-            outputs += weightedMapOf(9 to Items.DIAMOND.toRStack(), 1 to Items.DIAMOND_BLOCK.toRStack())
-            time = 20000
-        }
-
         THIN_RECIPES.blocksImplementing += Blocks.IRON_BARS
-        THIN_RECIPES.build {
-            inputs += Items.COBBLESTONE.toRStack(8)
-            fluidOutputs += Fluids.LAVA.toRStack()
-            time = 200
-            energyPerTick = 24
-        }
+        Recipe(THIN_RECIPES, "thin_recipe_test",
+                ItemInputsHandler(listOf(Items.COBBLESTONE.toRStack(8) to 1f)),
+                FluidOutputsHandler(listOf<WeightedMap<IRecipeStack<FluidStack>>>(weightedMapOf(1 to Fluids.LAVA.toRStack()))),
+                TimeHandler(200),
+                EnergyPerTickHandler(24)
+        )
     }
 }

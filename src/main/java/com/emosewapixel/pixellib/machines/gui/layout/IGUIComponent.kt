@@ -45,4 +45,6 @@ interface IGUIComponent {
         x += xOffset
         y += yOffset
     }
+
+    fun unwrap() = listOf(OffsetGUIComponent(this))
 }

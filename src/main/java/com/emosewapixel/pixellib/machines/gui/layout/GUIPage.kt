@@ -1,14 +1,26 @@
 package com.emosewapixel.pixellib.machines.gui.layout
 
 import com.emosewapixel.pixellib.machines.capabilities.fluids.IFluidHandlerModifiable
-import com.emosewapixel.pixellib.machines.gui.layout.components.*
+import com.emosewapixel.pixellib.machines.gui.layout.components.bars.FluidBarComponent
+import com.emosewapixel.pixellib.machines.gui.layout.components.bars.ProgressBarComponent
+import com.emosewapixel.pixellib.machines.gui.layout.components.buttons.BooleanButtonComponent
+import com.emosewapixel.pixellib.machines.gui.layout.components.buttons.ColorButtonComponent
+import com.emosewapixel.pixellib.machines.gui.layout.components.buttons.IntegerButtonComponent
+import com.emosewapixel.pixellib.machines.gui.layout.components.buttons.PageButtonComponent
+import com.emosewapixel.pixellib.machines.gui.layout.components.slots.FluidSlotComponent
+import com.emosewapixel.pixellib.machines.gui.layout.components.slots.GhostItemSlotComponent
+import com.emosewapixel.pixellib.machines.gui.layout.components.slots.ItemSlotComponent
+import com.emosewapixel.pixellib.machines.gui.layout.components.slots.PlayerSlotComponent
+import com.emosewapixel.pixellib.machines.gui.layout.components.still.ImageComponent
+import com.emosewapixel.pixellib.machines.gui.layout.components.still.InventoryLabelComponent
+import com.emosewapixel.pixellib.machines.gui.layout.components.still.LabelComponent
 import com.emosewapixel.pixellib.machines.gui.textures.AnimatedGUITexture
 import com.emosewapixel.pixellib.machines.gui.textures.ButtonTextureGroup
 import com.emosewapixel.pixellib.machines.gui.textures.GUITexture
 import com.emosewapixel.pixellib.machines.properties.ILimitedIntegerProperty
 import com.emosewapixel.pixellib.machines.properties.IValueProperty
 import com.emosewapixel.pixellib.machines.properties.IVariableProperty
-import com.emosewapixel.pixellib.machines.properties.implementations.UpdatePageProperty
+import com.emosewapixel.pixellib.machines.properties.implementations.TEPageProperty
 import net.minecraftforge.items.IItemHandlerModifiable
 
 open class GUIPage(var extraWidth: Int = 0, var extraHeight: Int = 0, builder: GUIPage.() -> Unit = { }) {
@@ -75,14 +87,14 @@ open class GUIPage(var extraWidth: Int = 0, var extraHeight: Int = 0, builder: G
         components += component
     }
 
-    fun fluidSlot(property: IValueProperty<IFluidHandlerModifiable>, x: Int, y: Int, builder: FluidSlotComponent.() -> Unit = { }) {
-        val component = FluidSlotComponent(property, x, y)
+    fun fluidSlot(property: IValueProperty<IFluidHandlerModifiable>, tankIndex: Int, builder: FluidSlotComponent.() -> Unit = { }) {
+        val component = FluidSlotComponent(property, tankIndex)
         component.builder()
         components += component
     }
 
-    fun ghostItemSlot(property: IValueProperty<IItemHandlerModifiable>, x: Int, y: Int, builder: GhostItemSlotComponent.() -> Unit = { }) {
-        val component = GhostItemSlotComponent(property, x, y)
+    fun ghostItemSlot(property: IValueProperty<IItemHandlerModifiable>, slotIndex: Int, builder: GhostItemSlotComponent.() -> Unit = { }) {
+        val component = GhostItemSlotComponent(property, slotIndex)
         component.builder()
         components += component
     }
@@ -99,8 +111,8 @@ open class GUIPage(var extraWidth: Int = 0, var extraHeight: Int = 0, builder: G
         components += component
     }
 
-    fun itemSlot(property: IValueProperty<IItemHandlerModifiable>, x: Int, y: Int, builder: ItemSlotComponent.() -> Unit = { }) {
-        val component = ItemSlotComponent(property, x, y)
+    fun itemSlot(property: IValueProperty<IItemHandlerModifiable>, index: Int, builder: ItemSlotComponent.() -> Unit = { }) {
+        val component = ItemSlotComponent(property, index)
         component.builder()
         components += component
     }
@@ -117,7 +129,7 @@ open class GUIPage(var extraWidth: Int = 0, var extraHeight: Int = 0, builder: G
         components += component
     }
 
-    fun pageButton(property: UpdatePageProperty, page: Int, texture: GUITexture, x: Int, y: Int, builder: PageButtonComponent.() -> Unit = { }) {
+    fun pageButton(property: TEPageProperty, page: Int, texture: GUITexture, x: Int, y: Int, builder: PageButtonComponent.() -> Unit = { }) {
         val component = PageButtonComponent(property, page, texture, x, y)
         component.builder()
         components += component

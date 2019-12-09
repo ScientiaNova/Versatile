@@ -1,12 +1,11 @@
 package com.emosewapixel.pixellib.integration.jei
 
-import com.emosewapixel.pixellib.extensions.isNotEmpty
-import com.emosewapixel.pixellib.extensions.shorten
 import com.emosewapixel.pixellib.extensions.toStack
-import com.emosewapixel.pixellib.machines.gui.layout.components.FluidSlotComponent
-import com.emosewapixel.pixellib.machines.gui.layout.components.ItemSlotComponent
+import com.emosewapixel.pixellib.machines.gui.layout.OffsetGUIComponent
+import com.emosewapixel.pixellib.machines.gui.layout.components.stacksuppliers.IStackSupplierComponent
 import com.emosewapixel.pixellib.machines.recipes.Recipe
 import com.emosewapixel.pixellib.machines.recipes.RecipeList
+import com.emosewapixel.pixellib.machines.recipes.components.grouping.IOType
 import mezz.jei.api.constants.VanillaTypes
 import mezz.jei.api.gui.IRecipeLayout
 import mezz.jei.api.gui.drawable.IDrawable
@@ -14,13 +13,13 @@ import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.ingredients.IIngredients
 import mezz.jei.api.recipe.category.IRecipeCategory
 import net.minecraft.item.ItemStack
-import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.fluids.FluidStack
 
+@Suppress("UNCHECKED_CAST")
 open class MachineBaseCategory(helper: IGuiHelper, protected val recipeList: RecipeList) : IRecipeCategory<Recipe> {
-    val page = recipeList.createComponentGroup()
+    val listGroup = recipeList.createComponentGroup()
 
-    private val background: IDrawable = helper.createBlankDrawable(page.width, page.height)
+    private val background: IDrawable = helper.createBlankDrawable(listGroup.width, listGroup.height)
 
     private val icon = recipeList.blocksImplementing.firstOrNull()?.let { helper.createDrawableIngredient(it.toStack()) }
 
@@ -33,24 +32,26 @@ open class MachineBaseCategory(helper: IGuiHelper, protected val recipeList: Rec
     override fun getIcon() = icon
 
     override fun setIngredients(recipe: Recipe, ingredients: IIngredients) {
-        ingredients.setInputLists(VanillaTypes.ITEM, recipe.inputs.map { pair ->
-            pair.first.stacks.filter(ItemStack::isNotEmpty).map { it.apply { orCreateTag.putFloat("consume_chance", pair.second) } }
-        })
-        ingredients.setInputLists(VanillaTypes.FLUID, recipe.fluidInputs.map { pair ->
-            pair.first.stacks.filter(FluidStack::isNotEmpty).map { it.apply { orCreateTag.putFloat("consume_chance", pair.second) } }
-        })
-        ingredients.setOutputLists(VanillaTypes.ITEM, recipe.outputs.map { map ->
-            map.weightedEntries.map {
-                it.second.stacks.firstOrNull()?.apply { if (isNotEmpty) orCreateTag.putDouble("output_chance", it.first / map.maxWeight.toDouble()) }
-                        ?: ItemStack.EMPTY
-            }.filter(ItemStack::isNotEmpty)
-        })
-        ingredients.setOutputLists(VanillaTypes.FLUID, recipe.fluidOutputs.map { map ->
-            map.weightedEntries.map {
-                it.second.stacks.firstOrNull()?.apply { if (isNotEmpty) orCreateTag.putDouble("output_chance", it.first / map.maxWeight.toDouble()) }
-                        ?: FluidStack.EMPTY
-            }.filter(FluidStack::isNotEmpty)
-        })
+        val ingredientTable = recipe.page.unwrap().map(OffsetGUIComponent::component).filterIsInstance<IStackSupplierComponent<*>>()
+                .groupBy(IStackSupplierComponent<*>::ioType).mapValues { it.value.groupBy(IStackSupplierComponent<*>::type) }
+
+        ingredientTable[IOType.INPUT]?.let { typesMap ->
+            typesMap[ItemStack::class.java]?.let { components ->
+                ingredients.setInputLists(VanillaTypes.ITEM, components.map { (it as IStackSupplierComponent<ItemStack>).getStacks(recipe) })
+            }
+            typesMap[FluidStack::class.java]?.let { components ->
+                ingredients.setInputLists(VanillaTypes.FLUID, components.map { (it as IStackSupplierComponent<FluidStack>).getStacks(recipe) })
+            }
+        }
+
+        ingredientTable[IOType.OUTPUT]?.let { typesMap ->
+            typesMap[ItemStack::class.java]?.let { components ->
+                ingredients.setOutputLists(VanillaTypes.ITEM, components.map { (it as IStackSupplierComponent<ItemStack>).getStacks(recipe) })
+            }
+            typesMap[FluidStack::class.java]?.let { components ->
+                ingredients.setOutputLists(VanillaTypes.FLUID, components.map { (it as IStackSupplierComponent<FluidStack>).getStacks(recipe) })
+            }
+        }
     }
 
     override fun setRecipe(layout: IRecipeLayout, recipe: Recipe, ingredients: IIngredients) {
@@ -61,49 +62,62 @@ open class MachineBaseCategory(helper: IGuiHelper, protected val recipeList: Rec
         val itemOutputs = ingredients.getOutputs(VanillaTypes.ITEM)
         val fluidOutputs = ingredients.getOutputs(VanillaTypes.FLUID)
 
-        page.components.forEach {
-            if (it is ItemSlotComponent) {
-                val isInput = it.slotIndex < recipeList.maxInputs
-                guiItemStacks.init(it.slotIndex, isInput, it.x, it.y)
-                (if (isInput) itemInputs.getOrNull(it.slotIndex) else itemOutputs.getOrNull(it.slotIndex - recipeList.maxInputs))?.let { ingredient ->
-                    guiItemStacks.set(it.slotIndex, ingredient)
-                }
-            }
-            if (it is FluidSlotComponent) {
-                val isInput = it.tankId < recipeList.maxFluidInputs
-                guiFluidStacks.init(it.tankId, isInput, GUIFluidRenderer(), it.x, it.y, 18, 18, 1, 1)
-                (if (isInput) fluidInputs.getOrNull(it.tankId) else fluidOutputs.getOrNull(it.tankId - recipeList.maxFluidInputs))?.let { ingredient ->
-                    guiFluidStacks.set(it.tankId, ingredient)
-                }
-            }
+        val supplierComponents = recipe.page.unwrap().filter { it.component is IStackSupplierComponent<*> }
+        val ingredientMap = supplierComponents.groupBy { (it.component as IStackSupplierComponent<*>).type }
+                .mapValues { entry -> entry.value.filter { (it.component as IStackSupplierComponent<*>).ioType != IOType.NONE } }
+
+        val xOffset = (listGroup.width - recipe.page.width) / 2
+        val yOffset = (listGroup.height - recipe.page.height) / 2
+
+        var itemInputIndex = 0
+
+        ingredientMap[ItemStack::class.java]?.forEachIndexed { index, component ->
+            val supplierComponent = component.component as IStackSupplierComponent<ItemStack>
+            guiItemStacks.init(index,
+                    supplierComponent.ioType == IOType.INPUT,
+                    component.xOffset + xOffset + supplierComponent.x,
+                    component.yOffset + yOffset + supplierComponent.y
+            )
+            guiItemStacks.set(index, if (supplierComponent.ioType == IOType.INPUT) itemInputs[itemInputIndex++] else itemOutputs[index - itemInputIndex])
         }
 
-        guiItemStacks.addTooltipCallback { _, input, stack, tooltips ->
-            if (input) {
-                val consumeChance = stack.orCreateTag.getFloat("consume_chance")
-                if (consumeChance <= 0) tooltips += TranslationTextComponent("extra_recipe_info.not_consumed").string
-                else if (consumeChance < 1) tooltips += TranslationTextComponent("extra_recipe_info.consume_chance", (consumeChance * 100).shorten()).string
-            } else {
-                val outputChance = stack.orCreateTag.getFloat("output_chance")
-                if (outputChance < 1) tooltips += TranslationTextComponent("extra_recipe_info.output_chance", (outputChance * 100).shorten()).string
+        var fluidInputIndex = 0
+
+        ingredientMap[FluidStack::class.java]?.forEachIndexed { index, component ->
+            val supplierComponent = component.component as IStackSupplierComponent<FluidStack>
+            guiFluidStacks.init(index,
+                    supplierComponent.ioType == IOType.INPUT,
+                    GUIFluidRenderer,
+                    component.xOffset + xOffset + supplierComponent.x,
+                    component.yOffset + yOffset + supplierComponent.y,
+                    18, 18, 1, 1
+            )
+            guiFluidStacks.set(index, if (supplierComponent.ioType == IOType.INPUT) fluidInputs[fluidInputIndex++] else fluidOutputs[index - fluidInputIndex])
+        }
+
+        val specialComponents = supplierComponents.groupBy(Any::javaClass).map { it.value.first() }
+                .map { (it.component as IStackSupplierComponent<*>) }.groupBy(IStackSupplierComponent<*>::type)
+
+        guiItemStacks.addTooltipCallback { _, _, stack, tooltips ->
+            specialComponents[ItemStack::class.java]?.fold(tooltips) { acc, component ->
+                acc += (component as IStackSupplierComponent<ItemStack>).getExtraTooltips(stack)
+                acc
             }
         }
-        guiFluidStacks.addTooltipCallback { _, input, stack, tooltips ->
-            if (input) {
-                val consumeChance = stack.orCreateTag.getFloat("consume_chance")
-                if (consumeChance <= 0) tooltips += TranslationTextComponent("extra_recipe_info.not_consumed").string
-                else if (consumeChance < 1) tooltips += TranslationTextComponent("extra_recipe_info.consume_chance", (consumeChance * 100).shorten()).string
-            } else {
-                val outputChance = stack.orCreateTag.getFloat("output_chance")
-                if (outputChance < 1) tooltips += TranslationTextComponent("extra_recipe_info.output_chance", (outputChance * 100).shorten()).string
+        guiFluidStacks.addTooltipCallback { _, _, stack, tooltips ->
+            specialComponents[FluidStack::class.java]?.fold(tooltips) { acc, component ->
+                acc += (component as IStackSupplierComponent<FluidStack>).getExtraTooltips(stack)
+                acc
             }
         }
     }
 
-    override fun draw(recipe: Recipe, mouseX: Double, mouseY: Double) {
-        page.components.forEach { it.drawInBackground(mouseX, mouseY, 0, 0) }
-        recipeList.renderExtraInfo(page, recipe)
-    }
+    override fun draw(recipe: Recipe, mouseX: Double, mouseY: Double) = recipe.page.drawInBackground(
+            mouseX,
+            mouseY,
+            (listGroup.width - recipe.page.width) / 2,
+            (listGroup.height - recipe.page.height) / 2
+    )
 
     @Suppress("UNCHECKED_CAST")
     override fun getRecipeClass() = Recipe::class.java

@@ -10,7 +10,7 @@ import net.minecraftforge.common.util.INBTSerializable
 import net.minecraftforge.fluids.FluidStack
 import net.minecraftforge.fluids.capability.IFluidHandler
 
-open class FluidStackHandler @JvmOverloads constructor(val count: Int, val capacity: Int = 10000) : IFluidHandlerModifiable, INBTSerializable<CompoundNBT> {
+open class FluidStackHandler @JvmOverloads constructor(val count: Int, val capacity: Int = 10_000) : IFluidHandlerModifiable, INBTSerializable<CompoundNBT> {
     protected var tanks: NonNullList<FluidStack> = NonNullList.withSize(count, FluidStack.EMPTY)
 
     override fun drain(resource: FluidStack?, action: IFluidHandler.FluidAction): FluidStack {
