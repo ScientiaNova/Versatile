@@ -1,6 +1,8 @@
-package com.emosewapixel.pixellib.machines.gui.textures
+package com.emosewapixel.pixellib.machines.gui.textures.interactable
 
-data class ButtonTextureGroup @JvmOverloads constructor(val on: GUITexture, val off: GUITexture, val selected: GUITexture = off) : IDrawable {
+import com.emosewapixel.pixellib.machines.gui.textures.IDrawable
+
+data class ButtonTextureGroup @JvmOverloads constructor(val on: IDrawable, val off: IDrawable, val selected: IDrawable = off) : IDrawable {
     override val uStart = 0.0
     override val vStart = 0.0
     override val uEnd = 1.0

@@ -2,7 +2,7 @@ package com.emosewapixel.pixellib.machines.gui.layout.components.bars
 
 import com.emosewapixel.pixellib.machines.gui.layout.components.ITexturedGUIComponent
 import com.emosewapixel.pixellib.machines.gui.textures.BaseTextures
-import com.emosewapixel.pixellib.machines.gui.textures.Direction2D
+import com.emosewapixel.pixellib.machines.gui.textures.updating.Direction2D
 import com.emosewapixel.pixellib.machines.properties.IValueProperty
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn

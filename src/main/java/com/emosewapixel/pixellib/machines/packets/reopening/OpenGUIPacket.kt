@@ -1,4 +1,4 @@
-package com.emosewapixel.pixellib.machines.packets
+package com.emosewapixel.pixellib.machines.packets.reopening
 
 import com.emosewapixel.pixellib.machines.gui.BaseContainerProvider
 import net.minecraft.network.PacketBuffer

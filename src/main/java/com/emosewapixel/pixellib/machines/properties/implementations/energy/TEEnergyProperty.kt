@@ -8,7 +8,7 @@ import com.emosewapixel.pixellib.machines.capabilities.energy.EnergyHandler
 import com.emosewapixel.pixellib.machines.capabilities.energy.IEnergyStorageModifiable
 import com.emosewapixel.pixellib.machines.gui.BaseContainer
 import com.emosewapixel.pixellib.machines.packets.NetworkHandler
-import com.emosewapixel.pixellib.machines.packets.UpdateIntPacket
+import com.emosewapixel.pixellib.machines.packets.primitives.UpdateIntPacket
 import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
 import com.emosewapixel.pixellib.machines.properties.IValueProperty
 import com.google.common.reflect.MutableTypeToInstanceMap

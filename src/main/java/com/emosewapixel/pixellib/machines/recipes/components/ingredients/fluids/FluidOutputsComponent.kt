@@ -16,7 +16,7 @@ import net.minecraftforge.fluids.FluidStack
 import kotlin.math.max
 
 class FluidOutputsComponent(val max: Int, val min: Int = 0, val capacity: Int = 10_000) : IRecipeComponent<List<WeightedMap<IRecipeStack<FluidStack>>>> {
-    override val name = "fluid_outputs"
+    override val name = "fluidOutputs"
     override val family = RecipeComponentFamilies.OUTPUT_SLOTS
 
     override fun isRecipeValid(recipe: Recipe): Boolean {
@@ -25,19 +25,19 @@ class FluidOutputsComponent(val max: Int, val min: Int = 0, val capacity: Int = 
     }
 
     override fun addDefaultProperty(te: BaseTileEntity, properties: MutableList<ITEBoundProperty>) {
-        properties += TEFluidOutputProperty(max, "fluid_outputs", te)
+        properties += TEFluidOutputProperty(max, "fluidOutputs", te)
     }
 
     override fun addGUIComponents(machine: BaseTileEntity?): List<IGUIComponent> =
             machine?.let {
-                val property = it.teProperties["fluid_outputs"] as? TEFluidInventoryProperty ?: return emptyList()
+                val property = it.teProperties["fluidOutputs"] as? TEFluidInventoryProperty ?: return emptyList()
                 (0 until property.value.tanks).map { index -> FluidSlotComponent(property, index) }
             } ?: (0 until max).map(::RecipeOutputFluidStackSupplierSlot)
 
     override fun addRecipeGUIComponents(machine: BaseTileEntity?, recipe: Recipe): List<IGUIComponent> {
         val handler = recipe[this]?.value ?: return emptyList()
         return machine?.let {
-            val property = it.teProperties["fluid_outputs"] as? TEFluidInventoryProperty ?: return emptyList()
+            val property = it.teProperties["fluidOutputs"] as? TEFluidInventoryProperty ?: return emptyList()
             (0 until max(property.value.tanks, handler.size)).map { index -> FluidSlotComponent(property, index) }
         } ?: (handler.indices).map(::RecipeOutputFluidStackSupplierSlot)
     }

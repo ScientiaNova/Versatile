@@ -1,7 +1,7 @@
 package com.emosewapixel.pixellib.machines.gui.layout.components.buttons
 
 import com.emosewapixel.pixellib.machines.gui.layout.components.ITexturedGUIComponent
-import com.emosewapixel.pixellib.machines.gui.textures.AnimatedGUITexture
+import com.emosewapixel.pixellib.machines.gui.textures.updating.AnimatedGUITexture
 import com.emosewapixel.pixellib.machines.properties.ILimitedIntegerProperty
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn

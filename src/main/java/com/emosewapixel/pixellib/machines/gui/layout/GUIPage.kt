@@ -14,9 +14,9 @@ import com.emosewapixel.pixellib.machines.gui.layout.components.slots.PlayerSlot
 import com.emosewapixel.pixellib.machines.gui.layout.components.still.ImageComponent
 import com.emosewapixel.pixellib.machines.gui.layout.components.still.InventoryLabelComponent
 import com.emosewapixel.pixellib.machines.gui.layout.components.still.LabelComponent
-import com.emosewapixel.pixellib.machines.gui.textures.AnimatedGUITexture
-import com.emosewapixel.pixellib.machines.gui.textures.ButtonTextureGroup
-import com.emosewapixel.pixellib.machines.gui.textures.GUITexture
+import com.emosewapixel.pixellib.machines.gui.textures.updating.AnimatedGUITexture
+import com.emosewapixel.pixellib.machines.gui.textures.interactable.ButtonTextureGroup
+import com.emosewapixel.pixellib.machines.gui.textures.still.GUITexture
 import com.emosewapixel.pixellib.machines.properties.ILimitedIntegerProperty
 import com.emosewapixel.pixellib.machines.properties.IValueProperty
 import com.emosewapixel.pixellib.machines.properties.IVariableProperty
@@ -56,7 +56,7 @@ open class GUIPage(var extraWidth: Int = 0, var extraHeight: Int = 0, builder: G
         inventoryLabel(xStart, yStart)
 
         val mainY = yStart + 11
-        for (index in 9..35) {
+        for (index in 9 until 36) {
             val x = xStart + index % 9 * 18
             val y = mainY + index / 9 * 18 - 18
             playerSlot(index, x, y)

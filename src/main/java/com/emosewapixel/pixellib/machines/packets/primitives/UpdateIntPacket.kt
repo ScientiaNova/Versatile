@@ -1,4 +1,4 @@
-package com.emosewapixel.pixellib.machines.packets
+package com.emosewapixel.pixellib.machines.packets.primitives
 
 import com.emosewapixel.pixellib.machines.gui.BaseContainer
 import com.emosewapixel.pixellib.machines.properties.IVariableProperty

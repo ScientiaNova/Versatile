@@ -4,7 +4,7 @@ import com.emosewapixel.pixellib.extensions.nbt
 import com.emosewapixel.pixellib.machines.BaseTileEntity
 import com.emosewapixel.pixellib.machines.gui.BaseContainer
 import com.emosewapixel.pixellib.machines.packets.NetworkHandler
-import com.emosewapixel.pixellib.machines.packets.UpdateIntPacket
+import com.emosewapixel.pixellib.machines.packets.primitives.UpdateIntPacket
 import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
 import com.emosewapixel.pixellib.machines.properties.IVariableProperty
 import net.minecraft.entity.player.ServerPlayerEntity

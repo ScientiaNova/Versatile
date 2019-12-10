@@ -2,14 +2,16 @@ package com.emosewapixel.pixellib.machines.recipes
 
 import com.emosewapixel.pixellib.PixelLib
 import com.emosewapixel.pixellib.machines.BaseTileEntity
+import com.emosewapixel.pixellib.machines.gui.BaseContainer
 import com.emosewapixel.pixellib.machines.gui.layout.DefaultSizeConstants
 import com.emosewapixel.pixellib.machines.gui.layout.GUIComponentGroup
 import com.emosewapixel.pixellib.machines.gui.layout.GUIPage
 import com.emosewapixel.pixellib.machines.gui.layout.IGUIComponent
 import com.emosewapixel.pixellib.machines.gui.textures.BaseTextures
-import com.emosewapixel.pixellib.machines.gui.textures.ProgressBar
+import com.emosewapixel.pixellib.machines.gui.textures.updating.ProgressBar
 import com.emosewapixel.pixellib.machines.properties.IValueProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.primitives.IncrementingDoubleProperty
+import com.emosewapixel.pixellib.machines.properties.implementations.recipes.RecipeProperty
 import com.emosewapixel.pixellib.machines.recipes.components.IRecipeComponent
 import com.emosewapixel.pixellib.machines.recipes.components.grouping.IOType
 import com.google.common.collect.HashMultimap
@@ -26,6 +28,9 @@ open class RecipeList(val name: ResourceLocation, vararg components: IRecipeComp
     val inputMap = HashMultimap.create<String, Recipe>()
     val localizedName = TranslationTextComponent("recipe_list.$name")
     val recipeComponents = components.groupBy(IRecipeComponent<*>::name).mapValues { it.value.first() }
+    open val recipeTransferFunction: ((Recipe, BaseContainer) -> Unit)? = { recipe, container ->
+        (container.te.teProperties["recipe"] as? RecipeProperty)?.setValue(recipe)
+    }
 
     init {
         RecipeLists += this

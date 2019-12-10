@@ -11,7 +11,7 @@ import com.emosewapixel.pixellib.machines.gui.layout.components.ITexturedGUIComp
 import com.emosewapixel.pixellib.machines.gui.textures.BaseTextures
 import com.emosewapixel.pixellib.machines.packets.NetworkHandler
 import com.emosewapixel.pixellib.machines.packets.UpdateHeldStackPacket
-import com.emosewapixel.pixellib.machines.packets.UpdateTankPacket
+import com.emosewapixel.pixellib.machines.packets.handlers.UpdateTankPacket
 import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
 import com.emosewapixel.pixellib.machines.properties.IValueProperty
 import net.minecraft.client.Minecraft
@@ -50,7 +50,7 @@ open class FluidSlotComponent(val property: IValueProperty<out IFluidHandlerModi
             else
                 listOf(fluid.fluid.attributes.getDisplayName(fluid).string, "${fluid.amount}/${handler.getTankCapacity(tankIndex)} mB", TranslationTextComponent("gui.tooltip.tank_empty").formattedText)
 
-            GUiUtils.renderTooltip(tooltips, mouseX - guiLeft, mouseY - guiTop)
+            GUiUtils.drawTooltip(tooltips, mouseX - guiLeft, mouseY - guiTop)
         }
     }
 

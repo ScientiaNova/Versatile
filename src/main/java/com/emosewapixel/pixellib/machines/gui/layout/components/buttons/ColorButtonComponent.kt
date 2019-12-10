@@ -5,7 +5,7 @@ import com.emosewapixel.pixellib.extensions.blueF
 import com.emosewapixel.pixellib.extensions.greenF
 import com.emosewapixel.pixellib.extensions.redF
 import com.emosewapixel.pixellib.machines.gui.layout.components.ITexturedGUIComponent
-import com.emosewapixel.pixellib.machines.gui.textures.GUITexture
+import com.emosewapixel.pixellib.machines.gui.textures.still.GUITexture
 import com.emosewapixel.pixellib.machines.properties.ILimitedIntegerProperty
 import com.mojang.blaze3d.platform.GlStateManager
 import net.minecraftforge.api.distmarker.Dist

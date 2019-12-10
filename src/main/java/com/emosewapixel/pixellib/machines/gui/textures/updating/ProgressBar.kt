@@ -1,4 +1,7 @@
-package com.emosewapixel.pixellib.machines.gui.textures
+package com.emosewapixel.pixellib.machines.gui.textures.updating
+
+import com.emosewapixel.pixellib.machines.gui.textures.IDrawable
+import com.emosewapixel.pixellib.machines.gui.textures.still.GUITexture
 
 data class ProgressBar(val background: GUITexture, val fill: GUITexture) : IDrawable {
     override val uStart = background.uStart

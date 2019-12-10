@@ -10,7 +10,7 @@ import com.emosewapixel.pixellib.machines.capabilities.fluids.FluidStackHandler
 import com.emosewapixel.pixellib.machines.capabilities.fluids.IFluidHandlerModifiable
 import com.emosewapixel.pixellib.machines.gui.BaseContainer
 import com.emosewapixel.pixellib.machines.packets.NetworkHandler
-import com.emosewapixel.pixellib.machines.packets.UpdateTankPacket
+import com.emosewapixel.pixellib.machines.packets.handlers.UpdateTankPacket
 import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
 import com.emosewapixel.pixellib.machines.properties.IValueProperty
 import com.google.common.reflect.MutableTypeToInstanceMap

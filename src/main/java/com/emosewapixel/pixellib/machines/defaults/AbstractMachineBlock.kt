@@ -1,6 +1,8 @@
-package com.emosewapixel.pixellib.machines
+package com.emosewapixel.pixellib.machines.defaults
 
 import com.emosewapixel.pixellib.blocks.ModBlock
+import com.emosewapixel.pixellib.machines.BaseTileEntity
+import com.emosewapixel.pixellib.machines.IMachineBlock
 import com.emosewapixel.pixellib.machines.gui.BaseContainerProvider
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity

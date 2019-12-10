@@ -1,7 +1,8 @@
-package com.emosewapixel.pixellib.machines.gui.textures
+package com.emosewapixel.pixellib.machines.gui.textures.still
 
 import com.emosewapixel.pixellib.extensions.toResLoc
 import com.emosewapixel.pixellib.machines.gui.GUiUtils
+import com.emosewapixel.pixellib.machines.gui.textures.IDrawable
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn

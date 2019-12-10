@@ -8,7 +8,7 @@ import com.emosewapixel.pixellib.machines.BaseTileEntity
 import com.emosewapixel.pixellib.machines.capabilities.items.ItemCapabilityWrapper
 import com.emosewapixel.pixellib.machines.gui.BaseContainer
 import com.emosewapixel.pixellib.machines.packets.NetworkHandler
-import com.emosewapixel.pixellib.machines.packets.UpdateSlotPacket
+import com.emosewapixel.pixellib.machines.packets.handlers.UpdateSlotPacket
 import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
 import com.emosewapixel.pixellib.machines.properties.IValueProperty
 import com.google.common.reflect.MutableTypeToInstanceMap

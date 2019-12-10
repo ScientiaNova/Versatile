@@ -90,12 +90,12 @@ object GUiUtils {
     }
 
     @JvmStatic
-    fun renderTooltip(tooltips: List<String>, x: Double, y: Double) = GuiUtils.drawHoveringText(tooltips, x.toInt(), y.toInt(), mc.mainWindow.scaledWidth, mc.mainWindow.scaledHeight, -1, mc.fontRenderer)
+    fun drawTooltip(tooltips: List<String>, x: Double, y: Double) = GuiUtils.drawHoveringText(tooltips, x.toInt(), y.toInt(), mc.mainWindow.scaledWidth, mc.mainWindow.scaledHeight, -1, mc.fontRenderer)
 
     @JvmStatic
-    fun renderTooltip(stack: ItemStack, x: Double, y: Double) {
+    fun drawTooltip(stack: ItemStack, x: Double, y: Double) {
         GuiUtils.preItemToolTip(stack)
-        this.renderTooltip(this.getTooltipsFromItem(stack), x, y)
+        this.drawTooltip(this.getTooltipsFromItem(stack), x, y)
         GuiUtils.postItemToolTip()
     }
 

@@ -3,9 +3,9 @@ package com.emosewapixel.pixellib.machines.properties.implementations
 import com.emosewapixel.pixellib.extensions.nbt
 import com.emosewapixel.pixellib.machines.BaseTileEntity
 import com.emosewapixel.pixellib.machines.gui.BaseContainer
-import com.emosewapixel.pixellib.machines.packets.ChangePagePacket
+import com.emosewapixel.pixellib.machines.packets.reopening.ChangePagePacket
 import com.emosewapixel.pixellib.machines.packets.NetworkHandler
-import com.emosewapixel.pixellib.machines.packets.ReopenGUIPacket
+import com.emosewapixel.pixellib.machines.packets.reopening.ReopenGUIPacket
 import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.nbt.CompoundNBT
@@ -21,7 +21,6 @@ open class TEPageProperty(override val te: BaseTileEntity) : ITEBoundProperty {
     }
 
     fun setPage(pageId: Int) {
-        te.guiLayout.current = te.guiLayout.pages.getOrElse(pageId) { te.guiLayout.pages[0] }()
         if (FMLEnvironment.dist.isClient)
             NetworkHandler.CHANNEL.sendToServer(ChangePagePacket(te.pos, pageId))
     }

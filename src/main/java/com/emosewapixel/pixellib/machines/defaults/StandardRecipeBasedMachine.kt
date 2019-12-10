@@ -1,21 +1,22 @@
-package com.emosewapixel.pixellib.machines
+package com.emosewapixel.pixellib.machines.defaults
 
+import com.emosewapixel.pixellib.machines.BaseTileEntity
 import com.emosewapixel.pixellib.machines.gui.layout.DefaultSizeConstants
 import com.emosewapixel.pixellib.machines.gui.layout.GUIBook
 import com.emosewapixel.pixellib.machines.gui.layout.book
 import com.emosewapixel.pixellib.machines.gui.layout.components.still.LabelComponent
 import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
-import com.emosewapixel.pixellib.machines.properties.implementations.TERecipeProperty
+import com.emosewapixel.pixellib.machines.properties.implementations.recipes.TEStandardRecipeProperty
 import com.emosewapixel.pixellib.machines.recipes.RecipeList
 import kotlin.math.max
 
-open class RecipeBasedMachine(recipeList: RecipeList, properties: Properties, name: String = recipeList.name.toString()) : AbstractMachineBlock(properties, name) {
+open class StandardRecipeBasedMachine(recipeList: RecipeList, properties: Properties, name: String = recipeList.name.toString()) : AbstractMachineBlock(properties, name) {
     init {
         recipeList.blocksImplementing += this
     }
 
     override val teProperties: BaseTileEntity.() -> List<ITEBoundProperty> = {
-        recipeList.recipeComponents.values.fold(mutableListOf<ITEBoundProperty>(TERecipeProperty(recipeList, "recipe", this))) { list, component ->
+        recipeList.recipeComponents.values.fold(mutableListOf<ITEBoundProperty>(TEStandardRecipeProperty(recipeList, "recipe", this))) { list, component ->
             component.addDefaultProperty(this, list)
             list
         }
@@ -37,7 +38,7 @@ open class RecipeBasedMachine(recipeList: RecipeList, properties: Properties, na
                     height = pageHeight
                 }
 
-                label(this@RecipeBasedMachine.nameTextComponent.formattedText, pageWidth / 2, 6) {
+                label(this@StandardRecipeBasedMachine.nameTextComponent.formattedText, pageWidth / 2, 6) {
                     location = LabelComponent.LabelLocation.CENTER
                 }
 

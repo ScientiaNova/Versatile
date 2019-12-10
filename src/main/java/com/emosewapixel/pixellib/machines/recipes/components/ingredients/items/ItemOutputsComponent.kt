@@ -16,7 +16,7 @@ import net.minecraft.item.ItemStack
 import kotlin.math.max
 
 class ItemOutputsComponent(val max: Int, val min: Int = 0) : IRecipeComponent<List<WeightedMap<IRecipeStack<ItemStack>>>> {
-    override val name = "item_outputs"
+    override val name = "itemOutputs"
     override val family = RecipeComponentFamilies.OUTPUT_SLOTS
 
     override fun isRecipeValid(recipe: Recipe): Boolean {
@@ -25,19 +25,19 @@ class ItemOutputsComponent(val max: Int, val min: Int = 0) : IRecipeComponent<Li
     }
 
     override fun addDefaultProperty(te: BaseTileEntity, properties: MutableList<ITEBoundProperty>) {
-        properties += TEItemOutputProperty(max, "item_outputs", te)
+        properties += TEItemOutputProperty(max, "itemOutputs", te)
     }
 
     override fun addGUIComponents(machine: BaseTileEntity?): List<IGUIComponent> =
             machine?.let {
-                val property = it.teProperties["item_outputs"] as? TEItemInventoryProperty ?: return emptyList()
+                val property = it.teProperties["itemOutputs"] as? TEItemInventoryProperty ?: return emptyList()
                 (0 until property.value.slots).map { index -> ItemSlotComponent(property, index) }
             } ?: (0 until max).map(::RecipeOutputItemStackSupplierSlot)
 
     override fun addRecipeGUIComponents(machine: BaseTileEntity?, recipe: Recipe): List<IGUIComponent> {
         val handler = recipe[this]?.value ?: return emptyList()
         return machine?.let {
-            val property = it.teProperties["item_outputs"] as? TEItemInventoryProperty ?: return emptyList()
+            val property = it.teProperties["itemOutputs"] as? TEItemInventoryProperty ?: return emptyList()
             (0 until max(property.value.slots, handler.size)).map { index -> ItemSlotComponent(property, index) }
         } ?: (handler.indices).map(::RecipeOutputItemStackSupplierSlot)
     }

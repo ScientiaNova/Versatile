@@ -1,8 +1,8 @@
 package com.emosewapixel.pixellib.machines.gui.layout.components.buttons
 
 import com.emosewapixel.pixellib.machines.gui.layout.components.ITexturedGUIComponent
-import com.emosewapixel.pixellib.machines.gui.textures.ButtonDrawMode
-import com.emosewapixel.pixellib.machines.gui.textures.ButtonTextureGroup
+import com.emosewapixel.pixellib.machines.gui.textures.interactable.ButtonDrawMode
+import com.emosewapixel.pixellib.machines.gui.textures.interactable.ButtonTextureGroup
 import com.emosewapixel.pixellib.machines.properties.IVariableProperty
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn

@@ -1,5 +1,8 @@
 package com.emosewapixel.pixellib.machines.gui.textures
 
+import com.emosewapixel.pixellib.machines.gui.textures.still.GUITexture
+import com.emosewapixel.pixellib.machines.gui.textures.updating.ProgressBar
+
 object BaseTextures {
     @JvmField
     val BACKGROUND = GUITexture("pixellib:textures/gui/background.png")

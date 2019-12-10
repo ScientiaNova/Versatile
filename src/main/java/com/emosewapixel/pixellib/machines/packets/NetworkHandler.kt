@@ -1,6 +1,15 @@
 package com.emosewapixel.pixellib.machines.packets
 
 import com.emosewapixel.pixellib.PixelLib
+import com.emosewapixel.pixellib.machines.packets.handlers.UpdateEnergyPacket
+import com.emosewapixel.pixellib.machines.packets.handlers.UpdateSlotPacket
+import com.emosewapixel.pixellib.machines.packets.handlers.UpdateTankPacket
+import com.emosewapixel.pixellib.machines.packets.primitives.UpdateBooleanPacket
+import com.emosewapixel.pixellib.machines.packets.primitives.UpdateIntPacket
+import com.emosewapixel.pixellib.machines.packets.reopening.ChangePagePacket
+import com.emosewapixel.pixellib.machines.packets.reopening.OpenGUIPacket
+import com.emosewapixel.pixellib.machines.packets.reopening.ReopenGUIPacket
+import com.emosewapixel.pixellib.machines.packets.reopening.UpdateRecipePacket
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fml.network.NetworkRegistry
 import net.minecraftforge.fml.network.simple.SimpleChannel

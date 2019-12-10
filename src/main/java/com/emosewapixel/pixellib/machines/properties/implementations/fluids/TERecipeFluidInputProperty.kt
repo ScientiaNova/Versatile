@@ -2,7 +2,7 @@ package com.emosewapixel.pixellib.machines.properties.implementations.fluids
 
 import com.emosewapixel.pixellib.machines.BaseTileEntity
 import com.emosewapixel.pixellib.machines.capabilities.fluids.RecipeInputFluidStackHandler
-import com.emosewapixel.pixellib.machines.properties.implementations.RecipeProperty
+import com.emosewapixel.pixellib.machines.properties.implementations.recipes.RecipeProperty
 
 class TERecipeFluidInputProperty(override val value: RecipeInputFluidStackHandler, id: String, te: BaseTileEntity) : TEFluidInputProperty(value, id, te) {
     constructor(tanks: Int, recipeProperty: RecipeProperty, id: String, te: BaseTileEntity, capacity: Int = 10_000) : this(

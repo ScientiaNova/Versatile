@@ -1,8 +1,10 @@
 package com.emosewapixel.pixellib.integration.jei
 
 import com.emosewapixel.pixellib.extensions.toStack
+import com.emosewapixel.pixellib.machines.gui.BaseContainer
 import com.emosewapixel.pixellib.machines.gui.layout.OffsetGUIComponent
 import com.emosewapixel.pixellib.machines.gui.layout.components.stacksuppliers.IStackSupplierComponent
+import com.emosewapixel.pixellib.machines.properties.implementations.recipes.RecipeProperty
 import com.emosewapixel.pixellib.machines.recipes.Recipe
 import com.emosewapixel.pixellib.machines.recipes.RecipeList
 import com.emosewapixel.pixellib.machines.recipes.components.grouping.IOType
@@ -12,6 +14,7 @@ import mezz.jei.api.gui.drawable.IDrawable
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.ingredients.IIngredients
 import mezz.jei.api.recipe.category.IRecipeCategory
+import net.minecraft.client.Minecraft
 import net.minecraft.item.ItemStack
 import net.minecraftforge.fluids.FluidStack
 
@@ -112,13 +115,26 @@ open class MachineBaseCategory(helper: IGuiHelper, protected val recipeList: Rec
         }
     }
 
-    override fun draw(recipe: Recipe, mouseX: Double, mouseY: Double) = recipe.page.drawInBackground(
-            mouseX,
-            mouseY,
-            (listGroup.width - recipe.page.width) / 2,
-            (listGroup.height - recipe.page.height) / 2
-    )
+    override fun draw(recipe: Recipe, mouseX: Double, mouseY: Double) {
+        recipe.page.drawInBackground(mouseX, mouseY, (listGroup.width - recipe.page.width) / 2, (listGroup.height - recipe.page.height) / 2)
+        if (recipeList.recipeTransferFunction != null)
+            ((Minecraft.getInstance().player.openContainer as? BaseContainer)?.te?.teProperties?.get("recipe") as? RecipeProperty)?.let { recipeProperty ->
+                if (recipeProperty.recipeList === recipeList) {
+                    TransferButton.drawInBackground(mouseX, mouseY, listGroup.width + 6, listGroup.height - 13)
+                    TransferButton.drawInForeground(mouseX, mouseY, listGroup.width + 6, listGroup.height - 13)
+                }
+            }
+    }
 
-    @Suppress("UNCHECKED_CAST")
+    override fun handleClick(recipe: Recipe, mouseX: Double, mouseY: Double, mouseButton: Int): Boolean {
+        recipeList.recipeTransferFunction?.let {
+            if (TransferButton.isSelected(mouseX - (listGroup.width + 6), mouseY - (listGroup.height - 13))) {
+                it.invoke(recipe, Minecraft.getInstance().player.openContainer as BaseContainer)
+                return true
+            }
+        }
+        return false
+    }
+
     override fun getRecipeClass() = Recipe::class.java
 }

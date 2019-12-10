@@ -1,29 +1,31 @@
-package com.emosewapixel.pixellib.machines.packets
+package com.emosewapixel.pixellib.machines.packets.handlers
 
+import com.emosewapixel.pixellib.extensions.readFluidStack
+import com.emosewapixel.pixellib.extensions.writeFluidStack
+import com.emosewapixel.pixellib.machines.capabilities.fluids.IFluidHandlerModifiable
 import com.emosewapixel.pixellib.machines.gui.BaseContainer
 import com.emosewapixel.pixellib.machines.properties.IValueProperty
 import net.minecraft.client.Minecraft
-import net.minecraft.item.ItemStack
 import net.minecraft.network.PacketBuffer
+import net.minecraftforge.fluids.FluidStack
 import net.minecraftforge.fml.DistExecutor
 import net.minecraftforge.fml.network.NetworkEvent
-import net.minecraftforge.items.IItemHandlerModifiable
 import java.util.function.Supplier
 
-class UpdateSlotPacket(val property: String, val index: Int, val stack: ItemStack) {
+class UpdateTankPacket(val property: String, val index: Int, val stack: FluidStack) {
     fun encode(buffer: PacketBuffer) {
         buffer.writeString(property)
         buffer.writeVarInt(index)
-        buffer.writeItemStack(stack)
+        buffer.writeFluidStack(stack)
     }
 
     companion object {
         @JvmStatic
-        fun decode(buffer: PacketBuffer) = UpdateSlotPacket(buffer.readString(), buffer.readVarInt(), buffer.readItemStack())
+        fun decode(buffer: PacketBuffer) = UpdateTankPacket(buffer.readString(), buffer.readVarInt(), buffer.readFluidStack())
 
         @JvmStatic
         @Suppress("UNCHECKED_CAST")
-        fun processPacket(packet: UpdateSlotPacket, context: Supplier<NetworkEvent.Context>) {
+        fun processPacket(packet: UpdateTankPacket, context: Supplier<NetworkEvent.Context>) {
             context.get().enqueueWork {
                 val serverSideContainer = context.get().sender?.openContainer as? BaseContainer
                 val container = DistExecutor.runForDist(
@@ -34,10 +36,10 @@ class UpdateSlotPacket(val property: String, val index: Int, val stack: ItemStac
                         },
                         { Supplier { serverSideContainer } }
                 )
-                (container?.te?.teProperties?.get(packet.property) as? IValueProperty<IItemHandlerModifiable>)
-                        ?.value?.setStackInSlot(packet.index, packet.stack)
-                (container?.clientProperties?.get(packet.property) as? IValueProperty<IItemHandlerModifiable>)
-                        ?.value?.setStackInSlot(packet.index, packet.stack.copy())
+                (container?.te?.teProperties?.get(packet.property) as? IValueProperty<IFluidHandlerModifiable>)
+                        ?.value?.setFluidInTank(packet.index, packet.stack)
+                (container?.clientProperties?.get(packet.property) as? IValueProperty<IFluidHandlerModifiable>)
+                        ?.value?.setFluidInTank(packet.index, packet.stack.copy())
             }
             context.get().packetHandled = true
         }

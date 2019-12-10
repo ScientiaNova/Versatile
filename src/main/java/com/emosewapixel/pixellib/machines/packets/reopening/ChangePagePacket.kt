@@ -1,4 +1,4 @@
-package com.emosewapixel.pixellib.machines.packets
+package com.emosewapixel.pixellib.machines.packets.reopening
 
 import com.emosewapixel.pixellib.machines.BaseTileEntity
 import net.minecraft.network.PacketBuffer
@@ -19,9 +19,11 @@ class ChangePagePacket(val pos: BlockPos, val pageId: Int) {
         @JvmStatic
         fun processPacket(packet: ChangePagePacket, context: Supplier<NetworkEvent.Context>) {
             context.get().enqueueWork {
-                val layout = (context.get().sender?.world?.getTileEntity(packet.pos) as? BaseTileEntity)?.guiLayout
-                layout?.current = layout?.get(packet.pageId)!!()
+                (context.get().sender?.world?.getTileEntity(packet.pos) as? BaseTileEntity)?.guiLayout?.let { layout ->
+                    layout.current = layout[packet.pageId]()
+                }
             }
+            context.get().packetHandled = true
         }
     }
 }

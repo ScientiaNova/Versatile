@@ -1,27 +1,26 @@
-package com.emosewapixel.pixellib.machines.packets
+package com.emosewapixel.pixellib.machines.packets.primitives
 
-import com.emosewapixel.pixellib.machines.capabilities.energy.IEnergyStorageModifiable
 import com.emosewapixel.pixellib.machines.gui.BaseContainer
-import com.emosewapixel.pixellib.machines.properties.IValueProperty
+import com.emosewapixel.pixellib.machines.properties.IVariableProperty
 import net.minecraft.client.Minecraft
 import net.minecraft.network.PacketBuffer
 import net.minecraftforge.fml.DistExecutor
 import net.minecraftforge.fml.network.NetworkEvent
 import java.util.function.Supplier
 
-class UpdateEnergyPacket(val property: String, val value: Int) {
+class UpdateBooleanPacket(val property: String, val value: Boolean) {
     fun encode(buffer: PacketBuffer) {
         buffer.writeString(property)
-        buffer.writeVarInt(value)
+        buffer.writeBoolean(value)
     }
 
     companion object {
         @JvmStatic
-        fun decode(buffer: PacketBuffer) = UpdateEnergyPacket(buffer.readString(), buffer.readVarInt())
+        fun decode(buffer: PacketBuffer) = UpdateBooleanPacket(buffer.readString(), buffer.readBoolean())
 
         @JvmStatic
         @Suppress("UNCHECKED_CAST")
-        fun processPacket(packet: UpdateEnergyPacket, context: Supplier<NetworkEvent.Context>) {
+        fun processPacket(packet: UpdateBooleanPacket, context: Supplier<NetworkEvent.Context>) {
             context.get().enqueueWork {
                 val serverSideContainer = context.get().sender?.openContainer as? BaseContainer
                 val container = DistExecutor.runForDist(
@@ -32,8 +31,10 @@ class UpdateEnergyPacket(val property: String, val value: Int) {
                         },
                         { Supplier { serverSideContainer } }
                 )
-                (container?.te?.teProperties?.get(packet.property) as? IValueProperty<IEnergyStorageModifiable>)?.value?.energyStored = packet.value
-                (container?.clientProperties?.get(packet.property) as? IValueProperty<IEnergyStorageModifiable>)?.value?.energyStored = packet.value
+                (container?.te?.teProperties?.get(packet.property) as? IVariableProperty<Boolean>)
+                        ?.setValue(packet.value, false)
+                (container?.clientProperties?.get(packet.property) as? IVariableProperty<Boolean>)
+                        ?.setValue(packet.value, false)
             }
             context.get().packetHandled = true
         }

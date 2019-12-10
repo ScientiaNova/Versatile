@@ -6,10 +6,11 @@ import com.emosewapixel.pixellib.machines.gui.layout.components.slots.ItemSlotCo
 import com.emosewapixel.pixellib.machines.gui.layout.components.slots.RecipeItemSlotComponent
 import com.emosewapixel.pixellib.machines.gui.layout.components.stacksuppliers.RecipeInputItemStackSupplierSlot
 import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
-import com.emosewapixel.pixellib.machines.properties.implementations.RecipeProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.items.TEItemInputProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.items.TEItemInventoryProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.items.TERecipeItemInputProperty
+import com.emosewapixel.pixellib.machines.properties.implementations.recipes.RecipeProperty
+import com.emosewapixel.pixellib.machines.properties.implementations.recipes.TEAutomationRecipeProperty
 import com.emosewapixel.pixellib.machines.recipes.Recipe
 import com.emosewapixel.pixellib.machines.recipes.RecipeList
 import com.emosewapixel.pixellib.machines.recipes.StackToRecipeStackHashConversion
@@ -20,7 +21,7 @@ import net.minecraft.item.ItemStack
 import kotlin.math.max
 
 class ItemInputsComponent(val max: Int, val min: Int = 0) : IRecipeComponent<List<Pair<IRecipeStack<ItemStack>, Float>>> {
-    override val name = "item_inputs"
+    override val name = "itemInputs"
     override val family = RecipeComponentFamilies.INPUT_SLOTS
 
     override fun isRecipeValid(recipe: Recipe): Boolean {
@@ -29,8 +30,8 @@ class ItemInputsComponent(val max: Int, val min: Int = 0) : IRecipeComponent<Lis
     }
 
     override fun addDefaultProperty(te: BaseTileEntity, properties: MutableList<ITEBoundProperty>) {
-        properties += properties.firstOrNull { it is RecipeProperty }?.let { TERecipeItemInputProperty(max, it as RecipeProperty, "item_inputs", te) }
-                ?: TEItemInputProperty(max, "item_inputs", te)
+        properties += properties.firstOrNull { it is TEAutomationRecipeProperty }?.let { TERecipeItemInputProperty(max, it as RecipeProperty, "itemInputs", te) }
+                ?: TEItemInputProperty(max, "itemInputs", te)
     }
 
     override fun onRecipeAdded(recipe: Recipe) {
@@ -45,7 +46,7 @@ class ItemInputsComponent(val max: Int, val min: Int = 0) : IRecipeComponent<Lis
         }
     }
 
-    override fun findRecipe(recipeList: RecipeList, recipes: List<Recipe>, machine: BaseTileEntity) = (machine.teProperties["item_inputs"] as? TEItemInventoryProperty)?.value?.let { stackHandler ->
+    override fun findRecipe(recipeList: RecipeList, recipes: List<Recipe>, machine: BaseTileEntity) = (machine.teProperties["itemInputs"] as? TEItemInventoryProperty)?.value?.let { stackHandler ->
         (0 until stackHandler.slots).map { slot ->
             val stack = stackHandler.getStackInSlot(slot)
             StackToRecipeStackHashConversion.convertItemStack(stack).mapNotNull { recipeList.inputMap[it]?.filterNotNull() }
@@ -55,14 +56,14 @@ class ItemInputsComponent(val max: Int, val min: Int = 0) : IRecipeComponent<Lis
 
     override fun addGUIComponents(machine: BaseTileEntity?): List<IGUIComponent> =
             machine?.let {
-                val property = it.teProperties["item_inputs"] as? TEItemInventoryProperty ?: return emptyList()
+                val property = it.teProperties["itemInputs"] as? TEItemInventoryProperty ?: return emptyList()
                 (0 until property.value.slots).map { index -> ItemSlotComponent(property, index) }
             } ?: (0 until max).map(::RecipeInputItemStackSupplierSlot)
 
     override fun addRecipeGUIComponents(machine: BaseTileEntity?, recipe: Recipe): List<IGUIComponent> {
         val handler = recipe[this]?.value ?: return emptyList()
         return machine?.let {
-            val property = it.teProperties["item_inputs"] as? TEItemInventoryProperty ?: return emptyList()
+            val property = it.teProperties["itemInputs"] as? TEItemInventoryProperty ?: return emptyList()
             if (property is TERecipeItemInputProperty)
                 (0 until max(property.value.slots, handler.size)).map { index -> RecipeItemSlotComponent(property, index) }
             else

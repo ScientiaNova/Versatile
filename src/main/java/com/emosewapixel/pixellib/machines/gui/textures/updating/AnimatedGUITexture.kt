@@ -1,5 +1,7 @@
-package com.emosewapixel.pixellib.machines.gui.textures
+package com.emosewapixel.pixellib.machines.gui.textures.updating
 
+import com.emosewapixel.pixellib.machines.gui.textures.IDrawable
+import com.emosewapixel.pixellib.machines.gui.textures.still.GUITexture
 import net.minecraft.util.ResourceLocation
 
 data class AnimatedGUITexture @JvmOverloads constructor(val frames: List<GUITexture>, val tickDelay: Int = 1) : IDrawable {

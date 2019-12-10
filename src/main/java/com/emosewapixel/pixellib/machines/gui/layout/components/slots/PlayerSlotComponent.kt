@@ -10,7 +10,6 @@ open class PlayerSlotComponent(val slotIndex: Int, override var x: Int, override
     override var width = 18
     override var height = 18
 
-
     override fun isSelected(mouseX: Double, mouseY: Double) = x + 1 < mouseX && mouseX < x + width - 2 && y + 1 < mouseY && mouseY < y + height - 2
 
     override fun addSlots(playerInv: PlayerInventory, xOffset: Int, yOffset: Int) = listOf(PlayerSlot(playerInv, slotIndex, xOffset + (width - 16) / 2 + x, yOffset + (height - 16) / 2 + y))

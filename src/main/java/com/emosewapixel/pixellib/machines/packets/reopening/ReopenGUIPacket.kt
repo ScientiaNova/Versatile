@@ -1,5 +1,6 @@
-package com.emosewapixel.pixellib.machines.packets
+package com.emosewapixel.pixellib.machines.packets.reopening
 
+import com.emosewapixel.pixellib.machines.packets.NetworkHandler
 import net.minecraft.client.Minecraft
 import net.minecraft.inventory.container.ContainerType
 import net.minecraft.network.PacketBuffer

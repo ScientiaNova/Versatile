@@ -1,7 +1,7 @@
 package com.emosewapixel.pixellib.machines.gui
 
 import com.emosewapixel.pixellib.machines.packets.NetworkHandler
-import com.emosewapixel.pixellib.machines.packets.OpenGUIPacket
+import com.emosewapixel.pixellib.machines.packets.reopening.OpenGUIPacket
 import net.minecraft.client.gui.screen.inventory.ContainerScreen
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.util.text.ITextComponent

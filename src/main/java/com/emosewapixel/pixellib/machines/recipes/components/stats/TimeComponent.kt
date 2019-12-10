@@ -1,10 +1,11 @@
-package com.emosewapixel.pixellib.machines.recipes.components
+package com.emosewapixel.pixellib.machines.recipes.components.stats
 
 import com.emosewapixel.pixellib.extensions.shorten
 import com.emosewapixel.pixellib.machines.BaseTileEntity
 import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.primitives.TEIntegerProperty
 import com.emosewapixel.pixellib.machines.recipes.Recipe
+import com.emosewapixel.pixellib.machines.recipes.components.IRecipeComponent
 import com.emosewapixel.pixellib.machines.recipes.components.grouping.RecipeComponentFamilies
 import net.minecraft.util.text.TranslationTextComponent
 

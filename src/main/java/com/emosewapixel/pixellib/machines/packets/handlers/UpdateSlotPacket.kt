@@ -1,26 +1,29 @@
-package com.emosewapixel.pixellib.machines.packets
+package com.emosewapixel.pixellib.machines.packets.handlers
 
 import com.emosewapixel.pixellib.machines.gui.BaseContainer
-import com.emosewapixel.pixellib.machines.properties.IVariableProperty
+import com.emosewapixel.pixellib.machines.properties.IValueProperty
 import net.minecraft.client.Minecraft
+import net.minecraft.item.ItemStack
 import net.minecraft.network.PacketBuffer
 import net.minecraftforge.fml.DistExecutor
 import net.minecraftforge.fml.network.NetworkEvent
+import net.minecraftforge.items.IItemHandlerModifiable
 import java.util.function.Supplier
 
-class UpdateBooleanPacket(val property: String, val value: Boolean) {
+class UpdateSlotPacket(val property: String, val index: Int, val stack: ItemStack) {
     fun encode(buffer: PacketBuffer) {
         buffer.writeString(property)
-        buffer.writeBoolean(value)
+        buffer.writeVarInt(index)
+        buffer.writeItemStack(stack)
     }
 
     companion object {
         @JvmStatic
-        fun decode(buffer: PacketBuffer) = UpdateBooleanPacket(buffer.readString(), buffer.readBoolean())
+        fun decode(buffer: PacketBuffer) = UpdateSlotPacket(buffer.readString(), buffer.readVarInt(), buffer.readItemStack())
 
         @JvmStatic
         @Suppress("UNCHECKED_CAST")
-        fun processPacket(packet: UpdateBooleanPacket, context: Supplier<NetworkEvent.Context>) {
+        fun processPacket(packet: UpdateSlotPacket, context: Supplier<NetworkEvent.Context>) {
             context.get().enqueueWork {
                 val serverSideContainer = context.get().sender?.openContainer as? BaseContainer
                 val container = DistExecutor.runForDist(
@@ -31,10 +34,10 @@ class UpdateBooleanPacket(val property: String, val value: Boolean) {
                         },
                         { Supplier { serverSideContainer } }
                 )
-                (container?.te?.teProperties?.get(packet.property) as? IVariableProperty<Boolean>)
-                        ?.setValue(packet.value, false)
-                (container?.clientProperties?.get(packet.property) as? IVariableProperty<Boolean>)
-                        ?.setValue(packet.value, false)
+                (container?.te?.teProperties?.get(packet.property) as? IValueProperty<IItemHandlerModifiable>)
+                        ?.value?.setStackInSlot(packet.index, packet.stack)
+                (container?.clientProperties?.get(packet.property) as? IValueProperty<IItemHandlerModifiable>)
+                        ?.value?.setStackInSlot(packet.index, packet.stack.copy())
             }
             context.get().packetHandled = true
         }
