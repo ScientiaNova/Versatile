@@ -15,7 +15,7 @@ import com.emosewapixel.pixellib.machines.recipes.components.ingredients.utility
 import net.minecraft.item.ItemStack
 import kotlin.math.min
 
-class ItemOutputsComponent(val max: Int, val min: Int = 0) : IRecipeComponent<List<WeightedMap<IRecipeStack<ItemStack>>>> {
+class ItemOutputsComponent(val max: Int, val min: Int = 0) : IRecipeComponent<List<WeightedMap<out IRecipeStack<ItemStack>>>> {
     override val name = "itemOutputs"
     override val family = RecipeComponentFamilies.OUTPUT_SLOTS
 

@@ -5,6 +5,6 @@ import com.emosewapixel.pixellib.machines.recipes.components.ingredients.recipes
 import com.emosewapixel.pixellib.machines.recipes.components.ingredients.utility.WeightedMap
 import net.minecraft.item.ItemStack
 
-class ItemOutputsHandler(override val value: List<WeightedMap<IRecipeStack<ItemStack>>>) : IRecipeComponentHandler<List<WeightedMap<IRecipeStack<ItemStack>>>> {
+class ItemOutputsHandler(override val value: List<WeightedMap<out IRecipeStack<ItemStack>>>) : IRecipeComponentHandler<List<WeightedMap<out IRecipeStack<ItemStack>>>> {
     override val pairedComponentType = ItemOutputsComponent::class.java
 }

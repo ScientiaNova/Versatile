@@ -11,7 +11,6 @@ import com.emosewapixel.pixellib.machines.gui.textures.BaseTextures
 import com.emosewapixel.pixellib.machines.gui.textures.updating.ProgressBar
 import com.emosewapixel.pixellib.machines.properties.IValueProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.primitives.IncrementingDoubleProperty
-import com.emosewapixel.pixellib.machines.properties.implementations.recipes.RecipeProperty
 import com.emosewapixel.pixellib.machines.recipes.components.IRecipeComponent
 import com.emosewapixel.pixellib.machines.recipes.components.grouping.IOType
 import com.google.common.collect.HashMultimap
@@ -28,9 +27,7 @@ open class RecipeList(val name: ResourceLocation, vararg components: IRecipeComp
     val inputMap = HashMultimap.create<String, Recipe>()
     val localizedName = TranslationTextComponent("recipe_list.$name")
     val recipeComponents = components.groupBy(IRecipeComponent<*>::name).mapValues { it.value.first() }
-    open val recipeTransferFunction: ((Recipe, BaseContainer) -> Unit)? = { recipe, container ->
-        (container.te.teProperties["recipe"] as? RecipeProperty)?.setValue(recipe)
-    }
+    open val recipeTransferFunction: ((Recipe, BaseContainer) -> Unit)? = null
 
     init {
         RecipeLists += this
@@ -102,7 +99,7 @@ open class RecipeList(val name: ResourceLocation, vararg components: IRecipeComp
 
     open fun createRecipeBasedComponentGroup(machine: BaseTileEntity?, recipe: Recipe, progressProperty: IValueProperty<Double> = IncrementingDoubleProperty()): GUIComponentGroup {
         val components = recipeComponents.values.groupBy(IRecipeComponent<*>::family).entries.groupBy { it.key.io }.mapValues {
-            val groups = it.value.map { entry -> entry.value.flatMap { component -> component.addRecipeGUIComponents(machine, recipe) } }
+            val groups = it.value.map { entry -> entry.value.flatMap { component -> component.addGUIComponents(machine) } }
                     .filter(List<IGUIComponent>::isNotEmpty).map { list ->
                         val width = list.first().width
                         val height = list.first().height

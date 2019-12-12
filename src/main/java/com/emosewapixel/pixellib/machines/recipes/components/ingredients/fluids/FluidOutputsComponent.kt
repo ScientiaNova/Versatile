@@ -15,7 +15,7 @@ import com.emosewapixel.pixellib.machines.recipes.components.ingredients.utility
 import net.minecraftforge.fluids.FluidStack
 import kotlin.math.min
 
-class FluidOutputsComponent(val max: Int, val min: Int = 0, val capacity: Int = 10_000) : IRecipeComponent<List<WeightedMap<IRecipeStack<FluidStack>>>> {
+class FluidOutputsComponent(val max: Int, val min: Int = 0, val capacity: Int = 10_000) : IRecipeComponent<List<WeightedMap<out IRecipeStack<FluidStack>>>> {
     override val name = "fluidOutputs"
     override val family = RecipeComponentFamilies.OUTPUT_SLOTS
 

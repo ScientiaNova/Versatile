@@ -5,6 +5,6 @@ import com.emosewapixel.pixellib.machines.recipes.components.ingredients.recipes
 import com.emosewapixel.pixellib.machines.recipes.components.ingredients.utility.WeightedMap
 import net.minecraftforge.fluids.FluidStack
 
-class FluidOutputsHandler(override val value: List<WeightedMap<IRecipeStack<FluidStack>>>) : IRecipeComponentHandler<List<WeightedMap<IRecipeStack<FluidStack>>>> {
+class FluidOutputsHandler(override val value: List<WeightedMap<out IRecipeStack<FluidStack>>>) : IRecipeComponentHandler<List<WeightedMap<out IRecipeStack<FluidStack>>>> {
     override val pairedComponentType = FluidOutputsComponent::class.java
 }
