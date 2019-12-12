@@ -12,10 +12,11 @@ class RecipeFluidTagStack(stack: TagStack<Fluid>) : IRecipeStack<FluidStack> {
 
     override val count = stack.count
 
-    override val stacks
-        get() = tag.allElements.map { it * count }
+    override val stacks get() = tag.allElements.map { it * count }
 
     override fun matches(other: FluidStack) = count <= other.amount && other.fluid in tag
+
+    override fun matchesWithoutCount(other: FluidStack) = other.fluid in tag
 
     override fun toString() = "fluid_tag:" + tag.id
 

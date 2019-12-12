@@ -18,7 +18,7 @@ import com.emosewapixel.pixellib.machines.recipes.components.IRecipeComponent
 import com.emosewapixel.pixellib.machines.recipes.components.grouping.RecipeComponentFamilies
 import com.emosewapixel.pixellib.machines.recipes.components.ingredients.recipestacks.IRecipeStack
 import net.minecraft.item.ItemStack
-import kotlin.math.max
+import kotlin.math.min
 
 class ItemInputsComponent(val max: Int, val min: Int = 0) : IRecipeComponent<List<Pair<IRecipeStack<ItemStack>, Float>>> {
     override val name = "itemInputs"
@@ -65,9 +65,9 @@ class ItemInputsComponent(val max: Int, val min: Int = 0) : IRecipeComponent<Lis
         return machine?.let {
             val property = it.teProperties["itemInputs"] as? TEItemInventoryProperty ?: return emptyList()
             if (property is TERecipeItemInputProperty)
-                (0 until max(property.value.slots, handler.size)).map { index -> RecipeItemSlotComponent(property, index) }
+                (0 until min(property.value.slots, handler.size)).map { index -> RecipeItemSlotComponent(property, index) }
             else
-                (0 until max(property.value.slots, handler.size)).map { index -> ItemSlotComponent(property, index) }
+                (0 until min(property.value.slots, handler.size)).map { index -> ItemSlotComponent(property, index) }
         } ?: (handler.indices).map(::RecipeInputItemStackSupplierSlot)
     }
 }

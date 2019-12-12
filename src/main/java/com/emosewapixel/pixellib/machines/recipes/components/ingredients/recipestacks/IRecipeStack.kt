@@ -10,6 +10,8 @@ interface IRecipeStack<T> {
 
     fun matches(other: T): Boolean
 
+    fun matchesWithoutCount(other: T): Boolean
+
     override fun toString(): String
 }
 

@@ -11,6 +11,8 @@ class RecipeItemStack(val stack: ItemStack) : IRecipeStack<ItemStack> {
 
     override fun matches(other: ItemStack) = stack.isItemEqual(other) && count <= other.count
 
+    override fun matchesWithoutCount(other: ItemStack) = stack.isItemEqual(other)
+
     override fun toString() = "item:" + stack.item.registryName
 
     override fun hashCode() = toString().hashCode()

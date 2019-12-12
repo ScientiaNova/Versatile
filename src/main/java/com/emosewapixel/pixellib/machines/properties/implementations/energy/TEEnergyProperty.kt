@@ -18,7 +18,12 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider
 import net.minecraftforge.fml.network.NetworkDirection
 
 open class TEEnergyProperty(override val value: EnergyHandler, override val id: String, override val te: BaseTileEntity) : IValueProperty<IEnergyStorageModifiable>, ITEBoundProperty {
-    constructor(capacity: Int, id: String, te: BaseTileEntity) : this(EnergyHandler(capacity), id, te)
+    constructor(capacity: Int, id: String, te: BaseTileEntity) : this(object : EnergyHandler(capacity) {
+        override fun onUpdate() {
+            te.update()
+            te.markDirty()
+        }
+    }, id, te)
 
     override fun createDefault() = TEEnergyProperty(value.maxEnergyStored, id, te)
 

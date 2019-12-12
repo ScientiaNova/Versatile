@@ -11,6 +11,8 @@ class RecipeFluidStack(val stack: FluidStack) : IRecipeStack<FluidStack> {
 
     override fun matches(other: FluidStack) = stack.isFluidEqual(other) && count <= other.amount
 
+    override fun matchesWithoutCount(other: FluidStack) = stack.isFluidEqual(other)
+
     override fun toString() = "fluid:" + stack.fluid.registryName
 
     override fun hashCode() = toString().hashCode()

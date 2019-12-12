@@ -5,7 +5,10 @@ import com.emosewapixel.pixellib.machines.capabilities.items.OutputItemStackHand
 
 open class TEItemOutputProperty(value: OutputItemStackHandler, id: String, te: BaseTileEntity) : TEItemInventoryProperty(value, id, te) {
     constructor(slots: Int, id: String, te: BaseTileEntity) : this(object : OutputItemStackHandler(slots) {
-        override fun onContentsChanged(slot: Int) = te.update()
+        override fun onContentsChanged(slot: Int) {
+            te.markDirty()
+            te.update()
+        }
     }, id, te)
 
     override fun createDefault() = TEItemOutputProperty(OutputItemStackHandler(value.slots), id, te)

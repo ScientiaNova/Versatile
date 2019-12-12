@@ -12,10 +12,11 @@ class RecipeItemTagStack(stack: TagStack<Item>) : IRecipeStack<ItemStack> {
 
     override val count = stack.count
 
-    override val stacks
-        get() = tag.allElements.map { it * count }
+    override val stacks get() = tag.allElements.map { it * count }
 
     override fun matches(other: ItemStack) = count <= other.count && other.item in tag
+
+    override fun matchesWithoutCount(other: ItemStack) = other.item in tag
 
     override fun toString() = "item_tag:" + tag.id
 

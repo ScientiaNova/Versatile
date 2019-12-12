@@ -17,6 +17,7 @@ open class TEIntegerProperty(override val id: String, override val te: BaseTileE
         if (causeUpdate && !FMLEnvironment.dist.isDedicatedServer)
             NetworkHandler.CHANNEL.sendToServer(UpdateIntPacket(id, value))
         value = new
+        te.markDirty()
     }
 
     override var value = 0

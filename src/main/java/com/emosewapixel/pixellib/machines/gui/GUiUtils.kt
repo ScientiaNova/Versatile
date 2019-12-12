@@ -24,25 +24,23 @@ object GUiUtils {
     val mc = Minecraft.getInstance()
 
     @JvmStatic
-    fun drawItemStack(stack: ItemStack, x: Int, y: Int) {
+    fun drawItemStack(stack: ItemStack, x: Int, y: Int, z: Int = 200, altText: String? = null) {
         val itemRenderer = mc.itemRenderer
-        GlStateManager.translatef(0.0f, 0.0f, 32.0f)
-        itemRenderer.zLevel = 200.0f
-        val font = stack.item.getFontRenderer(stack) ?: Minecraft.getInstance().fontRenderer
+        itemRenderer.zLevel = z.toFloat()
+        val font = stack.item.getFontRenderer(stack) ?: mc.fontRenderer
         itemRenderer.renderItemAndEffectIntoGUI(stack, x, y)
-        itemRenderer.renderItemOverlayIntoGUI(font, stack, x, y, null)
-        itemRenderer.zLevel = 0.0f
+        itemRenderer.renderItemOverlayIntoGUI(font, stack, x, y, altText)
+        itemRenderer.zLevel = 0f
     }
 
     @JvmStatic
-    fun drawTransparentItemStack(stack: ItemStack, x: Int, y: Int) {
+    fun drawTransparentItemStack(stack: ItemStack, x: Int, y: Int, z: Int = 200) {
         val itemRenderer = mc.itemRenderer
-        GlStateManager.translatef(0.0f, 0.0f, 32.0f)
-        itemRenderer.zLevel = 200.0f
+        itemRenderer.zLevel = z.toFloat()
         itemRenderer.renderItemAndEffectIntoGUI(stack, x, y)
-        GlStateManager.colorMask(true, true, true, false)
+        itemRenderer.zLevel = 0f
+        GlStateManager.colorMask(true, true, true, true)
         drawColoredRectangle(0x7f7f7f80, x, y, 16, 16)
-        itemRenderer.zLevel = 0.0f
     }
 
     @JvmStatic
@@ -119,12 +117,14 @@ object GUiUtils {
 
     fun drawColoredRectangle(color: Int, x: Int, y: Int, width: Int, height: Int, z: Int = 0) {
         GlStateManager.disableTexture()
+        GlStateManager.disableDepthTest()
         GlStateManager.enableBlend()
+        GlStateManager.color4f(color.redF, color.greenF, color.blueF, color.alphaF)
 
         val tessellator = Tessellator.getInstance()
         val bufferbuilder = tessellator.buffer
         GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO)
-        GlStateManager.color4f(color.redF, color.greenF, color.blueF, color.alphaF)
+
         bufferbuilder.begin(7, DefaultVertexFormats.POSITION)
         bufferbuilder.pos(x.toDouble(), (y + height).toDouble(), z.toDouble()).endVertex()
         bufferbuilder.pos((x + width).toDouble(), (y + height).toDouble(), z.toDouble()).endVertex()
@@ -132,7 +132,9 @@ object GUiUtils {
         bufferbuilder.pos(x.toDouble(), y.toDouble(), z.toDouble()).endVertex()
         tessellator.draw()
 
+        GlStateManager.color4f(1f, 1f, 1f, 1f)
         GlStateManager.disableBlend()
+        GlStateManager.enableDepthTest()
         GlStateManager.enableTexture()
     }
 

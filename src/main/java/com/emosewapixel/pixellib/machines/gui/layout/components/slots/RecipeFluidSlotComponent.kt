@@ -11,13 +11,13 @@ open class RecipeFluidSlotComponent(property: TERecipeFluidInputProperty, tankIn
     val recipeProperty = property.value.recipeProperty
 
     @OnlyIn(Dist.CLIENT)
-    override fun drawInBackground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int, guiLeft: Int, guiTop: Int) {
-        super.drawInBackground(mouseX, mouseY, xOffset, yOffset, guiLeft, guiTop)
+    override fun drawInForeground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int, guiLeft: Int, guiTop: Int) {
         if (property.value.getFluidInTank(tankIndex).isEmpty)
             recipeProperty.value?.get(FluidInputsComponent::class.java)?.value?.getOrNull(tankIndex)?.let {
                 val stacks = it.first.stacks
                 val stack = stacks[(Minecraft.getInstance().world.gameTime / 40).toInt() % stacks.size]
                 GUiUtils.drawTransparentFluidStack(stack, xOffset + x + 1, yOffset + y + 1, height - 2, width - 2)
             }
+        super.drawInForeground(mouseX, mouseY, xOffset, yOffset, guiLeft, guiTop)
     }
 }

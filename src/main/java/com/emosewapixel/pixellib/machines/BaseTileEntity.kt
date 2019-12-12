@@ -7,6 +7,8 @@ import com.google.common.reflect.MutableTypeToInstanceMap
 import net.minecraft.block.Block
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.CompoundNBT
+import net.minecraft.network.NetworkManager
+import net.minecraft.network.play.server.SUpdateTileEntityPacket
 import net.minecraft.tileentity.ITickableTileEntity
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.tileentity.TileEntityType
@@ -52,6 +54,12 @@ open class BaseTileEntity(type: TileEntityType<*> = BaseMachineRegistry.BASE_TIL
             map
         }.values.toSet()
     }
+
+    override fun getUpdatePacket() = SUpdateTileEntityPacket(pos, 1, write(CompoundNBT()))
+
+    override fun onDataPacket(net: NetworkManager, pkt: SUpdateTileEntityPacket) = read(pkt.nbtCompound)
+
+    override fun getUpdateTag() = write(CompoundNBT())
 
     override fun <T> getCapability(cap: Capability<T>, side: Direction?) = capabilities.map { it.getCapability(cap, side) }
             .firstOrNull(LazyOptional<T>::isPresent) ?: LazyOptional.empty()

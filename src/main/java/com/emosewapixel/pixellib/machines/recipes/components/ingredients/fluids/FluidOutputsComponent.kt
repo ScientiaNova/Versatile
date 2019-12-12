@@ -13,7 +13,7 @@ import com.emosewapixel.pixellib.machines.recipes.components.grouping.RecipeComp
 import com.emosewapixel.pixellib.machines.recipes.components.ingredients.recipestacks.IRecipeStack
 import com.emosewapixel.pixellib.machines.recipes.components.ingredients.utility.WeightedMap
 import net.minecraftforge.fluids.FluidStack
-import kotlin.math.max
+import kotlin.math.min
 
 class FluidOutputsComponent(val max: Int, val min: Int = 0, val capacity: Int = 10_000) : IRecipeComponent<List<WeightedMap<IRecipeStack<FluidStack>>>> {
     override val name = "fluidOutputs"
@@ -38,7 +38,7 @@ class FluidOutputsComponent(val max: Int, val min: Int = 0, val capacity: Int = 
         val handler = recipe[this]?.value ?: return emptyList()
         return machine?.let {
             val property = it.teProperties["fluidOutputs"] as? TEFluidInventoryProperty ?: return emptyList()
-            (0 until max(property.value.tanks, handler.size)).map { index -> FluidSlotComponent(property, index) }
+            (0 until min(property.value.tanks, handler.size)).map { index -> FluidSlotComponent(property, index) }
         } ?: (handler.indices).map(::RecipeOutputFluidStackSupplierSlot)
     }
 }

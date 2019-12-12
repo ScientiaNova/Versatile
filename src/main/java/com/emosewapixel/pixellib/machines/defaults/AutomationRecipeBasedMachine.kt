@@ -43,9 +43,10 @@ open class AutomationRecipeBasedMachine(recipeList: RecipeList, properties: Prop
                 }
 
                 (teProperties["recipe"] as? RecipeProperty)?.value?.let { currentRecipe ->
-                    val processX = (pageWidth - currentRecipe.page.trueWidth) / 2
-                    val processY = TOP_MARGIN + (pageHeight - TOP_MARGIN - currentRecipe.page.trueHeight - 2 - INVENTORY_HEIGHT - MARGIN) / 2
-                    add(recipeList.createRecipeBasedComponentGroup(te, currentRecipe), processX - recipeListPage.leftMost, processY - recipeListPage.topMost)
+                    val currentRecipePage = recipeList.createRecipeBasedComponentGroup(te, currentRecipe)
+                    val processX = (pageWidth - currentRecipePage.trueWidth) / 2
+                    val processY = TOP_MARGIN + (pageHeight - TOP_MARGIN - currentRecipePage.trueHeight - 2 - INVENTORY_HEIGHT - MARGIN) / 2
+                    add(currentRecipePage, processX - recipeListPage.leftMost, processY - recipeListPage.topMost)
                 } ?: label(TranslationTextComponent("gui.info.find_recipe").string,
                         pageWidth / 2, TOP_MARGIN + (pageHeight - TOP_MARGIN - INVENTORY_HEIGHT - MARGIN) / 2) {
                     location = LabelComponent.LabelLocation.CENTER

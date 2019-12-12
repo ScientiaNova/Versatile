@@ -31,6 +31,9 @@ interface IGUIComponent {
     fun drawInBackground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int, guiLeft: Int = xOffset, guiTop: Int = yOffset)
 
     @OnlyIn(Dist.CLIENT)
+    fun drawItem(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int, guiLeft: Int = xOffset, guiTop: Int = yOffset) {}
+
+    @OnlyIn(Dist.CLIENT)
     fun drawInForeground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int, guiLeft: Int = xOffset, guiTop: Int = yOffset) {
     }
 

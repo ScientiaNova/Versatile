@@ -13,7 +13,7 @@ import com.emosewapixel.pixellib.machines.recipes.components.grouping.RecipeComp
 import com.emosewapixel.pixellib.machines.recipes.components.ingredients.recipestacks.IRecipeStack
 import com.emosewapixel.pixellib.machines.recipes.components.ingredients.utility.WeightedMap
 import net.minecraft.item.ItemStack
-import kotlin.math.max
+import kotlin.math.min
 
 class ItemOutputsComponent(val max: Int, val min: Int = 0) : IRecipeComponent<List<WeightedMap<IRecipeStack<ItemStack>>>> {
     override val name = "itemOutputs"
@@ -38,7 +38,7 @@ class ItemOutputsComponent(val max: Int, val min: Int = 0) : IRecipeComponent<Li
         val handler = recipe[this]?.value ?: return emptyList()
         return machine?.let {
             val property = it.teProperties["itemOutputs"] as? TEItemInventoryProperty ?: return emptyList()
-            (0 until max(property.value.slots, handler.size)).map { index -> ItemSlotComponent(property, index) }
+            (0 until min(property.value.slots, handler.size)).map { index -> ItemSlotComponent(property, index) }
         } ?: (handler.indices).map(::RecipeOutputItemStackSupplierSlot)
     }
 }

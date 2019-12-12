@@ -13,13 +13,17 @@ open class EnergyHandler(private val max: Int) : IEnergyStorageModifiable, INBTS
 
     override fun setEnergyStored(amount: Int) {
         stored = amount
+        onUpdate()
     }
 
     override fun canExtract() = true
 
     override fun extractEnergy(maxExtract: Int, simulate: Boolean): Int {
         val extracted = maxExtract.coerceAtMost(stored)
-        if (!simulate) stored -= extracted
+        if (!simulate) {
+            stored -= extracted
+            onUpdate()
+        }
         return extracted
     }
 
@@ -27,7 +31,10 @@ open class EnergyHandler(private val max: Int) : IEnergyStorageModifiable, INBTS
 
     override fun receiveEnergy(maxReceive: Int, simulate: Boolean): Int {
         val received = maxReceive.coerceAtMost(max - stored)
-        if (!simulate) stored += received
+        if (!simulate) {
+            stored += received
+            onUpdate()
+        }
         return received
     }
 
@@ -37,7 +44,10 @@ open class EnergyHandler(private val max: Int) : IEnergyStorageModifiable, INBTS
 
     override fun deserializeNBT(nbt: CompoundNBT?) {
         stored = nbt?.getInt("energy") ?: 0
+        onLoad()
     }
 
-    fun noLoad() {}
+    open fun onLoad() {}
+
+    open fun onUpdate() {}
 }

@@ -16,6 +16,11 @@ open class GUIComponentGroup @JvmOverloads constructor(extraWidth: Int = 0, extr
     }
 
     @OnlyIn(Dist.CLIENT)
+    override fun drawItem(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int, guiLeft: Int, guiTop: Int) = components.forEach {
+        it.drawItem(mouseX, mouseY, xOffset + x, yOffset + y, guiLeft, guiTop)
+    }
+
+    @OnlyIn(Dist.CLIENT)
     override fun drawInForeground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int, guiLeft: Int, guiTop: Int) = components.forEach {
         it.drawInForeground(mouseX, mouseY, xOffset + x, yOffset + y, guiLeft, guiTop)
     }

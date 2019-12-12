@@ -14,6 +14,7 @@ import com.emosewapixel.pixellib.machines.packets.UpdateHeldStackPacket
 import com.emosewapixel.pixellib.machines.packets.handlers.UpdateTankPacket
 import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
 import com.emosewapixel.pixellib.machines.properties.IValueProperty
+import com.mojang.blaze3d.platform.GlStateManager
 import net.minecraft.client.Minecraft
 import net.minecraft.item.ItemStack
 import net.minecraft.util.text.TranslationTextComponent
@@ -41,7 +42,7 @@ open class FluidSlotComponent(val property: IValueProperty<out IFluidHandlerModi
     @OnlyIn(Dist.CLIENT)
     override fun drawInForeground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int, guiLeft: Int, guiTop: Int) {
         if (isSelected(mouseX - xOffset, mouseY - yOffset)) {
-            GUiUtils.drawColoredRectangle(0x7FFFFFFF, xOffset - guiLeft + x + 1, yOffset - guiTop + y + 1, width - 2, height - 2)
+            GUiUtils.drawColoredRectangle(0x7FFFFFFF, xOffset + x + 1, yOffset + y + 1, width - 2, height - 2)
             val handler = property.value
             val fluid = handler.getFluidInTank(tankIndex)
 
@@ -50,7 +51,7 @@ open class FluidSlotComponent(val property: IValueProperty<out IFluidHandlerModi
             else
                 listOf(fluid.fluid.attributes.getDisplayName(fluid).string, "${fluid.amount}/${handler.getTankCapacity(tankIndex)} mB", TranslationTextComponent("gui.tooltip.tank_empty").formattedText)
 
-            GUiUtils.drawTooltip(tooltips, mouseX - guiLeft, mouseY - guiTop)
+            GUiUtils.drawTooltip(tooltips, mouseX, mouseY)
         }
     }
 

@@ -34,6 +34,7 @@ open class TEStandardRecipeProperty(recipeList: RecipeList, override val id: Str
             NetworkHandler.CHANNEL.sendToServer(UpdateRecipePacket(id, value?.name
                     ?: ""))
         value = new
+        te.markDirty()
     }
 
     override fun serializeNBT() = nbt {

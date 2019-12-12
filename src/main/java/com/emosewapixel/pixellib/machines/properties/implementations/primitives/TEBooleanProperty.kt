@@ -17,6 +17,7 @@ open class TEBooleanProperty(override val id: String, override val te: BaseTileE
         if (causeUpdate && !FMLEnvironment.dist.isDedicatedServer)
             NetworkHandler.CHANNEL.sendToServer(UpdateBooleanPacket(id, value))
         value = new
+        te.markDirty()
     }
 
     override var value = false

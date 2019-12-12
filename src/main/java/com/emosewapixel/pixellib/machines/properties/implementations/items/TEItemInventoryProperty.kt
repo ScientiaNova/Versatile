@@ -21,7 +21,10 @@ import net.minecraftforge.items.ItemStackHandler
 
 open class TEItemInventoryProperty(override val value: ItemStackHandler, override val id: String, override val te: BaseTileEntity) : IValueProperty<IItemHandlerModifiable>, ITEBoundProperty {
     constructor(slots: Int, id: String, te: BaseTileEntity) : this(object : ItemStackHandler(slots) {
-        override fun onContentsChanged(slot: Int) = te.update()
+        override fun onContentsChanged(slot: Int) {
+            te.markDirty()
+            te.update()
+        }
     }, id, te)
 
     override fun detectAndSendChanges(container: BaseContainer) {

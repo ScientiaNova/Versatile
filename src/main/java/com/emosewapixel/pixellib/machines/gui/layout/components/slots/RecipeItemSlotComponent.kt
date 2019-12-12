@@ -11,13 +11,12 @@ open class RecipeItemSlotComponent(property: TERecipeItemInputProperty, slotInde
     val recipeProperty = property.value.recipeProperty
 
     @OnlyIn(Dist.CLIENT)
-    override fun drawInBackground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int, guiLeft: Int, guiTop: Int) {
-        super.drawInBackground(mouseX, mouseY, xOffset, yOffset, guiLeft, guiTop)
+    override fun drawItem(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int, guiLeft: Int, guiTop: Int) {
         if (property.value.getStackInSlot(slotIndex).isEmpty)
             recipeProperty.value?.get(ItemInputsComponent::class.java)?.value?.getOrNull(slotIndex)?.let {
                 val stacks = it.first.stacks
                 val stack = stacks[(Minecraft.getInstance().world.gameTime / 40).toInt() % stacks.size]
-                GUiUtils.drawTransparentItemStack(stack, xOffset + x + (width - 16) / 2 + 1, yOffset + (height - 16) / 2 + y)
+                GUiUtils.drawTransparentItemStack(stack, xOffset + (width - 16) / 2 + x, yOffset + (height - 16) / 2 + y)
             }
     }
 }
