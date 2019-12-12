@@ -1,9 +1,6 @@
 package com.emosewapixel.pixellib.machines.properties.implementations.items
 
-import com.emosewapixel.pixellib.extensions.get
-import com.emosewapixel.pixellib.extensions.getOrAddInstance
-import com.emosewapixel.pixellib.extensions.nbt
-import com.emosewapixel.pixellib.extensions.set
+import com.emosewapixel.pixellib.extensions.*
 import com.emosewapixel.pixellib.machines.BaseTileEntity
 import com.emosewapixel.pixellib.machines.capabilities.items.ItemCapabilityWrapper
 import com.emosewapixel.pixellib.machines.gui.BaseContainer
@@ -13,7 +10,9 @@ import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
 import com.emosewapixel.pixellib.machines.properties.IValueProperty
 import com.google.common.reflect.MutableTypeToInstanceMap
 import net.minecraft.entity.player.ServerPlayerEntity
+import net.minecraft.item.ItemStack
 import net.minecraft.nbt.CompoundNBT
+import net.minecraft.util.math.BlockPos
 import net.minecraftforge.common.capabilities.ICapabilityProvider
 import net.minecraftforge.fml.network.NetworkDirection
 import net.minecraftforge.items.IItemHandlerModifiable
@@ -49,5 +48,15 @@ open class TEItemInventoryProperty(override val value: ItemStackHandler, overrid
 
     override fun addCapability(map: MutableTypeToInstanceMap<ICapabilityProvider>) {
         map.getOrAddInstance(ItemCapabilityWrapper::class.java, ItemCapabilityWrapper()).addHandler(value)
+    }
+
+    override fun clear() {
+        val spawnPos = te.pos + BlockPos(0.5, 0.5, 0.5)
+        te.world?.let { world ->
+            (0 until value.slots).forEach {
+                world.spawnItemInWorld(spawnPos, value[it].copy())
+                value[it] = ItemStack.EMPTY
+            }
+        }
     }
 }

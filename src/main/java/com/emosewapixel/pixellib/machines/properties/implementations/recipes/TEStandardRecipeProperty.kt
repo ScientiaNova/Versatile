@@ -30,10 +30,11 @@ open class TEStandardRecipeProperty(recipeList: RecipeList, override val id: Str
     }
 
     override fun setValue(new: Recipe?, causeUpdate: Boolean) {
+        value = new
+        te.guiLayout.current = te.guiLayout[0]()
         if (causeUpdate && !FMLEnvironment.dist.isDedicatedServer)
             NetworkHandler.CHANNEL.sendToServer(UpdateRecipePacket(id, value?.name
                     ?: ""))
-        value = new
         te.markDirty()
     }
 

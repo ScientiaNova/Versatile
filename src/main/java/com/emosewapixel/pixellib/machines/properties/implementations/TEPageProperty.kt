@@ -23,6 +23,7 @@ open class TEPageProperty(override val te: BaseTileEntity) : ITEBoundProperty {
     fun setPage(pageId: Int) {
         if (FMLEnvironment.dist.isClient)
             NetworkHandler.CHANNEL.sendToServer(ChangePagePacket(te.pos, pageId))
+        te.guiLayout.current = te.guiLayout[pageId]()
     }
 
     override fun createDefault() = this

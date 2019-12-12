@@ -2,6 +2,7 @@ package com.emosewapixel.pixellib.extensions
 
 import net.minecraft.client.renderer.Vector3f
 import net.minecraft.client.renderer.Vector4f
+import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
 import net.minecraft.util.math.Vec3i
 
@@ -47,3 +48,15 @@ operator fun Vec3d.component1() = x
 operator fun Vec3d.component2() = y
 operator fun Vec3d.component3() = z
 fun Vec3d.toVec3i() = Vec3i(x, y, z)
+
+infix fun BlockPos.x(other: BlockPos): BlockPos = crossProduct(other)
+operator fun BlockPos.plus(other: BlockPos): BlockPos = add(other)
+operator fun BlockPos.minus(other: BlockPos): BlockPos = subtract(other)
+operator fun BlockPos.times(other: BlockPos) = BlockPos(x * other.x, y * other.y, z * other.z)
+operator fun BlockPos.times(m: Int) = BlockPos(x * m, y * m, z * m)
+operator fun BlockPos.div(other: BlockPos): BlockPos = BlockPos(x / other.x, y / other.y, z / other.z)
+operator fun BlockPos.unaryMinus(): BlockPos = times(-1)
+operator fun BlockPos.component1() = x
+operator fun BlockPos.component2() = y
+operator fun BlockPos.component3() = z
+fun BlockPos.toVec3i() = BlockPos(x, y, z)

@@ -66,6 +66,8 @@ open class BaseTileEntity(type: TileEntityType<*> = BaseMachineRegistry.BASE_TIL
 
     fun canInteractWith(playerIn: PlayerEntity) = playerIn.getDistanceSq(pos.x + 0.5, pos.y + 0.5, pos.z + 0.5) <= 64
 
+    fun clear() = teProperties.values.forEach(ITEBoundProperty::clear)
+
     companion object {
         @JvmField
         val USED_BY = mutableListOf<Block>()

@@ -129,6 +129,7 @@ open class MachineBaseCategory(helper: IGuiHelper, protected val recipeList: Rec
     override fun handleClick(recipe: Recipe, mouseX: Double, mouseY: Double, mouseButton: Int): Boolean {
         recipeList.recipeTransferFunction?.let {
             if (TransferButton.isSelected(mouseX - (listGroup.width + 6), mouseY - (listGroup.height - 13))) {
+                Minecraft.getInstance().currentScreen?.onClose()
                 it.invoke(recipe, Minecraft.getInstance().player.openContainer as BaseContainer)
                 return true
             }

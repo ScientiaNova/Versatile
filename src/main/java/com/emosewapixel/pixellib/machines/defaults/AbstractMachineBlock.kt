@@ -7,6 +7,8 @@ import com.emosewapixel.pixellib.machines.gui.BaseContainerProvider
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.ServerPlayerEntity
+import net.minecraft.item.ItemStack
+import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.Hand
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.BlockRayTraceResult
@@ -22,5 +24,10 @@ abstract class AbstractMachineBlock(properties: Properties, name: String) : ModB
         if (!worldIn.isRemote)
             NetworkHooks.openGui(player as? ServerPlayerEntity, BaseContainerProvider(pos), pos)
         return true
+    }
+
+    override fun harvestBlock(world: World, player: PlayerEntity, pos: BlockPos, state: BlockState, te: TileEntity?, heldStack: ItemStack) {
+        (te as? BaseTileEntity)?.clear()
+        super.harvestBlock(world, player, pos, state, te, heldStack)
     }
 }
