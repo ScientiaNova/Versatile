@@ -14,12 +14,11 @@ class WeightedMap<V>(other: Map<Int, V> = emptyMap()) : Map<Int, V> {
         map = if (other is WeightedMap<V>) {
             total = other.maxWeight
             TreeMap(other)
-        } else
-            TreeMap(other.mapKeys { (k, _) ->
-                val value = total + k
-                total += k
-                value
-            })
+        } else TreeMap(other.mapKeys { (k, _) ->
+            val value = total + k
+            total += k
+            value
+        })
         maxWeight = total
     }
 
