@@ -52,7 +52,7 @@ open class BaseScreen(container: BaseContainer, playerInv: PlayerInventory, titl
 
     override fun render(mouseX: Int, mouseY: Int, partialTicks: Float) {
         renderBackground()
-        if (container.guiPage != container.te.guiLayout.current) {
+        if (container.guiPage != container.te.guiLayout.currentPage) {
             onClose()
             NetworkHandler.CHANNEL.sendToServer(OpenGUIPacket(container.te.pos))
             return

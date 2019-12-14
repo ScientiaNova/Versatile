@@ -39,7 +39,7 @@ class UpdateRecipePacket(val property: String, val name: String) {
                 (container?.clientProperties?.get(packet.property) as? RecipeProperty)?.let {
                     it.setValue(it.recipeList.getRecipes()[packet.name], false)
                 }
-                container?.te?.guiLayout?.let { layout -> layout.current = layout[0]() }
+                container?.te?.guiLayout?.let { layout -> layout.setCurrentPage(layout.currentPageId) }
                 context.get().sender?.let { player ->
                     if (container != null)
                         NetworkHandler.CHANNEL.sendTo(ReopenGUIPacket(container.te.pos, container.type), player.connection.networkManager, NetworkDirection.PLAY_TO_CLIENT)

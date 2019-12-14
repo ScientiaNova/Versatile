@@ -31,7 +31,7 @@ open class BaseTileEntity(type: TileEntityType<*> = BaseMachineRegistry.BASE_TIL
 
     override fun tick() = teProperties.values.forEach(ITEBoundProperty::tick)
 
-    fun update() = teProperties.values.forEach(ITEBoundProperty::update)
+    open fun update() = teProperties.values.forEach(ITEBoundProperty::update)
 
     override fun write(nbt: CompoundNBT): CompoundNBT {
         teProperties.values.forEach { nbt += it.serializeNBT() }

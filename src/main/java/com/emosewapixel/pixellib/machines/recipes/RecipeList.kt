@@ -9,8 +9,6 @@ import com.emosewapixel.pixellib.machines.gui.layout.GUIPage
 import com.emosewapixel.pixellib.machines.gui.layout.IGUIComponent
 import com.emosewapixel.pixellib.machines.gui.textures.BaseTextures
 import com.emosewapixel.pixellib.machines.gui.textures.updating.ProgressBar
-import com.emosewapixel.pixellib.machines.properties.IValueProperty
-import com.emosewapixel.pixellib.machines.properties.implementations.primitives.IncrementingDoubleProperty
 import com.emosewapixel.pixellib.machines.recipes.components.IRecipeComponent
 import com.emosewapixel.pixellib.machines.recipes.components.grouping.IOType
 import com.google.common.collect.HashMultimap
@@ -54,7 +52,7 @@ open class RecipeList(val name: ResourceLocation, vararg components: IRecipeComp
         recipes.remove(name)?.let { recipe -> recipeComponents.values.forEach { it.onRecipeRemoved(recipe) } }
     }
 
-    open fun createComponentGroup(machine: BaseTileEntity? = null, progressProperty: IValueProperty<Double> = IncrementingDoubleProperty()): GUIComponentGroup {
+    open fun createComponentGroup(machine: BaseTileEntity? = null): GUIComponentGroup {
         val components = recipeComponents.values.groupBy(IRecipeComponent<*>::family).entries.groupBy { it.key.io }.mapValues {
             val groups = it.value.map { entry -> entry.value.flatMap { component -> component.addGUIComponents(machine) } }
                     .filter(List<IGUIComponent>::isNotEmpty).map { list ->
@@ -87,8 +85,16 @@ open class RecipeList(val name: ResourceLocation, vararg components: IRecipeComp
         return GUIComponentGroup(extraHeight = extraHeight).apply {
             add(inputSide, 0, (maxHeight - inputSide.height) / 2)
 
-            progressBar(progressProperty) {
-                texture = progressBar
+            recipeComponents.values.map { it.getProgressBarDouble(machine) }.firstOrNull { it != null }?.let {
+                progressBar(it) {
+                    texture = progressBar
+                    x = inputSide.width + 10
+                    y = (maxHeight - 16) / 2
+                }
+            } ?: image {
+                texture = progressBar.background
+                width = 22
+                height = 16
                 x = inputSide.width + 10
                 y = (maxHeight - 16) / 2
             }
@@ -97,7 +103,7 @@ open class RecipeList(val name: ResourceLocation, vararg components: IRecipeComp
         }
     }
 
-    open fun createRecipeBasedComponentGroup(machine: BaseTileEntity?, recipe: Recipe, progressProperty: IValueProperty<Double> = IncrementingDoubleProperty()): GUIComponentGroup {
+    open fun createRecipeBasedComponentGroup(machine: BaseTileEntity?, recipe: Recipe): GUIComponentGroup {
         val components = recipeComponents.values.groupBy(IRecipeComponent<*>::family).entries.groupBy { it.key.io }.mapValues {
             val groups = it.value.map { entry -> entry.value.flatMap { component -> component.addGUIComponents(machine) } }
                     .filter(List<IGUIComponent>::isNotEmpty).map { list ->
@@ -128,8 +134,19 @@ open class RecipeList(val name: ResourceLocation, vararg components: IRecipeComp
         return GUIComponentGroup().apply {
             add(inputSide, 0, (maxHeight - inputSide.height) / 2)
 
-            progressBar(progressProperty) {
-                texture = progressBar
+            recipeComponents.values.let { list ->
+                if (machine != null) list.map { it.getProgressBarDouble(machine) }
+                else list.map { it.getRecipeProgressBarDouble(machine, recipe) }
+            }.firstOrNull { it != null }?.let {
+                progressBar(it) {
+                    texture = progressBar
+                    x = inputSide.width + 10
+                    y = (maxHeight - 16) / 2
+                }
+            } ?: image {
+                texture = progressBar.background
+                width = 22
+                height = 16
                 x = inputSide.width + 10
                 y = (maxHeight - 16) / 2
             }

@@ -6,7 +6,7 @@ import com.emosewapixel.pixellib.machines.properties.implementations.TEPagePrope
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 
-open class PageButtonComponent(val property: TEPageProperty, val page: Int, override val texture: GUITexture, override var x: Int, override var y: Int) : ITexturedGUIComponent {
+open class PageButtonComponent(val property: TEPageProperty, val pageId: Int, override val texture: GUITexture, override var x: Int, override var y: Int) : ITexturedGUIComponent {
     override var width = 16
     override var height = 16
 
@@ -17,7 +17,7 @@ open class PageButtonComponent(val property: TEPageProperty, val page: Int, over
     @OnlyIn(Dist.CLIENT)
     override fun onMouseClicked(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int, clickType: Int): Boolean {
         if (!isSelected(mouseX - xOffset, mouseY - yOffset)) return false
-        property.setPage(page)
+        property.page = pageId
         return true
     }
 

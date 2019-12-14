@@ -1,4 +1,4 @@
-package com.emosewapixel.pixellib.machines.properties.implementations.primitives
+package com.emosewapixel.pixellib.machines.properties.implementations.primitives.doubles
 
 import com.emosewapixel.pixellib.machines.properties.IValueProperty
 

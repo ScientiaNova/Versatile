@@ -39,5 +39,16 @@ object RecipeTest {
                 +Fluids.LAVA.toStack()
             }
         }
+
+        THIN_RECIPES.add("automation_recipe_test_2") {
+            time = 30
+            energyPerTick = 24
+            itemInputs {
+                +listOf(Items.ICE.toStack() to 0.5f, Items.HEART_OF_THE_SEA.toStack() to 0f)
+            }
+            fluidOutputs {
+                +Fluids.WATER.toStack()
+            }
+        }
     }
 }

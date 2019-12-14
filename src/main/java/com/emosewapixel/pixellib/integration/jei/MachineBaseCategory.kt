@@ -15,8 +15,12 @@ import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.ingredients.IIngredients
 import mezz.jei.api.recipe.category.IRecipeCategory
 import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.screen.Screen
 import net.minecraft.item.ItemStack
+import net.minecraft.util.text.TextFormatting
+import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.fluids.FluidStack
+
 
 @Suppress("UNCHECKED_CAST")
 open class MachineBaseCategory(helper: IGuiHelper, protected val recipeList: RecipeList) : IRecipeCategory<Recipe> {
@@ -101,17 +105,21 @@ open class MachineBaseCategory(helper: IGuiHelper, protected val recipeList: Rec
         val specialComponents = supplierComponents.groupBy(Any::javaClass).map { it.value.first() }
                 .map { (it.component as IStackSupplierComponent<*>) }.groupBy(IStackSupplierComponent<*>::type)
 
-        guiItemStacks.addTooltipCallback { _, _, stack, tooltips ->
+        guiItemStacks.addTooltipCallback { _, isInput, stack, tooltips ->
             specialComponents[ItemStack::class.java]?.fold(tooltips) { acc, component ->
                 acc += (component as IStackSupplierComponent<ItemStack>).getExtraTooltips(stack)
                 acc
             }
+            if (!isInput && (Minecraft.getInstance().gameSettings.advancedItemTooltips || Screen.hasShiftDown()))
+                tooltips.add(TextFormatting.DARK_GRAY.toString() + TranslationTextComponent("jei.tooltip.recipe.id", recipe.name).string)
         }
-        guiFluidStacks.addTooltipCallback { _, _, stack, tooltips ->
+        guiFluidStacks.addTooltipCallback { _, isInput, stack, tooltips ->
             specialComponents[FluidStack::class.java]?.fold(tooltips) { acc, component ->
                 acc += (component as IStackSupplierComponent<FluidStack>).getExtraTooltips(stack)
                 acc
             }
+            if (!isInput && (Minecraft.getInstance().gameSettings.advancedItemTooltips || Screen.hasShiftDown()))
+                tooltips.add(TextFormatting.DARK_GRAY.toString() + TranslationTextComponent("jei.tooltip.recipe.id", recipe.name).string)
         }
     }
 

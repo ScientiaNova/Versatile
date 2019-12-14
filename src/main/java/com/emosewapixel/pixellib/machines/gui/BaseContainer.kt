@@ -18,7 +18,8 @@ import net.minecraft.network.PacketBuffer
 open class BaseContainer(id: Int, val playerInv: PlayerInventory, val te: BaseTileEntity, type: ContainerType<*> = BaseMachineRegistry.BASE_CONTAINER) : Container(type, id) {
     constructor(id: Int, playerInv: PlayerInventory, extraData: PacketBuffer) : this(id, playerInv, playerInv.player.world.getTileEntity(extraData.readBlockPos()) as BaseTileEntity)
 
-    val guiPage = te.guiLayout.current
+    val guiPage = te.guiLayout.currentPage
+
     val properties = guiPage.components.fold(mutableSetOf<IMachineProperty>()) { acc, curr ->
         acc += curr.addProperties()
         acc

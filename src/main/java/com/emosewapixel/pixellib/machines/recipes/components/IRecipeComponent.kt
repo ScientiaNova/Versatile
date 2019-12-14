@@ -3,6 +3,7 @@ package com.emosewapixel.pixellib.machines.recipes.components
 import com.emosewapixel.pixellib.machines.BaseTileEntity
 import com.emosewapixel.pixellib.machines.gui.layout.IGUIComponent
 import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
+import com.emosewapixel.pixellib.machines.properties.IValueProperty
 import com.emosewapixel.pixellib.machines.recipes.Recipe
 import com.emosewapixel.pixellib.machines.recipes.RecipeList
 import com.emosewapixel.pixellib.machines.recipes.components.grouping.RecipeComponentFamily
@@ -27,4 +28,8 @@ interface IRecipeComponent<T> {
     fun addRecipeGUIComponents(machine: BaseTileEntity?, recipe: Recipe) = emptyList<IGUIComponent>()
 
     fun addDefaultProperty(te: BaseTileEntity, properties: MutableList<ITEBoundProperty>)
+
+    fun getProgressBarDouble(machine: BaseTileEntity?): IValueProperty<Double>? = null
+
+    fun getRecipeProgressBarDouble(machine: BaseTileEntity?, recipe: Recipe): IValueProperty<Double>? = null
 }
