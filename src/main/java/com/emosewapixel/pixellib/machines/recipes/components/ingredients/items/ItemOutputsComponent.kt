@@ -10,12 +10,11 @@ import com.emosewapixel.pixellib.machines.properties.implementations.items.TEIte
 import com.emosewapixel.pixellib.machines.recipes.Recipe
 import com.emosewapixel.pixellib.machines.recipes.components.IRecipeComponent
 import com.emosewapixel.pixellib.machines.recipes.components.grouping.RecipeComponentFamilies
-import com.emosewapixel.pixellib.machines.recipes.components.ingredients.recipestacks.IRecipeStack
-import com.emosewapixel.pixellib.machines.recipes.components.ingredients.utility.WeightedMap
+import com.emosewapixel.pixellib.machines.recipes.components.ingredients.recipestacks.ChancedRecipeStack
 import net.minecraft.item.ItemStack
 import kotlin.math.min
 
-class ItemOutputsComponent(val max: Int, val min: Int = 0) : IRecipeComponent<List<WeightedMap<out IRecipeStack<ItemStack>>>> {
+class ItemOutputsComponent(val max: Int, val min: Int = 0) : IRecipeComponent<List<ChancedRecipeStack<ItemStack>>> {
     override val name = "itemOutputs"
     override val family = RecipeComponentFamilies.OUTPUT_SLOTS
 

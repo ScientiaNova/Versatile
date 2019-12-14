@@ -16,11 +16,11 @@ import com.emosewapixel.pixellib.machines.recipes.RecipeList
 import com.emosewapixel.pixellib.machines.recipes.StackToRecipeStackHashConversion
 import com.emosewapixel.pixellib.machines.recipes.components.IRecipeComponent
 import com.emosewapixel.pixellib.machines.recipes.components.grouping.RecipeComponentFamilies
-import com.emosewapixel.pixellib.machines.recipes.components.ingredients.recipestacks.IRecipeStack
+import com.emosewapixel.pixellib.machines.recipes.components.ingredients.recipestacks.ChancedRecipeStack
 import net.minecraft.item.ItemStack
 import kotlin.math.min
 
-class ItemInputsComponent(val max: Int, val min: Int = 0) : IRecipeComponent<List<Pair<IRecipeStack<ItemStack>, Float>>> {
+class ItemInputsComponent(val max: Int, val min: Int = 0) : IRecipeComponent<List<ChancedRecipeStack<ItemStack>>> {
     override val name = "itemInputs"
     override val family = RecipeComponentFamilies.INPUT_SLOTS
 
@@ -36,13 +36,13 @@ class ItemInputsComponent(val max: Int, val min: Int = 0) : IRecipeComponent<Lis
 
     override fun onRecipeAdded(recipe: Recipe) {
         recipe[this]?.value?.forEach {
-            recipe.recipeList.inputMap.put(it.first.toString(), recipe)
+            recipe.recipeList.inputMap.put(it.value.toString(), recipe)
         }
     }
 
     override fun onRecipeRemoved(recipe: Recipe) {
         recipe[this]?.value?.forEach {
-            recipe.recipeList.inputMap.remove(it.first.toString(), recipe)
+            recipe.recipeList.inputMap.remove(it.value.toString(), recipe)
         }
     }
 

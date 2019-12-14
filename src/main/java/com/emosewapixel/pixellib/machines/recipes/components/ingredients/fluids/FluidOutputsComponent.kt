@@ -10,12 +10,11 @@ import com.emosewapixel.pixellib.machines.properties.implementations.fluids.TEFl
 import com.emosewapixel.pixellib.machines.recipes.Recipe
 import com.emosewapixel.pixellib.machines.recipes.components.IRecipeComponent
 import com.emosewapixel.pixellib.machines.recipes.components.grouping.RecipeComponentFamilies
-import com.emosewapixel.pixellib.machines.recipes.components.ingredients.recipestacks.IRecipeStack
-import com.emosewapixel.pixellib.machines.recipes.components.ingredients.utility.WeightedMap
+import com.emosewapixel.pixellib.machines.recipes.components.ingredients.recipestacks.ChancedRecipeStack
 import net.minecraftforge.fluids.FluidStack
 import kotlin.math.min
 
-class FluidOutputsComponent(val max: Int, val min: Int = 0, val capacity: Int = 10_000) : IRecipeComponent<List<WeightedMap<out IRecipeStack<FluidStack>>>> {
+class FluidOutputsComponent(val max: Int, val min: Int = 0, val capacity: Int = 10_000) : IRecipeComponent<List<ChancedRecipeStack<FluidStack>>> {
     override val name = "fluidOutputs"
     override val family = RecipeComponentFamilies.OUTPUT_SLOTS
 

@@ -9,8 +9,7 @@ import net.minecraft.tags.Tag
 
 //Tag Stacks are a way of getting an amount of a certain Item Tag. They're meant to be used in Machine Recipes
 data class TagStack<T> @JvmOverloads constructor(var tag: Tag<T>, var count: Int = 1) {
-    val isEmpty: Boolean
-        get() = count == 0
+    val isEmpty get() = count == 0
 }
 
 fun TagStack<Item>.asItemStack() = (tag.allElements.firstOrNull() ?: Items.AIR) * count

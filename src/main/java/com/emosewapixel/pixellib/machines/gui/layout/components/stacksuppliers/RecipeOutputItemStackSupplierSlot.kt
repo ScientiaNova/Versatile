@@ -19,8 +19,8 @@ open class RecipeOutputItemStackSupplierSlot(val index: Int) : IStackSupplierCom
     override val ioType = IOType.OUTPUT
     override val type = ItemStack::class.java
 
-    override fun getStacks(recipe: Recipe) = recipe[ItemOutputsComponent::class.java]?.value?.getOrNull(index)?.let { map ->
-        map.entries.flatMap { entry -> entry.value.stacks.filter(ItemStack::isNotEmpty).map { it.apply { orCreateTag.putFloat("output_chance", entry.key / map.maxWeight.toFloat()) } } }
+    override fun getStacks(recipe: Recipe) = recipe[ItemOutputsComponent::class.java]?.value?.getOrNull(index)?.let { stack ->
+        stack.value.stacks.filter(ItemStack::isNotEmpty).map { it.apply { orCreateTag.putFloat("output_chance", stack.chance) } }
     } ?: emptyList()
 
     override fun getExtraTooltips(stack: ItemStack) = if ("output_chance" in stack.orCreateTag) {

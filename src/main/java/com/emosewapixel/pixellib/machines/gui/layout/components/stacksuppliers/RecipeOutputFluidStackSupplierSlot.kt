@@ -19,8 +19,8 @@ open class RecipeOutputFluidStackSupplierSlot(val index: Int) : IStackSupplierCo
     override val ioType = IOType.OUTPUT
     override val type = FluidStack::class.java
 
-    override fun getStacks(recipe: Recipe) = recipe[FluidOutputsComponent::class.java]?.value?.getOrNull(index)?.let { map ->
-        map.entries.flatMap { entry -> entry.value.stacks.filter(FluidStack::isNotEmpty).map { it.apply { orCreateTag.putFloat("output_chance", entry.key / map.maxWeight.toFloat()) } } }
+    override fun getStacks(recipe: Recipe) = recipe[FluidOutputsComponent::class.java]?.value?.getOrNull(index)?.let { stack ->
+        stack.value.stacks.filter(FluidStack::isNotEmpty).map { it.apply { orCreateTag.putFloat("output_chance", stack.chance) } }
     } ?: emptyList()
 
     override fun getExtraTooltips(stack: FluidStack) = if ("output_chance" in stack.orCreateTag) {

@@ -5,7 +5,6 @@ import com.emosewapixel.pixellib.extensions.toStack
 import com.emosewapixel.pixellib.machines.recipes.builders.AutomationRecipeListBuilder
 import com.emosewapixel.pixellib.machines.recipes.builders.StandardRecipeListBuilder
 import com.emosewapixel.pixellib.machines.recipes.builders.add
-import com.emosewapixel.pixellib.machines.recipes.components.ingredients.utility.weightedMapOf
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.Items
 import net.minecraft.util.ResourceLocation
@@ -25,7 +24,7 @@ object RecipeTest {
                 +Fluids.WATER.toStack()
             }
             itemOutputs {
-                +weightedMapOf(9 to Items.DIAMOND.toStack(), 1 to Items.DIAMOND_BLOCK.toStack())
+                +Items.DIAMOND.toStack()
             }
         }
 

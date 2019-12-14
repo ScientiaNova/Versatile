@@ -16,11 +16,11 @@ import com.emosewapixel.pixellib.machines.recipes.RecipeList
 import com.emosewapixel.pixellib.machines.recipes.StackToRecipeStackHashConversion
 import com.emosewapixel.pixellib.machines.recipes.components.IRecipeComponent
 import com.emosewapixel.pixellib.machines.recipes.components.grouping.RecipeComponentFamilies
-import com.emosewapixel.pixellib.machines.recipes.components.ingredients.recipestacks.IRecipeStack
+import com.emosewapixel.pixellib.machines.recipes.components.ingredients.recipestacks.ChancedRecipeStack
 import net.minecraftforge.fluids.FluidStack
 import kotlin.math.min
 
-class FluidInputsComponent(val max: Int, val min: Int = 0, val capacity: Int = 10_000) : IRecipeComponent<List<Pair<IRecipeStack<FluidStack>, Float>>> {
+class FluidInputsComponent(val max: Int, val min: Int = 0, val capacity: Int = 10_000) : IRecipeComponent<List<ChancedRecipeStack<FluidStack>>> {
     override val name = "fluidInputs"
     override val family = RecipeComponentFamilies.INPUT_SLOTS
 
@@ -36,13 +36,13 @@ class FluidInputsComponent(val max: Int, val min: Int = 0, val capacity: Int = 1
 
     override fun onRecipeAdded(recipe: Recipe) {
         recipe[this]?.value?.forEach {
-            recipe.recipeList.inputMap.put(it.first.toString(), recipe)
+            recipe.recipeList.inputMap.put(it.value.toString(), recipe)
         }
     }
 
     override fun onRecipeRemoved(recipe: Recipe) {
         recipe[this]?.value?.forEach {
-            recipe.recipeList.inputMap.remove(it.first.toString(), recipe)
+            recipe.recipeList.inputMap.remove(it.value.toString(), recipe)
         }
     }
 
