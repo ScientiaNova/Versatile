@@ -11,7 +11,8 @@ import com.emosewapixel.pixellib.machines.recipes.components.ingredients.recipes
 import com.emosewapixel.pixellib.machines.recipes.components.ingredients.utility.TagStack
 import com.emosewapixel.pixellib.machines.recipes.components.ingredients.utility.WeightedMap
 import com.emosewapixel.pixellib.machines.recipes.components.ingredients.utility.weightedMapOf
-import com.emosewapixel.pixellib.machines.recipes.components.stats.EnergyPerTickHandler
+import com.emosewapixel.pixellib.machines.recipes.components.energy.EnergyConsumptionHandler
+import com.emosewapixel.pixellib.machines.recipes.components.energy.EnergyGenerationHandler
 import com.emosewapixel.pixellib.machines.recipes.components.stats.TimeHandler
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
@@ -27,9 +28,15 @@ open class DSLRecipeBuilder(val recipeList: RecipeList, val name: String) {
             field = value
         }
 
-    var energyPerTick = 0
+    var energyConsumedPerTick = 0
         set(value) {
-            handlers += EnergyPerTickHandler(value)
+            handlers += EnergyConsumptionHandler(value)
+            field = value
+        }
+
+    var energyGeneratedPerTick = 0
+        set(value) {
+            handlers += EnergyGenerationHandler(value)
             field = value
         }
 

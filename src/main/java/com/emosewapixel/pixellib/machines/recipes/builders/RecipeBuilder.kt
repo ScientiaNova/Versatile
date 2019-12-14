@@ -11,7 +11,8 @@ import com.emosewapixel.pixellib.machines.recipes.components.ingredients.recipes
 import com.emosewapixel.pixellib.machines.recipes.components.ingredients.utility.TagStack
 import com.emosewapixel.pixellib.machines.recipes.components.ingredients.utility.WeightedMap
 import com.emosewapixel.pixellib.machines.recipes.components.ingredients.utility.weightedMapOf
-import com.emosewapixel.pixellib.machines.recipes.components.stats.EnergyPerTickHandler
+import com.emosewapixel.pixellib.machines.recipes.components.energy.EnergyConsumptionHandler
+import com.emosewapixel.pixellib.machines.recipes.components.energy.EnergyGenerationHandler
 import com.emosewapixel.pixellib.machines.recipes.components.stats.TimeHandler
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
@@ -29,8 +30,13 @@ object Recipe {
             return this
         }
 
-        fun energyPerTick(amount: Int): Builder {
-            handlers += EnergyPerTickHandler(amount)
+        fun energyConsumedPerTick(amount: Int): Builder {
+            handlers += EnergyConsumptionHandler(amount)
+            return this
+        }
+
+        fun energyGeneratedPerTick(amount: Int): Builder {
+            handlers += EnergyGenerationHandler(amount)
             return this
         }
 

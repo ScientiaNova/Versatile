@@ -1,4 +1,4 @@
-package com.emosewapixel.pixellib.machines.properties.implementations.primitives
+package com.emosewapixel.pixellib.machines.properties.implementations.primitives.integers
 
 import com.emosewapixel.pixellib.machines.properties.ILimitedIntegerProperty
 

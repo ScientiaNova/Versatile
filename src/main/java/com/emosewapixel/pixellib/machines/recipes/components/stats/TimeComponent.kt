@@ -3,10 +3,11 @@ package com.emosewapixel.pixellib.machines.recipes.components.stats
 import com.emosewapixel.pixellib.extensions.shorten
 import com.emosewapixel.pixellib.machines.BaseTileEntity
 import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
-import com.emosewapixel.pixellib.machines.properties.implementations.primitives.TEIntegerProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.primitives.doubles.IncrementingDoubleProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.primitives.doubles.IntegerBasedDoubleProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.primitives.doubles.RecipeTimeBasedDoubleProperty
+import com.emosewapixel.pixellib.machines.properties.implementations.primitives.integers.ClearableIntegerProperty
+import com.emosewapixel.pixellib.machines.properties.implementations.primitives.integers.TEIntegerProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.recipes.RecipeProperty
 import com.emosewapixel.pixellib.machines.recipes.Recipe
 import com.emosewapixel.pixellib.machines.recipes.components.IRecipeComponent
@@ -20,7 +21,7 @@ object TimeComponent : IRecipeComponent<Int> {
     override fun isRecipeValid(recipe: Recipe) = recipe[this]?.value?.let { it > 0 } ?: false
 
     override fun addDefaultProperty(te: BaseTileEntity, properties: MutableList<ITEBoundProperty>) {
-        properties += TEIntegerProperty("processingTime", te)
+        properties += ClearableIntegerProperty("processingTime", te)
     }
 
     override fun addExtraInfo() = listOf { recipe: Recipe ->

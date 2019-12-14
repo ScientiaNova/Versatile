@@ -63,7 +63,9 @@
 	"extra_recipe_info.not_consumed": "Not Consumed",
 	"extra_recipe_info.output_chance": "%s%% Output Chance",
 	"extra_recipe_info.duration": "Time: %s secs",
-	"extra_recipe_info.energy_per_tick": "Takes: %s FE/t",
-	"extra_recipe_info.total_energy": "Total: %s FE",
+	"extra_recipe_info.energy_consumed_per_tick": "Takes: %s FE/t",
+	"extra_recipe_info.total_energy_consumed": "Total: %s FE",
+	"extra_recipe_info.energy_generated_per_tick": "Makes: %s FE/t",
+	"extra_recipe_info.total_energy_generated": "Total: %s FE",
 	"extra_recipe_info.set_recipe": "Set Recipe"
 }

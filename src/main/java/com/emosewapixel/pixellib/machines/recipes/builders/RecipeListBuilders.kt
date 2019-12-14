@@ -9,7 +9,8 @@ import com.emosewapixel.pixellib.machines.recipes.components.ingredients.fluids.
 import com.emosewapixel.pixellib.machines.recipes.components.ingredients.fluids.FluidOutputsComponent
 import com.emosewapixel.pixellib.machines.recipes.components.ingredients.items.ItemInputsComponent
 import com.emosewapixel.pixellib.machines.recipes.components.ingredients.items.ItemOutputsComponent
-import com.emosewapixel.pixellib.machines.recipes.components.stats.EnergyPerTickComponent
+import com.emosewapixel.pixellib.machines.recipes.components.energy.EnergyConsumptionComponent
+import com.emosewapixel.pixellib.machines.recipes.components.energy.EnergyGenerationComponent
 import com.emosewapixel.pixellib.machines.recipes.components.stats.TimeComponent
 import net.minecraft.util.ResourceLocation
 
@@ -33,8 +34,13 @@ open class StandardRecipeListBuilder(protected val name: ResourceLocation) {
         return this
     }
 
-    fun energyPerTick(max: Int): StandardRecipeListBuilder {
-        components += EnergyPerTickComponent(max)
+    fun consumeEnergy(maxPerTick: Int): StandardRecipeListBuilder {
+        components += EnergyConsumptionComponent(maxPerTick)
+        return this
+    }
+
+    fun generateEnergy(maxPerTick: Int): StandardRecipeListBuilder {
+        components += EnergyGenerationComponent(maxPerTick)
         return this
     }
 

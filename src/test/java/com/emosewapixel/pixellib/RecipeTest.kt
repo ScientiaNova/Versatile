@@ -12,7 +12,7 @@ import net.minecraft.util.ResourceLocation
 
 object RecipeTest {
     val TEST_RECIPES = StandardRecipeListBuilder("pixeltest:test".toResLoc()).itemInputs(8).fluidInputs(1).itemOutputs(1).time().build()
-    val THIN_RECIPES = AutomationRecipeListBuilder(ResourceLocation(PixelTest.MOD_ID, "thin_test")).itemInputs(3).fluidOutputs(2).time().energyPerTick(100).build()
+    val THIN_RECIPES = AutomationRecipeListBuilder(ResourceLocation(PixelTest.MOD_ID, "thin_test")).itemInputs(3).fluidOutputs(2).time().consumeEnergy(100).build()
 
     init {
         TEST_RECIPES.add("standard_recipe_test") {
@@ -31,7 +31,7 @@ object RecipeTest {
 
         THIN_RECIPES.add("automation_recipe_test") {
             time = 200
-            energyPerTick = 24
+            energyConsumedPerTick = 24
             itemInputs {
                 +Items.COBBLESTONE.toStack(8)
             }
@@ -42,7 +42,7 @@ object RecipeTest {
 
         THIN_RECIPES.add("automation_recipe_test_2") {
             time = 30
-            energyPerTick = 24
+            energyConsumedPerTick = 24
             itemInputs {
                 +listOf(Items.ICE.toStack() to 0.5f, Items.HEART_OF_THE_SEA.toStack() to 0f)
             }
