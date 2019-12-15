@@ -14,16 +14,19 @@ import net.minecraftforge.fml.common.Mod
 object MachineRegistry {
     val TEST_MACHINE = StandardRecipeBasedMachine(RecipeTest.TEST_RECIPES, Block.Properties.from(Blocks.STONE))
     val THIN_TEST_MACHINE = AutomationRecipeBasedMachine(RecipeTest.THIN_RECIPES, Block.Properties.from(Blocks.STONE))
+    val TEST_GENERATOR = AutomationRecipeBasedMachine(RecipeTest.GENERATOR_RECIPES, Block.Properties.from(Blocks.STONE))
 
     @SubscribeEvent
     fun onBlockRegistry(e: RegistryEvent.Register<Block>) {
         e.registry.register(TEST_MACHINE)
         e.registry.register(THIN_TEST_MACHINE)
+        e.registry.register(TEST_GENERATOR)
     }
 
     @SubscribeEvent
     fun onIteMRegistry(e: RegistryEvent.Register<Item>) {
         e.registry.register(BlockItem(TEST_MACHINE, Item.Properties().group(PixelLib.MAIN)).setRegistryName(TEST_MACHINE.registryName))
         e.registry.register(BlockItem(THIN_TEST_MACHINE, Item.Properties().group(PixelLib.MAIN)).setRegistryName(THIN_TEST_MACHINE.registryName))
+        e.registry.register(BlockItem(TEST_GENERATOR, Item.Properties().group(PixelLib.MAIN)).setRegistryName(TEST_GENERATOR.registryName))
     }
 }

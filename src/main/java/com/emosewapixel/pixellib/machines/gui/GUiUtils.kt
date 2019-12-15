@@ -79,7 +79,7 @@ object GUiUtils {
 
         drawTexture(texture, x, y, width, height, z = 100)
         GlStateManager.colorMask(true, true, true, false)
-        drawColoredRectangle(0x7f7f7f80, x, y, 16, 16)
+        drawColoredRectangle(0x7f434343, x, y, 16, 16)
 
         GlStateManager.color4f(1f, 1f, 1f, 1f)
 

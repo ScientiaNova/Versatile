@@ -7,6 +7,7 @@ import com.emosewapixel.pixellib.machines.gui.layout.components.stacksuppliers.R
 import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.items.TEItemInventoryProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.items.TEItemOutputProperty
+import com.emosewapixel.pixellib.machines.properties.implementations.processing.handlers.ItemOutputsProcessingHandler
 import com.emosewapixel.pixellib.machines.recipes.Recipe
 import com.emosewapixel.pixellib.machines.recipes.components.IRecipeComponent
 import com.emosewapixel.pixellib.machines.recipes.components.grouping.RecipeComponentFamilies
@@ -39,5 +40,9 @@ class ItemOutputsComponent(val max: Int, val min: Int = 0) : IRecipeComponent<Li
             val property = it.teProperties["itemOutputs"] as? TEItemInventoryProperty ?: return emptyList()
             (0 until min(property.value.slots, handler.size)).map { index -> ItemSlotComponent(property, index) }
         } ?: (handler.indices).map(::RecipeOutputItemStackSupplierSlot)
+    }
+
+    override fun getProcessingHandler(machine: BaseTileEntity) = (machine.teProperties["itemOutputs"] as? TEItemOutputProperty)?.let {
+        ItemOutputsProcessingHandler(it)
     }
 }

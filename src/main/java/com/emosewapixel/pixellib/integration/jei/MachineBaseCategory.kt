@@ -20,13 +20,14 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.text.TextFormatting
 import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.fluids.FluidStack
+import kotlin.math.max
 
 
 @Suppress("UNCHECKED_CAST")
 open class MachineBaseCategory(helper: IGuiHelper, protected val recipeList: RecipeList) : IRecipeCategory<Recipe> {
-    val listGroup = recipeList.createComponentGroup()
+    private val listGroup = recipeList.createComponentGroup()
 
-    private val background: IDrawable = helper.createBlankDrawable(listGroup.width, listGroup.height)
+    private val background: IDrawable = helper.createBlankDrawable(max(listGroup.width,78), listGroup.height)
 
     private val icon = recipeList.blocksImplementing.firstOrNull()?.let { helper.createDrawableIngredient(it.toStack()) }
 
@@ -73,8 +74,8 @@ open class MachineBaseCategory(helper: IGuiHelper, protected val recipeList: Rec
         val ingredientMap = supplierComponents.groupBy { (it.component as IStackSupplierComponent<*>).type }
                 .mapValues { entry -> entry.value.filter { (it.component as IStackSupplierComponent<*>).ioType != IOType.NONE } }
 
-        val xOffset = (listGroup.width - recipe.page.width) / 2
-        val yOffset = (listGroup.height - recipe.page.height) / 2
+        val xOffset = (background.width - recipe.page.width) / 2
+        val yOffset = (background.height - recipe.page.height) / 2
 
         var itemInputIndex = 0
 
@@ -124,19 +125,19 @@ open class MachineBaseCategory(helper: IGuiHelper, protected val recipeList: Rec
     }
 
     override fun draw(recipe: Recipe, mouseX: Double, mouseY: Double) {
-        recipe.page.drawInBackground(mouseX, mouseY, (listGroup.width - recipe.page.width) / 2, (listGroup.height - recipe.page.height) / 2)
+        recipe.page.drawInBackground(mouseX, mouseY, (background.width - recipe.page.width) / 2, (background.height - recipe.page.height) / 2)
         if (recipeList.recipeTransferFunction != null)
             ((Minecraft.getInstance().player.openContainer as? BaseContainer)?.te?.teProperties?.get("recipe") as? RecipeProperty)?.let { recipeProperty ->
                 if (recipeProperty.recipeList === recipeList) {
-                    TransferButton.drawInBackground(mouseX, mouseY, listGroup.width + 6, listGroup.height - 13)
-                    TransferButton.drawInForeground(mouseX, mouseY, listGroup.width + 6, listGroup.height - 13)
+                    TransferButton.drawInBackground(mouseX, mouseY, background.width + 6, background.height - 13)
+                    TransferButton.drawInForeground(mouseX, mouseY, background.width + 6, background.height - 13)
                 }
             }
     }
 
     override fun handleClick(recipe: Recipe, mouseX: Double, mouseY: Double, mouseButton: Int): Boolean {
         recipeList.recipeTransferFunction?.let {
-            if (TransferButton.isSelected(mouseX - (listGroup.width + 6), mouseY - (listGroup.height - 13))) {
+            if (TransferButton.isSelected(mouseX - (background.width + 6), mouseY - (background.height - 13))) {
                 Minecraft.getInstance().currentScreen?.onClose()
                 it.invoke(recipe, Minecraft.getInstance().player.openContainer as BaseContainer)
                 return true

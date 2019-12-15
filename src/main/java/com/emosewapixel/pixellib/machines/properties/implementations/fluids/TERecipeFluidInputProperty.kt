@@ -7,7 +7,7 @@ import com.emosewapixel.pixellib.machines.properties.implementations.recipes.Rec
 class TERecipeFluidInputProperty(override val value: RecipeInputFluidStackHandler, id: String, te: BaseTileEntity) : TEFluidInputProperty(value, id, te) {
     constructor(tanks: Int, recipeProperty: RecipeProperty, id: String, te: BaseTileEntity, capacity: Int = 10_000) : this(
             object : RecipeInputFluidStackHandler(tanks, recipeProperty, capacity) {
-                override fun onContentsChanged(index: Int) {
+                override fun onContentsChanged(indices: List<Int>) {
                     te.markDirty()
                     te.update()
                 }

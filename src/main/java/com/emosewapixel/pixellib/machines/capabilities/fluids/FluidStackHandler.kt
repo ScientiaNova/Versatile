@@ -18,14 +18,16 @@ open class FluidStackHandler @JvmOverloads constructor(val count: Int, val capac
             return FluidStack.EMPTY
 
         val consuming = resource.copy()
+        val updatedIndices = mutableListOf<Int>()
         tanks.withIndex().filter { it.value.isFluidEqual(resource) }.forEach { (index, tank) ->
             val take = tank.amount.coerceAtMost(consuming.amount)
             if (action == IFluidHandler.FluidAction.EXECUTE) {
                 tank.amount -= take
-                onContentsChanged(index)
+                updatedIndices += index
             }
             consuming.amount -= take
         }
+        if (updatedIndices.isNotEmpty()) onContentsChanged(updatedIndices)
         return resource.fluid * (resource.amount - consuming.amount)
     }
 
@@ -35,15 +37,17 @@ open class FluidStackHandler @JvmOverloads constructor(val count: Int, val capac
         val takeFirst = filledTanks.first().value.amount.coerceAtMost(maxDrain)
         filledTanks[0].value.amount -= takeFirst
         val consuming = FluidStack(filledTanks.first().value.fluid, maxDrain - takeFirst)
+        val updatedIndices = mutableListOf<Int>()
         if (!consuming.isEmpty)
             filledTanks.filter { it.value.isFluidEqual(consuming) }.forEach { (index, tank) ->
                 val take = tank.amount.coerceAtMost(consuming.amount)
                 if (action == IFluidHandler.FluidAction.EXECUTE) {
                     tank.amount -= take
-                    onContentsChanged(index)
+                    updatedIndices += index
                 }
                 consuming.amount -= take
             }
+        if (updatedIndices.isNotEmpty()) onContentsChanged(updatedIndices)
         return consuming.fluid * (maxDrain - consuming.amount)
     }
 
@@ -53,16 +57,18 @@ open class FluidStackHandler @JvmOverloads constructor(val count: Int, val capac
         if (resource == null || resource.isEmpty)
             return 0
         val consuming = resource.copy()
+        val updatedIndices = mutableListOf<Int>()
         tanks.withIndex().filter { isFluidValid(it.index, resource) && (it.value.isEmpty || it.value.fluid == resource.fluid) }.forEach { (index, tank) ->
             val filled = (getTankCapacity(index) - tank.amount).coerceAtMost(consuming.amount)
             if (action == IFluidHandler.FluidAction.EXECUTE) {
                 if (tank.isEmpty) tanks[index] = consuming.fluid * filled
                 else tank.amount += filled
-                onContentsChanged(index)
+                updatedIndices += index
             }
             consuming.amount -= filled
             if (consuming.amount == 0) return resource.amount
         }
+        if (updatedIndices.isNotEmpty()) onContentsChanged(updatedIndices)
         return resource.amount - consuming.amount
     }
 
@@ -70,7 +76,7 @@ open class FluidStackHandler @JvmOverloads constructor(val count: Int, val capac
 
     override fun setFluidInTank(tank: Int, stack: FluidStack) {
         tanks[tank] = stack
-        onContentsChanged(tank)
+        onContentsChanged(listOf(tank))
     }
 
     override fun getTanks() = count
@@ -98,7 +104,7 @@ open class FluidStackHandler @JvmOverloads constructor(val count: Int, val capac
         onLoad()
     }
 
-    open fun onContentsChanged(index: Int) {}
+    open fun onContentsChanged(indices: List<Int>) {}
 
     open fun onLoad() {}
 }

@@ -7,6 +7,7 @@ import com.emosewapixel.pixellib.machines.gui.layout.components.stacksuppliers.R
 import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.fluids.TEFluidInventoryProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.fluids.TEFluidOutputProperty
+import com.emosewapixel.pixellib.machines.properties.implementations.processing.handlers.FluidOutputsProcessingHandler
 import com.emosewapixel.pixellib.machines.recipes.Recipe
 import com.emosewapixel.pixellib.machines.recipes.components.IRecipeComponent
 import com.emosewapixel.pixellib.machines.recipes.components.grouping.RecipeComponentFamilies
@@ -39,5 +40,9 @@ class FluidOutputsComponent(val max: Int, val min: Int = 0, val capacity: Int = 
             val property = it.teProperties["fluidOutputs"] as? TEFluidInventoryProperty ?: return emptyList()
             (0 until min(property.value.tanks, handler.size)).map { index -> FluidSlotComponent(property, index) }
         } ?: (handler.indices).map(::RecipeOutputFluidStackSupplierSlot)
+    }
+
+    override fun getProcessingHandler(machine: BaseTileEntity) = (machine.teProperties["fluidOutputs"] as? TEFluidOutputProperty)?.let {
+        FluidOutputsProcessingHandler(it)
     }
 }

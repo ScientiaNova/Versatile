@@ -6,6 +6,7 @@ import com.emosewapixel.pixellib.machines.gui.layout.GUIBook
 import com.emosewapixel.pixellib.machines.gui.layout.book
 import com.emosewapixel.pixellib.machines.gui.layout.components.still.LabelComponent
 import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
+import com.emosewapixel.pixellib.machines.properties.implementations.processing.DefaultProcessingProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.recipes.RecipeProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.recipes.TEAutomationRecipeProperty
 import com.emosewapixel.pixellib.machines.recipes.RecipeList
@@ -18,10 +19,11 @@ open class AutomationRecipeBasedMachine(recipeList: RecipeList, properties: Prop
     }
 
     override val teProperties: BaseTileEntity.() -> List<ITEBoundProperty> = {
-        recipeList.recipeComponents.values.fold(mutableListOf<ITEBoundProperty>(TEAutomationRecipeProperty(recipeList, "recipe", this))) { list, component ->
+        val recipeProperty = TEAutomationRecipeProperty(recipeList, "recipe", this)
+        recipeList.recipeComponents.values.fold(mutableListOf<ITEBoundProperty>(recipeProperty)) { list, component ->
             component.addDefaultProperty(this, list)
             list
-        }
+        } + DefaultProcessingProperty("processing", this, recipeProperty)
     }
 
     override val guiLayout: BaseTileEntity.() -> GUIBook = {

@@ -2,10 +2,10 @@ package com.emosewapixel.pixellib.machines.properties.implementations.primitives
 
 import com.emosewapixel.pixellib.machines.BaseTileEntity
 
-class ClearableIntegerProperty(id: String, te: BaseTileEntity) : TEIntegerProperty(id, te) {
+class TEClearableIntegerProperty(id: String, te: BaseTileEntity) : TEIntegerProperty(id, te) {
     override fun clear() {
         value = 0
     }
 
-    override fun createDefault() = ClearableIntegerProperty(id, te)
+    override fun createDefault() = TEClearableIntegerProperty(id, te)
 }

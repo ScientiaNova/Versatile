@@ -5,7 +5,7 @@ import com.emosewapixel.pixellib.machines.capabilities.fluids.OutputFluidStackHa
 
 open class TEFluidOutputProperty(value: OutputFluidStackHandler, id: String, te: BaseTileEntity) : TEFluidInventoryProperty(value, id, te) {
     constructor(tanks: Int, id: String, te: BaseTileEntity, capacity: Int = 10_000) : this(object : OutputFluidStackHandler(tanks, capacity) {
-        override fun onContentsChanged(index: Int) {
+        override fun onContentsChanged(indices: List<Int>) {
             te.markDirty()
             te.update()
         }

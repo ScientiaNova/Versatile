@@ -14,7 +14,6 @@ import com.emosewapixel.pixellib.machines.packets.UpdateHeldStackPacket
 import com.emosewapixel.pixellib.machines.packets.handlers.UpdateTankPacket
 import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
 import com.emosewapixel.pixellib.machines.properties.IValueProperty
-import com.mojang.blaze3d.platform.GlStateManager
 import net.minecraft.client.Minecraft
 import net.minecraft.item.ItemStack
 import net.minecraft.util.text.TranslationTextComponent
@@ -100,7 +99,7 @@ open class FluidSlotComponent(val property: IValueProperty<out IFluidHandlerModi
                             slotTank.setFluidInTank(tankIndex, leftOverStack)
                         else {
                             slotTank.getFluidInTank(tankIndex).amount += leftOverFluid
-                            if (slotTank is FluidStackHandler) slotTank.onContentsChanged(tankIndex)
+                            if (slotTank is FluidStackHandler) slotTank.onContentsChanged(listOf(tankIndex))
                         }
                         heldStack.copy().getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).ifPresent {
                             it.drain(leftOverStack, IFluidHandler.FluidAction.EXECUTE)
@@ -138,7 +137,7 @@ open class FluidSlotComponent(val property: IValueProperty<out IFluidHandlerModi
                                 resultStack.changeOrAdd(it.container)
                             }
                             selectedTank.amount -= fillableInStack
-                            if (slotTank is FluidStackHandler) slotTank.onContentsChanged(tankIndex)
+                            if (slotTank is FluidStackHandler) slotTank.onContentsChanged(listOf(tankIndex))
                             heldStack.shrink(fillableItems)
                         }
                         if (leftOver > 0) {
@@ -147,7 +146,7 @@ open class FluidSlotComponent(val property: IValueProperty<out IFluidHandlerModi
                                 extraStack = resultStack.changeOrAdd(it.container)
                             }
                             selectedTank.amount -= leftOver
-                            if (slotTank is FluidStackHandler) slotTank.onContentsChanged(tankIndex)
+                            if (slotTank is FluidStackHandler) slotTank.onContentsChanged(listOf(tankIndex))
                             heldStack.shrink(1)
                         }
                         if (heldStack.isEmpty) {
@@ -186,7 +185,7 @@ open class FluidSlotComponent(val property: IValueProperty<out IFluidHandlerModi
                     val fullyConsumableFluid = fluid * fullyConsumableAmount
                     if (fullyConsumableItems > 0 && handler.drain(fullyConsumableFluid, IFluidHandler.FluidAction.SIMULATE).amount == fullyConsumableAmount) {
                         slotTank.getFluidInTank(tankIndex).amount += fullyConsumableAmount
-                        if (slotTank is FluidStackHandler) slotTank.onContentsChanged(tankIndex)
+                        if (slotTank is FluidStackHandler) slotTank.onContentsChanged(listOf(tankIndex))
                         heldStack.copy().getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).ifPresent {
                             it.drain(fullyConsumableFluid, IFluidHandler.FluidAction.EXECUTE)
                             resultStack.changeOrAdd(it.container)
@@ -196,7 +195,7 @@ open class FluidSlotComponent(val property: IValueProperty<out IFluidHandlerModi
                     val leftOverStack = fluid * leftOver
                     if (leftOver > 0 && handler.drain(leftOverStack, IFluidHandler.FluidAction.SIMULATE).amount == leftOver) {
                         slotTank.getFluidInTank(tankIndex).amount += leftOver
-                        if (slotTank is FluidStackHandler) slotTank.onContentsChanged(tankIndex)
+                        if (slotTank is FluidStackHandler) slotTank.onContentsChanged(listOf(tankIndex))
                         heldStack.copy().getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).ifPresent {
                             it.drain(leftOverStack, IFluidHandler.FluidAction.EXECUTE)
                             extraStack = resultStack.changeOrAdd(it.container)

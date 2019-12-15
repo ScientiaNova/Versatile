@@ -80,7 +80,7 @@ open class RecipeList(val name: ResourceLocation, vararg components: IRecipeComp
 
         val maxHeight = max(inputSide.height, outputSide.height)
 
-        val extraHeight = if (machine == null) recipeComponents.values.flatMap { it.addExtraInfo() }.size * 10 + 2 + DefaultSizeConstants.TEXT_HEIGHT else 0
+        val extraHeight = if (machine == null) recipeComponents.values.flatMap { it.addExtraInfo() }.lastIndex * 10 + 2 + DefaultSizeConstants.TEXT_HEIGHT else 0
 
         return GUIComponentGroup(extraHeight = extraHeight).apply {
             add(inputSide, 0, (maxHeight - inputSide.height) / 2)

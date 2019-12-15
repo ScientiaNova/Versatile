@@ -21,7 +21,7 @@ import net.minecraftforge.fml.network.NetworkDirection
 
 open class TEFluidInventoryProperty(override val value: FluidStackHandler, override val id: String, override val te: BaseTileEntity) : IValueProperty<IFluidHandlerModifiable>, ITEBoundProperty {
     constructor(slots: Int, id: String, te: BaseTileEntity, capacity: Int = 10_000) : this(object : FluidStackHandler(slots, capacity) {
-        override fun onContentsChanged(index: Int) {
+        override fun onContentsChanged(indices: List<Int>) {
             te.markDirty()
             te.update()
         }

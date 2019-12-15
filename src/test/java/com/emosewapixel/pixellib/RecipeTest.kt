@@ -12,6 +12,7 @@ import net.minecraft.util.ResourceLocation
 object RecipeTest {
     val TEST_RECIPES = StandardRecipeListBuilder("pixeltest:test".toResLoc()).itemInputs(8).fluidInputs(1).itemOutputs(1).time().build()
     val THIN_RECIPES = AutomationRecipeListBuilder(ResourceLocation(PixelTest.MOD_ID, "thin_test")).itemInputs(3).fluidOutputs(2).time().consumeEnergy(100).build()
+    val GENERATOR_RECIPES = AutomationRecipeListBuilder(ResourceLocation(PixelTest.MOD_ID, "generator_test")).fluidInputs(1).time().generateEnergy(10000).build()
 
     init {
         TEST_RECIPES.add("standard_recipe_test") {
@@ -47,6 +48,14 @@ object RecipeTest {
             }
             fluidOutputs {
                 +Fluids.WATER.toStack()
+            }
+        }
+
+        GENERATOR_RECIPES.add("lava_to_power") {
+            time = 2000
+            energyGeneratedPerTick = 200
+            fluidInputs {
+                +Fluids.LAVA.toStack()
             }
         }
     }
