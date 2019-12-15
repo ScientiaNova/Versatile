@@ -11,5 +11,5 @@ open class TEEnergyOutputProperty(value: OutputEnergyHandler, id: String, te: Ba
         }
     }, id, te)
 
-    override fun createDefault() = TEEnergyOutputProperty(value.maxEnergyStored, id, te)
+    override fun clone() = TEEnergyOutputProperty(OutputEnergyHandler(value.maxEnergyStored), id, te)
 }

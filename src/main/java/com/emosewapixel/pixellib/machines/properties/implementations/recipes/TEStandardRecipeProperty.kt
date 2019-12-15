@@ -10,11 +10,10 @@ import com.emosewapixel.pixellib.machines.recipes.Recipe
 import com.emosewapixel.pixellib.machines.recipes.RecipeList
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.nbt.CompoundNBT
-import net.minecraftforge.fml.loading.FMLEnvironment
 import net.minecraftforge.fml.network.NetworkDirection
 
-open class TEStandardRecipeProperty(recipeList: RecipeList, override val id: String, override val te: BaseTileEntity) : RecipeProperty(recipeList), ITEBoundProperty {
-    override fun createDefault() = TEStandardRecipeProperty(recipeList, id, te)
+open class TEStandardRecipeProperty(recipeList: RecipeList, value: Recipe?, override val id: String, override val te: BaseTileEntity) : RecipeProperty(recipeList, value), ITEBoundProperty {
+    override fun clone() = TEStandardRecipeProperty(recipeList, value, id, te)
 
     override fun detectAndSendChanges(container: BaseContainer) {
         if ((container.clientProperties[id] as? TEStandardRecipeProperty)?.value != value) {
@@ -32,7 +31,7 @@ open class TEStandardRecipeProperty(recipeList: RecipeList, override val id: Str
     override fun setValue(new: Recipe?, causeUpdate: Boolean) {
         value = new
         te.guiLayout.setCurrentPage(te.guiLayout.currentPageId)
-        if (causeUpdate && !FMLEnvironment.dist.isDedicatedServer)
+        if (causeUpdate && te.world?.isRemote == true)
             NetworkHandler.CHANNEL.sendToServer(UpdateRecipePacket(id, value?.name
                     ?: ""))
         te.markDirty()

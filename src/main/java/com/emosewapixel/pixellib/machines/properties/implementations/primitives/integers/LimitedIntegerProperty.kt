@@ -14,5 +14,5 @@ open class LimitedIntegerProperty(override val min: Int, override val max: Int) 
     override var value = min
         protected set
 
-    override fun createDefault() = LimitedIntegerProperty(min, max)
+    override fun clone() = LimitedIntegerProperty(min, max)
 }

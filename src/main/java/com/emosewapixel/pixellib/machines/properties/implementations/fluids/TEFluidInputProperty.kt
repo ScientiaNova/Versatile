@@ -11,5 +11,5 @@ open class TEFluidInputProperty(value: InputFluidStackHandler, id: String, te: B
         }
     }, id, te)
 
-    override fun createDefault() = TEFluidInputProperty(InputFluidStackHandler(value.tanks, value.capacity), id, te)
+    override fun clone() = TEFluidInputProperty(InputFluidStackHandler(value.tanks, value.capacity), id, te)
 }

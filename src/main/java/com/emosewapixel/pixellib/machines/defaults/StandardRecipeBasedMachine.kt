@@ -16,7 +16,7 @@ open class StandardRecipeBasedMachine(recipeList: RecipeList, properties: Proper
     }
 
     override val teProperties: BaseTileEntity.() -> List<ITEBoundProperty> = {
-        recipeList.recipeComponents.values.fold(mutableListOf<ITEBoundProperty>(TEStandardRecipeProperty(recipeList, "recipe", this))) { list, component ->
+        recipeList.recipeComponents.values.fold(mutableListOf<ITEBoundProperty>(TEStandardRecipeProperty(recipeList, null, "recipe", this))) { list, component ->
             component.addDefaultProperty(this, list)
             list
         }

@@ -35,7 +35,7 @@ class UpdateSlotPacket(val property: String, val index: Int, val stack: ItemStac
                         { Supplier { serverSideContainer } }
                 )
                 (container?.te?.teProperties?.get(packet.property) as? IValueProperty<IItemHandlerModifiable>)
-                        ?.value?.setStackInSlot(packet.index, packet.stack)
+                        ?.value?.setStackInSlot(packet.index, packet.stack.copy())
                 (container?.clientProperties?.get(packet.property) as? IValueProperty<IItemHandlerModifiable>)
                         ?.value?.setStackInSlot(packet.index, packet.stack.copy())
             }

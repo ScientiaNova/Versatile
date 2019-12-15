@@ -36,7 +36,7 @@ open class TEItemInventoryProperty(override val value: ItemStackHandler, overrid
         }
     }
 
-    override fun createDefault() = TEItemInventoryProperty(ItemStackHandler(value.slots), id, te)
+    override fun clone() = TEItemInventoryProperty(ItemStackHandler(value.slots), id, te)
 
     override fun deserializeNBT(nbt: CompoundNBT?) {
         if (nbt?.contains(id) == true) value.deserializeNBT(nbt.getCompound(id))

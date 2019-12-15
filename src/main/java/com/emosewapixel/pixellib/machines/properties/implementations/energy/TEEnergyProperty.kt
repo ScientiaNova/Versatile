@@ -25,7 +25,7 @@ open class TEEnergyProperty(override val value: EnergyHandler, override val id: 
         }
     }, id, te)
 
-    override fun createDefault() = TEEnergyProperty(value.maxEnergyStored, id, te)
+    override fun clone() = TEEnergyProperty(EnergyHandler(value.maxEnergyStored), id, te)
 
     override fun detectAndSendChanges(container: BaseContainer) {
         if ((container.clientProperties[id] as TEEnergyProperty).value.energyStored != value.energyStored) {

@@ -23,7 +23,7 @@ open class EnergyCapabilityWrapper : IEnergyStorage, ICapabilityProvider {
     override fun extractEnergy(maxExtract: Int, simulate: Boolean) = maxExtract - handlers.filter(IEnergyStorage::canExtract)
             .fold(maxExtract) { acc, handler -> acc - handler.extractEnergy(acc, simulate) }
 
-    override fun receiveEnergy(maxReceive: Int, simulate: Boolean) = maxReceive - handlers.filter(IEnergyStorage::canExtract)
+    override fun receiveEnergy(maxReceive: Int, simulate: Boolean) = maxReceive - handlers.filter(IEnergyStorage::canReceive)
             .fold(maxReceive) { acc, handler -> acc - handler.receiveEnergy(acc, simulate) }
 
     val optional = LazyOptional.of { this }

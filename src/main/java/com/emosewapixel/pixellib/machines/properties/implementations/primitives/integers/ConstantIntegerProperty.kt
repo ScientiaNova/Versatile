@@ -3,5 +3,5 @@ package com.emosewapixel.pixellib.machines.properties.implementations.primitives
 import com.emosewapixel.pixellib.machines.properties.IValueProperty
 
 open class ConstantIntegerProperty(override val value: Int) : IValueProperty<Int> {
-    override fun createDefault() = ConstantIntegerProperty(value)
+    override fun clone() = ConstantIntegerProperty(value)
 }

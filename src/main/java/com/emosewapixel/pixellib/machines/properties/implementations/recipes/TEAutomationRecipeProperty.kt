@@ -11,8 +11,8 @@ import com.emosewapixel.pixellib.machines.recipes.RecipeList
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraftforge.fml.network.NetworkDirection
 
-open class TEAutomationRecipeProperty(recipeList: RecipeList, override val id: String, override val te: BaseTileEntity) : TEStandardRecipeProperty(recipeList, id, te), ITEBoundProperty {
-    override fun createDefault() = TEAutomationRecipeProperty(recipeList, id, te)
+open class TEAutomationRecipeProperty(recipeList: RecipeList, value: Recipe?,  override val id: String, override val te: BaseTileEntity) : TEStandardRecipeProperty(recipeList, value, id, te), ITEBoundProperty {
+    override fun clone() = TEAutomationRecipeProperty(recipeList, value, id, te)
 
     override fun detectAndSendChanges(container: BaseContainer) {
         if ((container.clientProperties[id] as? TEAutomationRecipeProperty)?.value != value) {

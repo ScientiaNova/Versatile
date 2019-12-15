@@ -12,5 +12,5 @@ open class TERecipeItemInputProperty(override val value: RecipeInputItemStackHan
         }
     }, id, te)
 
-    override fun createDefault() = TERecipeItemInputProperty(RecipeInputItemStackHandler(value.slots, value.recipeProperty), id, te)
+    override fun clone() = TERecipeItemInputProperty(RecipeInputItemStackHandler(value.slots, value.recipeProperty), id, te)
 }

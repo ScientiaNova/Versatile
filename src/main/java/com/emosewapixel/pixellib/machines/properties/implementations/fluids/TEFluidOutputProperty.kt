@@ -11,5 +11,5 @@ open class TEFluidOutputProperty(value: OutputFluidStackHandler, id: String, te:
         }
     }, id, te)
 
-    override fun createDefault() = TEFluidOutputProperty(OutputFluidStackHandler(value.tanks, value.capacity), id, te)
+    override fun clone() = TEFluidOutputProperty(OutputFluidStackHandler(value.tanks, value.capacity), id, te)
 }

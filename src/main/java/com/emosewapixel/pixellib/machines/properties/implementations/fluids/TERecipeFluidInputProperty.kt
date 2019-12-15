@@ -14,5 +14,5 @@ class TERecipeFluidInputProperty(override val value: RecipeInputFluidStackHandle
             }, id, te
     )
 
-    override fun createDefault() = TERecipeFluidInputProperty(RecipeInputFluidStackHandler(value.tanks, value.recipeProperty, value.capacity), id, te)
+    override fun clone() = TERecipeFluidInputProperty(RecipeInputFluidStackHandler(value.tanks, value.recipeProperty, value.capacity), id, te)
 }

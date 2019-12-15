@@ -9,7 +9,7 @@ open class EnergyHandler(private val max: Int) : IEnergyStorageModifiable, INBTS
 
     private var stored = 0
 
-    override fun getEnergyStored() = 0
+    override fun getEnergyStored() = stored
 
     override fun setEnergyStored(amount: Int) {
         stored = amount

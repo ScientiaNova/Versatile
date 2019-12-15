@@ -9,12 +9,11 @@ import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
 import com.emosewapixel.pixellib.machines.properties.IVariableProperty
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.nbt.CompoundNBT
-import net.minecraftforge.fml.loading.FMLEnvironment
 import net.minecraftforge.fml.network.NetworkDirection
 
 open class TEBooleanProperty(override val id: String, override val te: BaseTileEntity) : IVariableProperty<Boolean>, ITEBoundProperty {
     override fun setValue(new: Boolean, causeUpdate: Boolean) {
-        if (causeUpdate && !FMLEnvironment.dist.isDedicatedServer)
+        if (causeUpdate && te.world?.isRemote == true)
             NetworkHandler.CHANNEL.sendToServer(UpdateBooleanPacket(id, value))
         value = new
         te.markDirty()
@@ -30,7 +29,7 @@ open class TEBooleanProperty(override val id: String, override val te: BaseTileE
         }
     }
 
-    override fun createDefault() = TEBooleanProperty(id, te)
+    override fun clone() = TEBooleanProperty(id, te)
 
     override fun deserializeNBT(nbt: CompoundNBT?) {
         if (nbt?.contains(id) == true) value = nbt.getBoolean(id)

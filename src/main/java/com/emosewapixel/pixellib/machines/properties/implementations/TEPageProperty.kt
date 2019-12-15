@@ -9,7 +9,6 @@ import com.emosewapixel.pixellib.machines.packets.reopening.ReopenGUIPacket
 import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.nbt.CompoundNBT
-import net.minecraftforge.fml.loading.FMLEnvironment
 import net.minecraftforge.fml.network.NetworkDirection
 
 open class TEPageProperty(override val te: BaseTileEntity) : ITEBoundProperty {
@@ -23,12 +22,12 @@ open class TEPageProperty(override val te: BaseTileEntity) : ITEBoundProperty {
     var page
         get() = te.guiLayout.currentPageId
         set(value) {
-            if (!FMLEnvironment.dist.isDedicatedServer)
+            if (te.world?.isRemote == true)
                 NetworkHandler.CHANNEL.sendToServer(ChangePagePacket(te.pos, value))
             te.guiLayout.setCurrentPage(value)
         }
 
-    override fun createDefault() = this
+    override fun clone() = this
 
     override fun deserializeNBT(nbt: CompoundNBT?) {}
 

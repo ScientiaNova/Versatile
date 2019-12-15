@@ -37,7 +37,7 @@ class UpdateTankPacket(val property: String, val index: Int, val stack: FluidSta
                         { Supplier { serverSideContainer } }
                 )
                 (container?.te?.teProperties?.get(packet.property) as? IValueProperty<IFluidHandlerModifiable>)
-                        ?.value?.setFluidInTank(packet.index, packet.stack)
+                        ?.value?.setFluidInTank(packet.index, packet.stack.copy())
                 (container?.clientProperties?.get(packet.property) as? IValueProperty<IFluidHandlerModifiable>)
                         ?.value?.setFluidInTank(packet.index, packet.stack.copy())
             }

@@ -227,9 +227,8 @@ open class FluidSlotComponent(val property: IValueProperty<out IFluidHandlerModi
 
     private fun updateOnServer() {
         val slotTank = property.value
-        (property as? ITEBoundProperty)?.let {
-            NetworkHandler.CHANNEL.sendToServer(UpdateTankPacket(it.id, tankIndex, slotTank.getFluidInTank(tankIndex)))
-        }
+        if (property is ITEBoundProperty)
+            NetworkHandler.CHANNEL.sendToServer(UpdateTankPacket(property.id, tankIndex, slotTank.getFluidInTank(tankIndex)))
     }
 
     override fun addProperties() = setOf(property)

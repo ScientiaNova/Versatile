@@ -17,6 +17,7 @@ import com.google.common.reflect.MutableTypeToInstanceMap
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.nbt.CompoundNBT
 import net.minecraftforge.common.capabilities.ICapabilityProvider
+import net.minecraftforge.fluids.FluidStack
 import net.minecraftforge.fml.network.NetworkDirection
 
 open class TEFluidInventoryProperty(override val value: FluidStackHandler, override val id: String, override val te: BaseTileEntity) : IValueProperty<IFluidHandlerModifiable>, ITEBoundProperty {
@@ -37,7 +38,7 @@ open class TEFluidInventoryProperty(override val value: FluidStackHandler, overr
         }
     }
 
-    override fun createDefault() = TEFluidInventoryProperty(FluidStackHandler(value.count, value.capacity), id, te)
+    override fun clone() = TEFluidInventoryProperty(FluidStackHandler(value.count, value.capacity), id, te)
 
     override fun deserializeNBT(nbt: CompoundNBT) {
         if (id in nbt) value.deserializeNBT(nbt.getCompound(id))
@@ -49,5 +50,11 @@ open class TEFluidInventoryProperty(override val value: FluidStackHandler, overr
 
     override fun addCapability(map: MutableTypeToInstanceMap<ICapabilityProvider>) {
         map.getOrAddInstance(FluidCapabilityWrapper::class.java, FluidCapabilityWrapper()).addHandler(value)
+    }
+
+    override fun clear() {
+        (0 until value.tanks).map {
+            value[it] = FluidStack.EMPTY
+        }
     }
 }

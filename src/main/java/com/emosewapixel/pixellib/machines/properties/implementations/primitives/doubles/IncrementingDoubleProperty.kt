@@ -16,5 +16,5 @@ open class IncrementingDoubleProperty(private val increment: Double = 0.01) : IV
         }
         protected set
 
-    override fun createDefault() = IncrementingDoubleProperty(increment)
+    override fun clone() = IncrementingDoubleProperty(increment)
 }

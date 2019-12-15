@@ -7,5 +7,5 @@ class TEClearableIntegerProperty(id: String, te: BaseTileEntity) : TEIntegerProp
         value = 0
     }
 
-    override fun createDefault() = TEClearableIntegerProperty(id, te)
+    override fun clone() = TEClearableIntegerProperty(id, te)
 }

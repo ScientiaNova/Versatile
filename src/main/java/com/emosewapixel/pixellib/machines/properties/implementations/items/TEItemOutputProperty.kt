@@ -11,5 +11,5 @@ open class TEItemOutputProperty(value: OutputItemStackHandler, id: String, te: B
         }
     }, id, te)
 
-    override fun createDefault() = TEItemOutputProperty(OutputItemStackHandler(value.slots), id, te)
+    override fun clone() = TEItemOutputProperty(OutputItemStackHandler(value.slots), id, te)
 }

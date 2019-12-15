@@ -6,5 +6,5 @@ open class IntegerBasedDoubleProperty(val intProperty: IValueProperty<Int>, val 
     override val value
         get() = intProperty.value / max.toDouble()
 
-    override fun createDefault() = IntegerBasedDoubleProperty(intProperty, max)
+    override fun clone() = IntegerBasedDoubleProperty(intProperty, max)
 }

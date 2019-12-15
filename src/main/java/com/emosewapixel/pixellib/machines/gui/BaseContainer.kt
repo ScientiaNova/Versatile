@@ -4,8 +4,6 @@ import com.emosewapixel.pixellib.machines.BaseMachineRegistry
 import com.emosewapixel.pixellib.machines.BaseTileEntity
 import com.emosewapixel.pixellib.machines.gui.slots.IImprovedSlot
 import com.emosewapixel.pixellib.machines.gui.slots.SlotLogic
-import com.emosewapixel.pixellib.machines.properties.IMachineProperty
-import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.container.ClickType
@@ -20,11 +18,7 @@ open class BaseContainer(id: Int, val playerInv: PlayerInventory, val te: BaseTi
 
     val guiPage = te.guiLayout.currentPage
 
-    val properties = guiPage.components.fold(mutableSetOf<IMachineProperty>()) { acc, curr ->
-        acc += curr.addProperties()
-        acc
-    }
-    val clientProperties = te.teProperties.mapValues { it.value.createDefault() }
+    val clientProperties = te.teProperties.mapValues { it.value.clone() }
 
     init {
         guiPage.components.fold(mutableListOf<IImprovedSlot>()) { acc, current ->
@@ -37,7 +31,7 @@ open class BaseContainer(id: Int, val playerInv: PlayerInventory, val te: BaseTi
 
     override fun detectAndSendChanges() {
         if (te.world?.isRemote != false) return
-        properties.forEach { (it as? ITEBoundProperty)?.detectAndSendChanges(this) }
+        te.teProperties.values.forEach { it.detectAndSendChanges(this) }
     }
 
     override fun transferStackInSlot(playerIn: PlayerEntity, index: Int): ItemStack {

@@ -11,5 +11,5 @@ open class RecipeTimeBasedDoubleProperty(val intProperty: IValueProperty<Int>, v
             return intProperty.value / recipeTime.toDouble()
         }
 
-    override fun createDefault() = RecipeTimeBasedDoubleProperty(intProperty, recipeProperty)
+    override fun clone() = RecipeTimeBasedDoubleProperty(intProperty, recipeProperty)
 }
