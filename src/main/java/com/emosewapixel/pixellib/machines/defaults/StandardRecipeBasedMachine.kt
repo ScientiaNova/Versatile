@@ -6,6 +6,7 @@ import com.emosewapixel.pixellib.machines.gui.layout.GUIBook
 import com.emosewapixel.pixellib.machines.gui.layout.book
 import com.emosewapixel.pixellib.machines.gui.layout.components.still.LabelComponent
 import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
+import com.emosewapixel.pixellib.machines.properties.implementations.processing.StandardProcessingProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.recipes.TEStandardRecipeProperty
 import com.emosewapixel.pixellib.machines.recipes.RecipeList
 import kotlin.math.max
@@ -16,10 +17,11 @@ open class StandardRecipeBasedMachine(recipeList: RecipeList, properties: Proper
     }
 
     override val teProperties: BaseTileEntity.() -> List<ITEBoundProperty> = {
-        recipeList.recipeComponents.values.fold(mutableListOf<ITEBoundProperty>(TEStandardRecipeProperty(recipeList, null, "recipe", this))) { list, component ->
+        val recipeProperty = TEStandardRecipeProperty(recipeList, null, "recipe", this)
+        recipeList.recipeComponents.values.fold(mutableListOf<ITEBoundProperty>(recipeProperty)) { list, component ->
             component.addDefaultProperty(this, list)
             list
-        }
+        } + StandardProcessingProperty("processing", this, recipeProperty)
     }
 
     override val guiLayout: BaseTileEntity.() -> GUIBook = {

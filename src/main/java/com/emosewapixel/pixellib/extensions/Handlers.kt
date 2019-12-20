@@ -9,6 +9,8 @@ import net.minecraftforge.items.IItemHandlerModifiable
 
 operator fun IItemHandler.get(slot: Int) = getStackInSlot(slot)
 operator fun IItemHandlerModifiable.set(slot: Int, stack: ItemStack) = setStackInSlot(slot, stack)
+fun IItemHandler.toList() = (0 until slots).map(::getStackInSlot).filter(ItemStack::isNotEmpty)
 
 operator fun IFluidHandler.get(tank: Int) = getFluidInTank(tank)
 operator fun IFluidHandlerModifiable.set(tank: Int, stack: FluidStack) = setFluidInTank(tank, stack)
+fun IFluidHandlerModifiable.toList() = (0 until tanks).map(::getFluidInTank).filter(FluidStack::isNotEmpty)

@@ -8,7 +8,7 @@ import com.emosewapixel.pixellib.machines.properties.implementations.recipes.Rec
 import com.emosewapixel.pixellib.machines.recipes.Recipe
 import net.minecraft.nbt.CompoundNBT
 
-open class DefaultProcessingProperty(override val id: String, override val te: BaseTileEntity, val recipeProperty: RecipeProperty) : ITEBoundProperty {
+open class AutomationProcessingProperty(override val id: String, override val te: BaseTileEntity, val recipeProperty: RecipeProperty) : ITEBoundProperty {
     override fun detectAndSendChanges(container: BaseContainer) {}
 
     override fun clone() = this
@@ -26,10 +26,10 @@ open class DefaultProcessingProperty(override val id: String, override val te: B
     override fun tick() {
         if (te.world?.isRemote != false) return
         recipeProperty.value?.let { recipe ->
-            if (processingHandlers.all { it.isProcessing(recipe) }) {
+            if (processingHandlers.all(IProcessingHandler::isProcessing)) {
                 if (processingHandlers.all { it.shouldFinishProcessing(recipe) }) {
                     isFinishing = true
-                    processingHandlers.forEach { it.finishProcessing(recipe) }
+                    processingHandlers.forEach { it.finishProcessingAutomation(recipe) }
                     isFinishing = false
                     startProcessing(recipe)
                 } else if (processingHandlers.all { it.canContinueProcessing(recipe) })
@@ -42,13 +42,12 @@ open class DefaultProcessingProperty(override val id: String, override val te: B
         if (isFinishing) return
         if (te.world?.isRemote != false) return
         val recipe = recipeProperty.value ?: return
+        if (processingHandlers.all { it.isProcessing() }) return
         startProcessing(recipe)
     }
 
     private fun startProcessing(recipe: Recipe) {
-        if (!processingHandlers.all { it.isProcessing(recipe) } && processingHandlers.all { it.canStartProcessing(recipe) })
-            processingHandlers.forEach {
-                it.startProcessing(recipe)
-            }
+        if (processingHandlers.all { it.canStartProcessingAutomation(recipe) })
+            processingHandlers.forEach { it.startProcessingAutomation(recipe) }
     }
 }

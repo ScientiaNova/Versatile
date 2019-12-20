@@ -30,10 +30,8 @@ open class TEStandardRecipeProperty(recipeList: RecipeList, value: Recipe?, over
 
     override fun setValue(new: Recipe?, causeUpdate: Boolean) {
         value = new
-        te.guiLayout.setCurrentPage(te.guiLayout.currentPageId)
         if (causeUpdate && te.world?.isRemote == true)
-            NetworkHandler.CHANNEL.sendToServer(UpdateRecipePacket(id, value?.name
-                    ?: ""))
+            NetworkHandler.CHANNEL.sendToServer(UpdateRecipePacket(id, value?.name ?: ""))
         te.markDirty()
     }
 

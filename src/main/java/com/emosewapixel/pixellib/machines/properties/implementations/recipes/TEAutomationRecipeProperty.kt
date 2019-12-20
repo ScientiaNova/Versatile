@@ -29,6 +29,7 @@ open class TEAutomationRecipeProperty(recipeList: RecipeList, value: Recipe?,  o
 
     override fun setValue(new: Recipe?, causeUpdate: Boolean) {
         super.setValue(new, causeUpdate)
+        te.guiLayout.setCurrentPage(te.guiLayout.currentPageId)
         te.clear()
     }
 }

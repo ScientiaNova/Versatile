@@ -1,5 +1,7 @@
 package com.emosewapixel.pixellib.machines.properties.implementations.fluids
 
+import com.emosewapixel.pixellib.extensions.get
+import com.emosewapixel.pixellib.extensions.set
 import com.emosewapixel.pixellib.machines.BaseTileEntity
 import com.emosewapixel.pixellib.machines.capabilities.fluids.RecipeInputFluidStackHandler
 import com.emosewapixel.pixellib.machines.properties.implementations.recipes.RecipeProperty
@@ -14,5 +16,9 @@ class TERecipeFluidInputProperty(override val value: RecipeInputFluidStackHandle
             }, id, te
     )
 
-    override fun clone() = TERecipeFluidInputProperty(RecipeInputFluidStackHandler(value.tanks, value.recipeProperty, value.capacity), id, te)
+    override fun clone(): TERecipeFluidInputProperty {
+        val stackHandler = RecipeInputFluidStackHandler(value.count, value.recipeProperty, value.capacity)
+        (0 until value.tanks).forEach { stackHandler[it] = value[it].copy() }
+        return TERecipeFluidInputProperty(stackHandler, id, te)
+    }
 }

@@ -11,5 +11,9 @@ open class TEEnergyInputProperty(value: InputEnergyHandler, id: String, te: Base
         }
     }, id, te)
 
-    override fun clone() = TEEnergyInputProperty(InputEnergyHandler(value.maxEnergyStored), id, te)
+    override fun clone(): TEEnergyInputProperty {
+        val handler = InputEnergyHandler(value.maxEnergyStored)
+        handler.energyStored = value.energyStored
+        return TEEnergyInputProperty(handler, id, te)
+    }
 }

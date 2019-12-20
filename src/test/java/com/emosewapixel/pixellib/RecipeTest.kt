@@ -16,7 +16,7 @@ object RecipeTest {
 
     init {
         TEST_RECIPES.add("standard_recipe_test") {
-            time = 20000
+            time = 200
             itemInputs {
                 +Items.DIRT.toStack(8)
                 +Items.COAL.toStack()

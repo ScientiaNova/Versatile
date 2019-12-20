@@ -41,8 +41,9 @@ open class RecipeList(val name: ResourceLocation, vararg components: IRecipeComp
         } else PixelLib.LOGGER.error("Invalid recipe ${recipe.name} for recipe list $name")
     }
 
-    fun findRecipe(machine: BaseTileEntity) =
-            recipeComponents.values.fold(recipes.values.toList()) { list, component -> component.findRecipe(this, list, machine) }.firstOrNull()
+    fun findRecipe(machine: BaseTileEntity) = recipeComponents.values.fold(recipes.values.toList()) { list, component ->
+        component.findRecipe(this, list, machine)
+    }.firstOrNull()
 
     fun removeRecipe(recipe: Recipe) {
         if (recipes.remove(recipe.name) != null) recipeComponents.values.forEach { it.onRecipeRemoved(recipe) }

@@ -12,11 +12,11 @@ open class ItemHandlerSlot(handler: IItemHandler, val index: Int, x: Int, y: Int
 
     override fun canTakeStack(playerIn: PlayerEntity): Boolean {
         val handler = itemHandler
-        return if (handler is IContainerItemHandler) handler.extraItemFromContainer(index, 1, true).isNotEmpty else super.canTakeStack(playerIn)
+        return if (handler is IContainerItemHandler) handler.forceExtractItem(index, 1, true).isNotEmpty else super.canTakeStack(playerIn)
     }
 
     override fun decrStackSize(amount: Int): ItemStack {
         val handler = itemHandler
-        return if (handler is IContainerItemHandler) handler.extraItemFromContainer(index, amount, false) else super.decrStackSize(amount)
+        return if (handler is IContainerItemHandler) handler.forceExtractItem(index, amount, false) else super.decrStackSize(amount)
     }
 }

@@ -6,5 +6,5 @@ import net.minecraftforge.items.ItemStackHandler
 open class InputItemStackHandler(slotCount: Int) : ItemStackHandler(slotCount), IContainerItemHandler {
     override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack = ItemStack.EMPTY
 
-    override fun extraItemFromContainer(slot: Int, amount: Int, simulate: Boolean) = super.extractItem(slot, amount, simulate)
+    override fun forceExtractItem(slot: Int, amount: Int, simulate: Boolean) = super.extractItem(slot, amount, simulate)
 }

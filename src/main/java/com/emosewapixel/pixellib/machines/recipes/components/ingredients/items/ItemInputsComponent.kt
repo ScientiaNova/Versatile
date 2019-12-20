@@ -1,5 +1,6 @@
 package com.emosewapixel.pixellib.machines.recipes.components.ingredients.items
 
+import com.emosewapixel.pixellib.extensions.toList
 import com.emosewapixel.pixellib.machines.BaseTileEntity
 import com.emosewapixel.pixellib.machines.gui.layout.IGUIComponent
 import com.emosewapixel.pixellib.machines.gui.layout.components.slots.ItemSlotComponent
@@ -8,8 +9,8 @@ import com.emosewapixel.pixellib.machines.gui.layout.components.stacksuppliers.R
 import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.items.TEItemInputProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.items.TEItemInventoryProperty
+import com.emosewapixel.pixellib.machines.properties.implementations.items.TENonRepeatingItemInputProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.items.TERecipeItemInputProperty
-import com.emosewapixel.pixellib.machines.properties.implementations.processing.IProcessingHandler
 import com.emosewapixel.pixellib.machines.properties.implementations.processing.handlers.ItemInputsProcessingHandler
 import com.emosewapixel.pixellib.machines.properties.implementations.recipes.RecipeProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.recipes.TEAutomationRecipeProperty
@@ -33,7 +34,7 @@ class ItemInputsComponent(val max: Int, val min: Int = 0) : IRecipeComponent<Lis
 
     override fun addDefaultProperty(te: BaseTileEntity, properties: MutableList<ITEBoundProperty>) {
         properties += properties.firstOrNull { it is TEAutomationRecipeProperty }?.let { TERecipeItemInputProperty(max, it as RecipeProperty, "itemInputs", te) }
-                ?: TEItemInputProperty(max, "itemInputs", te)
+                ?: TENonRepeatingItemInputProperty(max, "itemInputs", te)
     }
 
     override fun onRecipeAdded(recipe: Recipe) {
@@ -49,11 +50,14 @@ class ItemInputsComponent(val max: Int, val min: Int = 0) : IRecipeComponent<Lis
     }
 
     override fun findRecipe(recipeList: RecipeList, recipes: List<Recipe>, machine: BaseTileEntity) = (machine.teProperties["itemInputs"] as? TEItemInventoryProperty)?.value?.let { stackHandler ->
-        (0 until stackHandler.slots).map { slot ->
-            val stack = stackHandler.getStackInSlot(slot)
-            StackToRecipeStackHashConversion.convertItemStack(stack).mapNotNull { recipeList.inputMap[it]?.filterNotNull() }
-                    .firstOrNull() ?: emptySet<Recipe>()
-        }.fold(recipes as Iterable<Recipe>) { acc, set -> (acc intersect set) }.toList()
+        val inputStacks = stackHandler.toList()
+        inputStacks.map { stack ->
+            StackToRecipeStackHashConversion.convertItemStack(stack).asSequence().mapNotNull {
+                recipeList.inputMap[it]?.filter { recipe ->
+                    (recipe[this] ?: 0) == inputStacks.size
+                }
+            }.firstOrNull(List<Recipe>::isNotEmpty) ?: emptySet<Recipe>()
+        }.fold(recipes as Iterable<Recipe>) { acc, set -> (set intersect acc) }.toList()
     } ?: emptyList()
 
     override fun addGUIComponents(machine: BaseTileEntity?): List<IGUIComponent> =

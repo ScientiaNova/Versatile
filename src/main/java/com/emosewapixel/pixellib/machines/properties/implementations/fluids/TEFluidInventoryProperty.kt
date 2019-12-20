@@ -38,7 +38,11 @@ open class TEFluidInventoryProperty(override val value: FluidStackHandler, overr
         }
     }
 
-    override fun clone() = TEFluidInventoryProperty(FluidStackHandler(value.count, value.capacity), id, te)
+    override fun clone(): TEFluidInventoryProperty {
+        val stackHandler = FluidStackHandler(value.count, value.capacity)
+        (0 until value.tanks).forEach { stackHandler[it] = value[it].copy() }
+        return TEFluidInventoryProperty(stackHandler, id, te)
+    }
 
     override fun deserializeNBT(nbt: CompoundNBT) {
         if (id in nbt) value.deserializeNBT(nbt.getCompound(id))

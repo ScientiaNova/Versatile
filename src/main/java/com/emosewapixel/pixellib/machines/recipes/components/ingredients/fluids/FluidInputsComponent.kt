@@ -1,5 +1,6 @@
 package com.emosewapixel.pixellib.machines.recipes.components.ingredients.fluids
 
+import com.emosewapixel.pixellib.extensions.toList
 import com.emosewapixel.pixellib.machines.BaseTileEntity
 import com.emosewapixel.pixellib.machines.gui.layout.IGUIComponent
 import com.emosewapixel.pixellib.machines.gui.layout.components.slots.FluidSlotComponent
@@ -8,6 +9,7 @@ import com.emosewapixel.pixellib.machines.gui.layout.components.stacksuppliers.R
 import com.emosewapixel.pixellib.machines.properties.ITEBoundProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.fluids.TEFluidInputProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.fluids.TEFluidInventoryProperty
+import com.emosewapixel.pixellib.machines.properties.implementations.fluids.TENonRepeatingFluidInputProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.fluids.TERecipeFluidInputProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.processing.handlers.FluidInputsProcessingHandler
 import com.emosewapixel.pixellib.machines.properties.implementations.recipes.RecipeProperty
@@ -32,7 +34,7 @@ class FluidInputsComponent(val max: Int, val min: Int = 0, val capacity: Int = 1
 
     override fun addDefaultProperty(te: BaseTileEntity, properties: MutableList<ITEBoundProperty>) {
         properties += properties.firstOrNull { it is TEAutomationRecipeProperty }?.let { TERecipeFluidInputProperty(max, it as RecipeProperty, "fluidInputs", te, capacity) }
-                ?: TEFluidInputProperty(max, "fluidInputs", te, capacity)
+                ?: TENonRepeatingFluidInputProperty(max, "fluidInputs", te, capacity)
     }
 
     override fun onRecipeAdded(recipe: Recipe) {
@@ -48,11 +50,14 @@ class FluidInputsComponent(val max: Int, val min: Int = 0, val capacity: Int = 1
     }
 
     override fun findRecipe(recipeList: RecipeList, recipes: List<Recipe>, machine: BaseTileEntity) = (machine.teProperties["fluidInputs"] as? TEFluidInventoryProperty)?.value?.let { stackHandler ->
-        (0 until stackHandler.tanks).map { slot ->
-            val stack = stackHandler.getFluidInTank(slot)
-            StackToRecipeStackHashConversion.convertFluidStack(stack).mapNotNull { recipeList.inputMap[it]?.filterNotNull() }
-                    .firstOrNull() ?: emptySet<Recipe>()
-        }.fold(recipes as Iterable<Recipe>) { acc, set -> (acc intersect set) }.toList()
+        val inputStacks = stackHandler.toList()
+        inputStacks.map { stack ->
+            StackToRecipeStackHashConversion.convertFluidStack(stack).asSequence().mapNotNull {
+                recipeList.inputMap[it]?.filter { recipe ->
+                    (recipe[this] ?: 0) == inputStacks.size
+                }
+            }.firstOrNull(List<Recipe>::isNotEmpty) ?: emptySet<Recipe>()
+        }.fold(recipes as Iterable<Recipe>) { acc, set -> (set intersect acc) }.toList()
     } ?: emptyList()
 
     override fun addGUIComponents(machine: BaseTileEntity?): List<IGUIComponent> =

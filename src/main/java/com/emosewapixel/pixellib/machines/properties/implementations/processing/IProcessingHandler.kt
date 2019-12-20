@@ -3,11 +3,15 @@ package com.emosewapixel.pixellib.machines.properties.implementations.processing
 import com.emosewapixel.pixellib.machines.recipes.Recipe
 
 interface IProcessingHandler {
-    fun canStartProcessing(recipe: Recipe) = true
+    fun canStartProcessingStandard(recipe: Recipe) = true
 
-    fun startProcessing(recipe: Recipe) {}
+    fun canStartProcessingAutomation(recipe: Recipe) = true
 
-    fun isProcessing(recipe: Recipe) = true
+    fun startProcessingStandard(recipe: Recipe) {}
+
+    fun startProcessingAutomation(recipe: Recipe) {}
+
+    fun isProcessing() = true
 
     fun canContinueProcessing(recipe: Recipe) = true
 
@@ -15,5 +19,7 @@ interface IProcessingHandler {
 
     fun shouldFinishProcessing(recipe: Recipe) = true
 
-    fun finishProcessing(recipe: Recipe) {}
+    fun finishProcessingAutomation(recipe: Recipe) {}
+
+    fun finishProcessingStandard(recipe: Recipe) {}
 }

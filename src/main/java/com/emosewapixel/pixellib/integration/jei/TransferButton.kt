@@ -2,6 +2,7 @@ package com.emosewapixel.pixellib.integration.jei
 
 import com.emosewapixel.pixellib.machines.gui.GUiUtils
 import com.emosewapixel.pixellib.machines.gui.layout.IGUIComponent
+import com.mojang.blaze3d.platform.GlStateManager
 import mezz.jei.Internal
 import net.minecraft.util.text.TranslationTextComponent
 
@@ -16,6 +17,7 @@ object TransferButton : IGUIComponent {
         val texture = textures.getButtonForState(true, isSelected(mouseX - xOffset, mouseY - yOffset))
         texture.draw(xOffset, yOffset, width, height)
         JEITextures.TRANSFER_OVERLAY.draw(xOffset + 3, yOffset + 3, 7, 7)
+        GlStateManager.color4f(1f, 1f, 1f, 1f)
     }
 
     override fun drawInForeground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int, guiLeft: Int, guiTop: Int) {
