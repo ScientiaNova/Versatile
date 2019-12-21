@@ -40,6 +40,11 @@ open class BaseScreen(container: BaseContainer, playerInv: PlayerInventory, titl
         return if (componentsMatch) true else super.mouseReleased(mouseX, mouseY, clickType)
     }
 
+    override fun charTyped(char: Char, modifiers: Int): Boolean {
+        val componentsMatch = container.guiPage.components.reversed().any { it.charTyped(char, modifiers, guiLeft, guiTop) }
+        return if (componentsMatch) true else super.charTyped(char, modifiers)
+    }
+
     override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
         val componentsMatch = container.guiPage.components.reversed().any { it.keyPressed(keyCode, scanCode, modifiers, guiLeft, guiTop) }
         return if (componentsMatch) true else super.keyPressed(keyCode, scanCode, modifiers)

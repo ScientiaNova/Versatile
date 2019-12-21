@@ -88,5 +88,11 @@ object NetworkHandler {
                 .decoder(UpdateRecipePacket.Companion::decode)
                 .consumer(UpdateRecipePacket.Companion::processPacket)
                 .add()
+
+        CHANNEL.messageBuilder(UpdateStringPacket::class.java, packetId)
+                .encoder(UpdateStringPacket::encode)
+                .decoder(UpdateStringPacket.Companion::decode)
+                .consumer(UpdateStringPacket.Companion::processPacket)
+                .add()
     }
 }

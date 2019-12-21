@@ -53,6 +53,9 @@ open class GUIComponentGroup @JvmOverloads constructor(extraWidth: Int = 0, extr
         it.keyReleased(keyCode, scanCode, modifiers, xOffset + x, yOffset + y)
     }
 
+    @OnlyIn(Dist.CLIENT)
+    override fun charTyped(char: Char, modifier: Int, xOffset: Int, yOffset: Int) = components.any { it.charTyped(char, modifier, xOffset + x, yOffset + y) }
+
     override fun addSlots(playerInv: PlayerInventory, xOffset: Int, yOffset: Int) = components.fold(mutableListOf<IImprovedSlot>()) { acc, current ->
         acc += current.addSlots(playerInv, xOffset + x, yOffset + y)
         acc

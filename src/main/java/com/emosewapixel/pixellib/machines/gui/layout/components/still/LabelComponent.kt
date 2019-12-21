@@ -14,8 +14,8 @@ open class LabelComponent(val text: String, override var x: Int, override var y:
     override val height = DefaultSizeConstants.TEXT_HEIGHT
     override val width
         get() = DistExecutor.runForDist(
-                { Supplier { Minecraft.getInstance().fontRenderer.getStringWidth(text) / if (location == LabelLocation.START) 1 else 2 } },
-                { Supplier { text.length / if (location == LabelLocation.START) 1 else 2 } }
+                { Supplier { Minecraft.getInstance().fontRenderer.getStringWidth(text) } },
+                { Supplier { text.length * 4 } }
         )
 
     @OnlyIn(Dist.CLIENT)
@@ -26,10 +26,6 @@ open class LabelComponent(val text: String, override var x: Int, override var y:
             LabelLocation.START -> font.drawString(text, xOffset + x.toFloat(), yOffset + y.toFloat(), color)
         }
     }
-
-    @OnlyIn(Dist.CLIENT)
-    override fun isSelected(mouseX: Double, mouseY: Double) =
-            x < mouseX && mouseX < x + Minecraft.getInstance().fontRenderer.getStringWidth(text) && y < mouseY && mouseY < x + 10
 
     enum class LabelLocation {
         CENTER,

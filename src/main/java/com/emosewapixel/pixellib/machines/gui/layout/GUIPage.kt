@@ -14,13 +14,17 @@ import com.emosewapixel.pixellib.machines.gui.layout.components.slots.PlayerSlot
 import com.emosewapixel.pixellib.machines.gui.layout.components.still.ImageComponent
 import com.emosewapixel.pixellib.machines.gui.layout.components.still.InventoryLabelComponent
 import com.emosewapixel.pixellib.machines.gui.layout.components.still.LabelComponent
-import com.emosewapixel.pixellib.machines.gui.textures.updating.AnimatedGUITexture
+import com.emosewapixel.pixellib.machines.gui.layout.components.still.WrappingTextComponent
+import com.emosewapixel.pixellib.machines.gui.layout.components.textboxes.FocusableTextBoxComponent
+import com.emosewapixel.pixellib.machines.gui.layout.components.textboxes.TextBoxComponent
 import com.emosewapixel.pixellib.machines.gui.textures.interactable.ButtonTextureGroup
 import com.emosewapixel.pixellib.machines.gui.textures.still.GUITexture
+import com.emosewapixel.pixellib.machines.gui.textures.updating.AnimatedGUITexture
 import com.emosewapixel.pixellib.machines.properties.ILimitedIntegerProperty
 import com.emosewapixel.pixellib.machines.properties.IValueProperty
 import com.emosewapixel.pixellib.machines.properties.IVariableProperty
 import com.emosewapixel.pixellib.machines.properties.implementations.TEPageProperty
+import com.emosewapixel.pixellib.machines.properties.implementations.strings.VariableStringProperty
 import net.minecraftforge.items.IItemHandlerModifiable
 
 open class GUIPage(var extraWidth: Int = 0, var extraHeight: Int = 0, builder: GUIPage.() -> Unit = { }) {
@@ -123,6 +127,12 @@ open class GUIPage(var extraWidth: Int = 0, var extraHeight: Int = 0, builder: G
         components += component
     }
 
+    fun wrappingText(text: String, x: Int, y: Int, width: Int, builder: WrappingTextComponent.() -> Unit = { }) {
+        val component = WrappingTextComponent(text, x, y, width)
+        component.builder()
+        components += component
+    }
+
     fun inventoryLabel(x: Int, y: Int, builder: InventoryLabelComponent.() -> Unit = { }) {
         val component = InventoryLabelComponent(x, y)
         component.builder()
@@ -143,6 +153,18 @@ open class GUIPage(var extraWidth: Int = 0, var extraHeight: Int = 0, builder: G
 
     fun progressBar(property: IValueProperty<Double>, builder: ProgressBarComponent.() -> Unit = { }) {
         val component = ProgressBarComponent(property)
+        component.builder()
+        components += component
+    }
+
+    fun textBox(property: VariableStringProperty, builder: TextBoxComponent.() -> Unit = { }) {
+        val component = TextBoxComponent(property)
+        component.builder()
+        components += component
+    }
+
+    fun focusableTextBox(property: VariableStringProperty, builder: FocusableTextBoxComponent.() -> Unit = { }) {
+        val component = FocusableTextBoxComponent(property)
         component.builder()
         components += component
     }

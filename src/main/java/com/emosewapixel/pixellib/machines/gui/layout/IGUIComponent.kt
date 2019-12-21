@@ -28,6 +28,9 @@ interface IGUIComponent {
     fun keyReleased(keyCode: Int, scanCode: Int, modifiers: Int, xOffset: Int, yOffset: Int) = false
 
     @OnlyIn(Dist.CLIENT)
+    fun charTyped(char: Char, modifier: Int, xOffset: Int, yOffset: Int) = false
+
+    @OnlyIn(Dist.CLIENT)
     fun drawInBackground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int, guiLeft: Int = xOffset, guiTop: Int = yOffset)
 
     @OnlyIn(Dist.CLIENT)
