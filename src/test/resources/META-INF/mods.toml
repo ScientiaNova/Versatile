@@ -4,8 +4,8 @@ loaderVersion="[1,)"
 modId="versatiletest"
 version="${file.jarVersion}"
 displayName="Versatile Test"
-authors="TheEmosewaPixel"
-description="A test mod for PixelLib"
+authors="TheEmosewaPixel, Quantum64"
+description="A test mod for Versatile"
 [[dependencies.versatile]]
     modId="forge"
     mandatory=true

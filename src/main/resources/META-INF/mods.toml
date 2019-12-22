@@ -6,8 +6,8 @@ modId="versatile"
 version="${file.jarVersion}"
 displayName="Versatile"
 logoFile="versatile.png"
-authors="TheEmosewaPixel"
-description="A library mod for easily adding some new things"
+authors="TheEmosewaPixel, Quantum64"
+description="A mod for adding a large number of items, blocks, fluids, machines and more through a data-driven system."
 [[dependencies.versatile]]
     modId="forge"
     mandatory=true
