@@ -1,0 +1,6 @@
+{
+    "parent": "versatile:block/colored_cube_all",
+    "textures": {
+        "all": "versatile:block/fuel_block"
+    }
+}

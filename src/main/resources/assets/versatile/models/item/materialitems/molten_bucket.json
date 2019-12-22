@@ -1,0 +1,7 @@
+{
+  "parent":"item/generated",
+  "textures": {
+    "layer0":"versatile:item/molten_bucket_base",
+    "layer1":"versatile:item/molten_bucket_overlay"
+  }
+}

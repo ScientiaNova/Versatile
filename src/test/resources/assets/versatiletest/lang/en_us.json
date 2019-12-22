@@ -1,0 +1,11 @@
+{
+  "material.angmallen": "Angmallen",
+
+  "recipe_list.versatiletest:test": "Test",
+  "recipe_list.versatiletest:thin_test": "Thin Test",
+  "recipe_list.versatiletest:generator_test": "Generator Test",
+
+  "block.versatiletest.test": "Test Machine",
+  "block.versatiletest.thin_test": "Thin Test Machine",
+  "block.versatiletest.generator_test": "Test Generator"
+}

@@ -1,0 +1,7 @@
+{
+  "parent":"versatile:block/overlayed_colored_block",
+  "textures": {
+    "all": "block/stone",
+    "overlay": "versatile:block/ore"
+  }
+}

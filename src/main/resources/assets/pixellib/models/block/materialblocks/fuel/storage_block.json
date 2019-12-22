@@ -1,6 +1,0 @@
-{
-    "parent": "pixellib:block/colored_cube_all",
-    "textures": {
-        "all": "pixellib:block/fuel_block"
-    }
-}
