@@ -10,7 +10,7 @@ import net.minecraftforge.event.RegistryEvent
 object BlockRegistry {
     fun registerBlocks(e: RegistryEvent.Register<Block>) {
         MaterialBlocks.additionSuppliers.cellSet()
-                .forEach { MaterialBlocks.addBlock(it.rowKey!!, it.columnKey!!, it.value!!.get()) }
+                .forEach { MaterialBlocks.addBlock(it.rowKey!!, it.columnKey!!, it.value!!()) }
         Materials.all.forEach { mat ->
             ObjTypes.all.filter { type -> type.isMaterialCompatible(mat) && !MaterialBlocks.contains(mat, type) && if (mat.invertedBlacklist) type in mat.typeBlacklist else type !in mat.typeBlacklist }
                     .forEach { type -> type.blockConstructor?.invoke(mat)?.let { e.registry.register(it) } }

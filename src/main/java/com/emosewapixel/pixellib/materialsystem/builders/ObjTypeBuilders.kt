@@ -9,10 +9,9 @@ import com.emosewapixel.pixellib.fluids.MaterialBucketItem
 import com.emosewapixel.pixellib.fluids.MaterialFluidBlock
 import com.emosewapixel.pixellib.fluids.MaterialFluidHolder
 import com.emosewapixel.pixellib.items.MaterialItem
+import com.emosewapixel.pixellib.materialsystem.addition.ObjTypeProperties
 import com.emosewapixel.pixellib.materialsystem.main.Material
 import com.emosewapixel.pixellib.materialsystem.main.ObjectType
-import com.emosewapixel.pixellib.materialsystem.main.ct.MaterialRequirement
-import com.emosewapixel.pixellib.materialsystem.addition.ObjTypeProperties
 import com.emosewapixel.pixellib.materialsystem.properties.ObjTypeProperty
 import com.google.gson.JsonObject
 import net.minecraft.block.Block
@@ -22,7 +21,7 @@ import net.minecraft.item.Items
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fluids.FluidAttributes
 
-open class ObjTypeBuilder(name: String, requirement: MaterialRequirement) {
+open class ObjTypeBuilder(name: String, requirement: (Material) -> Boolean) {
     protected val result = ObjectType(name, requirement)
 
     fun <T> property(property: ObjTypeProperty<T>, value: T) = this.also { result[property] = value }
@@ -73,13 +72,13 @@ open class ObjTypeBuilder(name: String, requirement: MaterialRequirement) {
     fun buildAndRegister() = result.register()
 }
 
-class ItemTypeBuilder(name: String, requirement: MaterialRequirement) : ObjTypeBuilder(name, requirement) {
+class ItemTypeBuilder(name: String, requirement: (Material) -> Boolean) : ObjTypeBuilder(name, requirement) {
     init {
         itemConstructor(::MaterialItem)
     }
 }
 
-class BlockTypeBuilder(name: String, requirement: MaterialRequirement) : ObjTypeBuilder(name, requirement) {
+class BlockTypeBuilder(name: String, requirement: (Material) -> Boolean) : ObjTypeBuilder(name, requirement) {
     init {
         itemConstructor(::MaterialBlockItem)
         blockConstructor(::MaterialBlock)
@@ -91,7 +90,7 @@ class BlockTypeBuilder(name: String, requirement: MaterialRequirement) : ObjType
     }
 }
 
-class FluidTypeBuilder(name: String, requirement: MaterialRequirement) : ObjTypeBuilder(name, requirement) {
+class FluidTypeBuilder(name: String, requirement: (Material) -> Boolean) : ObjTypeBuilder(name, requirement) {
     init {
         itemConstructor(::MaterialBucketItem)
         blockConstructor(::MaterialFluidBlock)

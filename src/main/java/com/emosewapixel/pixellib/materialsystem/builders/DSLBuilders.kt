@@ -12,7 +12,6 @@ import com.emosewapixel.pixellib.materialsystem.addition.BaseObjTypes
 import com.emosewapixel.pixellib.materialsystem.addition.BaseTextureTypes
 import com.emosewapixel.pixellib.materialsystem.main.Material
 import com.emosewapixel.pixellib.materialsystem.main.ObjectType
-import com.emosewapixel.pixellib.materialsystem.main.ct.MaterialRequirement
 import com.emosewapixel.pixellib.materialsystem.properties.CompoundType
 import com.emosewapixel.pixellib.materialsystem.properties.DisplayType
 import net.minecraft.block.Block
@@ -59,18 +58,18 @@ fun groupMaterial(vararg names: String, builder: Material.() -> Unit = { }) = Ma
 }.register()
 
 @JvmOverloads
-fun objType(name: String, requirement: (Material) -> Boolean, builder: ObjectType.() -> Unit = { }) = ObjectType(name, MaterialRequirement { requirement(it) }).apply {
+fun objType(name: String, requirement: (Material) -> Boolean, builder: ObjectType.() -> Unit = { }) = ObjectType(name) { requirement(it) }.apply {
     builder()
 }.register()
 
 @JvmOverloads
-fun itemType(name: String, requirement: (Material) -> Boolean, builder: ObjectType.() -> Unit = { }) = ObjectType(name, MaterialRequirement { requirement(it) }).apply {
+fun itemType(name: String, requirement: (Material) -> Boolean, builder: ObjectType.() -> Unit = { }) = ObjectType(name) { requirement(it) }.apply {
     itemConstructor = { mat -> MaterialItem(mat, this) }
     builder()
 }.register()
 
 @JvmOverloads
-fun blockType(name: String, requirement: (Material) -> Boolean, builder: ObjectType.() -> Unit = { }) = ObjectType(name, MaterialRequirement { requirement(it) }).apply {
+fun blockType(name: String, requirement: (Material) -> Boolean, builder: ObjectType.() -> Unit = { }) = ObjectType(name) { requirement(it) }.apply {
     itemConstructor = { mat -> MaterialBlockItem(mat, this) }
     blockConstructor = { mat -> MaterialBlock(mat, this) }
     itemModel = { mat ->
@@ -82,7 +81,7 @@ fun blockType(name: String, requirement: (Material) -> Boolean, builder: ObjectT
 }.register()
 
 @JvmOverloads
-fun fluidType(name: String, requirement: (Material) -> Boolean, builder: ObjectType.() -> Unit = { }) = ObjectType(name, MaterialRequirement { requirement(it) }).apply {
+fun fluidType(name: String, requirement: (Material) -> Boolean, builder: ObjectType.() -> Unit = { }) = ObjectType(name) { requirement(it) }.apply {
     itemConstructor = { mat -> MaterialBucketItem(mat, this) }
     blockConstructor = { mat -> MaterialFluidBlock(mat, this) }
     fluidPairConstructor = { mat -> MaterialFluidHolder(mat, this) }

@@ -62,7 +62,7 @@ open class MaterialBuilder(vararg names: String) {
 
     fun transitionProperties(transitionProperties: TransitionProperties) = property(MatProperties.TRANSITION_PROPERTIES, transitionProperties)
 
-    fun transitionProperties(neededAmount: Int, endMaterial: () -> Material) = transitionProperties(TransitionProperties(neededAmount, endMaterial))
+    fun transitionProperties(neededAmount: Int, endMaterial: String) = transitionProperties(TransitionProperties(neededAmount, endMaterial))
 
     @JvmOverloads
     fun hasOre(value: Boolean = true) = property(MatProperties.HAS_ORE, value)

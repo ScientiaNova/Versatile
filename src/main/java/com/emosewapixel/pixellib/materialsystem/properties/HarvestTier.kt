@@ -1,13 +1,10 @@
 package com.emosewapixel.pixellib.materialsystem.properties
 
-import com.blamejared.crafttweaker.api.annotations.ZenRegister
-import org.openzen.zencode.java.ZenCodeType
-
-//Harvest Tiers contain the stats for breaking blocks
-@ZenRegister
-@ZenCodeType.Name("pixellib.materialsystem.materials.HarvestTier")
-data class HarvestTier @ZenCodeType.Constructor constructor(
-        @ZenCodeType.Field val hardness: Float,
-        @ZenCodeType.Field val resistance: Float,
-        @ZenCodeType.Field val harvestLevel: Int
-)
+data class HarvestTier(val hardness: Float, val resistance: Float, val harvestLevel: Int) : IBranchingProperty {
+    override fun get(name: String): Any? = when (name) {
+        "hardness" -> hardness
+        "resistance" -> resistance
+        "harvest_level" -> harvestLevel
+        else -> null
+    }
+}

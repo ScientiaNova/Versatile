@@ -9,7 +9,7 @@ import net.minecraftforge.event.RegistryEvent
 object FluidRegistry {
     fun registerFluids(e: RegistryEvent.Register<Fluid>) {
         MaterialFluids.additionSuppliers.cellSet()
-                .forEach { MaterialFluids.addFluidPair(it.rowKey!!, it.columnKey!!, it.value!!.get()) }
+                .forEach { MaterialFluids.addFluidPair(it.rowKey!!, it.columnKey!!, it.value!!()) }
         Materials.all.forEach { mat ->
             ObjTypes.all.filter { type -> type.isMaterialCompatible(mat) && !MaterialFluids.contains(mat, type) && if (mat.invertedBlacklist) type in mat.typeBlacklist else type !in mat.typeBlacklist }
                     .forEach { type ->

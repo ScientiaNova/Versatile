@@ -1,23 +1,20 @@
 package com.emosewapixel.pixellib.materialsystem.main
 
-import com.blamejared.crafttweaker.api.annotations.ZenRegister
 import com.emosewapixel.pixellib.extensions.toResLoc
 import com.emosewapixel.pixellib.materialsystem.addition.BaseElements
 import com.emosewapixel.pixellib.materialsystem.addition.BaseObjTypes
 import com.emosewapixel.pixellib.materialsystem.addition.MatProperties
 import com.emosewapixel.pixellib.materialsystem.lists.Materials
 import com.emosewapixel.pixellib.materialsystem.properties.HarvestTier
+import com.emosewapixel.pixellib.materialsystem.properties.IBranchingProperty
 import com.emosewapixel.pixellib.materialsystem.properties.MatProperty
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.FluidTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.util.text.TranslationTextComponent
-import org.openzen.zencode.java.ZenCodeType
 import java.util.*
 
-@ZenRegister
-@ZenCodeType.Name("pixellib.materialsystem.materials.Material")
-class Material @ZenCodeType.Constructor constructor(vararg names: String) {
+class Material(vararg names: String) : IBranchingProperty {
     val names = linkedSetOf(*names)
     val name get() = names.first()
 
@@ -31,6 +28,8 @@ class Material @ZenCodeType.Constructor constructor(vararg names: String) {
     operator fun <T> get(property: MatProperty<T>) = properties[property] as? T ?: property.default(this)
 
     operator fun contains(property: MatProperty<*>) = property in properties
+
+    override fun get(name: String): Any? = null
 
     val typeBlacklist = ArrayList<ObjectType>()
 
@@ -223,10 +222,8 @@ class Material @ZenCodeType.Constructor constructor(vararg names: String) {
 
     operator fun invoke(builder: Material.() -> Unit) = builder(this)
 
-    @ZenCodeType.Method
     override fun toString() = name
 
-    @ZenCodeType.Method
     fun register(): Material {
         Materials.add(this)
         return Materials[name]!!
@@ -241,37 +238,29 @@ class Material @ZenCodeType.Constructor constructor(vararg names: String) {
         return this
     }
 
-    @ZenCodeType.Method
     fun getItemTags(type: ObjectType) = names.map { ItemTags.Wrapper("${type.itemTagName}/$it".toResLoc()) }
 
-    @ZenCodeType.Method
     fun getBlockTags(type: ObjectType) = names.map { BlockTags.Wrapper("${type.itemTagName}/$it".toResLoc()) }
 
-    @ZenCodeType.Method
     fun getFluidTags(type: ObjectType) = names.map { FluidTags.Wrapper("${type.itemTagName}/$it".toResLoc()) }
 
     @JvmOverloads
-    @ZenCodeType.Method
     fun getItemTag(type: ObjectType, nameIndex: Int = 0) = getItemTags(type).let {
         it.getOrNull(nameIndex) ?: it.first()
     }
 
     @JvmOverloads
-    @ZenCodeType.Method
     fun getBlockTag(type: ObjectType, nameIndex: Int = 0) = getBlockTags(type).let {
         it.getOrNull(nameIndex) ?: it.first()
     }
 
     @JvmOverloads
-    @ZenCodeType.Method
     fun getFluidTag(type: ObjectType, nameIndex: Int = 0) = getFluidTags(type).let {
         it.getOrNull(nameIndex) ?: it.first()
     }
 
-    @ZenCodeType.Method
     fun harvestTier(hardness: Float, resistance: Float) = HarvestTier(hardness, resistance, tier)
 
-    @ZenCodeType.Operator(ZenCodeType.OperatorType.MUL)
     operator fun times(count: Int) = MaterialStack(this, count)
 
     @JvmOverloads

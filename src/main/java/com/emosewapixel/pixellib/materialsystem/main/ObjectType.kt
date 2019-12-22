@@ -1,26 +1,13 @@
 package com.emosewapixel.pixellib.materialsystem.main
 
-import com.blamejared.crafttweaker.api.annotations.ZenRegister
 import com.emosewapixel.pixellib.extensions.toResLoc
-import com.emosewapixel.pixellib.materialsystem.lists.ObjTypes
-import com.emosewapixel.pixellib.materialsystem.main.ct.MaterialRequirement
 import com.emosewapixel.pixellib.materialsystem.addition.ObjTypeProperties
+import com.emosewapixel.pixellib.materialsystem.lists.ObjTypes
 import com.emosewapixel.pixellib.materialsystem.properties.ObjTypeProperty
 import net.minecraft.tags.ItemTags
 import net.minecraft.util.text.TranslationTextComponent
-import org.openzen.zencode.java.ZenCodeType
 
-/*
-Object Types are objects used for generating blocks/items/fluids for certain materials.
-This is the base class that shouldn't be used for generating anything
-*/
-@ZenRegister
-@ZenCodeType.Name("pixellib.materialsystem.main.ObjectType")
-class ObjectType @ZenCodeType.Constructor constructor(
-        @ZenCodeType.Field val name: String,
-        @ZenCodeType.Field var requirement: MaterialRequirement
-) {
-
+class ObjectType(val name: String, var requirement: (Material) -> Boolean) {
     val properties = mutableMapOf<ObjTypeProperty<out Any?>, Any?>()
 
     operator fun <T> set(property: ObjTypeProperty<T>, value: T) {
@@ -164,13 +151,13 @@ class ObjectType @ZenCodeType.Constructor constructor(
 
     override fun toString() = name
 
-    fun isMaterialCompatible(mat: Material) = requirement.test(mat)
+    fun isMaterialCompatible(mat: Material) = requirement(mat)
 
     fun merge(type: ObjectType): ObjectType {
         type.properties.forEach { (key, value) ->
             key.merge(properties[key], value)?.let { properties[key] = it }
         }
-        requirement = MaterialRequirement { requirement.and(type.requirement).test(it) }
+        requirement = { requirement(it) && type.requirement(it) }
         return this
     }
 
