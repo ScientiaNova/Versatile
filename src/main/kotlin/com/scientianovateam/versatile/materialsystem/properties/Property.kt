@@ -1,6 +1,8 @@
 package com.scientianovateam.versatile.materialsystem.properties
 
 import com.scientianovateam.versatile.common.registry.BaseRegistries
+import com.scientianovateam.versatile.common.registry.MATERIAL_PROPERTIES
+import com.scientianovateam.versatile.common.registry.OBJECT_TYPE_PROPERTIES
 import com.scientianovateam.versatile.materialsystem.main.Material
 import com.scientianovateam.versatile.materialsystem.main.ObjectType
 import net.minecraft.util.ResourceLocation
@@ -20,7 +22,7 @@ data class MatProperty<T>(
 ) : Property<T, Material>() {
 
     init {
-        BaseRegistries.MATERIAL_PROPERTIES[name] = this
+        MATERIAL_PROPERTIES[name] = this
     }
 
     override fun hashCode() = name.hashCode()
@@ -36,7 +38,7 @@ data class ObjTypeProperty<T>(
 ) : Property<T, ObjectType>() {
 
     init {
-        BaseRegistries.OBJECT_TYPE_PROPERTIES[name] = this
+        OBJECT_TYPE_PROPERTIES[name] = this
     }
 
     override fun hashCode() = name.hashCode()
