@@ -2,7 +2,7 @@ package com.scientianovateam.versatile.materialsystem.main
 
 import com.scientianovateam.versatile.common.extensions.toResLoc
 import com.scientianovateam.versatile.materialsystem.addition.BaseElements
-import com.scientianovateam.versatile.materialsystem.addition.BaseObjTypes
+import com.scientianovateam.versatile.materialsystem.addition.BaseForms
 import com.scientianovateam.versatile.materialsystem.addition.MatProperties
 import com.scientianovateam.versatile.materialsystem.lists.Materials
 import com.scientianovateam.versatile.materialsystem.properties.HarvestTier
@@ -31,7 +31,7 @@ class Material(vararg names: String) : IBranchingProperty {
 
     override fun get(name: String): Any? = null
 
-    val typeBlacklist = ArrayList<ObjectType>()
+    val typeBlacklist = ArrayList<Form>()
 
     var invertedBlacklist = false
 
@@ -214,9 +214,9 @@ class Material(vararg names: String) : IBranchingProperty {
 
     val isItemMaterial get() = mainItemType != null
 
-    val isIngotMaterial: Boolean get() = mainItemType == BaseObjTypes.INGOT
+    val isIngotMaterial: Boolean get() = mainItemType == BaseForms.INGOT
 
-    val isGemMaterial: Boolean get() = mainItemType == BaseObjTypes.GEM
+    val isGemMaterial: Boolean get() = mainItemType == BaseForms.GEM
 
     val isFluidMaterial get() = mainItemType == null && fluidTemperature > 0
 
@@ -238,24 +238,24 @@ class Material(vararg names: String) : IBranchingProperty {
         return this
     }
 
-    fun getItemTags(type: ObjectType) = names.map { ItemTags.Wrapper("${type.itemTagName}/$it".toResLoc()) }
+    fun getItemTags(type: Form) = names.map { ItemTags.Wrapper("${type.itemTagName}/$it".toResLoc()) }
 
-    fun getBlockTags(type: ObjectType) = names.map { BlockTags.Wrapper("${type.itemTagName}/$it".toResLoc()) }
+    fun getBlockTags(type: Form) = names.map { BlockTags.Wrapper("${type.itemTagName}/$it".toResLoc()) }
 
-    fun getFluidTags(type: ObjectType) = names.map { FluidTags.Wrapper("${type.itemTagName}/$it".toResLoc()) }
+    fun getFluidTags(type: Form) = names.map { FluidTags.Wrapper("${type.itemTagName}/$it".toResLoc()) }
 
     @JvmOverloads
-    fun getItemTag(type: ObjectType, nameIndex: Int = 0) = getItemTags(type).let {
+    fun getItemTag(type: Form, nameIndex: Int = 0) = getItemTags(type).let {
         it.getOrNull(nameIndex) ?: it.first()
     }
 
     @JvmOverloads
-    fun getBlockTag(type: ObjectType, nameIndex: Int = 0) = getBlockTags(type).let {
+    fun getBlockTag(type: Form, nameIndex: Int = 0) = getBlockTags(type).let {
         it.getOrNull(nameIndex) ?: it.first()
     }
 
     @JvmOverloads
-    fun getFluidTag(type: ObjectType, nameIndex: Int = 0) = getFluidTags(type).let {
+    fun getFluidTag(type: Form, nameIndex: Int = 0) = getFluidTags(type).let {
         it.getOrNull(nameIndex) ?: it.first()
     }
 

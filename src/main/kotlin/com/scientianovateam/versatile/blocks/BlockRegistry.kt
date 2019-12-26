@@ -2,7 +2,7 @@ package com.scientianovateam.versatile.blocks
 
 import com.scientianovateam.versatile.materialsystem.lists.MaterialBlocks
 import com.scientianovateam.versatile.materialsystem.lists.Materials
-import com.scientianovateam.versatile.materialsystem.lists.ObjTypes
+import com.scientianovateam.versatile.materialsystem.lists.Forms
 import net.minecraft.block.Block
 import net.minecraftforge.event.RegistryEvent
 
@@ -12,7 +12,7 @@ object BlockRegistry {
         MaterialBlocks.additionSuppliers.cellSet()
                 .forEach { MaterialBlocks.addBlock(it.rowKey!!, it.columnKey!!, it.value!!()) }
         Materials.all.forEach { mat ->
-            ObjTypes.all.filter { type -> type.isMaterialCompatible(mat) && !MaterialBlocks.contains(mat, type) && if (mat.invertedBlacklist) type in mat.typeBlacklist else type !in mat.typeBlacklist }
+            Forms.all.filter { type -> type.isMaterialCompatible(mat) && !MaterialBlocks.contains(mat, type) && if (mat.invertedBlacklist) type in mat.typeBlacklist else type !in mat.typeBlacklist }
                     .forEach { type -> type.blockConstructor?.invoke(mat)?.let { e.registry.register(it) } }
         }
     }

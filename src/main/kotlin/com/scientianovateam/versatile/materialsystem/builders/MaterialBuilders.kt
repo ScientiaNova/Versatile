@@ -1,12 +1,12 @@
 package com.scientianovateam.versatile.materialsystem.builders
 
-import com.scientianovateam.versatile.materialsystem.addition.BaseObjTypes
+import com.scientianovateam.versatile.materialsystem.addition.BaseForms
 import com.scientianovateam.versatile.materialsystem.addition.BaseTextureTypes
 import com.scientianovateam.versatile.materialsystem.addition.MatProperties
 import com.scientianovateam.versatile.materialsystem.elements.Element
 import com.scientianovateam.versatile.materialsystem.main.Material
 import com.scientianovateam.versatile.materialsystem.main.MaterialStack
-import com.scientianovateam.versatile.materialsystem.main.ObjectType
+import com.scientianovateam.versatile.materialsystem.main.Form
 import com.scientianovateam.versatile.materialsystem.properties.*
 import net.minecraft.item.IArmorMaterial
 import net.minecraft.item.IItemTier
@@ -16,7 +16,7 @@ open class MaterialBuilder(vararg names: String) {
 
     fun <T> property(property: MatProperty<T>, value: T) = this.also { result[property] = value }
 
-    fun blacklistTypes(vararg types: ObjectType) = this.also { result.typeBlacklist += types }
+    fun blacklistTypes(vararg types: Form) = this.also { result.typeBlacklist += types }
 
     fun invertedBlacklist() = this.also { result.invertedBlacklist = true }
 
@@ -79,21 +79,21 @@ open class MaterialBuilder(vararg names: String) {
     @JvmOverloads
     fun hasDust(value: Boolean = true) = property(MatProperties.HAS_ORE, value)
 
-    fun mainItemType(value: ObjectType) = property(MatProperties.MAIN_ITEM_TYPE, value)
+    fun mainItemType(value: Form) = property(MatProperties.MAIN_ITEM_TYPE, value)
 
     fun buildAndRegister() = result.register()
 }
 
 class DustMaterialBuilder(vararg names: String) : MaterialBuilder(*names) {
     init {
-        mainItemType(BaseObjTypes.DUST)
+        mainItemType(BaseForms.DUST)
         hasDust()
     }
 }
 
 class GemMaterialBuilder(vararg names: String) : MaterialBuilder(*names) {
     init {
-        mainItemType(BaseObjTypes.GEM)
+        mainItemType(BaseForms.GEM)
         hasDust()
     }
 }
@@ -101,7 +101,7 @@ class GemMaterialBuilder(vararg names: String) : MaterialBuilder(*names) {
 class IngotMaterialBuilder(vararg names: String) : MaterialBuilder(*names) {
     init {
         compoundType(CompoundType.ALLOY)
-        mainItemType(BaseObjTypes.INGOT)
+        mainItemType(BaseForms.INGOT)
         hasDust()
     }
 }

@@ -1,16 +1,16 @@
 {
 	"itemGroup.versatile": "Versatile",
 
-	"objtype.storage_block": "Block of %s",
-	"objtype.ore": "%s Ore",
+	"form.storage_block": "Block of %s",
+	"form.ore": "%s Ore",
 
-	"objtype.ingot": "%s Ingot",
-	"objtype.gem": "%s",
-	"objtype.dust": "%s Dust",
-	"objtype.nugget": "%s Nugget",
+	"form.ingot": "%s Ingot",
+	"form.gem": "%s",
+	"form.dust": "%s Dust",
+	"form.nugget": "%s Nugget",
 
-	"objtype.fluid": "%s",
-	"objtype.molten": "Molten %s",
+	"form.fluid": "%s",
+	"form.molten": "Molten %s",
 
 	"material.coal": "Coal",
 	"material.charcoal": "Charcoal",
@@ -55,8 +55,8 @@
 
 	"command.material.item.error": "This item has no material",
 	"command.material.error": "No material exists with the name",
-	"command.objtype.item.error": "This item has no object type",
-	"command.objtype.error": "No object type exists with that name",
+	"command.form.item.error": "This item has no object type",
+	"command.form.error": "No object type exists with that name",
 	"command.fluidcontainer.error": "That is not a fluid container item",
 
 	"extra_recipe_info.consume_chance": "%s%% Consume Chance",

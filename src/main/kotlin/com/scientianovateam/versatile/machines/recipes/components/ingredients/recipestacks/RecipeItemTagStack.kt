@@ -1,10 +1,16 @@
 package com.scientianovateam.versatile.machines.recipes.components.ingredients.recipestacks
 
+import com.google.gson.JsonObject
+import com.scientianovateam.versatile.common.extensions.json
 import com.scientianovateam.versatile.common.extensions.times
+import com.scientianovateam.versatile.common.extensions.toResLoc
+import com.scientianovateam.versatile.common.serialization.IRegisterableJSONSerializer
 import com.scientianovateam.versatile.machines.recipes.components.ingredients.utility.TagStack
+import com.scientianovateam.versatile.machines.recipes.components.ingredients.utility.times
 import com.scientianovateam.versatile.machines.recipes.components.ingredients.utility.toStack
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
+import net.minecraft.tags.ItemTags
 import net.minecraft.tags.Tag
 
 class RecipeItemTagStack(stack: TagStack<Item>) : IRecipeStack<ItemStack> {
@@ -23,6 +29,24 @@ class RecipeItemTagStack(stack: TagStack<Item>) : IRecipeStack<ItemStack> {
     override fun hashCode() = toString().hashCode()
 
     override fun equals(other: Any?) = other is RecipeItemTagStack && other.tag.id == tag.id && other.count == count
+
+    override val serializer = Serializer
+
+    object Serializer : IRegisterableJSONSerializer<RecipeItemTagStack, JsonObject> {
+        override val registryName = "versatile:tag_stack".toResLoc()
+
+        override fun read(json: JsonObject): RecipeItemTagStack {
+            val tag = json.getAsJsonPrimitive("tag")?.asString?.toResLoc()?.let { ItemTags.Wrapper(it) }
+                    ?: ItemTags.Wrapper("empty".toResLoc())
+            val count = if (json.has("count")) json.getAsJsonPrimitive("count").asNumber?.toInt() ?: 1 else 1
+            return RecipeItemTagStack(tag * count)
+        }
+
+        override fun write(obj: RecipeItemTagStack) = json {
+            "tag" to obj.tag
+            if (obj.count > 1) "count" to obj.count
+        }
+    }
 }
 
 operator fun MutableCollection<IRecipeStack<ItemStack>>.plusAssign(stack: TagStack<Item>) = plusAssign(RecipeItemTagStack(stack))

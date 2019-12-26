@@ -2,7 +2,7 @@ package com.scientianovateam.versatile.materialsystem.addition
 
 import com.scientianovateam.versatile.common.extensions.toResLoc
 import com.scientianovateam.versatile.materialsystem.main.Material
-import com.scientianovateam.versatile.materialsystem.main.ObjectType
+import com.scientianovateam.versatile.materialsystem.main.Form
 import com.scientianovateam.versatile.materialsystem.properties.*
 import net.minecraft.item.IArmorMaterial
 import net.minecraft.item.IItemTier
@@ -63,13 +63,13 @@ object MatProperties {
     @JvmStatic
     val DISPLAY_TYPE = MatProperty("versatile:display_type".toResLoc(), ::merge) { DisplayType.COMPOUND }
     @JvmStatic
-    val MAIN_ITEM_TYPE = MatProperty<ObjectType?>("versatile:main_item_type".toResLoc(), { first, second ->
+    val MAIN_ITEM_TYPE = MatProperty<Form?>("versatile:main_item_type".toResLoc(), { first, second ->
         when (first) {
-            is ObjectType -> when (second) {
-                is ObjectType -> if (second.typePriority > first.typePriority) second else first
+            is Form -> when (second) {
+                is Form -> if (second.typePriority > first.typePriority) second else first
                 else -> first
             }
-            else -> second as? ObjectType
+            else -> second as? Form
         }
     }, { it?.itemConstructor != null }) { null }
 }

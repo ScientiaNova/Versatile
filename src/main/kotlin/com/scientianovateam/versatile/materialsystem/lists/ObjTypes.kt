@@ -1,18 +1,18 @@
 package com.scientianovateam.versatile.materialsystem.lists
 
-import com.scientianovateam.versatile.materialsystem.main.ObjectType
+import com.scientianovateam.versatile.materialsystem.main.Form
 
-object ObjTypes {
-    private val objTypes = hashMapOf<String, ObjectType>()
+object Forms {
+    private val objTypes = hashMapOf<String, Form>()
 
     @JvmStatic
     val all  get() = objTypes.values
 
     @JvmStatic
-    fun add(type: ObjectType) = objTypes[type.name]?.merge(type) ?: objTypes.put(type.name, type)
+    fun add(type: Form) = objTypes[type.name]?.merge(type) ?: objTypes.put(type.name, type)
 
     @JvmStatic
-    operator fun get(name: String): ObjectType? = objTypes[name]
+    operator fun get(name: String): Form? = objTypes[name]
 
     @JvmStatic
     operator fun contains(name: String) = name in objTypes

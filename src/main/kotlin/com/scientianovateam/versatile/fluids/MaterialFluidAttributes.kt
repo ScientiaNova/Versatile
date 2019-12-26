@@ -3,7 +3,7 @@ package com.scientianovateam.versatile.fluids
 import com.scientianovateam.versatile.common.extensions.plus
 import com.scientianovateam.versatile.materialsystem.elements.ElementUtils
 import com.scientianovateam.versatile.materialsystem.main.Material
-import com.scientianovateam.versatile.materialsystem.main.ObjectType
+import com.scientianovateam.versatile.materialsystem.main.Form
 import net.minecraft.fluid.Fluid
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.SoundEvents
@@ -16,7 +16,7 @@ import net.minecraftforge.fluids.FluidStack
 class MaterialFluidAttributes(builder: FluidAttributes.Builder, fluid: Fluid, val nameFun: MaterialFluidAttributes.() -> ITextComponent) : FluidAttributes(builder, fluid) {
     override fun getDisplayName(stack: FluidStack?) = nameFun()
 
-    class Builder(mat: Material, type: ObjectType, baseLocation: ResourceLocation) : FluidAttributes.Builder(baseLocation + "_still", baseLocation + "_flow", { builder: FluidAttributes.Builder, fluid: Fluid -> MaterialFluidAttributes(builder, fluid) { if (LanguageMap.getInstance().exists(translationKey)) TranslationTextComponent(translationKey) else type.localize(mat) } }) {
+    class Builder(mat: Material, type: Form, baseLocation: ResourceLocation) : FluidAttributes.Builder(baseLocation + "_still", baseLocation + "_flow", { builder: FluidAttributes.Builder, fluid: Fluid -> MaterialFluidAttributes(builder, fluid) { if (LanguageMap.getInstance().exists(translationKey)) TranslationTextComponent(translationKey) else type.localize(mat) } }) {
         init {
             translationKey(type.registryName(mat).toString())
             color(type.color(mat) or (mat.alpha shl 24))

@@ -7,6 +7,8 @@ import net.minecraftforge.fml.loading.moddiscovery.ModAnnotation
 import net.minecraftforge.forgespi.language.ModFileScanData
 import org.objectweb.asm.Type
 
+//TODO Remove once materials are done
+@Deprecated("Temporary")
 abstract class AnnotationInitializer(annotation: Class<*>) {
     val instances: List<Any>
 

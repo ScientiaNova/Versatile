@@ -8,10 +8,10 @@ import com.scientianovateam.versatile.fluids.MaterialBucketItem
 import com.scientianovateam.versatile.fluids.MaterialFluidBlock
 import com.scientianovateam.versatile.fluids.MaterialFluidHolder
 import com.scientianovateam.versatile.items.MaterialItem
-import com.scientianovateam.versatile.materialsystem.addition.BaseObjTypes
+import com.scientianovateam.versatile.materialsystem.addition.BaseForms
 import com.scientianovateam.versatile.materialsystem.addition.BaseTextureTypes
 import com.scientianovateam.versatile.materialsystem.main.Material
-import com.scientianovateam.versatile.materialsystem.main.ObjectType
+import com.scientianovateam.versatile.materialsystem.main.Form
 import com.scientianovateam.versatile.materialsystem.properties.CompoundType
 import com.scientianovateam.versatile.materialsystem.properties.DisplayType
 import net.minecraft.block.Block
@@ -24,21 +24,21 @@ fun material(vararg names: String, builder: Material.() -> Unit = { }) = Materia
 
 @JvmOverloads
 fun dustMaterial(vararg names: String, builder: Material.() -> Unit = { }) = Material(*names).apply {
-    mainItemType = BaseObjTypes.DUST
+    mainItemType = BaseForms.DUST
     hasDust = true
     builder()
 }.register()
 
 @JvmOverloads
 fun gemMaterial(vararg names: String, builder: Material.() -> Unit = { }) = Material(*names).apply {
-    mainItemType = BaseObjTypes.GEM
+    mainItemType = BaseForms.GEM
     hasDust = true
     builder()
 }.register()
 
 @JvmOverloads
 fun ingotMaterial(vararg names: String, builder: Material.() -> Unit = { }) = Material(*names).apply {
-    mainItemType = BaseObjTypes.INGOT
+    mainItemType = BaseForms.INGOT
     compoundType = CompoundType.ALLOY
     hasDust = true
     builder()
@@ -58,18 +58,18 @@ fun groupMaterial(vararg names: String, builder: Material.() -> Unit = { }) = Ma
 }.register()
 
 @JvmOverloads
-fun objType(name: String, requirement: (Material) -> Boolean, builder: ObjectType.() -> Unit = { }) = ObjectType(name) { requirement(it) }.apply {
+fun objType(name: String, requirement: (Material) -> Boolean, builder: Form.() -> Unit = { }) = Form(name) { requirement(it) }.apply {
     builder()
 }.register()
 
 @JvmOverloads
-fun itemType(name: String, requirement: (Material) -> Boolean, builder: ObjectType.() -> Unit = { }) = ObjectType(name) { requirement(it) }.apply {
+fun itemType(name: String, requirement: (Material) -> Boolean, builder: Form.() -> Unit = { }) = Form(name) { requirement(it) }.apply {
     itemConstructor = { mat -> MaterialItem(mat, this) }
     builder()
 }.register()
 
 @JvmOverloads
-fun blockType(name: String, requirement: (Material) -> Boolean, builder: ObjectType.() -> Unit = { }) = ObjectType(name) { requirement(it) }.apply {
+fun blockType(name: String, requirement: (Material) -> Boolean, builder: Form.() -> Unit = { }) = Form(name) { requirement(it) }.apply {
     itemConstructor = { mat -> MaterialBlockItem(mat, this) }
     blockConstructor = { mat -> MaterialBlock(mat, this) }
     itemModel = { mat ->
@@ -81,7 +81,7 @@ fun blockType(name: String, requirement: (Material) -> Boolean, builder: ObjectT
 }.register()
 
 @JvmOverloads
-fun fluidType(name: String, requirement: (Material) -> Boolean, builder: ObjectType.() -> Unit = { }) = ObjectType(name) { requirement(it) }.apply {
+fun fluidType(name: String, requirement: (Material) -> Boolean, builder: Form.() -> Unit = { }) = Form(name) { requirement(it) }.apply {
     itemConstructor = { mat -> MaterialBucketItem(mat, this) }
     blockConstructor = { mat -> MaterialFluidBlock(mat, this) }
     fluidPairConstructor = { mat -> MaterialFluidHolder(mat, this) }

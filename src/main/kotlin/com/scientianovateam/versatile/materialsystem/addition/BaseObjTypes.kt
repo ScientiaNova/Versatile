@@ -14,7 +14,7 @@ import net.minecraft.util.SoundEvents
 import net.minecraftforge.common.ToolType
 import net.minecraft.block.material.Material as BlockMaterial
 
-object BaseObjTypes {
+object BaseForms {
     @JvmField
     val DUST = itemType("dust", Material::hasDust) {
         bucketVolume = 144
@@ -64,7 +64,7 @@ object BaseObjTypes {
     val MOLTEN_FLUID = fluidType("molten", { it.isItemMaterial && it.fluidTemperature > 0 }) {
         registryName = { ResourceLocation("versatile:molten_${it.name}") }
         fluidAttributes = { mat ->
-            ObjTypeProperties.FLUID_ATTRIBUTES.default(this)(mat).sound(SoundEvents.ITEM_BUCKET_FILL_LAVA, SoundEvents.ITEM_BUCKET_EMPTY_LAVA)
+            FormProperties.FLUID_ATTRIBUTES.default(this)(mat).sound(SoundEvents.ITEM_BUCKET_FILL_LAVA, SoundEvents.ITEM_BUCKET_EMPTY_LAVA)
         }
     }
 }

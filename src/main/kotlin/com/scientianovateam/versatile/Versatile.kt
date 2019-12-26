@@ -1,7 +1,7 @@
 package com.scientianovateam.versatile
 
 import com.scientianovateam.versatile.blocks.BlockRegistry
-import com.scientianovateam.versatile.common.registry.VersatileRegistryInitializer
+import com.scientianovateam.versatile.common.registry.VersatileRegistryEvent
 import com.scientianovateam.versatile.fluids.FluidRegistry
 import com.scientianovateam.versatile.items.ItemRegistry
 import com.scientianovateam.versatile.items.MaterialItem
@@ -10,7 +10,7 @@ import com.scientianovateam.versatile.machines.gui.BaseScreen
 import com.scientianovateam.versatile.machines.packets.NetworkHandler
 import com.scientianovateam.versatile.materialsystem.commands.FluidContainerCommand
 import com.scientianovateam.versatile.materialsystem.commands.MaterialCommand
-import com.scientianovateam.versatile.materialsystem.commands.ObjTypeCommand
+import com.scientianovateam.versatile.materialsystem.commands.FormCommand
 import com.scientianovateam.versatile.materialsystem.lists.MaterialItems
 import com.scientianovateam.versatile.materialsystem.main.IMaterialObject
 import com.scientianovateam.versatile.proxy.ClientProxy
@@ -27,6 +27,7 @@ import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemStack
+import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.RegistryEvent
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent
 import net.minecraftforge.eventbus.api.EventPriority
@@ -86,7 +87,7 @@ object Versatile {
     object RegistryEvents {
         @SubscribeEvent(priority = EventPriority.HIGHEST)
         fun onEarlyBlockRegistry(e: RegistryEvent.Register<Block>) {
-            VersatileRegistryInitializer
+            MinecraftForge.EVENT_BUS.post(VersatileRegistryEvent)
         }
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -112,7 +113,7 @@ object Versatile {
         @SubscribeEvent
         fun onServerStart(e: FMLServerStartingEvent) {
             MaterialCommand(e.commandDispatcher)
-            ObjTypeCommand(e.commandDispatcher)
+            FormCommand(e.commandDispatcher)
             FluidContainerCommand(e.commandDispatcher)
         }
 

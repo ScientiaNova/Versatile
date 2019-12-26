@@ -2,7 +2,7 @@ package com.scientianovateam.versatile.fluids
 
 import com.scientianovateam.versatile.materialsystem.lists.MaterialFluids
 import com.scientianovateam.versatile.materialsystem.lists.Materials
-import com.scientianovateam.versatile.materialsystem.lists.ObjTypes
+import com.scientianovateam.versatile.materialsystem.lists.Forms
 import net.minecraft.fluid.Fluid
 import net.minecraftforge.event.RegistryEvent
 
@@ -11,7 +11,7 @@ object FluidRegistry {
         MaterialFluids.additionSuppliers.cellSet()
                 .forEach { MaterialFluids.addFluidPair(it.rowKey!!, it.columnKey!!, it.value!!()) }
         Materials.all.forEach { mat ->
-            ObjTypes.all.filter { type -> type.isMaterialCompatible(mat) && !MaterialFluids.contains(mat, type) && if (mat.invertedBlacklist) type in mat.typeBlacklist else type !in mat.typeBlacklist }
+            Forms.all.filter { type -> type.isMaterialCompatible(mat) && !MaterialFluids.contains(mat, type) && if (mat.invertedBlacklist) type in mat.typeBlacklist else type !in mat.typeBlacklist }
                     .forEach { type ->
                         type.fluidPairConstructor?.invoke(mat)?.let {
                             e.registry.register(it.still)

@@ -26,7 +26,7 @@ object BaseMaterials {
         tier = 1
         color = 0xb55c42
         blockCompaction = BlockCompaction.FROM_2X2
-        typeBlacklist += BaseObjTypes.NUGGET
+        typeBlacklist += BaseForms.NUGGET
         compoundType = CompoundType.CHEMICAL
     }
     @JvmField
@@ -34,7 +34,7 @@ object BaseMaterials {
         tier = 1
         color = 0x472a30
         blockCompaction = BlockCompaction.FROM_2X2
-        typeBlacklist += BaseObjTypes.NUGGET
+        typeBlacklist += BaseForms.NUGGET
         compoundType = CompoundType.CHEMICAL
     }
     @JvmField
@@ -165,64 +165,64 @@ object BaseMaterials {
     }
 
     init {
-        MaterialItems.addItem(COAL, BaseObjTypes.GEM, Items.COAL)
-        MaterialBlocks.addBlock(COAL, BaseObjTypes.BLOCK, Blocks.COAL_BLOCK)
-        MaterialBlocks.addBlock(COAL, BaseObjTypes.ORE, Blocks.COAL_ORE)
+        MaterialItems.addItem(COAL, BaseForms.GEM, Items.COAL)
+        MaterialBlocks.addBlock(COAL, BaseForms.BLOCK, Blocks.COAL_BLOCK)
+        MaterialBlocks.addBlock(COAL, BaseForms.ORE, Blocks.COAL_ORE)
 
-        MaterialItems.addItem(CHARCOAL, BaseObjTypes.GEM, Items.CHARCOAL)
+        MaterialItems.addItem(CHARCOAL, BaseForms.GEM, Items.CHARCOAL)
 
-        MaterialItems.addItem(IRON, BaseObjTypes.INGOT, Items.IRON_INGOT)
-        MaterialItems.addItem(IRON, BaseObjTypes.NUGGET, Items.IRON_NUGGET)
-        MaterialBlocks.addBlock(IRON, BaseObjTypes.BLOCK, Blocks.IRON_BLOCK)
-        MaterialBlocks.addBlock(IRON, BaseObjTypes.ORE, Blocks.IRON_ORE)
+        MaterialItems.addItem(IRON, BaseForms.INGOT, Items.IRON_INGOT)
+        MaterialItems.addItem(IRON, BaseForms.NUGGET, Items.IRON_NUGGET)
+        MaterialBlocks.addBlock(IRON, BaseForms.BLOCK, Blocks.IRON_BLOCK)
+        MaterialBlocks.addBlock(IRON, BaseForms.ORE, Blocks.IRON_ORE)
 
-        MaterialItems.addItem(GOLD, BaseObjTypes.INGOT, Items.GOLD_INGOT)
-        MaterialItems.addItem(GOLD, BaseObjTypes.NUGGET, Items.GOLD_NUGGET)
-        MaterialBlocks.addBlock(GOLD, BaseObjTypes.BLOCK, Blocks.GOLD_BLOCK)
-        MaterialBlocks.addBlock(GOLD, BaseObjTypes.ORE, Blocks.GOLD_ORE)
+        MaterialItems.addItem(GOLD, BaseForms.INGOT, Items.GOLD_INGOT)
+        MaterialItems.addItem(GOLD, BaseForms.NUGGET, Items.GOLD_NUGGET)
+        MaterialBlocks.addBlock(GOLD, BaseForms.BLOCK, Blocks.GOLD_BLOCK)
+        MaterialBlocks.addBlock(GOLD, BaseForms.ORE, Blocks.GOLD_ORE)
 
-        MaterialItems.addItem(LAPIS, BaseObjTypes.GEM, Items.LAPIS_LAZULI)
-        MaterialBlocks.addBlock(LAPIS, BaseObjTypes.BLOCK, Blocks.LAPIS_BLOCK)
-        MaterialBlocks.addBlock(LAPIS, BaseObjTypes.ORE, Blocks.LAPIS_ORE)
+        MaterialItems.addItem(LAPIS, BaseForms.GEM, Items.LAPIS_LAZULI)
+        MaterialBlocks.addBlock(LAPIS, BaseForms.BLOCK, Blocks.LAPIS_BLOCK)
+        MaterialBlocks.addBlock(LAPIS, BaseForms.ORE, Blocks.LAPIS_ORE)
 
-        MaterialItems.addItem(DIAMOND, BaseObjTypes.GEM, Items.DIAMOND)
-        MaterialBlocks.addBlock(DIAMOND, BaseObjTypes.BLOCK, Blocks.DIAMOND_BLOCK)
-        MaterialBlocks.addBlock(DIAMOND, BaseObjTypes.ORE, Blocks.DIAMOND_ORE)
+        MaterialItems.addItem(DIAMOND, BaseForms.GEM, Items.DIAMOND)
+        MaterialBlocks.addBlock(DIAMOND, BaseForms.BLOCK, Blocks.DIAMOND_BLOCK)
+        MaterialBlocks.addBlock(DIAMOND, BaseForms.ORE, Blocks.DIAMOND_ORE)
 
-        MaterialItems.addItem(EMERALD, BaseObjTypes.GEM, Items.EMERALD)
-        MaterialBlocks.addBlock(EMERALD, BaseObjTypes.BLOCK, Blocks.EMERALD_BLOCK)
-        MaterialBlocks.addBlock(EMERALD, BaseObjTypes.ORE, Blocks.EMERALD_ORE)
+        MaterialItems.addItem(EMERALD, BaseForms.GEM, Items.EMERALD)
+        MaterialBlocks.addBlock(EMERALD, BaseForms.BLOCK, Blocks.EMERALD_BLOCK)
+        MaterialBlocks.addBlock(EMERALD, BaseForms.ORE, Blocks.EMERALD_ORE)
 
-        MaterialItems.addItem(QUARTZ, BaseObjTypes.GEM, Items.QUARTZ)
-        MaterialBlocks.addBlock(QUARTZ, BaseObjTypes.BLOCK, Blocks.QUARTZ_BLOCK)
-        MaterialBlocks.addBlock(QUARTZ, BaseObjTypes.ORE, Blocks.NETHER_QUARTZ_ORE)
+        MaterialItems.addItem(QUARTZ, BaseForms.GEM, Items.QUARTZ)
+        MaterialBlocks.addBlock(QUARTZ, BaseForms.BLOCK, Blocks.QUARTZ_BLOCK)
+        MaterialBlocks.addBlock(QUARTZ, BaseForms.ORE, Blocks.NETHER_QUARTZ_ORE)
 
-        MaterialItems.addItem(REDSTONE, BaseObjTypes.DUST, Items.REDSTONE)
-        MaterialBlocks.addBlock(REDSTONE, BaseObjTypes.BLOCK, Blocks.REDSTONE_BLOCK)
-        MaterialBlocks.addBlock(REDSTONE, BaseObjTypes.ORE, Blocks.REDSTONE_ORE)
+        MaterialItems.addItem(REDSTONE, BaseForms.DUST, Items.REDSTONE)
+        MaterialBlocks.addBlock(REDSTONE, BaseForms.BLOCK, Blocks.REDSTONE_BLOCK)
+        MaterialBlocks.addBlock(REDSTONE, BaseForms.ORE, Blocks.REDSTONE_ORE)
 
-        MaterialItems.addItem(GLOWSTONE, BaseObjTypes.DUST, Items.GLOWSTONE_DUST)
-        MaterialBlocks.addBlock(GLOWSTONE, BaseObjTypes.BLOCK, Blocks.GLOWSTONE)
+        MaterialItems.addItem(GLOWSTONE, BaseForms.DUST, Items.GLOWSTONE_DUST)
+        MaterialBlocks.addBlock(GLOWSTONE, BaseForms.BLOCK, Blocks.GLOWSTONE)
 
-        MaterialItems.addItem(BRICK, BaseObjTypes.INGOT, Items.BRICK)
-        MaterialBlocks.addBlock(BRICK, BaseObjTypes.BLOCK, Blocks.BRICKS)
+        MaterialItems.addItem(BRICK, BaseForms.INGOT, Items.BRICK)
+        MaterialBlocks.addBlock(BRICK, BaseForms.BLOCK, Blocks.BRICKS)
 
-        MaterialItems.addItem(NETHER_BRICK, BaseObjTypes.INGOT, Items.NETHER_BRICK)
-        MaterialBlocks.addBlock(NETHER_BRICK, BaseObjTypes.BLOCK, Blocks.NETHER_BRICKS)
+        MaterialItems.addItem(NETHER_BRICK, BaseForms.INGOT, Items.NETHER_BRICK)
+        MaterialBlocks.addBlock(NETHER_BRICK, BaseForms.BLOCK, Blocks.NETHER_BRICKS)
 
-        MaterialItems.addItem(FLINT, BaseObjTypes.GEM, Items.FLINT)
+        MaterialItems.addItem(FLINT, BaseForms.GEM, Items.FLINT)
 
-        MaterialItems.addItem(BONE, BaseObjTypes.DUST, Items.BONE_MEAL)
-        MaterialBlocks.addBlock(BONE, BaseObjTypes.BLOCK, Blocks.BONE_BLOCK)
+        MaterialItems.addItem(BONE, BaseForms.DUST, Items.BONE_MEAL)
+        MaterialBlocks.addBlock(BONE, BaseForms.BLOCK, Blocks.BONE_BLOCK)
 
-        MaterialItems.addItem(BLAZE, BaseObjTypes.DUST, Items.BLAZE_POWDER)
+        MaterialItems.addItem(BLAZE, BaseForms.DUST, Items.BLAZE_POWDER)
 
-        MaterialFluids.addFluidPair(WATER, BaseObjTypes.FLUID, FluidPairHolder(Fluids.WATER, Fluids.FLOWING_WATER))
-        MaterialBlocks.addBlock(WATER, BaseObjTypes.FLUID, Blocks.WATER)
-        MaterialItems.addItem(WATER, BaseObjTypes.FLUID, Items.WATER_BUCKET)
+        MaterialFluids.addFluidPair(WATER, BaseForms.FLUID, FluidPairHolder(Fluids.WATER, Fluids.FLOWING_WATER))
+        MaterialBlocks.addBlock(WATER, BaseForms.FLUID, Blocks.WATER)
+        MaterialItems.addItem(WATER, BaseForms.FLUID, Items.WATER_BUCKET)
 
-        MaterialFluids.addFluidPair(LAVA, BaseObjTypes.FLUID, FluidPairHolder(Fluids.LAVA, Fluids.FLOWING_LAVA))
-        MaterialBlocks.addBlock(LAVA, BaseObjTypes.FLUID, Blocks.LAVA)
-        MaterialItems.addItem(LAVA, BaseObjTypes.FLUID, Items.LAVA_BUCKET)
+        MaterialFluids.addFluidPair(LAVA, BaseForms.FLUID, FluidPairHolder(Fluids.LAVA, Fluids.FLOWING_LAVA))
+        MaterialBlocks.addBlock(LAVA, BaseForms.FLUID, Blocks.LAVA)
+        MaterialItems.addItem(LAVA, BaseForms.FLUID, Items.LAVA_BUCKET)
     }
 }

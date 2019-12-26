@@ -4,7 +4,7 @@ import com.scientianovateam.versatile.materialsystem.lists.MaterialBlocks
 import com.scientianovateam.versatile.materialsystem.lists.MaterialFluids
 import com.scientianovateam.versatile.materialsystem.main.IMaterialObject
 import com.scientianovateam.versatile.materialsystem.main.Material
-import com.scientianovateam.versatile.materialsystem.main.ObjectType
+import com.scientianovateam.versatile.materialsystem.main.Form
 import net.minecraft.block.BlockState
 import net.minecraft.block.FlowingFluidBlock
 import net.minecraft.entity.Entity
@@ -13,7 +13,7 @@ import net.minecraft.util.text.TranslationTextComponent
 import net.minecraft.util.text.translation.LanguageMap
 import net.minecraft.world.World
 
-class MaterialFluidBlock(override val mat: Material, override val objType: ObjectType) : FlowingFluidBlock({ MaterialFluids[mat, objType] }, objType.blockProperties(mat)), IMaterialObject {
+class MaterialFluidBlock(override val mat: Material, override val objType: Form) : FlowingFluidBlock({ MaterialFluids[mat, objType] }, objType.blockProperties(mat)), IMaterialObject {
     init {
         registryName = objType.registryName(mat)
         MaterialBlocks.addBlock(this)

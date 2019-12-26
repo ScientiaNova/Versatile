@@ -3,7 +3,6 @@ package com.scientianovateam.versatile.machines.recipes.components.ingredients.r
 import com.google.gson.JsonObject
 import com.scientianovateam.versatile.common.extensions.json
 import com.scientianovateam.versatile.common.extensions.toResLoc
-import com.scientianovateam.versatile.common.registry.BaseRegistries
 import com.scientianovateam.versatile.common.serialization.IJSONSerializer
 import com.scientianovateam.versatile.common.serialization.SerializerRegistries
 import net.minecraft.item.ItemStack

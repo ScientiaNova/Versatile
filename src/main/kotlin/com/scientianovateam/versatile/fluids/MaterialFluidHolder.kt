@@ -5,13 +5,13 @@ import com.scientianovateam.versatile.materialsystem.lists.MaterialFluids
 import com.scientianovateam.versatile.materialsystem.lists.MaterialItems
 import com.scientianovateam.versatile.materialsystem.main.IMaterialObject
 import com.scientianovateam.versatile.materialsystem.main.Material
-import com.scientianovateam.versatile.materialsystem.main.ObjectType
+import com.scientianovateam.versatile.materialsystem.main.Form
 import net.minecraft.block.FlowingFluidBlock
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.BucketItem
 import net.minecraftforge.fluids.ForgeFlowingFluid
 
-class MaterialFluidHolder(override val mat: Material, override val objType: ObjectType) : IMaterialObject, IFluidPairHolder {
+class MaterialFluidHolder(override val mat: Material, override val objType: Form) : IMaterialObject, IFluidPairHolder {
     private val attributes: ForgeFlowingFluid.Properties = ForgeFlowingFluid.Properties(::still, ::flowing, objType.fluidAttributes(mat))
             .block { MaterialBlocks[mat, objType] as? FlowingFluidBlock }
             .bucket { MaterialItems[mat, objType] as? BucketItem }
