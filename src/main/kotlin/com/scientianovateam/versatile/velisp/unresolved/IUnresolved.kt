@@ -7,3 +7,5 @@ interface IUnresolved {
     fun resolve(map: Map<String, IEvaluated>): IUnevaluated
     fun tryToResolve(map: Map<String, IEvaluated>): IUnresolved = this
 }
+
+fun IUnresolved.evaluate() = (this as? IUnevaluated)?.evaluate() ?: throw IllegalStateException("tried to evaluate unresolved value")
