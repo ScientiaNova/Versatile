@@ -9,6 +9,7 @@ import com.scientianovateam.versatile.velisp.unresolved.IUnresolved
 import com.scientianovateam.versatile.velisp.unresolved.evaluate
 
 object MapOptionalFunction : IFunction {
+    override val name = "versatile/map_optional"
     override val inputCount = 2..2
     override fun evaluate(inputs: List<IUnresolved>) = when (val optional = inputs.first().evaluate() as OptionalValue) {
         is SomeValue -> inputs.last().evaluate().callFunction(optional.evaluatedValue)

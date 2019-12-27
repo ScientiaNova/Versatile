@@ -4,7 +4,7 @@ import com.scientianovateam.versatile.velisp.evaluated.IEvaluated
 import com.scientianovateam.versatile.velisp.unresolved.IUnresolved
 
 interface IFunction {
+    val name: String
     val inputCount: IntRange
-
     fun evaluate(inputs: List<IUnresolved>): IEvaluated
 }

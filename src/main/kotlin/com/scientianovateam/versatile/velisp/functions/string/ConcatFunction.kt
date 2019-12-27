@@ -7,6 +7,7 @@ import com.scientianovateam.versatile.velisp.unresolved.IUnresolved
 import com.scientianovateam.versatile.velisp.unresolved.evaluate
 
 object ConcatFunction : IFunction {
+    override val name = "versatile/concat"
     override val inputCount = 1..Int.MAX_VALUE
     override fun evaluate(inputs: List<IUnresolved>) = StringValue(inputs.joinToString { unevaluated ->
         unevaluated.evaluate().value.let { if (it is Double) it.shorten() else it }.toString()

@@ -13,8 +13,8 @@ interface IEvaluated : IUnevaluated {
 val IEvaluated.function
     get() = when(this) {
         is FunctionValue -> this
-        is StringValue -> VELISPRegistries.FUNCTION_REGISTRY[this.value.toResLoc("versatile", '/')]?: throw IllegalStateException("No such function with name $value")
-        else -> throw IllegalStateException("Invalid function")
+        is StringValue -> VELISPRegistries.FUNCTION_REGISTRY[this.value.toResLoc("versatile", '/')]?: error("No such function with name $value")
+        else -> error("Invalid function")
     }
 
 fun IEvaluated.callFunction(vararg inputs: IUnresolved) = function.evaluate(inputs.toList())

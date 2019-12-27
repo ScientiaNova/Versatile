@@ -11,14 +11,14 @@ import com.scientianovateam.versatile.velisp.unresolved.IUnresolved
 
 fun convertJSON(json: JsonElement): IUnresolved = when (json) {
     is JsonArray -> FunctionCall((((json.firstOrNull()
-            ?: throw IllegalStateException("Empty JSON array")) as? JsonPrimitive)?.asString
-            ?: throw IllegalStateException("Invalid start of a function call")), json.drop(1).map(::convertJSON))
+            ?: error("Empty JSON array")) as? JsonPrimitive)?.asString
+            ?: error("Invalid start of a function call")), json.drop(1).map(::convertJSON))
     is JsonPrimitive -> when {
         json.isNumber -> NumberValue(json.asDouble)
         json.isBoolean -> BoolValue(json.asBoolean)
         else -> if (json.asString.startsWith('$')) Getter(json.asString) else StringValue(json.asString)
     }
-    is JsonObject -> throw IllegalStateException("Can't use a JSON object in an expression")
+    is JsonObject -> error("Can't use a JSON object in an expression")
     is JsonNull -> NullValue
     else -> error("Invalid JSON expression")
 }

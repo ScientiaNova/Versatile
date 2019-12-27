@@ -8,10 +8,11 @@ import com.scientianovateam.versatile.velisp.unresolved.IUnresolved
 import com.scientianovateam.versatile.velisp.unresolved.evaluate
 
 object MapFunction : IFunction {
+    override val name = "versatile/map"
     override val inputCount = 2..2
     override fun evaluate(inputs: List<IUnresolved>): IEvaluated {
         val function = inputs.last().evaluate().function
-        if (1 !in function.inputCount) throw IllegalStateException("Invalid amount of function parameters")
+        if (1 !in function.inputCount) error("Invalid amount of function parameters")
         return ListValue((inputs.first().evaluate() as ListValue).value.map { function.evaluate(listOf(it)) })
     }
 }

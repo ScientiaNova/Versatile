@@ -5,8 +5,8 @@ import com.scientianovateam.versatile.velisp.functions.IFunction
 import com.scientianovateam.versatile.velisp.unresolved.IUnresolved
 import com.scientianovateam.versatile.velisp.unresolved.evaluate
 
-object AndFunction : IFunction {
-    override val name = "versatile/and"
-    override val inputCount = 2..Int.MAX_VALUE
-    override fun evaluate(inputs: List<IUnresolved>) = BoolValue(inputs.all { it.evaluate().value == true })
+object LessOrEqualFunction : IFunction {
+    override val name = "versatile/less_or_equal"
+    override val inputCount = 2..2
+    override fun evaluate(inputs: List<IUnresolved>) = BoolValue((inputs.first().evaluate().value as Double) <= inputs.last().evaluate().value as Double)
 }
