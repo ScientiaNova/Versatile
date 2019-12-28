@@ -9,61 +9,61 @@ import net.minecraft.item.IItemTier
 
 object MatProperties {
     @JvmStatic
-    val TEXTURE_TYPE = MatProperty("versatile:texture_type".toResLoc(), ::merge) { BaseTextureTypes.REGULAR }
+    val TEXTURE_TYPE = MatLegacyProperty("versatile:texture_type".toResLoc(), ::merge) { BaseTextureTypes.REGULAR }
     @JvmStatic
-    val COLOR = MatProperty("versatile:color".toResLoc(), ::merge) { -1 }
+    val COLOR = MatLegacyProperty("versatile:color".toResLoc(), ::merge) { -1 }
     @JvmStatic
-    val TIER = MatProperty("versatile:tier".toResLoc(), ::merge) { 0 }
+    val TIER = MatLegacyProperty("versatile:tier".toResLoc(), ::merge) { 0 }
     @JvmStatic
-    val HARVEST_TIER = MatProperty("versatile:harvest_tier".toResLoc(), ::merge) {
+    val HARVEST_TIER = MatLegacyProperty("versatile:harvest_tier".toResLoc(), ::merge) {
         it.harvestTier(1.5f * (it.tier + 1), 1.5f * (it.tier + 1))
     }
     @JvmStatic
-    val ITEM_TIER = MatProperty<IItemTier?>("versatile:item_tier".toResLoc(), ::merge) { null }
+    val ITEM_TIER = MatLegacyProperty<IItemTier?>("versatile:item_tier".toResLoc(), ::merge) { null }
     @JvmStatic
-    val ARMOR_MATERIAL = MatProperty<IArmorMaterial?>("versatile:armor_material".toResLoc(), ::merge) { null }
+    val ARMOR_MATERIAL = MatLegacyProperty<IArmorMaterial?>("versatile:armor_material".toResLoc(), ::merge) { null }
     @JvmStatic
-    val ELEMENT = MatProperty("versatile:element".toResLoc(), ::merge) { BaseElements.NULL }
+    val ELEMENT = MatLegacyProperty("versatile:element".toResLoc(), ::merge) { BaseElements.NULL }
     @JvmStatic
-    val BURN_TIME = MatProperty("versatile:burn_time".toResLoc(), ::merge) { 0 }
+    val BURN_TIME = MatLegacyProperty("versatile:burn_time".toResLoc(), ::merge) { 0 }
     @JvmStatic
-    val COMPOUND_TYPE = MatProperty("versatile:compound_type".toResLoc(), ::merge) { CompoundType.CHEMICAL }
+    val COMPOUND_TYPE = MatLegacyProperty("versatile:compound_type".toResLoc(), ::merge) { CompoundType.CHEMICAL }
     @JvmStatic
-    val DENSITY_MULTIPLIER = MatProperty("versatile:density_multiplier".toResLoc(), ::merge) { 1f }
+    val DENSITY_MULTIPLIER = MatLegacyProperty("versatile:density_multiplier".toResLoc(), ::merge) { 1f }
     @JvmStatic
-    val PROCESSING_MULTIPLIER = MatProperty("versatile:processing_multiplier".toResLoc(), ::merge) { 1 }
+    val PROCESSING_MULTIPLIER = MatLegacyProperty("versatile:processing_multiplier".toResLoc(), ::merge) { 1 }
     @JvmStatic
-    val UNREFINED_COLOR = MatProperty("versatile:unrefined_color".toResLoc(), ::merge, default = Material::color)
+    val UNREFINED_COLOR = MatLegacyProperty("versatile:unrefined_color".toResLoc(), ::merge, default = Material::color)
     @JvmStatic
-    val FLUID_TEMPERATURE = MatProperty("versatile:fluid_temperature".toResLoc(), ::merge) { 0 }
+    val FLUID_TEMPERATURE = MatLegacyProperty("versatile:fluid_temperature".toResLoc(), ::merge) { 0 }
     @JvmStatic
-    val BOILING_TEMPERATURE = MatProperty("versatile:boiling_temperature".toResLoc(), ::merge) { 0 }
+    val BOILING_TEMPERATURE = MatLegacyProperty("versatile:boiling_temperature".toResLoc(), ::merge) { 0 }
     @JvmStatic
-    val BOILING_MATERIAL = MatProperty("versatile:boiling_material".toResLoc(), ::merge) { it }
+    val BOILING_MATERIAL = MatLegacyProperty("versatile:boiling_material".toResLoc(), ::merge) { it }
     @JvmStatic
-    val REFINED_MATERIAL = MatProperty("versatile:refined_material".toResLoc(), ::merge) { it }
+    val REFINED_MATERIAL = MatLegacyProperty("versatile:refined_material".toResLoc(), ::merge) { it }
     @JvmStatic
-    val PH = MatProperty("versatile:ph".toResLoc(), ::merge, { it > 0f && it < 14f }) { 7f }
+    val PH = MatLegacyProperty("versatile:ph".toResLoc(), ::merge, { it > 0f && it < 14f }) { 7f }
     @JvmStatic
-    val ALPHA = MatProperty("versatile:alpha".toResLoc(), ::merge) { 0xFF }
+    val ALPHA = MatLegacyProperty("versatile:alpha".toResLoc(), ::merge) { 0xFF }
     @JvmStatic
-    val BLOCK_COMPACTION = MatProperty("versatile:block_compation".toResLoc(), ::merge) { BlockCompaction.FROM_3X3 }
+    val BLOCK_COMPACTION = MatLegacyProperty("versatile:block_compation".toResLoc(), ::merge) { BlockCompaction.FROM_3X3 }
     @JvmStatic
-    val TRANSITION_PROPERTIES = MatProperty<TransitionProperties?>("versatile:transition_properties".toResLoc(), ::merge) { null }
+    val TRANSITION_PROPERTIES = MatLegacyProperty<TransitionProperties?>("versatile:transition_properties".toResLoc(), ::merge) { null }
     @JvmStatic
-    val HAS_ORE = MatProperty("versatile:has_ore".toResLoc(), ::merge) { false }
+    val HAS_ORE = MatLegacyProperty("versatile:has_ore".toResLoc(), ::merge) { false }
     @JvmStatic
-    val IS_GAS = MatProperty("versatile:is_gas".toResLoc(), ::merge) { false }
+    val IS_GAS = MatLegacyProperty("versatile:is_gas".toResLoc(), ::merge) { false }
     @JvmStatic
-    val SIMPLE_PROCESSING = MatProperty("versatile:simple_processing".toResLoc(), ::merge) { true }
+    val SIMPLE_PROCESSING = MatLegacyProperty("versatile:simple_processing".toResLoc(), ::merge) { true }
     @JvmStatic
-    val ROD_OUTPUT_COUNT = MatProperty("versatile:rod_output_count".toResLoc(), ::merge) { 1 }
+    val ROD_OUTPUT_COUNT = MatLegacyProperty("versatile:rod_output_count".toResLoc(), ::merge) { 1 }
     @JvmStatic
-    val HAS_DUST = MatProperty("versatile:has_dust".toResLoc(), ::merge) { false }
+    val HAS_DUST = MatLegacyProperty("versatile:has_dust".toResLoc(), ::merge) { false }
     @JvmStatic
-    val DISPLAY_TYPE = MatProperty("versatile:display_type".toResLoc(), ::merge) { DisplayType.COMPOUND }
+    val DISPLAY_TYPE = MatLegacyProperty("versatile:display_type".toResLoc(), ::merge) { DisplayType.COMPOUND }
     @JvmStatic
-    val MAIN_ITEM_TYPE = MatProperty<Form?>("versatile:main_item_type".toResLoc(), { first, second ->
+    val MAIN_ITEM_TYPE = MatLegacyProperty<Form?>("versatile:main_item_type".toResLoc(), { first, second ->
         when (first) {
             is Form -> when (second) {
                 is Form -> if (second.typePriority > first.typePriority) second else first

@@ -3,21 +3,21 @@ package com.scientianovateam.versatile.materialsystem.main
 import com.scientianovateam.versatile.common.extensions.toResLoc
 import com.scientianovateam.versatile.materialsystem.addition.FormProperties
 import com.scientianovateam.versatile.materialsystem.lists.Forms
-import com.scientianovateam.versatile.materialsystem.properties.FormProperty
+import com.scientianovateam.versatile.materialsystem.properties.FormLegacyProperty
 import net.minecraft.tags.ItemTags
 import net.minecraft.util.text.TranslationTextComponent
 
 class Form(val name: String, var requirement: (Material) -> Boolean) {
-    val properties = mutableMapOf<FormProperty<out Any?>, Any?>()
+    val properties = mutableMapOf<FormLegacyProperty<out Any?>, Any?>()
 
-    operator fun <T> set(property: FormProperty<T>, value: T) {
+    operator fun <T> set(property: FormLegacyProperty<T>, value: T) {
         if (property.isValid(value)) properties[property] = value
     }
 
     @Suppress("UNCHECKED_CAST")
-    operator fun <T> get(property: FormProperty<T>) = properties[property] as? T ?: property.default(this)
+    operator fun <T> get(property: FormLegacyProperty<T>) = properties[property] as? T ?: property.default(this)
 
-    operator fun contains(property: FormProperty<*>) = property in properties
+    operator fun contains(property: FormLegacyProperty<*>) = property in properties
 
     val indexBlackList = mutableListOf<Int>()
 

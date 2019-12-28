@@ -14,7 +14,7 @@ import net.minecraft.item.IItemTier
 open class MaterialBuilder(vararg names: String) {
     protected val result = Material(*names)
 
-    fun <T> property(property: MatProperty<T>, value: T) = this.also { result[property] = value }
+    fun <T> property(property: MatLegacyProperty<T>, value: T) = this.also { result[property] = value }
 
     fun blacklistTypes(vararg types: Form) = this.also { result.typeBlacklist += types }
 

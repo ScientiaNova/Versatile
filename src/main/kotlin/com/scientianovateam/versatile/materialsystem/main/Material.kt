@@ -7,27 +7,33 @@ import com.scientianovateam.versatile.materialsystem.addition.MatProperties
 import com.scientianovateam.versatile.materialsystem.lists.Materials
 import com.scientianovateam.versatile.materialsystem.properties.HarvestTier
 import com.scientianovateam.versatile.materialsystem.properties.IBranchingProperty
-import com.scientianovateam.versatile.materialsystem.properties.MatProperty
+import com.scientianovateam.versatile.materialsystem.properties.IPropertyContainer
+import com.scientianovateam.versatile.materialsystem.properties.MatLegacyProperty
+import com.scientianovateam.versatile.velisp.evaluated.IEvaluated
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.FluidTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.util.text.TranslationTextComponent
 import java.util.*
 
-class Material(vararg names: String) : IBranchingProperty {
-    val names = linkedSetOf(*names)
+class Material(override val properties: Map<String, IEvaluated>) : IBranchingProperty, IPropertyContainer {
+    val names = mutableListOf<String>()
     val name get() = names.first()
 
-    val properties = mutableMapOf<MatProperty<out Any?>, Any?>()
+    constructor(vararg name: String) : this(mutableMapOf()) {
+        names.addAll(name) // TODO Legacy constructor
+    }
 
-    operator fun <T> set(property: MatProperty<T>, value: T) {
-        if (property.isValid(value)) properties[property] = value
+    val legacyProperties = mutableMapOf<MatLegacyProperty<out Any?>, Any?>()
+
+    operator fun <T> set(property: MatLegacyProperty<T>, value: T) {
+        if (property.isValid(value)) legacyProperties[property] = value
     }
 
     @Suppress("UNCHECKED_CAST")
-    operator fun <T> get(property: MatProperty<T>) = properties[property] as? T ?: property.default(this)
+    operator fun <T> get(property: MatLegacyProperty<T>) = legacyProperties[property] as? T ?: property.default(this)
 
-    operator fun contains(property: MatProperty<*>) = property in properties
+    operator fun contains(property: MatLegacyProperty<*>) = property in legacyProperties
 
     override fun get(name: String): Any? = null
 
@@ -231,8 +237,8 @@ class Material(vararg names: String) : IBranchingProperty {
 
     fun merge(mat: Material): Material {
         names union mat.names
-        mat.properties.forEach { (key, value) ->
-            key.merge(properties[key], value)?.let { properties[key] = it }
+        mat.legacyProperties.forEach { (key, value) ->
+            key.merge(legacyProperties[key], value)?.let { legacyProperties[key] = it }
         }
         typeBlacklist.addAll(mat.typeBlacklist)
         return this

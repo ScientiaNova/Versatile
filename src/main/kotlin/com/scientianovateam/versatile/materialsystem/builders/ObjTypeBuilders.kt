@@ -13,7 +13,7 @@ import com.scientianovateam.versatile.items.MaterialItem
 import com.scientianovateam.versatile.materialsystem.addition.FormProperties
 import com.scientianovateam.versatile.materialsystem.main.Material
 import com.scientianovateam.versatile.materialsystem.main.Form
-import com.scientianovateam.versatile.materialsystem.properties.FormProperty
+import com.scientianovateam.versatile.materialsystem.properties.FormLegacyProperty
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.item.Item
@@ -24,7 +24,7 @@ import net.minecraftforge.fluids.FluidAttributes
 open class FormBuilder(name: String, requirement: (Material) -> Boolean) {
     protected val result = Form(name, requirement)
 
-    fun <T> property(property: FormProperty<T>, value: T) = this.also { result[property] = value }
+    fun <T> property(property: FormLegacyProperty<T>, value: T) = this.also { result[property] = value }
 
     fun blacklistIndices(vararg indices: Int) = this.also { result.indexBlackList += indices.toList() }
 

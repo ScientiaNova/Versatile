@@ -1,8 +1,9 @@
 package com.scientianovateam.versatile.common.registry
 
-import com.scientianovateam.versatile.materialsystem.properties.MatProperty
-import com.scientianovateam.versatile.materialsystem.properties.FormProperty
+import com.scientianovateam.versatile.materialsystem.properties.MatLegacyProperty
+import com.scientianovateam.versatile.materialsystem.properties.FormLegacyProperty
+import com.scientianovateam.versatile.materialsystem.properties.Property
 
-val MATERIAL_PROPERTIES = Registry<MatProperty<*>>()
+val MATERIAL_PROPERTIES = Registry<Property>()
 
-val OBJECT_TYPE_PROPERTIES = Registry<FormProperty<*>>()
+val OBJECT_TYPE_PROPERTIES = Registry<Property>()

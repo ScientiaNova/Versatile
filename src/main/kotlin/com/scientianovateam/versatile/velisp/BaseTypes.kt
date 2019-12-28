@@ -14,6 +14,11 @@ abstract class VELISPType(val name: String, private val superTypes: Set<VELISPTy
     infix fun subtypes(other: VELISPType) = this == NothingType || other in allSuperTypes
 
     infix fun supertypes(other: VELISPType) = other == NothingType || this in other.allSuperTypes
+
+    companion object {
+        // TODO Does not handle optional[types], functions with arguments, or lists
+        fun fromName(name: String): VELISPType? = TYPES.firstOrNull { it.name == name }
+    }
 }
 
 object AnyType : VELISPType("any")
