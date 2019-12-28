@@ -1,17 +1,16 @@
 package com.scientianovateam.versatile.velisp.unevaluated
 
-import com.scientianovateam.versatile.Versatile
-import com.scientianovateam.versatile.common.extensions.toResLoc
+import com.scientianovateam.versatile.common.extensions.toResLocV
 import com.scientianovateam.versatile.velisp.FunctionType
 import com.scientianovateam.versatile.velisp.evaluated.IEvaluated
 import com.scientianovateam.versatile.velisp.registry.VELISP_FUNCTIONS
 import com.scientianovateam.versatile.velisp.unresolved.IUnresolved
 
 data class FunctionCall(val name: String, var inputs: List<IUnresolved>) : IUnevaluated {
-    val function = VELISP_FUNCTIONS[name.toResLoc(Versatile.MOD_ID, '/')]
+    val function = VELISP_FUNCTIONS[name.toResLocV('/')]
             ?: error("Unknown function")
 
-    override fun dependencies(): List<String> = inputs.flatMap(IUnresolved::dependencies)
+    override fun <T> find(type: Class<out T>, predicate: (T) -> Boolean) = super.find(type, predicate) + inputs.flatMap { it.find(type, predicate) }
 
     override fun resolve(map: Map<String, IEvaluated>): FunctionCall {
         inputs = inputs.map { it.tryToResolve(map) }

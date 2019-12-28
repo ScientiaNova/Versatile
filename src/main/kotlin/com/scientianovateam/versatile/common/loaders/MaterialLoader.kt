@@ -10,14 +10,12 @@ import com.scientianovateam.versatile.common.math.Graph
 import com.scientianovateam.versatile.common.registry.MATERIAL_PROPERTIES
 import com.scientianovateam.versatile.common.serialization.registries.MaterialSerializer
 import com.scientianovateam.versatile.materialsystem.lists.Materials
-import com.scientianovateam.versatile.velisp.convertJSON
+import com.scientianovateam.versatile.velisp.convertToExpression
 import com.scientianovateam.versatile.velisp.evaluated.StringValue
 import com.scientianovateam.versatile.velisp.functions.constructor.MaterialFunction
 import com.scientianovateam.versatile.velisp.unevaluated.FunctionCall
-import com.scientianovateam.versatile.velisp.unresolved.IUnresolved
 import com.scientianovateam.versatile.velisp.unresolved.evaluate
 import java.util.*
-
 
 fun loadMaterials() {
     val jsonSets = mutableListOf<MutableList<JsonObject>>()
@@ -42,26 +40,17 @@ fun loadMaterials() {
     earlyResources.loadJsons("registries/materials").forEach { add(it) }
     val graph = Graph<JsonObject>()
     jsonSets.map(::cascadeJsons).forEach { material ->
-        MATERIAL_PROPERTIES.forEach { property ->
+        MATERIAL_PROPERTIES.forEach { (_, property) ->
             val value = if (material.has(property.name))
-                convertJSON(material.get(property.name))
+                convertToExpression(material.get(property.name))
             else property.default
-            materialDependencies(value).map(::get).forEach { graph.add(it, material) }
+            value.find(FunctionCall::class.java) { it.function == MaterialFunction }
+                    .mapNotNull { (it.inputs.firstOrNull()?.evaluate() as? StringValue)?.value?.let(::get) }
+                    .forEach { graph.add(it, material) }
         }
     }
     val materials = graph.topologicalSort() ?: error("Material dependency cycle")
     materials.map(MaterialSerializer::read).forEach(Materials::add)
-}
-
-private fun materialDependencies(expression: IUnresolved, result: MutableList<String> = mutableListOf<String>()): MutableList<String> {
-    if (expression is FunctionCall) {
-        if (expression.function == MaterialFunction) {
-            (expression.inputs.firstOrNull()?.evaluate() as? StringValue)?.let { result.add(it.value) }
-        } else {
-            expression.inputs.forEach { materialDependencies(it, result) }
-        }
-    }
-    return result
 }
 
 private fun names(json: JsonObject): List<String> {

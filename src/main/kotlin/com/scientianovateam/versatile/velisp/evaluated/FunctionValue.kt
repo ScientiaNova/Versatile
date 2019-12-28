@@ -14,6 +14,8 @@ data class FunctionValue(val parameters: List<String>, val expression: IUnresolv
         return expression.resolve(lambdaInputs).evaluate()
     }
 
+    override fun <T> find(type: Class<out T>, predicate: (T) -> Boolean) = super.find(type, predicate) + expression.find(type, predicate)
+
     override val type = FunctionType(parameters.size..parameters.size)
     override val value = expression
 }

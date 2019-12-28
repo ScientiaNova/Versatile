@@ -1,6 +1,6 @@
 package com.scientianovateam.versatile.velisp
 
-import com.scientianovateam.versatile.common.extensions.toResLoc
+import com.scientianovateam.versatile.common.extensions.toResLocV
 import com.scientianovateam.versatile.velisp.registry.VELISP_TYPES
 
 internal val ALL_TYPES = mutableSetOf<VELISPType>()
@@ -21,7 +21,7 @@ abstract class VELISPType(val name: String, private val superTypes: Set<VELISPTy
     companion object {
         fun fromName(typeString: String): VELISPType? {
             val (name, info) = separateNameAndInfo(typeString)
-            return VELISP_TYPES[name.toResLoc("versatile")]?.invoke(info)
+            return VELISP_TYPES[name.toResLocV()]?.invoke(info)
         }
 
         fun separateNameAndInfo(type: String): Pair<String, String> {

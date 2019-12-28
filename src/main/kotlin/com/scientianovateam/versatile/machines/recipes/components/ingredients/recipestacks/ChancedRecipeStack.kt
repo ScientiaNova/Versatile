@@ -2,7 +2,7 @@ package com.scientianovateam.versatile.machines.recipes.components.ingredients.r
 
 import com.google.gson.JsonObject
 import com.scientianovateam.versatile.common.extensions.json
-import com.scientianovateam.versatile.common.extensions.toResLoc
+import com.scientianovateam.versatile.common.extensions.toResLocV
 import com.scientianovateam.versatile.common.serialization.IJSONSerializer
 import com.scientianovateam.versatile.common.serialization.SerializerRegistries
 import net.minecraft.item.ItemStack
@@ -15,7 +15,7 @@ fun <T> IRecipeStack<T>.chanced(chance: Float = 1f) = ChancedRecipeStack(this, c
 object ChancedRecipeItemStackSerializer : IJSONSerializer<ChancedRecipeStack<ItemStack>, JsonObject> {
     override fun read(json: JsonObject): ChancedRecipeStack<ItemStack> {
         val stack = json.entrySet().firstOrNull { it.key != "chance" }?.let {
-            SerializerRegistries.RECIPE_ITEM_STACK_SERIALIZERS[it.key.toResLoc("versatile")]?.read(it.value.asJsonObject)
+            SerializerRegistries.RECIPE_ITEM_STACK_SERIALIZERS[it.key.toResLocV()]?.read(it.value.asJsonObject)
         } ?: RecipeItemStack.EMPTY
         val chance = if (json.has("chance")) json.getAsJsonPrimitive("chance").asFloat else 1f
         return ChancedRecipeStack(stack, chance)
@@ -30,7 +30,7 @@ object ChancedRecipeItemStackSerializer : IJSONSerializer<ChancedRecipeStack<Ite
 object ChancedRecipeFluidStackSerializer : IJSONSerializer<ChancedRecipeStack<FluidStack>, JsonObject> {
     override fun read(json: JsonObject): ChancedRecipeStack<FluidStack> {
         val stack = json.entrySet().firstOrNull { it.key != "chance" }?.let {
-            SerializerRegistries.RECIPE_FLUID_STACK_SERIALIZERS[it.key.toResLoc("versatile")]?.read(it.value.asJsonObject)
+            SerializerRegistries.RECIPE_FLUID_STACK_SERIALIZERS[it.key.toResLocV()]?.read(it.value.asJsonObject)
         } ?: RecipeFluidStack.EMPTY
         val chance = if (json.has("chance")) json.getAsJsonPrimitive("chance").asFloat else 1f
         return ChancedRecipeStack(stack, chance)

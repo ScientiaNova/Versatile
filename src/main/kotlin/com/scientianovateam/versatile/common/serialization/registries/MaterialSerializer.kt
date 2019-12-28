@@ -2,16 +2,17 @@ package com.scientianovateam.versatile.common.serialization.registries
 
 import com.google.gson.JsonObject
 import com.scientianovateam.versatile.common.extensions.plus
-import com.scientianovateam.versatile.common.extensions.toResLoc
+import com.scientianovateam.versatile.common.extensions.toResLocV
 import com.scientianovateam.versatile.common.math.Graph
 import com.scientianovateam.versatile.common.registry.MATERIAL_PROPERTIES
 import com.scientianovateam.versatile.common.serialization.IRegistrySerializer
 import com.scientianovateam.versatile.materialsystem.main.Material
 import com.scientianovateam.versatile.materialsystem.properties.Property
-import com.scientianovateam.versatile.velisp.convertJSON
+import com.scientianovateam.versatile.velisp.convertToExpression
 import com.scientianovateam.versatile.velisp.evaluated.BoolValue
 import com.scientianovateam.versatile.velisp.evaluated.IEvaluated
 import com.scientianovateam.versatile.velisp.evaluated.PropertiesHolder
+import com.scientianovateam.versatile.velisp.unresolved.Getter
 import com.scientianovateam.versatile.velisp.unresolved.IUnresolved
 import net.minecraft.util.ResourceLocation
 
@@ -21,15 +22,15 @@ object MaterialSerializer : IRegistrySerializer<Material> {
         val loaded = mutableMapOf<Property, IUnresolved>()
         MATERIAL_PROPERTIES.forEach { (_, property) ->
             loaded[property] = if (json.has(property.name))
-                convertJSON(json.get(property.name))
+                convertToExpression(json.get(property.name))
             else property.default
         }
         val graph = Graph<Property>()
         loaded.forEach { (key, value) ->
-            value.dependencies().filter { it.startsWith("mat/") }.forEach {
-                val iterator = it.drop(4).split('/').iterator()
-                graph.add(findProperty(iterator, iterator.next().toResLoc("versatile"))
-                        ?: error("No such property with name $it"), key)
+            value.find(Getter::class.java) { it.name.startsWith("mat/") }.forEach {
+                val iterator = it.name.drop(4).split('/').iterator()
+                graph.add(findProperty(iterator, iterator.next().toResLocV())
+                        ?: error("No such property with name ${it.name}"), key)
             }
         }
         val ordered = graph.topologicalSort() ?: error("Getter cycle")

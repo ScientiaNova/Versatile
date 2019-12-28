@@ -9,10 +9,10 @@ import com.scientianovateam.versatile.velisp.unevaluated.FunctionCall
 import com.scientianovateam.versatile.velisp.unresolved.Getter
 import com.scientianovateam.versatile.velisp.unresolved.IUnresolved
 
-fun convertJSON(json: JsonElement): IUnresolved = when (json) {
+fun convertToExpression(json: JsonElement): IUnresolved = when (json) {
     is JsonArray -> FunctionCall((((json.firstOrNull()
             ?: error("Empty JSON array")) as? JsonPrimitive)?.asString
-            ?: error("Invalid start of a function call")), json.drop(1).map(::convertJSON))
+            ?: error("Invalid start of a function call")), json.drop(1).map(::convertToExpression))
     is JsonPrimitive -> when {
         json.isNumber -> NumberValue(json.asDouble)
         json.isBoolean -> BoolValue(json.asBoolean)

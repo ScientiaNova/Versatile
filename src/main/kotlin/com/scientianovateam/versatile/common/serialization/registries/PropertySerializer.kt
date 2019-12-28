@@ -6,7 +6,7 @@ import com.scientianovateam.versatile.common.extensions.getStringOrNull
 import com.scientianovateam.versatile.common.serialization.IRegistrySerializer
 import com.scientianovateam.versatile.materialsystem.properties.Property
 import com.scientianovateam.versatile.velisp.VELISPType
-import com.scientianovateam.versatile.velisp.convertJSON
+import com.scientianovateam.versatile.velisp.convertToExpression
 import com.scientianovateam.versatile.velisp.evaluated.BoolValue
 import com.scientianovateam.versatile.velisp.evaluated.NullValue
 
@@ -22,8 +22,8 @@ object PropertySerializer : IRegistrySerializer<List<Property>> {
             val name = json.getStringOrNull("") ?: error("Property missing a name field")
             val type = VELISPType.fromName(json.getStringOrNull("type") ?: error("Property $name missing type"))
                     ?: error("Type for $name not found")
-            val default = json.getArrayOrNull("default")?.run(::convertJSON) ?: NullValue
-            val valid = json.getArrayOrNull("valid")?.run(::convertJSON) ?: BoolValue.TRUE
+            val default = json.getArrayOrNull("default")?.run(::convertToExpression) ?: NullValue
+            val valid = json.getArrayOrNull("valid")?.run(::convertToExpression) ?: BoolValue.TRUE
             result.add(Property(path + name, type, default, valid))
         }
         return result
