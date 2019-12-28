@@ -1,7 +1,7 @@
 package com.scientianovateam.versatile.velisp.evaluated
 
 import com.scientianovateam.versatile.common.extensions.toResLoc
-import com.scientianovateam.versatile.velisp.registry.VELISPRegistries
+import com.scientianovateam.versatile.velisp.registry.VELISP_FUNCTIONS
 import com.scientianovateam.versatile.velisp.unevaluated.IUnevaluated
 import com.scientianovateam.versatile.velisp.unresolved.IUnresolved
 
@@ -13,7 +13,7 @@ interface IEvaluated : IUnevaluated {
 val IEvaluated.function
     get() = when(this) {
         is FunctionValue -> this
-        is StringValue -> VELISPRegistries.FUNCTION_REGISTRY[this.value.toResLoc("versatile", '/')]?: error("No such function with name $value")
+        is StringValue -> VELISP_FUNCTIONS[this.value.toResLoc("versatile", '/')]?: error("No such function with name $value")
         else -> error("Invalid function")
     }
 

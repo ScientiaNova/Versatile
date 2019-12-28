@@ -1,13 +1,16 @@
 package com.scientianovateam.versatile.velisp
 
-internal val TYPES = mutableSetOf<VELISPType>()
+import com.scientianovateam.versatile.common.extensions.toResLoc
+import com.scientianovateam.versatile.velisp.registry.VELISP_TYPES
+
+internal val ALL_TYPES = mutableSetOf<VELISPType>()
 
 abstract class VELISPType(val name: String, private val superTypes: Set<VELISPType> = emptySet()) {
     init {
-        TYPES += this
+        ALL_TYPES += this
     }
 
-    final override fun toString() = name
+    override fun toString() = name
 
     open val allSuperTypes = superTypes.fold(setOf(this)) { set, type -> (set + type) union type.superTypes } + AnyType
 
@@ -16,29 +19,47 @@ abstract class VELISPType(val name: String, private val superTypes: Set<VELISPTy
     infix fun supertypes(other: VELISPType) = other == NothingType || this in other.allSuperTypes
 
     companion object {
-        // TODO Does not handle optional[types], functions with arguments, or lists
-        fun fromName(name: String): VELISPType? = TYPES.firstOrNull { it.name == name }
+        fun fromName(typeString: String): VELISPType? {
+            val (name, info) = separateNameAndInfo(typeString)
+            return VELISP_TYPES[name.toResLoc("versatile")]?.invoke(info)
+        }
+
+        fun separateNameAndInfo(type: String): Pair<String, String> {
+            val name = type.takeWhile { it != '[' }
+            val info = type.removePrefix(name).let { if (it.length < 2) it else it.substring(1 until it.lastIndex) }
+            return name to info
+        }
     }
 }
 
-object AnyType : VELISPType("any")
+object AnyType : VELISPType("versatile:any")
 
-object NumberType : VELISPType("number")
+object NumberType : VELISPType("versatile:number")
 
-object BoolType : VELISPType("bool")
+object BoolType : VELISPType("versatile:bool")
 
-object StringType : VELISPType("string")
+object StringType : VELISPType("versatile:string")
 
-data class ListType(val type: VELISPType) : VELISPType("list")
+data class ListType(val type: VELISPType) : VELISPType("versatile:list") {
+    override fun toString() = "versatile:list[$type]"
+    override val allSuperTypes = type.allSuperTypes.map(::ListType).toSet() + AnyType
+}
 
-data class OptionalType(val type: VELISPType) : VELISPType("optional")
+data class OptionalType(val type: VELISPType) : VELISPType("versatile:optional") {
+    override fun toString() = "versatile:optional[$type]"
+    override val allSuperTypes = type.allSuperTypes.map(::OptionalType).toSet() + AnyType
+}
 
-data class FunctionType(val inputCount: IntRange) : VELISPType("function")
+data class FunctionType(val inputCount: IntRange) : VELISPType("versatile:function") {
+    constructor(inputCount: Int) : this(inputCount..inputCount)
 
-object MaterialType : VELISPType("material")
+    override fun toString() = "versatile:function[$inputCount]"
+}
 
-object FormType : VELISPType("form")
+object MaterialType : VELISPType("versatile:material")
 
-object NothingType : VELISPType("nothing") {
-    override val allSuperTypes = TYPES
+object FormType : VELISPType("versatile:form")
+
+object NothingType : VELISPType("versatile:nothing") {
+    override val allSuperTypes = ALL_TYPES
 }

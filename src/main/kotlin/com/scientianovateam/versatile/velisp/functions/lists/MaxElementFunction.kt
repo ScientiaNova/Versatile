@@ -7,9 +7,9 @@ import com.scientianovateam.versatile.velisp.functions.IFunction
 import com.scientianovateam.versatile.velisp.unresolved.IUnresolved
 import com.scientianovateam.versatile.velisp.unresolved.evaluate
 
-object NthFunction : IFunction {
-    override val name = "versatile/nth"
-    override val inputCount = 2..2
-    override fun evaluate(inputs: List<IUnresolved>) = (inputs.first().evaluate() as ListValue).value.getOrNull(inputs.last().evaluate().value as Int)?.let(::SomeValue)
+object MaxElementFunction : IFunction {
+    override val name = "versatile/max_element"
+    override val inputCount = 1..1
+    override fun evaluate(inputs: List<IUnresolved>) = (inputs.first().evaluate() as ListValue).value.maxBy { it.value as Double }?.let(::SomeValue)
             ?: NullValue
 }
