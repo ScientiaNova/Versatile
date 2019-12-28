@@ -7,7 +7,7 @@ import com.scientianovateam.versatile.velisp.evaluated.IEvaluated
 import com.scientianovateam.versatile.velisp.registry.VELISPRegistries
 import com.scientianovateam.versatile.velisp.unresolved.IUnresolved
 
-data class FunctionCall(val name: String, private var inputs: List<IUnresolved>) : IUnevaluated {
+data class FunctionCall(val name: String, var inputs: List<IUnresolved>) : IUnevaluated {
     val function = VELISPRegistries.FUNCTION_REGISTRY[name.toResLoc(Versatile.MOD_ID, '/')]
             ?: error("Unknown function")
 
