@@ -1,7 +1,10 @@
 package com.scientianovateam.versatile.common.extensions
 
-import com.google.gson.*
-
+import com.google.gson.JsonArray
+import com.google.gson.JsonElement
+import com.google.gson.JsonObject
+import com.google.gson.JsonPrimitive
+import net.minecraft.item.ItemStack
 
 fun JsonObject.getObjectOrNull(name: String): JsonObject? = get(name) as? JsonObject
 
@@ -31,3 +34,18 @@ fun JsonElement.copy(): JsonElement = when (this) {
     is JsonArray -> copy()
     else -> this
 }
+
+fun Number.toJson() = JsonPrimitive(this)
+
+fun Char.toJson() = JsonPrimitive(this)
+
+fun Boolean.toJson() = JsonPrimitive(this)
+
+fun String.toJson() = JsonPrimitive(this)
+
+fun ItemStack.toJson() = json {
+    "item" to item.registryName!!.toString()
+    "count" to count
+}
+
+fun Iterable<JsonElement>.toJson() = JsonArray().apply { this@toJson.forEach { this.add(it) } }

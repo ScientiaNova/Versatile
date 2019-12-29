@@ -13,12 +13,10 @@ import java.io.InputStreamReader
 val earlyResources by lazy { EarlyGameResourceLoader() }
 
 class EarlyGameResourceLoader {
-    private val packs: List<ModFileResourcePack>
-    private val manager: FallbackResourceManager
+    private val packs= ModList.get().modFiles.filter { it.modLoader != "minecraft" }.map { mf: ModFileInfo -> ModFileResourcePack(mf.file) }
+    private val manager = FallbackResourceManager(ResourcePackType.SERVER_DATA)
 
     init {
-        packs = ModList.get().modFiles.filter { it.modLoader != "minecraft" }.map { mf: ModFileInfo -> ModFileResourcePack(mf.file) }
-        manager = FallbackResourceManager(ResourcePackType.SERVER_DATA)
         packs.forEach { manager.addResourcePack(it) }
     }
 

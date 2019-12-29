@@ -8,13 +8,12 @@ import com.scientianovateam.versatile.machines.recipes.components.ingredients.re
 import net.minecraft.item.ItemStack
 import net.minecraftforge.fluids.FluidStack
 
-object SerializerRegistries {
-    @JvmField
-    val RECIPE_ITEM_STACK_SERIALIZERS = Registry<IRegisterableJSONSerializer<out IRecipeStack<ItemStack>, JsonObject>>()
+val RECIPE_ITEM_STACK_SERIALIZERS = Registry<IRegisterableSerializer<out IRecipeStack<ItemStack>, JsonObject>>()
 
-    @JvmField
-    val RECIPE_FLUID_STACK_SERIALIZERS = Registry<IRegisterableJSONSerializer<out IRecipeStack<FluidStack>, JsonObject>>()
+val RECIPE_FLUID_STACK_SERIALIZERS = Registry<IRegisterableSerializer<out IRecipeStack<FluidStack>, JsonObject>>()
 
-    @JvmField
-    val RECIPE_COMPONENT_HANDLER_SERIALIZERS = Registry<IRegisterableJSONSerializer<out IRecipeComponentHandler<*>, out JsonElement>>()
-}
+val RECIPE_COMPONENT_HANDLER_SERIALIZERS = Registry<IRegisterableSerializer<out IRecipeComponentHandler<*>, JsonElement>>()
+
+fun <T : IRegisterableSerializer<*, *>> Registry<T>.register(serializer: T) = set(serializer.registryName, serializer)
+
+fun <T : IRegisterableSerializer<*, *>> Registry<T>.registerAll(vararg serializers: T) = serializers.forEach(::register)

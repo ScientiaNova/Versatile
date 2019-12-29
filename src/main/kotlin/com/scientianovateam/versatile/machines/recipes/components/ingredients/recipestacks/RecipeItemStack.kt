@@ -1,15 +1,15 @@
 package com.scientianovateam.versatile.machines.recipes.components.ingredients.recipestacks
 
+import com.google.gson.JsonObject
 import com.scientianovateam.versatile.common.extensions.json
-import com.scientianovateam.versatile.common.extensions.times
 import com.scientianovateam.versatile.common.extensions.toResLoc
 import com.scientianovateam.versatile.common.extensions.toStack
-import com.scientianovateam.versatile.common.serialization.IRegisterableJSONSerializer
-import com.google.gson.JsonObject
+import com.scientianovateam.versatile.common.serialization.IRegisterableSerializer
+import com.scientianovateam.versatile.velisp.convertToExpression
+import com.scientianovateam.versatile.velisp.evaluated.NumberValue
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
-import net.minecraftforge.registries.ForgeRegistries
+import net.minecraft.network.PacketBuffer
 
 class RecipeItemStack(val stack: ItemStack) : IRecipeStack<ItemStack> {
     override val count = stack.count
@@ -28,19 +28,25 @@ class RecipeItemStack(val stack: ItemStack) : IRecipeStack<ItemStack> {
 
     override val serializer = Serializer
 
-    object Serializer : IRegisterableJSONSerializer<RecipeItemStack, JsonObject> {
+    object Serializer : IRegisterableSerializer<RecipeItemStack, JsonObject> {
         override val registryName = "versatile:item_stack".toResLoc()
 
-        override fun read(json: JsonObject): RecipeItemStack {
-            val item = json.getAsJsonPrimitive("item")?.asString?.toResLoc()?.let { ForgeRegistries.ITEMS.getValue(it) }
-                    ?: Items.AIR
-            val count = if (json.has("count")) json.getAsJsonPrimitive("count").asNumber?.toInt() ?: 1 else 1
-            return RecipeItemStack(item * count)
+        override fun read(json: JsonObject): RecipeItemStackIntermediate {
+            val item = json.get("item")?.let { convertToExpression(it) }
+                    ?: throw error("Didn't specify item in item stack")
+            val count = json.get("count")?.let { convertToExpression(it) } ?: NumberValue(1)
+            return RecipeItemStackIntermediate(item, count)
         }
 
         override fun write(obj: RecipeItemStack) = json {
             "item" to obj.stack.item
-            if (obj.count > 1) "count" to obj.count
+            "count" to obj.count
+        }
+
+        override fun read(packet: PacketBuffer) = RecipeItemStack(packet.readItemStack())
+
+        override fun write(packet: PacketBuffer, obj: RecipeItemStack) {
+            packet.writeItemStack(obj.stack)
         }
     }
 

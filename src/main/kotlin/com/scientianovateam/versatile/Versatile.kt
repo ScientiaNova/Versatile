@@ -8,9 +8,11 @@ import com.scientianovateam.versatile.items.MaterialItem
 import com.scientianovateam.versatile.machines.BaseMachineRegistry
 import com.scientianovateam.versatile.machines.gui.BaseScreen
 import com.scientianovateam.versatile.machines.packets.NetworkHandler
+import com.scientianovateam.versatile.machines.recipes.RecipeList
+import com.scientianovateam.versatile.machines.recipes.RecipeLists
 import com.scientianovateam.versatile.materialsystem.commands.FluidContainerCommand
-import com.scientianovateam.versatile.materialsystem.commands.MaterialCommand
 import com.scientianovateam.versatile.materialsystem.commands.FormCommand
+import com.scientianovateam.versatile.materialsystem.commands.MaterialCommand
 import com.scientianovateam.versatile.materialsystem.lists.MaterialItems
 import com.scientianovateam.versatile.materialsystem.main.IMaterialObject
 import com.scientianovateam.versatile.proxy.ClientProxy
@@ -27,6 +29,7 @@ import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemStack
+import net.minecraftforge.client.event.RecipesUpdatedEvent
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.RegistryEvent
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent
@@ -40,6 +43,7 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent
 import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent
+import net.minecraftforge.resource.ISelectiveResourceReloadListener
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import java.util.function.Supplier
@@ -87,7 +91,7 @@ object Versatile {
     object RegistryEvents {
         @SubscribeEvent(priority = EventPriority.HIGHEST)
         fun onEarlyBlockRegistry(e: RegistryEvent.Register<Block>) {
-            MinecraftForge.EVENT_BUS.post(VersatileRegistryEvent)
+            MinecraftForge.EVENT_BUS.post(VersatileRegistryEvent())
         }
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -108,7 +112,17 @@ object Versatile {
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, modid = MOD_ID)
     object GameEvents {
         @SubscribeEvent(priority = EventPriority.HIGH)
-        fun onServerAboutToStart(e: FMLServerAboutToStartEvent) = e.server.resourcePacks.addPackFinder(FakeDataPackFinder)
+        fun onEarlyServerAboutToStart(e: FMLServerAboutToStartEvent) {
+            e.server.resourcePacks.addPackFinder(FakeDataPackFinder)
+            e.server.recipeManager.recipes = e.server.recipeManager.recipes.mapValues { it.value.toMutableMap() }
+        }
+
+        @SubscribeEvent(priority = EventPriority.LOWEST)
+        fun onLateServerAboutToStart(e: FMLServerAboutToStartEvent) {
+            e.server.resourceManager.addReloadListener(ISelectiveResourceReloadListener { _, _ ->
+                //TODO
+            })
+        }
 
         @SubscribeEvent
         fun onServerStart(e: FMLServerStartingEvent) {

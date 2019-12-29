@@ -9,9 +9,9 @@ import com.scientianovateam.versatile.machines.recipes.components.ingredients.fl
 import com.scientianovateam.versatile.machines.recipes.components.ingredients.fluids.FluidOutputsComponent
 import com.scientianovateam.versatile.machines.recipes.components.ingredients.items.ItemInputsComponent
 import com.scientianovateam.versatile.machines.recipes.components.ingredients.items.ItemOutputsComponent
-import com.scientianovateam.versatile.machines.recipes.components.energy.EnergyConsumptionComponent
-import com.scientianovateam.versatile.machines.recipes.components.energy.EnergyGenerationComponent
-import com.scientianovateam.versatile.machines.recipes.components.stats.TimeComponent
+import com.scientianovateam.versatile.machines.recipes.components.energy.consumption.EnergyConsumptionComponent
+import com.scientianovateam.versatile.machines.recipes.components.energy.generation.EnergyGenerationComponent
+import com.scientianovateam.versatile.machines.recipes.components.time.TimeComponent
 import net.minecraft.util.ResourceLocation
 
 open class StandardRecipeListBuilder(protected val name: ResourceLocation) {

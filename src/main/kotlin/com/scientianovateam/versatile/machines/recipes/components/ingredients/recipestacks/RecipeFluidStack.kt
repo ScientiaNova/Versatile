@@ -1,15 +1,13 @@
 package com.scientianovateam.versatile.machines.recipes.components.ingredients.recipestacks
 
 import com.google.gson.JsonObject
-import com.scientianovateam.versatile.common.extensions.json
-import com.scientianovateam.versatile.common.extensions.times
-import com.scientianovateam.versatile.common.extensions.toResLoc
-import com.scientianovateam.versatile.common.extensions.toStack
-import com.scientianovateam.versatile.common.serialization.IRegisterableJSONSerializer
+import com.scientianovateam.versatile.common.extensions.*
+import com.scientianovateam.versatile.common.serialization.IRegisterableSerializer
+import com.scientianovateam.versatile.velisp.convertToExpression
+import com.scientianovateam.versatile.velisp.evaluated.NumberValue
 import net.minecraft.fluid.Fluid
-import net.minecraft.fluid.Fluids
+import net.minecraft.network.PacketBuffer
 import net.minecraftforge.fluids.FluidStack
-import net.minecraftforge.registries.ForgeRegistries
 
 class RecipeFluidStack(val stack: FluidStack) : IRecipeStack<FluidStack> {
     override val count = stack.amount
@@ -28,19 +26,25 @@ class RecipeFluidStack(val stack: FluidStack) : IRecipeStack<FluidStack> {
 
     override val serializer = Serializer
 
-    object Serializer : IRegisterableJSONSerializer<RecipeFluidStack, JsonObject> {
+    object Serializer : IRegisterableSerializer<RecipeFluidStack, JsonObject> {
         override val registryName = "versatile:item_stack".toResLoc()
 
-        override fun read(json: JsonObject): RecipeFluidStack {
-            val item = json.getAsJsonPrimitive("item")?.asString?.toResLoc()?.let { ForgeRegistries.FLUIDS.getValue(it) }
-                    ?: Fluids.EMPTY
-            val count = if (json.has("count")) json.getAsJsonPrimitive("count").asNumber?.toInt() ?: 1 else 1
-            return RecipeFluidStack(item * count)
+        override fun read(json: JsonObject): RecipeFluidStackIntermediate {
+            val fluid = json.get("fluid")?.let { convertToExpression(it) }
+                    ?: throw error("Didn't specify fluid in fluid stack")
+            val count = json.get("count")?.let { convertToExpression(it) } ?: NumberValue(1)
+            return RecipeFluidStackIntermediate(fluid, count)
         }
 
         override fun write(obj: RecipeFluidStack) = json {
-            "item" to obj.stack.fluid
-            if (obj.count > 1) "count" to obj.count
+            "fluid" to obj.stack.fluid
+            "count" to obj.count
+        }
+
+        override fun read(packet: PacketBuffer) = RecipeFluidStack(packet.readFluidStack())
+
+        override fun write(packet: PacketBuffer, obj: RecipeFluidStack) {
+            packet.writeFluidStack(obj.stack)
         }
     }
 

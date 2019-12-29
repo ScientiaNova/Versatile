@@ -3,15 +3,15 @@ package com.scientianovateam.versatile.machines.recipes.builders
 import com.scientianovateam.versatile.machines.recipes.Recipe
 import com.scientianovateam.versatile.machines.recipes.RecipeList
 import com.scientianovateam.versatile.machines.recipes.components.IRecipeComponentHandler
-import com.scientianovateam.versatile.machines.recipes.components.energy.EnergyConsumptionHandler
-import com.scientianovateam.versatile.machines.recipes.components.energy.EnergyGenerationHandler
+import com.scientianovateam.versatile.machines.recipes.components.energy.consumption.EnergyConsumptionHandler
+import com.scientianovateam.versatile.machines.recipes.components.energy.generation.EnergyGenerationHandler
 import com.scientianovateam.versatile.machines.recipes.components.ingredients.fluids.FluidInputsHandler
 import com.scientianovateam.versatile.machines.recipes.components.ingredients.fluids.FluidOutputsHandler
 import com.scientianovateam.versatile.machines.recipes.components.ingredients.items.ItemInputsHandler
 import com.scientianovateam.versatile.machines.recipes.components.ingredients.items.ItemOutputsHandler
 import com.scientianovateam.versatile.machines.recipes.components.ingredients.recipestacks.*
 import com.scientianovateam.versatile.machines.recipes.components.ingredients.utility.TagStack
-import com.scientianovateam.versatile.machines.recipes.components.stats.TimeHandler
+import com.scientianovateam.versatile.machines.recipes.components.time.TimeHandler
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
@@ -54,7 +54,7 @@ open class DSLRecipeBuilder(val recipeList: RecipeList, val name: String) {
         handlers += FluidOutputsDSL().apply(builder).build()
     }
 
-    open fun build() = Recipe(recipeList, name, *handlers.toTypedArray())
+    open fun build() = Recipe(recipeList, name, handlers)
 }
 
 fun RecipeList.add(name: String, builder: DSLRecipeBuilder.() -> Unit) = DSLRecipeBuilder(this, name).apply(builder).build()

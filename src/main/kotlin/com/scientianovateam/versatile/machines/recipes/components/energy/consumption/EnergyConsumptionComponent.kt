@@ -1,4 +1,4 @@
-package com.scientianovateam.versatile.machines.recipes.components.energy
+package com.scientianovateam.versatile.machines.recipes.components.energy.consumption
 
 import com.scientianovateam.versatile.machines.BaseTileEntity
 import com.scientianovateam.versatile.machines.properties.ITEBoundProperty
@@ -7,7 +7,7 @@ import com.scientianovateam.versatile.machines.properties.implementations.proces
 import com.scientianovateam.versatile.machines.recipes.Recipe
 import com.scientianovateam.versatile.machines.recipes.components.IRecipeComponent
 import com.scientianovateam.versatile.machines.recipes.components.grouping.RecipeComponentFamilies
-import com.scientianovateam.versatile.machines.recipes.components.stats.TimeComponent
+import com.scientianovateam.versatile.machines.recipes.components.time.TimeComponent
 import net.minecraft.util.text.TranslationTextComponent
 
 class EnergyConsumptionComponent(val maxPerTick: Int) : IRecipeComponent<Int> {

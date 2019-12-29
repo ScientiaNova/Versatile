@@ -1,4 +1,4 @@
-package com.scientianovateam.versatile.machines.recipes.components.stats
+package com.scientianovateam.versatile.machines.recipes.components.time
 
 import com.scientianovateam.versatile.common.extensions.shorten
 import com.scientianovateam.versatile.machines.BaseTileEntity
