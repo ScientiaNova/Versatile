@@ -18,12 +18,5 @@ fun cascadeJsons(resources: List<JsonObject>): JsonObject {
                         }))
         json.addProperty("priority", updated)
     }
-    // Someone figure out how to do this functionally
-    if (resources.isEmpty()) return JsonObject()
-    val mutable = resources.toMutableList()
-    var result = mutable.removeAt(0)
-    while (mutable.isNotEmpty()) {
-        result = result.merge(mutable.removeAt(0))
-    }
-    return result
+    return resources.fold(JsonObject(), { a, b -> a.merge(b) })
 }
