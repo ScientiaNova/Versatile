@@ -4,9 +4,9 @@ import com.scientianovateam.versatile.common.extensions.isNotEmpty
 import com.scientianovateam.versatile.common.extensions.shorten
 import com.scientianovateam.versatile.machines.gui.layout.components.ITexturedGUIComponent
 import com.scientianovateam.versatile.machines.gui.textures.BaseTextures
-import com.scientianovateam.versatile.machines.recipes.Recipe
-import com.scientianovateam.versatile.machines.recipes.components.grouping.IOType
-import com.scientianovateam.versatile.machines.recipes.components.ingredients.fluids.FluidInputsComponent
+import com.scientianovateam.versatile.recipes.Recipe
+import com.scientianovateam.versatile.recipes.components.grouping.IOType
+import com.scientianovateam.versatile.recipes.components.ingredients.fluids.input.FluidInputsComponent
 import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.fluids.FluidStack
 

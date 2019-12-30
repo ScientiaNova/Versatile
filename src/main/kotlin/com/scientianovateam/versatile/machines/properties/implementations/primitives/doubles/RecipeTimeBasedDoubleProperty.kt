@@ -2,7 +2,7 @@ package com.scientianovateam.versatile.machines.properties.implementations.primi
 
 import com.scientianovateam.versatile.machines.properties.IValueProperty
 import com.scientianovateam.versatile.machines.properties.implementations.recipes.RecipeProperty
-import com.scientianovateam.versatile.machines.recipes.components.time.TimeComponent
+import com.scientianovateam.versatile.recipes.components.time.TimeComponent
 
 open class RecipeTimeBasedDoubleProperty(val intProperty: IValueProperty<Int>, val recipeProperty: RecipeProperty) : IValueProperty<Double> {
     override val value: Double

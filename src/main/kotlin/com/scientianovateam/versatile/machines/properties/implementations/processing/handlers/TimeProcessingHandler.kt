@@ -2,8 +2,8 @@ package com.scientianovateam.versatile.machines.properties.implementations.proce
 
 import com.scientianovateam.versatile.machines.properties.implementations.primitives.integers.TEIntegerProperty
 import com.scientianovateam.versatile.machines.properties.implementations.processing.IProcessingHandler
-import com.scientianovateam.versatile.machines.recipes.Recipe
-import com.scientianovateam.versatile.machines.recipes.components.time.TimeComponent
+import com.scientianovateam.versatile.recipes.Recipe
+import com.scientianovateam.versatile.recipes.components.time.TimeComponent
 
 class TimeProcessingHandler(val property: TEIntegerProperty) : IProcessingHandler {
     override fun isProcessing() = property.value > 0

@@ -1,8 +1,8 @@
 package com.scientianovateam.versatile.integration.jei
 
 import com.scientianovateam.versatile.common.extensions.toStack
-import com.scientianovateam.versatile.machines.recipes.RecipeList
-import com.scientianovateam.versatile.machines.recipes.RecipeLists
+import com.scientianovateam.versatile.recipes.lists.RecipeList
+import com.scientianovateam.versatile.recipes.lists.RecipeLists
 import mezz.jei.api.IModPlugin
 import mezz.jei.api.JeiPlugin
 import mezz.jei.api.registration.IRecipeCatalystRegistration

@@ -1,7 +1,7 @@
 package com.scientianovateam.versatile.machines.capabilities.items
 
 import com.scientianovateam.versatile.machines.properties.implementations.recipes.RecipeProperty
-import com.scientianovateam.versatile.machines.recipes.components.ingredients.items.ItemInputsComponent
+import com.scientianovateam.versatile.recipes.components.ingredients.items.input.ItemInputsComponent
 import net.minecraft.item.ItemStack
 
 open class RecipeInputItemStackHandler(slots: Int, val recipeProperty: RecipeProperty) : InputItemStackHandler(slots) {

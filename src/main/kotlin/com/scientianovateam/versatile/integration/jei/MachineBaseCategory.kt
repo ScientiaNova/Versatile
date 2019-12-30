@@ -5,9 +5,9 @@ import com.scientianovateam.versatile.machines.gui.BaseContainer
 import com.scientianovateam.versatile.machines.gui.layout.OffsetGUIComponent
 import com.scientianovateam.versatile.machines.gui.layout.components.stacksuppliers.IStackSupplierComponent
 import com.scientianovateam.versatile.machines.properties.implementations.recipes.RecipeProperty
-import com.scientianovateam.versatile.machines.recipes.Recipe
-import com.scientianovateam.versatile.machines.recipes.RecipeList
-import com.scientianovateam.versatile.machines.recipes.components.grouping.IOType
+import com.scientianovateam.versatile.recipes.Recipe
+import com.scientianovateam.versatile.recipes.lists.RecipeList
+import com.scientianovateam.versatile.recipes.components.grouping.IOType
 import mezz.jei.api.constants.VanillaTypes
 import mezz.jei.api.gui.IRecipeLayout
 import mezz.jei.api.gui.drawable.IDrawable

@@ -2,9 +2,9 @@ package com.scientianovateam.versatile
 
 import com.scientianovateam.versatile.common.extensions.toResLoc
 import com.scientianovateam.versatile.common.extensions.toStack
-import com.scientianovateam.versatile.machines.recipes.builders.AutomationRecipeListBuilder
-import com.scientianovateam.versatile.machines.recipes.builders.StandardRecipeListBuilder
-import com.scientianovateam.versatile.machines.recipes.builders.add
+import com.scientianovateam.versatile.recipes.builders.AutomationRecipeListBuilder
+import com.scientianovateam.versatile.recipes.builders.StandardRecipeListBuilder
+import com.scientianovateam.versatile.recipes.builders.add
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.Items
 import net.minecraft.util.ResourceLocation

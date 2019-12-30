@@ -2,8 +2,8 @@ package com.scientianovateam.versatile.machines.properties.implementations.proce
 
 import com.scientianovateam.versatile.machines.properties.implementations.items.TEItemOutputProperty
 import com.scientianovateam.versatile.machines.properties.implementations.processing.IProcessingHandler
-import com.scientianovateam.versatile.machines.recipes.Recipe
-import com.scientianovateam.versatile.machines.recipes.components.ingredients.items.ItemOutputsComponent
+import com.scientianovateam.versatile.recipes.Recipe
+import com.scientianovateam.versatile.recipes.components.ingredients.items.output.ItemOutputsComponent
 import net.minecraft.item.ItemStack
 import java.util.*
 

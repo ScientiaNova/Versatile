@@ -9,7 +9,7 @@ import com.scientianovateam.versatile.machines.properties.ITEBoundProperty
 import com.scientianovateam.versatile.machines.properties.implementations.processing.AutomationProcessingProperty
 import com.scientianovateam.versatile.machines.properties.implementations.recipes.RecipeProperty
 import com.scientianovateam.versatile.machines.properties.implementations.recipes.TEAutomationRecipeProperty
-import com.scientianovateam.versatile.machines.recipes.RecipeList
+import com.scientianovateam.versatile.recipes.lists.RecipeList
 import net.minecraft.util.text.TranslationTextComponent
 import kotlin.math.max
 

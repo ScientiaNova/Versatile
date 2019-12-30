@@ -3,8 +3,8 @@ package com.scientianovateam.versatile.machines.properties.implementations.proce
 import com.scientianovateam.versatile.common.extensions.toList
 import com.scientianovateam.versatile.machines.properties.implementations.fluids.TEFluidInputProperty
 import com.scientianovateam.versatile.machines.properties.implementations.processing.IProcessingHandler
-import com.scientianovateam.versatile.machines.recipes.Recipe
-import com.scientianovateam.versatile.machines.recipes.components.ingredients.fluids.FluidInputsComponent
+import com.scientianovateam.versatile.recipes.Recipe
+import com.scientianovateam.versatile.recipes.components.ingredients.fluids.input.FluidInputsComponent
 import java.util.*
 
 class FluidInputsProcessingHandler(val property: TEFluidInputProperty) : IProcessingHandler {

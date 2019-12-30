@@ -2,8 +2,8 @@ package com.scientianovateam.versatile.machines.properties.implementations.proce
 
 import com.scientianovateam.versatile.machines.properties.implementations.energy.TEEnergyInputProperty
 import com.scientianovateam.versatile.machines.properties.implementations.processing.IProcessingHandler
-import com.scientianovateam.versatile.machines.recipes.Recipe
-import com.scientianovateam.versatile.machines.recipes.components.energy.consumption.EnergyConsumptionComponent
+import com.scientianovateam.versatile.recipes.Recipe
+import com.scientianovateam.versatile.recipes.components.energy.consumption.EnergyConsumptionComponent
 
 class EnergyInputProcessingHandler(val property: TEEnergyInputProperty) : IProcessingHandler {
     override fun canStartProcessingStandard(recipe: Recipe): Boolean {

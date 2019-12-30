@@ -1,6 +1,6 @@
 package com.scientianovateam.versatile.machines.properties.implementations.processing
 
-import com.scientianovateam.versatile.machines.recipes.Recipe
+import com.scientianovateam.versatile.recipes.Recipe
 
 interface IProcessingHandler {
     fun canStartProcessingStandard(recipe: Recipe) = true

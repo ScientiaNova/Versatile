@@ -3,8 +3,8 @@ package com.scientianovateam.versatile.common.serialization
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.scientianovateam.versatile.common.registry.Registry
-import com.scientianovateam.versatile.machines.recipes.components.IRecipeComponentHandler
-import com.scientianovateam.versatile.machines.recipes.components.ingredients.recipestacks.IRecipeStack
+import com.scientianovateam.versatile.recipes.components.IRecipeComponentHandler
+import com.scientianovateam.versatile.recipes.components.ingredients.recipestacks.IRecipeStack
 import net.minecraft.item.ItemStack
 import net.minecraftforge.fluids.FluidStack
 

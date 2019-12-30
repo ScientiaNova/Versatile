@@ -6,12 +6,12 @@ import com.scientianovateam.versatile.machines.packets.NetworkHandler
 import com.scientianovateam.versatile.machines.packets.reopening.ReopenGUIPacket
 import com.scientianovateam.versatile.machines.packets.reopening.UpdateRecipePacket
 import com.scientianovateam.versatile.machines.properties.ITEBoundProperty
-import com.scientianovateam.versatile.machines.recipes.Recipe
-import com.scientianovateam.versatile.machines.recipes.RecipeList
+import com.scientianovateam.versatile.recipes.Recipe
+import com.scientianovateam.versatile.recipes.lists.RecipeList
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraftforge.fml.network.NetworkDirection
 
-open class TEAutomationRecipeProperty(recipeList: RecipeList, value: Recipe?,  override val id: String, override val te: BaseTileEntity) : TEStandardRecipeProperty(recipeList, value, id, te), ITEBoundProperty {
+open class TEAutomationRecipeProperty(recipeList: RecipeList, value: Recipe?, override val id: String, override val te: BaseTileEntity) : TEStandardRecipeProperty(recipeList, value, id, te), ITEBoundProperty {
     override fun clone() = TEAutomationRecipeProperty(recipeList, value, id, te)
 
     override fun detectAndSendChanges(container: BaseContainer) {

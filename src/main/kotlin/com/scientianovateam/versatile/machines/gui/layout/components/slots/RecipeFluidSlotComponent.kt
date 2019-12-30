@@ -2,7 +2,7 @@ package com.scientianovateam.versatile.machines.gui.layout.components.slots
 
 import com.scientianovateam.versatile.machines.gui.GUiUtils
 import com.scientianovateam.versatile.machines.properties.implementations.fluids.TERecipeFluidInputProperty
-import com.scientianovateam.versatile.machines.recipes.components.ingredients.fluids.FluidInputsComponent
+import com.scientianovateam.versatile.recipes.components.ingredients.fluids.input.FluidInputsComponent
 import net.minecraft.client.Minecraft
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn

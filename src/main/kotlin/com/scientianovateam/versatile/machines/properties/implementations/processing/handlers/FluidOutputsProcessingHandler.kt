@@ -2,8 +2,8 @@ package com.scientianovateam.versatile.machines.properties.implementations.proce
 
 import com.scientianovateam.versatile.machines.properties.implementations.fluids.TEFluidOutputProperty
 import com.scientianovateam.versatile.machines.properties.implementations.processing.IProcessingHandler
-import com.scientianovateam.versatile.machines.recipes.Recipe
-import com.scientianovateam.versatile.machines.recipes.components.ingredients.fluids.FluidOutputsComponent
+import com.scientianovateam.versatile.recipes.Recipe
+import com.scientianovateam.versatile.recipes.components.ingredients.fluids.output.FluidOutputsComponent
 import net.minecraftforge.fluids.FluidStack
 import net.minecraftforge.fluids.capability.IFluidHandler
 import java.util.*

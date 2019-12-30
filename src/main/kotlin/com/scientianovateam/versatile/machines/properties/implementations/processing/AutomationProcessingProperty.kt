@@ -5,7 +5,7 @@ import com.scientianovateam.versatile.machines.BaseTileEntity
 import com.scientianovateam.versatile.machines.gui.BaseContainer
 import com.scientianovateam.versatile.machines.properties.ITEBoundProperty
 import com.scientianovateam.versatile.machines.properties.implementations.recipes.RecipeProperty
-import com.scientianovateam.versatile.machines.recipes.Recipe
+import com.scientianovateam.versatile.recipes.Recipe
 import net.minecraft.nbt.CompoundNBT
 
 open class AutomationProcessingProperty(override val id: String, override val te: BaseTileEntity, val recipeProperty: RecipeProperty) : ITEBoundProperty {

@@ -3,8 +3,8 @@ package com.scientianovateam.versatile.machines.properties.implementations.proce
 import com.scientianovateam.versatile.common.extensions.toList
 import com.scientianovateam.versatile.machines.properties.implementations.items.TEItemInputProperty
 import com.scientianovateam.versatile.machines.properties.implementations.processing.IProcessingHandler
-import com.scientianovateam.versatile.machines.recipes.Recipe
-import com.scientianovateam.versatile.machines.recipes.components.ingredients.items.ItemInputsComponent
+import com.scientianovateam.versatile.recipes.Recipe
+import com.scientianovateam.versatile.recipes.components.ingredients.items.input.ItemInputsComponent
 import java.util.*
 
 class ItemInputsProcessingHandler(val property: TEItemInputProperty) : IProcessingHandler {

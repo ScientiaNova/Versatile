@@ -8,11 +8,11 @@ import com.scientianovateam.versatile.items.MaterialItem
 import com.scientianovateam.versatile.machines.BaseMachineRegistry
 import com.scientianovateam.versatile.machines.gui.BaseScreen
 import com.scientianovateam.versatile.machines.packets.NetworkHandler
-import com.scientianovateam.versatile.machines.recipes.RecipeList
-import com.scientianovateam.versatile.machines.recipes.RecipeLists
-import com.scientianovateam.versatile.machines.recipes.syncing.MaterialBasedRecipe
-import com.scientianovateam.versatile.machines.recipes.syncing.SingleRecipe
-import com.scientianovateam.versatile.machines.recipes.syncing.VanillaRecipeRegistry
+import com.scientianovateam.versatile.recipes.lists.RecipeList
+import com.scientianovateam.versatile.recipes.lists.RecipeLists
+import com.scientianovateam.versatile.recipes.syncing.MaterialBasedRecipe
+import com.scientianovateam.versatile.recipes.syncing.SingleRecipe
+import com.scientianovateam.versatile.recipes.syncing.VanillaRecipeRegistry
 import com.scientianovateam.versatile.materialsystem.commands.FluidContainerCommand
 import com.scientianovateam.versatile.materialsystem.commands.FormCommand
 import com.scientianovateam.versatile.materialsystem.commands.MaterialCommand
