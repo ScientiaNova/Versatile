@@ -15,6 +15,8 @@ class RecipeFluidStack(val stack: FluidStack) : IRecipeStack<FluidStack> {
 
     override val stacks = listOf(stack.copy())
 
+    override val singleStack = stack.copy()
+
     override fun matches(other: FluidStack) = stack.isFluidEqual(other) && count <= other.amount
 
     override fun matchesWithoutCount(other: FluidStack) = stack.isFluidEqual(other)

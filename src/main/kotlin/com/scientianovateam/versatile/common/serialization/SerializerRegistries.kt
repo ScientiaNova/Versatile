@@ -17,3 +17,7 @@ val RECIPE_COMPONENT_HANDLER_SERIALIZERS = Registry<IRegisterableSerializer<out 
 fun <T : IRegisterableSerializer<*, *>> Registry<T>.register(serializer: T) = set(serializer.registryName, serializer)
 
 fun <T : IRegisterableSerializer<*, *>> Registry<T>.registerAll(vararg serializers: T) = serializers.forEach(::register)
+
+fun <T : IRegisterableJSONSerializer<*, *>> Registry<T>.register(serializer: T) = set(serializer.registryName, serializer)
+
+fun <T : IRegisterableJSONSerializer<*, *>> Registry<T>.registerAll(vararg serializers: T) = serializers.forEach(::register)

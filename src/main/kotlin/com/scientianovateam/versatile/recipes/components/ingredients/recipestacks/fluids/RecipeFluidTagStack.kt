@@ -12,6 +12,7 @@ import com.scientianovateam.versatile.recipes.components.ingredients.utility.toS
 import com.scientianovateam.versatile.velisp.convertToExpression
 import com.scientianovateam.versatile.velisp.evaluated.NumberValue
 import net.minecraft.fluid.Fluid
+import net.minecraft.fluid.Fluids
 import net.minecraft.network.PacketBuffer
 import net.minecraft.tags.FluidTags
 import net.minecraft.tags.Tag
@@ -23,6 +24,8 @@ class RecipeFluidTagStack(stack: TagStack<Fluid>) : IRecipeStack<FluidStack> {
     override val count = stack.count
 
     override val stacks get() = tag.allElements.map { it * count }
+
+    override val singleStack = (tag.allElements.minBy { it.registryName.toString() } ?: Fluids.EMPTY) * count
 
     override fun matches(other: FluidStack) = count <= other.amount && other.fluid in tag
 

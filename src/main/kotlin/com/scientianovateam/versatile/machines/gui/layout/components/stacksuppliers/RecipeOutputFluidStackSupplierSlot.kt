@@ -1,6 +1,5 @@
 package com.scientianovateam.versatile.machines.gui.layout.components.stacksuppliers
 
-import com.scientianovateam.versatile.common.extensions.isNotEmpty
 import com.scientianovateam.versatile.common.extensions.shorten
 import com.scientianovateam.versatile.machines.gui.layout.components.ITexturedGUIComponent
 import com.scientianovateam.versatile.machines.gui.textures.BaseTextures
@@ -19,8 +18,8 @@ open class RecipeOutputFluidStackSupplierSlot(val index: Int) : IStackSupplierCo
     override val ioType = IOType.OUTPUT
     override val type = FluidStack::class.java
 
-    override fun getStacks(recipe: Recipe) = recipe[FluidOutputsComponent::class.java]?.value?.getOrNull(index)?.let { stack ->
-        stack.value.stacks.filter(FluidStack::isNotEmpty).map { it.apply { orCreateTag.putFloat("output_chance", stack.chance) } }
+    override fun getStacks(recipe: Recipe) = recipe[FluidOutputsComponent::class.java]?.value?.getOrNull(index)?.singleStack?.let {
+        if (it.isEmpty) emptyList() else listOf(it)
     } ?: emptyList()
 
     override fun getExtraTooltips(stack: FluidStack) = if ("output_chance" in stack.orCreateTag) {

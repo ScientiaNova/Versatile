@@ -12,7 +12,7 @@ class ItemOutputsProcessingHandler(val property: TEItemOutputProperty) : IProces
         val recipeOutputs = recipe[ItemOutputsComponent::class.java]?.value ?: return true
         val handlerClone = property.clone().value
         return recipeOutputs.all {
-            val stack = it.stacks.firstOrNull() ?: ItemStack.EMPTY
+            val stack = it.singleStack
             (0 until handlerClone.slots).fold(stack) { acc, slotId -> handlerClone.forceInsertItem(slotId, acc, false) }.isEmpty
         }
     }
@@ -28,7 +28,7 @@ class ItemOutputsProcessingHandler(val property: TEItemOutputProperty) : IProces
         val recipeOutputs = recipe[ItemOutputsComponent::class.java]?.value ?: return
         recipeOutputs.forEach {
             if (it.chance <= Random().nextFloat()) return@forEach
-            val stack = it.stacks.firstOrNull() ?: ItemStack.EMPTY
+            val stack = it.singleStack
             (0 until property.value.slots).fold(stack) { acc, slotId -> property.value.forceInsertItem(slotId, acc, false) }
         }
     }
@@ -39,7 +39,7 @@ class ItemOutputsProcessingHandler(val property: TEItemOutputProperty) : IProces
             if (recipeOutputs[it].chance <= Random().nextFloat()) return@forEach
             val stack = property.value.getStackInSlot(it)
             if (stack.isEmpty)
-                property.value.setStackInSlot(it, recipeOutputs[it].stacks.firstOrNull()?.copy() ?: ItemStack.EMPTY)
+                property.value.setStackInSlot(it, recipeOutputs[it].singleStack)
             else
                 stack.grow(recipeOutputs[it].count)
         }
