@@ -6,10 +6,6 @@ import com.scientianovateam.versatile.machines.recipes.components.IRecipeCompone
 class Recipe(val recipeList: RecipeList, val name: String, componentHandlers: List<IRecipeComponentHandler<*>>) {
     val componentMap = componentHandlers.map { it.pairedComponentType to it }.toMap()
 
-    init {
-        recipeList.addRecipe(this)
-    }
-
     val page by lazy { recipeList.createRecipeBasedComponentGroup(null, this) }
 
     @Suppress("UNCHECKED_CAST")

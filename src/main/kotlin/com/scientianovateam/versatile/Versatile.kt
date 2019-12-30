@@ -10,6 +10,9 @@ import com.scientianovateam.versatile.machines.gui.BaseScreen
 import com.scientianovateam.versatile.machines.packets.NetworkHandler
 import com.scientianovateam.versatile.machines.recipes.RecipeList
 import com.scientianovateam.versatile.machines.recipes.RecipeLists
+import com.scientianovateam.versatile.machines.recipes.syncing.MaterialBasedRecipe
+import com.scientianovateam.versatile.machines.recipes.syncing.SingleRecipe
+import com.scientianovateam.versatile.machines.recipes.syncing.VanillaRecipeRegistry
 import com.scientianovateam.versatile.materialsystem.commands.FluidContainerCommand
 import com.scientianovateam.versatile.materialsystem.commands.FormCommand
 import com.scientianovateam.versatile.materialsystem.commands.MaterialCommand
@@ -29,6 +32,8 @@ import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemStack
+import net.minecraftforge.api.distmarker.Dist
+import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.client.event.RecipesUpdatedEvent
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.RegistryEvent
@@ -43,7 +48,6 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent
 import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent
-import net.minecraftforge.resource.ISelectiveResourceReloadListener
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import java.util.function.Supplier
@@ -109,6 +113,7 @@ object Versatile {
         fun onLateFluidRegistry(e: RegistryEvent.Register<Fluid>) = FluidRegistry.registerFluids(e)
     }
 
+    @Suppress("DEPRECATION")
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, modid = MOD_ID)
     object GameEvents {
         @SubscribeEvent(priority = EventPriority.HIGH)
@@ -119,9 +124,34 @@ object Versatile {
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
         fun onLateServerAboutToStart(e: FMLServerAboutToStartEvent) {
-            e.server.resourceManager.addReloadListener(ISelectiveResourceReloadListener { _, _ ->
-                //TODO
+            e.server.resourceManager.addReloadListener(net.minecraft.resources.IResourceManagerReloadListener {
+                val singleRecipe = e.server.recipeManager.recipes[VanillaRecipeRegistry.SINGLE_RECIPE_TYPE]
+                        ?: return@IResourceManagerReloadListener
+                e.server.recipeManager.recipes[VanillaRecipeRegistry.MATERIAL_BASED_RECIPE_TYPE]?.forEach {
+                    (it.value as? MaterialBasedRecipe)?.eval(singleRecipe)
+                }
             })
+        }
+
+        @SubscribeEvent(priority = EventPriority.LOWEST)
+        fun onLatestServerAboutToStart(e: FMLServerAboutToStartEvent) {
+            RecipeLists.all.forEach(RecipeList::clear)
+            e.server.resourceManager.addReloadListener(net.minecraft.resources.IResourceManagerReloadListener {
+                e.server.recipeManager.recipes[VanillaRecipeRegistry.SINGLE_RECIPE_TYPE]?.forEach {
+                    val recipe = (it.value as? SingleRecipe)?.recipe ?: return@forEach
+                    recipe.recipeList.addRecipe(recipe, e.server.recipeManager.recipes)
+                }
+            })
+        }
+
+        @OnlyIn(Dist.CLIENT)
+        @SubscribeEvent(priority = EventPriority.HIGHEST)
+        fun onRecipesUpdated(e: RecipesUpdatedEvent) {
+            RecipeLists.all.forEach(RecipeList::clear)
+            e.recipeManager.recipes[VanillaRecipeRegistry.SINGLE_RECIPE_TYPE]?.forEach {
+                val recipe = (it.value as? SingleRecipe)?.recipe ?: return@forEach
+                recipe.recipeList.addRecipe(recipe, null)
+            }
         }
 
         @SubscribeEvent

@@ -8,11 +8,11 @@ operator fun ResourceLocation.component2(): String = path
 operator fun ResourceLocation.plus(extra: String) = ResourceLocation(namespace, path + extra)
 
 fun String.toResLoc(baseNamespace: String = "minecraft", separator: Char = ':'): ResourceLocation {
-    val parts = this.split(separator, limit = 1)
+    val parts = this.split(separator, limit = 2)
     return if (parts.size == 1) ResourceLocation(baseNamespace, parts.first()) else ResourceLocation(parts.first(), parts.last())
 }
 
 fun String.toResLocV(separator: Char = ':'): ResourceLocation {
-    val parts = this.split(separator, limit = 1)
+    val parts = this.split(separator, limit = 2)
     return if (parts.size == 1) ResourceLocation(Versatile.MOD_ID, parts.first()) else ResourceLocation(parts.first(), parts.last())
 }

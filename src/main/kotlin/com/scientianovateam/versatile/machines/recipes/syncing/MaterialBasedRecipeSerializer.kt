@@ -7,7 +7,6 @@ import com.scientianovateam.versatile.common.extensions.toResLocV
 import com.scientianovateam.versatile.common.serialization.RECIPE_COMPONENT_HANDLER_SERIALIZERS
 import com.scientianovateam.versatile.machines.recipes.RecipeLists
 import com.scientianovateam.versatile.machines.recipes.RecipeMaterialTemplate
-import com.scientianovateam.versatile.machines.recipes.RecipeSerializer
 import com.scientianovateam.versatile.velisp.convertToExpression
 import net.minecraft.item.crafting.IRecipeSerializer
 import net.minecraft.network.PacketBuffer
@@ -27,15 +26,10 @@ object MaterialBasedRecipeSerializer : ForgeRegistryEntry<IRecipeSerializer<*>>(
                 ?: error("Missing recipe template for $recipeId")
         val materialPredicate = json.get("predicate")?.let(::convertToExpression)
 
-        return MaterialBasedRecipe(materialPredicate, RecipeMaterialTemplate(list, recipeId.toString(), template), emptyList())
+        return MaterialBasedRecipe(materialPredicate, RecipeMaterialTemplate(list, recipeId.toString(), template))
     }
 
-    override fun read(recipeId: ResourceLocation, buffer: PacketBuffer) = MaterialBasedRecipe(null, null, List(buffer.readVarInt()) {
-        RecipeSerializer.read(buffer)
-    })
+    override fun read(recipeId: ResourceLocation, buffer: PacketBuffer) = MaterialBasedRecipe(null, null)
 
-    override fun write(buffer: PacketBuffer, recipe: MaterialBasedRecipe) {
-        buffer.writeVarInt(recipe.generated.size)
-        recipe.generated.forEach { RecipeSerializer.write(buffer, it) }
-    }
+    override fun write(buffer: PacketBuffer, recipe: MaterialBasedRecipe) {}
 }

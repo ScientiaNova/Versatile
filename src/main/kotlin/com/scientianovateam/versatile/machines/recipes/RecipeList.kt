@@ -1,5 +1,7 @@
 package com.scientianovateam.versatile.machines.recipes
 
+import com.google.common.collect.HashMultimap
+import com.scientianovateam.versatile.Versatile
 import com.scientianovateam.versatile.machines.BaseTileEntity
 import com.scientianovateam.versatile.machines.gui.BaseContainer
 import com.scientianovateam.versatile.machines.gui.layout.DefaultSizeConstants
@@ -10,9 +12,9 @@ import com.scientianovateam.versatile.machines.gui.textures.BaseTextures
 import com.scientianovateam.versatile.machines.gui.textures.updating.ProgressBar
 import com.scientianovateam.versatile.machines.recipes.components.IRecipeComponent
 import com.scientianovateam.versatile.machines.recipes.components.grouping.IOType
-import com.google.common.collect.HashMultimap
-import com.scientianovateam.versatile.Versatile
 import net.minecraft.block.Block
+import net.minecraft.item.crafting.IRecipe
+import net.minecraft.item.crafting.IRecipeType
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.TranslationTextComponent
 import kotlin.math.ceil
@@ -33,7 +35,7 @@ open class RecipeList(val name: ResourceLocation, vararg components: IRecipeComp
 
     fun getRecipes() = recipes.toMap()
 
-    fun addRecipe(recipe: Recipe) {
+    fun addRecipe(recipe: Recipe, vanillaRecipeMap: MutableMap<IRecipeType<*>, MutableMap<ResourceLocation, IRecipe<*>>>?) {
         if (recipe.recipeList != this) return
         if (recipeComponents.values.all { it.isRecipeValid(recipe) }) {
             recipes[recipe.name] = recipe
@@ -44,6 +46,11 @@ open class RecipeList(val name: ResourceLocation, vararg components: IRecipeComp
     fun findRecipe(machine: BaseTileEntity) = recipeComponents.values.fold(recipes.values.toList()) { list, component ->
         component.findRecipe(this, list, machine)
     }.firstOrNull()
+
+    fun clear() {
+        recipes.clear()
+        inputMap.clear()
+    }
 
     fun removeRecipe(recipe: Recipe) {
         if (recipes.remove(recipe.name) != null) recipeComponents.values.forEach { it.onRecipeRemoved(recipe) }
