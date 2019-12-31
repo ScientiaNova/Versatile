@@ -27,15 +27,11 @@ class RecipeItemTagStack(stack: TagStack<Item>) : IRecipeStack<ItemStack> {
 
     override val singleStack = (tag.allElements.minBy { it.registryName.toString() } ?: Items.AIR) * count
 
+    override val names get() = tag.allElements.map { it.registryName!! }.toSet()
+
     override fun matches(other: ItemStack) = count <= other.count && other.item in tag
 
     override fun matchesWithoutCount(other: ItemStack) = other.item in tag
-
-    override fun toString() = "item_tag:" + tag.id
-
-    override fun hashCode() = toString().hashCode()
-
-    override fun equals(other: Any?) = other is RecipeItemTagStack && other.tag.id == tag.id && other.count == count
 
     override val serializer = Serializer
 

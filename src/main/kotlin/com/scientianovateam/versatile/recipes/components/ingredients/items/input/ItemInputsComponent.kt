@@ -24,7 +24,6 @@ import com.scientianovateam.versatile.recipes.components.IRecipeComponent
 import com.scientianovateam.versatile.recipes.components.grouping.RecipeComponentFamilies
 import com.scientianovateam.versatile.recipes.components.ingredients.recipestacks.ChancedRecipeStack
 import com.scientianovateam.versatile.recipes.lists.IRecipeLIst
-import com.scientianovateam.versatile.recipes.lists.StackToRecipeStackHashConversion
 import net.minecraft.item.ItemStack
 import kotlin.math.min
 
@@ -44,8 +43,8 @@ data class ItemInputsComponent(val min: Int, val max: Int) : IRecipeComponent<Li
     }
 
     override fun onRecipeAdded(recipe: Recipe) {
-        recipe[this]?.value?.forEach {
-            recipe.recipeList.inputMap.put(it.value.toString(), recipe)
+        recipe[this]?.value?.forEach { component ->
+            component.names.forEach { recipe.recipeList.inputMap.put(it, recipe) }
         }
     }
 
@@ -58,11 +57,7 @@ data class ItemInputsComponent(val min: Int, val max: Int) : IRecipeComponent<Li
     override fun findRecipe(recipeList: IRecipeLIst, recipes: List<Recipe>, machine: BaseTileEntity) = (machine.teProperties["itemInputs"] as? TEItemInventoryProperty)?.value?.let { stackHandler ->
         val inputStacks = stackHandler.toList()
         inputStacks.map { stack ->
-            StackToRecipeStackHashConversion.convertItemStack(stack).asSequence().mapNotNull {
-                recipeList.inputMap[it]?.filter { recipe ->
-                    (recipe[this] ?: 0) == inputStacks.size
-                }
-            }.firstOrNull(List<Recipe>::isNotEmpty) ?: emptySet<Recipe>()
+            recipeList.inputMap[stack.item.registryName!!] ?: emptySet<Recipe>()
         }.fold(recipes as Iterable<Recipe>) { acc, set -> (set intersect acc) }.toList()
     } ?: emptyList()
 

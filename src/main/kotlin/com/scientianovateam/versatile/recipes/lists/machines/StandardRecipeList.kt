@@ -13,7 +13,6 @@ import com.scientianovateam.versatile.recipes.Recipe
 import com.scientianovateam.versatile.recipes.components.IRecipeComponent
 import com.scientianovateam.versatile.recipes.components.grouping.IOType
 import com.scientianovateam.versatile.recipes.lists.IRecipeLIst
-import com.scientianovateam.versatile.recipes.lists.RecipeLists
 import net.minecraft.block.Block
 import net.minecraft.item.crafting.IRecipe
 import net.minecraft.item.crafting.IRecipeType
@@ -23,16 +22,12 @@ import kotlin.math.ceil
 import kotlin.math.max
 import kotlin.math.sqrt
 
-open class StandardRecipeList(final override val name: ResourceLocation, vararg components: IRecipeComponent<*>, val progressBar: ProgressBar = BaseTextures.ARROW_BAR, override val genJEIPage: Boolean = true): IRecipeLIst {
+open class StandardRecipeList(final override val name: ResourceLocation, vararg components: IRecipeComponent<*>, val progressBar: ProgressBar = BaseTextures.ARROW_BAR, override val genJEIPage: Boolean = true) : IRecipeLIst {
     override val recipes = mutableMapOf<ResourceLocation, Recipe>()
     override val blocksImplementing = mutableListOf<Block>()
-    override val inputMap = HashMultimap.create<String, Recipe>()
+    override val inputMap = HashMultimap.create<ResourceLocation, Recipe>()
     override val localizedName = TranslationTextComponent("recipe_list.$name")
     override val recipeComponents = components.map { it.name to it }.toMap()
-
-    init {
-        RecipeLists += this
-    }
 
     override fun addRecipe(recipe: Recipe, vanillaRecipeMap: MutableMap<IRecipeType<*>, MutableMap<ResourceLocation, IRecipe<*>>>?) {
         if (recipe.recipeList != this) return

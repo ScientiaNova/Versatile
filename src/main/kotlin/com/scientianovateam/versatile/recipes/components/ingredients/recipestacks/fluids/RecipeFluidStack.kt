@@ -10,22 +10,18 @@ import net.minecraft.fluid.Fluid
 import net.minecraft.network.PacketBuffer
 import net.minecraftforge.fluids.FluidStack
 
-class RecipeFluidStack(val stack: FluidStack) : IRecipeStack<FluidStack> {
+data class RecipeFluidStack(val stack: FluidStack) : IRecipeStack<FluidStack> {
     override val count = stack.amount
 
     override val stacks = listOf(stack.copy())
 
     override val singleStack = stack.copy()
 
+    override val names = setOf(stack.fluid.registryName!!)
+
     override fun matches(other: FluidStack) = stack.isFluidEqual(other) && count <= other.amount
 
     override fun matchesWithoutCount(other: FluidStack) = stack.isFluidEqual(other)
-
-    override fun toString() = "fluid:" + stack.fluid.registryName
-
-    override fun hashCode() = toString().hashCode()
-
-    override fun equals(other: Any?) = other is RecipeFluidStack && other.stack.isFluidStackIdentical(stack)
 
     override val serializer = Serializer
 

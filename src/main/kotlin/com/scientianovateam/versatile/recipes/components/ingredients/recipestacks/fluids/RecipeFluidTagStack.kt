@@ -27,15 +27,11 @@ class RecipeFluidTagStack(stack: TagStack<Fluid>) : IRecipeStack<FluidStack> {
 
     override val singleStack = (tag.allElements.minBy { it.registryName.toString() } ?: Fluids.EMPTY) * count
 
+    override val names get() = tag.allElements.map { it.registryName!! }.toSet()
+
     override fun matches(other: FluidStack) = count <= other.amount && other.fluid in tag
 
     override fun matchesWithoutCount(other: FluidStack) = other.fluid in tag
-
-    override fun toString() = "fluid_tag:" + tag.id
-
-    override fun hashCode() = toString().hashCode()
-
-    override fun equals(other: Any?) = other is RecipeFluidTagStack && other.tag.id == tag.id && other.count == count
 
     override val serializer = Serializer
 

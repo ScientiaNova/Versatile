@@ -15,7 +15,7 @@ import net.minecraft.util.text.TranslationTextComponent
 interface IRecipeLIst {
     val name: ResourceLocation
     val blocksImplementing: MutableList<Block>
-    val inputMap: Multimap<String, Recipe>
+    val inputMap: Multimap<ResourceLocation, Recipe>
     val recipes: Map<ResourceLocation, Recipe>
     val localizedName get() = TranslationTextComponent("recipe_list.$name")
     val recipeComponents: Map<String, IRecipeComponent<*>>

@@ -12,22 +12,18 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.network.PacketBuffer
 
-class RecipeItemStack(val stack: ItemStack) : IRecipeStack<ItemStack> {
+data class RecipeItemStack(val stack: ItemStack) : IRecipeStack<ItemStack> {
     override val count = stack.count
 
     override val stacks = listOf(stack.copy())
 
     override val singleStack = stack.copy()
 
+    override val names = setOf(stack.item.registryName!!)
+
     override fun matches(other: ItemStack) = stack.isItemEqual(other) && count <= other.count
 
     override fun matchesWithoutCount(other: ItemStack) = stack.isItemEqual(other)
-
-    override fun toString() = "item:" + stack.item.registryName
-
-    override fun hashCode() = toString().hashCode()
-
-    override fun equals(other: Any?) = other is RecipeItemStack && ItemStack.areItemStacksEqual(stack, other.stack)
 
     override val serializer = Serializer
 
