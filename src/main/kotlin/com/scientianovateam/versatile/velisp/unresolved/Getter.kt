@@ -1,5 +1,6 @@
 package com.scientianovateam.versatile.velisp.unresolved
 
+import com.google.gson.JsonPrimitive
 import com.scientianovateam.versatile.common.extensions.toResLocV
 import com.scientianovateam.versatile.materialsystem.properties.IPropertyContainer
 import com.scientianovateam.versatile.velisp.evaluated.IEvaluated
@@ -25,4 +26,6 @@ data class Getter(val name: String) : IUnresolved {
                 else newProperty
             } ?: if (iterator.hasNext()) findEndProperty(property, iterator, "$currentName/${iterator.next()}")
             else null
+
+    override fun toJson() = JsonPrimitive("$$name")
 }

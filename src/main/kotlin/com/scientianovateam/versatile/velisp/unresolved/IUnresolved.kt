@@ -1,5 +1,6 @@
 package com.scientianovateam.versatile.velisp.unresolved
 
+import com.google.gson.JsonElement
 import com.scientianovateam.versatile.velisp.evaluated.IEvaluated
 import com.scientianovateam.versatile.velisp.unevaluated.IUnevaluated
 
@@ -13,6 +14,8 @@ interface IUnresolved {
         }
         return emptyList()
     }
+
+    fun toJson(): JsonElement
 }
 
 fun IUnresolved.evaluate() = (this as? IUnevaluated)?.evaluate() ?: error("tried to evaluate unresolved value")

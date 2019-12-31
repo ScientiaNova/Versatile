@@ -1,7 +1,9 @@
 package com.scientianovateam.versatile.velisp.evaluated
 
+import com.google.gson.JsonPrimitive
 import com.scientianovateam.versatile.velisp.StringType
 
 class StringValue(override val value: String) : IEvaluated {
     override val type = StringType
+    override fun toJson() = JsonPrimitive(value)
 }
