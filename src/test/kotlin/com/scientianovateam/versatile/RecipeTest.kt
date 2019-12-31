@@ -1,6 +1,7 @@
 package com.scientianovateam.versatile
 
 import com.scientianovateam.versatile.common.extensions.toResLoc
+import com.scientianovateam.versatile.common.extensions.toResLocV
 import com.scientianovateam.versatile.common.extensions.toStack
 import com.scientianovateam.versatile.recipes.builders.AutomationRecipeListBuilder
 import com.scientianovateam.versatile.recipes.builders.StandardRecipeListBuilder
@@ -15,7 +16,7 @@ object RecipeTest {
     val GENERATOR_RECIPES = AutomationRecipeListBuilder(ResourceLocation(VersatileTest.MOD_ID, "generator_test")).fluidInputs(1).time().generateEnergy(10000).build()
 
     init {
-        TEST_RECIPES.add("standard_recipe_test") {
+        TEST_RECIPES.add("standard_recipe_test".toResLocV()) {
             time = 200
             itemInputs {
                 +Items.DIRT.toStack(8)
@@ -29,7 +30,7 @@ object RecipeTest {
             }
         }
 
-        THIN_RECIPES.add("automation_recipe_test") {
+        THIN_RECIPES.add("automation_recipe_test".toResLocV()) {
             time = 200
             energyConsumedPerTick = 24
             itemInputs {
@@ -40,7 +41,7 @@ object RecipeTest {
             }
         }
 
-        THIN_RECIPES.add("automation_recipe_test_2") {
+        THIN_RECIPES.add("automation_recipe_test_2".toResLocV()) {
             time = 30
             energyConsumedPerTick = 24
             itemInputs {
@@ -51,7 +52,7 @@ object RecipeTest {
             }
         }
 
-        GENERATOR_RECIPES.add("lava_to_power") {
+        GENERATOR_RECIPES.add("lava_to_power".toResLocV()) {
             time = 2000
             energyGeneratedPerTick = 200
             fluidInputs {

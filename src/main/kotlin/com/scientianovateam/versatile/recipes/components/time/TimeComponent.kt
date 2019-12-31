@@ -1,6 +1,11 @@
 package com.scientianovateam.versatile.recipes.components.time
 
+import com.google.gson.JsonObject
+import com.scientianovateam.versatile.common.extensions.getPrimitiveOrNull
+import com.scientianovateam.versatile.common.extensions.json
 import com.scientianovateam.versatile.common.extensions.shorten
+import com.scientianovateam.versatile.common.extensions.toResLocV
+import com.scientianovateam.versatile.common.serialization.IRegisterableJSONSerializer
 import com.scientianovateam.versatile.machines.BaseTileEntity
 import com.scientianovateam.versatile.machines.properties.ITEBoundProperty
 import com.scientianovateam.versatile.machines.properties.implementations.primitives.doubles.IncrementingDoubleProperty
@@ -15,11 +20,12 @@ import com.scientianovateam.versatile.recipes.components.IRecipeComponent
 import com.scientianovateam.versatile.recipes.components.grouping.RecipeComponentFamilies
 import net.minecraft.util.text.TranslationTextComponent
 
-object TimeComponent : IRecipeComponent<Int> {
+data class TimeComponent(val min: Int = 0, val max: Int = Int.MAX_VALUE) : IRecipeComponent<Int> {
     override val name = "time"
     override val family = RecipeComponentFamilies.STATS
+    override val serializer = Serializer
 
-    override fun isRecipeValid(recipe: Recipe) = recipe[this]?.value?.let { it > 0 } ?: false
+    override fun isRecipeValid(recipe: Recipe) = recipe[this]?.value?.let { it in min..max } ?: false
 
     override fun addDefaultProperty(te: BaseTileEntity, properties: MutableList<ITEBoundProperty>) {
         properties += TEClearableIntegerProperty("processingTime", te)
@@ -45,5 +51,19 @@ object TimeComponent : IRecipeComponent<Int> {
 
     override fun getProcessingHandler(machine: BaseTileEntity) = (machine.teProperties["processingTime"] as? TEIntegerProperty)?.let {
         TimeProcessingHandler(it)
+    }
+
+    object Serializer : IRegisterableJSONSerializer<TimeComponent, JsonObject> {
+        override val registryName = "time".toResLocV()
+
+        override fun read(json: JsonObject) = TimeComponent(
+                json.getPrimitiveOrNull("min")?.asInt ?: 0,
+                json.getPrimitiveOrNull("max")?.asInt ?: Int.MAX_VALUE
+        )
+
+        override fun write(obj: TimeComponent) = json {
+            "min" to obj.min
+            "max" to obj.max
+        }
     }
 }

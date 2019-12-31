@@ -1,5 +1,10 @@
 package com.scientianovateam.versatile.recipes.components.energy.consumption
 
+import com.google.gson.JsonObject
+import com.scientianovateam.versatile.common.extensions.getPrimitiveOrNull
+import com.scientianovateam.versatile.common.extensions.json
+import com.scientianovateam.versatile.common.extensions.toResLocV
+import com.scientianovateam.versatile.common.serialization.IRegisterableJSONSerializer
 import com.scientianovateam.versatile.machines.BaseTileEntity
 import com.scientianovateam.versatile.machines.properties.ITEBoundProperty
 import com.scientianovateam.versatile.machines.properties.implementations.energy.TEEnergyInputProperty
@@ -10,14 +15,15 @@ import com.scientianovateam.versatile.recipes.components.grouping.RecipeComponen
 import com.scientianovateam.versatile.recipes.components.time.TimeComponent
 import net.minecraft.util.text.TranslationTextComponent
 
-class EnergyConsumptionComponent(val maxPerTick: Int) : IRecipeComponent<Int> {
-    override val name = "energy_consumption"
+data class EnergyConsumptionComponent(val min: Int, val max: Int) : IRecipeComponent<Int> {
+    override val name = "energyConsumption"
     override val family = RecipeComponentFamilies.STATS
+    override val serializer = Serializer
 
-    override fun isRecipeValid(recipe: Recipe) = recipe[this]?.value?.let { it in 0..maxPerTick } ?: false
+    override fun isRecipeValid(recipe: Recipe) = recipe[this]?.value?.let { it in min..max } ?: false
 
     override fun addDefaultProperty(te: BaseTileEntity, properties: MutableList<ITEBoundProperty>) {
-        properties += TEEnergyInputProperty(maxPerTick, "energyInput", te)
+        properties += TEEnergyInputProperty(max, "energyInput", te)
     }
 
     override fun addExtraInfo(): List<(Recipe) -> String> = listOf({ recipe ->
@@ -29,5 +35,19 @@ class EnergyConsumptionComponent(val maxPerTick: Int) : IRecipeComponent<Int> {
 
     override fun getProcessingHandler(machine: BaseTileEntity) = (machine.teProperties["energyInput"] as? TEEnergyInputProperty)?.let {
         EnergyInputProcessingHandler(it)
+    }
+
+    object Serializer : IRegisterableJSONSerializer<EnergyConsumptionComponent, JsonObject> {
+        override val registryName = "energy_consumption".toResLocV()
+
+        override fun read(json: JsonObject) = EnergyConsumptionComponent(
+                json.getPrimitiveOrNull("min")?.asInt ?: 0,
+                json.getPrimitiveOrNull("max")?.asInt ?: Int.MAX_VALUE
+        )
+
+        override fun write(obj: EnergyConsumptionComponent) = json {
+            "min" to obj.min
+            "max" to obj.max
+        }
     }
 }

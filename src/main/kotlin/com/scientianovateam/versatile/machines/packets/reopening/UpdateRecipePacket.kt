@@ -5,20 +5,21 @@ import com.scientianovateam.versatile.machines.packets.NetworkHandler
 import com.scientianovateam.versatile.machines.properties.implementations.recipes.RecipeProperty
 import net.minecraft.client.Minecraft
 import net.minecraft.network.PacketBuffer
+import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fml.DistExecutor
 import net.minecraftforge.fml.network.NetworkDirection
 import net.minecraftforge.fml.network.NetworkEvent
 import java.util.function.Supplier
 
-class UpdateRecipePacket(val property: String, val name: String) {
+class UpdateRecipePacket(val property: String, val name: ResourceLocation) {
     fun encode(buffer: PacketBuffer) {
         buffer.writeString(property)
-        buffer.writeString(name)
+        buffer.writeResourceLocation(name)
     }
 
     companion object {
         @JvmStatic
-        fun decode(buffer: PacketBuffer) = UpdateRecipePacket(buffer.readString(), buffer.readString())
+        fun decode(buffer: PacketBuffer) = UpdateRecipePacket(buffer.readString(), buffer.readResourceLocation())
 
         @JvmStatic
         @Suppress("UNCHECKED_CAST")
@@ -34,10 +35,10 @@ class UpdateRecipePacket(val property: String, val name: String) {
                         { Supplier { serverSideContainer } }
                 )
                 (container?.te?.teProperties?.get(packet.property) as? RecipeProperty)?.let {
-                    it.setValue(it.recipeList.getRecipes()[packet.name], false)
+                    it.setValue(it.recipeList.recipes[packet.name], false)
                 }
                 (container?.clientProperties?.get(packet.property) as? RecipeProperty)?.let {
-                    it.setValue(it.recipeList.getRecipes()[packet.name], false)
+                    it.setValue(it.recipeList.recipes[packet.name], false)
                 }
                 container?.te?.guiLayout?.let { layout -> layout.setCurrentPage(layout.currentPageId) }
                 context.get().sender?.let { player ->

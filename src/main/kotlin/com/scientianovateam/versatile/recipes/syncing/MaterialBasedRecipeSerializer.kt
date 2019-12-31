@@ -4,7 +4,7 @@ import com.google.gson.JsonObject
 import com.scientianovateam.versatile.common.extensions.getObjectOrNull
 import com.scientianovateam.versatile.common.extensions.getStringOrNull
 import com.scientianovateam.versatile.common.extensions.toResLocV
-import com.scientianovateam.versatile.common.serialization.RECIPE_COMPONENT_HANDLER_SERIALIZERS
+import com.scientianovateam.versatile.recipes.RECIPE_COMPONENT_HANDLER_SERIALIZERS
 import com.scientianovateam.versatile.recipes.lists.RecipeLists
 import com.scientianovateam.versatile.recipes.RecipeMaterialTemplate
 import com.scientianovateam.versatile.velisp.convertToExpression
@@ -26,7 +26,7 @@ object MaterialBasedRecipeSerializer : ForgeRegistryEntry<IRecipeSerializer<*>>(
                 ?: error("Missing recipe template for $recipeId")
         val materialPredicate = json.get("predicate")?.let(::convertToExpression)
 
-        return MaterialBasedRecipe(materialPredicate, RecipeMaterialTemplate(list, recipeId.toString(), template))
+        return MaterialBasedRecipe(materialPredicate, RecipeMaterialTemplate(list, recipeId, template))
     }
 
     override fun read(recipeId: ResourceLocation, buffer: PacketBuffer) = MaterialBasedRecipe(null, null)

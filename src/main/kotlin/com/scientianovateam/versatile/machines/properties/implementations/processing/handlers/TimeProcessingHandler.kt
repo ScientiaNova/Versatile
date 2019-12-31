@@ -14,7 +14,7 @@ class TimeProcessingHandler(val property: TEIntegerProperty) : IProcessingHandle
 
     override fun processTick(recipe: Recipe) = property.setValue(property.value + 1, true)
 
-    override fun shouldFinishProcessing(recipe: Recipe) = property.value >= recipe[TimeComponent]?.value ?: 0
+    override fun shouldFinishProcessing(recipe: Recipe) = property.value >= recipe[TimeComponent::class.java]?.value ?: 0
 
     override fun finishProcessingStandard(recipe: Recipe) = property.setValue(0, true)
 

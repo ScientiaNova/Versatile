@@ -1,4 +1,4 @@
-package com.scientianovateam.versatile.recipes.lists
+package com.scientianovateam.versatile.recipes.lists.machines
 
 import com.scientianovateam.versatile.machines.BaseTileEntity
 import com.scientianovateam.versatile.machines.gui.BaseContainer
@@ -16,7 +16,7 @@ import kotlin.math.ceil
 import kotlin.math.max
 import kotlin.math.sqrt
 
-open class AutomationRecipeList(name: ResourceLocation, vararg components: IRecipeComponent<*>, progressBar: ProgressBar = BaseTextures.ARROW_BAR, genJEIPage: Boolean = true) : RecipeList(name, *components, progressBar = progressBar, genJEIPage = genJEIPage) {
+open class AutomationRecipeList(name: ResourceLocation, vararg components: IRecipeComponent<*>, progressBar: ProgressBar = BaseTextures.ARROW_BAR, genJEIPage: Boolean = true) : StandardRecipeList(name, *components, progressBar = progressBar, genJEIPage = genJEIPage) {
     override val recipeTransferFunction: (Recipe, BaseContainer) -> Unit = { recipe, container ->
         (container.te.teProperties["recipe"] as? RecipeProperty)?.setValue(recipe)
     }

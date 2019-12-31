@@ -8,11 +8,6 @@ import com.scientianovateam.versatile.items.MaterialItem
 import com.scientianovateam.versatile.machines.BaseMachineRegistry
 import com.scientianovateam.versatile.machines.gui.BaseScreen
 import com.scientianovateam.versatile.machines.packets.NetworkHandler
-import com.scientianovateam.versatile.recipes.lists.RecipeList
-import com.scientianovateam.versatile.recipes.lists.RecipeLists
-import com.scientianovateam.versatile.recipes.syncing.MaterialBasedRecipe
-import com.scientianovateam.versatile.recipes.syncing.SingleRecipe
-import com.scientianovateam.versatile.recipes.syncing.VanillaRecipeRegistry
 import com.scientianovateam.versatile.materialsystem.commands.FluidContainerCommand
 import com.scientianovateam.versatile.materialsystem.commands.FormCommand
 import com.scientianovateam.versatile.materialsystem.commands.MaterialCommand
@@ -22,6 +17,11 @@ import com.scientianovateam.versatile.proxy.ClientProxy
 import com.scientianovateam.versatile.proxy.IModProxy
 import com.scientianovateam.versatile.proxy.ServerProxy
 import com.scientianovateam.versatile.proxy.addModelJSONs
+import com.scientianovateam.versatile.recipes.lists.IRecipeLIst
+import com.scientianovateam.versatile.recipes.lists.RecipeLists
+import com.scientianovateam.versatile.recipes.syncing.MaterialBasedRecipe
+import com.scientianovateam.versatile.recipes.syncing.SingleRecipe
+import com.scientianovateam.versatile.recipes.syncing.VanillaRecipeRegistry
 import com.scientianovateam.versatile.resources.BaseDataAddition
 import com.scientianovateam.versatile.resources.FakeDataPackFinder
 import com.scientianovateam.versatile.worldgen.OreGen
@@ -32,6 +32,7 @@ import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.client.event.RecipesUpdatedEvent
@@ -59,7 +60,7 @@ object Versatile {
     val LOGGER: Logger = LogManager.getLogger()
 
     val MAIN: ItemGroup = object : ItemGroup(MOD_ID) {
-        override fun createIcon() = ItemStack(MaterialItems.all.first { it is MaterialItem })
+        override fun createIcon() = ItemStack(MaterialItems.all.firstOrNull { it is MaterialItem } ?: Items.AIR)
     }
 
     private val proxy = DistExecutor.runForDist<IModProxy>({ Supplier { ClientProxy } }, { Supplier { ServerProxy } })
@@ -135,7 +136,7 @@ object Versatile {
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
         fun onLatestServerAboutToStart(e: FMLServerAboutToStartEvent) {
-            RecipeLists.all.forEach(RecipeList::clear)
+            RecipeLists.all.forEach(IRecipeLIst::clear)
             e.server.resourceManager.addReloadListener(net.minecraft.resources.IResourceManagerReloadListener {
                 e.server.recipeManager.recipes[VanillaRecipeRegistry.SINGLE_RECIPE_TYPE]?.forEach {
                     val recipe = (it.value as? SingleRecipe)?.recipe ?: return@forEach
@@ -147,7 +148,7 @@ object Versatile {
         @OnlyIn(Dist.CLIENT)
         @SubscribeEvent(priority = EventPriority.HIGHEST)
         fun onRecipesUpdated(e: RecipesUpdatedEvent) {
-            RecipeLists.all.forEach(RecipeList::clear)
+            RecipeLists.all.forEach(IRecipeLIst::clear)
             e.recipeManager.recipes[VanillaRecipeRegistry.SINGLE_RECIPE_TYPE]?.forEach {
                 val recipe = (it.value as? SingleRecipe)?.recipe ?: return@forEach
                 recipe.recipeList.addRecipe(recipe, null)

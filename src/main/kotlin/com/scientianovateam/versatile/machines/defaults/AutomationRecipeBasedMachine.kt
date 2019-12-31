@@ -9,11 +9,11 @@ import com.scientianovateam.versatile.machines.properties.ITEBoundProperty
 import com.scientianovateam.versatile.machines.properties.implementations.processing.AutomationProcessingProperty
 import com.scientianovateam.versatile.machines.properties.implementations.recipes.RecipeProperty
 import com.scientianovateam.versatile.machines.properties.implementations.recipes.TEAutomationRecipeProperty
-import com.scientianovateam.versatile.recipes.lists.RecipeList
+import com.scientianovateam.versatile.recipes.lists.IRecipeLIst
 import net.minecraft.util.text.TranslationTextComponent
 import kotlin.math.max
 
-open class AutomationRecipeBasedMachine(recipeList: RecipeList, properties: Properties, name: String = recipeList.name.toString()) : AbstractMachineBlock(properties, name) {
+open class AutomationRecipeBasedMachine(recipeList: IRecipeLIst, properties: Properties, name: String = recipeList.name.toString()) : AbstractMachineBlock(properties, name) {
     init {
         recipeList.blocksImplementing += this
     }

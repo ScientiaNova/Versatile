@@ -2,8 +2,8 @@ package com.scientianovateam.versatile.recipes.builders
 
 import com.scientianovateam.versatile.machines.gui.textures.BaseTextures
 import com.scientianovateam.versatile.machines.gui.textures.updating.ProgressBar
-import com.scientianovateam.versatile.recipes.lists.AutomationRecipeList
-import com.scientianovateam.versatile.recipes.lists.RecipeList
+import com.scientianovateam.versatile.recipes.lists.machines.AutomationRecipeList
+import com.scientianovateam.versatile.recipes.lists.machines.StandardRecipeList
 import com.scientianovateam.versatile.recipes.components.IRecipeComponent
 import com.scientianovateam.versatile.recipes.components.ingredients.fluids.input.FluidInputsComponent
 import com.scientianovateam.versatile.recipes.components.ingredients.fluids.output.FluidOutputsComponent
@@ -29,46 +29,46 @@ open class StandardRecipeListBuilder(protected val name: ResourceLocation) {
         return this
     }
 
-    fun time(): StandardRecipeListBuilder {
-        components += TimeComponent
+    fun time(min: Int = 0, max: Int = Int.MAX_VALUE): StandardRecipeListBuilder {
+        components += TimeComponent(min, max)
         return this
     }
 
-    fun consumeEnergy(maxPerTick: Int): StandardRecipeListBuilder {
-        components += EnergyConsumptionComponent(maxPerTick)
+    fun consumeEnergy(min: Int = 0, max: Int = Int.MAX_VALUE): StandardRecipeListBuilder {
+        components += EnergyConsumptionComponent(min, max)
         return this
     }
 
-    fun generateEnergy(maxPerTick: Int): StandardRecipeListBuilder {
-        components += EnergyGenerationComponent(maxPerTick)
+    fun generateEnergy(min: Int = 0, max: Int = Int.MAX_VALUE): StandardRecipeListBuilder {
+        components += EnergyGenerationComponent(min, max)
         return this
     }
 
     @JvmOverloads
     fun itemInputs(max: Int, min: Int = 0): StandardRecipeListBuilder {
-        components += ItemInputsComponent(max, min)
+        components += ItemInputsComponent(min, max)
         return this
     }
 
     @JvmOverloads
     fun itemOutputs(max: Int, min: Int = 0): StandardRecipeListBuilder {
-        components += ItemOutputsComponent(max, min)
+        components += ItemOutputsComponent(min, max)
         return this
     }
 
     @JvmOverloads
-    fun fluidInputs(max: Int, min: Int = 0): StandardRecipeListBuilder {
-        components += FluidInputsComponent(max, min)
+    fun fluidInputs(max: Int, min: Int = 0, capacity: Int = 10_000): StandardRecipeListBuilder {
+        components += FluidInputsComponent(min, max, capacity)
         return this
     }
 
     @JvmOverloads
-    fun fluidOutputs(max: Int, min: Int = 0): StandardRecipeListBuilder {
-        components += FluidOutputsComponent(max, min)
+    fun fluidOutputs(max: Int, min: Int = 0, capacity: Int = 10_000): StandardRecipeListBuilder {
+        components += FluidOutputsComponent(min, max, capacity)
         return this
     }
 
-    open fun build() = RecipeList(name, *components.toTypedArray(), progressBar = progressBar, genJEIPage = genJEIPage)
+    open fun build() = StandardRecipeList(name, *components.toTypedArray(), progressBar = progressBar, genJEIPage = genJEIPage)
 }
 
 open class AutomationRecipeListBuilder(name: ResourceLocation): StandardRecipeListBuilder(name) {
