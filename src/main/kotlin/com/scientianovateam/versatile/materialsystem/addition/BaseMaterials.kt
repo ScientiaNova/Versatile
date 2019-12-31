@@ -24,7 +24,7 @@ object BaseMaterials {
     @JvmField
     val BRICK = ingotMaterial("brick") {
         tier = 1
-        color = 0xb55c42
+        legacyColor = 0xb55c42
         blockCompaction = BlockCompaction.FROM_2X2
         typeBlacklist += BaseForms.NUGGET
         compoundType = CompoundType.CHEMICAL
@@ -32,7 +32,7 @@ object BaseMaterials {
     @JvmField
     val NETHER_BRICK = ingotMaterial("nether_brick") {
         tier = 1
-        color = 0x472a30
+        legacyColor = 0x472a30
         blockCompaction = BlockCompaction.FROM_2X2
         typeBlacklist += BaseForms.NUGGET
         compoundType = CompoundType.CHEMICAL
@@ -52,7 +52,7 @@ object BaseMaterials {
     @JvmField
     val GOLD = ingotMaterial("gold") {
         tier = 2
-        color = 0xfad64a
+        legacyColor = 0xfad64a
         textureType = BaseTextureTypes.SHINY
         element = BaseElements.GOLD
         itemTier = ItemTier.GOLD
@@ -63,7 +63,7 @@ object BaseMaterials {
     }
     @JvmField
     val COAL = gemMaterial("coal") {
-        color = 0x1a1a1a
+        legacyColor = 0x1a1a1a
         textureType = BaseTextureTypes.FUEL
         standardBurnTime = 1600
         element = BaseElements.CARBON
@@ -71,25 +71,25 @@ object BaseMaterials {
     }
     @JvmField
     val CHARCOAL = gemMaterial("charcoal") {
-        color = 0x443e33
+        legacyColor = 0x443e33
         textureType = BaseTextureTypes.FUEL
         standardBurnTime = 1600
         element = BaseElements.CARBON
     }
     @JvmField
     val FLINT = gemMaterial("flint") {
-        color = 0x222020
+        legacyColor = 0x222020
         textureType = BaseTextureTypes.SHARP
         blockCompaction = BlockCompaction.NONE
     }
     @JvmField
     val LAPIS = gemMaterial("lapis") {
-        color = 0x2351be
+        legacyColor = 0x2351be
         hasOre = true
     }
     @JvmField
     val QUARTZ = gemMaterial("quartz") {
-        color = 0xe8dfd0
+        legacyColor = 0xe8dfd0
         textureType = BaseTextureTypes.CRYSTAL
         blockCompaction = BlockCompaction.FROM_2X2
         hasOre = true
@@ -97,7 +97,7 @@ object BaseMaterials {
     @JvmField
     val DIAMOND = gemMaterial("diamond") {
         tier = 2
-        color = 0x34ebe3
+        legacyColor = 0x34ebe3
         textureType = BaseTextureTypes.PENTAGONAL
         element = BaseElements.CARBON
         itemTier = ItemTier.DIAMOND
@@ -107,60 +107,60 @@ object BaseMaterials {
     @JvmField
     val EMERALD = gemMaterial("emerald") {
         tier = 2
-        color = 0x08ad2c
+        legacyColor = 0x08ad2c
         textureType = BaseTextureTypes.OCTAGONAL
         hasOre = true
     }
     @JvmField
     val WOODEN = dustMaterial("wooden") {
         tier = -1
-        color = 0x87672c
+        legacyColor = 0x87672c
         textureType = BaseTextureTypes.FINE
         standardBurnTime = 200
         itemTier = ItemTier.WOOD
     }
     @JvmField
     val STONE = dustMaterial("stone") {
-        color = 0xb1b0ae
+        legacyColor = 0xb1b0ae
         textureType = BaseTextureTypes.FINE
         itemTier = ItemTier.STONE
     }
     @JvmField
     val BONE = dustMaterial("bone") {
-        color = 0xfcfaed
+        legacyColor = 0xfcfaed
         rodOutputCount = 3
     }
     @JvmField
     val BLAZE = dustMaterial("blaze") {
-        color = 0xffc20c
+        legacyColor = 0xffc20c
         rodOutputCount = 3
     }
     @JvmField
     val REDSTONE = dustMaterial("redstone") {
         tier = 1
-        color = 0xfc1a19
+        legacyColor = 0xfc1a19
         hasOre = true
     }
     @JvmField
     val GLOWSTONE = dustMaterial("glowstone") {
         tier = 1
-        color = 0xfcbe60
+        legacyColor = 0xfcbe60
         blockCompaction = BlockCompaction.FROM_2X2
     }
     @JvmField
     val OBSIDIAN = dustMaterial("obsidian") {
         tier = 1
-        color = 0x3c2a53
+        legacyColor = 0x3c2a53
         textureType = BaseTextureTypes.FINE
     }
     @JvmField
     val WATER = fluidMaterial("water") {
-        color = 0x3e4ac6
+        legacyColor = 0x3e4ac6
         textureType = BaseTextureTypes.FLUID
     }
     @JvmField
     val LAVA = fluidMaterial("lava") {
-        color = 0xc54c13
+        legacyColor = 0xc54c13
         textureType = BaseTextureTypes.FLUID
     }
 

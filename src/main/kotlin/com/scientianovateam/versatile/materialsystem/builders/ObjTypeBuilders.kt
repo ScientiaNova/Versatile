@@ -10,7 +10,7 @@ import com.scientianovateam.versatile.fluids.MaterialBucketItem
 import com.scientianovateam.versatile.fluids.MaterialFluidBlock
 import com.scientianovateam.versatile.fluids.MaterialFluidHolder
 import com.scientianovateam.versatile.items.MaterialItem
-import com.scientianovateam.versatile.materialsystem.addition.FormProperties
+import com.scientianovateam.versatile.materialsystem.addition.LegacyFormProperties
 import com.scientianovateam.versatile.materialsystem.main.Material
 import com.scientianovateam.versatile.materialsystem.main.Form
 import com.scientianovateam.versatile.materialsystem.properties.FormLegacyProperty
@@ -28,46 +28,46 @@ open class FormBuilder(name: String, requirement: (Material) -> Boolean) {
 
     fun blacklistIndices(vararg indices: Int) = this.also { result.indexBlackList += indices.toList() }
 
-    fun bucketVolume(value: Int) = property(FormProperties.BUCKET_VOLUME, value)
+    fun bucketVolume(value: Int) = property(LegacyFormProperties.BUCKET_VOLUME, value)
 
-    fun registryNameFunc(value: (Material) -> ResourceLocation) = property(FormProperties.REGISTRY_NAME_FUM, value)
+    fun registryNameFunc(value: (Material) -> ResourceLocation) = property(LegacyFormProperties.REGISTRY_NAME_FUM, value)
 
-    fun itemTagName(value: String) = property(FormProperties.ITEM_TAG, value)
+    fun itemTagName(value: String) = property(LegacyFormProperties.ITEM_TAG, value)
 
-    fun blockTagName(value: String) = property(FormProperties.BLOCK_TAG, value)
+    fun blockTagName(value: String) = property(LegacyFormProperties.BLOCK_TAG, value)
 
-    fun fluidTagName(value: String) = property(FormProperties.FLUID_TAG, value)
+    fun fluidTagName(value: String) = property(LegacyFormProperties.FLUID_TAG, value)
 
-    fun colorFunc(value: (Material) -> Int) = property(FormProperties.COLOR_FUN, value)
+    fun colorFunc(value: (Material) -> Int) = property(LegacyFormProperties.COLOR_FUN, value)
 
-    fun densityMultiplier(value: Float) = property(FormProperties.DENSITY_MULTIPLIER, value)
+    fun densityMultiplier(value: Float) = property(LegacyFormProperties.DENSITY_MULTIPLIER, value)
 
-    fun isGasFunc(value: (Material) -> Boolean) = property(FormProperties.IS_GAS, value)
+    fun isGasFunc(value: (Material) -> Boolean) = property(LegacyFormProperties.IS_GAS, value)
 
-    fun temperatureFunc(value: (Material) -> Int) = property(FormProperties.TEMPERATURE, value)
+    fun temperatureFunc(value: (Material) -> Int) = property(LegacyFormProperties.TEMPERATURE, value)
 
     @JvmOverloads
-    fun singleTextureType(value: Boolean = true) = property(FormProperties.SINGLE_TEXTURE_TYPE, value)
+    fun singleTextureType(value: Boolean = true) = property(LegacyFormProperties.SINGLE_TEXTURE_TYPE, value)
 
-    fun burnTimeFunc(value: (Material) -> Int) = property(FormProperties.BURN_TIME, value)
+    fun burnTimeFunc(value: (Material) -> Int) = property(LegacyFormProperties.BURN_TIME, value)
 
-    fun itemModelFunc(value: (Material) -> JsonObject) = property(FormProperties.ITEM_MODEL, value)
+    fun itemModelFunc(value: (Material) -> JsonObject) = property(LegacyFormProperties.ITEM_MODEL, value)
 
-    fun blockStateFunc(value: (Material) -> JsonObject) = property(FormProperties.BLOCKSTATE_JSON, value)
+    fun blockStateFunc(value: (Material) -> JsonObject) = property(LegacyFormProperties.BLOCKSTATE_JSON, value)
 
-    fun itemConstructor(value: (Material, Form) -> Item) = property(FormProperties.ITEM_CONSTRUCTOR) { mat -> value(mat, result) }
+    fun itemConstructor(value: (Material, Form) -> Item) = property(LegacyFormProperties.ITEM_CONSTRUCTOR) { mat -> value(mat, result) }
 
-    fun itemPropertiesFunc(value: (Material, Form) -> Item.Properties) = property(FormProperties.ITEM_PROPERTIES) { mat -> value(mat, result) }
+    fun itemPropertiesFunc(value: (Material, Form) -> Item.Properties) = property(LegacyFormProperties.ITEM_PROPERTIES) { mat -> value(mat, result) }
 
-    fun blockConstructor(value: (Material, Form) -> Block) = property(FormProperties.BLOCK_CONSTRUCTOR) { mat -> value(mat, result) }
+    fun blockConstructor(value: (Material, Form) -> Block) = property(LegacyFormProperties.BLOCK_CONSTRUCTOR) { mat -> value(mat, result) }
 
-    fun blockPropertiesFunc(value: (Material, Form) -> Block.Properties) = property(FormProperties.BLOCK_PROPERTIES) { mat -> value(mat, result) }
+    fun blockPropertiesFunc(value: (Material, Form) -> Block.Properties) = property(LegacyFormProperties.BLOCK_PROPERTIES) { mat -> value(mat, result) }
 
-    fun fluidPairConstructor(value: (Material, Form) -> IFluidPairHolder) = property(FormProperties.FLUID_CONSTRUCTOR) { mat -> value(mat, result) }
+    fun fluidPairConstructor(value: (Material, Form) -> IFluidPairHolder) = property(LegacyFormProperties.FLUID_CONSTRUCTOR) { mat -> value(mat, result) }
 
-    fun fluidAttributesFunc(value: (Material, Form) -> FluidAttributes.Builder) = property(FormProperties.FLUID_ATTRIBUTES) { mat -> value(mat, result) }
+    fun fluidAttributesFunc(value: (Material, Form) -> FluidAttributes.Builder) = property(LegacyFormProperties.FLUID_ATTRIBUTES) { mat -> value(mat, result) }
 
-    fun typePriority(value: Int) = property(FormProperties.TYPE_PRIORITY, value)
+    fun typePriority(value: Int) = property(LegacyFormProperties.TYPE_PRIORITY, value)
 
     fun buildAndRegister() = result.register()
 }

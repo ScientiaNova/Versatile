@@ -33,7 +33,7 @@ object MatProperties {
     @JvmStatic
     val PROCESSING_MULTIPLIER = MatLegacyProperty("versatile:processing_multiplier".toResLoc(), ::merge) { 1 }
     @JvmStatic
-    val UNREFINED_COLOR = MatLegacyProperty("versatile:unrefined_color".toResLoc(), ::merge, default = Material::color)
+    val UNREFINED_COLOR = MatLegacyProperty("versatile:unrefined_color".toResLoc(), ::merge, default = Material::legacyColor)
     @JvmStatic
     val FLUID_TEMPERATURE = MatLegacyProperty("versatile:fluid_temperature".toResLoc(), ::merge) { 0 }
     @JvmStatic

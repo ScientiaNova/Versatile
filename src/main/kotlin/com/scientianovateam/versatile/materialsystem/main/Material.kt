@@ -4,12 +4,14 @@ import com.scientianovateam.versatile.common.extensions.toResLoc
 import com.scientianovateam.versatile.materialsystem.addition.BaseElements
 import com.scientianovateam.versatile.materialsystem.addition.BaseForms
 import com.scientianovateam.versatile.materialsystem.addition.MatProperties
+import com.scientianovateam.versatile.materialsystem.addition.MaterialProperties
 import com.scientianovateam.versatile.materialsystem.lists.Materials
 import com.scientianovateam.versatile.materialsystem.properties.HarvestTier
 import com.scientianovateam.versatile.materialsystem.properties.IBranchingProperty
 import com.scientianovateam.versatile.materialsystem.properties.IPropertyContainer
 import com.scientianovateam.versatile.materialsystem.properties.MatLegacyProperty
 import com.scientianovateam.versatile.velisp.evaluated.IEvaluated
+import com.scientianovateam.versatile.velisp.evaluated.NumberValue
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.FluidTags
 import net.minecraft.tags.ItemTags
@@ -37,6 +39,9 @@ class Material(override val properties: Map<String, IEvaluated>) : IBranchingPro
 
     override fun get(name: String): Any? = null
 
+    val color: Int
+        get() = (properties[MaterialProperties.COLOR] as NumberValue).value.toInt()
+
     val typeBlacklist = ArrayList<Form>()
 
     var invertedBlacklist = false
@@ -49,7 +54,7 @@ class Material(override val properties: Map<String, IEvaluated>) : IBranchingPro
             this[MatProperties.TEXTURE_TYPE] = value
         }
 
-    var color
+    var legacyColor
         get() = this[MatProperties.COLOR]
         set(value) {
             this[MatProperties.COLOR] = value

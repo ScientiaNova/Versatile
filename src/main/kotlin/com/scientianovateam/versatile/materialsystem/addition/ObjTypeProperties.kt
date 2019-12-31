@@ -18,7 +18,7 @@ import net.minecraftforge.common.ToolType
 import net.minecraftforge.fluids.FluidAttributes
 import net.minecraft.block.material.Material as BlockMaterial
 
-object FormProperties {
+object LegacyFormProperties {
     @JvmStatic
     val BUCKET_VOLUME = FormLegacyProperty("versatile:bucket_volume".toResLoc(), ::merge) { 0 }
     @JvmStatic
@@ -32,7 +32,7 @@ object FormProperties {
     @JvmStatic
     val FLUID_TAG = FormLegacyProperty("versatile:fluid_tag".toResLoc(), ::merge) { type -> "forge:${type}_" }
     @JvmStatic
-    val COLOR_FUN = FormLegacyProperty<(Material) -> Int>("versatile:color_fun".toResLoc(), ::merge) { Material::color }
+    val COLOR_FUN = FormLegacyProperty<(Material) -> Int>("versatile:color_fun".toResLoc(), ::merge) { Material::legacyColor }
     @JvmStatic
     val DENSITY_MULTIPLIER = FormLegacyProperty("versatile:density_multiplier".toResLoc(), ::merge) { 1f }
     @JvmStatic

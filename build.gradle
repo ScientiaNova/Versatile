@@ -74,6 +74,18 @@ minecraft {
                 }
             }
         }
+
+        data {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+            args '--mod', 'versatile', '--all', '--output', file('src/generated/resources/')
+            mods {
+                versatile {
+                    source sourceSets.main
+                }
+            }
+        }
     }
 }
 

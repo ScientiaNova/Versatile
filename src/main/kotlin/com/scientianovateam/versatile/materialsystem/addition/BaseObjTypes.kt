@@ -64,7 +64,7 @@ object BaseForms {
     val MOLTEN_FLUID = fluidType("molten", { it.isItemMaterial && it.fluidTemperature > 0 }) {
         registryName = { ResourceLocation("versatile:molten_${it.name}") }
         fluidAttributes = { mat ->
-            FormProperties.FLUID_ATTRIBUTES.default(this)(mat).sound(SoundEvents.ITEM_BUCKET_FILL_LAVA, SoundEvents.ITEM_BUCKET_EMPTY_LAVA)
+            LegacyFormProperties.FLUID_ATTRIBUTES.default(this)(mat).sound(SoundEvents.ITEM_BUCKET_FILL_LAVA, SoundEvents.ITEM_BUCKET_EMPTY_LAVA)
         }
     }
 }

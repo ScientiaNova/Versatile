@@ -42,6 +42,7 @@ object MaterialSerializer : IRegistrySerializer<Material> {
             val valid = property.valid.resolve(properties + ("it" to evaluated)).evaluate()
             if (valid !is BoolValue) error("Validity check for $property returned a ${valid.type} instead of a boolean")
             if (!valid.value) error("Validity check failed for $property, value ${evaluated.value}")
+            properties[property.name] = evaluated
         }
         return Material(properties)
     }

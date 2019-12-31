@@ -9,7 +9,7 @@ object TestMaterialRegistry {
     @JvmField
     val ANGMALLEN = ingotMaterial("angmallen") {
         tier = 2
-        color = 0xe0d78a
+        legacyColor = 0xe0d78a
         composition = listOf(BaseMaterials.IRON.toStack(), BaseMaterials.GOLD.toStack())
     }
 }

@@ -1,7 +1,5 @@
 package com.scientianovateam.versatile.materialsystem.properties
 
-import com.scientianovateam.versatile.common.registry.MATERIAL_PROPERTIES
-import com.scientianovateam.versatile.common.registry.OBJECT_TYPE_PROPERTIES
 import com.scientianovateam.versatile.materialsystem.main.Material
 import com.scientianovateam.versatile.materialsystem.main.Form
 import net.minecraft.util.ResourceLocation
