@@ -10,6 +10,8 @@ interface IRecipeStack<T> {
 
     val stacks: List<T>
 
+    val singleStack: T
+
     val serializer: IRegisterableSerializer<out IRecipeStack<T>, JsonObject>
 
     fun matches(other: T): Boolean

@@ -1,5 +1,10 @@
 package com.scientianovateam.versatile.recipes.components.ingredients.items.output
 
+import com.google.gson.JsonObject
+import com.scientianovateam.versatile.common.extensions.getPrimitiveOrNull
+import com.scientianovateam.versatile.common.extensions.json
+import com.scientianovateam.versatile.common.extensions.toResLocV
+import com.scientianovateam.versatile.common.serialization.IRegisterableJSONSerializer
 import com.scientianovateam.versatile.machines.BaseTileEntity
 import com.scientianovateam.versatile.machines.gui.layout.IGUIComponent
 import com.scientianovateam.versatile.machines.gui.layout.components.slots.ItemSlotComponent
@@ -15,9 +20,10 @@ import com.scientianovateam.versatile.recipes.components.ingredients.recipestack
 import net.minecraft.item.ItemStack
 import kotlin.math.min
 
-class ItemOutputsComponent(val max: Int, val min: Int = 0) : IRecipeComponent<List<ChancedRecipeStack<ItemStack>>> {
+data class ItemOutputsComponent(val min: Int, val max: Int) : IRecipeComponent<List<ChancedRecipeStack<ItemStack>>> {
     override val name = "itemOutputs"
     override val family = RecipeComponentFamilies.OUTPUT_SLOTS
+    override val serializer = Serializer
 
     override fun isRecipeValid(recipe: Recipe): Boolean {
         val handler = recipe[this] ?: return min <= 0
@@ -44,5 +50,19 @@ class ItemOutputsComponent(val max: Int, val min: Int = 0) : IRecipeComponent<Li
 
     override fun getProcessingHandler(machine: BaseTileEntity) = (machine.teProperties["itemOutputs"] as? TEItemOutputProperty)?.let {
         ItemOutputsProcessingHandler(it)
+    }
+
+    object Serializer : IRegisterableJSONSerializer<ItemOutputsComponent, JsonObject> {
+        override val registryName = "item_outputs".toResLocV()
+
+        override fun read(json: JsonObject) = ItemOutputsComponent(
+                json.getPrimitiveOrNull("min")?.asInt ?: 0,
+                json.getPrimitiveOrNull("max")?.asInt ?: error("Missing maximum amount of item outputs")
+        )
+
+        override fun write(obj: ItemOutputsComponent) = json {
+            "min" to obj.min
+            "max" to obj.max
+        }
     }
 }

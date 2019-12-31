@@ -2,9 +2,9 @@ package com.scientianovateam.versatile.machines.properties.implementations.recip
 
 import com.scientianovateam.versatile.machines.properties.IVariableProperty
 import com.scientianovateam.versatile.recipes.Recipe
-import com.scientianovateam.versatile.recipes.lists.RecipeList
+import com.scientianovateam.versatile.recipes.lists.IRecipeLIst
 
-open class RecipeProperty(val recipeList: RecipeList, value: Recipe? = null) : IVariableProperty<Recipe?> {
+open class RecipeProperty(val recipeList: IRecipeLIst, value: Recipe? = null) : IVariableProperty<Recipe?> {
     override var value: Recipe? = value
         protected set
 

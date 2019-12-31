@@ -5,8 +5,8 @@ import com.scientianovateam.versatile.common.extensions.json
 import com.scientianovateam.versatile.common.extensions.toResLocV
 import com.scientianovateam.versatile.common.serialization.IGeneralSerializer
 import com.scientianovateam.versatile.common.serialization.IRegisterableSerializer
-import com.scientianovateam.versatile.common.serialization.RECIPE_FLUID_STACK_SERIALIZERS
-import com.scientianovateam.versatile.common.serialization.RECIPE_ITEM_STACK_SERIALIZERS
+import com.scientianovateam.versatile.recipes.RECIPE_FLUID_STACK_SERIALIZERS
+import com.scientianovateam.versatile.recipes.RECIPE_ITEM_STACK_SERIALIZERS
 import com.scientianovateam.versatile.recipes.components.ingredients.recipestacks.fluids.RecipeFluidStackIntermediate
 import com.scientianovateam.versatile.recipes.components.ingredients.recipestacks.items.RecipeItemStackIntermediate
 import com.scientianovateam.versatile.velisp.convertToExpression

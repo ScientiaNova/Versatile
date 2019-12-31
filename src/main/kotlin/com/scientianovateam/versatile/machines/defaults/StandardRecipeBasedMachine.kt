@@ -8,10 +8,10 @@ import com.scientianovateam.versatile.machines.gui.layout.components.still.Label
 import com.scientianovateam.versatile.machines.properties.ITEBoundProperty
 import com.scientianovateam.versatile.machines.properties.implementations.processing.StandardProcessingProperty
 import com.scientianovateam.versatile.machines.properties.implementations.recipes.TEStandardRecipeProperty
-import com.scientianovateam.versatile.recipes.lists.RecipeList
+import com.scientianovateam.versatile.recipes.lists.IRecipeLIst
 import kotlin.math.max
 
-open class StandardRecipeBasedMachine(recipeList: RecipeList, properties: Properties, name: String = recipeList.name.toString()) : AbstractMachineBlock(properties, name) {
+open class StandardRecipeBasedMachine(recipeList: IRecipeLIst, properties: Properties, name: String = recipeList.name.toString()) : AbstractMachineBlock(properties, name) {
     init {
         recipeList.blocksImplementing += this
     }

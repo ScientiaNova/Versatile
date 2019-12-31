@@ -7,7 +7,7 @@ import com.scientianovateam.versatile.recipes.components.time.TimeComponent
 open class RecipeTimeBasedDoubleProperty(val intProperty: IValueProperty<Int>, val recipeProperty: RecipeProperty) : IValueProperty<Double> {
     override val value: Double
         get() {
-            val recipeTime = recipeProperty.value?.get(TimeComponent)?.value ?: return 0.0
+            val recipeTime = recipeProperty.value?.get(TimeComponent::class.java)?.value ?: return 0.0
             return intProperty.value / recipeTime.toDouble()
         }
 

@@ -17,6 +17,8 @@ class RecipeItemStack(val stack: ItemStack) : IRecipeStack<ItemStack> {
 
     override val stacks = listOf(stack.copy())
 
+    override val singleStack = stack.copy()
+
     override fun matches(other: ItemStack) = stack.isItemEqual(other) && count <= other.count
 
     override fun matchesWithoutCount(other: ItemStack) = stack.isItemEqual(other)

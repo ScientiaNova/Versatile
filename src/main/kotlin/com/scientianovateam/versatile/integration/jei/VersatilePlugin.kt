@@ -1,7 +1,7 @@
 package com.scientianovateam.versatile.integration.jei
 
 import com.scientianovateam.versatile.common.extensions.toStack
-import com.scientianovateam.versatile.recipes.lists.RecipeList
+import com.scientianovateam.versatile.recipes.lists.IRecipeLIst
 import com.scientianovateam.versatile.recipes.lists.RecipeLists
 import mezz.jei.api.IModPlugin
 import mezz.jei.api.JeiPlugin
@@ -12,7 +12,7 @@ import net.minecraft.util.ResourceLocation
 
 @JeiPlugin
 class VersatilePlugin : IModPlugin {
-    private val jeiRecipeLists get() = RecipeLists.all.filter(RecipeList::genJEIPage)
+    private val jeiRecipeLists get() = RecipeLists.all.filter(IRecipeLIst::genJEIPage)
 
     override fun getPluginUid() = ResourceLocation("versatile", "generated")
 
@@ -29,6 +29,6 @@ class VersatilePlugin : IModPlugin {
     }
 
     override fun registerRecipes(registration: IRecipeRegistration) {
-        jeiRecipeLists.forEach { registration.addRecipes(it.getRecipes().values, it.name) }
+        jeiRecipeLists.forEach { registration.addRecipes(it.recipes.values, it.name) }
     }
 }

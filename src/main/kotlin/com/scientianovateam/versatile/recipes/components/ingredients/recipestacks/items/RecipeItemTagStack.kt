@@ -13,6 +13,7 @@ import com.scientianovateam.versatile.velisp.convertToExpression
 import com.scientianovateam.versatile.velisp.evaluated.NumberValue
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
 import net.minecraft.network.PacketBuffer
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.Tag
@@ -23,6 +24,8 @@ class RecipeItemTagStack(stack: TagStack<Item>) : IRecipeStack<ItemStack> {
     override val count = stack.count
 
     override val stacks get() = tag.allElements.map { it * count }
+
+    override val singleStack = (tag.allElements.minBy { it.registryName.toString() } ?: Items.AIR) * count
 
     override fun matches(other: ItemStack) = count <= other.count && other.item in tag
 

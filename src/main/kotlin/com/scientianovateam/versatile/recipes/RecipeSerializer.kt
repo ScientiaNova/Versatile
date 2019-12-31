@@ -7,7 +7,6 @@ import com.scientianovateam.versatile.common.extensions.json
 import com.scientianovateam.versatile.common.extensions.toResLocV
 import com.scientianovateam.versatile.common.serialization.IJSONSerializer
 import com.scientianovateam.versatile.common.serialization.IPacketSerializer
-import com.scientianovateam.versatile.common.serialization.RECIPE_COMPONENT_HANDLER_SERIALIZERS
 import com.scientianovateam.versatile.recipes.components.IRecipeComponentHandler
 import com.scientianovateam.versatile.recipes.components.IRecipeHandlerSerializer
 import com.scientianovateam.versatile.recipes.lists.RecipeLists
@@ -17,7 +16,7 @@ import net.minecraft.network.PacketBuffer
 object RecipeSerializer : IJSONSerializer<Recipe, JsonObject>, IPacketSerializer<Recipe> {
     override fun read(json: JsonObject) = Recipe(
             json.getStringOrNull("list")?.let(RecipeLists::get) ?: error("Missing recipe list for recipe"),
-            json.get("name").asString,
+            json.get("name").asString.toResLocV(),
             json.getObjectOrNull("components")?.entrySet()?.mapNotNull { (key, element) ->
                 RECIPE_COMPONENT_HANDLER_SERIALIZERS[key.toResLocV()]?.read(element)?.resolve(emptyMap())
             } ?: emptyList()
@@ -34,13 +33,13 @@ object RecipeSerializer : IJSONSerializer<Recipe, JsonObject>, IPacketSerializer
         }
     }
 
-    override fun read(packet: PacketBuffer) = Recipe(RecipeLists[packet.readResourceLocation()]!!, packet.readString(), List(packet.readVarInt()) {
+    override fun read(packet: PacketBuffer) = Recipe(RecipeLists[packet.readResourceLocation()]!!, packet.readResourceLocation(), List(packet.readVarInt()) {
         RECIPE_COMPONENT_HANDLER_SERIALIZERS[packet.readResourceLocation()]!!.read(packet)
     })
 
     override fun write(packet: PacketBuffer, obj: Recipe) {
         packet.writeResourceLocation(obj.recipeList.name)
-        packet.writeString(obj.name)
+        packet.writeResourceLocation(obj.name)
         packet.writeVarInt(obj.componentMap.size)
         obj.componentMap.values.forEach { it.serializer.writePacket(packet, it) }
     }

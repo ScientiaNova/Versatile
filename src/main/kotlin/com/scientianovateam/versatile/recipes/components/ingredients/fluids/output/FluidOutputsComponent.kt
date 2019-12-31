@@ -1,5 +1,10 @@
 package com.scientianovateam.versatile.recipes.components.ingredients.fluids.output
 
+import com.google.gson.JsonObject
+import com.scientianovateam.versatile.common.extensions.getPrimitiveOrNull
+import com.scientianovateam.versatile.common.extensions.json
+import com.scientianovateam.versatile.common.extensions.toResLocV
+import com.scientianovateam.versatile.common.serialization.IRegisterableJSONSerializer
 import com.scientianovateam.versatile.machines.BaseTileEntity
 import com.scientianovateam.versatile.machines.gui.layout.IGUIComponent
 import com.scientianovateam.versatile.machines.gui.layout.components.slots.FluidSlotComponent
@@ -15,9 +20,10 @@ import com.scientianovateam.versatile.recipes.components.ingredients.recipestack
 import net.minecraftforge.fluids.FluidStack
 import kotlin.math.min
 
-class FluidOutputsComponent(val max: Int, val min: Int = 0, val capacity: Int = 10_000) : IRecipeComponent<List<ChancedRecipeStack<FluidStack>>> {
+class FluidOutputsComponent(val min: Int, val max: Int, val capacity: Int) : IRecipeComponent<List<ChancedRecipeStack<FluidStack>>> {
     override val name = "fluidOutputs"
     override val family = RecipeComponentFamilies.OUTPUT_SLOTS
+    override val serializer = Serializer
 
     override fun isRecipeValid(recipe: Recipe): Boolean {
         val handler = recipe[this] ?: return min <= 0
@@ -44,5 +50,21 @@ class FluidOutputsComponent(val max: Int, val min: Int = 0, val capacity: Int = 
 
     override fun getProcessingHandler(machine: BaseTileEntity) = (machine.teProperties["fluidOutputs"] as? TEFluidOutputProperty)?.let {
         FluidOutputsProcessingHandler(it)
+    }
+
+    object Serializer : IRegisterableJSONSerializer<FluidOutputsComponent, JsonObject> {
+        override val registryName = "fluid_outputs".toResLocV()
+
+        override fun read(json: JsonObject) = FluidOutputsComponent(
+                json.getPrimitiveOrNull("min")?.asInt ?: 0,
+                json.getPrimitiveOrNull("max")?.asInt ?: error("Missing maximum amount of fluid outputs"),
+                json.getPrimitiveOrNull("capacity")?.asInt ?: 10_000
+        )
+
+        override fun write(obj: FluidOutputsComponent) = json {
+            "min" to obj.min
+            "max" to obj.max
+            "capacity" to obj.capacity
+        }
     }
 }

@@ -2,9 +2,10 @@ package com.scientianovateam.versatile.recipes
 
 import com.scientianovateam.versatile.recipes.components.IRecipeComponent
 import com.scientianovateam.versatile.recipes.components.IRecipeComponentHandler
-import com.scientianovateam.versatile.recipes.lists.RecipeList
+import com.scientianovateam.versatile.recipes.lists.IRecipeLIst
+import net.minecraft.util.ResourceLocation
 
-class Recipe(val recipeList: RecipeList, val name: String, componentHandlers: List<IRecipeComponentHandler<*>>) {
+class Recipe(val recipeList: IRecipeLIst, val name: ResourceLocation, componentHandlers: List<IRecipeComponentHandler<*>>) {
     val componentMap = componentHandlers.map { it.pairedComponentType to it }.toMap()
 
     val page by lazy { recipeList.createRecipeBasedComponentGroup(null, this) }

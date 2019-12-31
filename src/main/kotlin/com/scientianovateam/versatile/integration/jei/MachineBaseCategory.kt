@@ -6,8 +6,8 @@ import com.scientianovateam.versatile.machines.gui.layout.OffsetGUIComponent
 import com.scientianovateam.versatile.machines.gui.layout.components.stacksuppliers.IStackSupplierComponent
 import com.scientianovateam.versatile.machines.properties.implementations.recipes.RecipeProperty
 import com.scientianovateam.versatile.recipes.Recipe
-import com.scientianovateam.versatile.recipes.lists.RecipeList
 import com.scientianovateam.versatile.recipes.components.grouping.IOType
+import com.scientianovateam.versatile.recipes.lists.IRecipeLIst
 import mezz.jei.api.constants.VanillaTypes
 import mezz.jei.api.gui.IRecipeLayout
 import mezz.jei.api.gui.drawable.IDrawable
@@ -24,10 +24,10 @@ import kotlin.math.max
 
 
 @Suppress("UNCHECKED_CAST")
-open class MachineBaseCategory(helper: IGuiHelper, protected val recipeList: RecipeList) : IRecipeCategory<Recipe> {
+open class MachineBaseCategory(helper: IGuiHelper, protected val recipeList: IRecipeLIst) : IRecipeCategory<Recipe> {
     private val listGroup = recipeList.createComponentGroup()
 
-    private val background: IDrawable = helper.createBlankDrawable(max(listGroup.width,78), listGroup.height)
+    private val background: IDrawable = helper.createBlankDrawable(max(listGroup.width, 78), listGroup.height)
 
     private val icon = recipeList.blocksImplementing.firstOrNull()?.let { helper.createDrawableIngredient(it.toStack()) }
 

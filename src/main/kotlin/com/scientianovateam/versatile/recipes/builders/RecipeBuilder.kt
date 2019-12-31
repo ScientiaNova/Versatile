@@ -1,7 +1,6 @@
 package com.scientianovateam.versatile.recipes.builders
 
 import com.scientianovateam.versatile.recipes.Recipe
-import com.scientianovateam.versatile.recipes.lists.RecipeList
 import com.scientianovateam.versatile.recipes.components.IRecipeComponentHandler
 import com.scientianovateam.versatile.recipes.components.energy.consumption.EnergyConsumptionHandler
 import com.scientianovateam.versatile.recipes.components.energy.generation.EnergyGenerationHandler
@@ -9,22 +8,26 @@ import com.scientianovateam.versatile.recipes.components.ingredients.fluids.inpu
 import com.scientianovateam.versatile.recipes.components.ingredients.fluids.output.FluidOutputsHandler
 import com.scientianovateam.versatile.recipes.components.ingredients.items.input.ItemInputsHandler
 import com.scientianovateam.versatile.recipes.components.ingredients.items.output.ItemOutputsHandler
-import com.scientianovateam.versatile.recipes.components.ingredients.recipestacks.*
+import com.scientianovateam.versatile.recipes.components.ingredients.recipestacks.ChancedRecipeStack
+import com.scientianovateam.versatile.recipes.components.ingredients.recipestacks.IRecipeStack
+import com.scientianovateam.versatile.recipes.components.ingredients.recipestacks.chanced
 import com.scientianovateam.versatile.recipes.components.ingredients.recipestacks.fluids.RecipeFluidStack
 import com.scientianovateam.versatile.recipes.components.ingredients.recipestacks.fluids.RecipeFluidTagStack
 import com.scientianovateam.versatile.recipes.components.ingredients.recipestacks.items.RecipeItemStack
 import com.scientianovateam.versatile.recipes.components.ingredients.recipestacks.items.RecipeItemTagStack
 import com.scientianovateam.versatile.recipes.components.ingredients.utility.TagStack
 import com.scientianovateam.versatile.recipes.components.time.TimeHandler
+import com.scientianovateam.versatile.recipes.lists.IRecipeLIst
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
+import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fluids.FluidStack
 
 object Recipe {
-    fun builder(recipeList: RecipeList, name: String) = Builder(recipeList, name)
+    fun builder(recipeList: IRecipeLIst, name: ResourceLocation) = Builder(recipeList, name)
 
-    open class Builder internal constructor(val recipeList: RecipeList, val name: String) {
+    open class Builder internal constructor(val recipeList: IRecipeLIst, val name: ResourceLocation) {
         protected val handlers = mutableListOf<IRecipeComponentHandler<*>>()
 
         fun time(amount: Int): Builder {

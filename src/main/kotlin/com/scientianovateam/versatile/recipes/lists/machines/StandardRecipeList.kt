@@ -1,9 +1,8 @@
-package com.scientianovateam.versatile.recipes.lists
+package com.scientianovateam.versatile.recipes.lists.machines
 
 import com.google.common.collect.HashMultimap
 import com.scientianovateam.versatile.Versatile
 import com.scientianovateam.versatile.machines.BaseTileEntity
-import com.scientianovateam.versatile.machines.gui.BaseContainer
 import com.scientianovateam.versatile.machines.gui.layout.DefaultSizeConstants
 import com.scientianovateam.versatile.machines.gui.layout.GUIComponentGroup
 import com.scientianovateam.versatile.machines.gui.layout.GUIPage
@@ -13,6 +12,8 @@ import com.scientianovateam.versatile.machines.gui.textures.updating.ProgressBar
 import com.scientianovateam.versatile.recipes.Recipe
 import com.scientianovateam.versatile.recipes.components.IRecipeComponent
 import com.scientianovateam.versatile.recipes.components.grouping.IOType
+import com.scientianovateam.versatile.recipes.lists.IRecipeLIst
+import com.scientianovateam.versatile.recipes.lists.RecipeLists
 import net.minecraft.block.Block
 import net.minecraft.item.crafting.IRecipe
 import net.minecraft.item.crafting.IRecipeType
@@ -22,21 +23,18 @@ import kotlin.math.ceil
 import kotlin.math.max
 import kotlin.math.sqrt
 
-open class RecipeList(val name: ResourceLocation, vararg components: IRecipeComponent<*>, val progressBar: ProgressBar = BaseTextures.ARROW_BAR, val genJEIPage: Boolean = true) {
-    private val recipes = mutableMapOf<String, Recipe>()
-    val blocksImplementing = mutableListOf<Block>()
-    val inputMap = HashMultimap.create<String, Recipe>()
-    val localizedName = TranslationTextComponent("recipe_list.$name")
-    val recipeComponents = components.groupBy(IRecipeComponent<*>::name).mapValues { it.value.first() }
-    open val recipeTransferFunction: ((Recipe, BaseContainer) -> Unit)? = null
+open class StandardRecipeList(final override val name: ResourceLocation, vararg components: IRecipeComponent<*>, val progressBar: ProgressBar = BaseTextures.ARROW_BAR, override val genJEIPage: Boolean = true): IRecipeLIst {
+    override val recipes = mutableMapOf<ResourceLocation, Recipe>()
+    override val blocksImplementing = mutableListOf<Block>()
+    override val inputMap = HashMultimap.create<String, Recipe>()
+    override val localizedName = TranslationTextComponent("recipe_list.$name")
+    override val recipeComponents = components.map { it.name to it }.toMap()
 
     init {
         RecipeLists += this
     }
 
-    fun getRecipes() = recipes.toMap()
-
-    fun addRecipe(recipe: Recipe, vanillaRecipeMap: MutableMap<IRecipeType<*>, MutableMap<ResourceLocation, IRecipe<*>>>?) {
+    override fun addRecipe(recipe: Recipe, vanillaRecipeMap: MutableMap<IRecipeType<*>, MutableMap<ResourceLocation, IRecipe<*>>>?) {
         if (recipe.recipeList != this) return
         if (recipeComponents.values.all { it.isRecipeValid(recipe) }) {
             recipes[recipe.name] = recipe
@@ -44,24 +42,16 @@ open class RecipeList(val name: ResourceLocation, vararg components: IRecipeComp
         } else Versatile.LOGGER.error("Invalid recipe ${recipe.name} for recipe list $name")
     }
 
-    fun findRecipe(machine: BaseTileEntity) = recipeComponents.values.fold(recipes.values.toList()) { list, component ->
+    override fun findRecipe(machine: BaseTileEntity) = recipeComponents.values.fold(recipes.values.toList()) { list, component ->
         component.findRecipe(this, list, machine)
     }.firstOrNull()
 
-    fun clear() {
+    override fun clear() {
         recipes.clear()
         inputMap.clear()
     }
 
-    fun removeRecipe(recipe: Recipe) {
-        if (recipes.remove(recipe.name) != null) recipeComponents.values.forEach { it.onRecipeRemoved(recipe) }
-    }
-
-    fun removeRecipe(name: String) {
-        recipes.remove(name)?.let { recipe -> recipeComponents.values.forEach { it.onRecipeRemoved(recipe) } }
-    }
-
-    open fun createComponentGroup(machine: BaseTileEntity? = null): GUIComponentGroup {
+    override fun createComponentGroup(machine: BaseTileEntity?): GUIComponentGroup {
         val components = recipeComponents.values.groupBy(IRecipeComponent<*>::family).entries.groupBy { it.key.io }.mapValues {
             val groups = it.value.map { entry -> entry.value.flatMap { component -> component.addGUIComponents(machine) } }
                     .filter(List<IGUIComponent>::isNotEmpty).map { list ->
@@ -112,7 +102,7 @@ open class RecipeList(val name: ResourceLocation, vararg components: IRecipeComp
         }
     }
 
-    open fun createRecipeBasedComponentGroup(machine: BaseTileEntity?, recipe: Recipe): GUIComponentGroup {
+    override fun createRecipeBasedComponentGroup(machine: BaseTileEntity?, recipe: Recipe): GUIComponentGroup {
         val components = recipeComponents.values.groupBy(IRecipeComponent<*>::family).entries.groupBy { it.key.io }.mapValues {
             val groups = it.value.map { entry -> entry.value.flatMap { component -> component.addGUIComponents(machine) } }
                     .filter(List<IGUIComponent>::isNotEmpty).map { list ->

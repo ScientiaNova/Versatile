@@ -1,6 +1,11 @@
 package com.scientianovateam.versatile.recipes.components.ingredients.items.input
 
+import com.google.gson.JsonObject
+import com.scientianovateam.versatile.common.extensions.getPrimitiveOrNull
+import com.scientianovateam.versatile.common.extensions.json
 import com.scientianovateam.versatile.common.extensions.toList
+import com.scientianovateam.versatile.common.extensions.toResLocV
+import com.scientianovateam.versatile.common.serialization.IRegisterableJSONSerializer
 import com.scientianovateam.versatile.machines.BaseTileEntity
 import com.scientianovateam.versatile.machines.gui.layout.IGUIComponent
 import com.scientianovateam.versatile.machines.gui.layout.components.slots.ItemSlotComponent
@@ -15,17 +20,18 @@ import com.scientianovateam.versatile.machines.properties.implementations.proces
 import com.scientianovateam.versatile.machines.properties.implementations.recipes.RecipeProperty
 import com.scientianovateam.versatile.machines.properties.implementations.recipes.TEAutomationRecipeProperty
 import com.scientianovateam.versatile.recipes.Recipe
-import com.scientianovateam.versatile.recipes.lists.RecipeList
-import com.scientianovateam.versatile.recipes.lists.StackToRecipeStackHashConversion
 import com.scientianovateam.versatile.recipes.components.IRecipeComponent
 import com.scientianovateam.versatile.recipes.components.grouping.RecipeComponentFamilies
 import com.scientianovateam.versatile.recipes.components.ingredients.recipestacks.ChancedRecipeStack
+import com.scientianovateam.versatile.recipes.lists.IRecipeLIst
+import com.scientianovateam.versatile.recipes.lists.StackToRecipeStackHashConversion
 import net.minecraft.item.ItemStack
 import kotlin.math.min
 
-class ItemInputsComponent(val max: Int, val min: Int = 0) : IRecipeComponent<List<ChancedRecipeStack<ItemStack>>> {
+data class ItemInputsComponent(val min: Int, val max: Int) : IRecipeComponent<List<ChancedRecipeStack<ItemStack>>> {
     override val name = "itemInputs"
     override val family = RecipeComponentFamilies.INPUT_SLOTS
+    override val serializer = Serializer
 
     override fun isRecipeValid(recipe: Recipe): Boolean {
         val handler = recipe[this] ?: return min <= 0
@@ -49,7 +55,7 @@ class ItemInputsComponent(val max: Int, val min: Int = 0) : IRecipeComponent<Lis
         }
     }
 
-    override fun findRecipe(recipeList: RecipeList, recipes: List<Recipe>, machine: BaseTileEntity) = (machine.teProperties["itemInputs"] as? TEItemInventoryProperty)?.value?.let { stackHandler ->
+    override fun findRecipe(recipeList: IRecipeLIst, recipes: List<Recipe>, machine: BaseTileEntity) = (machine.teProperties["itemInputs"] as? TEItemInventoryProperty)?.value?.let { stackHandler ->
         val inputStacks = stackHandler.toList()
         inputStacks.map { stack ->
             StackToRecipeStackHashConversion.convertItemStack(stack).asSequence().mapNotNull {
@@ -79,5 +85,19 @@ class ItemInputsComponent(val max: Int, val min: Int = 0) : IRecipeComponent<Lis
 
     override fun getProcessingHandler(machine: BaseTileEntity) = (machine.teProperties["itemInputs"] as? TEItemInputProperty)?.let {
         ItemInputsProcessingHandler(it)
+    }
+
+    object Serializer : IRegisterableJSONSerializer<ItemInputsComponent, JsonObject> {
+        override val registryName = "item_inputs".toResLocV()
+
+        override fun read(json: JsonObject) = ItemInputsComponent(
+                json.getPrimitiveOrNull("min")?.asInt ?: 0,
+                json.getPrimitiveOrNull("max")?.asInt ?: error("Missing maximum amount of item inputs")
+        )
+
+        override fun write(obj: ItemInputsComponent) = json {
+            "min" to obj.min
+            "max" to obj.max
+        }
     }
 }
