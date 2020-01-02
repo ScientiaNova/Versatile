@@ -22,7 +22,7 @@ interface IRecipeStack<T> {
     fun matchesWithoutCount(other: T): Boolean
 }
 
-fun IRecipeStack<ItemStack>.toIngredient() = Ingredient.fromStacks(*stacks.toTypedArray())
+fun IRecipeStack<ItemStack>.toIngredient(): Ingredient = Ingredient.fromStacks(*stacks.toTypedArray())
 
 @Suppress("UNCHECKED_CAST")
 fun <T : IRecipeStack<*>> T.serialize() = (serializer as IRegisterableSerializer<T, JsonObject>).write(this)

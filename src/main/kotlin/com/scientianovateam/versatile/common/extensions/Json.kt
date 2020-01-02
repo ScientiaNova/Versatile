@@ -5,6 +5,7 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
 import net.minecraft.item.ItemStack
+import net.minecraft.util.ResourceLocation
 
 fun JsonObject.getObjectOrNull(name: String): JsonObject? = get(name) as? JsonObject
 
@@ -43,9 +44,27 @@ fun Boolean.toJson() = JsonPrimitive(this)
 
 fun String.toJson() = JsonPrimitive(this)
 
+fun ResourceLocation.toJson() = JsonPrimitive(toString())
+
 fun ItemStack.toJson() = json {
     "item" to item.registryName!!.toString()
     "count" to count
 }
 
-fun Iterable<JsonElement>.toJson() = JsonArray().apply { this@toJson.forEach { this.add(it) } }
+fun Iterable<JsonElement>.toJson() = JsonArray().apply { this@toJson.forEach(::add) }
+
+fun Array<JsonElement>.toJson() = JsonArray().apply { this@toJson.forEach(::add) }
+
+fun IntArray.toJson() = JsonArray().apply { this@toJson.forEach(::add) }
+
+fun LongArray.toJson() = JsonArray().apply { this@toJson.forEach(::add) }
+
+fun FloatArray.toJson() = JsonArray().apply { this@toJson.forEach(::add) }
+
+fun DoubleArray.toJson() = JsonArray().apply { this@toJson.forEach(::add) }
+
+fun CharArray.toJson() = JsonArray().apply { this@toJson.forEach(::add) }
+
+fun ByteArray.toJson() = JsonArray().apply { this@toJson.forEach(::add) }
+
+fun ShortArray.toJson() = JsonArray().apply { this@toJson.forEach(::add) }

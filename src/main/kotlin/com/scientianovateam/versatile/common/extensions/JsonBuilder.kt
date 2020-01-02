@@ -18,7 +18,7 @@ class JsonBuilder(builder: JsonBuilder.() -> Unit) {
     infix fun String.to(property: String) = result.addProperty(this, property)
     infix fun String.to(property: JsonElement) = result.add(this, property)
     infix fun String.to(property: ItemStack) = result.add(this, property.toJson())
-    infix fun String.to(properties: Iterable<JsonElement>) = result.add(this, properties.toJson())
+    infix fun String.to(properties: Collection<JsonElement>) = result.add(this, properties.toJson())
 
     infix fun String.to(properties: Array<JsonElement>) {
         val arr = JsonArray()
