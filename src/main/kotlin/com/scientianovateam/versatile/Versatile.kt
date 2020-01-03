@@ -105,12 +105,6 @@ object Versatile {
         }
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
-        fun onLateItemRegistry(e: RegistryEvent.Register<Item>) {
-            ItemRegistry.registerItems(e)
-            addModelJSONs()
-        }
-
-        @SubscribeEvent(priority = EventPriority.LOWEST)
         fun onLateFluidRegistry(e: RegistryEvent.Register<Fluid>) = FluidRegistry.registerFluids(e)
     }
 

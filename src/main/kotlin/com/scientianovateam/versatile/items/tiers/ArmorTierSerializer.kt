@@ -12,7 +12,7 @@ import net.minecraftforge.registries.ForgeRegistries
 
 object ArmorTierSerializer : IJSONSerializer<ArmorTier, JsonObject> {
     override fun read(json: JsonObject) = ArmorTier(
-            json.getStringOrNull("name")?.toResLoc() ?: error("Missing name for armor tier"),
+            json.getStringOrNull("name") ?: error("Missing name for armor tier"),
             json.getArrayOrNull("durability")?.map(JsonElement::getAsInt)?.toIntArray() ?: intArrayOf(0, 0, 0, 0),
             json.getArrayOrNull("damage_reduction")?.map(JsonElement::getAsInt)?.toIntArray() ?: intArrayOf(0, 0, 0, 0),
             json.getPrimitiveOrNull("enchantability")?.asInt ?: ArmorMaterial.LEATHER.enchantability,

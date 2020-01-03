@@ -1,10 +1,7 @@
 package com.scientianovateam.versatile.items.tiers
 
 import com.google.gson.JsonObject
-import com.scientianovateam.versatile.common.extensions.getObjectOrNull
-import com.scientianovateam.versatile.common.extensions.getPrimitiveOrNull
-import com.scientianovateam.versatile.common.extensions.json
-import com.scientianovateam.versatile.common.extensions.toResLocV
+import com.scientianovateam.versatile.common.extensions.*
 import com.scientianovateam.versatile.common.serialization.IJSONSerializer
 import com.scientianovateam.versatile.recipes.RECIPE_ITEM_STACK_SERIALIZERS
 import com.scientianovateam.versatile.recipes.components.ingredients.recipestacks.items.RecipeItemStack
@@ -13,6 +10,7 @@ import net.minecraft.item.ItemTier
 
 object ToolTierSerializer : IJSONSerializer<ToolTier, JsonObject> {
     override fun read(json: JsonObject) = ToolTier(
+            json.getStringOrNull("name") ?: error("Missing registry name for item tier"),
             json.getPrimitiveOrNull("max_uses")?.asInt ?: ItemTier.WOOD.maxUses,
             json.getPrimitiveOrNull("efficiency")?.asFloat ?: ItemTier.WOOD.efficiency,
             json.getPrimitiveOrNull("attack_damage")?.asFloat ?: ItemTier.WOOD.attackDamage,
