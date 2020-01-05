@@ -18,7 +18,7 @@ object RecipeSerializer : IJSONSerializer<Recipe, JsonObject>, IPacketSerializer
             json.getStringOrNull("list")?.let(RecipeLists::get) ?: error("Missing recipe list for recipe"),
             json.get("name").asString.toResLocV(),
             json.getObjectOrNull("components")?.entrySet()?.mapNotNull { (key, element) ->
-                RECIPE_COMPONENT_HANDLER_SERIALIZERS[key.toResLocV()]?.read(element)?.resolve(emptyMap())
+                RECIPE_COMPONENT_HANDLER_SERIALIZERS[key.toResLocV()]?.read(element)?.resolve()
             } ?: emptyList()
     )
 

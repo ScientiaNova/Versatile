@@ -1,0 +1,11 @@
+{
+  "max_uses": 131,
+  "efficiency": 4.0,
+  "attack_damage": 1.0,
+  "harvest_level": 1,
+  "enchantability": 5,
+  "repair_ingredient": {
+    "type": "versatile:item_stack",
+    "item": "minecraft:cobblestone"
+  }
+}

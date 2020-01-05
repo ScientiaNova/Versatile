@@ -18,7 +18,7 @@ object EffectInstanceSerializer : IJSONSerializer<EffectInstance, JsonObject> {
     )
 
     override fun write(obj: EffectInstance) = json {
-        "effect" to obj.potion.registryName!!.toString()
+        "effect" to obj.potion
         "duration" to obj.duration
         "level" to obj.amplifier
         "Is_ambient" to obj.isAmbient

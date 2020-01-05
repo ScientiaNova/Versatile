@@ -39,7 +39,7 @@ data class RecipeItemStack(val stack: ItemStack) : IRecipeStack<ItemStack> {
 
         override fun write(obj: RecipeItemStack) = json {
             "item" to obj.stack.item
-            "count" to obj.count
+            if (obj.count != 1) "count" to obj.count
         }
 
         override fun read(packet: PacketBuffer) = RecipeItemStack(packet.readItemStack())

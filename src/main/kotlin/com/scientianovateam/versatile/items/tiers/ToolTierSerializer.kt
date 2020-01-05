@@ -10,15 +10,15 @@ import net.minecraft.item.ItemTier
 
 object ToolTierSerializer : IJSONSerializer<ToolTier, JsonObject> {
     override fun read(json: JsonObject) = ToolTier(
-            json.getStringOrNull("name") ?: error("Missing registry name for item tier"),
-            json.getIntOrNull("max_uses") ?: ItemTier.WOOD.maxUses,
-            json.getFloatOrNull("efficiency") ?: ItemTier.WOOD.efficiency,
-            json.getFloatOrNull("attack_damage") ?: ItemTier.WOOD.attackDamage,
-            json.getIntOrNull("harvest_level") ?: ItemTier.WOOD.harvestLevel,
-            json.getIntOrNull("enchantability") ?: ItemTier.WOOD.enchantability
+            registryName = json.getStringOrNull("name") ?: error("Missing registry name for item tier"),
+            maxUses = json.getIntOrNull("max_uses") ?: ItemTier.WOOD.maxUses,
+            efficiency = json.getFloatOrNull("efficiency") ?: ItemTier.WOOD.efficiency,
+            attackDamage = json.getFloatOrNull("attack_damage") ?: ItemTier.WOOD.attackDamage,
+            harvestLevel = json.getIntOrNull("harvest_level") ?: ItemTier.WOOD.harvestLevel,
+            enchantability = json.getIntOrNull("enchantability") ?: ItemTier.WOOD.enchantability
     ) {
-        json.getObjectOrNull("repair_ingredient")?.entrySet()?.firstOrNull()?.let { (serializer, value) ->
-            (value as? JsonObject)?.let { RECIPE_ITEM_STACK_SERIALIZERS[serializer.toResLocV()]?.read(it)?.resolve(emptyMap()) }
+        json.getStringOrNull("type")?.let {
+            RECIPE_ITEM_STACK_SERIALIZERS[it.toResLocV()]?.read(json)?.resolve()
         } ?: RecipeItemStack.EMPTY
     }
 
@@ -30,7 +30,8 @@ object ToolTierSerializer : IJSONSerializer<ToolTier, JsonObject> {
         "enchantability" to obj.enchantability
         "repair_ingredient" {
             val repairStack = obj.repairRecipeStack
-            repairStack.serializer.registryName.toString() to repairStack.serialize()
+            "type" to repairStack.serializer.registryName
+            repairStack.serialize().extract()
         }
     }
 }

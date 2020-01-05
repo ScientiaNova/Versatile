@@ -56,7 +56,7 @@ object MaterialFluids {
     fun addFluidPair(mat: Material, type: Form, fluidPair: () -> IFluidPairHolder) = additionSuppliers.put(mat, type, fluidPair)
 
     @JvmStatic
-    fun <O> addFluidPair(fluidPair: O) where O : IMaterialObject, O : IFluidPairHolder = materialFluids.put(fluidPair.mat, fluidPair.objType, fluidPair)
+    fun <O> addFluidPair(fluidPair: O) where O : IMaterialObject, O : IFluidPairHolder = materialFluids.put(fluidPair.mat, fluidPair.form, fluidPair)
 
     @JvmStatic
     fun getFluidCell(fluid: FlowingFluid): Table.Cell<Material, Form, IFluidPairHolder>? = materialFluids.cellSet().firstOrNull { it.value?.still === fluid }
@@ -65,5 +65,5 @@ object MaterialFluids {
     fun getFluidMaterial(fluid: FlowingFluid): Material? = if (fluid is IMaterialObject) fluid.mat else getFluidCell(fluid)?.rowKey
 
     @JvmStatic
-    fun getFluidForm(fluid: FlowingFluid): Form? = if (fluid is IMaterialObject) fluid.objType else getFluidCell(fluid)?.columnKey
+    fun getFluidForm(fluid: FlowingFluid): Form? = if (fluid is IMaterialObject) fluid.form else getFluidCell(fluid)?.columnKey
 }

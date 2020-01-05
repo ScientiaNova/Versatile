@@ -33,7 +33,7 @@ object ArmorTierSerializer : IJSONSerializer<ArmorTier, JsonObject> {
         "durability" to obj.durability.toJson()
         "damage_reduction" to obj.damageReduction.toJson()
         "enchantability" to obj.enchantability
-        "sound" to obj.soundEvent.registryName!!.toString()
+        "sound" to obj.soundEvent
         "toughness" to obj.toughness
         "repair_ingredient" {
             val repairStack = obj.repairRecipeStack

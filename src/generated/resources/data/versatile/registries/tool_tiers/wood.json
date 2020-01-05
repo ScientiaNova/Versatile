@@ -1,0 +1,11 @@
+{
+  "max_uses": 59,
+  "efficiency": 2.0,
+  "attack_damage": 0.0,
+  "harvest_level": 0,
+  "enchantability": 15,
+  "repair_ingredient": {
+    "type": "versatile:tag_stack",
+    "tag": "minecraft:planks"
+  }
+}

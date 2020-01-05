@@ -1,6 +1,5 @@
 package com.scientianovateam.versatile
 
-import com.scientianovateam.versatile.blocks.BlockRegistry
 import com.scientianovateam.versatile.common.registry.VersatileRegistryEvent
 import com.scientianovateam.versatile.fluids.FluidRegistry
 import com.scientianovateam.versatile.items.MaterialItem
@@ -11,7 +10,6 @@ import com.scientianovateam.versatile.materialsystem.commands.FluidContainerComm
 import com.scientianovateam.versatile.materialsystem.commands.FormCommand
 import com.scientianovateam.versatile.materialsystem.commands.MaterialCommand
 import com.scientianovateam.versatile.materialsystem.lists.MaterialItems
-import com.scientianovateam.versatile.materialsystem.main.IMaterialObject
 import com.scientianovateam.versatile.proxy.ClientProxy
 import com.scientianovateam.versatile.proxy.IModProxy
 import com.scientianovateam.versatile.proxy.ServerProxy
@@ -35,7 +33,6 @@ import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.client.event.RecipesUpdatedEvent
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.RegistryEvent
-import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent
 import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.DistExecutor
@@ -80,7 +77,7 @@ object Versatile {
     }
 
     private fun enqueueIMC(e: InterModEnqueueEvent) {
-        proxy.enque(e)
+        proxy.enqueue(e)
         OreGen.register()
     }
 
@@ -146,12 +143,6 @@ object Versatile {
             MaterialCommand(e.commandDispatcher)
             FormCommand(e.commandDispatcher)
             FluidContainerCommand(e.commandDispatcher)
-        }
-
-        @SubscribeEvent
-        fun fuelTime(e: FurnaceFuelBurnTimeEvent) {
-            val item = e.itemStack.item
-            if (item is IMaterialObject) item.objType.burnTime(item.mat).let { if (it > 0) e.burnTime = it }
         }
     }
 }

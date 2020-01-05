@@ -1,0 +1,21 @@
+{
+  "durability": [
+    429,
+    495,
+    528,
+    363
+  ],
+  "damage_reduction": [
+    3,
+    6,
+    8,
+    3
+  ],
+  "enchantability": 10,
+  "sound": "minecraft:item.armor.equip_diamond",
+  "toughness": 2.0,
+  "repair_ingredient": {
+    "type": "versatile:item_stack",
+    "item": "minecraft:diamond"
+  }
+}

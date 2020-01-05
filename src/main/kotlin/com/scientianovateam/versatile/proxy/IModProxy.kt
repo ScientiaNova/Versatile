@@ -5,9 +5,9 @@ import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent
 
 //This is an interface used for making Mod Proxies
 interface IModProxy {
-    fun init()
+    fun init() {}
 
-    fun enque(e: InterModEnqueueEvent)
+    fun enqueue(e: InterModEnqueueEvent) {}
 
-    fun process(e: InterModProcessEvent)
+    fun process(e: InterModProcessEvent) {}
 }

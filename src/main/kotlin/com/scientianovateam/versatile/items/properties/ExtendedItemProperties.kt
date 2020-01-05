@@ -64,7 +64,7 @@ open class ExtendedItemProperties(
         override fun write(obj: ExtendedItemProperties) = json {
             "max_stack_size" to obj.maxStackSize
             "max_durability" to obj.maxDurability
-            obj.containerItem?.registryName?.toString()?.let { "container_item" to it }
+            obj.containerItem?.let { "container_item" to it }
             "rarity" to obj.rarity.name.toLowerCase()
             "can_repair" to obj.canRepair
             "destroy_speed" to obj.destroySpeed

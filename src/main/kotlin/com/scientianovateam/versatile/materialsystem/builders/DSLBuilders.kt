@@ -58,18 +58,18 @@ fun groupMaterial(vararg names: String, builder: Material.() -> Unit = { }) = Ma
 }.register()
 
 @JvmOverloads
-fun objType(name: String, requirement: (Material) -> Boolean, builder: Form.() -> Unit = { }) = Form(name) { requirement(it) }.apply {
+fun form(name: String, requirement: (Material) -> Boolean, builder: Form.() -> Unit = { }) = Form(name) { requirement(it) }.apply {
     builder()
 }.register()
 
 @JvmOverloads
-fun itemType(name: String, requirement: (Material) -> Boolean, builder: Form.() -> Unit = { }) = Form(name) { requirement(it) }.apply {
+fun itemForm(name: String, requirement: (Material) -> Boolean, builder: Form.() -> Unit = { }) = Form(name) { requirement(it) }.apply {
     itemConstructor = { mat -> MaterialItem(mat, this) }
     builder()
 }.register()
 
 @JvmOverloads
-fun blockType(name: String, requirement: (Material) -> Boolean, builder: Form.() -> Unit = { }) = Form(name) { requirement(it) }.apply {
+fun blockForm(name: String, requirement: (Material) -> Boolean, builder: Form.() -> Unit = { }) = Form(name) { requirement(it) }.apply {
     itemConstructor = { mat -> MaterialBlockItem(mat, this) }
     blockConstructor = { mat -> MaterialBlock(mat, this) }
     itemModel = { mat ->
@@ -81,7 +81,7 @@ fun blockType(name: String, requirement: (Material) -> Boolean, builder: Form.()
 }.register()
 
 @JvmOverloads
-fun fluidType(name: String, requirement: (Material) -> Boolean, builder: Form.() -> Unit = { }) = Form(name) { requirement(it) }.apply {
+fun fluidForm(name: String, requirement: (Material) -> Boolean, builder: Form.() -> Unit = { }) = Form(name) { requirement(it) }.apply {
     itemConstructor = { mat -> MaterialBucketItem(mat, this) }
     blockConstructor = { mat -> MaterialFluidBlock(mat, this) }
     fluidPairConstructor = { mat -> MaterialFluidHolder(mat, this) }

@@ -2,9 +2,9 @@ package com.scientianovateam.versatile.materialsystem.addition
 
 import com.scientianovateam.versatile.common.extensions.toResLoc
 import com.scientianovateam.versatile.fluids.MaterialFluidAttributes
-import com.scientianovateam.versatile.materialsystem.builders.blockType
-import com.scientianovateam.versatile.materialsystem.builders.fluidType
-import com.scientianovateam.versatile.materialsystem.builders.itemType
+import com.scientianovateam.versatile.materialsystem.builders.blockForm
+import com.scientianovateam.versatile.materialsystem.builders.fluidForm
+import com.scientianovateam.versatile.materialsystem.builders.itemForm
 import com.scientianovateam.versatile.materialsystem.main.Material
 import com.scientianovateam.versatile.materialsystem.properties.BlockCompaction
 import net.minecraft.block.Block
@@ -16,32 +16,32 @@ import net.minecraft.block.material.Material as BlockMaterial
 
 object BaseForms {
     @JvmField
-    val DUST = itemType("dust", Material::hasDust) {
+    val DUST = itemForm("dust", Material::hasDust) {
         bucketVolume = 144
         typePriority = 1
     }
     @JvmField
-    val GEM = itemType("gem", Material::isGemMaterial) {
+    val GEM = itemForm("gem", Material::isGemMaterial) {
         bucketVolume = 144
         typePriority = 2
     }
     @JvmField
-    val INGOT = itemType("ingot", Material::isIngotMaterial) {
+    val INGOT = itemForm("ingot", Material::isIngotMaterial) {
         bucketVolume = 144
         typePriority = 2
     }
     @JvmField
-    val NUGGET = itemType("nugget", Material::isIngotMaterial) {
+    val NUGGET = itemForm("nugget", Material::isIngotMaterial) {
         bucketVolume = 16
     }
     @JvmField
-    val BLOCK = blockType("storage_block", { it.isItemMaterial && it.blockCompaction != BlockCompaction.NONE }) {
+    val BLOCK = blockForm("storage_block", { it.isItemMaterial && it.blockCompaction != BlockCompaction.NONE }) {
         registryName = { ResourceLocation("versatile:${it.name}_block") }
         burnTime = { it.standardBurnTime * 10 }
         bucketVolume = 1296
     }
     @JvmField
-    val ORE = blockType("ore", Material::hasOre) {
+    val ORE = blockForm("ore", Material::hasOre) {
         blockProperties = { Block.Properties.create(BlockMaterial.ROCK).sound(SoundType.STONE).fromTier(it.harvestTier).harvestTool(ToolType.PICKAXE) }
         color = Material::unrefinedColor
         indexBlackList += 1
@@ -49,7 +49,7 @@ object BaseForms {
         burnTime = { 0 }
     }
     @JvmField
-    val FLUID = fluidType("fluid", Material::isFluidMaterial) {
+    val FLUID = fluidForm("fluid", Material::isFluidMaterial) {
         registryName = { ResourceLocation("versatile:${it.name}") }
         fluidTagName = "forge:"
         itemTagName = "forge:buckets"
@@ -61,7 +61,7 @@ object BaseForms {
         }
     }
     @JvmField
-    val MOLTEN_FLUID = fluidType("molten", { it.isItemMaterial && it.fluidTemperature > 0 }) {
+    val MOLTEN_FLUID = fluidForm("molten", { it.isItemMaterial && it.fluidTemperature > 0 }) {
         registryName = { ResourceLocation("versatile:molten_${it.name}") }
         fluidAttributes = { mat ->
             LegacyFormProperties.FLUID_ATTRIBUTES.default(this)(mat).sound(SoundEvents.ITEM_BUCKET_FILL_LAVA, SoundEvents.ITEM_BUCKET_EMPTY_LAVA)

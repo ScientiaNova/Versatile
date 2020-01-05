@@ -16,4 +16,4 @@ fun cascadeJsons(resources: List<JsonObject>): JsonObject = resources.onEach { j
                         else -> 3
                     }))
     json.addProperty("priority", updated)
-}.fold(JsonObject()) { a, b -> a.merge(b) }
+}.fold(JsonObject(), JsonObject::merge)

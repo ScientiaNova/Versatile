@@ -1,0 +1,11 @@
+{
+  "max_uses": 1561,
+  "efficiency": 8.0,
+  "attack_damage": 3.0,
+  "harvest_level": 3,
+  "enchantability": 10,
+  "repair_ingredient": {
+    "type": "versatile:item_stack",
+    "item": "minecraft:diamond"
+  }
+}

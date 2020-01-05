@@ -52,7 +52,7 @@ object RecipeMaker {
             JSONAdder.addDataJSON(ResourceLocation(name.namespace, "recipes/" + name.path + ".json")) {
                 "type" to type
                 "ingredient" to inputToJson(input)
-                "result" to output.registryName!!.toString()
+                "result" to output
                 "cookingtime" to cookTime
                 "experience" to xp
             }
@@ -108,9 +108,9 @@ object RecipeMaker {
     @JvmStatic
     fun inputToJson(obj: Any) = json {
         when (obj) {
-            is Item -> "item" to obj.registryName!!.toString()
-            is Block -> "item" to obj.registryName!!.toString()
-            is Tag<*> -> "tag" to obj.id.toString()
+            is Item -> "item" to obj
+            is Block -> "item" to obj
+            is Tag<*> -> "tag" to obj.id
         }
     }
 }

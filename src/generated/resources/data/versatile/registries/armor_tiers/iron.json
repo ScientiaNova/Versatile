@@ -1,0 +1,21 @@
+{
+  "durability": [
+    195,
+    225,
+    240,
+    165
+  ],
+  "damage_reduction": [
+    2,
+    5,
+    6,
+    2
+  ],
+  "enchantability": 9,
+  "sound": "minecraft:item.armor.equip_iron",
+  "toughness": 0.0,
+  "repair_ingredient": {
+    "type": "versatile:item_stack",
+    "item": "minecraft:iron_ingot"
+  }
+}

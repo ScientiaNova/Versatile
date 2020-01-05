@@ -1,0 +1,21 @@
+{
+  "durability": [
+    65,
+    75,
+    80,
+    55
+  ],
+  "damage_reduction": [
+    1,
+    2,
+    3,
+    1
+  ],
+  "enchantability": 15,
+  "sound": "minecraft:item.armor.equip_leather",
+  "toughness": 0.0,
+  "repair_ingredient": {
+    "type": "versatile:item_stack",
+    "item": "minecraft:leather"
+  }
+}

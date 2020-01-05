@@ -18,10 +18,8 @@ import net.minecraft.network.PacketBuffer
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.Tag
 
-class RecipeItemTagStack(stack: TagStack<Item>) : IRecipeStack<ItemStack> {
-    val tag = stack.tag
-
-    override val count = stack.count
+data class RecipeItemTagStack(val tag: Tag<Item>, override val count: Int = 1) : IRecipeStack<ItemStack> {
+    constructor(stack: TagStack<Item>) : this(stack.tag, stack.count)
 
     override val stacks get() = tag.allElements.map { it * count }
 
@@ -46,8 +44,8 @@ class RecipeItemTagStack(stack: TagStack<Item>) : IRecipeStack<ItemStack> {
         }
 
         override fun write(obj: RecipeItemTagStack) = json {
-            "tag" to obj.tag
-            "count" to obj.count
+            "tag" to obj.tag.id
+            if (obj.count != 1) "count" to obj.count
         }
 
         override fun read(packet: PacketBuffer) = RecipeItemTagStack(ItemTags.Wrapper(packet.readResourceLocation()) * packet.readVarInt())

@@ -1,0 +1,21 @@
+{
+  "durability": [
+    325,
+    375,
+    400,
+    275
+  ],
+  "damage_reduction": [
+    2,
+    5,
+    6,
+    2
+  ],
+  "enchantability": 9,
+  "sound": "minecraft:item.armor.equip_turtle",
+  "toughness": 0.0,
+  "repair_ingredient": {
+    "type": "versatile:item_stack",
+    "item": "minecraft:scute"
+  }
+}

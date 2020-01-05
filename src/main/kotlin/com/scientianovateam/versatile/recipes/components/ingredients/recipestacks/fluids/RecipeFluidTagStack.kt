@@ -18,10 +18,8 @@ import net.minecraft.tags.FluidTags
 import net.minecraft.tags.Tag
 import net.minecraftforge.fluids.FluidStack
 
-class RecipeFluidTagStack(stack: TagStack<Fluid>) : IRecipeStack<FluidStack> {
-    val tag = stack.tag
-
-    override val count = stack.count
+data class RecipeFluidTagStack(val tag: Tag<Fluid>, override val count: Int = 1) : IRecipeStack<FluidStack> {
+    constructor(stack: TagStack<Fluid>) : this(stack.tag, stack.count)
 
     override val stacks get() = tag.allElements.map { it * count }
 
@@ -46,8 +44,8 @@ class RecipeFluidTagStack(stack: TagStack<Fluid>) : IRecipeStack<FluidStack> {
         }
 
         override fun write(obj: RecipeFluidTagStack) = json {
-            "tag" to obj.tag
-            "count" to obj.count
+            "tag" to obj.tag.id
+            if (obj.count != 1) "count" to obj.count
         }
 
         override fun read(packet: PacketBuffer) = RecipeFluidTagStack(FluidTags.Wrapper(packet.readResourceLocation()) * packet.readVarInt())

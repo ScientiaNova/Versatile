@@ -55,7 +55,7 @@ fun String.toJson() = JsonPrimitive(this)
 fun ResourceLocation.toJson() = JsonPrimitive(toString())
 
 fun ItemStack.toJson() = json {
-    "item" to item.registryName!!.toString()
+    "item" to item
     "count" to count
 }
 

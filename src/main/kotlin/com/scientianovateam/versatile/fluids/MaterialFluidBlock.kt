@@ -13,13 +13,13 @@ import net.minecraft.util.text.TranslationTextComponent
 import net.minecraft.util.text.translation.LanguageMap
 import net.minecraft.world.World
 
-class MaterialFluidBlock(override val mat: Material, override val objType: Form) : FlowingFluidBlock({ MaterialFluids[mat, objType] }, objType.blockProperties(mat)), IMaterialObject {
+class MaterialFluidBlock(override val mat: Material, override val form: Form) : FlowingFluidBlock({ MaterialFluids[mat, form] }, form.blockProperties(mat)), IMaterialObject {
     init {
-        registryName = objType.registryName(mat)
+        registryName = form.registryName(mat)
         MaterialBlocks.addBlock(this)
     }
 
-    override fun getNameTextComponent() = if (LanguageMap.getInstance().exists(translationKey)) TranslationTextComponent(translationKey) else objType.localize(mat)
+    override fun getNameTextComponent() = if (LanguageMap.getInstance().exists(translationKey)) TranslationTextComponent(translationKey) else form.localize(mat)
     override fun onEntityCollision(state: BlockState, world: World, pos: BlockPos, entity: Entity) {
         if (!entity.isImmuneToFire) {
             val temp = fluid.attributes.temperature

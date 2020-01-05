@@ -42,7 +42,7 @@ object MaterialBlocks {
     fun addBlock(mat: Material, type: Form, block: () -> Block) = additionSuppliers.put(mat, type, block)
 
     @JvmStatic
-    fun <O> addBlock(block: O) where O : IMaterialObject, O : Block = materialBlocks.put(block.mat, block.objType, block)
+    fun <O> addBlock(block: O) where O : IMaterialObject, O : Block = materialBlocks.put(block.mat, block.form, block)
 
     @JvmStatic
     fun getBlockCell(block: Block): Table.Cell<Material, Form, Block>? = materialBlocks.cellSet().firstOrNull { it.value === block }
@@ -52,5 +52,5 @@ object MaterialBlocks {
             .filter { '/' in it.path }.map { Materials[it.path.takeLastWhile { char -> char != '/' }] }.firstOrNull()
 
     @JvmStatic
-    fun getBlockForm(block: Block): Form? = if (block is IMaterialObject) block.objType else getBlockCell(block)?.columnKey
+    fun getBlockForm(block: Block): Form? = if (block is IMaterialObject) block.form else getBlockCell(block)?.columnKey
 }

@@ -100,10 +100,10 @@ open class ExtendedBlockProperties(
         }
 
         override fun write(obj: ExtendedBlockProperties) = json {
-            "material" to obj.material.registryName.toString()
+            "material" to obj.material.registryName
             "material_color" to obj.materialColor
             "blocks_movement" to obj.blocksMovement
-            "sound" to obj.sound.registryName.toString()
+            "sound" to obj.sound.registryName
             "light_value" to obj.lightValue
             "hardness" to obj.hardness
             "resistance" to obj.resistance

@@ -36,8 +36,8 @@ data class RecipeFluidStack(val stack: FluidStack) : IRecipeStack<FluidStack> {
         }
 
         override fun write(obj: RecipeFluidStack) = json {
-            "fluid" to obj.stack.fluid
-            "count" to obj.count
+            "fluid" to obj.stack.fluid.registryName.toString()
+            if (obj.count != 1) "count" to obj.count
         }
 
         override fun read(packet: PacketBuffer) = RecipeFluidStack(packet.readFluidStack())
