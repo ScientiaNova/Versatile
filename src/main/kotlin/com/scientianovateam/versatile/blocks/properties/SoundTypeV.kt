@@ -47,11 +47,11 @@ class SoundTypeV(val registryName: ResourceLocation, volume: Float = 1f, pitch: 
         override fun write(obj: SoundTypeV) = json {
             "volume" to obj.volume
             "pitch" to obj.pitch
-            "break_sound" to obj.fallSound!!
-            "step_sound" to obj.stepSound!!
-            "place_sound" to obj.placeSound!!
-            "hit_sound" to obj.hitSound!!
-            "fall_sound" to obj.fallSound!!
+            "break_sound" to obj.fallSound
+            "step_sound" to obj.stepSound
+            "place_sound" to obj.placeSound
+            "hit_sound" to obj.hitSound
+            "fall_sound" to obj.fallSound
         }
     }
 }

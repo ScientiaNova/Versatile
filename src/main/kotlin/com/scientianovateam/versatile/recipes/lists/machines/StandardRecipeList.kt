@@ -1,7 +1,9 @@
 package com.scientianovateam.versatile.recipes.lists.machines
 
 import com.google.common.collect.HashMultimap
+import com.google.gson.JsonObject
 import com.scientianovateam.versatile.Versatile
+import com.scientianovateam.versatile.common.serialization.IRegisterableJSONSerializer
 import com.scientianovateam.versatile.machines.BaseTileEntity
 import com.scientianovateam.versatile.machines.gui.layout.DefaultSizeConstants
 import com.scientianovateam.versatile.machines.gui.layout.GUIComponentGroup
@@ -28,6 +30,7 @@ open class StandardRecipeList(final override val name: ResourceLocation, vararg 
     override val inputMap = HashMultimap.create<ResourceLocation, Recipe>()
     override val localizedName = TranslationTextComponent("recipe_list.$name")
     override val recipeComponents = components.map { it.name to it }.toMap()
+    override val serializer: IRegisterableJSONSerializer<out StandardRecipeList, JsonObject> = StandardRecipeListSerializer
 
     override fun addRecipe(recipe: Recipe, vanillaRecipeMap: MutableMap<IRecipeType<*>, MutableMap<ResourceLocation, IRecipe<*>>>?) {
         if (recipe.recipeList != this) return

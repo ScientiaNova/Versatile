@@ -1,5 +1,7 @@
 package com.scientianovateam.versatile.recipes.lists.machines
 
+import com.google.gson.JsonObject
+import com.scientianovateam.versatile.common.serialization.IRegisterableJSONSerializer
 import com.scientianovateam.versatile.machines.BaseTileEntity
 import com.scientianovateam.versatile.machines.gui.BaseContainer
 import com.scientianovateam.versatile.machines.gui.layout.GUIComponentGroup
@@ -17,6 +19,7 @@ import kotlin.math.max
 import kotlin.math.sqrt
 
 open class AutomationRecipeList(name: ResourceLocation, vararg components: IRecipeComponent<*>, progressBar: ProgressBar = BaseTextures.ARROW_BAR, genJEIPage: Boolean = true) : StandardRecipeList(name, *components, progressBar = progressBar, genJEIPage = genJEIPage) {
+    override val serializer: IRegisterableJSONSerializer<out AutomationRecipeList, JsonObject> = AutomationRecipeListSerializer
     override val recipeTransferFunction: (Recipe, BaseContainer) -> Unit = { recipe, container ->
         (container.te.teProperties["recipe"] as? RecipeProperty)?.setValue(recipe)
     }

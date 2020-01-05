@@ -12,6 +12,7 @@ import com.scientianovateam.versatile.data.block.SoundTypeProvider
 import com.scientianovateam.versatile.data.item.ArmorTierProvider
 import com.scientianovateam.versatile.data.item.ItemProvider
 import com.scientianovateam.versatile.data.item.ToolTierProvider
+import com.scientianovateam.versatile.data.recipe.RecipeListProvider
 import com.scientianovateam.versatile.items.tiers.ArmorTier
 import com.scientianovateam.versatile.items.tiers.ToolTier
 import com.scientianovateam.versatile.recipes.components.ingredients.recipestacks.items.toRStack
@@ -595,3 +596,4 @@ fun DataGenerator.providers(function: DataGenerator.() -> Unit) = this.function(
 fun DataGenerator.toolTiers(function: ToolTierProvider.() -> Unit) = addProvider(ToolTierProvider(this).apply(function))
 fun DataGenerator.armorTiers(function: ArmorTierProvider.() -> Unit) = addProvider(ArmorTierProvider(this).apply(function))
 fun DataGenerator.items(function: ItemProvider.() -> Unit) = addProvider(ItemProvider(this).apply(function))
+fun DataGenerator.recipeLists(function: RecipeListProvider.() -> Unit) = addProvider(RecipeListProvider(this).apply(function))

@@ -1,6 +1,8 @@
 package com.scientianovateam.versatile.recipes.lists
 
 import com.google.common.collect.Multimap
+import com.google.gson.JsonObject
+import com.scientianovateam.versatile.common.serialization.IRegisterableJSONSerializer
 import com.scientianovateam.versatile.machines.BaseTileEntity
 import com.scientianovateam.versatile.machines.gui.BaseContainer
 import com.scientianovateam.versatile.machines.gui.layout.GUIComponentGroup
@@ -20,6 +22,7 @@ interface IRecipeLIst {
     val localizedName get() = TranslationTextComponent("recipe_list.$name")
     val recipeComponents: Map<String, IRecipeComponent<*>>
     val recipeTransferFunction: ((Recipe, BaseContainer) -> Unit)? get() = null
+    val serializer: IRegisterableJSONSerializer<out IRecipeLIst, JsonObject>
     val genJEIPage get() = true
     fun clear()
     fun addRecipe(recipe: Recipe, vanillaRecipeMap: MutableMap<IRecipeType<*>, MutableMap<ResourceLocation, IRecipe<*>>>?)
@@ -27,3 +30,6 @@ interface IRecipeLIst {
     fun createComponentGroup(machine: BaseTileEntity? = null): GUIComponentGroup
     fun createRecipeBasedComponentGroup(machine: BaseTileEntity?, recipe: Recipe): GUIComponentGroup
 }
+
+@Suppress("UNCHECKED_CAST")
+fun <T : IRecipeLIst> T.serialize() = (serializer as IRegisterableJSONSerializer<T, JsonObject>).write(this)
