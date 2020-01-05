@@ -41,24 +41,24 @@ open class ExtendedItemProperties(
 
     object Serializer : IJSONSerializer<ExtendedItemProperties, JsonObject> {
         override fun read(json: JsonObject) = ExtendedItemProperties(
-                maxStackSize = json.getPrimitiveOrNull("max_stack_size")?.asInt ?: 64,
-                maxDurability = json.getPrimitiveOrNull("max_durability")?.asInt ?: -1,
+                maxStackSize = json.getIntOrNull("max_stack_size") ?: 64,
+                maxDurability = json.getIntOrNull("max_durability") ?: -1,
                 containerItemSupplier = {
                     json.getStringOrNull("container_item")?.let { ForgeRegistries.ITEMS.getValue(it.toResLoc()) }
                 },
                 rarity = json.getStringOrNull("rarity")?.let { Rarity.valueOf(it.toUpperCase()) } ?: Rarity.COMMON,
-                canRepair = json.getPrimitiveOrNull("can_repair")?.asBoolean ?: true,
-                destroySpeed = json.getPrimitiveOrNull("destroy_speed")?.asFloat ?: 1f,
+                canRepair = json.getBooleanOrNull("can_repair") ?: true,
+                destroySpeed = json.getFloatOrNull("destroy_speed") ?: 1f,
                 food = json.getObjectOrNull("food")?.let { FoodSerializer.read(it) },
                 tooltips = json.getArrayOrNull("tooltips")?.map { TranslationTextComponent(it.asString) }
                         ?: emptyList(),
                 translationKey = json.getStringOrNull("translation_key"),
-                glows = json.getPrimitiveOrNull("glows")?.asBoolean ?: false,
-                isEnchantable = json.getPrimitiveOrNull("is_enchantable")?.asBoolean ?: true,
-                enchantability = json.getPrimitiveOrNull("enchantability")?.asInt ?: 0,
-                entityLifespan = json.getPrimitiveOrNull("entity_lifespan")?.asInt ?: 6000,
-                isBookEnchantable = json.getPrimitiveOrNull("is_book_enchantable")?.asBoolean ?: true,
-                burnTime = json.getAsJsonPrimitive("burn_time")?.asInt ?: -1
+                glows = json.getBooleanOrNull("glows") ?: false,
+                isEnchantable = json.getBooleanOrNull("is_enchantable") ?: true,
+                enchantability = json.getIntOrNull("enchantability") ?: 0,
+                entityLifespan = json.getIntOrNull("entity_lifespan") ?: 6000,
+                isBookEnchantable = json.getBooleanOrNull("is_book_enchantable") ?: true,
+                burnTime = json.getIntOrNull("burn_time") ?: -1
         )
 
         override fun write(obj: ExtendedItemProperties) = json {

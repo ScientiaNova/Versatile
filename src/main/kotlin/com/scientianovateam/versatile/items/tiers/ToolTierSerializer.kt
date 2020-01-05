@@ -11,11 +11,11 @@ import net.minecraft.item.ItemTier
 object ToolTierSerializer : IJSONSerializer<ToolTier, JsonObject> {
     override fun read(json: JsonObject) = ToolTier(
             json.getStringOrNull("name") ?: error("Missing registry name for item tier"),
-            json.getPrimitiveOrNull("max_uses")?.asInt ?: ItemTier.WOOD.maxUses,
-            json.getPrimitiveOrNull("efficiency")?.asFloat ?: ItemTier.WOOD.efficiency,
-            json.getPrimitiveOrNull("attack_damage")?.asFloat ?: ItemTier.WOOD.attackDamage,
-            json.getPrimitiveOrNull("harvest_level")?.asInt ?: ItemTier.WOOD.harvestLevel,
-            json.getPrimitiveOrNull("enchantability")?.asInt ?: ItemTier.WOOD.enchantability
+            json.getIntOrNull("max_uses") ?: ItemTier.WOOD.maxUses,
+            json.getFloatOrNull("efficiency") ?: ItemTier.WOOD.efficiency,
+            json.getFloatOrNull("attack_damage") ?: ItemTier.WOOD.attackDamage,
+            json.getIntOrNull("harvest_level") ?: ItemTier.WOOD.harvestLevel,
+            json.getIntOrNull("enchantability") ?: ItemTier.WOOD.enchantability
     ) {
         json.getObjectOrNull("repair_ingredient")?.entrySet()?.firstOrNull()?.let { (serializer, value) ->
             (value as? JsonObject)?.let { RECIPE_ITEM_STACK_SERIALIZERS[serializer.toResLocV()]?.read(it)?.resolve(emptyMap()) }

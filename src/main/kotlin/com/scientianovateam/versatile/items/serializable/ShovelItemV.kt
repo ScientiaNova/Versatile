@@ -1,7 +1,7 @@
 package com.scientianovateam.versatile.items.serializable
 
 import com.google.gson.JsonObject
-import com.scientianovateam.versatile.common.extensions.getPrimitiveOrNull
+import com.scientianovateam.versatile.common.extensions.getFloatOrNull
 import com.scientianovateam.versatile.common.extensions.toResLocV
 import com.scientianovateam.versatile.common.extensions.toStack
 import com.scientianovateam.versatile.common.serialization.IRegisterableJSONSerializer
@@ -42,8 +42,8 @@ class ShovelItemV(val tierBasedProperties: ToolTierBasedProperties, val extraAtt
 
         override fun read(json: JsonObject) = ShovelItemV(
                 ToolTierBasedProperties.Serializer.read(json),
-                json.getPrimitiveOrNull("extra_attack_damage")?.asFloat ?: 2.5f,
-                json.getPrimitiveOrNull("attack_speed")?.asFloat ?: -3f
+                json.getFloatOrNull("extra_attack_damage") ?: 2.5f,
+                json.getFloatOrNull("attack_speed") ?: -3f
         )
 
         override fun write(obj: ShovelItemV) = ToolTierBasedProperties.Serializer.write(obj.tierBasedProperties).apply {

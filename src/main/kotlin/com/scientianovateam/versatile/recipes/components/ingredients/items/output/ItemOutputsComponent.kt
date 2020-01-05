@@ -1,7 +1,7 @@
 package com.scientianovateam.versatile.recipes.components.ingredients.items.output
 
 import com.google.gson.JsonObject
-import com.scientianovateam.versatile.common.extensions.getPrimitiveOrNull
+import com.scientianovateam.versatile.common.extensions.getIntOrNull
 import com.scientianovateam.versatile.common.extensions.json
 import com.scientianovateam.versatile.common.extensions.toResLocV
 import com.scientianovateam.versatile.common.serialization.IRegisterableJSONSerializer
@@ -56,8 +56,8 @@ data class ItemOutputsComponent(val min: Int, val max: Int) : IRecipeComponent<L
         override val registryName = "item_outputs".toResLocV()
 
         override fun read(json: JsonObject) = ItemOutputsComponent(
-                json.getPrimitiveOrNull("min")?.asInt ?: 0,
-                json.getPrimitiveOrNull("max")?.asInt ?: error("Missing maximum amount of item outputs")
+                json.getIntOrNull("min") ?: 0,
+                json.getIntOrNull("max") ?: error("Missing maximum amount of item outputs")
         )
 
         override fun write(obj: ItemOutputsComponent) = json {

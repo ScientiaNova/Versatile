@@ -15,6 +15,14 @@ fun JsonObject.getPrimitiveOrNull(name: String): JsonPrimitive? = get(name) as? 
 
 fun JsonObject.getStringOrNull(name: String): String? = getPrimitiveOrNull(name)?.asString
 
+fun JsonObject.getBooleanOrNull(name: String): Boolean? = getPrimitiveOrNull(name)?.asBoolean
+
+fun JsonObject.getNumberOrNull(name: String): Number? = getPrimitiveOrNull(name)?.let { if (it.isNumber) it.asNumber else null }
+
+fun JsonObject.getIntOrNull(name: String): Int? = getNumberOrNull(name)?.toInt()
+
+fun JsonObject.getFloatOrNull(name: String): Float? = getNumberOrNull(name)?.toFloat()
+
 fun JsonObject.merge(target: JsonObject): JsonObject = copy().also { new ->
     target.entrySet().forEach { (key, value) ->
         new.add(key, when (value) {

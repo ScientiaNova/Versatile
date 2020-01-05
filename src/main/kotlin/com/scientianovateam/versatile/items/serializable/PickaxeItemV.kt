@@ -1,7 +1,7 @@
 package com.scientianovateam.versatile.items.serializable
 
 import com.google.gson.JsonObject
-import com.scientianovateam.versatile.common.extensions.getPrimitiveOrNull
+import com.scientianovateam.versatile.common.extensions.getFloatOrNull
 import com.scientianovateam.versatile.common.extensions.toResLocV
 import com.scientianovateam.versatile.common.extensions.toStack
 import com.scientianovateam.versatile.common.serialization.IRegisterableJSONSerializer
@@ -42,8 +42,8 @@ class PickaxeItemV(val tierBasedProperties: ToolTierBasedProperties, val extraAt
 
         override fun read(json: JsonObject) = PickaxeItemV(
                 ToolTierBasedProperties.Serializer.read(json),
-                json.getPrimitiveOrNull("extra_attack_damage")?.asFloat ?: 2f,
-                json.getPrimitiveOrNull("attack_speed")?.asFloat ?: -2.8f
+                json.getFloatOrNull("extra_attack_damage") ?: 2f,
+                json.getFloatOrNull("attack_speed") ?: -2.8f
         )
 
         override fun write(obj: PickaxeItemV) = ToolTierBasedProperties.Serializer.write(obj.tierBasedProperties).apply {

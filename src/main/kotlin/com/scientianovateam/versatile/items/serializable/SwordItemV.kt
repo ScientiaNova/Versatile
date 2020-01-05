@@ -1,7 +1,8 @@
 package com.scientianovateam.versatile.items.serializable
 
 import com.google.gson.JsonObject
-import com.scientianovateam.versatile.common.extensions.getPrimitiveOrNull
+import com.scientianovateam.versatile.common.extensions.getFloatOrNull
+import com.scientianovateam.versatile.common.extensions.getIntOrNull
 import com.scientianovateam.versatile.common.extensions.toResLocV
 import com.scientianovateam.versatile.common.extensions.toStack
 import com.scientianovateam.versatile.common.serialization.IRegisterableJSONSerializer
@@ -36,8 +37,8 @@ class SwordItemV(val tierBasedProperties: ToolTierBasedProperties, val extraAtta
 
         override fun read(json: JsonObject) = SwordItemV(
                 ToolTierBasedProperties.Serializer.read(json),
-                json.getPrimitiveOrNull("extra_attack_damage")?.asInt ?: 3,
-                json.getPrimitiveOrNull("attack_speed")?.asFloat ?: -2.4f
+                json.getIntOrNull("extra_attack_damage") ?: 3,
+                json.getFloatOrNull("attack_speed") ?: -2.4f
         )
 
         override fun write(obj: SwordItemV) = ToolTierBasedProperties.Serializer.write(obj.tierBasedProperties).apply {

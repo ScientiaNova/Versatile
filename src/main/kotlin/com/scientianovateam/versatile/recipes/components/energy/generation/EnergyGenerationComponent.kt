@@ -1,7 +1,7 @@
 package com.scientianovateam.versatile.recipes.components.energy.generation
 
 import com.google.gson.JsonObject
-import com.scientianovateam.versatile.common.extensions.getPrimitiveOrNull
+import com.scientianovateam.versatile.common.extensions.getIntOrNull
 import com.scientianovateam.versatile.common.extensions.json
 import com.scientianovateam.versatile.common.extensions.toResLocV
 import com.scientianovateam.versatile.common.serialization.IRegisterableJSONSerializer
@@ -41,8 +41,8 @@ data class EnergyGenerationComponent(val min: Int, val max: Int) : IRecipeCompon
         override val registryName = "energy_generation".toResLocV()
 
         override fun read(json: JsonObject) = EnergyGenerationComponent(
-                json.getPrimitiveOrNull("min")?.asInt ?: 0,
-                json.getPrimitiveOrNull("max")?.asInt ?: Int.MAX_VALUE
+                json.getIntOrNull("min") ?: 0,
+                json.getIntOrNull("max") ?: Int.MAX_VALUE
         )
 
         override fun write(obj: EnergyGenerationComponent) = json {

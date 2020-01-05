@@ -1,7 +1,7 @@
 package com.scientianovateam.versatile.recipes.components.ingredients.fluids.input
 
 import com.google.gson.JsonObject
-import com.scientianovateam.versatile.common.extensions.getPrimitiveOrNull
+import com.scientianovateam.versatile.common.extensions.getIntOrNull
 import com.scientianovateam.versatile.common.extensions.json
 import com.scientianovateam.versatile.common.extensions.toList
 import com.scientianovateam.versatile.common.extensions.toResLocV
@@ -86,9 +86,9 @@ data class FluidInputsComponent(val min: Int, val max: Int, val capacity: Int) :
         override val registryName = "fluid_inputs".toResLocV()
 
         override fun read(json: JsonObject) = FluidInputsComponent(
-                json.getPrimitiveOrNull("min")?.asInt ?: 0,
-                json.getPrimitiveOrNull("max")?.asInt ?: error("Missing maximum amount of fluid inputs"),
-                json.getPrimitiveOrNull("capacity")?.asInt ?: 10_000
+                json.getIntOrNull("min") ?: 0,
+                json.getIntOrNull("max") ?: error("Missing maximum amount of fluid inputs"),
+                json.getIntOrNull("capacity") ?: 10_000
         )
 
         override fun write(obj: FluidInputsComponent) = json {

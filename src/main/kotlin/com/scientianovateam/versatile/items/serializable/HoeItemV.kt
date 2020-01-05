@@ -1,7 +1,7 @@
 package com.scientianovateam.versatile.items.serializable
 
 import com.google.gson.JsonObject
-import com.scientianovateam.versatile.common.extensions.getPrimitiveOrNull
+import com.scientianovateam.versatile.common.extensions.getFloatOrNull
 import com.scientianovateam.versatile.common.extensions.toResLocV
 import com.scientianovateam.versatile.common.extensions.toStack
 import com.scientianovateam.versatile.common.serialization.IRegisterableJSONSerializer
@@ -36,8 +36,7 @@ class HoeItemV(val tierBasedProperties: ToolTierBasedProperties, val attackSpeed
 
         override fun read(json: JsonObject): HoeItemV {
             val properties = ToolTierBasedProperties.Serializer.read(json)
-            return HoeItemV(properties, json.getPrimitiveOrNull("attack_speed")?.asFloat
-                    ?: properties.tier.attackDamage + 1)
+            return HoeItemV(properties, json.getFloatOrNull("attack_speed") ?: properties.tier.attackDamage + 1)
         }
 
         override fun write(obj: HoeItemV) = ToolTierBasedProperties.Serializer.write(obj.tierBasedProperties).apply {

@@ -3,7 +3,6 @@ package com.scientianovateam.versatile
 import com.scientianovateam.versatile.blocks.BlockRegistry
 import com.scientianovateam.versatile.common.registry.VersatileRegistryEvent
 import com.scientianovateam.versatile.fluids.FluidRegistry
-import com.scientianovateam.versatile.items.ItemRegistry
 import com.scientianovateam.versatile.items.MaterialItem
 import com.scientianovateam.versatile.machines.BaseMachineRegistry
 import com.scientianovateam.versatile.machines.gui.BaseScreen
@@ -16,7 +15,6 @@ import com.scientianovateam.versatile.materialsystem.main.IMaterialObject
 import com.scientianovateam.versatile.proxy.ClientProxy
 import com.scientianovateam.versatile.proxy.IModProxy
 import com.scientianovateam.versatile.proxy.ServerProxy
-import com.scientianovateam.versatile.proxy.addModelJSONs
 import com.scientianovateam.versatile.recipes.lists.IRecipeLIst
 import com.scientianovateam.versatile.recipes.lists.RecipeLists
 import com.scientianovateam.versatile.recipes.syncing.MaterialBasedRecipe
@@ -29,7 +27,6 @@ import net.alexwells.kottle.FMLKotlinModLoadingContext
 import net.minecraft.block.Block
 import net.minecraft.client.gui.ScreenManager
 import net.minecraft.fluid.Fluid
-import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
@@ -97,11 +94,6 @@ object Versatile {
         @SubscribeEvent(priority = EventPriority.HIGHEST)
         fun onEarlyBlockRegistry(e: RegistryEvent.Register<Block>) {
             MinecraftForge.EVENT_BUS.post(VersatileRegistryEvent())
-        }
-
-        @SubscribeEvent(priority = EventPriority.LOWEST)
-        fun onLateBlockRegistry(e: RegistryEvent.Register<Block>) {
-            BlockRegistry.registerBlocks(e)
         }
 
         @SubscribeEvent(priority = EventPriority.LOWEST)

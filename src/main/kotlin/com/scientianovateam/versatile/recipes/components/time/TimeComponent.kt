@@ -1,7 +1,7 @@
 package com.scientianovateam.versatile.recipes.components.time
 
 import com.google.gson.JsonObject
-import com.scientianovateam.versatile.common.extensions.getPrimitiveOrNull
+import com.scientianovateam.versatile.common.extensions.getIntOrNull
 import com.scientianovateam.versatile.common.extensions.json
 import com.scientianovateam.versatile.common.extensions.shorten
 import com.scientianovateam.versatile.common.extensions.toResLocV
@@ -57,8 +57,8 @@ data class TimeComponent(val min: Int = 0, val max: Int = Int.MAX_VALUE) : IReci
         override val registryName = "time".toResLocV()
 
         override fun read(json: JsonObject) = TimeComponent(
-                json.getPrimitiveOrNull("min")?.asInt ?: 0,
-                json.getPrimitiveOrNull("max")?.asInt ?: Int.MAX_VALUE
+                json.getIntOrNull("min") ?: 0,
+                json.getIntOrNull("max") ?: Int.MAX_VALUE
         )
 
         override fun write(obj: TimeComponent) = json {

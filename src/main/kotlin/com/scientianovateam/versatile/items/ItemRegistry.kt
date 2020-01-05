@@ -1,6 +1,7 @@
 package com.scientianovateam.versatile.items
 
 import com.scientianovateam.versatile.Versatile
+import com.scientianovateam.versatile.common.extensions.forEach
 import com.scientianovateam.versatile.common.registry.VersatileRegistryEvent
 import com.scientianovateam.versatile.items.serializable.*
 import com.scientianovateam.versatile.materialsystem.lists.Forms
@@ -31,8 +32,8 @@ object ItemRegistry {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     fun onLateItemRegistry(e: RegistryEvent.Register<Item>) {
-        MaterialItems.additionSuppliers.cellSet()
-                .forEach { MaterialItems.addItem(it.rowKey!!, it.columnKey!!, it.value!!()) }
+        SERIALIZED_ITEMS.forEach { e.registry.register(it.value) }
+        MaterialItems.additionSuppliers.forEach { MaterialItems.addItem(it.rowKey!!, it.columnKey!!, it.value!!()) }
         Materials.all.forEach { mat ->
             Forms.all.filter { type -> type.isMaterialCompatible(mat) && !MaterialItems.contains(mat, type) && if (mat.invertedBlacklist) type in mat.typeBlacklist else type !in mat.typeBlacklist }
                     .forEach { type -> type.itemConstructor?.invoke(mat)?.let { e.registry.register(it) } }

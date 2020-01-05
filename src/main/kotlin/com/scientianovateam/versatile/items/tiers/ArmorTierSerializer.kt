@@ -12,15 +12,17 @@ import net.minecraftforge.registries.ForgeRegistries
 
 object ArmorTierSerializer : IJSONSerializer<ArmorTier, JsonObject> {
     override fun read(json: JsonObject) = ArmorTier(
-            json.getStringOrNull("name") ?: error("Missing name for armor tier"),
-            json.getArrayOrNull("durability")?.map(JsonElement::getAsInt)?.toIntArray() ?: intArrayOf(0, 0, 0, 0),
-            json.getArrayOrNull("damage_reduction")?.map(JsonElement::getAsInt)?.toIntArray() ?: intArrayOf(0, 0, 0, 0),
-            json.getPrimitiveOrNull("enchantability")?.asInt ?: ArmorMaterial.LEATHER.enchantability,
-            {
-                json.getPrimitiveOrNull("sound")?.asString?.let { ForgeRegistries.SOUND_EVENTS.getValue(it.toResLoc()) }
+            registryName = json.getStringOrNull("name") ?: error("Missing name for armor tier"),
+            durability = json.getArrayOrNull("durability")?.map(JsonElement::getAsInt)?.toIntArray()
+                    ?: intArrayOf(0, 0, 0, 0),
+            damageReduction = json.getArrayOrNull("damage_reduction")?.map(JsonElement::getAsInt)?.toIntArray()
+                    ?: intArrayOf(0, 0, 0, 0),
+            enchantability = json.getIntOrNull("enchantability") ?: ArmorMaterial.LEATHER.enchantability,
+            soundSupplier = {
+                json.getStringOrNull("sound")?.let { ForgeRegistries.SOUND_EVENTS.getValue(it.toResLoc()) }
                         ?: ArmorMaterial.IRON.soundEvent
             },
-            json.getPrimitiveOrNull("toughness")?.asFloat ?: ArmorMaterial.LEATHER.toughness
+            toughness = json.getFloatOrNull("toughness") ?: ArmorMaterial.LEATHER.toughness
     ) {
         json.getObjectOrNull("repair_ingredient")?.entrySet()?.firstOrNull()?.let { (serializer, value) ->
             (value as? JsonObject)?.let { RECIPE_ITEM_STACK_SERIALIZERS[serializer.toResLocV()]?.read(it)?.resolve(emptyMap()) }

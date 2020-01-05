@@ -32,9 +32,7 @@ open class RegularItem(val extendedProperties: ExtendedItemProperties) : Item(ex
 
     object Serializer : IRegisterableJSONSerializer<RegularItem, JsonObject> {
         override val registryName = "regular".toResLocV()
-
         override fun read(json: JsonObject) = RegularItem(ExtendedItemProperties.Serializer.read(json))
-
         override fun write(obj: RegularItem) = ExtendedItemProperties.Serializer.write(obj.extendedProperties)
     }
 }
