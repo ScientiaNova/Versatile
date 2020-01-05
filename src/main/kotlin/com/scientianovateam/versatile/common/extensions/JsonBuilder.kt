@@ -31,6 +31,10 @@ class JsonBuilder(builder: JsonBuilder.() -> Unit) {
     }
 
     operator fun String.invoke(builder: JsonBuilder.() -> Unit) = result.add(this, JsonBuilder(builder).result)
+
+    fun JsonObject.extract() = this.entrySet().forEach { (key, value) ->
+        result.add(key, value)
+    }
 }
 
 fun json(builder: JsonBuilder.() -> Unit) = JsonBuilder(builder).result

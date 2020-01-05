@@ -17,8 +17,10 @@ object ToolTierSerializer : IJSONSerializer<ToolTier, JsonObject> {
             harvestLevel = json.getIntOrNull("harvest_level") ?: ItemTier.WOOD.harvestLevel,
             enchantability = json.getIntOrNull("enchantability") ?: ItemTier.WOOD.enchantability
     ) {
-        json.getStringOrNull("type")?.let {
-            RECIPE_ITEM_STACK_SERIALIZERS[it.toResLocV()]?.read(json)?.resolve()
+        json.getObjectOrNull("repair_ingredient")?.let { ingredientJson ->
+            json.getStringOrNull("type")?.let {
+                RECIPE_ITEM_STACK_SERIALIZERS[it.toResLocV()]?.read(ingredientJson)?.resolve()
+            }
         } ?: RecipeItemStack.EMPTY
     }
 

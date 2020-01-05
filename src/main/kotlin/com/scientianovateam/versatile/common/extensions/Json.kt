@@ -23,7 +23,7 @@ fun JsonObject.getIntOrNull(name: String): Int? = getNumberOrNull(name)?.toInt()
 
 fun JsonObject.getFloatOrNull(name: String): Float? = getNumberOrNull(name)?.toFloat()
 
-fun JsonObject.merge(target: JsonObject): JsonObject = copy().also { new ->
+infix fun JsonObject.merge(target: JsonObject): JsonObject = copy().also { new ->
     target.entrySet().forEach { (key, value) ->
         new.add(key, when (value) {
             is JsonObject -> new.getObjectOrNull(key)?.merge(value) ?: value

@@ -24,8 +24,10 @@ object ArmorTierSerializer : IJSONSerializer<ArmorTier, JsonObject> {
             },
             toughness = json.getFloatOrNull("toughness") ?: ArmorMaterial.LEATHER.toughness
     ) {
-        json.getObjectOrNull("repair_ingredient")?.entrySet()?.firstOrNull()?.let { (serializer, value) ->
-            (value as? JsonObject)?.let { RECIPE_ITEM_STACK_SERIALIZERS[serializer.toResLocV()]?.read(it)?.resolve(emptyMap()) }
+        json.getObjectOrNull("repair_ingredient")?.let { ingredientJson ->
+            json.getStringOrNull("type")?.let {
+                RECIPE_ITEM_STACK_SERIALIZERS[it.toResLocV()]?.read(ingredientJson)?.resolve()
+            }
         } ?: RecipeItemStack.EMPTY
     }
 
@@ -37,7 +39,8 @@ object ArmorTierSerializer : IJSONSerializer<ArmorTier, JsonObject> {
         "toughness" to obj.toughness
         "repair_ingredient" {
             val repairStack = obj.repairRecipeStack
-            repairStack.serializer.registryName.toString() to repairStack.serialize()
+            "type" to repairStack.serializer.registryName
+            repairStack.serialize().extract()
         }
     }
 }

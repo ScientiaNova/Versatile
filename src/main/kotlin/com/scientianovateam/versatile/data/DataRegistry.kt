@@ -5,11 +5,13 @@ import com.google.gson.GsonBuilder
 import com.scientianovateam.versatile.Versatile
 import com.scientianovateam.versatile.data.item.ArmorTierProvider
 import com.scientianovateam.versatile.data.item.ToolTierProvider
+import com.scientianovateam.versatile.items.tiers.ArmorTier
 import com.scientianovateam.versatile.items.tiers.ToolTier
 import com.scientianovateam.versatile.recipes.components.ingredients.recipestacks.items.toRStack
 import net.minecraft.data.DataGenerator
 import net.minecraft.item.Items
 import net.minecraft.tags.ItemTags
+import net.minecraft.util.SoundEvents
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent
@@ -66,7 +68,60 @@ object DataRegistry {
             )
         }
         armorTiers {
-            
+            +ArmorTier(
+                    registryName = "leather",
+                    durability = intArrayOf(65, 75, 80, 55),
+                    damageReduction = intArrayOf(1, 2, 3, 1),
+                    enchantability = 15,
+                    soundSupplier = { SoundEvents.ITEM_ARMOR_EQUIP_LEATHER },
+                    toughness = 0f,
+                    repairRecipeStackSupplier = { Items.LEATHER.toRStack() }
+            )
+            +ArmorTier(
+                    registryName = "chainmail",
+                    durability = intArrayOf(195, 225, 240, 165),
+                    damageReduction = intArrayOf(1, 4, 5, 2),
+                    enchantability = 12,
+                    soundSupplier = { SoundEvents.ITEM_ARMOR_EQUIP_CHAIN },
+                    toughness = 0f,
+                    repairRecipeStackSupplier = { Items.IRON_INGOT.toRStack() }
+            )
+            +ArmorTier(
+                    registryName = "iron",
+                    durability = intArrayOf(195, 225, 240, 165),
+                    damageReduction = intArrayOf(2, 5, 6, 2),
+                    enchantability = 9,
+                    soundSupplier = { SoundEvents.ITEM_ARMOR_EQUIP_IRON },
+                    toughness = 0f,
+                    repairRecipeStackSupplier = { Items.IRON_INGOT.toRStack() }
+            )
+            +ArmorTier(
+                    registryName = "gold",
+                    durability = intArrayOf(91, 105, 112, 77),
+                    damageReduction = intArrayOf(1, 3, 5, 2),
+                    enchantability = 25,
+                    soundSupplier = { SoundEvents.ITEM_ARMOR_EQUIP_GOLD },
+                    toughness = 0f,
+                    repairRecipeStackSupplier = { Items.GOLD_INGOT.toRStack() }
+            )
+            +ArmorTier(
+                    registryName = "diamond",
+                    durability = intArrayOf(429, 495, 528, 363),
+                    damageReduction = intArrayOf(3, 6, 8, 3),
+                    enchantability = 10,
+                    soundSupplier = { SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND },
+                    toughness = 2f,
+                    repairRecipeStackSupplier = { Items.DIAMOND.toRStack() }
+            )
+            +ArmorTier(
+                    registryName = "turtle",
+                    durability = intArrayOf(325, 375, 400, 275),
+                    damageReduction = intArrayOf(2, 5, 6, 2),
+                    enchantability = 9,
+                    soundSupplier = { SoundEvents.ITEM_ARMOR_EQUIP_TURTLE },
+                    toughness = 0f,
+                    repairRecipeStackSupplier = { Items.SCUTE.toRStack() }
+            )
         }
     }
 }
