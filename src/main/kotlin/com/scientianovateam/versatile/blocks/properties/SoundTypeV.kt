@@ -8,14 +8,18 @@ import com.scientianovateam.versatile.common.extensions.toResLoc
 import com.scientianovateam.versatile.common.serialization.IJSONSerializer
 import net.minecraft.block.SoundType
 import net.minecraft.util.ResourceLocation
+import net.minecraft.util.SoundEvent
 import net.minecraftforge.registries.ForgeRegistries
 
-class SoundTypeV(val registryName: ResourceLocation, volume: Float, pitch: Float, breakSoundName: ResourceLocation, stepSoundName: ResourceLocation, placeSoundName: ResourceLocation, hitSoundName: ResourceLocation, fallSoundName: ResourceLocation) : SoundType(volume, pitch, null, null, null, null, null) {
-    private val breakSoundEvent by lazy { ForgeRegistries.SOUND_EVENTS.getValue(breakSoundName) }
-    private val stepSoundEvent by lazy { ForgeRegistries.SOUND_EVENTS.getValue(stepSoundName) }
-    private val placeSoundEvent by lazy { ForgeRegistries.SOUND_EVENTS.getValue(placeSoundName) }
-    private val hitSoundEvent by lazy { ForgeRegistries.SOUND_EVENTS.getValue(hitSoundName) }
-    private val fallSoundEvent by lazy { ForgeRegistries.SOUND_EVENTS.getValue(fallSoundName) }
+class SoundTypeV(val registryName: ResourceLocation, volume: Float = 1f, pitch: Float = 1f, breakSoundSupplier: () -> SoundEvent, stepSoundSupplier: () -> SoundEvent, placeSoundSupplier: () -> SoundEvent, hitSoundSupplier: () -> SoundEvent, fallSoundSupplier: () -> SoundEvent) : SoundType(volume, pitch, null, null, null, null, null) {
+    constructor(registryName: ResourceLocation, volume: Float = 1f, pitch: Float = 1f, breakSoundName: ResourceLocation, stepSoundName: ResourceLocation, placeSoundName: ResourceLocation, hitSoundName: ResourceLocation, fallSoundName: ResourceLocation) :
+            this(registryName, volume, pitch, { ForgeRegistries.SOUND_EVENTS.getValue(breakSoundName)!! }, { ForgeRegistries.SOUND_EVENTS.getValue(stepSoundName)!! }, { ForgeRegistries.SOUND_EVENTS.getValue(placeSoundName)!! }, { ForgeRegistries.SOUND_EVENTS.getValue(hitSoundName)!! }, { ForgeRegistries.SOUND_EVENTS.getValue(fallSoundName)!! })
+
+    private val breakSoundEvent by lazy(breakSoundSupplier)
+    private val stepSoundEvent by lazy(stepSoundSupplier)
+    private val placeSoundEvent by lazy(placeSoundSupplier)
+    private val hitSoundEvent by lazy(hitSoundSupplier)
+    private val fallSoundEvent by lazy(fallSoundSupplier)
 
     override fun getBreakSound() = breakSoundEvent
     override fun getStepSound() = stepSoundEvent

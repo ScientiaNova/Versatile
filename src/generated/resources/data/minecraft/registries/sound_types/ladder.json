@@ -1,0 +1,9 @@
+{
+  "volume": 1.0,
+  "pitch": 1.0,
+  "break_sound": "minecraft:block.ladder.fall",
+  "step_sound": "minecraft:block.ladder.step",
+  "place_sound": "minecraft:block.ladder.place",
+  "hit_sound": "minecraft:block.ladder.hit",
+  "fall_sound": "minecraft:block.ladder.fall"
+}

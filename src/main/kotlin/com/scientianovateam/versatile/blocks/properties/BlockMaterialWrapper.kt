@@ -15,12 +15,12 @@ data class BlockMaterialWrapper(
         val solid: Boolean = true,
         val blocksMovement: Boolean = true,
         val opaque: Boolean = true,
-        val requiresNoTool: Boolean = false,
+        val requiresTool: Boolean = false,
         val flammable: Boolean = false,
         val replaceable: Boolean = false,
         val pushReaction: PushReaction = PushReaction.NORMAL
 ) {
-    val material = Material(color, liquid, solid, blocksMovement, opaque, requiresNoTool, flammable, replaceable, pushReaction)
+    val material = Material(color, liquid, solid, blocksMovement, opaque, !requiresTool, flammable, replaceable, pushReaction)
 
     object Serializer : IJSONSerializer<BlockMaterialWrapper, JsonObject> {
         override fun read(json: JsonObject) = BlockMaterialWrapper(
@@ -30,7 +30,7 @@ data class BlockMaterialWrapper(
                 solid = json.getBooleanOrNull("solid") ?: true,
                 blocksMovement = json.getBooleanOrNull("blocks_movement") ?: true,
                 opaque = json.getBooleanOrNull("opaque") ?: true,
-                requiresNoTool = json.getBooleanOrNull("requires_no_tool") ?: false,
+                requiresTool = json.getBooleanOrNull("requires_tool") ?: false,
                 flammable = json.getBooleanOrNull("flammable") ?: false,
                 replaceable = json.getBooleanOrNull("replaceable") ?: false,
                 pushReaction = json.getStringOrNull("push_reaction")?.let { PushReaction.valueOf(it.toUpperCase()) } ?: PushReaction.NORMAL
@@ -42,7 +42,7 @@ data class BlockMaterialWrapper(
             "is_solid" to obj.solid
             "blocks_movement" to obj.blocksMovement
             "is_opaque" to obj.opaque
-            "requires_no_tool" to obj.requiresNoTool
+            "requires_tool" to obj.requiresTool
             "flammable" to obj.flammable
             "replaceable" to obj.replaceable
             "push_reaction" to obj.pushReaction.name.toLowerCase()

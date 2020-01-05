@@ -13,7 +13,7 @@ import net.minecraft.item.SwordItem
 import net.minecraft.util.text.ITextComponent
 import net.minecraft.world.World
 
-class SwordItemV(val tierBasedProperties: ToolTierBasedProperties, val extraAttackDamage: Int = 3, val attackSpeed: Float = 2.4f) : SwordItem(tierBasedProperties.tier, extraAttackDamage, attackSpeed, tierBasedProperties) {
+class SwordItemV(val tierBasedProperties: ToolTierBasedProperties, val extraAttackDamage: Int = 3, val attackSpeed: Float = 2.4f) : SwordItem(tierBasedProperties.tier, extraAttackDamage, attackSpeed, tierBasedProperties), ISerializableItem {
     override fun hasContainerItem(stack: ItemStack?) = tierBasedProperties.containerItem != null
 
     override fun getContainerItem(itemStack: ItemStack?): ItemStack = tierBasedProperties.containerItem?.toStack()
@@ -31,6 +31,8 @@ class SwordItemV(val tierBasedProperties: ToolTierBasedProperties, val extraAtta
     override fun getEntityLifespan(itemStack: ItemStack?, world: World?) = tierBasedProperties.entityLifespan
     override fun isBookEnchantable(stack: ItemStack?, book: ItemStack?) = tierBasedProperties.isBookEnchantable
     override fun getBurnTime(itemStack: ItemStack?) = tierBasedProperties.burnTime
+
+    override val serializer = Serializer
 
     object Serializer : IRegisterableJSONSerializer<SwordItemV, JsonObject> {
         override val registryName = "sword".toResLocV()

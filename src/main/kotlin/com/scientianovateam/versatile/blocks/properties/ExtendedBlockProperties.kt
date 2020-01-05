@@ -7,6 +7,7 @@ import com.scientianovateam.versatile.common.extensions.*
 import com.scientianovateam.versatile.common.serialization.IJSONSerializer
 import net.minecraft.block.Block
 import net.minecraft.block.material.MaterialColor
+import net.minecraft.block.material.PushReaction
 import net.minecraft.util.BlockRenderLayer
 import net.minecraft.util.math.shapes.VoxelShape
 import net.minecraft.util.math.shapes.VoxelShapes
@@ -44,7 +45,8 @@ open class ExtendedBlockProperties(
         val sticky: Boolean = false,
         val flammability: Int = 0,
         val fireSpreadSpeed: Int = 0,
-        val fireSource: Boolean = false
+        val fireSource: Boolean = false,
+        val pushReaction: PushReaction = material.pushReaction
 ) : Block.Properties(material.material, materialColor) {
     init {
         if (!blocksMovement) super.doesNotBlockMovement()
@@ -94,8 +96,10 @@ open class ExtendedBlockProperties(
                     enchantingPowerBonus = json.getFloatOrNull("enchanting_power_boost") ?: 0f,
                     sticky = json.getBooleanOrNull("sticky") ?: false,
                     flammability = json.getIntOrNull("flammability") ?: 0,
-                    fireSpreadSpeed = json.getIntOrNull("fire_spread_seped") ?: 0,
-                    fireSource = json.getBooleanOrNull("fire_source") ?: false
+                    fireSpreadSpeed = json.getIntOrNull("fire_spread_speed") ?: 0,
+                    fireSource = json.getBooleanOrNull("fire_source") ?: false,
+                    pushReaction = json.getStringOrNull("push_reaction")?.let { PushReaction.valueOf(it.toUpperCase()) }
+                            ?: material.pushReaction
             )
         }
 
@@ -130,6 +134,7 @@ open class ExtendedBlockProperties(
             "flammability" to obj.flammability
             "fire_spread_speed" to obj.fireSpreadSpeed
             "fire_source" to obj.fireSource
+            "push_reaction" to obj.pushReaction.name.toLowerCase()
         }
     }
 }

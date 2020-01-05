@@ -1,0 +1,9 @@
+{
+  "volume": 1.0,
+  "pitch": 1.0,
+  "break_sound": "minecraft:block.wet_grass.fall",
+  "step_sound": "minecraft:block.wet_grass.step",
+  "place_sound": "minecraft:block.wet_grass.place",
+  "hit_sound": "minecraft:block.wet_grass.hit",
+  "fall_sound": "minecraft:block.wet_grass.fall"
+}

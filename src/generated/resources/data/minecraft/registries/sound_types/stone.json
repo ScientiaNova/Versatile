@@ -1,0 +1,9 @@
+{
+  "volume": 1.0,
+  "pitch": 1.0,
+  "break_sound": "minecraft:block.stone.fall",
+  "step_sound": "minecraft:block.stone.step",
+  "place_sound": "minecraft:block.stone.place",
+  "hit_sound": "minecraft:block.stone.hit",
+  "fall_sound": "minecraft:block.stone.fall"
+}

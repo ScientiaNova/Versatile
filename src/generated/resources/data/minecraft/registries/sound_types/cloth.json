@@ -1,0 +1,9 @@
+{
+  "volume": 1.0,
+  "pitch": 1.0,
+  "break_sound": "minecraft:block.wool.fall",
+  "step_sound": "minecraft:block.wool.step",
+  "place_sound": "minecraft:block.wool.place",
+  "hit_sound": "minecraft:block.wool.hit",
+  "fall_sound": "minecraft:block.wool.fall"
+}

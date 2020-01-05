@@ -1,0 +1,9 @@
+{
+  "volume": 1.0,
+  "pitch": 1.0,
+  "break_sound": "minecraft:block.bamboo.fall",
+  "step_sound": "minecraft:block.bamboo.step",
+  "place_sound": "minecraft:block.bamboo_sapling.place",
+  "hit_sound": "minecraft:block.bamboo_sapling.hit",
+  "fall_sound": "minecraft:block.bamboo.fall"
+}

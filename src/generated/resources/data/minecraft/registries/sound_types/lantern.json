@@ -1,0 +1,9 @@
+{
+  "volume": 1.0,
+  "pitch": 1.0,
+  "break_sound": "minecraft:block.lantern.fall",
+  "step_sound": "minecraft:block.lantern.step",
+  "place_sound": "minecraft:block.lantern.place",
+  "hit_sound": "minecraft:block.lantern.hit",
+  "fall_sound": "minecraft:block.lantern.fall"
+}

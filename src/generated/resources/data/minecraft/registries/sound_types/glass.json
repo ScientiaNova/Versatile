@@ -1,0 +1,9 @@
+{
+  "volume": 1.0,
+  "pitch": 1.0,
+  "break_sound": "minecraft:block.glass.fall",
+  "step_sound": "minecraft:block.glass.step",
+  "place_sound": "minecraft:block.glass.place",
+  "hit_sound": "minecraft:block.glass.hit",
+  "fall_sound": "minecraft:block.glass.fall"
+}

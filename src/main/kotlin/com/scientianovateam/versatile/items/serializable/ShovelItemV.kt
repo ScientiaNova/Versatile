@@ -13,7 +13,7 @@ import net.minecraft.item.ShovelItem
 import net.minecraft.util.text.ITextComponent
 import net.minecraft.world.World
 
-class ShovelItemV(val tierBasedProperties: ToolTierBasedProperties, val extraAttackDamage: Float = 2.5f, attackSpeed: Float = -3f) : ShovelItem(tierBasedProperties.tier, tierBasedProperties.tier.attackDamage + extraAttackDamage, attackSpeed, tierBasedProperties) {
+class ShovelItemV(val tierBasedProperties: ToolTierBasedProperties, val extraAttackDamage: Float = 2.5f, attackSpeed: Float = -3f) : ShovelItem(tierBasedProperties.tier, tierBasedProperties.tier.attackDamage + extraAttackDamage, attackSpeed, tierBasedProperties), ISerializableItem {
     override fun hasContainerItem(stack: ItemStack?) = tierBasedProperties.containerItem != null
 
     override fun getContainerItem(itemStack: ItemStack?): ItemStack = tierBasedProperties.containerItem?.toStack()
@@ -36,6 +36,8 @@ class ShovelItemV(val tierBasedProperties: ToolTierBasedProperties, val extraAtt
     override fun getEntityLifespan(itemStack: ItemStack?, world: World?) = tierBasedProperties.entityLifespan
     override fun isBookEnchantable(stack: ItemStack?, book: ItemStack?) = tierBasedProperties.isBookEnchantable
     override fun getBurnTime(itemStack: ItemStack?) = tierBasedProperties.burnTime
+
+    override val serializer = Serializer
 
     object Serializer : IRegisterableJSONSerializer<ShovelItemV, JsonObject> {
         override val registryName = "shovel".toResLocV()

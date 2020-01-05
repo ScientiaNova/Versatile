@@ -14,7 +14,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.text.ITextComponent
 import net.minecraft.world.World
 
-class ArmorItemV(val armorProperties: ArmorItemProperties) : ArmorItem(armorProperties.tier, armorProperties.slotType, armorProperties) {
+class ArmorItemV(val armorProperties: ArmorItemProperties) : ArmorItem(armorProperties.tier, armorProperties.slotType, armorProperties), ISerializableItem {
     override fun getArmorTexture(stack: ItemStack?, entity: Entity?, slot: EquipmentSlotType?, type: String?) =
             "${registryName?.namespace}:textures/models/armor/${armorMaterial.name}_layer_${if (slot == EquipmentSlotType.LEGS) 2 else 1}" +
                     "${type?.let { "_$it" } ?: ""}.png"
@@ -35,6 +35,8 @@ class ArmorItemV(val armorProperties: ArmorItemProperties) : ArmorItem(armorProp
     override fun getEntityLifespan(itemStack: ItemStack?, world: World?) = armorProperties.entityLifespan
     override fun isBookEnchantable(stack: ItemStack?, book: ItemStack?) = armorProperties.isBookEnchantable
     override fun getBurnTime(itemStack: ItemStack?) = armorProperties.burnTime
+
+    override val serializer = Serializer
 
     object Serializer : IRegisterableJSONSerializer<ArmorItemV, JsonObject> {
         override val registryName = "armor".toResLocV()

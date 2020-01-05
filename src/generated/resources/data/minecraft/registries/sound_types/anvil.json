@@ -1,0 +1,9 @@
+{
+  "volume": 0.3,
+  "pitch": 1.0,
+  "break_sound": "minecraft:block.anvil.fall",
+  "step_sound": "minecraft:block.anvil.step",
+  "place_sound": "minecraft:block.anvil.place",
+  "hit_sound": "minecraft:block.anvil.hit",
+  "fall_sound": "minecraft:block.anvil.fall"
+}

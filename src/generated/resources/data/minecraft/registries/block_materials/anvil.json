@@ -1,0 +1,11 @@
+{
+  "color": 6,
+  "is_liquid": false,
+  "is_solid": true,
+  "blocks_movement": true,
+  "is_opaque": true,
+  "requires_tool": true,
+  "flammable": false,
+  "replaceable": false,
+  "push_reaction": "block"
+}

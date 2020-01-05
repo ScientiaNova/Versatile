@@ -1,0 +1,9 @@
+{
+  "volume": 1.0,
+  "pitch": 1.0,
+  "break_sound": "minecraft:block.snow.fall",
+  "step_sound": "minecraft:block.snow.step",
+  "place_sound": "minecraft:block.snow.place",
+  "hit_sound": "minecraft:block.snow.hit",
+  "fall_sound": "minecraft:block.snow.fall"
+}

@@ -1,0 +1,9 @@
+{
+  "volume": 1.0,
+  "pitch": 1.0,
+  "break_sound": "minecraft:block.grass.fall",
+  "step_sound": "minecraft:block.grass.step",
+  "place_sound": "minecraft:item.crop.plant",
+  "hit_sound": "minecraft:block.grass.hit",
+  "fall_sound": "minecraft:block.grass.fall"
+}

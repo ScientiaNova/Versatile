@@ -13,7 +13,7 @@ import net.minecraft.item.PickaxeItem
 import net.minecraft.util.text.ITextComponent
 import net.minecraft.world.World
 
-class PickaxeItemV(val tierBasedProperties: ToolTierBasedProperties, val extraAttackDamage: Float = 2f, attackSpeed: Float = -2.8f) : PickaxeItem(tierBasedProperties.tier, (tierBasedProperties.tier.attackDamage + extraAttackDamage).toInt(), attackSpeed, tierBasedProperties) {
+class PickaxeItemV(val tierBasedProperties: ToolTierBasedProperties, val extraAttackDamage: Float = 2f, attackSpeed: Float = -2.8f) : PickaxeItem(tierBasedProperties.tier, (tierBasedProperties.tier.attackDamage + extraAttackDamage).toInt(), attackSpeed, tierBasedProperties), ISerializableItem {
     override fun hasContainerItem(stack: ItemStack?) = tierBasedProperties.containerItem != null
 
     override fun getContainerItem(itemStack: ItemStack?): ItemStack = tierBasedProperties.containerItem?.toStack()
@@ -36,6 +36,8 @@ class PickaxeItemV(val tierBasedProperties: ToolTierBasedProperties, val extraAt
     override fun getEntityLifespan(itemStack: ItemStack?, world: World?) = tierBasedProperties.entityLifespan
     override fun isBookEnchantable(stack: ItemStack?, book: ItemStack?) = tierBasedProperties.isBookEnchantable
     override fun getBurnTime(itemStack: ItemStack?) = tierBasedProperties.burnTime
+
+    override val serializer = Serializer
 
     object Serializer : IRegisterableJSONSerializer<PickaxeItemV, JsonObject> {
         override val registryName = "pickaxe".toResLocV()

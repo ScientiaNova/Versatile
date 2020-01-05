@@ -12,7 +12,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.text.ITextComponent
 import net.minecraft.world.World
 
-class HoeItemV(val tierBasedProperties: ToolTierBasedProperties, val attackSpeed: Float = tierBasedProperties.tier.attackDamage + 1) : HoeItem(tierBasedProperties.tier, attackSpeed, tierBasedProperties) {
+class HoeItemV(val tierBasedProperties: ToolTierBasedProperties, val attackSpeed: Float = tierBasedProperties.tier.attackDamage + 1) : HoeItem(tierBasedProperties.tier, attackSpeed, tierBasedProperties), ISerializableItem {
     override fun hasContainerItem(stack: ItemStack?) = tierBasedProperties.containerItem != null
 
     override fun getContainerItem(itemStack: ItemStack?): ItemStack = tierBasedProperties.containerItem?.toStack()
@@ -30,6 +30,8 @@ class HoeItemV(val tierBasedProperties: ToolTierBasedProperties, val attackSpeed
     override fun getEntityLifespan(itemStack: ItemStack?, world: World?) = tierBasedProperties.entityLifespan
     override fun isBookEnchantable(stack: ItemStack?, book: ItemStack?) = tierBasedProperties.isBookEnchantable
     override fun getBurnTime(itemStack: ItemStack?) = tierBasedProperties.burnTime
+
+    override val serializer = Serializer
 
     object Serializer : IRegisterableJSONSerializer<HoeItemV, JsonObject> {
         override val registryName = "hoe".toResLocV()

@@ -1,5 +1,6 @@
 package com.scientianovateam.versatile.blocks
 
+import com.scientianovateam.versatile.blocks.serializable.RegularBlock
 import com.scientianovateam.versatile.common.extensions.forEach
 import com.scientianovateam.versatile.common.registry.VersatileRegistryEvent
 import com.scientianovateam.versatile.materialsystem.lists.Forms
@@ -19,7 +20,7 @@ object BlockRegistry {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     fun onLateBlockRegistry(e: RegistryEvent.Register<Block>) {
-        SERIALIZED_BLOCKS.forEach { e.registry.register(it.value) }
+        SERIALIZED_BLOCKS.forEach { e.registry.register(it.value as Block) }
         MaterialBlocks.additionSuppliers.forEach { MaterialBlocks.addBlock(it.rowKey!!, it.columnKey!!, it.value!!()) }
         Materials.all.forEach { mat ->
             Forms.all.filter { type -> type.isMaterialCompatible(mat) && !MaterialBlocks.contains(mat, type) && if (mat.invertedBlacklist) type in mat.typeBlacklist else type !in mat.typeBlacklist }

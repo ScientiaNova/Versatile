@@ -1,4 +1,4 @@
-package com.scientianovateam.versatile.blocks
+package com.scientianovateam.versatile.blocks.serializable
 
 import com.google.gson.JsonObject
 import com.scientianovateam.versatile.blocks.properties.ExtendedBlockProperties
@@ -16,7 +16,7 @@ import net.minecraft.world.Explosion
 import net.minecraft.world.IBlockReader
 import net.minecraft.world.IWorldReader
 
-open class RegularBlock(val extendedProperties: ExtendedBlockProperties) : Block(extendedProperties) {
+open class RegularBlock(val extendedProperties: ExtendedBlockProperties) : Block(extendedProperties), ISerializableBlock {
     override fun isAir(state: BlockState?, world: IBlockReader?, pos: BlockPos?) = extendedProperties.isAir
     override fun getTranslationKey(): String = extendedProperties.translationKey ?: super.getTranslationKey()
     override fun getRenderLayer() = extendedProperties.renderLayer
@@ -36,6 +36,9 @@ open class RegularBlock(val extendedProperties: ExtendedBlockProperties) : Block
     override fun getFlammability(state: BlockState?, world: IBlockReader?, pos: BlockPos?, face: Direction?) = extendedProperties.flammability
     override fun getFireSpreadSpeed(state: BlockState?, world: IBlockReader?, pos: BlockPos?, face: Direction?) = extendedProperties.fireSpreadSpeed
     override fun isFireSource(state: BlockState?, world: IBlockReader?, pos: BlockPos?, side: Direction?) = extendedProperties.fireSource
+    override fun getPushReaction(state: BlockState) = extendedProperties.pushReaction
+
+    override val serializer = Serializer
 
     object Serializer : IRegisterableJSONSerializer<RegularBlock, JsonObject> {
         override val registryName = "regular".toResLocV()

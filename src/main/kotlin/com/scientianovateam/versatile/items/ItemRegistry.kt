@@ -32,7 +32,7 @@ object ItemRegistry {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     fun onLateItemRegistry(e: RegistryEvent.Register<Item>) {
-        SERIALIZED_ITEMS.forEach { e.registry.register(it.value) }
+        SERIALIZED_ITEMS.forEach { e.registry.register(it.value as Item) }
         MaterialItems.additionSuppliers.forEach { MaterialItems.addItem(it.rowKey!!, it.columnKey!!, it.value!!()) }
         Materials.all.forEach { mat ->
             Forms.all.filter { type -> type.isMaterialCompatible(mat) && !MaterialItems.contains(mat, type) && if (mat.invertedBlacklist) type in mat.typeBlacklist else type !in mat.typeBlacklist }
