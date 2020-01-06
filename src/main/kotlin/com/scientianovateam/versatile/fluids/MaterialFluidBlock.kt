@@ -10,7 +10,7 @@ import net.minecraft.block.FlowingFluidBlock
 import net.minecraft.entity.Entity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.text.TranslationTextComponent
-import net.minecraft.util.text.translation.LanguageMap
+import net.minecraft.util.text.LanguageMap
 import net.minecraft.world.World
 
 class MaterialFluidBlock(override val mat: Material, override val form: Form) : FlowingFluidBlock({ MaterialFluids[mat, form] }, form.blockProperties(mat)), IMaterialObject {

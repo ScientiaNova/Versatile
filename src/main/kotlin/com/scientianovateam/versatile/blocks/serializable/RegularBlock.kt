@@ -19,8 +19,7 @@ import net.minecraft.world.IWorldReader
 open class RegularBlock(val extendedProperties: ExtendedBlockProperties) : Block(extendedProperties), ISerializableBlock {
     override fun isAir(state: BlockState?, world: IBlockReader?, pos: BlockPos?) = extendedProperties.isAir
     override fun getTranslationKey(): String = extendedProperties.translationKey ?: super.getTranslationKey()
-    override fun getRenderLayer() = extendedProperties.renderLayer
-    override fun isSolid(state: BlockState) = extendedProperties.solid
+    override val renderType = extendedProperties.renderType
     override fun getShape(state: BlockState, blockReader: IBlockReader, pos: BlockPos, context: ISelectionContext) = extendedProperties.shape
     override fun getCollisionShape(state: BlockState, blockReader: IBlockReader, pos: BlockPos, context: ISelectionContext) = extendedProperties.collisionShape
     override fun getRenderShape(state: BlockState, blockReader: IBlockReader, pos: BlockPos) = extendedProperties.renderShape

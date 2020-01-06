@@ -14,7 +14,7 @@ open class RecipeFluidSlotComponent(property: TERecipeFluidInputProperty, tankIn
     override fun drawInForeground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int, guiLeft: Int, guiTop: Int) {
         if (property.value.getFluidInTank(tankIndex).isEmpty)
             recipeProperty.value?.get(FluidInputsComponent::class.java)?.value?.getOrNull(tankIndex)?.let {
-                val stack = it.stacks[(Minecraft.getInstance().world.gameTime / 40).toInt() % it.stacks.size]
+                val stack = it.stacks[(Minecraft.getInstance().world!!.gameTime / 40).toInt() % it.stacks.size]
                 GUiUtils.drawTransparentFluidStack(stack, xOffset + x + 1, yOffset + y + 1, height - 2, width - 2)
             }
         super.drawInForeground(mouseX, mouseY, xOffset, yOffset, guiLeft, guiTop)

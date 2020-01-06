@@ -29,7 +29,7 @@ class UpdateRecipePacket(val property: String, val name: ResourceLocation) {
                 val container = DistExecutor.runForDist(
                         {
                             Supplier {
-                                serverSideContainer ?: Minecraft.getInstance().player.openContainer as? BaseContainer
+                                serverSideContainer ?: Minecraft.getInstance().player?.openContainer as? BaseContainer
                             }
                         },
                         { Supplier { serverSideContainer } }

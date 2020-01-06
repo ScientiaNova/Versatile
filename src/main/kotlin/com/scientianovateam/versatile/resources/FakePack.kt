@@ -1,9 +1,9 @@
 package com.scientianovateam.versatile.resources
 
-import com.scientianovateam.versatile.common.extensions.JsonBuilder
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonElement
 import com.google.gson.JsonParser
+import com.scientianovateam.versatile.common.extensions.JsonBuilder
 import net.minecraft.resources.IResourcePack
 import net.minecraft.resources.ResourcePack
 import net.minecraft.resources.ResourcePackType
@@ -55,11 +55,11 @@ internal class FakePack constructor(private val name: String) : IResourcePack {
             (if (type == ResourcePackType.CLIENT_RESOURCES) assets else data)[location]
                     ?: throw FileNotFoundException(location.toString())
 
-    override fun getAllResourceLocations(type: ResourcePackType, pathIn: String, maxDepth: Int, filter: Predicate<String>) =
+    override fun func_225637_a_(type: ResourcePackType, namespaceIn: String, pathIn: String, maxDepth: Int, filter: Predicate<String>) =
             (if (type == ResourcePackType.CLIENT_RESOURCES) assets else data).keys.filter {
                 val path = it.path
                 val lastSlash = path.lastIndexOf('/')
-                StringUtils.countMatches(path, '/') < maxDepth && path.startsWith(pathIn) && filter.test(path.substring(if (lastSlash < 0) 0 else lastSlash))
+                StringUtils.countMatches(path, '/') < maxDepth && it.namespace == namespaceIn && path.startsWith(path) && filter.test(path.substring(if (lastSlash < 0) 0 else lastSlash))
             }
 
     override fun resourceExists(type: ResourcePackType, location: ResourceLocation) =

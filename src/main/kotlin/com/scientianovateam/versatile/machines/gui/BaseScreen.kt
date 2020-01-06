@@ -1,9 +1,8 @@
 package com.scientianovateam.versatile.machines.gui
 
+import com.mojang.blaze3d.systems.RenderSystem
 import com.scientianovateam.versatile.machines.packets.NetworkHandler
 import com.scientianovateam.versatile.machines.packets.reopening.OpenGUIPacket
-import com.mojang.blaze3d.platform.GLX
-import com.mojang.blaze3d.platform.GlStateManager
 import net.minecraft.client.gui.screen.inventory.ContainerScreen
 import net.minecraft.client.renderer.RenderHelper
 import net.minecraft.entity.player.PlayerInventory
@@ -13,7 +12,6 @@ import net.minecraft.util.text.TextFormatting
 import net.minecraftforge.client.event.GuiContainerEvent.DrawBackground
 import net.minecraftforge.client.event.GuiContainerEvent.DrawForeground
 import net.minecraftforge.common.MinecraftForge
-
 
 open class BaseScreen(container: BaseContainer, playerInv: PlayerInventory, title: ITextComponent) : ContainerScreen<BaseContainer>(container, playerInv, title) {
     override fun drawGuiContainerBackgroundLayer(partialTicks: Float, mouseX: Int, mouseY: Int) =
@@ -70,47 +68,44 @@ open class BaseScreen(container: BaseContainer, playerInv: PlayerInventory, titl
         drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY)
 
         MinecraftForge.EVENT_BUS.post(DrawBackground(this, mouseX, mouseY))
-        GlStateManager.disableRescaleNormal()
+        RenderSystem.disableRescaleNormal()
         RenderHelper.disableStandardItemLighting()
-        GlStateManager.disableLighting()
-        GlStateManager.disableDepthTest()
-        RenderHelper.enableGUIStandardItemLighting()
-        GlStateManager.pushMatrix()
-        GlStateManager.color4f(1f, 1f, 1f, 1f)
-        GlStateManager.enableRescaleNormal()
+        RenderSystem.disableLighting()
+        RenderSystem.disableDepthTest()
+        RenderSystem.pushMatrix()
+        RenderSystem.color4f(1f, 1f, 1f, 1f)
+        RenderSystem.enableRescaleNormal()
         hoveredSlot = null
-        GLX.glMultiTexCoord2f(GLX.GL_TEXTURE1, 240f, 240f)
-        GlStateManager.color4f(1f, 1f, 1f, 1f)
+        RenderSystem.glMultiTexCoord2f(33986, 240.0f, 240.0f)
+        RenderSystem.color4f(1f, 1f, 1f, 1f)
 
         drawItems(mouseX, mouseY)
 
-        GlStateManager.translatef(guiLeft.toFloat(), guiTop.toFloat(), 0f)
+        RenderSystem.translatef(guiLeft.toFloat(), guiTop.toFloat(), 0f)
 
-        for (i1 in container.inventorySlots.indices) {
-            val slot = container.inventorySlots[i1]
+        for (slot in container.inventorySlots) {
             if (slot.isEnabled) drawSlot(slot)
             if (isSlotSelected(slot, mouseX.toDouble(), mouseY.toDouble()) && slot.isEnabled) {
                 hoveredSlot = slot
-                GlStateManager.disableLighting()
-                GlStateManager.disableDepthTest()
+                RenderSystem.disableLighting()
+                RenderSystem.disableDepthTest()
                 val slotX = slot.xPos
                 val slotY = slot.yPos
-                GlStateManager.colorMask(true, true, true, false)
-                val slotColor = getSlotColor(i1)
+                RenderSystem.colorMask(true, true, true, false)
+                val slotColor = getSlotColor(slot.slotIndex)
                 fillGradient(slotX, slotY, slotX + 16, slotY + 16, slotColor, slotColor)
-                GlStateManager.colorMask(true, true, true, true)
-                GlStateManager.enableLighting()
-                GlStateManager.enableDepthTest()
+                RenderSystem.colorMask(true, true, true, true)
+                RenderSystem.enableLighting()
+                RenderSystem.enableDepthTest()
             }
         }
 
-        GlStateManager.translatef(-guiLeft.toFloat(), -guiTop.toFloat(), 0f)
+        RenderSystem.translatef(-guiLeft.toFloat(), -guiTop.toFloat(), 0f)
 
         RenderHelper.disableStandardItemLighting()
         drawGuiContainerForegroundLayer(mouseX, mouseY)
-        RenderHelper.enableGUIStandardItemLighting()
         MinecraftForge.EVENT_BUS.post(DrawForeground(this, mouseX, mouseY))
-        val playerInv = minecraft!!.player.inventory
+        val playerInv = minecraft!!.player!!.inventory
         var itemStack = if (draggedStack.isEmpty) playerInv.itemStack else draggedStack
         if (!itemStack.isEmpty) {
             val yOffset = if (draggedStack.isEmpty) 8 else 16
@@ -124,14 +119,13 @@ open class BaseScreen(container: BaseContainer, playerInv: PlayerInventory, titl
                 if (itemStack.isEmpty)
                     altText = "" + TextFormatting.YELLOW + "0"
             }
-            GlStateManager.translatef(0f, 0f, 32f)
+            RenderSystem.translatef(0f, 0f, 32f)
             GUiUtils.drawItemStack(itemStack, mouseX - 8, mouseY - yOffset, altText = altText)
         }
 
-        GlStateManager.popMatrix()
-        GlStateManager.enableLighting()
-        GlStateManager.enableDepthTest()
-        RenderHelper.enableStandardItemLighting()
+        RenderSystem.popMatrix()
+        RenderSystem.enableLighting()
+        RenderSystem.enableDepthTest()
     }
 
     override fun init() {

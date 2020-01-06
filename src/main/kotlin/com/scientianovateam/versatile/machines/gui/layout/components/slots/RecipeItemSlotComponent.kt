@@ -14,7 +14,7 @@ open class RecipeItemSlotComponent(property: TERecipeItemInputProperty, slotInde
     override fun drawItem(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int, guiLeft: Int, guiTop: Int) {
         if (property.value.getStackInSlot(slotIndex).isEmpty)
             recipeProperty.value?.get(ItemInputsComponent::class.java)?.value?.getOrNull(slotIndex)?.let {
-                val stack = it.stacks[(Minecraft.getInstance().world.gameTime / 40).toInt() % it.stacks.size]
+                val stack = it.stacks[(Minecraft.getInstance().world!!.gameTime / 40).toInt() % it.stacks.size]
                 GUiUtils.drawTransparentItemStack(stack, xOffset + (width - 16) / 2 + x, yOffset + (height - 16) / 2 + y)
             }
     }

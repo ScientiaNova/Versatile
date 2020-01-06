@@ -127,7 +127,7 @@ open class MachineBaseCategory(helper: IGuiHelper, protected val recipeList: IRe
     override fun draw(recipe: Recipe, mouseX: Double, mouseY: Double) {
         recipe.page.drawInBackground(mouseX, mouseY, (background.width - recipe.page.width) / 2, (background.height - recipe.page.height) / 2)
         if (recipeList.recipeTransferFunction != null)
-            ((Minecraft.getInstance().player.openContainer as? BaseContainer)?.te?.teProperties?.get("recipe") as? RecipeProperty)?.let { recipeProperty ->
+            ((Minecraft.getInstance().player!!.openContainer as? BaseContainer)?.te?.teProperties?.get("recipe") as? RecipeProperty)?.let { recipeProperty ->
                 if (recipeProperty.recipeList === recipeList) {
                     TransferButton.drawInBackground(mouseX, mouseY, background.width + 6, background.height - 13)
                     TransferButton.drawInForeground(mouseX, mouseY, background.width + 6, background.height - 13)
@@ -139,7 +139,7 @@ open class MachineBaseCategory(helper: IGuiHelper, protected val recipeList: IRe
         recipeList.recipeTransferFunction?.let {
             if (TransferButton.isSelected(mouseX - (background.width + 6), mouseY - (background.height - 13))) {
                 Minecraft.getInstance().currentScreen?.onClose()
-                it.invoke(recipe, Minecraft.getInstance().player.openContainer as BaseContainer)
+                it.invoke(recipe, Minecraft.getInstance().player!!.openContainer as BaseContainer)
                 return true
             }
         }

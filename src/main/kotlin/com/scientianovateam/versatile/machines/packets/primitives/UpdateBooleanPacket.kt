@@ -26,7 +26,7 @@ class UpdateBooleanPacket(val property: String, val value: Boolean) {
                 val container = DistExecutor.runForDist(
                         {
                             Supplier {
-                                serverSideContainer ?: Minecraft.getInstance().player.openContainer as? BaseContainer
+                                serverSideContainer ?: Minecraft.getInstance().player?.openContainer as? BaseContainer
                             }
                         },
                         { Supplier { serverSideContainer } }

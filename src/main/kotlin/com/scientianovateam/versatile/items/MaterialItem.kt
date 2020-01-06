@@ -7,7 +7,7 @@ import com.scientianovateam.versatile.materialsystem.main.Material
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.util.text.TranslationTextComponent
-import net.minecraft.util.text.translation.LanguageMap
+import net.minecraft.util.text.LanguageMap
 
 //Material Items are Items that have a Material and Object Type
 class MaterialItem(override val mat: Material, override val form: Form) : Item(form.itemProperties(mat)), IMaterialObject {

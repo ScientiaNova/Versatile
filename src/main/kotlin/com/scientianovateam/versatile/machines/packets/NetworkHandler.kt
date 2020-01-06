@@ -24,9 +24,7 @@ object NetworkHandler {
             .simpleChannel()
 
     private var packetId = 0
-        get() {
-            return field++
-        }
+        get() = field++
 
     init {
         CHANNEL.messageBuilder(OpenGUIPacket::class.java, packetId)

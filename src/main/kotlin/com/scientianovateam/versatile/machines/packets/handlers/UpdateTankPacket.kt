@@ -31,7 +31,7 @@ class UpdateTankPacket(val property: String, val index: Int, val stack: FluidSta
                 val container = DistExecutor.runForDist(
                         {
                             Supplier {
-                                serverSideContainer ?: Minecraft.getInstance().player.openContainer as? BaseContainer
+                                serverSideContainer ?: Minecraft.getInstance().player?.openContainer as? BaseContainer
                             }
                         },
                         { Supplier { serverSideContainer } }

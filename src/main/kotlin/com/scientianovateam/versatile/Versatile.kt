@@ -1,5 +1,7 @@
 package com.scientianovateam.versatile
 
+import com.scientianovateam.versatile.blocks.SERIALIZED_BLOCKS
+import com.scientianovateam.versatile.blocks.properties.renderTypeFromString
 import com.scientianovateam.versatile.common.registry.VersatileRegistryEvent
 import com.scientianovateam.versatile.fluids.FluidRegistry
 import com.scientianovateam.versatile.items.MaterialItem
@@ -20,10 +22,10 @@ import com.scientianovateam.versatile.recipes.syncing.SingleRecipe
 import com.scientianovateam.versatile.recipes.syncing.VanillaRecipeRegistry
 import com.scientianovateam.versatile.resources.BaseDataAddition
 import com.scientianovateam.versatile.resources.FakeDataPackFinder
-import com.scientianovateam.versatile.worldgen.OreGen
 import net.alexwells.kottle.FMLKotlinModLoadingContext
 import net.minecraft.block.Block
 import net.minecraft.client.gui.ScreenManager
+import net.minecraft.client.renderer.RenderTypeLookup
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemStack
@@ -70,6 +72,9 @@ object Versatile {
 
     private fun clientSetup() {
         ScreenManager.registerFactory(BaseMachineRegistry.BASE_CONTAINER, ::BaseScreen)
+        SERIALIZED_BLOCKS.forEach { (_, block) ->
+            RenderTypeLookup.setRenderLayer(block as Block, renderTypeFromString(block.renderType))
+        }
     }
 
     private fun commonSetup() {
@@ -78,7 +83,6 @@ object Versatile {
 
     private fun enqueueIMC(e: InterModEnqueueEvent) {
         proxy.enqueue(e)
-        OreGen.register()
     }
 
     private fun processIMC(e: InterModProcessEvent) {

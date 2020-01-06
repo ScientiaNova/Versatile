@@ -60,7 +60,7 @@ open class FluidSlotComponent(val property: IValueProperty<out IFluidHandlerModi
     override fun onMouseClicked(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int, clickType: Int): Boolean {
         if (!isSelected(mouseX - xOffset, mouseY - yOffset)) return false
         val slotTank = property.value
-        val playerInv = Minecraft.getInstance().player.inventory
+        val playerInv = Minecraft.getInstance().player!!.inventory
         val heldStack = playerInv.itemStack
         heldStack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).ifPresent { handler ->
             val itemTanks = (0 until handler.tanks).map { index -> index to handler.getFluidInTank(index) }

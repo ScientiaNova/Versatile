@@ -8,7 +8,6 @@ import com.scientianovateam.versatile.common.serialization.IJSONSerializer
 import net.minecraft.block.Block
 import net.minecraft.block.material.MaterialColor
 import net.minecraft.block.material.PushReaction
-import net.minecraft.util.BlockRenderLayer
 import net.minecraft.util.math.shapes.VoxelShape
 import net.minecraft.util.math.shapes.VoxelShapes
 import net.minecraftforge.common.ToolType
@@ -23,12 +22,14 @@ open class ExtendedBlockProperties(
         val resistance: Float = 0f,
         val ticksRandomly: Boolean = false,
         val slipperiness: Float = .6f,
+        val speedMultiplier: Float = 1f,
+        val jumpMultiplier: Float = 1f,
         val harvestLevel: Int = -1,
         val harvestTool: ToolType? = null,
         val isAir: Boolean = false,
         val translationKey: String? = null,
-        val renderLayer: BlockRenderLayer = BlockRenderLayer.SOLID,
-        val solid: Boolean = blocksMovement && renderLayer == BlockRenderLayer.SOLID,
+        val renderType: String = "solid",
+        val solid: Boolean = true,
         val shape: VoxelShape = VoxelShapes.fullCube(),
         val collisionShape: VoxelShape = if (blocksMovement) shape else VoxelShapes.empty(),
         val renderShape: VoxelShape = shape,
@@ -53,8 +54,11 @@ open class ExtendedBlockProperties(
         super.sound(sound)
         super.lightValue(lightValue)
         super.hardnessAndResistance(hardness, resistance)
+        if (!solid) super.func_226896_b_()
         if (ticksRandomly) super.tickRandomly()
         super.slipperiness(slipperiness)
+        super.func_226897_b_(speedMultiplier)
+        super.func_226898_c_(jumpMultiplier)
         super.harvestLevel(harvestLevel)
         if (harvestTool != null) super.harvestTool(harvestTool)
     }
@@ -64,8 +68,7 @@ open class ExtendedBlockProperties(
             val material = json.getStringOrNull("material")?.let { BLOCK_MATERIALS[it.toResLoc()] }
                     ?: error("Missing block material")
             val blocksMovement = json.getBooleanOrNull("blocks_movement") ?: material.blocksMovement
-            val renderLayer = json.getStringOrNull("render_layer")?.let { BlockRenderLayer.valueOf(it.toUpperCase()) }
-                    ?: BlockRenderLayer.SOLID
+            val renderLayer = json.getStringOrNull("render_type") ?: "solid"
             return ExtendedBlockProperties(
                     material = material,
                     materialColor = json.getIntOrNull("material_color")?.let { MaterialColor.COLORS[it] }
@@ -77,12 +80,14 @@ open class ExtendedBlockProperties(
                     resistance = json.getFloatOrNull("resistance") ?: 0f,
                     ticksRandomly = json.getBooleanOrNull("ticks_randomly") ?: false,
                     slipperiness = json.getFloatOrNull("slipperiness") ?: .6f,
+                    speedMultiplier = json.getFloatOrNull("speed_multiplier") ?: 1f,
+                    jumpMultiplier = json.getFloatOrNull("jump_multiplier") ?: 1f,
                     harvestLevel = json.getIntOrNull("harvest_level") ?: -1,
                     harvestTool = json.getStringOrNull("harvest_tool")?.let(ToolType::get),
                     isAir = json.getBooleanOrNull("is_air") ?: false,
                     translationKey = json.getStringOrNull("translation_key"),
-                    renderLayer = renderLayer,
-                    solid = json.getBooleanOrNull("solid") ?: blocksMovement && renderLayer == BlockRenderLayer.SOLID,
+                    renderType = renderLayer,
+                    solid = json.getBooleanOrNull("solid") ?: true,
                     //TODO Voxel Shape Serializer
                     canDropFromExplosion = json.getBooleanOrNull("can_drop_from_explosion") ?: true,
                     climbable = json.getBooleanOrNull("climbable") ?: false,
@@ -113,11 +118,13 @@ open class ExtendedBlockProperties(
             "resistance" to obj.resistance
             "ticks_randomly" to obj.ticksRandomly
             "slipperiness" to obj.slipperiness
+            "speed_multiplier" to obj.speedMultiplier
+            "jump_multiplier" to obj.jumpMultiplier
             "harvest_level" to obj.harvestLevel
             obj.harvestTool?.let { "harvest_tool" to it.name }
             "is_air" to obj.isAir
             obj.translationKey?.let { "translation_key" to it }
-            "render_layer" to obj.renderLayer.name.toLowerCase()
+            "render_layer" to obj.renderType
             "solid" to obj.solid
             //TODO Voxel Shape Serializer
             "can_drop_from_explosion" to obj.canDropFromExplosion

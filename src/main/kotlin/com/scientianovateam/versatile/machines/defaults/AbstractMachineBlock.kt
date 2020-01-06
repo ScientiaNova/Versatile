@@ -11,6 +11,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
+import net.minecraft.util.ActionResultType
 import net.minecraft.util.Hand
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.BlockRayTraceResult
@@ -23,14 +24,14 @@ abstract class AbstractMachineBlock(properties: Properties, name: String) : ModB
         BaseTileEntity.USED_BY += this
     }
 
-    override fun onBlockActivated(state: BlockState, worldIn: World, pos: BlockPos, player: PlayerEntity, handIn: Hand, hit: BlockRayTraceResult): Boolean {
-        if (!worldIn.isRemote) {
-            val te = worldIn.getTileEntity(pos)!!
-            (player as ServerPlayerEntity).connection.sendPacket(worldIn.getTileEntity(pos)!!.updatePacket!!)
+    override fun func_225533_a_(state: BlockState, world: World, pos: BlockPos, player: PlayerEntity, hand: Hand, rayTraceResult: BlockRayTraceResult): ActionResultType? {
+        if (!world.isRemote) {
+            val te = world.getTileEntity(pos)!!
+            (player as ServerPlayerEntity).connection.sendPacket(world.getTileEntity(pos)!!.updatePacket!!)
             NetworkHandler.CHANNEL.sendTo(ChangePagePacket(te.pos, 0), player.connection.networkManager, NetworkDirection.PLAY_TO_CLIENT)
             NetworkHooks.openGui(player, BaseContainerProvider(pos), pos)
         }
-        return true
+        return ActionResultType.SUCCESS
     }
 
     override fun harvestBlock(world: World, player: PlayerEntity, pos: BlockPos, state: BlockState, te: TileEntity?, heldStack: ItemStack) {

@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation
 import net.minecraft.util.SoundEvents
 import net.minecraft.util.text.ITextComponent
 import net.minecraft.util.text.TranslationTextComponent
-import net.minecraft.util.text.translation.LanguageMap
+import net.minecraft.util.text.LanguageMap
 import net.minecraftforge.fluids.FluidAttributes
 import net.minecraftforge.fluids.FluidStack
 

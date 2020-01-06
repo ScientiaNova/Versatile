@@ -19,9 +19,7 @@ class ChangePagePacket(val pos: BlockPos, val pageId: Int) {
         @JvmStatic
         fun processPacket(packet: ChangePagePacket, context: Supplier<NetworkEvent.Context>) {
             context.get().enqueueWork {
-                (context.get().sender?.world?.getTileEntity(packet.pos) as? BaseTileEntity)?.guiLayout?.let { layout ->
-                    layout.setCurrentPage(packet.pageId)
-                }
+                (context.get().sender?.world?.getTileEntity(packet.pos) as? BaseTileEntity)?.guiLayout?.setCurrentPage(packet.pageId)
             }
             context.get().packetHandled = true
         }

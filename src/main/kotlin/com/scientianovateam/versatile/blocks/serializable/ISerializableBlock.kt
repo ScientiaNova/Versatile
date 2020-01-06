@@ -8,6 +8,7 @@ import net.minecraftforge.registries.IForgeRegistryEntry
 
 interface ISerializableBlock : IForgeBlock, IForgeRegistryEntry<Block> {
     val serializer: IJSONSerializer<out ISerializableBlock, JsonObject>
+    val renderType: String
 }
 
 @Suppress("UNCHECKED_CAST")

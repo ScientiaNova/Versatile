@@ -3,7 +3,6 @@ package com.scientianovateam.versatile.common.loaders.internal
 import com.google.gson.JsonObject
 import net.minecraft.resources.FallbackResourceManager
 import net.minecraft.resources.IResource
-import net.minecraft.resources.ResourcePackType
 import net.minecraft.util.JSONUtils
 import net.minecraftforge.fml.ModList
 import net.minecraftforge.fml.loading.moddiscovery.ModFileInfo
@@ -13,8 +12,8 @@ import java.io.InputStreamReader
 val earlyResources by lazy { EarlyGameResourceLoader() }
 
 class EarlyGameResourceLoader {
-    private val packs= ModList.get().modFiles.filter { it.modLoader != "minecraft" }.map { mf: ModFileInfo -> ModFileResourcePack(mf.file) }
-    private val manager = FallbackResourceManager(ResourcePackType.SERVER_DATA)
+    private val packs = ModList.get().modFiles.filter { it.modLoader != "minecraft" }.map { mf: ModFileInfo -> ModFileResourcePack(mf.file) }
+    private val manager: FallbackResourceManager = TODO("1.15")
 
     init {
         packs.forEach { manager.addResourcePack(it) }

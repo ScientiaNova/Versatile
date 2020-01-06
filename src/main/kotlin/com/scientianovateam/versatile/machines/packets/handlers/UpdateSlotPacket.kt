@@ -29,7 +29,7 @@ class UpdateSlotPacket(val property: String, val index: Int, val stack: ItemStac
                 val container = DistExecutor.runForDist(
                         {
                             Supplier {
-                                serverSideContainer ?: Minecraft.getInstance().player.openContainer as? BaseContainer
+                                serverSideContainer ?: Minecraft.getInstance().player?.openContainer as? BaseContainer
                             }
                         },
                         { Supplier { serverSideContainer } }

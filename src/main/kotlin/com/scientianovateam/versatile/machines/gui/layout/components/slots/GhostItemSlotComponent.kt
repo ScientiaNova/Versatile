@@ -11,7 +11,7 @@ open class GhostItemSlotComponent(property: IValueProperty<out IItemHandlerModif
     @OnlyIn(Dist.CLIENT)
     override fun onMouseClicked(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int, clickType: Int): Boolean {
         val itemHandler = property.value
-        val heldStack = Minecraft.getInstance().player.inventory.itemStack
+        val heldStack = Minecraft.getInstance().player!!.inventory.itemStack
         if (heldStack.isEmpty) {
             if (!itemHandler.getStackInSlot(slotIndex).isEmpty) {
                 val stack = itemHandler.getStackInSlot(slotIndex)

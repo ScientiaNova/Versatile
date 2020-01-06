@@ -16,14 +16,14 @@ data class ProgressBar(val background: GUITexture, val fill: GUITexture) : IDraw
             Direction2D.UP, Direction2D.DOWN -> height
         }).toInt()
         when (direction) {
-            Direction2D.UP -> fill.draw(x, y + height - current, width, current, vStart = current / height.toDouble())
-            Direction2D.DOWN -> fill.draw(x, y, width, current, vEnd = current / height.toDouble())
-            Direction2D.LEFT -> fill.draw(x + width - current, y, current, height, uStart = current / width.toDouble())
-            Direction2D.RIGHT -> fill.draw(x, y, current, height, uEnd = current / width.toDouble())
+            Direction2D.UP -> fill.draw(x, y + height - current, width, current, vStart = current / height.toFloat())
+            Direction2D.DOWN -> fill.draw(x, y, width, current, vEnd = current / height.toFloat())
+            Direction2D.LEFT -> fill.draw(x + width - current, y, current, height, uStart = current / width.toFloat())
+            Direction2D.RIGHT -> fill.draw(x, y, current, height, uEnd = current / width.toFloat())
         }
     }
 
-    override fun draw(x: Int, y: Int, width: Int, height: Int, uStart: Double, vStart: Double, uEnd: Double, vEnd: Double) {
+    override fun draw(x: Int, y: Int, width: Int, height: Int, uStart: Float, vStart: Float, uEnd: Float, vEnd: Float) {
         draw(x, y, width, height, 1.0)
     }
 }

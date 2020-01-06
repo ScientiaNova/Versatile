@@ -27,7 +27,7 @@ class UpdateEnergyPacket(val property: String, val value: Int) {
                 val container = DistExecutor.runForDist(
                         {
                             Supplier {
-                                serverSideContainer ?: Minecraft.getInstance().player.openContainer as? BaseContainer
+                                serverSideContainer ?: Minecraft.getInstance().player?.openContainer as? BaseContainer
                             }
                         },
                         { Supplier { serverSideContainer } }
