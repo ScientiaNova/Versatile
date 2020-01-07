@@ -1,5 +1,4 @@
 {
-  "type": "versatile:string",
-  "default": "regular",
-  "valid": true
+  "type": "string",
+  "default": "regular"
 }

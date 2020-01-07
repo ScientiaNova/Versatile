@@ -1,15 +1,15 @@
 {
-  "type": "versatile:string",
+  "type": "string",
   "default": "chemical",
   "valid": [
     "or",
     [
-      "\u003d",
+      "=",
       "$it",
       "compound"
     ],
     [
-      "\u003d",
+      "=",
       "$it",
       "chemical"
     ]

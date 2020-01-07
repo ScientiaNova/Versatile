@@ -15,7 +15,7 @@
   "sound": "minecraft:item.armor.equip_chain",
   "toughness": 0.0,
   "repair_ingredient": {
-    "type": "versatile:item_stack",
+    "type": "item_stack",
     "item": "minecraft:iron_ingot"
   }
 }

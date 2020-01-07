@@ -44,7 +44,7 @@ data class RecipeFluidTagStack(val tag: Tag<Fluid>, override val count: Int = 1)
         }
 
         override fun write(obj: RecipeFluidTagStack) = json {
-            "tag" to obj.tag.id
+            "tag" to obj.tag
             if (obj.count != 1) "count" to obj.count
         }
 

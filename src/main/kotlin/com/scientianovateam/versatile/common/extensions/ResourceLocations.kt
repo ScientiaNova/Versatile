@@ -16,3 +16,5 @@ fun String.toResLocV(separator: Char = ':'): ResourceLocation {
     val parts = this.split(separator, limit = 2)
     return if (parts.size == 1) ResourceLocation(Versatile.MOD_ID, parts.first()) else ResourceLocation(parts.first(), parts.last())
 }
+
+val ResourceLocation.serialized: String get() = if (namespace == Versatile.MOD_ID) path else toString()

@@ -4,6 +4,7 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import net.minecraft.item.ItemStack
+import net.minecraft.tags.Tag
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.registries.IForgeRegistryEntry
 
@@ -18,7 +19,8 @@ class JsonBuilder(builder: JsonBuilder.() -> Unit) {
     infix fun String.to(property: Char) = result.addProperty(this, property)
     infix fun String.to(property: Boolean) = result.addProperty(this, property)
     infix fun String.to(property: String) = result.addProperty(this, property)
-    infix fun String.to(property: ResourceLocation) = result.addProperty(this, property.toString())
+    infix fun String.to(property: ResourceLocation) = result.addProperty(this, property.serialized)
+    infix fun String.to(property: Tag<*>) = result.addProperty(this, property.id.toString())
     infix fun String.to(property: IForgeRegistryEntry<*>) = result.addProperty(this, property.registryName.toString())
     infix fun String.to(property: JsonElement) = result.add(this, property)
     infix fun String.to(property: ItemStack) = result.add(this, property.toJson())

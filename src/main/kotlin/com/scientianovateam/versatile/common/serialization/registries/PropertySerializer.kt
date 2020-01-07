@@ -24,6 +24,6 @@ object PropertySerializer : IRegistrySerializer<Property> {
     override fun write(obj: Property) = json {
         "type" to obj.type.toString()
         "default" to obj.default.toJson()
-        "valid" to obj.valid.toJson()
+        if (obj.valid != BoolValue.TRUE) "valid" to obj.valid.toJson()
     }
 }

@@ -5,7 +5,7 @@
   "harvest_level": 0,
   "enchantability": 15,
   "repair_ingredient": {
-    "type": "versatile:tag_stack",
+    "type": "tag_stack",
     "tag": "minecraft:planks"
   }
 }

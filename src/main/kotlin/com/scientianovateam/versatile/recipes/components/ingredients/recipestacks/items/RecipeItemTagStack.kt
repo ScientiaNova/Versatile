@@ -44,7 +44,7 @@ data class RecipeItemTagStack(val tag: Tag<Item>, override val count: Int = 1) :
         }
 
         override fun write(obj: RecipeItemTagStack) = json {
-            "tag" to obj.tag.id
+            "tag" to obj.tag
             if (obj.count != 1) "count" to obj.count
         }
 

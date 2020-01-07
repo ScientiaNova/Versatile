@@ -5,7 +5,7 @@
   "harvest_level": 3,
   "enchantability": 10,
   "repair_ingredient": {
-    "type": "versatile:item_stack",
+    "type": "item_stack",
     "item": "minecraft:diamond"
   }
 }

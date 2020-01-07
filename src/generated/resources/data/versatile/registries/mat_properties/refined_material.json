@@ -1,5 +1,4 @@
 {
-  "type": "versatile:material",
-  "default": "$mat",
-  "valid": true
+  "type": "material",
+  "default": "$mat"
 }

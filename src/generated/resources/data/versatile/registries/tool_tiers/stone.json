@@ -5,7 +5,7 @@
   "harvest_level": 1,
   "enchantability": 5,
   "repair_ingredient": {
-    "type": "versatile:item_stack",
+    "type": "item_stack",
     "item": "minecraft:cobblestone"
   }
 }

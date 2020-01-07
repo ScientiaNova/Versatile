@@ -1,5 +1,4 @@
 {
-  "type": "versatile:number",
-  "default": 0.0,
-  "valid": true
+  "type": "number",
+  "default": 0.0
 }

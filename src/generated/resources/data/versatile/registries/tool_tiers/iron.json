@@ -5,7 +5,7 @@
   "harvest_level": 2,
   "enchantability": 14,
   "repair_ingredient": {
-    "type": "versatile:item_stack",
+    "type": "item_stack",
     "item": "minecraft:iron_ingot"
   }
 }

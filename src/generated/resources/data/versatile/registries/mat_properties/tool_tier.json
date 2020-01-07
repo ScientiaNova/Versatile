@@ -1,4 +1,4 @@
 {
-  "type": "versatile:optional[versatile:string]",
-  "valid": true
+  "type": "optional[string]",
+  "default": null
 }

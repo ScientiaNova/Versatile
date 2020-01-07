@@ -755,7 +755,7 @@ object DataRegistry {
     }
 }
 
-val GSON: Gson = GsonBuilder().setPrettyPrinting().create()
+val GSON: Gson = GsonBuilder().serializeNulls().setPrettyPrinting().disableHtmlEscaping().create()
 
 fun DataGenerator.soundTypes(function: SoundTypeProvider.() -> Unit) = addProvider(SoundTypeProvider(this).apply(function))
 fun DataGenerator.blockMaterials(function: BlockMaterialProvider.() -> Unit) = addProvider(BlockMaterialProvider(this).apply(function))

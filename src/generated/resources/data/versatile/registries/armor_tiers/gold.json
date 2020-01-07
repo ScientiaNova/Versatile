@@ -15,7 +15,7 @@
   "sound": "minecraft:item.armor.equip_gold",
   "toughness": 0.0,
   "repair_ingredient": {
-    "type": "versatile:item_stack",
+    "type": "item_stack",
     "item": "minecraft:gold_ingot"
   }
 }
