@@ -7,6 +7,7 @@ import com.scientianovateam.versatile.velisp.unresolved.evaluate
 
 object AddFunction : IFunction {
     override val name = "versatile/add"
+    override val symbol = "+"
     override val inputCount = 2..Int.MAX_VALUE
     override fun evaluate(inputs: List<IUnresolved>) = NumberValue(inputs.map { it.evaluate().value as Double }.sum())
 }

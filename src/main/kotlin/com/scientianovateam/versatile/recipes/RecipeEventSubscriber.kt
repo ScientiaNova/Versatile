@@ -23,8 +23,8 @@ import com.scientianovateam.versatile.recipes.components.time.TimeHandler
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod
 
-@Mod.EventBusSubscriber(modid = Versatile.MOD_ID)
-object RecipeComponentRegistry {
+@Mod.EventBusSubscriber(modid = Versatile.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+object RecipeEventSubscriber {
     @SubscribeEvent
     fun onVersatileRegistry(e: VersatileRegistryEvent) {
         RECIPE_COMPONENT_HANDLER_SERIALIZERS.registerAll(

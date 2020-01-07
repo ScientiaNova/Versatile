@@ -1,0 +1,5 @@
+{
+  "type": "versatile:string",
+  "default": "$mat/name",
+  "valid": true
+}

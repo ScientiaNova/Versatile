@@ -1,9 +1,7 @@
 package com.scientianovateam.versatile.velisp.registry
 
 import com.scientianovateam.versatile.Versatile
-import com.scientianovateam.versatile.common.extensions.toResLocV
 import com.scientianovateam.versatile.common.registry.VersatileRegistryEvent
-import com.scientianovateam.versatile.velisp.*
 import com.scientianovateam.versatile.velisp.functions.arithemetic.*
 import com.scientianovateam.versatile.velisp.functions.constructor.*
 import com.scientianovateam.versatile.velisp.functions.lists.*
@@ -12,30 +10,21 @@ import com.scientianovateam.versatile.velisp.functions.mics.IsFunction
 import com.scientianovateam.versatile.velisp.functions.mics.TypeOfFunction
 import com.scientianovateam.versatile.velisp.functions.optional.*
 import com.scientianovateam.versatile.velisp.functions.string.*
+import com.scientianovateam.versatile.velisp.types.*
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod
 
-@Mod.EventBusSubscriber(modid = Versatile.MOD_ID)
+@Mod.EventBusSubscriber(modid = Versatile.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 object VELISPEventSubscriber {
     @SubscribeEvent
     fun register(e: VersatileRegistryEvent) {
-        VELISP_TYPES["any"] = { AnyType }
-        VELISP_TYPES["number"] = { NumberType }
-        VELISP_TYPES["bool"] = { BoolType }
-        VELISP_TYPES["string"] = { StringType }
-        VELISP_TYPES["list"] = {
-            val (name, info) = VELISPType.separateNameAndInfo(it)
-            ListType(VELISP_TYPES[name.toResLocV()]?.invoke(info)
-                    ?: error("Didn't properly specify type for list type"))
-        }
-        VELISP_TYPES["optional"] = {
-            val (name, info) = VELISPType.separateNameAndInfo(it)
-            OptionalType(VELISP_TYPES[name.toResLocV()]?.invoke(info)
-                    ?: error("Didn't properly specify type for optional type"))
-        }
-        VELISP_TYPES["function"] = {
-            FunctionType(it.toIntOrNull() ?: error("Didn't specify amount of inputs for function type"))
-        }
+        VELISP_TYPES["any"] = AnyType
+        VELISP_TYPES["number"] = NumberType
+        VELISP_TYPES["bool"] = BoolType
+        VELISP_TYPES["string"] = StringType
+        VELISP_TYPES["list"] = ListType
+        VELISP_TYPES["optional"] = OptionalType
+        VELISP_TYPES["function"] = FunctionType
 
         VELISP_FUNCTIONS["+"] = AddFunction
         VELISP_FUNCTIONS["-"] = SubtractFunction

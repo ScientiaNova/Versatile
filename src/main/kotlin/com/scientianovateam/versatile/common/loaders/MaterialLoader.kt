@@ -41,8 +41,8 @@ fun loadMaterials() {
     val graph = Graph<JsonObject>()
     jsonSets.map(::cascadeJsons).forEach { material ->
         MATERIAL_PROPERTIES.forEach { (_, property) ->
-            val value = if (material.has(property.name))
-                convertToExpression(material.get(property.name))
+            val value = if (material.has(property.name.toString()))
+                convertToExpression(material.get(property.name.toString()))
             else property.default
             value.find(FunctionCall::class.java) { it.function == MaterialFunction }
                     .mapNotNull { (it.inputs.firstOrNull()?.evaluate() as? StringValue)?.value?.let(::get) }

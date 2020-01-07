@@ -15,8 +15,8 @@ import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod
 
-@Mod.EventBusSubscriber(modid = Versatile.MOD_ID)
-object ItemRegistry {
+@Mod.EventBusSubscriber(modid = Versatile.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+object ItemEventSubscriber {
     @SubscribeEvent
     fun onVersatileRegistry(e: VersatileRegistryEvent) {
         ITEM_SERIALIZERS.registerAll(

@@ -1,12 +1,10 @@
 package com.scientianovateam.versatile.velisp.registry
 
-import com.scientianovateam.versatile.common.extensions.toResLocV
-import com.scientianovateam.versatile.common.registry.Registry
-import com.scientianovateam.versatile.velisp.VELISPType
 import com.scientianovateam.versatile.velisp.functions.IFunction
+import com.scientianovateam.versatile.velisp.types.VELISPType
 
-val VELISP_TYPES = Registry<(String) -> VELISPType>()
-val VELISP_FUNCTIONS = Registry<IFunction>()
+val VELISP_TYPES = VELISPRegistry<VELISPType>()
+val VELISP_FUNCTIONS = VELISPRegistry<IFunction>()
 
-fun Registry<IFunction>.register(function: IFunction) = set(function.name.toResLocV(), function)
-fun Registry<IFunction>.registerAll(vararg functions: IFunction) = functions.forEach(::register)
+fun VELISPRegistry<IFunction>.register(function: IFunction) = set(function.name.toRegName(), function)
+fun VELISPRegistry<IFunction>.registerAll(vararg functions: IFunction) = functions.forEach(::register)

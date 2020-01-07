@@ -1,0 +1,22 @@
+{
+  "type": "versatile:string",
+  "default": "3x3",
+  "valid": [
+    "or",
+    [
+      "\u003d",
+      "$it",
+      "3x3"
+    ],
+    [
+      "\u003d",
+      "$it",
+      "2x2"
+    ],
+    [
+      "\u003d",
+      "$it",
+      "none"
+    ]
+  ]
+}

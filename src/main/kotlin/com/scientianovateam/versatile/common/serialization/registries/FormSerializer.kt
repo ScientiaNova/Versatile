@@ -10,7 +10,6 @@ import com.scientianovateam.versatile.materialsystem.lists.Materials
 import com.scientianovateam.versatile.materialsystem.main.Form
 import com.scientianovateam.versatile.materialsystem.main.Material
 import com.scientianovateam.versatile.materialsystem.properties.Property
-import com.scientianovateam.versatile.velisp.BoolType
 import com.scientianovateam.versatile.velisp.convertToExpression
 import com.scientianovateam.versatile.velisp.evaluated.BoolValue
 import com.scientianovateam.versatile.velisp.evaluated.IEvaluated
@@ -24,8 +23,8 @@ object FormSerializer : IRegistrySerializer<Form> {
         val properties = mutableMapOf<Material, Map<String, IEvaluated>>()
         val loaded = mutableMapOf<Property, IUnresolved>()
         FORM_PROPERTIES.forEach { (_, property) ->
-            loaded[property] = if (json.has(property.name))
-                convertToExpression(json.get(property.name))
+            loaded[property] = if (json.has(property.name.toString()))
+                convertToExpression(json.get(property.name.toString()))
             else property.default
         }
         val graph = Graph<Property>()
@@ -44,11 +43,11 @@ object FormSerializer : IRegistrySerializer<Form> {
             ordered.forEach { property ->
                 val value = loaded[property] ?: error("Impossible")
                 val evaluated = value.resolve(mapOf("form" to formProperties, "mat" to materialProperties)).evaluate()
-                if (!(evaluated.type subtypes property.type)) error("Evaluated property $property of wrong type (Expected ${property.type.name} got ${evaluated.type.name})")
+                if (!(evaluated.type subtypes property.type)) error("Evaluated property $property of wrong type (Expected ${property.type} got ${evaluated.type})")
                 val valid = property.valid.resolve(localProperties + ("it" to evaluated)).evaluate()
                 if (valid !is BoolValue) error("Validity check for $property returned a ${valid.type} instead of a boolean")
                 if (!valid.value) error("Validity check failed for $property, value ${evaluated.value}")
-                localProperties[property.name] = evaluated
+                localProperties[property.name.toString()] = evaluated
             }
 
             // Special case to avoid wasting memory on forms that will not be generated

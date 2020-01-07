@@ -1,0 +1,5 @@
+{
+  "type": "versatile:material",
+  "default": "$mat",
+  "valid": true
+}

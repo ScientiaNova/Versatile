@@ -24,8 +24,7 @@ data class Getter(val name: String) : IUnresolved {
                 if (iterator.hasNext()) findEndProperty(newProperty as? IPropertyContainer ?: return null,
                         iterator, iterator.next().toResLocV().toString())
                 else newProperty
-            } ?: if (iterator.hasNext()) findEndProperty(property, iterator, "$currentName/${iterator.next()}")
-            else null
+            }
 
     override fun toJson() = JsonPrimitive("$$name")
 }

@@ -1,0 +1,5 @@
+{
+  "type": "versatile:bool",
+  "default": false,
+  "valid": true
+}

@@ -6,16 +6,25 @@ import com.scientianovateam.versatile.Versatile
 import com.scientianovateam.versatile.blocks.properties.BlockMaterialWrapper
 import com.scientianovateam.versatile.blocks.properties.SoundTypeV
 import com.scientianovateam.versatile.common.extensions.toResLoc
+import com.scientianovateam.versatile.common.extensions.toResLocV
 import com.scientianovateam.versatile.data.block.BlockMaterialProvider
 import com.scientianovateam.versatile.data.block.BlockProvider
 import com.scientianovateam.versatile.data.block.SoundTypeProvider
+import com.scientianovateam.versatile.data.form.FormPropertyProvider
 import com.scientianovateam.versatile.data.item.ArmorTierProvider
 import com.scientianovateam.versatile.data.item.ItemProvider
 import com.scientianovateam.versatile.data.item.ToolTierProvider
+import com.scientianovateam.versatile.data.material.MaterialPropertyProvider
 import com.scientianovateam.versatile.data.recipe.RecipeListProvider
 import com.scientianovateam.versatile.items.tiers.ArmorTier
 import com.scientianovateam.versatile.items.tiers.ToolTier
+import com.scientianovateam.versatile.materialsystem.properties.Property
 import com.scientianovateam.versatile.recipes.components.ingredients.recipestacks.items.toRStack
+import com.scientianovateam.versatile.velisp.evaluated.NullValue
+import com.scientianovateam.versatile.velisp.expr
+import com.scientianovateam.versatile.velisp.get
+import com.scientianovateam.versatile.velisp.invoke
+import com.scientianovateam.versatile.velisp.types.*
 import net.minecraft.block.material.MaterialColor
 import net.minecraft.block.material.PushReaction
 import net.minecraft.data.DataGenerator
@@ -584,6 +593,165 @@ object DataRegistry {
                     repairRecipeStackSupplier = { Items.SCUTE.toRStack() }
             )
         }
+        matProperties {
+            +Property(
+                    name = "icon_set".toResLocV(),
+                    type = STRING_TYPE,
+                    default = "regular".expr()
+            )
+            +Property(
+                    name = "color".toResLocV(),
+                    type = NUMBER_TYPE,
+                    default = (-1).expr()
+            )
+            +Property(
+                    name = "tier".toResLocV(),
+                    type = NUMBER_TYPE,
+                    default = 0.expr()
+            )
+            +Property(
+                    name = "hardness".toResLocV(),
+                    type = NUMBER_TYPE,
+                    default = 0.expr()
+            )
+            +Property(
+                    name = "resistance".toResLocV(),
+                    type = NUMBER_TYPE,
+                    default = 0.expr()
+            )
+            +Property(
+                    name = "harvest_level".toResLocV(),
+                    type = NUMBER_TYPE,
+                    default = 0.expr()
+            )
+            +Property(
+                    name = "tool_tier".toResLocV(),
+                    type = OptionalType(STRING_TYPE),
+                    default = NullValue
+            )
+            +Property(
+                    name = "armor_tier".toResLocV(),
+                    type = OptionalType(STRING_TYPE),
+                    default = NullValue
+            )
+            //TODO Elements
+            +Property(
+                    name = "burn_time".toResLocV(),
+                    type = NUMBER_TYPE,
+                    default = (-1).expr()
+            )
+            +Property(
+                    name = "compound_type".toResLocV(),
+                    type = STRING_TYPE,
+                    default = "chemical".expr(),
+                    valid = "or"("="(get("it"), "compound".expr()), "="(get("it"), "chemical".expr()))
+            )
+            +Property(
+                    name = "density_multiplier".toResLocV(),
+                    type = NUMBER_TYPE,
+                    default = 1.expr()
+            )
+            +Property(
+                    name = "processing_multiplier".toResLocV(),
+                    type = NUMBER_TYPE,
+                    default = 1.expr()
+            )
+            +Property(
+                    name = "unrefined_color".toResLocV(),
+                    type = NUMBER_TYPE,
+                    default = get("mat/color")
+            )
+            +Property(
+                    name = "liquid_temperature".toResLocV(),
+                    type = NUMBER_TYPE,
+                    default = 0.expr()
+            )
+            +Property(
+                    name = "gas_temperature".toResLocV(),
+                    type = NUMBER_TYPE,
+                    default = 0.expr()
+            )
+            +Property(
+                    name = "liquid_name".toResLocV(),
+                    type = STRING_TYPE,
+                    default = get("mat/name")
+            )
+            +Property(
+                    name = "gas_name".toResLocV(),
+                    type = STRING_TYPE,
+                    default = get("mat/name")
+            )
+            +Property(
+                    name = "refined_material".toResLocV(),
+                    type = MATERIAL_TYPE,
+                    default = get("mat")
+            )
+            +Property(
+                    name = "ph".toResLocV(),
+                    type = NUMBER_TYPE,
+                    default = 7.expr(),
+                    valid = "in_range"(get("it"), 0.expr(), 14.expr())
+            )
+            +Property(
+                    name = "alpha".toResLocV(),
+                    type = NUMBER_TYPE,
+                    default = 0xFF.expr()
+            )
+            +Property(
+                    name = "block_compaction".toResLocV(),
+                    type = STRING_TYPE,
+                    default = "3x3".expr(),
+                    valid = "or"("="(get("it"), "3x3".expr()), "="(get("it"), "2x2".expr()), "="(get("it"), "none".expr()))
+            )
+            +Property(
+                    name = "transition_amount".toResLocV(),
+                    type = NUMBER_TYPE,
+                    default = 2.expr()
+            )
+            +Property(
+                    name = "transition_material".toResLocV(),
+                    type = OptionalType(STRING_TYPE),
+                    default = NullValue
+            )
+            +Property(
+                    name = "has_ore".toResLocV(),
+                    type = BOOL_TYPE,
+                    default = false.expr()
+            )
+            +Property(
+                    name = "simple_processing".toResLocV(),
+                    type = BOOL_TYPE,
+                    default = true.expr()
+            )
+            +Property(
+                    name = "rod_output_count".toResLocV(),
+                    type = NUMBER_TYPE,
+                    default = 1.expr()
+            )
+            +Property(
+                    name = "has_dust".toResLocV(),
+                    type = BOOL_TYPE,
+                    default = false.expr()
+            )
+            +Property(
+                    name = "has_ingot".toResLocV(),
+                    type = BOOL_TYPE,
+                    default = false.expr()
+            )
+            +Property(
+                    name = "has_gem".toResLocV(),
+                    type = BOOL_TYPE,
+                    default = false.expr()
+            )
+            +Property(
+                    name = "is_group".toResLocV(),
+                    type = BOOL_TYPE,
+                    default = false.expr()
+            )
+        }
+        formProperties {
+
+        }
     }
 }
 
@@ -596,4 +764,6 @@ fun DataGenerator.providers(function: DataGenerator.() -> Unit) = this.function(
 fun DataGenerator.toolTiers(function: ToolTierProvider.() -> Unit) = addProvider(ToolTierProvider(this).apply(function))
 fun DataGenerator.armorTiers(function: ArmorTierProvider.() -> Unit) = addProvider(ArmorTierProvider(this).apply(function))
 fun DataGenerator.items(function: ItemProvider.() -> Unit) = addProvider(ItemProvider(this).apply(function))
+fun DataGenerator.matProperties(function: MaterialPropertyProvider.() -> Unit) = addProvider(MaterialPropertyProvider(this).apply(function))
+fun DataGenerator.formProperties(function: FormPropertyProvider.() -> Unit) = addProvider(FormPropertyProvider(this).apply(function))
 fun DataGenerator.recipeLists(function: RecipeListProvider.() -> Unit) = addProvider(RecipeListProvider(this).apply(function))

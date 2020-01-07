@@ -7,6 +7,7 @@ import com.scientianovateam.versatile.velisp.unresolved.evaluate
 
 object RemainderFunction : IFunction {
     override val name = "versatile/remainder"
+    override val symbol = "%"
     override val inputCount = 2..2
     override fun evaluate(inputs: List<IUnresolved>) = NumberValue(inputs.first().evaluate().value as Double % inputs.last().evaluate().value as Double)
 }

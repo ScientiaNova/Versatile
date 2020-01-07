@@ -3,11 +3,10 @@ package com.scientianovateam.versatile.materialsystem.main
 import com.scientianovateam.versatile.common.extensions.toResLoc
 import com.scientianovateam.versatile.materialsystem.addition.BaseElements
 import com.scientianovateam.versatile.materialsystem.addition.BaseForms
-import com.scientianovateam.versatile.materialsystem.addition.MatProperties
+import com.scientianovateam.versatile.materialsystem.addition.LegacyMatProperties
 import com.scientianovateam.versatile.materialsystem.addition.MaterialProperties
 import com.scientianovateam.versatile.materialsystem.lists.Materials
 import com.scientianovateam.versatile.materialsystem.properties.HarvestTier
-import com.scientianovateam.versatile.materialsystem.properties.IBranchingProperty
 import com.scientianovateam.versatile.materialsystem.properties.IPropertyContainer
 import com.scientianovateam.versatile.materialsystem.properties.MatLegacyProperty
 import com.scientianovateam.versatile.velisp.evaluated.IEvaluated
@@ -18,7 +17,7 @@ import net.minecraft.tags.ItemTags
 import net.minecraft.util.text.TranslationTextComponent
 import java.util.*
 
-class Material(override val properties: Map<String, IEvaluated>) : IBranchingProperty, IPropertyContainer {
+class Material(override val properties: Map<String, IEvaluated>) : IPropertyContainer {
     val names = mutableListOf<String>()
     val name get() = names.first()
 
@@ -37,8 +36,6 @@ class Material(override val properties: Map<String, IEvaluated>) : IBranchingPro
 
     operator fun contains(property: MatLegacyProperty<*>) = property in legacyProperties
 
-    override fun get(name: String): Any? = null
-
     val color: Int
         get() = (properties[MaterialProperties.COLOR] as NumberValue).value.toInt()
 
@@ -49,169 +46,169 @@ class Material(override val properties: Map<String, IEvaluated>) : IBranchingPro
     var composition = listOf<MaterialStack>()
 
     var textureType
-        get() = this[MatProperties.TEXTURE_TYPE]
+        get() = this[LegacyMatProperties.TEXTURE_TYPE]
         set(value) {
-            this[MatProperties.TEXTURE_TYPE] = value
+            this[LegacyMatProperties.TEXTURE_TYPE] = value
         }
 
     var legacyColor
-        get() = this[MatProperties.COLOR]
+        get() = this[LegacyMatProperties.COLOR]
         set(value) {
-            this[MatProperties.COLOR] = value
+            this[LegacyMatProperties.COLOR] = value
         }
 
     var tier
-        get() = this[MatProperties.TIER]
+        get() = this[LegacyMatProperties.TIER]
         set(value) {
-            this[MatProperties.TIER] = value
+            this[LegacyMatProperties.TIER] = value
         }
 
     var itemTier
-        get() = this[MatProperties.ITEM_TIER]
+        get() = this[LegacyMatProperties.ITEM_TIER]
         set(value) {
-            this[MatProperties.ITEM_TIER] = value
+            this[LegacyMatProperties.ITEM_TIER] = value
         }
 
     var armorMaterial
-        get() = this[MatProperties.ARMOR_MATERIAL]
+        get() = this[LegacyMatProperties.ARMOR_MATERIAL]
         set(value) {
-            this[MatProperties.ARMOR_MATERIAL] = value
+            this[LegacyMatProperties.ARMOR_MATERIAL] = value
         }
 
     var element
-        get() = this[MatProperties.ELEMENT]
+        get() = this[LegacyMatProperties.ELEMENT]
         set(value) {
-            this[MatProperties.ELEMENT] = value
+            this[LegacyMatProperties.ELEMENT] = value
         }
 
     var standardBurnTime
-        get() = this[MatProperties.BURN_TIME]
+        get() = this[LegacyMatProperties.BURN_TIME]
         set(value) {
-            this[MatProperties.BURN_TIME] = value
+            this[LegacyMatProperties.BURN_TIME] = value
         }
 
     var compoundType
-        get() = this[MatProperties.COMPOUND_TYPE]
+        get() = this[LegacyMatProperties.COMPOUND_TYPE]
         set(value) {
-            this[MatProperties.COMPOUND_TYPE] = value
+            this[LegacyMatProperties.COMPOUND_TYPE] = value
         }
 
     var harvestTier
         get(): HarvestTier {
-            val tier = this[MatProperties.HARVEST_TIER]
-            if (MatProperties.HARVEST_TIER !in this) this[MatProperties.HARVEST_TIER] = tier
+            val tier = this[LegacyMatProperties.HARVEST_TIER]
+            if (LegacyMatProperties.HARVEST_TIER !in this) this[LegacyMatProperties.HARVEST_TIER] = tier
             return tier
         }
         set(value) {
-            this[MatProperties.HARVEST_TIER] = value
+            this[LegacyMatProperties.HARVEST_TIER] = value
         }
 
     var densityMultiplier
-        get() = this[MatProperties.DENSITY_MULTIPLIER]
+        get() = this[LegacyMatProperties.DENSITY_MULTIPLIER]
         set(value) {
-            this[MatProperties.DENSITY_MULTIPLIER] = value
+            this[LegacyMatProperties.DENSITY_MULTIPLIER] = value
         }
 
     var processingMultiplier
-        get() = this[MatProperties.PROCESSING_MULTIPLIER]
+        get() = this[LegacyMatProperties.PROCESSING_MULTIPLIER]
         set(value) {
-            this[MatProperties.PROCESSING_MULTIPLIER] = value
+            this[LegacyMatProperties.PROCESSING_MULTIPLIER] = value
         }
 
     var refinedMaterial
-        get() = this[MatProperties.REFINED_MATERIAL]
+        get() = this[LegacyMatProperties.REFINED_MATERIAL]
         set(value) {
-            this[MatProperties.REFINED_MATERIAL] = value
+            this[LegacyMatProperties.REFINED_MATERIAL] = value
         }
 
     var fluidTemperature
-        get() = this[MatProperties.FLUID_TEMPERATURE]
+        get() = this[LegacyMatProperties.FLUID_TEMPERATURE]
         set(value) {
-            this[MatProperties.FLUID_TEMPERATURE] = value
+            this[LegacyMatProperties.FLUID_TEMPERATURE] = value
         }
 
     var boilingTemperature
-        get() = this[MatProperties.BOILING_TEMPERATURE]
+        get() = this[LegacyMatProperties.BOILING_TEMPERATURE]
         set(value) {
-            this[MatProperties.BOILING_TEMPERATURE] = value
+            this[LegacyMatProperties.BOILING_TEMPERATURE] = value
         }
 
     var boilingMaterial
-        get() = this[MatProperties.BOILING_MATERIAL]
+        get() = this[LegacyMatProperties.BOILING_MATERIAL]
         set(value) {
-            this[MatProperties.BOILING_MATERIAL] = value
+            this[LegacyMatProperties.BOILING_MATERIAL] = value
         }
 
     var unrefinedColor
-        get() = this[MatProperties.UNREFINED_COLOR]
+        get() = this[LegacyMatProperties.UNREFINED_COLOR]
         set(value) {
-            this[MatProperties.UNREFINED_COLOR] = value
+            this[LegacyMatProperties.UNREFINED_COLOR] = value
         }
 
     var alpha
-        get() = this[MatProperties.ALPHA]
+        get() = this[LegacyMatProperties.ALPHA]
         set(value) {
-            this[MatProperties.ALPHA] = value
+            this[LegacyMatProperties.ALPHA] = value
         }
 
     var pH
-        get() = this[MatProperties.PH]
+        get() = this[LegacyMatProperties.PH]
         set(value) {
-            this[MatProperties.PH] = value
+            this[LegacyMatProperties.PH] = value
         }
 
     var blockCompaction
-        get() = this[MatProperties.BLOCK_COMPACTION]
+        get() = this[LegacyMatProperties.BLOCK_COMPACTION]
         set(value) {
-            this[MatProperties.BLOCK_COMPACTION] = value
+            this[LegacyMatProperties.BLOCK_COMPACTION] = value
         }
 
     var transitionProperties
-        get() = this[MatProperties.TRANSITION_PROPERTIES]
+        get() = this[LegacyMatProperties.TRANSITION_PROPERTIES]
         set(value) {
-            this[MatProperties.TRANSITION_PROPERTIES] = value
+            this[LegacyMatProperties.TRANSITION_PROPERTIES] = value
         }
 
     var hasOre
-        get() = this[MatProperties.HAS_ORE]
+        get() = this[LegacyMatProperties.HAS_ORE]
         set(value) {
-            this[MatProperties.HAS_ORE] = value
+            this[LegacyMatProperties.HAS_ORE] = value
         }
 
     var isGas
-        get() = this[MatProperties.IS_GAS]
+        get() = this[LegacyMatProperties.IS_GAS]
         set(value) {
-            this[MatProperties.IS_GAS] = value
+            this[LegacyMatProperties.IS_GAS] = value
         }
 
     var simpleProcessing
-        get() = this[MatProperties.SIMPLE_PROCESSING]
+        get() = this[LegacyMatProperties.SIMPLE_PROCESSING]
         set(value) {
-            this[MatProperties.SIMPLE_PROCESSING] = value
+            this[LegacyMatProperties.SIMPLE_PROCESSING] = value
         }
 
     var rodOutputCount
-        get() = this[MatProperties.ROD_OUTPUT_COUNT]
+        get() = this[LegacyMatProperties.ROD_OUTPUT_COUNT]
         set(value) {
-            this[MatProperties.ROD_OUTPUT_COUNT] = value
+            this[LegacyMatProperties.ROD_OUTPUT_COUNT] = value
         }
 
     var displayType
-        get() = this[MatProperties.DISPLAY_TYPE]
+        get() = this[LegacyMatProperties.DISPLAY_TYPE]
         set(value) {
-            this[MatProperties.DISPLAY_TYPE] = value
+            this[LegacyMatProperties.DISPLAY_TYPE] = value
         }
 
     var hasDust
-        get() = this[MatProperties.HAS_DUST]
+        get() = this[LegacyMatProperties.HAS_DUST]
         set(value) {
-            this[MatProperties.HAS_DUST] = value
+            this[LegacyMatProperties.HAS_DUST] = value
         }
 
     var mainItemType
-        get() = this[MatProperties.MAIN_ITEM_TYPE]
+        get() = this[LegacyMatProperties.MAIN_ITEM_TYPE]
         set(value) {
-            this[MatProperties.MAIN_ITEM_TYPE] = value
+            this[LegacyMatProperties.MAIN_ITEM_TYPE] = value
         }
 
     val localizedName get() = TranslationTextComponent("material.$name")

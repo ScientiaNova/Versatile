@@ -7,7 +7,7 @@ import com.scientianovateam.versatile.materialsystem.properties.*
 import net.minecraft.item.IArmorMaterial
 import net.minecraft.item.IItemTier
 
-object MatProperties {
+object LegacyMatProperties {
     @JvmStatic
     val TEXTURE_TYPE = MatLegacyProperty("versatile:texture_type".toResLoc(), ::merge) { BaseTextureTypes.REGULAR }
     @JvmStatic

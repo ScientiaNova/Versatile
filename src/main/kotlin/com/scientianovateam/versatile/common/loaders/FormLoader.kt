@@ -23,8 +23,8 @@ fun loadForms() {
     val graph = Graph<JsonObject>()
     jsons.values.forEach { form ->
         FORM_PROPERTIES.forEach { (_, property) ->
-            val value = if (form.has(property.name))
-                convertToExpression(form.get(property.name))
+            val value = if (form.has(property.name.toString()))
+                convertToExpression(form.get(property.name.toString()))
             else property.default
             value.find(FunctionCall::class.java) { it.function == FormFunction }
                     .mapNotNull { (it.inputs.firstOrNull()?.evaluate() as? StringValue)?.value?.let { key -> jsons[key] } }

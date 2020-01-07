@@ -7,6 +7,7 @@ import com.scientianovateam.versatile.velisp.unresolved.evaluate
 
 object GreaterOrEqualFunction : IFunction {
     override val name = "versatile/greater_or_equal"
+    override val symbol = ">="
     override val inputCount = 2..2
     override fun evaluate(inputs: List<IUnresolved>) = BoolValue(inputs.first().evaluate().value as Double >= inputs.last().evaluate().value as Double)
 }

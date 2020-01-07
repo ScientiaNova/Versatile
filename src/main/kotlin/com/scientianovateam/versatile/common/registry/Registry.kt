@@ -9,6 +9,8 @@ open class Registry<T : Any> : Iterable<Map.Entry<ResourceLocation, T>> {
 
     operator fun get(registryName: ResourceLocation) = map[registryName]
 
+    operator fun get(registryName: String) = map[registryName.toResLocV()]
+
     operator fun set(registryName: ResourceLocation, thing: T) {
         if (registryName in map) Versatile.LOGGER.warn("Overriding registry: $registryName")
         map[registryName] = thing

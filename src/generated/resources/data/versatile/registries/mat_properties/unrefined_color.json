@@ -1,0 +1,5 @@
+{
+  "type": "versatile:number",
+  "default": "$mat/color",
+  "valid": true
+}

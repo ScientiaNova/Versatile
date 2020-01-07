@@ -21,8 +21,8 @@ object MaterialSerializer : IRegistrySerializer<Material> {
         val properties = mutableMapOf<String, IEvaluated>()
         val loaded = mutableMapOf<Property, IUnresolved>()
         MATERIAL_PROPERTIES.forEach { (_, property) ->
-            loaded[property] = if (json.has(property.name))
-                convertToExpression(json.get(property.name))
+            loaded[property] = if (json.has(property.name.toString()))
+                convertToExpression(json.get(property.name.toString()))
             else property.default
         }
         val graph = Graph<Property>()
@@ -38,11 +38,11 @@ object MaterialSerializer : IRegistrySerializer<Material> {
         ordered.forEach { property ->
             val value = loaded[property] ?: error("Impossible")
             val evaluated = value.resolve(mapOf("mat" to propertiesHolder)).evaluate()
-            if (!(evaluated.type subtypes property.type)) error("Evaluated property $property of wrong type (Expected ${property.type.name} got ${evaluated.type.name})")
+            if (!(evaluated.type subtypes property.type)) error("Evaluated property $property of wrong type (Expected ${property.type} got ${evaluated.type})")
             val valid = property.valid.resolve(properties + ("it" to evaluated)).evaluate()
             if (valid !is BoolValue) error("Validity check for $property returned a ${valid.type} instead of a boolean")
             if (!valid.value) error("Validity check failed for $property, value ${evaluated.value}")
-            properties[property.name] = evaluated
+            properties[property.name.toString()] = evaluated
         }
         return Material(properties)
     }
