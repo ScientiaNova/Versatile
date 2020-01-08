@@ -6,7 +6,6 @@ import com.scientianovateam.versatile.Versatile
 import com.scientianovateam.versatile.blocks.properties.BlockMaterialWrapper
 import com.scientianovateam.versatile.blocks.properties.SoundTypeV
 import com.scientianovateam.versatile.common.extensions.toResLoc
-import com.scientianovateam.versatile.common.extensions.toResLocV
 import com.scientianovateam.versatile.data.block.BlockMaterialProvider
 import com.scientianovateam.versatile.data.block.BlockProvider
 import com.scientianovateam.versatile.data.block.SoundTypeProvider
@@ -20,11 +19,8 @@ import com.scientianovateam.versatile.items.tiers.ArmorTier
 import com.scientianovateam.versatile.items.tiers.ToolTier
 import com.scientianovateam.versatile.materialsystem.properties.Property
 import com.scientianovateam.versatile.recipes.components.ingredients.recipestacks.items.toRStack
+import com.scientianovateam.versatile.velisp.*
 import com.scientianovateam.versatile.velisp.evaluated.NullValue
-import com.scientianovateam.versatile.velisp.expr
-import com.scientianovateam.versatile.velisp.get
-import com.scientianovateam.versatile.velisp.invoke
-import com.scientianovateam.versatile.velisp.it
 import com.scientianovateam.versatile.velisp.types.*
 import net.minecraft.block.material.MaterialColor
 import net.minecraft.block.material.PushReaction
@@ -596,204 +592,204 @@ object DataRegistry {
         }
         matProperties {
             +Property(
-                    name = "icon_set".toResLocV(),
-                    type = STRING_TYPE,
-                    default = "regular".expr()
+                    name = "icon_set",
+                    type = STRING,
+                    default = "regular"
             )
             +Property(
-                    name = "color".toResLocV(),
-                    type = NUMBER_TYPE,
-                    default = (-1).expr()
+                    name = "color",
+                    type = NUMBER,
+                    default = -1
             )
             +Property(
-                    name = "tier".toResLocV(),
-                    type = NUMBER_TYPE,
-                    default = 0.expr()
+                    name = "tier",
+                    type = NUMBER,
+                    default = 0
             )
             +Property(
-                    name = "hardness".toResLocV(),
-                    type = NUMBER_TYPE,
-                    default = 0.expr()
+                    name = "hardness",
+                    type = NUMBER,
+                    default = 0
             )
             +Property(
-                    name = "resistance".toResLocV(),
-                    type = NUMBER_TYPE,
-                    default = 0.expr()
+                    name = "resistance",
+                    type = NUMBER,
+                    default = 0
             )
             +Property(
-                    name = "harvest_level".toResLocV(),
-                    type = NUMBER_TYPE,
-                    default = 0.expr()
+                    name = "harvest_level",
+                    type = NUMBER,
+                    default = 0
             )
             +Property(
-                    name = "tool_tier".toResLocV(),
-                    type = OptionalType(STRING_TYPE),
+                    name = "tool_tier",
+                    type = OptionalType(STRING),
                     default = NullValue
             )
             +Property(
-                    name = "armor_tier".toResLocV(),
-                    type = OptionalType(STRING_TYPE),
+                    name = "armor_tier",
+                    type = OptionalType(STRING),
                     default = NullValue
             )
             //TODO Elements
             +Property(
-                    name = "burn_time".toResLocV(),
-                    type = NUMBER_TYPE,
-                    default = (-1).expr()
+                    name = "burn_time",
+                    type = NUMBER,
+                    default = -1
             )
             +Property(
-                    name = "compound_type".toResLocV(),
-                    type = STRING_TYPE,
-                    default = "chemical".expr(),
-                    valid = "or"("="(it, "compound".expr()), "="(it, "chemical".expr()))
+                    name = "compound_type",
+                    type = STRING,
+                    default = "chemical",
+                    valid = "or"("="(it, "compound"), "="(it, "chemical"))
             )
             +Property(
-                    name = "density_multiplier".toResLocV(),
-                    type = NUMBER_TYPE,
-                    default = 1.expr()
+                    name = "density_multiplier",
+                    type = NUMBER,
+                    default = 1
             )
             +Property(
-                    name = "processing_multiplier".toResLocV(),
-                    type = NUMBER_TYPE,
-                    default = 1.expr()
+                    name = "processing_multiplier",
+                    type = NUMBER,
+                    default = 1
             )
             +Property(
-                    name = "unrefined_color".toResLocV(),
-                    type = NUMBER_TYPE,
-                    default = get("mat/color")
+                    name = "unrefined_color",
+                    type = NUMBER,
+                    default = "color".matGet
             )
             +Property(
-                    name = "liquid_temperature".toResLocV(),
-                    type = NUMBER_TYPE,
-                    default = 0.expr()
+                    name = "liquid_temperature",
+                    type = NUMBER,
+                    default = 0
             )
             +Property(
-                    name = "gas_temperature".toResLocV(),
-                    type = NUMBER_TYPE,
-                    default = 0.expr()
+                    name = "gas_temperature",
+                    type = NUMBER,
+                    default = 0
             )
             +Property(
-                    name = "liquid_name".toResLocV(),
-                    type = STRING_TYPE,
-                    default = get("mat/name")
+                    name = "liquid_name",
+                    type = STRING,
+                    default = "name".matGet
             )
             +Property(
-                    name = "gas_name".toResLocV(),
-                    type = STRING_TYPE,
-                    default = get("mat/name")
+                    name = "gas_name",
+                    type = STRING,
+                    default = "name".matGet
             )
             +Property(
-                    name = "refined_material".toResLocV(),
-                    type = MATERIAL_TYPE,
-                    default = get("mat")
+                    name = "refined_material",
+                    type = MATERIAL,
+                    default = "mat".get
             )
             +Property(
-                    name = "ph".toResLocV(),
-                    type = NUMBER_TYPE,
-                    default = 7.expr(),
-                    valid = "in_range"(it, 0.expr(), 14.expr())
+                    name = "ph",
+                    type = NUMBER,
+                    default = 7,
+                    valid = "in_range"(it, 0, 14)
             )
             +Property(
-                    name = "alpha".toResLocV(),
-                    type = NUMBER_TYPE,
-                    default = 0xFF.expr()
+                    name = "alpha",
+                    type = NUMBER,
+                    default = 0xFF
             )
             +Property(
-                    name = "block_compaction".toResLocV(),
-                    type = STRING_TYPE,
-                    default = "3x3".expr(),
-                    valid = "or"("="(it, "3x3".expr()), "="(it, "2x2".expr()), "="(it, "none".expr()))
+                    name = "block_compaction",
+                    type = STRING,
+                    default = "3x3",
+                    valid = "or"("="(it, "3x3"), "="(it, "2x2"), "="(it, "none"))
             )
             +Property(
-                    name = "transition_amount".toResLocV(),
-                    type = NUMBER_TYPE,
-                    default = 2.expr()
+                    name = "transition_amount",
+                    type = NUMBER,
+                    default = 2
             )
             +Property(
-                    name = "transition_material".toResLocV(),
-                    type = OptionalType(STRING_TYPE),
+                    name = "transition_material",
+                    type = OptionalType(STRING),
                     default = NullValue
             )
             +Property(
-                    name = "has_ore".toResLocV(),
-                    type = BOOL_TYPE,
-                    default = false.expr()
+                    name = "has_ore",
+                    type = BOOL,
+                    default = false
             )
             +Property(
-                    name = "simple_processing".toResLocV(),
-                    type = BOOL_TYPE,
-                    default = true.expr()
+                    name = "simple_processing",
+                    type = BOOL,
+                    default = true
             )
             +Property(
-                    name = "rod_output_count".toResLocV(),
-                    type = NUMBER_TYPE,
-                    default = 1.expr()
+                    name = "rod_output_count",
+                    type = NUMBER,
+                    default = 1
             )
             +Property(
-                    name = "has_dust".toResLocV(),
-                    type = BOOL_TYPE,
-                    default = false.expr()
+                    name = "has_dust",
+                    type = BOOL,
+                    default = false
             )
             +Property(
-                    name = "has_ingot".toResLocV(),
-                    type = BOOL_TYPE,
-                    default = false.expr()
+                    name = "has_ingot",
+                    type = BOOL,
+                    default = false
             )
             +Property(
-                    name = "has_gem".toResLocV(),
-                    type = BOOL_TYPE,
-                    default = false.expr()
+                    name = "has_gem",
+                    type = BOOL,
+                    default = false
             )
             +Property(
-                    name = "is_group".toResLocV(),
-                    type = BOOL_TYPE,
-                    default = false.expr()
+                    name = "is_group",
+                    type = BOOL,
+                    default = false
             )
         }
         formProperties {
             +Property(
                     name = "bucket_volume",
-                    type = NUMBER_TYPE,
-                    default = 0.expr(),
+                    type = NUMBER,
+                    default = 0,
                     valid = "is_positive"(it)
             )
             +Property(
                     name = "registry_name",
-                    type = STRING_TYPE,
-                    default = "concat"(get("mat/name"), "_".expr(), get("form/name")),
+                    type = STRING,
+                    default = "concat"("name".matGet, "_", "name".formGet),
                     valid = "valid_resource_location"(it)
             )
             +Property(
                     name = "color",
-                    type = NUMBER_TYPE,
-                    default = 0xFFFFFF.expr(),
-                    valid = "in_range"(it, 0x000000.expr(), 0xFFFFFF.expr())
+                    type = NUMBER,
+                    default = 0xFFFFFF,
+                    valid = "in_range"(it, 0x000000, 0xFFFFFF)
             )
             +Property(
                     name = "density_multiplier",
-                    type = NUMBER_TYPE,
-                    default = 1.expr(),
+                    type = NUMBER,
+                    default = 1,
                     valid = "is_positive"(it)
             )
             +Property(
                     name = "is_gas",
-                    type = BOOL_TYPE,
-                    default = false.expr()
+                    type = BOOL,
+                    default = false
             )
             +Property(
                     name = "temperature",
-                    type = NUMBER_TYPE,
-                    default = "if"("is_positive"(get("mat/fluid_temperature")), get("mat/fluid_temperature"), 300.expr())
+                    type = NUMBER,
+                    default = "if"("is_positive"("fluid_temperature".matGet), "mat/fluid_temperature".formGet, 300)
             )
             +Property(
                     name = "single_texture_type",
-                    type = BOOL_TYPE,
-                    default = false.expr()
+                    type = BOOL,
+                    default = false
             )
             +Property(
                     name = "burn_time",
-                    type = NUMBER_TYPE,
-                    default = "*"(get("mat/standard_burn_time"), "/"(get("mat/bucket_volume"), 144.expr()))
+                    type = NUMBER,
+                    default = "*"("standard_burn_time".matGet, "/"("bucket_volume".matGet, 144))
             )
         }
     }

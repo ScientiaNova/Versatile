@@ -10,16 +10,16 @@ class VELISPType(val name: ResourceLocation, val generics: Int = 0) {
 }
 
 val AnyType = VELISPType("any".toResLocV())
-val ANY_TYPE = AnyType()
+val ANY = AnyType()
 
 val NumberType = VELISPType("number".toResLocV())
-val NUMBER_TYPE = NumberType()
+val NUMBER = NumberType()
 
 val BoolType = VELISPType("bool".toResLocV())
-val BOOL_TYPE = BoolType()
+val BOOL = BoolType()
 
 val StringType = VELISPType("string".toResLocV())
-val STRING_TYPE = StringType()
+val STRING = StringType()
 
 val ListType = VELISPType("list".toResLocV(), 1)
 
@@ -28,13 +28,13 @@ val OptionalType = VELISPType("optional".toResLocV(), 1)
 val FunctionType = VELISPType("function".toResLocV())
 
 val MaterialType = VELISPType("material".toResLocV())
-val MATERIAL_TYPE = MaterialType()
+val MATERIAL = MaterialType()
 
 val FormType = VELISPType("form".toResLocV())
-val FORM_TYPE = FormType()
+val FORM = FormType()
 
 val NothingType = VELISPType("nothing".toResLocV())
-val NOTHING_TYPE = NothingType()
+val NOTHING = NothingType()
 
 val JsonType = VELISPType("json".toResLocV())
-val JSON_TYPE = JsonType()
+val JSON = JsonType()

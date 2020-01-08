@@ -2,6 +2,7 @@ package com.scientianovateam.versatile.materialsystem.properties
 
 import com.scientianovateam.versatile.common.extensions.toResLocV
 import com.scientianovateam.versatile.velisp.evaluated.BoolValue
+import com.scientianovateam.versatile.velisp.expr
 import com.scientianovateam.versatile.velisp.types.ITypeHolder
 import com.scientianovateam.versatile.velisp.unresolved.IUnresolved
 import net.minecraft.util.ResourceLocation
@@ -15,7 +16,7 @@ data class Property(
     constructor(
             name: String,
             type: ITypeHolder,
-            default: IUnresolved,
-            valid: IUnresolved = BoolValue.TRUE
-    ) : this(name.toResLocV(), type, default, valid)
+            default: Any,
+            valid: Any = BoolValue.TRUE
+    ) : this(name.toResLocV(), type, default.expr(), valid.expr())
 }
