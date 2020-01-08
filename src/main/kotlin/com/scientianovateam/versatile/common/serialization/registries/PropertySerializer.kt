@@ -18,7 +18,7 @@ object PropertySerializer : IRegistrySerializer<Property> {
         val name = ResourceLocation(json.getStringOrNull("namespace") ?: error("Property missing a namespace field"),
                 json.getStringOrNull("name") ?: error("Property missing a name field"))
         val type = ITypeHolder.fromName(json.getStringOrNull("type") ?: error("Property $name missing type"))
-        val default = json.getArrayOrNull("default")?.run(::convertToExpression) ?: NullValue
+        val default = json.get("default")?.run(::convertToExpression) ?: NullValue
         val valid = json.getArrayOrNull("valid")?.run(::convertToExpression) ?: BoolValue.TRUE
         return Property(name, type, default, valid)
     }
