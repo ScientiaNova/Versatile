@@ -19,21 +19,20 @@ class EarlyGameResourceLoader {
         packs.forEach { CustomResourceManager.addResourcePack(it) }
     }
 
-    fun resources(path: String): List<List<IResource>> {
-        return CustomResourceManager.getAllResourceLocations(path) { it.endsWith(".json") }.map(CustomResourceManager::getAllResources)
-    }
+    fun resources(path: String): List<List<IResource>> =
+            CustomResourceManager.getAllResourceLocations(path) { it.endsWith(".json") }.map(CustomResourceManager::getAllResources)
 
-    fun loadJsons(path: String): List<JsonObject> = resources(path).flatMap { set ->
+
+    fun loadAll(path: String): List<JsonObject> = resources(path).flatMap { set ->
         set.map {
             it.use { resource ->
                 JSONUtils.fromJson(InputStreamReader(resource.inputStream)).apply {
-                    addProperty("name", resource.location.path.let { path -> path.substring(path.length + 1, path.length - jsonExtensionLength) })
+                    addProperty("name", resource.location.path.let { name -> name.substring(path.length + 1, name.length - jsonExtensionLength) })
                     addProperty("namespace", resource.location.namespace)
                 }
             }
         }
     }
-
 
     companion object {
         private const val jsonExtensionLength = ".json".length

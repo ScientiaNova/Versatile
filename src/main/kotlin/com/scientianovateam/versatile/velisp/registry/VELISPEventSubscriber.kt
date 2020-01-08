@@ -25,6 +25,8 @@ object VELISPEventSubscriber {
         VELISP_TYPES["list"] = ListType
         VELISP_TYPES["optional"] = OptionalType
         VELISP_TYPES["function"] = FunctionType
+        VELISP_TYPES["material"] = MaterialType
+        VELISP_TYPES["form"] = FormType
 
         VELISP_FUNCTIONS["+"] = AddFunction
         VELISP_FUNCTIONS["-"] = SubtractFunction

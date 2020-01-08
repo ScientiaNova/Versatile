@@ -2,6 +2,9 @@ package com.scientianovateam.versatile
 
 import com.scientianovateam.versatile.blocks.SERIALIZED_BLOCKS
 import com.scientianovateam.versatile.blocks.properties.renderTypeFromString
+import com.scientianovateam.versatile.common.loaders.loadForms
+import com.scientianovateam.versatile.common.loaders.loadMaterials
+import com.scientianovateam.versatile.common.loaders.loadProperties
 import com.scientianovateam.versatile.common.registry.VersatileRegistryEvent
 import com.scientianovateam.versatile.fluids.FluidRegistry
 import com.scientianovateam.versatile.items.MaterialItem
@@ -95,6 +98,9 @@ object Versatile {
         @SubscribeEvent(priority = EventPriority.HIGHEST)
         fun onEarlyBlockRegistry(e: RegistryEvent.Register<Block>) {
             ModLoader.get().postEvent(VersatileRegistryEvent())
+            loadProperties()
+            loadMaterials()
+            loadForms()
         }
 
         @SubscribeEvent(priority = EventPriority.LOWEST)

@@ -16,7 +16,7 @@ import com.scientianovateam.versatile.velisp.unresolved.evaluate
 
 fun loadForms() {
     val sets = mutableMapOf<String, MutableList<JsonObject>>()
-    earlyResources.loadJsons("registries/forms").forEach { json ->
+    earlyResources.loadAll("registries/forms").forEach { json ->
         json.getStringOrNull("name")?.let { sets.computeIfAbsent(it) { mutableListOf() }.add(json) }
     }
     val jsons = sets.mapValues { (_, value) -> cascadeJsons(value) }

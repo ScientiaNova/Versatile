@@ -11,10 +11,12 @@ import com.scientianovateam.versatile.velisp.convertToExpression
 import com.scientianovateam.versatile.velisp.evaluated.BoolValue
 import com.scientianovateam.versatile.velisp.evaluated.NullValue
 import com.scientianovateam.versatile.velisp.types.ITypeHolder
+import net.minecraft.util.ResourceLocation
 
 object PropertySerializer : IRegistrySerializer<Property> {
     override fun read(json: JsonObject): Property {
-        val name = json.getStringOrNull("name")?.toResLocV() ?: error("Property missing a name field")
+        val name = ResourceLocation(json.getStringOrNull("namespace") ?: error("Property missing a namespace field"),
+                json.getStringOrNull("name") ?: error("Property missing a name field"))
         val type = ITypeHolder.fromName(json.getStringOrNull("type") ?: error("Property $name missing type"))
         val default = json.getArrayOrNull("default")?.run(::convertToExpression) ?: NullValue
         val valid = json.getArrayOrNull("valid")?.run(::convertToExpression) ?: BoolValue.TRUE

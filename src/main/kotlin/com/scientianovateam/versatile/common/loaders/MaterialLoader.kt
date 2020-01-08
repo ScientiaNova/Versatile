@@ -37,7 +37,7 @@ fun loadMaterials() {
         error("Could not find material with name $name")
     }
 
-    earlyResources.loadJsons("registries/materials").forEach { add(it) }
+    earlyResources.loadAll("registries/materials").forEach { add(it) }
     val graph = Graph<JsonObject>()
     jsonSets.map(::cascadeJsons).forEach { material ->
         MATERIAL_PROPERTIES.forEach { (_, property) ->
