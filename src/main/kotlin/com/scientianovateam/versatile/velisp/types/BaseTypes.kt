@@ -35,3 +35,6 @@ val FORM_TYPE = FormType()
 
 val NothingType = VELISPType("nothing".toResLocV())
 val NOTHING_TYPE = NothingType()
+
+val JsonType = VELISPType("json".toResLocV())
+val JSON_TYPE = JsonType()

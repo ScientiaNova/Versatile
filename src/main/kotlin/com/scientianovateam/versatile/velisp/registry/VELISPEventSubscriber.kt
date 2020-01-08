@@ -27,6 +27,7 @@ object VELISPEventSubscriber {
         VELISP_TYPES["function"] = FunctionType
         VELISP_TYPES["material"] = MaterialType
         VELISP_TYPES["form"] = FormType
+        VELISP_TYPES["json"] = JsonType
 
         VELISP_FUNCTIONS["+"] = AddFunction
         VELISP_FUNCTIONS["-"] = SubtractFunction
@@ -134,6 +135,8 @@ object VELISPEventSubscriber {
                 GreaterOrEqualFunction,
                 IfFunction,
                 InRangeFunction,
+                IsNegativeFunction,
+                IsPositiveFunction,
                 LessFunction,
                 LessOrEqualFunction,
                 MatchFunction,
@@ -156,7 +159,9 @@ object VELISPEventSubscriber {
                 ReplaceFunction,
                 StartsWithFunction,
                 StringContainsFunction,
-                SubstringFunction
+                StringEmptyFunction,
+                SubstringFunction,
+                ValidResourceLocationFunction
         )
     }
 }

@@ -24,6 +24,7 @@ import com.scientianovateam.versatile.velisp.evaluated.NullValue
 import com.scientianovateam.versatile.velisp.expr
 import com.scientianovateam.versatile.velisp.get
 import com.scientianovateam.versatile.velisp.invoke
+import com.scientianovateam.versatile.velisp.it
 import com.scientianovateam.versatile.velisp.types.*
 import net.minecraft.block.material.MaterialColor
 import net.minecraft.block.material.PushReaction
@@ -644,7 +645,7 @@ object DataRegistry {
                     name = "compound_type".toResLocV(),
                     type = STRING_TYPE,
                     default = "chemical".expr(),
-                    valid = "or"("="(get("it"), "compound".expr()), "="(get("it"), "chemical".expr()))
+                    valid = "or"("="(it, "compound".expr()), "="(it, "chemical".expr()))
             )
             +Property(
                     name = "density_multiplier".toResLocV(),
@@ -690,7 +691,7 @@ object DataRegistry {
                     name = "ph".toResLocV(),
                     type = NUMBER_TYPE,
                     default = 7.expr(),
-                    valid = "in_range"(get("it"), 0.expr(), 14.expr())
+                    valid = "in_range"(it, 0.expr(), 14.expr())
             )
             +Property(
                     name = "alpha".toResLocV(),
@@ -701,7 +702,7 @@ object DataRegistry {
                     name = "block_compaction".toResLocV(),
                     type = STRING_TYPE,
                     default = "3x3".expr(),
-                    valid = "or"("="(get("it"), "3x3".expr()), "="(get("it"), "2x2".expr()), "="(get("it"), "none".expr()))
+                    valid = "or"("="(it, "3x3".expr()), "="(it, "2x2".expr()), "="(it, "none".expr()))
             )
             +Property(
                     name = "transition_amount".toResLocV(),
@@ -750,7 +751,50 @@ object DataRegistry {
             )
         }
         formProperties {
-
+            +Property(
+                    name = "bucket_volume",
+                    type = NUMBER_TYPE,
+                    default = 0.expr(),
+                    valid = "is_positive"(it)
+            )
+            +Property(
+                    name = "registry_name",
+                    type = STRING_TYPE,
+                    default = "concat"(get("mat/name"), "_".expr(), get("form/name")),
+                    valid = "valid_resource_location"(it)
+            )
+            +Property(
+                    name = "color",
+                    type = NUMBER_TYPE,
+                    default = 0xFFFFFF.expr(),
+                    valid = "in_range"(it, 0x000000.expr(), 0xFFFFFF.expr())
+            )
+            +Property(
+                    name = "density_multiplier",
+                    type = NUMBER_TYPE,
+                    default = 1.expr(),
+                    valid = "is_positive"(it)
+            )
+            +Property(
+                    name = "is_gas",
+                    type = BOOL_TYPE,
+                    default = false.expr()
+            )
+            +Property(
+                    name = "temperature",
+                    type = NUMBER_TYPE,
+                    default = "if"("is_positive"(get("mat/fluid_temperature")), get("mat/fluid_temperature"), 300.expr())
+            )
+            +Property(
+                    name = "single_texture_type",
+                    type = BOOL_TYPE,
+                    default = false.expr()
+            )
+            +Property(
+                    name = "burn_time",
+                    type = NUMBER_TYPE,
+                    default = "*"(get("mat/standard_burn_time"), "/"(get("mat/bucket_volume"), 144.expr()))
+            )
         }
     }
 }
