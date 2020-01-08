@@ -1,10 +1,10 @@
 package com.scientianovateam.versatile.velisp.evaluated
 
 import com.google.gson.JsonPrimitive
-import com.scientianovateam.versatile.velisp.types.BOOL_TYPE
+import com.scientianovateam.versatile.velisp.types.BOOL
 
 class BoolValue(override val value: Boolean) : IEvaluated {
-    override val type = BOOL_TYPE
+    override val type = BOOL
 
     override fun toJson() = JsonPrimitive(value)
 

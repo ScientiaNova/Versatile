@@ -10,7 +10,7 @@ data class TypeHolder(override val type: VELISPType, val generics: List<ITypeHol
         other.type == NothingType -> this
         type == other.type && other is TypeHolder && generics.size == other.generics.size ->
             TypeHolder(type, generics.zip(other.generics, ITypeHolder::getMutualSupertype))
-        else -> ANY_TYPE
+        else -> ANY
     }
 
     override fun subtypes(other: ITypeHolder) = type == NothingType || other.type == AnyType ||

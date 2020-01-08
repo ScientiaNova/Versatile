@@ -5,7 +5,7 @@ data class FunctionTypeHolder(val inputs: Int) : ITypeHolder {
     override fun getMutualSupertype(other: ITypeHolder) = when {
         other.type == NothingType -> this
         other is FunctionTypeHolder && inputs == other.inputs -> this
-        else -> ANY_TYPE
+        else -> ANY
     }
 
     override fun subtypes(other: ITypeHolder) = other.type == NothingType || (other is FunctionTypeHolder && inputs == other.inputs)
