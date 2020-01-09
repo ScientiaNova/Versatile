@@ -26,7 +26,7 @@ sourceSets.main.resources {
 }
 
 minecraft {
-    mappings channel: 'snapshot', version: '20200106-1.14.3'
+    mappings channel: 'snapshot', version: '20200108-mixed-1.15.1'
 
     accessTransformer = file('src/main/resources/META-INF/versatile_at.cfg')
 
@@ -94,6 +94,11 @@ minecraft {
 }
 
 repositories {
+    maven {
+        //Probably temporary
+        name "yarn2mcp"
+        url "https://maven.tterrag.com/"
+    }
     maven {
         name = "Progwml6 maven"
         url = "https://dvs1.progwml6.com/files/maven/"

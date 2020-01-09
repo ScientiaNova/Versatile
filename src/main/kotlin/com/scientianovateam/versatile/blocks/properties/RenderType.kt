@@ -10,10 +10,10 @@ fun isValidRenderType(type: String) = type in VALID_RENDER_TYPES
 
 @OnlyIn(Dist.CLIENT)
 fun renderTypeFromString(type: String) = when (type) {
-    "solid" -> RenderType.func_228639_c_()
-    "cutout_mipped" -> RenderType.func_228641_d_()
-    "cutout" -> RenderType.func_228643_e_()
-    "translucent" -> RenderType.func_228645_f_()
-    "translucent_no_crumbling" -> RenderType.func_228647_g_()
+    "solid" -> RenderType.getSolid()
+    "cutout_mipped" -> RenderType.getCutout()
+    "cutout" -> RenderType.getCutoutMipped()
+    "translucent" -> RenderType.getTranslucent()
+    "translucent_no_crumbling" -> RenderType.getTranslucentNoCrumbling()
     else -> error("Invalid render type: $type")
 }

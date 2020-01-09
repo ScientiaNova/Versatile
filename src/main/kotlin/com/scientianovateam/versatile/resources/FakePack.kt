@@ -55,7 +55,7 @@ internal class FakePack constructor(private val name: String) : IResourcePack {
             (if (type == ResourcePackType.CLIENT_RESOURCES) assets else data)[location]
                     ?: throw FileNotFoundException(location.toString())
 
-    override fun func_225637_a_(type: ResourcePackType, namespaceIn: String, pathIn: String, maxDepth: Int, filter: Predicate<String>) =
+    override fun findResources(type: ResourcePackType, namespaceIn: String, pathIn: String, maxDepth: Int, filter: Predicate<String>) =
             (if (type == ResourcePackType.CLIENT_RESOURCES) assets else data).keys.filter {
                 val path = it.path
                 val lastSlash = path.lastIndexOf('/')

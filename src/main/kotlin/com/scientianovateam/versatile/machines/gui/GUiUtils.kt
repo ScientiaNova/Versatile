@@ -50,7 +50,7 @@ object GUiUtils {
         RenderSystem.enableBlend()
         RenderSystem.enableAlphaTest()
 
-        val texture = mc.func_228015_a_(PlayerContainer.field_226615_c_).apply(stack.fluid.attributes.stillTexture)
+        val texture = mc.getSpriteAtlas(PlayerContainer.BLOCK_ATLAS_TEXTURE).apply(stack.fluid.attributes.stillTexture)
         val color = stack.fluid.attributes.color
         RenderSystem.color4f(color.redF, color.greenF, color.blueF, 1f)
 
@@ -75,7 +75,7 @@ object GUiUtils {
         RenderSystem.enableBlend()
         RenderSystem.enableAlphaTest()
 
-        val texture = mc.func_228015_a_(PlayerContainer.field_226615_c_).apply(stack.fluid.attributes.stillTexture)
+        val texture = mc.getSpriteAtlas(PlayerContainer.BLOCK_ATLAS_TEXTURE).apply(stack.fluid.attributes.stillTexture)
         val color = stack.fluid.attributes.color
         RenderSystem.color4f(color.redF, color.greenF, color.blueF, 1f)
 
@@ -90,7 +90,7 @@ object GUiUtils {
     }
 
     @JvmStatic
-    fun drawTooltip(tooltips: List<String>, x: Double, y: Double) = GuiUtils.drawHoveringText(tooltips, x.toInt(), y.toInt(), mc.func_228018_at_().scaledWidth, mc.func_228018_at_().scaledHeight, -1, mc.fontRenderer)
+    fun drawTooltip(tooltips: List<String>, x: Double, y: Double) = GuiUtils.drawHoveringText(tooltips, x.toInt(), y.toInt(), mc.window.scaledWidth, mc.window.scaledHeight, -1, mc.fontRenderer)
 
     @JvmStatic
     fun drawTooltip(stack: ItemStack, x: Double, y: Double) {
@@ -101,7 +101,7 @@ object GUiUtils {
 
     @JvmStatic
     fun drawTexture(sprite: TextureAtlasSprite, x: Int, y: Int, width: Int, height: Int, z: Int = 0) =
-            drawTexture(PlayerContainer.field_226615_c_, x, y, width, height, sprite.minU, sprite.minV, sprite.maxU, sprite.maxV, z)
+            drawTexture(PlayerContainer.BLOCK_ATLAS_TEXTURE, x, y, width, height, sprite.minU, sprite.minV, sprite.maxU, sprite.maxV, z)
 
     @JvmStatic
     @JvmOverloads
@@ -109,10 +109,10 @@ object GUiUtils {
         mc.textureManager.bindTexture(location)
         val bufferBuilder = Tessellator.getInstance().buffer
         bufferBuilder.begin(7, DefaultVertexFormats.POSITION_TEX)
-        bufferBuilder.func_225582_a_(x.toDouble(), (y + height).toDouble(), z.toDouble()).func_225583_a_(uStart, vEnd).endVertex()
-        bufferBuilder.func_225582_a_((x + width).toDouble(), (y + height).toDouble(), z.toDouble()).func_225583_a_(uEnd, vEnd).endVertex()
-        bufferBuilder.func_225582_a_((x + width).toDouble(), y.toDouble(), z.toDouble()).func_225583_a_(uEnd, vStart).endVertex()
-        bufferBuilder.func_225582_a_(x.toDouble(), y.toDouble(), z.toDouble()).func_225583_a_(uStart, vStart).endVertex()
+        bufferBuilder.vertex(x.toDouble(), (y + height).toDouble(), z.toDouble()).texture(uStart, vEnd).endVertex()
+        bufferBuilder.vertex((x + width).toDouble(), (y + height).toDouble(), z.toDouble()).texture(uEnd, vEnd).endVertex()
+        bufferBuilder.vertex((x + width).toDouble(), y.toDouble(), z.toDouble()).texture(uEnd, vStart).endVertex()
+        bufferBuilder.vertex(x.toDouble(), y.toDouble(), z.toDouble()).texture(uStart, vStart).endVertex()
         bufferBuilder.finishDrawing()
         WorldVertexBufferUploader.draw(bufferBuilder)
     }
@@ -127,10 +127,10 @@ object GUiUtils {
         RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO)
 
         bufferBuilder.begin(7, DefaultVertexFormats.POSITION)
-        bufferBuilder.func_225582_a_(x.toDouble(), (y + height).toDouble(), z.toDouble()).endVertex()
-        bufferBuilder.func_225582_a_((x + width).toDouble(), (y + height).toDouble(), z.toDouble()).endVertex()
-        bufferBuilder.func_225582_a_((x + width).toDouble(), y.toDouble(), z.toDouble()).endVertex()
-        bufferBuilder.func_225582_a_(x.toDouble(), y.toDouble(), z.toDouble()).endVertex()
+        bufferBuilder.vertex(x.toDouble(), (y + height).toDouble(), z.toDouble()).endVertex()
+        bufferBuilder.vertex((x + width).toDouble(), (y + height).toDouble(), z.toDouble()).endVertex()
+        bufferBuilder.vertex((x + width).toDouble(), y.toDouble(), z.toDouble()).endVertex()
+        bufferBuilder.vertex(x.toDouble(), y.toDouble(), z.toDouble()).endVertex()
         bufferBuilder.finishDrawing()
         WorldVertexBufferUploader.draw(bufferBuilder)
 

@@ -680,8 +680,8 @@ object DataRegistry {
             )
             +Property(
                     name = "refined_material",
-                    type = MATERIAL,
-                    default = "mat".get
+                    type = OptionalType(MATERIAL),
+                    default = NullValue
             )
             +Property(
                     name = "ph",
