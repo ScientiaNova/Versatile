@@ -10,7 +10,7 @@ import com.scientianovateam.versatile.common.math.Graph
 import com.scientianovateam.versatile.common.registry.MATERIAL_PROPERTIES
 import com.scientianovateam.versatile.common.serialization.registries.MaterialSerializer
 import com.scientianovateam.versatile.materialsystem.lists.Materials
-import com.scientianovateam.versatile.velisp.convertToExpression
+import com.scientianovateam.versatile.velisp.toExpression
 import com.scientianovateam.versatile.velisp.evaluated.StringValue
 import com.scientianovateam.versatile.velisp.functions.constructor.MaterialFunction
 import com.scientianovateam.versatile.velisp.unevaluated.FunctionCall
@@ -42,7 +42,7 @@ fun loadMaterials() {
     jsonSets.map(::cascadeJsons).forEach { material ->
         MATERIAL_PROPERTIES.forEach { (_, property) ->
             val value = if (material.has(property.name.toString()))
-                convertToExpression(material.get(property.name.toString()))
+                material.get(property.name.toString()).toExpression()
             else property.default
             value.find(FunctionCall::class.java) { it.function == MaterialFunction }
                     .mapNotNull { (it.inputs.firstOrNull()?.evaluate() as? StringValue)?.value?.let(::get) }

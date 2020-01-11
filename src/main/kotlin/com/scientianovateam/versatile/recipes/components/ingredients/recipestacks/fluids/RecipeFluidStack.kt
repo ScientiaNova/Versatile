@@ -1,10 +1,11 @@
 package com.scientianovateam.versatile.recipes.components.ingredients.recipestacks.fluids
 
+import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.scientianovateam.versatile.common.extensions.*
 import com.scientianovateam.versatile.common.serialization.IRegisterableSerializer
 import com.scientianovateam.versatile.recipes.components.ingredients.recipestacks.IRecipeStack
-import com.scientianovateam.versatile.velisp.convertToExpression
+import com.scientianovateam.versatile.velisp.toExpression
 import com.scientianovateam.versatile.velisp.evaluated.NumberValue
 import net.minecraft.fluid.Fluid
 import net.minecraft.network.PacketBuffer
@@ -29,9 +30,9 @@ data class RecipeFluidStack(val stack: FluidStack) : IRecipeStack<FluidStack> {
         override val registryName = "versatile:item_stack".toResLoc()
 
         override fun read(json: JsonObject): RecipeFluidStackIntermediate {
-            val fluid = json.get("fluid")?.let { convertToExpression(it) }
+            val fluid = json.get("fluid")?.toExpression()
                     ?: throw error("Didn't specify fluid in fluid stack")
-            val count = json.get("count")?.let { convertToExpression(it) } ?: NumberValue(1)
+            val count = json.get("count")?.toExpression() ?: NumberValue(1)
             return RecipeFluidStackIntermediate(fluid, count)
         }
 

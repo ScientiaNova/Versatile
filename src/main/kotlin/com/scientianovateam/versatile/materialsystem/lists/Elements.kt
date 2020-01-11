@@ -15,7 +15,7 @@ object Elements {
     }
 
     @JvmStatic
-    operator fun get(name: String) = elements[name]
+    operator fun get(name: String) = elements[name] ?: error("No element with name $name")
 
     @JvmStatic
     operator fun contains(name: String) = name in elements

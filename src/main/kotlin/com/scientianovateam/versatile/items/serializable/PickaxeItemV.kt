@@ -11,6 +11,7 @@ import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.item.ItemStack
 import net.minecraft.item.PickaxeItem
 import net.minecraft.util.text.ITextComponent
+import net.minecraft.util.text.TranslationTextComponent
 import net.minecraft.world.World
 
 class PickaxeItemV(val tierBasedProperties: ToolTierBasedProperties, val extraAttackDamage: Float = 2f, attackSpeed: Float = -2.8f) : PickaxeItem(tierBasedProperties.tier, (tierBasedProperties.tier.attackDamage + extraAttackDamage).toInt(), attackSpeed, tierBasedProperties), ISerializableItem {
@@ -36,6 +37,11 @@ class PickaxeItemV(val tierBasedProperties: ToolTierBasedProperties, val extraAt
     override fun getEntityLifespan(itemStack: ItemStack?, world: World?) = tierBasedProperties.entityLifespan
     override fun isBookEnchantable(stack: ItemStack?, book: ItemStack?) = tierBasedProperties.isBookEnchantable
     override fun getBurnTime(itemStack: ItemStack?) = tierBasedProperties.burnTime
+    private var localizationFunction: () -> ITextComponent = { TranslationTextComponent(translationKey) }
+    override fun getDisplayName(stack: ItemStack) = localizationFunction()
+    override fun setLocalization(function: () -> ITextComponent) {
+        localizationFunction = function
+    }
 
     override val serializer = Serializer
 

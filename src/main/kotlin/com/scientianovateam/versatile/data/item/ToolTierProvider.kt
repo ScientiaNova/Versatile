@@ -1,7 +1,7 @@
 package com.scientianovateam.versatile.data.item
 
 import com.scientianovateam.versatile.Versatile
-import com.scientianovateam.versatile.data.GSON
+import com.scientianovateam.versatile.data.generation.GSON
 import com.scientianovateam.versatile.items.tiers.ToolTier
 import com.scientianovateam.versatile.items.tiers.ToolTierSerializer
 import net.minecraft.data.DataGenerator
@@ -12,8 +12,8 @@ import java.io.IOException
 class ToolTierProvider(private val dataGenerator: DataGenerator) : IDataProvider {
     private val tiers = mutableListOf<ToolTier>()
 
-    operator fun ToolTier.unaryPlus() = this.let {
-        tiers += it
+    operator fun ToolTier.unaryPlus() = this.apply {
+        tiers += this
     }
 
     override fun act(cache: DirectoryCache) {

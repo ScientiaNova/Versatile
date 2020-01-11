@@ -12,6 +12,8 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.util.Direction
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.shapes.ISelectionContext
+import net.minecraft.util.text.ITextComponent
+import net.minecraft.util.text.TranslationTextComponent
 import net.minecraft.world.Explosion
 import net.minecraft.world.IBlockReader
 import net.minecraft.world.IWorldReader
@@ -36,6 +38,11 @@ open class RegularBlock(val extendedProperties: ExtendedBlockProperties) : Block
     override fun getFireSpreadSpeed(state: BlockState?, world: IBlockReader?, pos: BlockPos?, face: Direction?) = extendedProperties.fireSpreadSpeed
     override fun isFireSource(state: BlockState?, world: IBlockReader?, pos: BlockPos?, side: Direction?) = extendedProperties.fireSource
     override fun getPushReaction(state: BlockState) = extendedProperties.pushReaction
+    private var localizationFunction: () -> ITextComponent = { TranslationTextComponent(translationKey) }
+    override fun setLocalization(function: () -> ITextComponent) {
+        localizationFunction = function
+    }
+    override fun getNameTextComponent() = localizationFunction()
 
     override val serializer = Serializer
 

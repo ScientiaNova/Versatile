@@ -10,6 +10,7 @@ import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.item.HoeItem
 import net.minecraft.item.ItemStack
 import net.minecraft.util.text.ITextComponent
+import net.minecraft.util.text.TranslationTextComponent
 import net.minecraft.world.World
 
 class HoeItemV(val tierBasedProperties: ToolTierBasedProperties, val attackSpeed: Float = tierBasedProperties.tier.attackDamage + 1) : HoeItem(tierBasedProperties.tier, attackSpeed, tierBasedProperties), ISerializableItem {
@@ -30,6 +31,11 @@ class HoeItemV(val tierBasedProperties: ToolTierBasedProperties, val attackSpeed
     override fun getEntityLifespan(itemStack: ItemStack?, world: World?) = tierBasedProperties.entityLifespan
     override fun isBookEnchantable(stack: ItemStack?, book: ItemStack?) = tierBasedProperties.isBookEnchantable
     override fun getBurnTime(itemStack: ItemStack?) = tierBasedProperties.burnTime
+    private var localizationFunction: () -> ITextComponent = { TranslationTextComponent(translationKey) }
+    override fun getDisplayName(stack: ItemStack) = localizationFunction()
+    override fun setLocalization(function: () -> ITextComponent) {
+        localizationFunction = function
+    }
 
     override val serializer = Serializer
 

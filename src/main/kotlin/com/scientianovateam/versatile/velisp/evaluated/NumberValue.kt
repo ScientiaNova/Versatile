@@ -7,5 +7,5 @@ class NumberValue(override val value: Double) : IEvaluated {
     constructor(value: Int) : this(value.toDouble())
 
     override val type = NUMBER
-    override fun toJson() = JsonPrimitive(value)
+    override fun serialize() = JsonPrimitive(value)
 }

@@ -1,0 +1,12 @@
+{
+  "type": "number",
+  "default": [
+    "if",
+    [
+      "is_positive",
+      "$mat/fluid_temperature"
+    ],
+    "$mat/fluid_temperature",
+    0.0
+  ]
+}

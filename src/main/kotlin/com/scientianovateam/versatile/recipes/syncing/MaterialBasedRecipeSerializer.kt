@@ -7,7 +7,7 @@ import com.scientianovateam.versatile.common.extensions.toResLocV
 import com.scientianovateam.versatile.recipes.RECIPE_COMPONENT_HANDLER_SERIALIZERS
 import com.scientianovateam.versatile.recipes.lists.RecipeLists
 import com.scientianovateam.versatile.recipes.RecipeMaterialTemplate
-import com.scientianovateam.versatile.velisp.convertToExpression
+import com.scientianovateam.versatile.velisp.toExpression
 import net.minecraft.item.crafting.IRecipeSerializer
 import net.minecraft.network.PacketBuffer
 import net.minecraft.util.ResourceLocation
@@ -24,7 +24,7 @@ object MaterialBasedRecipeSerializer : ForgeRegistryEntry<IRecipeSerializer<*>>(
         }
         val template = json.getObjectOrNull("template")?.entrySet()?.mapNotNull { RECIPE_COMPONENT_HANDLER_SERIALIZERS[it.key.toResLocV()]?.read(it.value) }
                 ?: error("Missing recipe template for $recipeId")
-        val materialPredicate = json.get("predicate")?.let(::convertToExpression)
+        val materialPredicate = json.get("predicate")?.toExpression()
 
         return MaterialBasedRecipe(materialPredicate, RecipeMaterialTemplate(list, recipeId, template))
     }

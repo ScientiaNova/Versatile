@@ -12,6 +12,7 @@ import net.minecraft.inventory.EquipmentSlotType
 import net.minecraft.item.ArmorItem
 import net.minecraft.item.ItemStack
 import net.minecraft.util.text.ITextComponent
+import net.minecraft.util.text.TranslationTextComponent
 import net.minecraft.world.World
 
 class ArmorItemV(val armorProperties: ArmorItemProperties) : ArmorItem(armorProperties.tier, armorProperties.slotType, armorProperties), ISerializableItem {
@@ -35,6 +36,11 @@ class ArmorItemV(val armorProperties: ArmorItemProperties) : ArmorItem(armorProp
     override fun getEntityLifespan(itemStack: ItemStack?, world: World?) = armorProperties.entityLifespan
     override fun isBookEnchantable(stack: ItemStack?, book: ItemStack?) = armorProperties.isBookEnchantable
     override fun getBurnTime(itemStack: ItemStack?) = armorProperties.burnTime
+    private var localizationFunction: () -> ITextComponent = { TranslationTextComponent(translationKey) }
+    override fun getDisplayName(stack: ItemStack) = localizationFunction()
+    override fun setLocalization(function: () -> ITextComponent) {
+        localizationFunction = function
+    }
 
     override val serializer = Serializer
 

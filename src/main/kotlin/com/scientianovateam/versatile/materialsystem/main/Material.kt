@@ -1,16 +1,17 @@
 package com.scientianovateam.versatile.materialsystem.main
 
 import com.scientianovateam.versatile.common.extensions.toResLoc
-import com.scientianovateam.versatile.materialsystem.addition.BaseElements
 import com.scientianovateam.versatile.materialsystem.addition.BaseForms
 import com.scientianovateam.versatile.materialsystem.addition.LegacyMatProperties
 import com.scientianovateam.versatile.materialsystem.addition.MaterialProperties
+import com.scientianovateam.versatile.materialsystem.lists.Elements
 import com.scientianovateam.versatile.materialsystem.lists.Materials
 import com.scientianovateam.versatile.materialsystem.properties.HarvestTier
 import com.scientianovateam.versatile.materialsystem.properties.IPropertyContainer
 import com.scientianovateam.versatile.materialsystem.properties.MatLegacyProperty
 import com.scientianovateam.versatile.velisp.evaluated.IEvaluated
 import com.scientianovateam.versatile.velisp.evaluated.NumberValue
+import com.scientianovateam.versatile.velisp.evaluated.StringValue
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.FluidTags
 import net.minecraft.tags.ItemTags
@@ -75,11 +76,8 @@ class Material(override val properties: Map<String, IEvaluated>) : IPropertyCont
             this[LegacyMatProperties.ARMOR_MATERIAL] = value
         }
 
-    var element
-        get() = this[LegacyMatProperties.ELEMENT]
-        set(value) {
-            this[LegacyMatProperties.ELEMENT] = value
-        }
+    val element
+        get() = Elements[(properties[MaterialProperties.ELEMENT] as StringValue).value]
 
     var standardBurnTime
         get() = this[LegacyMatProperties.BURN_TIME]
@@ -217,8 +215,6 @@ class Material(override val properties: Map<String, IEvaluated>) : IPropertyCont
         get() = if (composition.isEmpty()) listOf(this.toStack()) else composition.flatMap { (material, count) ->
             material.fullComposition.map { (material1, count1) -> material1 * (count1 * count) }
         }
-
-    val isPureElement get() = element !== BaseElements.NULL
 
     val isItemMaterial get() = mainItemType != null
 

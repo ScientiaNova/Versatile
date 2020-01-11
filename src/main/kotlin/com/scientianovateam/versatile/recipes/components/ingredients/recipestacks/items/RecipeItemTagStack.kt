@@ -1,5 +1,6 @@
 package com.scientianovateam.versatile.recipes.components.ingredients.recipestacks.items
 
+import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.scientianovateam.versatile.common.extensions.json
 import com.scientianovateam.versatile.common.extensions.times
@@ -9,7 +10,7 @@ import com.scientianovateam.versatile.recipes.components.ingredients.recipestack
 import com.scientianovateam.versatile.recipes.components.ingredients.utility.TagStack
 import com.scientianovateam.versatile.recipes.components.ingredients.utility.times
 import com.scientianovateam.versatile.recipes.components.ingredients.utility.toStack
-import com.scientianovateam.versatile.velisp.convertToExpression
+import com.scientianovateam.versatile.velisp.toExpression
 import com.scientianovateam.versatile.velisp.evaluated.NumberValue
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
@@ -37,9 +38,9 @@ data class RecipeItemTagStack(val tag: Tag<Item>, override val count: Int = 1) :
         override val registryName = "versatile:tag_stack".toResLoc()
 
         override fun read(json: JsonObject): RecipeItemTagStackIntermediate {
-            val tag = json.get("item")?.let { convertToExpression(it) }
+            val tag = json.get("item")?.toExpression()
                     ?: throw error("Didn't specify tag in item tag stack")
-            val count = json.get("count")?.let { convertToExpression(it) } ?: NumberValue(1)
+            val count = json.get("count")?.toExpression() ?: NumberValue(1)
             return RecipeItemTagStackIntermediate(tag, count)
         }
 

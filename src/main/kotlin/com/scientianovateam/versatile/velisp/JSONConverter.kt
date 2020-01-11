@@ -6,19 +6,20 @@ import com.scientianovateam.versatile.velisp.evaluated.NullValue
 import com.scientianovateam.versatile.velisp.evaluated.NumberValue
 import com.scientianovateam.versatile.velisp.evaluated.StringValue
 import com.scientianovateam.versatile.velisp.unevaluated.FunctionCall
+import com.scientianovateam.versatile.velisp.unevaluated.UnevaluatedStructValue
 import com.scientianovateam.versatile.velisp.unresolved.Getter
 import com.scientianovateam.versatile.velisp.unresolved.IUnresolved
 
-fun convertToExpression(json: JsonElement): IUnresolved = when (json) {
-    is JsonArray -> FunctionCall((((json.firstOrNull()
+fun JsonElement.toExpression(): IUnresolved = when (this) {
+    is JsonArray -> FunctionCall((((this.firstOrNull()
             ?: error("Empty JSON array")) as? JsonPrimitive)?.asString
-            ?: error("Invalid start of a function call")), json.drop(1).map(::convertToExpression))
+            ?: error("Invalid start of a function call")), this.drop(1).map(JsonElement::toExpression))
     is JsonPrimitive -> when {
-        json.isNumber -> NumberValue(json.asDouble)
-        json.isBoolean -> BoolValue(json.asBoolean)
-        else -> if (json.asString.startsWith('$')) Getter(json.asString) else StringValue(json.asString)
+        this.isNumber -> NumberValue(this.asDouble)
+        this.isBoolean -> BoolValue(this.asBoolean)
+        else -> if (this.asString.startsWith('$')) Getter(this.asString) else StringValue(this.asString)
     }
-    is JsonObject -> error("Can't use a JSON object in an expression")
+    is JsonObject -> UnevaluatedStructValue(this.entrySet().map { (key, value) -> key to value.toExpression() }.toMap())
     is JsonNull -> NullValue
     else -> error("Invalid JSON expression")
 }

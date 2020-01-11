@@ -32,7 +32,7 @@ open class MaterialBuilder(vararg names: String) {
 
     fun armorMaterial(value: IArmorMaterial) = property(LegacyMatProperties.ARMOR_MATERIAL, value)
 
-    fun element(value: Element) = property(LegacyMatProperties.ELEMENT, value)
+    //fun element(value: String) = property(LegacyMatProperties.ELEMENT, value)
 
     fun standardBurnTime(value: Int) = property(LegacyMatProperties.BURN_TIME, value)
 

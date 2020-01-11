@@ -1,5 +1,6 @@
 package com.scientianovateam.versatile.velisp.evaluated
 
+import com.google.gson.JsonElement
 import com.scientianovateam.versatile.velisp.registry.VELISP_FUNCTIONS
 import com.scientianovateam.versatile.velisp.registry.toRegName
 import com.scientianovateam.versatile.velisp.unevaluated.IUnevaluated
@@ -7,6 +8,7 @@ import com.scientianovateam.versatile.velisp.unresolved.IUnresolved
 
 interface IEvaluated : IUnevaluated {
     override fun evaluate() = this
+    fun toJSON(): JsonElement? = serialize()
     val value: Any
 }
 

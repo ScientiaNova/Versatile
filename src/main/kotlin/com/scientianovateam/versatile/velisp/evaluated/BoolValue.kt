@@ -6,7 +6,7 @@ import com.scientianovateam.versatile.velisp.types.BOOL
 class BoolValue(override val value: Boolean) : IEvaluated {
     override val type = BOOL
 
-    override fun toJson() = JsonPrimitive(value)
+    override fun serialize() = JsonPrimitive(value)
 
     companion object {
         val TRUE = BoolValue(true)

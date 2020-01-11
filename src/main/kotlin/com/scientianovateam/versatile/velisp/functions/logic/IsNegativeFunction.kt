@@ -1,6 +1,5 @@
 package com.scientianovateam.versatile.velisp.functions.logic
 
-import com.scientianovateam.versatile.velisp.evaluated.BoolValue
 import com.scientianovateam.versatile.velisp.evaluated.NumberValue
 import com.scientianovateam.versatile.velisp.expr
 import com.scientianovateam.versatile.velisp.functions.IFunction

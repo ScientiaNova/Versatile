@@ -36,5 +36,5 @@ val FORM = FormType()
 val NothingType = VELISPType("nothing".toResLocV())
 val NOTHING = NothingType()
 
-val JsonType = VELISPType("json".toResLocV())
-val JSON = JsonType()
+val StructType = VELISPType("struct".toResLocV())
+val STRUCT = StructType()

@@ -1,9 +1,9 @@
 package com.scientianovateam.versatile.materialsystem.elements
 
-import com.scientianovateam.versatile.materialsystem.addition.BaseElements
-import com.scientianovateam.versatile.materialsystem.properties.CompoundType
-import com.scientianovateam.versatile.materialsystem.main.Material
+import com.scientianovateam.versatile.materialsystem.lists.Elements
 import com.scientianovateam.versatile.materialsystem.main.Form
+import com.scientianovateam.versatile.materialsystem.main.Material
+import com.scientianovateam.versatile.materialsystem.properties.CompoundType
 
 //This class contains functions used for determining the elemental properties of compounds
 object ElementUtils {
@@ -14,7 +14,7 @@ object ElementUtils {
 
         val map = mat.fullComposition.groupBy { it.material.element }.mapValues { (_, value) -> value.map { it.count }.sum() }
 
-        return if (BaseElements.NULL in map) listOf(ElementStack.EMPTY) else map.entries.map { it.key * it.value }
+        return if (Elements["null"] in map) listOf(ElementStack.EMPTY) else map.entries.map { it.key * it.value }
     }
 
     @JvmStatic

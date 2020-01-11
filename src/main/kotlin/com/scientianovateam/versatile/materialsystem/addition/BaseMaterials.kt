@@ -41,7 +41,7 @@ object BaseMaterials {
     val IRON = ingotMaterial("iron") {
         tier = 1
         textureType = BaseTextureTypes.ROUGH
-        element = BaseElements.IRON
+        //Element Iron
         unrefinedColor = 0x947664
         itemTier = ItemTier.IRON
         armorMaterial = ArmorMaterial.IRON
@@ -54,7 +54,7 @@ object BaseMaterials {
         tier = 2
         legacyColor = 0xfad64a
         textureType = BaseTextureTypes.SHINY
-        element = BaseElements.GOLD
+        //Element Gold
         itemTier = ItemTier.GOLD
         armorMaterial = ArmorMaterial.GOLD
         fluidTemperature = 1064
@@ -66,7 +66,7 @@ object BaseMaterials {
         legacyColor = 0x1a1a1a
         textureType = BaseTextureTypes.FUEL
         standardBurnTime = 1600
-        element = BaseElements.CARBON
+        //Element Carbon
         hasOre = true
     }
     @JvmField
@@ -74,7 +74,7 @@ object BaseMaterials {
         legacyColor = 0x443e33
         textureType = BaseTextureTypes.FUEL
         standardBurnTime = 1600
-        element = BaseElements.CARBON
+        //Element Carbon
     }
     @JvmField
     val FLINT = gemMaterial("flint") {
@@ -99,7 +99,7 @@ object BaseMaterials {
         tier = 2
         legacyColor = 0x34ebe3
         textureType = BaseTextureTypes.PENTAGONAL
-        element = BaseElements.CARBON
+        //Element Carbon
         itemTier = ItemTier.DIAMOND
         armorMaterial = ArmorMaterial.DIAMOND
         hasOre = true

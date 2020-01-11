@@ -1,0 +1,8 @@
+{
+  "type": "number",
+  "default": 0.0,
+  "valid": [
+    "is_positive",
+    "$it"
+  ]
+}

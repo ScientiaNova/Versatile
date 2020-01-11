@@ -1,0 +1,26 @@
+{
+  "type": "struct",
+  "default": {
+    "": {
+      "parent": "versatile:block/colored_cube_all",
+      "textures": {
+        "all": [
+          "if",
+          "$form/single_texture_set",
+          [
+            "concat",
+            "versatile:block/",
+            "$form/name"
+          ],
+          [
+            "concat",
+            "versatile:block/",
+            "$mat/texture_set",
+            "/",
+            "$form/name"
+          ]
+        ]
+      }
+    }
+  }
+}

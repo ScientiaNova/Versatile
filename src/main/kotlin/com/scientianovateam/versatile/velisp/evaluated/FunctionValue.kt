@@ -21,5 +21,5 @@ data class FunctionValue(val parameters: List<String>, val expression: IUnresolv
     override val type = FunctionTypeHolder(parameters.size)
     override val value = expression
 
-    override fun toJson() = FunctionCall(LambdaFunction.name, listOf(*parameters.map(::StringValue).toTypedArray(), expression)).toJson()
+    override fun serialize() = FunctionCall(LambdaFunction.name, listOf(*parameters.map(::StringValue).toTypedArray(), expression)).serialize()
 }

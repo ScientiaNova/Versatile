@@ -23,8 +23,6 @@ object LegacyMatProperties {
     @JvmStatic
     val ARMOR_MATERIAL = MatLegacyProperty<IArmorMaterial?>("versatile:armor_material".toResLoc(), ::merge) { null }
     @JvmStatic
-    val ELEMENT = MatLegacyProperty("versatile:element".toResLoc(), ::merge) { BaseElements.NULL }
-    @JvmStatic
     val BURN_TIME = MatLegacyProperty("versatile:burn_time".toResLoc(), ::merge) { 0 }
     @JvmStatic
     val COMPOUND_TYPE = MatLegacyProperty("versatile:compound_type".toResLoc(), ::merge) { CompoundType.CHEMICAL }

@@ -5,7 +5,7 @@ import com.scientianovateam.versatile.common.extensions.toJson
 import com.scientianovateam.versatile.common.extensions.toResLocV
 import com.scientianovateam.versatile.recipes.components.IRecipeComponentHandler
 import com.scientianovateam.versatile.recipes.components.IRecipeHandlerSerializer
-import com.scientianovateam.versatile.velisp.convertToExpression
+import com.scientianovateam.versatile.velisp.toExpression
 import net.minecraft.network.PacketBuffer
 
 class TimeHandler(override val value: Int) : IRecipeComponentHandler<Int> {
@@ -15,7 +15,7 @@ class TimeHandler(override val value: Int) : IRecipeComponentHandler<Int> {
     object Serializer : IRecipeHandlerSerializer<TimeHandler>("time".toResLocV()) {
         override fun write(obj: TimeHandler) = obj.value.toJson()
 
-        override fun read(json: JsonElement) = TimeHandlerIntermediate(convertToExpression(json))
+        override fun read(json: JsonElement) = TimeHandlerIntermediate(json.toExpression())
 
         override fun read(packet: PacketBuffer) = TimeHandler(packet.readVarInt())
 
