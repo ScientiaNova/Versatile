@@ -3,6 +3,7 @@ package com.scientianovateam.versatile.velisp
 import com.google.gson.JsonElement
 import com.scientianovateam.versatile.materialsystem.main.Form
 import com.scientianovateam.versatile.materialsystem.main.Material
+import com.scientianovateam.versatile.materialsystem.main.MaterialStack
 import com.scientianovateam.versatile.velisp.evaluated.*
 import com.scientianovateam.versatile.velisp.unevaluated.FunctionCall
 import com.scientianovateam.versatile.velisp.unevaluated.UnevaluatedStructValue
@@ -17,7 +18,9 @@ fun Number.expr() = NumberValue(this.toDouble())
 fun String.expr() = StringValue(this)
 fun Boolean.expr() = BoolValue(this)
 fun Material.expr() = MaterialValue(this)
+fun MaterialStack.expr() = MaterialStackValue(material.expr(), count.expr())
 fun Form.expr() = FormValue(this)
+fun List<Any?>.expr() = ListValue(this.map { it.expr() as IEvaluated })
 fun get(property: String) = Getter(property)
 val it = get("it")
 
@@ -31,13 +34,15 @@ class StructBuilder {
 
 fun struct(builder: StructBuilder.() -> Unit) = StructBuilder().apply(builder).build()
 
-fun Any?.expr() = when (this) {
+fun Any?.expr(): IUnresolved = when (this) {
     null -> NullValue
     is Number -> expr()
     is String -> expr()
     is Boolean -> expr()
     is Material -> expr()
+    is MaterialStack -> expr()
     is Form -> expr()
+    is List<Any?> -> expr()
     is JsonElement -> toExpression()
     is IUnresolved -> this
     else -> error("${this::class.simpleName} is not an expression value")

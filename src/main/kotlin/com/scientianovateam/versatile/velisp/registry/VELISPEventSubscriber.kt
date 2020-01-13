@@ -28,6 +28,7 @@ object VELISPEventSubscriber {
         VELISP_TYPES["material"] = MaterialType
         VELISP_TYPES["form"] = FormType
         VELISP_TYPES["struct"] = StructType
+        VELISP_TYPES["material_stack"] = MaterialStackType
 
         VELISP_FUNCTIONS["+"] = AddFunction
         VELISP_FUNCTIONS["-"] = SubtractFunction
@@ -76,6 +77,7 @@ object VELISPEventSubscriber {
                 TanFunction,
                 TanhFunction,
                 //Constructors
+                ColorFunction,
                 CopyFunction,
                 FormFunction,
                 LambdaFunction,
@@ -135,7 +137,9 @@ object VELISPEventSubscriber {
                 GreaterOrEqualFunction,
                 IfFunction,
                 InRangeFunction,
+                IsEventFunction,
                 IsNegativeFunction,
+                IsOddFunction,
                 IsPositiveFunction,
                 LessFunction,
                 LessOrEqualFunction,

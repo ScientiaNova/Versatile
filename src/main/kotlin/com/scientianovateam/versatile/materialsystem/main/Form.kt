@@ -5,8 +5,6 @@ import com.scientianovateam.versatile.materialsystem.addition.FormProperties
 import com.scientianovateam.versatile.materialsystem.addition.LegacyFormProperties
 import com.scientianovateam.versatile.materialsystem.lists.Forms
 import com.scientianovateam.versatile.materialsystem.properties.FormLegacyProperty
-import com.scientianovateam.versatile.materialsystem.properties.IPropertyContainer
-import com.scientianovateam.versatile.materialsystem.properties.Property
 import com.scientianovateam.versatile.velisp.evaluated.BoolValue
 import com.scientianovateam.versatile.velisp.evaluated.IEvaluated
 import com.scientianovateam.versatile.velisp.evaluated.StringValue
@@ -14,7 +12,7 @@ import net.minecraft.tags.ItemTags
 import net.minecraft.util.text.TranslationTextComponent
 
 class Form(val properties: Map<Material, Map<String, IEvaluated>>) {
-    val any = properties.values.iterator().next()
+    val any = properties.values.first()
 
     val legacyProperties = mutableMapOf<FormLegacyProperty<out Any?>, Any?>()
 
@@ -79,14 +77,8 @@ class Form(val properties: Map<Material, Map<String, IEvaluated>>) {
         set(value) {
             this[LegacyFormProperties.DENSITY_MULTIPLIER] = value
         }
-
-    var isGas
-        get() = this[LegacyFormProperties.IS_GAS]
-        set(value) {
-            this[LegacyFormProperties.IS_GAS] = value
-        }
-
-    var temperature
+		
+	var temperature
         get() = this[LegacyFormProperties.TEMPERATURE]
         set(value) {
             this[LegacyFormProperties.TEMPERATURE] = value

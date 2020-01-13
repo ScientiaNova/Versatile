@@ -1,7 +1,7 @@
 package com.scientianovateam.versatile.data.material
 
 import com.scientianovateam.versatile.Versatile
-import com.scientianovateam.versatile.common.serialization.registries.PropertySerializer
+import com.scientianovateam.versatile.materialsystem.serializers.PropertySerializer
 import com.scientianovateam.versatile.data.generation.GSON
 import com.scientianovateam.versatile.materialsystem.properties.Property
 import net.minecraft.data.DataGenerator

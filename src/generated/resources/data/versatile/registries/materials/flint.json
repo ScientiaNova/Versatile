@@ -1,0 +1,11 @@
+{
+  "associated_names": [
+    "list",
+    "flint"
+  ],
+  "has_gem": true,
+  "has_dust": true,
+  "color": -14540768,
+  "texture_set": "sharp",
+  "block_compaction": "none"
+}

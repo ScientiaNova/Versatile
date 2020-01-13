@@ -11,9 +11,9 @@ object FluidRegistry {
         MaterialFluids.additionSuppliers.cellSet()
                 .forEach { MaterialFluids.addFluidPair(it.rowKey!!, it.columnKey!!, it.value!!()) }
         Materials.all.forEach { mat ->
-            Forms.all.filter { type -> type.isMaterialCompatible(mat) && !MaterialFluids.contains(mat, type) && if (mat.invertedBlacklist) type in mat.typeBlacklist else type !in mat.typeBlacklist }
-                    .forEach { type ->
-                        type.fluidPairConstructor?.invoke(mat)?.let {
+            Forms.all.filter { form -> form.isMaterialCompatible(mat) && !MaterialFluids.contains(mat, form) && mat.invertedBlacklist != (form.name in mat.formBlacklist) }
+                    .forEach { form ->
+                        form.fluidPairConstructor?.invoke(mat)?.let {
                             e.registry.register(it.still)
                             e.registry.register(it.flowing)
                         }

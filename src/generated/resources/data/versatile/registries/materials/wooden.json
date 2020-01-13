@@ -1,0 +1,15 @@
+{
+  "associated_names": [
+    "list",
+    "wooden"
+  ],
+  "has_dust": true,
+  "tier": -1,
+  "color": -7903444,
+  "texture_set": "fine",
+  "burn_time": 200,
+  "tool_tier": [
+    "some",
+    "wood"
+  ]
+}

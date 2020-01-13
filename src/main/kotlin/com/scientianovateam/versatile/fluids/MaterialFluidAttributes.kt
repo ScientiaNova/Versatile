@@ -16,15 +16,14 @@ import net.minecraftforge.fluids.FluidStack
 class MaterialFluidAttributes(builder: FluidAttributes.Builder, fluid: Fluid, val nameFun: MaterialFluidAttributes.() -> ITextComponent) : FluidAttributes(builder, fluid) {
     override fun getDisplayName(stack: FluidStack?) = nameFun()
 
-    class Builder(mat: Material, type: Form, baseLocation: ResourceLocation) : FluidAttributes.Builder(baseLocation + "_still", baseLocation + "_flow", { builder: FluidAttributes.Builder, fluid: Fluid -> MaterialFluidAttributes(builder, fluid) { if (LanguageMap.getInstance().exists(translationKey)) TranslationTextComponent(translationKey) else type.localize(mat) } }) {
+    class Builder(mat: Material, form: Form, baseLocation: ResourceLocation) : FluidAttributes.Builder(baseLocation + "_still", baseLocation + "_flow", { builder: FluidAttributes.Builder, fluid: Fluid -> MaterialFluidAttributes(builder, fluid) { if (LanguageMap.getInstance().exists(translationKey)) TranslationTextComponent(translationKey) else form.localize(mat) } }) {
         init {
-            translationKey(type.registryName(mat).toString())
-            color(type.color(mat) or (mat.alpha shl 24))
+            translationKey(form.registryName(mat).toString())
+            color(form.color(mat))
+            temperature(form.temperature(mat))
             sound(SoundEvents.ITEM_BUCKET_FILL, SoundEvents.ITEM_BUCKET_EMPTY)
-            temperature(type.temperature(mat))
-            luminosity(((mat.fluidTemperature - 500) / 50).coerceIn(0, 15))
-            viscosity(ElementUtils.getTotalDensity(mat, type).toInt().let { if (type.isGas(mat)) -it else it })
-            viscosity(ElementUtils.getTotalDensity(mat, type).toInt())
+            luminosity(((form.temperature(mat) - 500) / 50).coerceIn(0, 15))
+            density(ElementUtils.getTotalDensity(mat, form).toInt())
         }
     }
 }

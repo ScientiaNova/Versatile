@@ -11,8 +11,7 @@ object Materials {
 
     @JvmStatic
     fun add(mat: Material) {
-        val merged = mat.names.mapNotNull(this::get).distinct().fold(mat) { acc, current -> current.merge(acc) }
-        mat.names.forEach { materials[it] = merged }
+        materials[mat.name] = mat
     }
 
     @JvmStatic

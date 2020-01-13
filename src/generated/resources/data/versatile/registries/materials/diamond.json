@@ -1,0 +1,21 @@
+{
+  "associated_names": [
+    "list",
+    "diamond"
+  ],
+  "has_gem": true,
+  "has_dust": true,
+  "tier": 2,
+  "color": -13308957,
+  "texture_set": "pentagonal",
+  "element": "carbon",
+  "tool_tier": [
+    "some",
+    "diamond"
+  ],
+  "armor_tier": [
+    "some",
+    "diamond"
+  ],
+  "has_ore": true
+}

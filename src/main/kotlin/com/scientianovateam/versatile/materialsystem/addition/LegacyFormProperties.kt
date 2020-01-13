@@ -1,15 +1,14 @@
 package com.scientianovateam.versatile.materialsystem.addition
 
+import com.google.gson.JsonObject
+import com.scientianovateam.versatile.Versatile
 import com.scientianovateam.versatile.common.extensions.json
 import com.scientianovateam.versatile.common.extensions.toResLoc
 import com.scientianovateam.versatile.fluids.IFluidPairHolder
 import com.scientianovateam.versatile.fluids.MaterialFluidAttributes
 import com.scientianovateam.versatile.materialsystem.main.Material
-import com.scientianovateam.versatile.materialsystem.properties.HarvestTier
 import com.scientianovateam.versatile.materialsystem.properties.FormLegacyProperty
 import com.scientianovateam.versatile.materialsystem.properties.merge
-import com.google.gson.JsonObject
-import com.scientianovateam.versatile.Versatile
 import net.minecraft.block.Block
 import net.minecraft.block.SoundType
 import net.minecraft.item.Item
@@ -32,22 +31,20 @@ object LegacyFormProperties {
     @JvmStatic
     val FLUID_TAG = FormLegacyProperty("versatile:fluid_tag".toResLoc(), ::merge) { type -> "forge:${type}_" }
     @JvmStatic
-    val COLOR_FUN = FormLegacyProperty<(Material) -> Int>("versatile:color_fun".toResLoc(), ::merge) { Material::legacyColor }
+    val COLOR_FUN = FormLegacyProperty<(Material) -> Int>("versatile:color_fun".toResLoc(), ::merge) { Material::color }
     @JvmStatic
     val DENSITY_MULTIPLIER = FormLegacyProperty("versatile:density_multiplier".toResLoc(), ::merge) { 1f }
     @JvmStatic
-    val IS_GAS = FormLegacyProperty<(Material) -> Boolean>("versatile:is_gas".toResLoc(), ::merge) { Material::isGas }
-    @JvmStatic
-    val TEMPERATURE = FormLegacyProperty<(Material) -> Int>("versatile:temperature".toResLoc(), ::merge) { { mat -> mat.fluidTemperature.let { if (it > 0) it else 300 } } }
-    @JvmStatic
+	val TEMPERATURE = FormLegacyProperty<(Material) -> Int>("versatile:temperature".toResLoc(), ::merge) { { 300 } }
+	@JvmStatic
     val SINGLE_TEXTURE_TYPE = FormLegacyProperty("versatile:single_texture_type".toResLoc(), ::merge) { false }
     @JvmStatic
-    val BURN_TIME = FormLegacyProperty<(Material) -> Int>("versatile:burn_time".toResLoc(), ::merge) { type -> { mat -> (mat.standardBurnTime * (type.bucketVolume / 144f)).toInt() } }
+    val BURN_TIME = FormLegacyProperty<(Material) -> Int>("versatile:burn_time".toResLoc(), ::merge) { type -> { mat -> (mat.burnTime * (type.bucketVolume / 144f)).toInt() } }
     @JvmStatic
     val ITEM_MODEL = FormLegacyProperty<(Material) -> JsonObject>("versatile:item_model".toResLoc(), ::merge) { type ->
         { mat ->
             json {
-                "parent" to "versatile:item/materialitems/" + (if (type.singleTextureType) "" else "${mat.textureType}/") + type.name
+                "parent" to "versatile:item/materialitems/" + (if (type.singleTextureType) "" else "${mat.textureSet}/") + type.name
             }
         }
     }
@@ -57,7 +54,7 @@ object LegacyFormProperties {
             json {
                 "variants" {
                     "" {
-                        "model" to "versatile:block/materialblocks/" + (if (type.singleTextureType) "" else "${mat.textureType}/") + type.name
+                        "model" to "versatile:block/materialblocks/" + (if (type.singleTextureType) "" else "${mat.textureSet}/") + type.name
                     }
                 }
             }
@@ -71,18 +68,16 @@ object LegacyFormProperties {
     val BLOCK_CONSTRUCTOR = FormLegacyProperty<((Material) -> Block)?>("versatile:block_constructor".toResLoc(), ::merge) { null }
     @JvmStatic
     val BLOCK_PROPERTIES = FormLegacyProperty<(Material) -> Block.Properties>("versatile:block_properties".toResLoc(), ::merge) {
-        { mat -> Block.Properties.create(BlockMaterial.IRON).sound(SoundType.METAL).fromTier(mat.harvestTier).harvestTool(ToolType.PICKAXE) }
+        { mat -> Block.Properties.create(BlockMaterial.IRON).sound(SoundType.METAL).hardnessAndResistance(mat.hardness, mat.resistance).harvestLevel(mat.harvestTier).harvestTool(ToolType.PICKAXE) }
     }
     @JvmStatic
     val FLUID_CONSTRUCTOR = FormLegacyProperty<((Material) -> IFluidPairHolder)?>("versatile:fluid_constructor".toResLoc(), ::merge) { null }
     @JvmStatic
     val FLUID_ATTRIBUTES = FormLegacyProperty<(Material) -> FluidAttributes.Builder>("versatile:fluid_attributes".toResLoc(), ::merge) { type ->
         { mat ->
-            MaterialFluidAttributes.Builder(mat, type, "versatile:fluid/${type.name}".toResLoc()).apply { if (type.isGas(mat)) gaseous() }
+            MaterialFluidAttributes.Builder(mat, type, "versatile:fluid/${type.name}".toResLoc())
         }
     }
     @JvmStatic
     val TYPE_PRIORITY = FormLegacyProperty("versatile:type_priority".toResLoc(), ::merge) { 0 }
 }
-
-fun Block.Properties.fromTier(tier: HarvestTier): Block.Properties = this.hardnessAndResistance(tier.hardness, tier.resistance).harvestLevel(tier.harvestLevel)

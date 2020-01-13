@@ -8,7 +8,7 @@ import com.scientianovateam.versatile.common.loaders.internal.cascadeJsons
 import com.scientianovateam.versatile.common.loaders.internal.earlyResources
 import com.scientianovateam.versatile.common.math.Graph
 import com.scientianovateam.versatile.common.registry.MATERIAL_PROPERTIES
-import com.scientianovateam.versatile.common.serialization.registries.MaterialSerializer
+import com.scientianovateam.versatile.materialsystem.serializers.MaterialSerializer
 import com.scientianovateam.versatile.materialsystem.lists.Materials
 import com.scientianovateam.versatile.velisp.toExpression
 import com.scientianovateam.versatile.velisp.evaluated.StringValue

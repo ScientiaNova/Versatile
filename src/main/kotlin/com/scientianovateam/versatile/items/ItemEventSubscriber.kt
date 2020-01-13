@@ -35,8 +35,8 @@ object ItemEventSubscriber {
         SERIALIZED_ITEMS.forEach { e.registry.register(it.value as Item) }
         MaterialItems.additionSuppliers.forEach { MaterialItems.addItem(it.rowKey!!, it.columnKey!!, it.value!!()) }
         Materials.all.forEach { mat ->
-            Forms.all.filter { type -> type.isMaterialCompatible(mat) && !MaterialItems.contains(mat, type) && if (mat.invertedBlacklist) type in mat.typeBlacklist else type !in mat.typeBlacklist }
-                    .forEach { type -> type.itemConstructor?.invoke(mat)?.let { e.registry.register(it) } }
+            Forms.all.filter { form -> form.isMaterialCompatible(mat) && !MaterialItems.contains(mat, form) && mat.invertedBlacklist != (form.name in mat.formBlacklist) }
+                    .forEach { form -> form.itemConstructor?.invoke(mat)?.let { e.registry.register(it) } }
         }
         addModelJSONs()
     }

@@ -1,9 +1,9 @@
 package com.scientianovateam.versatile.machines
 
+import com.google.common.reflect.MutableTypeToInstanceMap
 import com.scientianovateam.versatile.common.extensions.plusAssign
 import com.scientianovateam.versatile.machines.gui.layout.GUIBook
 import com.scientianovateam.versatile.machines.properties.ITEBoundProperty
-import com.google.common.reflect.MutableTypeToInstanceMap
 import net.minecraft.block.Block
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.CompoundNBT
@@ -24,7 +24,7 @@ open class BaseTileEntity(type: TileEntityType<*> = BaseMachineRegistry.BASE_TIL
 
     val teProperties by lazy {
         block?.teProperties?.invoke(this)?.map { it.id to it }?.toMap()?.also { map -> unreadTag?.let { tag -> map.values.forEach { it.deserializeNBT(tag) } } }
-                ?: mapOf()
+                ?: emptyMap()
     }
 
     val guiLayout by lazy { block?.guiLayout?.invoke(this) ?: GUIBook() }

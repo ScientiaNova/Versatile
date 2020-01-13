@@ -1,0 +1,12 @@
+{
+  "associated_names": [
+    "list",
+    "quartz"
+  ],
+  "has_gem": true,
+  "has_dust": true,
+  "color": -1515568,
+  "texture_set": "crystal",
+  "block_compaction": "2x2",
+  "has_ore": true
+}

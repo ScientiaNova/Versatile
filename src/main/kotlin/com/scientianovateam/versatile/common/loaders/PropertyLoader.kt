@@ -3,7 +3,7 @@ package com.scientianovateam.versatile.common.loaders
 import com.scientianovateam.versatile.common.loaders.internal.earlyResources
 import com.scientianovateam.versatile.common.registry.FORM_PROPERTIES
 import com.scientianovateam.versatile.common.registry.MATERIAL_PROPERTIES
-import com.scientianovateam.versatile.common.serialization.registries.PropertySerializer
+import com.scientianovateam.versatile.materialsystem.serializers.PropertySerializer
 
 fun loadProperties() {
     earlyResources.loadAll("registries/mat_properties").map(PropertySerializer::read).forEach { property ->

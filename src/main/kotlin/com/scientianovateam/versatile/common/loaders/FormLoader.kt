@@ -6,7 +6,7 @@ import com.scientianovateam.versatile.common.loaders.internal.cascadeJsons
 import com.scientianovateam.versatile.common.loaders.internal.earlyResources
 import com.scientianovateam.versatile.common.math.Graph
 import com.scientianovateam.versatile.common.registry.FORM_PROPERTIES
-import com.scientianovateam.versatile.common.serialization.registries.FormSerializer
+import com.scientianovateam.versatile.materialsystem.serializers.FormSerializer
 import com.scientianovateam.versatile.materialsystem.lists.Forms
 import com.scientianovateam.versatile.velisp.toExpression
 import com.scientianovateam.versatile.velisp.evaluated.StringValue

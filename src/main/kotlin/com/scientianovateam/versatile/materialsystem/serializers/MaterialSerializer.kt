@@ -1,6 +1,7 @@
-package com.scientianovateam.versatile.common.serialization.registries
+package com.scientianovateam.versatile.materialsystem.serializers
 
 import com.google.gson.JsonObject
+import com.scientianovateam.versatile.common.extensions.json
 import com.scientianovateam.versatile.common.math.Graph
 import com.scientianovateam.versatile.common.registry.MATERIAL_PROPERTIES
 import com.scientianovateam.versatile.common.serialization.IRegistrySerializer
@@ -43,7 +44,9 @@ object MaterialSerializer : IRegistrySerializer<Material> {
         return Material(properties)
     }
 
-    override fun write(obj: Material): JsonObject {
-        TODO("not implemented")
+    override fun write(obj: Material) = json {
+        obj.properties.forEach {
+            it.key to it.value.serialize()
+        }
     }
 }

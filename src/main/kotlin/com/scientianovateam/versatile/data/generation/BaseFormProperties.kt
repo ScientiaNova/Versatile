@@ -33,7 +33,7 @@ fun DataGenerator.addFormProperties() = formProperties {
     +Property(
             name = "temperature",
             type = NUMBER,
-            default = "if"("is_positive"("fluid_temperature".matGet), "fluid_temperature".matGet, 0)
+            default = 300
     )
     +Property(
             name = "single_texture_set",

@@ -1,4 +1,4 @@
-package com.scientianovateam.versatile.common.serialization.registries
+package com.scientianovateam.versatile.materialsystem.serializers
 
 import com.google.gson.JsonObject
 import com.scientianovateam.versatile.common.math.Graph

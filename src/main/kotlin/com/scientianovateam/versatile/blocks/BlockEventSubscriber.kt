@@ -26,8 +26,8 @@ object BlockEventSubscriber {
         SERIALIZED_BLOCKS.forEach { e.registry.register(it.value as Block) }
         MaterialBlocks.additionSuppliers.forEach { MaterialBlocks.addBlock(it.rowKey!!, it.columnKey!!, it.value!!()) }
         Materials.all.forEach { mat ->
-            Forms.all.filter { type -> type.isMaterialCompatible(mat) && !MaterialBlocks.contains(mat, type) && if (mat.invertedBlacklist) type in mat.typeBlacklist else type !in mat.typeBlacklist }
-                    .forEach { type -> type.blockConstructor?.invoke(mat)?.let { e.registry.register(it) } }
+            Forms.all.filter { form -> form.isMaterialCompatible(mat) && !MaterialBlocks.contains(mat, form) && mat.invertedBlacklist != (form.name in mat.formBlacklist) }
+                    .forEach { form -> form.blockConstructor?.invoke(mat)?.let { e.registry.register(it) } }
         }
     }
 }

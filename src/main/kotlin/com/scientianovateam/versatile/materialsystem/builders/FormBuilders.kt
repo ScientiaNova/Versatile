@@ -42,10 +42,6 @@ open class FormBuilder(name: String, requirement: (Material) -> Boolean) {
 
     fun densityMultiplier(value: Float) = property(LegacyFormProperties.DENSITY_MULTIPLIER, value)
 
-    fun isGasFunc(value: (Material) -> Boolean) = property(LegacyFormProperties.IS_GAS, value)
-
-    fun temperatureFunc(value: (Material) -> Int) = property(LegacyFormProperties.TEMPERATURE, value)
-
     @JvmOverloads
     fun singleTextureType(value: Boolean = true) = property(LegacyFormProperties.SINGLE_TEXTURE_TYPE, value)
 
@@ -84,7 +80,7 @@ class BlockTypeBuilder(name: String, requirement: (Material) -> Boolean) : FormB
         blockConstructor(::MaterialBlock)
         itemModelFunc { mat ->
             json {
-                "parent" to "versatile:block/materialblocks/" + (if (this@BlockTypeBuilder.result.singleTextureType) "" else "${mat.textureType}/") + name
+                "parent" to "versatile:block/materialblocks/" + (if (this@BlockTypeBuilder.result.singleTextureType) "" else "${mat.textureSet}/") + name
             }
         }
     }
@@ -104,7 +100,7 @@ class FluidTypeBuilder(name: String, requirement: (Material) -> Boolean) : FormB
         blockTagName("")
         itemModelFunc { mat ->
             json {
-                "parent" to "versatile:block/materialblocks/" + (if (this@FluidTypeBuilder.result.singleTextureType) "" else "${mat.textureType}/") + name
+                "parent" to "versatile:block/materialblocks/" + (if (this@FluidTypeBuilder.result.singleTextureType) "" else "${mat.textureSet}/") + name
             }
         }
     }

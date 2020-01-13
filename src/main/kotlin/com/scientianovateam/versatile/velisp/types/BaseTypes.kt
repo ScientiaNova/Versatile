@@ -30,6 +30,9 @@ val FunctionType = VELISPType("function".toResLocV())
 val MaterialType = VELISPType("material".toResLocV())
 val MATERIAL = MaterialType()
 
+val MaterialStackType = VELISPType("material_stack".toResLocV())
+val MATERIAL_STACK = MaterialStackType()
+
 val FormType = VELISPType("form".toResLocV())
 val FORM = FormType()
 

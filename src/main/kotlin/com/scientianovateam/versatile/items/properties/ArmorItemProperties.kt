@@ -5,7 +5,7 @@ import com.google.gson.JsonPrimitive
 import com.scientianovateam.versatile.Versatile
 import com.scientianovateam.versatile.common.extensions.*
 import com.scientianovateam.versatile.common.serialization.IJSONSerializer
-import com.scientianovateam.versatile.items.ARMOR_TIER
+import com.scientianovateam.versatile.items.ARMOR_TIERS
 import com.scientianovateam.versatile.items.tiers.ArmorTier
 import net.minecraft.inventory.EquipmentSlotType
 import net.minecraft.item.Food
@@ -46,7 +46,7 @@ open class ArmorItemProperties(
 
     object Serializer : IJSONSerializer<ArmorItemProperties, JsonObject> {
         override fun read(json: JsonObject) = ArmorItemProperties(
-                tier = json.getStringOrNull("armor_tier")?.let(ARMOR_TIER::get) ?: error("Missing armor tier"),
+                tier = json.getStringOrNull("armor_tier")?.let(ARMOR_TIERS::get) ?: error("Missing armor tier"),
                 slotType = json.getStringOrNull("slot_type")?.let(EquipmentSlotType::fromString)
                         ?: error("Missing slot type"),
                 maxStackSize = json.getIntOrNull("max_stack_size") ?: 64,

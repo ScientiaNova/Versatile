@@ -1,12 +1,12 @@
 {
   "type": "number",
   "default": [
-    "+",
+    "*",
     "$mat/standard_burn_time",
     [
       "/",
       "$mat/bucket_volume",
-      144.0
+      144
     ]
   ]
 }

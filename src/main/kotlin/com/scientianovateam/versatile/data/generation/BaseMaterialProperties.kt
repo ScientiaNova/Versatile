@@ -9,6 +9,26 @@ import net.minecraft.data.DataGenerator
 
 fun DataGenerator.addMatProperties() = matProperties {
     +Property(
+            name = "associated_names",
+            type = ListType(STRING),
+            default = "list"()
+    )
+    +Property(
+            name = "form_blacklist",
+            type = ListType(STRING),
+            default = "list"()
+    )
+    +Property(
+            name = "inverted_blacklist",
+            type = BOOL,
+            default = false
+    )
+    +Property(
+            name = "composition",
+            type = ListType(MATERIAL_STACK),
+            default = "list"()
+    )
+    +Property(
             name = "texture_set",
             type = STRING,
             default = "regular"
@@ -16,7 +36,7 @@ fun DataGenerator.addMatProperties() = matProperties {
     +Property(
             name = "color",
             type = NUMBER,
-            default = -1
+            default = 0xFF000000
     )
     +Property(
             name = "tier",
@@ -26,17 +46,17 @@ fun DataGenerator.addMatProperties() = matProperties {
     +Property(
             name = "hardness",
             type = NUMBER,
-            default = 0
+            default = "*"(1.5, "+"("tier".matGet, 1))
     )
     +Property(
             name = "resistance",
             type = NUMBER,
-            default = 0
+            default = "*"(1.5, "+"("tier".matGet, 1))
     )
     +Property(
             name = "harvest_level",
             type = NUMBER,
-            default = 0
+            default = "tier".matGet
     )
     +Property(
             name = "tool_tier",
@@ -75,6 +95,11 @@ fun DataGenerator.addMatProperties() = matProperties {
             default = 1
     )
     +Property(
+            name = "refined_material",
+            type = OptionalType(MATERIAL),
+            default = null
+    )
+    +Property(
             name = "unrefined_color",
             type = NUMBER,
             default = "color".matGet
@@ -105,20 +130,10 @@ fun DataGenerator.addMatProperties() = matProperties {
             default = "color".matGet
     )
     +Property(
-            name = "refined_material",
-            type = OptionalType(MATERIAL),
-            default = null
-    )
-    +Property(
             name = "ph",
             type = NUMBER,
             default = 7,
             valid = "in_range"(it, 0, 14)
-    )
-    +Property(
-            name = "alpha",
-            type = NUMBER,
-            default = 0xFF
     )
     +Property(
             name = "block_compaction",
@@ -127,14 +142,14 @@ fun DataGenerator.addMatProperties() = matProperties {
             valid = "or"("="(it, "3x3"), "="(it, "2x2"), "="(it, "none"))
     )
     +Property(
-            name = "transition_amount",
-            type = NUMBER,
-            default = 2
-    )
-    +Property(
             name = "transition_material",
             type = OptionalType(STRING),
             default = null
+    )
+    +Property(
+            name = "transition_amount",
+            type = NUMBER,
+            default = 2
     )
     +Property(
             name = "has_ore",
@@ -167,8 +182,13 @@ fun DataGenerator.addMatProperties() = matProperties {
             default = false
     )
     +Property(
-            name = "is_group",
+            name = "group",
             type = BOOL,
             default = false
+    )
+    +Property(
+            name = "malleable",
+            type = BOOL,
+            default = true
     )
 }

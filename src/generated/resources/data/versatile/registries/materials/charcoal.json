@@ -1,0 +1,12 @@
+{
+  "associated_names": [
+    "list",
+    "charcoal"
+  ],
+  "has_gem": true,
+  "has_dust": true,
+  "color": -12304845,
+  "texture_set": "fuel",
+  "burn_time": 1600,
+  "element": "carbon"
+}

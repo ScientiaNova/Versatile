@@ -43,7 +43,7 @@ data class Isotope(
 
 object ElementSerializer : IJSONSerializer<Element, JsonObject> {
     override fun read(json: JsonObject) = json.getStringOrNull("standard_isotope")?.let {
-        val standardIsotope = ((Elements[it] ?: error("No such element $it")) as? BaseElement
+        val standardIsotope = (Elements[it] as? BaseElement
                 ?: error("Isotope required a base element, but got $it"))
         val nucleons = json.getIntOrNull("nucleons") ?: error("Missing nucleons for isotope")
         Isotope(
@@ -71,7 +71,7 @@ object ElementSerializer : IJSONSerializer<Element, JsonObject> {
         is Isotope -> json {
             "standard_isotope" to obj.standardIsotope.name
             "nucleons" to obj.nucleons
-            if (obj.symbol != "${obj.standardIsotope}-${obj.nucleons}")
+            if (obj.symbol != "${obj.standardIsotope.symbol}-${obj.nucleons}")
                 "symbol" to obj.symbol
         }
     }
