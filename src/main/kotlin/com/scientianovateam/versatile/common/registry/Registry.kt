@@ -4,7 +4,7 @@ import com.scientianovateam.versatile.Versatile
 import com.scientianovateam.versatile.common.extensions.toResLocV
 import net.minecraft.util.ResourceLocation
 
-open class Registry<T : Any> : Iterable<Map.Entry<ResourceLocation, T>> {
+open class Registry<T : Any> : Iterable<T> {
     private val map = mutableMapOf<ResourceLocation, T>()
 
     operator fun get(registryName: ResourceLocation) = map[registryName]
@@ -20,5 +20,5 @@ open class Registry<T : Any> : Iterable<Map.Entry<ResourceLocation, T>> {
 
     operator fun contains(registryName: ResourceLocation) = registryName in map
 
-    override fun iterator(): Iterator<Map.Entry<ResourceLocation, T>> = map.iterator()
+    override fun iterator(): Iterator<T> = map.values.iterator()
 }

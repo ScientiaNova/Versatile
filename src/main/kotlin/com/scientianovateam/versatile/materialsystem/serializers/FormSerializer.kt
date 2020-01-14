@@ -2,9 +2,8 @@ package com.scientianovateam.versatile.materialsystem.serializers
 
 import com.google.gson.JsonObject
 import com.scientianovateam.versatile.common.math.Graph
-import com.scientianovateam.versatile.common.registry.FORM_PROPERTIES
-import com.scientianovateam.versatile.common.serialization.IRegistrySerializer
-import com.scientianovateam.versatile.materialsystem.lists.Materials
+import com.scientianovateam.versatile.materialsystem.lists.FORM_PROPERTIES
+import com.scientianovateam.versatile.materialsystem.lists.MATERIALS
 import com.scientianovateam.versatile.materialsystem.main.Form
 import com.scientianovateam.versatile.materialsystem.main.Material
 import com.scientianovateam.versatile.materialsystem.properties.Property
@@ -15,11 +14,11 @@ import com.scientianovateam.versatile.velisp.toExpression
 import com.scientianovateam.versatile.velisp.unresolved.Getter
 import com.scientianovateam.versatile.velisp.unresolved.IUnresolved
 
-object FormSerializer : IRegistrySerializer<Form> {
-    override fun read(json: JsonObject): Form {
+object FormSerializer {
+    fun read(json: JsonObject): Form {
         val properties = mutableMapOf<Material, Map<String, IEvaluated>>()
         val loaded = mutableMapOf<Property, IUnresolved>()
-        FORM_PROPERTIES.forEach { (_, property) ->
+        FORM_PROPERTIES.forEach { property ->
             loaded[property] = if (json.has(property.name.toString()))
                 json.get(property.name.toString()).toExpression()
             else property.default
@@ -32,7 +31,7 @@ object FormSerializer : IRegistrySerializer<Form> {
             }
         }
         val ordered = graph.topologicalSort() ?: error("Getter cycle")
-        Materials.all.forEach { material ->
+        MATERIALS.forEach { material ->
             val localProperties = mutableMapOf<String, IEvaluated>()
             val formProperties = StructValue(localProperties)
             val materialProperties = StructValue(material.properties)
@@ -55,9 +54,5 @@ object FormSerializer : IRegistrySerializer<Form> {
         }
 
         return Form(properties)
-    }
-
-    override fun write(obj: Form): JsonObject {
-        TODO("not implemented")
     }
 }

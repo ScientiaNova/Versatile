@@ -1,0 +1,12 @@
+{
+  "item": {
+    "type": "regular",
+    "burn_time": "$form/burn_time"
+  },
+  "generate": [
+    "and",
+    "$mat/has_ingot",
+    "$mat/malleable"
+  ],
+  "bucket_volume": 16
+}

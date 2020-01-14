@@ -1,20 +1,20 @@
 package com.scientianovateam.versatile.items.serializable
 
 import com.google.gson.JsonObject
-import com.scientianovateam.versatile.common.extensions.json
-import com.scientianovateam.versatile.common.extensions.toResLocV
-import com.scientianovateam.versatile.common.extensions.toStack
+import com.scientianovateam.versatile.common.extensions.*
 import com.scientianovateam.versatile.common.serialization.IRegisterableJSONSerializer
 import com.scientianovateam.versatile.items.properties.ExtendedItemProperties
+import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.client.util.ITooltipFlag
-import net.minecraft.item.Item
+import net.minecraft.item.BlockItem
 import net.minecraft.item.ItemStack
 import net.minecraft.util.text.ITextComponent
 import net.minecraft.util.text.TranslationTextComponent
 import net.minecraft.world.World
+import net.minecraftforge.registries.ForgeRegistries
 
-open class RegularItem(val extendedProperties: ExtendedItemProperties) : Item(extendedProperties), ISerializableItem {
+open class BlockItemV(block: Block, val extendedProperties: ExtendedItemProperties) : BlockItem(block, extendedProperties), ISerializableItem {
     override fun getDestroySpeed(stack: ItemStack, state: BlockState) = extendedProperties.destroySpeed
     override fun hasContainerItem(stack: ItemStack?) = extendedProperties.containerItem != null
     override fun getContainerItem(itemStack: ItemStack?): ItemStack = extendedProperties.containerItem?.toStack()
@@ -39,11 +39,17 @@ open class RegularItem(val extendedProperties: ExtendedItemProperties) : Item(ex
 
     override val serializer = Serializer
 
-    object Serializer : IRegisterableJSONSerializer<RegularItem, JsonObject> {
-        override val registryName = "regular".toResLocV()
-        override fun read(json: JsonObject) = RegularItem(ExtendedItemProperties.Serializer.read(json))
-        override fun write(obj: RegularItem) = json {
-            "type" to "regular"
+    object Serializer : IRegisterableJSONSerializer<BlockItemV, JsonObject> {
+        override val registryName = "block_item".toResLocV()
+        override fun read(json: JsonObject) = BlockItemV(
+                (json.getStringOrNull("block")?.toResLoc() ?: error("Missing block for block item")).let {
+                    ForgeRegistries.BLOCKS.getValue(it) ?: error("No such block with name $it")
+                }, ExtendedItemProperties.Serializer.read(json)
+        )
+
+        override fun write(obj: BlockItemV) = json {
+            "type" to "block_item"
+            "block" to obj.block.registryName!!
             ExtendedItemProperties.Serializer.write(obj.extendedProperties).extract()
         }
     }

@@ -1,7 +1,9 @@
 package com.scientianovateam.versatile.items.serializable
 
 import com.google.gson.JsonObject
+import com.scientianovateam.versatile.common.extensions.getStringOrNull
 import com.scientianovateam.versatile.common.serialization.IJSONSerializer
+import com.scientianovateam.versatile.items.ITEM_SERIALIZERS
 import net.minecraft.item.Item
 import net.minecraft.util.text.ITextComponent
 import net.minecraftforge.common.extensions.IForgeItem
@@ -14,3 +16,7 @@ interface ISerializableItem : IForgeItem, IForgeRegistryEntry<Item> {
 
 @Suppress("UNCHECKED_CAST")
 fun <T : ISerializableItem> T.serialize() = (serializer as IJSONSerializer<T, JsonObject>).write(this)
+
+fun deserializeItem(json: JsonObject) = (json.getStringOrNull("type")?.let {
+    ITEM_SERIALIZERS[it] ?: error("Invalid item type: $it")
+} ?: RegularItem.Serializer).read(json)

@@ -62,21 +62,21 @@ open class ExtendedItemProperties(
         )
 
         override fun write(obj: ExtendedItemProperties) = json {
-            "max_stack_size" to obj.maxStackSize
-            "max_durability" to obj.maxDurability
+            if (obj.maxStackSize != 64) "max_stack_size" to obj.maxStackSize
+            if (obj.maxDurability != 0) "max_durability" to obj.maxDurability
             obj.containerItem?.let { "container_item" to it }
-            "rarity" to obj.rarity.name.toLowerCase()
-            "can_repair" to obj.canRepair
-            "destroy_speed" to obj.destroySpeed
+            if (obj.rarity != Rarity.COMMON) "rarity" to obj.rarity.name.toLowerCase()
+            if (!obj.canRepair) "can_repair" to obj.canRepair
+            if (obj.destroySpeed != 1f) "destroy_speed" to obj.destroySpeed
             obj.food?.let { "food" to FoodSerializer.write(it) }
-            "tooltips" to obj.tooltips.map { JsonPrimitive(it.key) }
+            if (obj.tooltips.isNotEmpty()) "tooltips" to obj.tooltips.map { JsonPrimitive(it.key) }
             obj.translationKey?.let { "translation_key" to it }
-            "glows" to obj.glows
-            "is_enchantable" to obj.isEnchantable
-            "enchantability" to obj.enchantability
-            "entity_lifespan" to obj.entityLifespan
-            "is_book_enchantable" to obj.isBookEnchantable
-            "burn_time" to obj.burnTime
+            if (obj.glows) "glows" to obj.glows
+            if (obj.isEnchantable != (obj.maxDurability > 0)) "is_enchantable" to obj.isEnchantable
+            if (obj.enchantability > 0) "enchantability" to obj.enchantability
+            if (obj.entityLifespan != 6000) "entity_lifespan" to obj.entityLifespan
+            if (!obj.isBookEnchantable) "is_book_enchantable" to obj.isBookEnchantable
+            if (obj.burnTime > 0) "burn_time" to obj.burnTime
         }
     }
 }

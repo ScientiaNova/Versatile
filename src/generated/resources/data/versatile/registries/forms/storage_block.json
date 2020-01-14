@@ -1,0 +1,37 @@
+{
+  "item": {
+    "type": "block_item",
+    "burn_time": "$form/burn_time"
+  },
+  "block": {
+    "type": "regular",
+    "material": "iron",
+    "hardness": "$mat/hardness",
+    "resistance": "$mat/resistance",
+    "harvest_tier": "$mat/harvest_tier"
+  },
+  "item_model": {
+    "parent": [
+      "concat",
+      "versatile:block/",
+      "$form/registry_name"
+    ]
+  },
+  "generate": [
+    "!=",
+    "$mat/block_compaction",
+    "none"
+  ],
+  "registry_name": [
+    "concat",
+    "versatile:",
+    "$mat/name",
+    "_block"
+  ],
+  "burn_time": [
+    "*",
+    "$mat/burn_time",
+    10
+  ],
+  "bucket_volume": 1296
+}

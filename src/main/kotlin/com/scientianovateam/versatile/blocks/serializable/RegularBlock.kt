@@ -2,6 +2,7 @@ package com.scientianovateam.versatile.blocks.serializable
 
 import com.google.gson.JsonObject
 import com.scientianovateam.versatile.blocks.properties.ExtendedBlockProperties
+import com.scientianovateam.versatile.common.extensions.json
 import com.scientianovateam.versatile.common.extensions.toResLocV
 import com.scientianovateam.versatile.common.serialization.IRegisterableJSONSerializer
 import net.minecraft.block.Block
@@ -49,6 +50,9 @@ open class RegularBlock(val extendedProperties: ExtendedBlockProperties) : Block
     object Serializer : IRegisterableJSONSerializer<RegularBlock, JsonObject> {
         override val registryName = "regular".toResLocV()
         override fun read(json: JsonObject) = RegularBlock(ExtendedBlockProperties.Serializer.read(json))
-        override fun write(obj: RegularBlock) = ExtendedBlockProperties.Serializer.write(obj.extendedProperties)
+        override fun write(obj: RegularBlock) = json {
+            "type" to "regular"
+            ExtendedBlockProperties.Serializer.write(obj.extendedProperties).extract()
+        }
     }
 }

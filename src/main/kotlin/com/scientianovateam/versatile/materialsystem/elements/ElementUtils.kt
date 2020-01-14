@@ -27,8 +27,8 @@ object ElementUtils {
     fun getMolarMass(mat: Material) = getElementalComposition(mat).map { (element, count) -> element.atomicMass * count }.sum()
 
     @JvmStatic
-    fun getTotalDensity(mat: Material, type: Form): Double {
+    fun getTotalDensity(mat: Material, form: Form): Double {
         val list = getElementalComposition(mat).map { (element, count) -> element.density * count }
-        return (if (mat.compoundType === CompoundType.CHEMICAL) list.sum() else list.average()) * type.densityMultiplier * mat.densityMultiplier
+        return (if (mat.compoundType === CompoundType.CHEMICAL) list.sum() else list.average()) * mat.densityMultiplier * form.densityMultiplier(mat)
     }
 }

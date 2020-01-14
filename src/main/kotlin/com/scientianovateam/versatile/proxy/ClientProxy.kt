@@ -60,13 +60,16 @@ fun addModelJSONs() {
 
     MaterialBlocks.all.filter { it is IMaterialObject && it !is FlowingFluidBlock }.forEach {
         val registryName = it.registryName!!
-        val type = (it as IMaterialObject).form
-        JSONAdder.addAssetsJSON(ResourceLocation(registryName.namespace, "blockstates/" + registryName.path + ".json"), type.blockStateJSON(it.mat))
+        val form = (it as IMaterialObject).form
+        JSONAdder.addAssetsJSON(ResourceLocation(registryName.namespace, "blockstates/" + registryName.path + ".json"), form.blockstateJSON(it.mat))
+        it.form.blockModels(it.mat).forEach { (name, json) ->
+            JSONAdder.addAssetsJSON(ResourceLocation(registryName.namespace, "models/block/" + registryName.path + (if (name.isEmpty()) "" else "_$name") + ".json"), json)
+        }
     }
 
     MaterialFluids.all.filterIsInstance<IMaterialObject>().forEach {
-        val type = it.form
+        val form = it.form
         val registryName = it.form.registryName(it.mat)
-        JSONAdder.addAssetsJSON(ResourceLocation(registryName.namespace, "blockstates/" + registryName.path + ".json"), type.blockStateJSON(it.mat))
+        JSONAdder.addAssetsJSON(ResourceLocation(registryName.namespace, "blockstates/" + registryName.path + ".json"), form.blockstateJSON(it.mat))
     }
 }

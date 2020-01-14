@@ -1,13 +1,10 @@
 package com.scientianovateam.versatile.materialsystem.commands
 
 import com.scientianovateam.versatile.common.extensions.*
-import com.scientianovateam.versatile.materialsystem.lists.MaterialBlocks
-import com.scientianovateam.versatile.materialsystem.lists.MaterialFluids
-import com.scientianovateam.versatile.materialsystem.lists.MaterialItems
-import com.scientianovateam.versatile.materialsystem.lists.Materials
 import com.scientianovateam.versatile.materialsystem.main.Material
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.StringArgumentType
+import com.scientianovateam.versatile.materialsystem.lists.*
 import net.minecraft.command.CommandSource
 import net.minecraft.command.arguments.ItemArgument
 import net.minecraft.entity.player.ServerPlayerEntity
@@ -45,13 +42,13 @@ class MaterialCommand(dispatcher: CommandDispatcher<CommandSource>) {
                             )
                             composition.forEach { it.material.sendHierarchy(level + 1) }
                         }
-                        Materials[StringArgumentType.getString(this, "name")]?.sendHierarchy()
+                        MATERIALS[StringArgumentType.getString(this, "name")]?.sendHierarchy()
                                 ?: source.sendErrorMessage(TranslationTextComponent("command.material.error"))
                     }
                 }
                 literal("items") {
                     does {
-                        Materials[StringArgumentType.getString(this, "name")]?.let {
+                        MATERIALS[StringArgumentType.getString(this, "name")]?.let {
                             MaterialItems[it]?.values?.forEach { item ->
                                 source.sendFeedback(item.registryName!!.toString().toComponent(), false)
                             }
@@ -60,7 +57,7 @@ class MaterialCommand(dispatcher: CommandDispatcher<CommandSource>) {
                 }
                 literal("blocks") {
                     does {
-                        Materials[StringArgumentType.getString(this, "name")]?.let {
+                        MATERIALS[StringArgumentType.getString(this, "name")]?.let {
                             MaterialBlocks[it]?.values?.forEach { block ->
                                 source.sendFeedback(block.registryName!!.toString().toComponent(), false)
                             }
@@ -69,7 +66,7 @@ class MaterialCommand(dispatcher: CommandDispatcher<CommandSource>) {
                 }
                 literal("fluids") {
                     does {
-                        Materials[StringArgumentType.getString(this, "name")]?.let {
+                        MATERIALS[StringArgumentType.getString(this, "name")]?.let {
                             MaterialFluids[it]?.values?.forEach { fluid ->
                                 source.sendFeedback(fluid.registryName!!.toString().toComponent(), false)
                             }

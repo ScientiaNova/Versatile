@@ -7,6 +7,7 @@ import com.scientianovateam.versatile.data.block.BlockMaterialProvider
 import com.scientianovateam.versatile.data.block.BlockProvider
 import com.scientianovateam.versatile.data.block.SoundTypeProvider
 import com.scientianovateam.versatile.data.form.FormPropertyProvider
+import com.scientianovateam.versatile.data.form.FormProvider
 import com.scientianovateam.versatile.data.item.ArmorTierProvider
 import com.scientianovateam.versatile.data.item.ItemProvider
 import com.scientianovateam.versatile.data.item.ToolTierProvider
@@ -30,6 +31,7 @@ object DataRegistry {
         addTiers()
         addElements()
         addMaterials()
+        addForms()
     }
 }
 
@@ -45,5 +47,6 @@ fun DataGenerator.armorTiers(function: ArmorTierProvider.() -> Unit) = addProvid
 fun DataGenerator.recipeLists(function: RecipeListProvider.() -> Unit) = addProvider(RecipeListProvider(this).apply(function))
 fun DataGenerator.elements(function: ElementProvider.() -> Unit) = addProvider(ElementProvider(this).apply(function))
 fun DataGenerator.materials(function: MaterialProvider.() -> Unit) = addProvider(MaterialProvider(this).apply(function))
+fun DataGenerator.forms(function: FormProvider.() -> Unit) = addProvider(FormProvider(this).apply(function))
 fun DataGenerator.blocks(function: BlockProvider.() -> Unit) = addProvider(BlockProvider(this).apply(function))
 fun DataGenerator.items(function: ItemProvider.() -> Unit) = addProvider(ItemProvider(this).apply(function))

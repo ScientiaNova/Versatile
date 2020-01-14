@@ -3,7 +3,7 @@ package com.scientianovateam.versatile.materialsystem.serializers
 import com.google.gson.JsonObject
 import com.scientianovateam.versatile.common.extensions.json
 import com.scientianovateam.versatile.common.math.Graph
-import com.scientianovateam.versatile.common.registry.MATERIAL_PROPERTIES
+import com.scientianovateam.versatile.materialsystem.lists.MATERIAL_PROPERTIES
 import com.scientianovateam.versatile.common.serialization.IRegistrySerializer
 import com.scientianovateam.versatile.materialsystem.main.Material
 import com.scientianovateam.versatile.materialsystem.properties.Property
@@ -18,7 +18,7 @@ object MaterialSerializer : IRegistrySerializer<Material> {
     override fun read(json: JsonObject): Material {
         val properties = mutableMapOf<String, IEvaluated>()
         val loaded = mutableMapOf<Property, IUnresolved>()
-        MATERIAL_PROPERTIES.forEach { (_, property) ->
+        MATERIAL_PROPERTIES.forEach { property ->
             loaded[property] = if (json.has(property.name.toString()))
                 json.get(property.name.toString()).toExpression()
             else property.default

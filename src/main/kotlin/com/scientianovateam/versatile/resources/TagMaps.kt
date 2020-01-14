@@ -1,9 +1,9 @@
 package com.scientianovateam.versatile.resources
 
-import com.scientianovateam.versatile.common.extensions.toResLoc
-import com.scientianovateam.versatile.materialsystem.main.IMaterialObject
 import com.google.common.collect.ListMultimap
 import com.google.common.collect.MultimapBuilder
+import com.scientianovateam.versatile.common.extensions.toResLoc
+import com.scientianovateam.versatile.materialsystem.main.IMaterialObject
 import net.minecraft.block.Block
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
@@ -24,31 +24,14 @@ object TagMaps {
     fun addMatItemToTag(obj: IMaterialObject) {
         when (obj) {
             is Item -> {
-                val tag = obj.form.itemTagName
-                if (tag.isNotEmpty()) {
-                    addItemToTag(tag, obj)
-                    obj.mat.names.forEach {
-                        addItemToTag("$tag/$it", obj)
-                    }
-                }
+                addItemToTag(obj.form.itemTag, obj)
+                obj.form.combinedItemTags(obj.mat).forEach { addItemToTag(it, obj) }
             }
             is Block -> {
-                val tag = obj.form.blockTagName
-                if (tag.isNotEmpty()) {
-                    addBlockToTag(tag, obj)
-                    obj.mat.names.forEach {
-                        addBlockToTag("$tag/$it", obj)
-                    }
-                }
+                addBlockToTag(obj.form.blockTag, obj)
+                obj.form.combinedBlockTags(obj.mat).forEach { addBlockToTag(it, obj) }
             }
-            is Fluid -> {
-                val tag = obj.form.fluidTagName
-                if (tag.isNotEmpty()) {
-                    obj.mat.names.forEach {
-                        addFluidToTag(tag + it, obj)
-                    }
-                }
-            }
+            is Fluid -> obj.form.combinedFluidTags(obj.mat).forEach { addFluidToTag(it, obj) }
         }
     }
 

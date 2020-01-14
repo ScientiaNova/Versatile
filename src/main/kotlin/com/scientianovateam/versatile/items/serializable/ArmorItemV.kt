@@ -1,6 +1,7 @@
 package com.scientianovateam.versatile.items.serializable
 
 import com.google.gson.JsonObject
+import com.scientianovateam.versatile.common.extensions.json
 import com.scientianovateam.versatile.common.extensions.toResLocV
 import com.scientianovateam.versatile.common.extensions.toStack
 import com.scientianovateam.versatile.common.serialization.IRegisterableJSONSerializer
@@ -49,6 +50,9 @@ class ArmorItemV(val armorProperties: ArmorItemProperties) : ArmorItem(armorProp
 
         override fun read(json: JsonObject) = ArmorItemV(ArmorItemProperties.Serializer.read(json))
 
-        override fun write(obj: ArmorItemV) = ArmorItemProperties.Serializer.write(obj.armorProperties)
+        override fun write(obj: ArmorItemV) = json {
+            "type" to "armor"
+            ArmorItemProperties.Serializer.write(obj.armorProperties).extract()
+        }
     }
 }

@@ -8,8 +8,10 @@ import com.scientianovateam.versatile.items.tiers.ToolTier
 import com.scientianovateam.versatile.materialsystem.addition.MaterialProperties
 import com.scientianovateam.versatile.materialsystem.elements.Element
 import com.scientianovateam.versatile.materialsystem.lists.Elements
-import com.scientianovateam.versatile.materialsystem.lists.Materials
-import com.scientianovateam.versatile.materialsystem.properties.*
+import com.scientianovateam.versatile.materialsystem.lists.MATERIALS
+import com.scientianovateam.versatile.materialsystem.properties.BlockCompaction
+import com.scientianovateam.versatile.materialsystem.properties.CompoundType
+import com.scientianovateam.versatile.materialsystem.properties.IPropertyContainer
 import com.scientianovateam.versatile.velisp.evaluated.*
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.FluidTags
@@ -66,8 +68,8 @@ class Material(override val properties: Map<String, IEvaluated>) : IPropertyCont
     val compoundType: CompoundType
         get() = CompoundType.valueOf((properties[MaterialProperties.COMPOUND_TYPE] as StringValue).value.toUpperCase())
 
-    val densityMultiplier: Int
-        get() = (properties[MaterialProperties.DENSITY_MULTIPLIER] as NumberValue).value.toInt()
+    val densityMultiplier: Float
+        get() = (properties[MaterialProperties.DENSITY_MULTIPLIER] as NumberValue).value.toFloat()
 
     val processingMultiplier: Int
         get() = (properties[MaterialProperties.PROCESSING_MULTIPLIER] as NumberValue).value.toInt()
@@ -100,7 +102,7 @@ class Material(override val properties: Map<String, IEvaluated>) : IPropertyCont
         get() = BlockCompaction.fromString((properties[MaterialProperties.BLOCK_COMPACTION] as StringValue).value)
 
     val transitionMaterial: Material?
-        get() = Materials[(properties[MaterialProperties.TRANSITION_MATERIAL] as StringValue).value]
+        get() = MATERIALS[(properties[MaterialProperties.TRANSITION_MATERIAL] as StringValue).value]
 
     val transitionAmount: Int
         get() = (properties[MaterialProperties.TRANSITION_AMOUNT] as NumberValue).value.toInt()
@@ -140,11 +142,11 @@ class Material(override val properties: Map<String, IEvaluated>) : IPropertyCont
 
     override fun toString() = name
 
-    fun getItemTags(type: Form) = names.map { ItemTags.Wrapper("${type.itemTagName}/$it".toResLoc()) }
+    fun getItemTags(type: Form) = names.map { ItemTags.Wrapper("${type.itemTag}/$it".toResLoc()) }
 
-    fun getBlockTags(type: Form) = names.map { BlockTags.Wrapper("${type.itemTagName}/$it".toResLoc()) }
+    fun getBlockTags(type: Form) = names.map { BlockTags.Wrapper("${type.itemTag}/$it".toResLoc()) }
 
-    fun getFluidTags(type: Form) = names.map { FluidTags.Wrapper("${type.itemTagName}/$it".toResLoc()) }
+    fun getFluidTags(type: Form) = names.map { FluidTags.Wrapper("${type.itemTag}/$it".toResLoc()) }
 
     @JvmOverloads
     fun getItemTag(type: Form, nameIndex: Int = 0) = getItemTags(type).let {

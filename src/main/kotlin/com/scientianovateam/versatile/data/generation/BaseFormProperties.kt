@@ -7,6 +7,21 @@ import net.minecraft.data.DataGenerator
 
 fun DataGenerator.addFormProperties() = formProperties {
     +Property(
+            name = "name",
+            type = STRING,
+            default = ""
+    )
+    +Property(
+            name = "generate",
+            type = BOOL,
+            default = false
+    )
+    +Property(
+            name = "index_blacklist",
+            type = ListType(NUMBER),
+            default = "list"()
+    )
+    +Property(
             name = "bucket_volume",
             type = NUMBER,
             default = 0,
@@ -59,6 +74,33 @@ fun DataGenerator.addFormProperties() = formProperties {
             name = "fluid",
             type = OptionalType(STRUCT),
             default = null
+    )
+    +Property(
+            name = "item_tag",
+            type = STRING,
+            default = "concat"("forge:", "name".formGet, "s"),
+            valid = "valid_resource_location"(it)
+    )
+    +Property(
+            name = "block_tag",
+            type = STRING,
+            default = "concat"("forge:", "name".formGet, "s"),
+            valid = "valid_resource_location"(it)
+    )
+    +Property(
+            name = "combined_item_tags",
+            type = ListType(STRING),
+            default = "map"("associated_names".matGet, "func"("it", "concat"("forge:", "name".formGet, "/", it)))
+    )
+    +Property(
+            name = "combined_block_tags",
+            type = ListType(STRING),
+            default = "map"("associated_names".matGet, "func"("it", "concat"("forge:", "name".formGet, "/", it)))
+    )
+    +Property(
+            name = "combined_fluid_tags",
+            type = ListType(STRING),
+            default = "map"("associated_names".matGet, "func"("it", "concat"("forge:", "name".formGet, "_", it)))
     )
     +Property(
             name = "item_model",

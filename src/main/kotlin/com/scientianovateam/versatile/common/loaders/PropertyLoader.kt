@@ -1,8 +1,8 @@
 package com.scientianovateam.versatile.common.loaders
 
 import com.scientianovateam.versatile.common.loaders.internal.earlyResources
-import com.scientianovateam.versatile.common.registry.FORM_PROPERTIES
-import com.scientianovateam.versatile.common.registry.MATERIAL_PROPERTIES
+import com.scientianovateam.versatile.materialsystem.lists.FORM_PROPERTIES
+import com.scientianovateam.versatile.materialsystem.lists.MATERIAL_PROPERTIES
 import com.scientianovateam.versatile.materialsystem.serializers.PropertySerializer
 
 fun loadProperties() {

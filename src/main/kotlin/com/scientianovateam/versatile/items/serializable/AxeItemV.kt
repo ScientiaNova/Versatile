@@ -2,6 +2,7 @@ package com.scientianovateam.versatile.items.serializable
 
 import com.google.gson.JsonObject
 import com.scientianovateam.versatile.common.extensions.getFloatOrNull
+import com.scientianovateam.versatile.common.extensions.json
 import com.scientianovateam.versatile.common.extensions.toResLocV
 import com.scientianovateam.versatile.common.extensions.toStack
 import com.scientianovateam.versatile.common.serialization.IRegisterableJSONSerializer
@@ -54,9 +55,11 @@ class AxeItemV(val tierBasedProperties: ToolTierBasedProperties, val extraAttack
                 json.getFloatOrNull("attack_speed") ?: -3.1f
         )
 
-        override fun write(obj: AxeItemV) = ToolTierBasedProperties.Serializer.write(obj.tierBasedProperties).apply {
-            addProperty("extra_attack_damage", obj.extraAttackDamage)
-            addProperty("attack_speed", obj.attackSpeed)
+        override fun write(obj: AxeItemV) = json {
+            "type" to "axe"
+            ToolTierBasedProperties.Serializer.write(obj.tierBasedProperties).extract()
+            "extra_attack_damage" to obj.extraAttackDamage
+            "attack_speed" to obj.attackSpeed
         }
     }
 }

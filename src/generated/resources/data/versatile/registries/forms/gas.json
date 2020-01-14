@@ -1,0 +1,68 @@
+{
+  "item": {
+    "type": "bucket",
+    "fluid": "$form/registry_name",
+    "burn_time": "$form/burn_time"
+  },
+  "block": {
+    "type": "fluid",
+    "fluid": "$form/registry_name",
+    "material": "water"
+  },
+  "single_texture_set": true,
+  "index_blacklist": [
+    "list",
+    0
+  ],
+  "bucket_volume": 1000,
+  "item_model": {
+    "parent": "item/generated",
+    "textures": {
+      "layer0": "versatile:item/fluid_bucket_base",
+      "layer1": "versatile:item/fluid_bucket_overlay"
+    }
+  },
+  "block_models": {
+    "": {
+      "textures": {
+        "particle": "minecraft:block/water_still"
+      }
+    }
+  },
+  "generate": [
+    ">",
+    "$mat/gas_temperature",
+    0
+  ],
+  "registry_name": [
+    "concat",
+    "versatile:",
+    "$mat/name"
+  ],
+  "item_tag": "forge:buckets",
+  "combined_item_tags": [
+    "list",
+    [
+      "concat",
+      "forge:buckets/",
+      "$mat/gas_name"
+    ]
+  ],
+  "combined_block_tags": [
+    "list",
+    [
+      "concat",
+      "forge:",
+      "$mat/gas_name"
+    ]
+  ],
+  "combined_fluid_tags": [
+    "list",
+    [
+      "concat",
+      "forge",
+      "$mat/gas_name"
+    ]
+  ],
+  "temperature": "$mat/gas_temperature"
+}

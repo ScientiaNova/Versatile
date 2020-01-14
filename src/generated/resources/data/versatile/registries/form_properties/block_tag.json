@@ -1,0 +1,13 @@
+{
+  "type": "string",
+  "default": [
+    "concat",
+    "forge:",
+    "$form/name",
+    "s"
+  ],
+  "valid": [
+    "valid_resource_location",
+    "$it"
+  ]
+}

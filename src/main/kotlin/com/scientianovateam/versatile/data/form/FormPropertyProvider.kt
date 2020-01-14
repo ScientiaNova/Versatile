@@ -21,10 +21,10 @@ class FormPropertyProvider(private val dataGenerator: DataGenerator) : IDataProv
             try {
                 IDataProvider.save(GSON, cache, PropertySerializer.write(it), dataGenerator.outputFolder.resolve("data/${it.name.namespace}/registries/form_properties/${it.name.path}.json"))
             } catch (e: IOException) {
-                Versatile.LOGGER.error("Couldn't save form property")
+                Versatile.LOGGER.error("Couldn't save forms")
             }
         }
     }
 
-    override fun getName() = "Form Properties"
+    override fun getName() = "Forms"
 }
