@@ -9,5 +9,5 @@ import kotlin.math.tanh
 object TanhFunction : IFunction {
     override val name = "versatile/tanh"
     override val inputCount = 1..1
-    override fun evaluate(inputs: List<IUnresolved>) = NumberValue(tanh(inputs.first().evaluate().value as Double))
+    override fun evaluate(inputs: List<IUnresolved>) = NumberValue(tanh(inputs[0].evaluate().value as Double))
 }

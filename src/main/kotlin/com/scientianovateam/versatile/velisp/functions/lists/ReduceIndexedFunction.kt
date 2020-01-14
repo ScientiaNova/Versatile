@@ -14,6 +14,6 @@ object ReduceIndexedFunction : IFunction {
     override fun evaluate(inputs: List<IUnresolved>): IEvaluated {
         val function = inputs.last().evaluate().function
         if (3 !in function.inputCount) error("Invalid amount of function parameters")
-        return (inputs.first().evaluate() as ListValue).value.reduceIndexed { index, acc, value -> function.evaluate(listOf(NumberValue(index), acc, value)) }
+        return (inputs[0].evaluate() as ListValue).value.reduceIndexed { index, acc, value -> function.evaluate(listOf(NumberValue(index), acc, value)) }
     }
 }

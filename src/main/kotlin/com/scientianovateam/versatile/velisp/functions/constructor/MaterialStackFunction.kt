@@ -9,6 +9,6 @@ import com.scientianovateam.versatile.velisp.unresolved.IUnresolved
 object MaterialStackFunction : IFunction {
     override val name = "versatile/stack"
     override val inputCount = 1..2
-    override fun evaluate(inputs: List<IUnresolved>) = MaterialStackValue(inputs.first() as MaterialValue, inputs.getOrNull(1) as? NumberValue
+    override fun evaluate(inputs: List<IUnresolved>) = MaterialStackValue(inputs[0] as MaterialValue, inputs.getOrNull(1) as? NumberValue
             ?: NumberValue.ONE)
 }

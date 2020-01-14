@@ -10,6 +10,6 @@ import com.scientianovateam.versatile.velisp.unresolved.evaluate
 object MaxElementFunction : IFunction {
     override val name = "versatile/max_element"
     override val inputCount = 1..1
-    override fun evaluate(inputs: List<IUnresolved>) = (inputs.first().evaluate() as ListValue).value.maxBy { it.value as Double }?.let(::SomeValue)
+    override fun evaluate(inputs: List<IUnresolved>) = (inputs[0].evaluate() as ListValue).value.maxBy { it.value as Double }?.let(::SomeValue)
             ?: NullValue
 }

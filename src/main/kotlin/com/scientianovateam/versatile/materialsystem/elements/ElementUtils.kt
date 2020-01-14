@@ -1,6 +1,6 @@
 package com.scientianovateam.versatile.materialsystem.elements
 
-import com.scientianovateam.versatile.materialsystem.lists.Elements
+import com.scientianovateam.versatile.materialsystem.lists.ELEMENTS
 import com.scientianovateam.versatile.materialsystem.main.Form
 import com.scientianovateam.versatile.materialsystem.main.Material
 import com.scientianovateam.versatile.materialsystem.properties.CompoundType
@@ -14,7 +14,7 @@ object ElementUtils {
 
         val map = mat.fullComposition.groupBy { it.material.element }.mapValues { (_, value) -> value.map { it.count }.sum() }
 
-        return if (Elements["null"] in map) listOf(ElementStack.EMPTY) else map.entries.map { it.key * it.value }
+        return if (ELEMENTS["null"] in map) listOf(ElementStack.EMPTY) else map.entries.map { it.key * it.value }
     }
 
     @JvmStatic

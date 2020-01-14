@@ -11,7 +11,7 @@ object FilterIndexedFunction : IFunction {
     override fun evaluate(inputs: List<IUnresolved>): IEvaluated {
         val function = inputs.last().evaluate().function
         if (2 !in function.inputCount) error("Invalid amount of function parameters")
-        return ListValue((inputs.first().evaluate() as ListValue).value.filterIndexed { index, value ->
+        return ListValue((inputs[0].evaluate() as ListValue).value.filterIndexed { index, value ->
             function.evaluate(listOf(NumberValue(index), value)) == BoolValue.TRUE
         })
     }

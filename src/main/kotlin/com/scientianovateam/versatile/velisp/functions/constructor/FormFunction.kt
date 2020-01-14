@@ -9,7 +9,7 @@ import com.scientianovateam.versatile.velisp.unresolved.evaluate
 object FormFunction : IFunction {
     override val name = "versatile/form"
     override val inputCount = 1..1
-    override fun evaluate(inputs: List<IUnresolved>) = FormValue(inputs.first().evaluate().value.toString().let {
+    override fun evaluate(inputs: List<IUnresolved>) = FormValue(inputs[0].evaluate().value.toString().let {
         FORMS[it] ?: error("No material with name $it")
     })
 }

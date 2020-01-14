@@ -1,4 +1,8 @@
 {
   "type": "string",
-  "default": "null"
+  "default": "null",
+  "valid": [
+    "element_exists",
+    "$it"
+  ]
 }

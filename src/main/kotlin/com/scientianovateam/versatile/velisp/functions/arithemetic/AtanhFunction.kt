@@ -9,5 +9,5 @@ import kotlin.math.atanh
 object AtanhFunction : IFunction {
     override val name = "versatile/atanh"
     override val inputCount = 1..1
-    override fun evaluate(inputs: List<IUnresolved>) = NumberValue(atanh(inputs.first().evaluate().value as Double))
+    override fun evaluate(inputs: List<IUnresolved>) = NumberValue(atanh(inputs[0].evaluate().value as Double))
 }

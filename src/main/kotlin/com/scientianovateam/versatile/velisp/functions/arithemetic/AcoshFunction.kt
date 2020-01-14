@@ -9,5 +9,5 @@ import kotlin.math.acosh
 object AcoshFunction : IFunction {
     override val name = "versatile/acoh"
     override val inputCount = 1..1
-    override fun evaluate(inputs: List<IUnresolved>) = NumberValue(acosh(inputs.first().evaluate().value as Double))
+    override fun evaluate(inputs: List<IUnresolved>) = NumberValue(acosh(inputs[0].evaluate().value as Double))
 }

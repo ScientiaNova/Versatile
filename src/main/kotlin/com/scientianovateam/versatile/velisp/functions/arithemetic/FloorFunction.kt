@@ -9,5 +9,5 @@ import kotlin.math.floor
 object FloorFunction : IFunction {
     override val name = "versatile/floor"
     override val inputCount = 1..1
-    override fun evaluate(inputs: List<IUnresolved>) = NumberValue(floor(inputs.first().evaluate().value as Double))
+    override fun evaluate(inputs: List<IUnresolved>) = NumberValue(floor(inputs[0].evaluate().value as Double))
 }

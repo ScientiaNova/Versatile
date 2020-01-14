@@ -8,5 +8,5 @@ import com.scientianovateam.versatile.velisp.unresolved.evaluate
 object NotFunction : IFunction {
     override val name = "versatile/not"
     override val inputCount = 1..1
-    override fun evaluate(inputs: List<IUnresolved>) = BoolValue(!(inputs.first().evaluate().value as Boolean))
+    override fun evaluate(inputs: List<IUnresolved>) = BoolValue(!(inputs[0].evaluate().value as Boolean))
 }

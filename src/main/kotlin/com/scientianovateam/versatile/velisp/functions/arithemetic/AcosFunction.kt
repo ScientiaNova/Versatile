@@ -9,5 +9,5 @@ import kotlin.math.acos
 object AcosFunction : IFunction {
     override val name = "versatile/acos"
     override val inputCount = 1..1
-    override fun evaluate(inputs: List<IUnresolved>) = NumberValue(acos(inputs.first().evaluate().value as Double))
+    override fun evaluate(inputs: List<IUnresolved>) = NumberValue(acos(inputs[0].evaluate().value as Double))
 }

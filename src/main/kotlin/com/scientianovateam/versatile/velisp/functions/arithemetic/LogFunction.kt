@@ -11,6 +11,6 @@ object LogFunction : IFunction {
     override val name = "versatile/log"
     override val inputCount = 1..2
     override fun evaluate(inputs: List<IUnresolved>) =
-            if (inputs.size == 1) NumberValue(ln(inputs.first().evaluate().value as Double))
-            else NumberValue(log(inputs.first().evaluate().value as Double, inputs.last().evaluate().value as Double))
+            if (inputs.size == 1) NumberValue(ln(inputs[0].evaluate().value as Double))
+            else NumberValue(log(inputs[0].evaluate().value as Double, inputs[1].evaluate().value as Double))
 }

@@ -9,5 +9,5 @@ import kotlin.math.absoluteValue
 object AbsoluteFunction : IFunction {
     override val name = "versatile/absolute"
     override val inputCount = 1..1
-    override fun evaluate(inputs: List<IUnresolved>) = NumberValue((inputs.first().evaluate().value as Double).absoluteValue)
+    override fun evaluate(inputs: List<IUnresolved>) = NumberValue((inputs[0].evaluate().value as Double).absoluteValue)
 }

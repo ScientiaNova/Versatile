@@ -14,6 +14,6 @@ object FilterIsInstanceFunction : IFunction {
         val type = inputs.last().evaluate().value.toString().let {
             ITypeHolder.fromName(it)
         }
-        return ListValue((inputs.first().evaluate() as ListValue).value.filter { it.type subtypes type })
+        return ListValue((inputs[0].evaluate() as ListValue).value.filter { it.type subtypes type })
     }
 }

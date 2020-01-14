@@ -7,6 +7,7 @@ import com.scientianovateam.versatile.velisp.functions.constructor.*
 import com.scientianovateam.versatile.velisp.functions.lists.*
 import com.scientianovateam.versatile.velisp.functions.logic.*
 import com.scientianovateam.versatile.velisp.functions.mics.IsFunction
+import com.scientianovateam.versatile.velisp.functions.mics.TryFunction
 import com.scientianovateam.versatile.velisp.functions.mics.TypeOfFunction
 import com.scientianovateam.versatile.velisp.functions.optional.*
 import com.scientianovateam.versatile.velisp.functions.string.*
@@ -149,6 +150,7 @@ object VELISPEventSubscriber {
                 OrFunction,
                 //Misc Functions
                 IsFunction,
+                TryFunction,
                 TypeOfFunction,
                 //Optional Function
                 ExpectFunction,
@@ -157,14 +159,17 @@ object VELISPEventSubscriber {
                 UnwrapFunction,
                 UnwrapOrFunction,
                 //String Functions
+                ArmorTierExistsFunction,
                 ConcatFunction,
                 EndsWithFunction,
+                ElementExistsFunction,
                 RepeatFunction,
                 ReplaceFunction,
                 StartsWithFunction,
                 StringContainsFunction,
                 StringEmptyFunction,
                 SubstringFunction,
+                ToolTierExistsFunction,
                 ValidResourceLocationFunction
         )
     }

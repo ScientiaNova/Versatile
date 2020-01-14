@@ -8,5 +8,5 @@ import com.scientianovateam.versatile.velisp.unresolved.evaluate
 object RepeatFunction : IFunction {
     override val name = "versatile/repeat"
     override val inputCount = 2..2
-    override fun evaluate(inputs: List<IUnresolved>) = StringValue(inputs.first().evaluate().value.toString().repeat(inputs.last().evaluate().value as Int))
+    override fun evaluate(inputs: List<IUnresolved>) = StringValue(inputs[0].evaluate().value.toString().repeat(inputs[1].evaluate().value as Int))
 }

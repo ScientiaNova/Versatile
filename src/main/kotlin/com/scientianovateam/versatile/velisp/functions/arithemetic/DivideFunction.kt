@@ -9,5 +9,5 @@ object DivideFunction : IFunction {
     override val name = "versatile/divide"
     override val symbol = "/"
     override val inputCount = 2..2
-    override fun evaluate(inputs: List<IUnresolved>) = NumberValue(inputs.first().evaluate().value as Double / inputs.last().evaluate().value as Double)
+    override fun evaluate(inputs: List<IUnresolved>) = NumberValue(inputs[0].evaluate().value as Double / inputs[1].evaluate().value as Double)
 }

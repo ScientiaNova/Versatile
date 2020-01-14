@@ -9,7 +9,7 @@ import com.scientianovateam.versatile.velisp.unresolved.evaluate
 object MaterialFunction : IFunction {
     override val name = "versatile/material"
     override val inputCount = 1..1
-    override fun evaluate(inputs: List<IUnresolved>) = MaterialValue(inputs.first().evaluate().value.toString().let {
+    override fun evaluate(inputs: List<IUnresolved>) = MaterialValue(inputs[0].evaluate().value.toString().let {
         MATERIALS[it] ?: error("No material with name $it")
     })
 }

@@ -8,5 +8,5 @@ import com.scientianovateam.versatile.velisp.unresolved.evaluate
 object TakeFunction : IFunction {
     override val name = "versatile/take"
     override val inputCount = 2..2
-    override fun evaluate(inputs: List<IUnresolved>) = ListValue((inputs.first().evaluate() as ListValue).value.take(inputs.last().evaluate().value as Int))
+    override fun evaluate(inputs: List<IUnresolved>) = ListValue((inputs[0].evaluate() as ListValue).value.take(inputs.last().evaluate().value as Int))
 }

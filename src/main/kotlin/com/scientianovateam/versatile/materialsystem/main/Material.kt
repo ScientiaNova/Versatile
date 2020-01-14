@@ -7,7 +7,7 @@ import com.scientianovateam.versatile.items.tiers.ArmorTier
 import com.scientianovateam.versatile.items.tiers.ToolTier
 import com.scientianovateam.versatile.materialsystem.addition.MaterialProperties
 import com.scientianovateam.versatile.materialsystem.elements.Element
-import com.scientianovateam.versatile.materialsystem.lists.Elements
+import com.scientianovateam.versatile.materialsystem.lists.ELEMENTS
 import com.scientianovateam.versatile.materialsystem.lists.MATERIALS
 import com.scientianovateam.versatile.materialsystem.properties.BlockCompaction
 import com.scientianovateam.versatile.materialsystem.properties.CompoundType
@@ -60,7 +60,7 @@ class Material(override val properties: Map<String, IEvaluated>) : IPropertyCont
         get() = ARMOR_TIERS[(properties[MaterialProperties.ARMOR_TIER] as StringValue).value]!!
 
     val element: Element
-        get() = Elements[(properties[MaterialProperties.ELEMENT] as StringValue).value]
+        get() = ELEMENTS[(properties[MaterialProperties.ELEMENT] as StringValue).value]!!
 
     val burnTime: Int
         get() = (properties[MaterialProperties.BURN_TIME] as NumberValue).value.toInt()

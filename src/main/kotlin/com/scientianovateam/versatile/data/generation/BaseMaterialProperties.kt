@@ -61,17 +61,20 @@ fun DataGenerator.addMatProperties() = matProperties {
     +Property(
             name = "tool_tier",
             type = OptionalType(STRING),
-            default = null
+            default = null,
+            valid = "unwrap_or"("map"(it, "tool_tier_exists"), true)
     )
     +Property(
             name = "armor_tier",
             type = OptionalType(STRING),
-            default = null
+            default = null,
+            valid = "unwrap_or"("map"(it, "armor_tier_exists"), true)
     )
     +Property(
             name = "element",
             type = STRING,
-            default = "null"
+            default = "null",
+            valid = "element_exists"(it)
     )
     +Property(
             name = "burn_time",

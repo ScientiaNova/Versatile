@@ -15,6 +15,6 @@ object AllFunction : IFunction {
     override fun evaluate(inputs: List<IUnresolved>): IEvaluated {
         val function = inputs.last().evaluate().function
         if (1 !in function.inputCount) error("Invalid amount of function parameters")
-        return (inputs.first().evaluate() as ListValue).value.all { function.evaluate(listOf(it)) == BoolValue.TRUE }.expr()
+        return (inputs[0].evaluate() as ListValue).value.all { function.evaluate(listOf(it)) == BoolValue.TRUE }.expr()
     }
 }

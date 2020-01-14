@@ -11,7 +11,7 @@ object MaxElementByFunction : IFunction {
     override fun evaluate(inputs: List<IUnresolved>): IEvaluated {
         val function = inputs.last().evaluate().function
         if (1 !in function.inputCount) error("Invalid amount of function parameters")
-        return (inputs.first().evaluate() as ListValue).value.maxBy { function.evaluate(listOf(it)).value as Double }?.let(::SomeValue)
+        return (inputs[0].evaluate() as ListValue).value.maxBy { function.evaluate(listOf(it)).value as Double }?.let(::SomeValue)
                 ?: NullValue
     }
 }

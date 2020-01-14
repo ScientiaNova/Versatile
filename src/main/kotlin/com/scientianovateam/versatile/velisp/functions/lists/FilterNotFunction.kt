@@ -14,6 +14,6 @@ object FilterNotFunction : IFunction {
     override fun evaluate(inputs: List<IUnresolved>): IEvaluated {
         val function = inputs.last().evaluate().function
         if (1 !in function.inputCount) error("Invalid amount of function parameters")
-        return ListValue((inputs.first().evaluate() as ListValue).value.filter { function.evaluate(listOf(it)) == BoolValue.FALSE })
+        return ListValue((inputs[0].evaluate() as ListValue).value.filter { function.evaluate(listOf(it)) == BoolValue.FALSE })
     }
 }

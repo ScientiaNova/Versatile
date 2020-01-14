@@ -9,5 +9,5 @@ import com.scientianovateam.versatile.velisp.unresolved.evaluate
 object IsOddFunction : IFunction {
     override val name = "versatile/is_odd"
     override val inputCount = 1..1
-    override fun evaluate(inputs: List<IUnresolved>) = ((inputs.first().evaluate() as NumberValue).value % 2 != 0.0).expr()
+    override fun evaluate(inputs: List<IUnresolved>) = ((inputs[0].evaluate() as NumberValue).value % 2 != 0.0).expr()
 }

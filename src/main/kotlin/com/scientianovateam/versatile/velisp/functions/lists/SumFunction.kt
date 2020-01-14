@@ -9,5 +9,5 @@ import com.scientianovateam.versatile.velisp.unresolved.evaluate
 object SumFunction : IFunction {
     override val name = "versatile/sum"
     override val inputCount = 1..1
-    override fun evaluate(inputs: List<IUnresolved>) = NumberValue((inputs.first().evaluate() as ListValue).value.sumByDouble { it.value as Double })
+    override fun evaluate(inputs: List<IUnresolved>) = NumberValue((inputs[0].evaluate() as ListValue).value.sumByDouble { it.value as Double })
 }

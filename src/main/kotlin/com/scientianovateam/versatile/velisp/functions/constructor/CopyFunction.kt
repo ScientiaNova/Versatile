@@ -10,7 +10,7 @@ object CopyFunction : IFunction {
     override val name = "versatile/copy"
     override val inputCount = 2..2
     override fun evaluate(inputs: List<IUnresolved>): IEvaluated {
-        val value = inputs.last().evaluate()
-        return ListValue(List(inputs.first().evaluate().value as Int) { value })
+        val value = inputs[1].evaluate()
+        return ListValue(List(inputs[0].evaluate().value as Int) { value })
     }
 }

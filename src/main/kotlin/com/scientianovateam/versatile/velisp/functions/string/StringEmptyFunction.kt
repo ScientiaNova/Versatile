@@ -8,5 +8,5 @@ import com.scientianovateam.versatile.velisp.unresolved.evaluate
 object StringEmptyFunction : IFunction {
     override val name = "versatile/string_empty"
     override val inputCount = 1..1
-    override fun evaluate(inputs: List<IUnresolved>) = BoolValue(inputs.first().evaluate().value.toString().isEmpty())
+    override fun evaluate(inputs: List<IUnresolved>) = BoolValue(inputs[0].evaluate().value.toString().isEmpty())
 }

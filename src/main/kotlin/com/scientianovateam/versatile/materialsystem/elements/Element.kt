@@ -5,7 +5,7 @@ import com.scientianovateam.versatile.common.extensions.getIntOrNull
 import com.scientianovateam.versatile.common.extensions.getStringOrNull
 import com.scientianovateam.versatile.common.extensions.json
 import com.scientianovateam.versatile.common.serialization.IJSONSerializer
-import com.scientianovateam.versatile.materialsystem.lists.Elements
+import com.scientianovateam.versatile.materialsystem.lists.ELEMENTS
 
 sealed class Element {
     abstract val name: String
@@ -43,7 +43,7 @@ data class Isotope(
 
 object ElementSerializer : IJSONSerializer<Element, JsonObject> {
     override fun read(json: JsonObject) = json.getStringOrNull("standard_isotope")?.let {
-        val standardIsotope = (Elements[it] as? BaseElement
+        val standardIsotope = (ELEMENTS[it] as? BaseElement
                 ?: error("Isotope required a base element, but got $it"))
         val nucleons = json.getIntOrNull("nucleons") ?: error("Missing nucleons for isotope")
         Isotope(
