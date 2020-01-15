@@ -1,12 +1,13 @@
 package com.scientianovateam.versatile.recipes.components.ingredients.recipestacks.items
 
+import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.scientianovateam.versatile.common.extensions.json
 import com.scientianovateam.versatile.common.extensions.toResLoc
 import com.scientianovateam.versatile.common.extensions.toStack
 import com.scientianovateam.versatile.common.serialization.IRegisterableSerializer
 import com.scientianovateam.versatile.recipes.components.ingredients.recipestacks.IRecipeStack
-import com.scientianovateam.versatile.velisp.convertToExpression
+import com.scientianovateam.versatile.velisp.toExpression
 import com.scientianovateam.versatile.velisp.evaluated.NumberValue
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
@@ -31,9 +32,9 @@ data class RecipeItemStack(val stack: ItemStack) : IRecipeStack<ItemStack> {
         override val registryName = "versatile:item_stack".toResLoc()
 
         override fun read(json: JsonObject): RecipeItemStackIntermediate {
-            val item = json.get("item")?.let { convertToExpression(it) }
+            val item = json.get("item")?.toExpression()
                     ?: throw error("Didn't specify item in item stack")
-            val count = json.get("count")?.let { convertToExpression(it) } ?: NumberValue(1)
+            val count = json.get("count")?.toExpression() ?: NumberValue(1)
             return RecipeItemStackIntermediate(item, count)
         }
 

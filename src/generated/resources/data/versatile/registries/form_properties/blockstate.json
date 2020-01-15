@@ -1,0 +1,14 @@
+{
+  "type": "struct",
+  "default": {
+    "variants": {
+      "": {
+        "model": [
+          "concat",
+          "versatile:block/",
+          "$form/registry_name"
+        ]
+      }
+    }
+  }
+}

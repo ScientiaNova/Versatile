@@ -9,5 +9,5 @@ import com.scientianovateam.versatile.velisp.unresolved.evaluate
 object AverageFunction : IFunction {
     override val name = "versatile/average"
     override val inputCount = 1..1
-    override fun evaluate(inputs: List<IUnresolved>) = NumberValue((inputs.first().evaluate() as ListValue).value.map { it.value as Int }.average())
+    override fun evaluate(inputs: List<IUnresolved>) = NumberValue((inputs[0].evaluate() as ListValue).value.map { it.value as Int }.average())
 }

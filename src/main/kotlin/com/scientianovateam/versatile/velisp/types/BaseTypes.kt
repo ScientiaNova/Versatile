@@ -30,11 +30,14 @@ val FunctionType = VELISPType("function".toResLocV())
 val MaterialType = VELISPType("material".toResLocV())
 val MATERIAL = MaterialType()
 
+val MaterialStackType = VELISPType("material_stack".toResLocV())
+val MATERIAL_STACK = MaterialStackType()
+
 val FormType = VELISPType("form".toResLocV())
 val FORM = FormType()
 
 val NothingType = VELISPType("nothing".toResLocV())
 val NOTHING = NothingType()
 
-val JsonType = VELISPType("json".toResLocV())
-val JSON = JsonType()
+val StructType = VELISPType("struct".toResLocV())
+val STRUCT = StructType()

@@ -1,7 +1,7 @@
 package com.scientianovateam.versatile.recipes.syncing
 
 import com.scientianovateam.versatile.common.extensions.toResLocV
-import com.scientianovateam.versatile.materialsystem.lists.Materials
+import com.scientianovateam.versatile.materialsystem.lists.MATERIALS
 import com.scientianovateam.versatile.recipes.RecipeMaterialTemplate
 import com.scientianovateam.versatile.velisp.evaluated.MaterialValue
 import com.scientianovateam.versatile.velisp.unresolved.IUnresolved
@@ -14,7 +14,7 @@ import net.minecraft.world.World
 open class MaterialBasedRecipe(private val materialPredicate: IUnresolved?, private val template: RecipeMaterialTemplate?) : IRecipe<PlayerInventory> {
     fun eval(map: MutableMap<ResourceLocation, IRecipe<*>>) {
         if (template == null) return
-        Materials.all.let {
+        MATERIALS.let {
             if (materialPredicate == null) it else it.filter { mat -> materialPredicate.resolve(mapOf("mat" to MaterialValue(mat))).evaluate().value == true }
         }.forEach { map += template.create(it).let { recipe -> recipe.name to SingleRecipe(recipe) } }
     }

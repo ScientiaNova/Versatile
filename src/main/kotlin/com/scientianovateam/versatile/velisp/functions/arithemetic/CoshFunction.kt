@@ -9,5 +9,5 @@ import kotlin.math.cosh
 object CoshFunction : IFunction {
     override val name = "versatile/cosh"
     override val inputCount = 1..1
-    override fun evaluate(inputs: List<IUnresolved>) = NumberValue(cosh(inputs.first().evaluate().value as Double))
+    override fun evaluate(inputs: List<IUnresolved>) = NumberValue(cosh(inputs[0].evaluate().value as Double))
 }

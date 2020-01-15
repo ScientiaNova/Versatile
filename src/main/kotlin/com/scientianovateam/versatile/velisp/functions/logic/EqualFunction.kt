@@ -9,5 +9,5 @@ object EqualFunction : IFunction {
     override val name = "versatile/equal"
     override val symbol = "="
     override val inputCount = 2..2
-    override fun evaluate(inputs: List<IUnresolved>) = BoolValue(inputs.first().evaluate().value.toString() == inputs.last().evaluate().value.toString())
+    override fun evaluate(inputs: List<IUnresolved>) = BoolValue(inputs[0].evaluate().value.toString() == inputs[1].evaluate().value.toString())
 }

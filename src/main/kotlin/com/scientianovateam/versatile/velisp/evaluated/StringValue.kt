@@ -5,5 +5,5 @@ import com.scientianovateam.versatile.velisp.types.STRING
 
 class StringValue(override val value: String) : IEvaluated {
     override val type = STRING
-    override fun toJson() = JsonPrimitive(value)
+    override fun serialize() = JsonPrimitive(value)
 }

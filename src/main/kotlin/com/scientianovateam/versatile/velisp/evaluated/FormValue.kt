@@ -7,5 +7,5 @@ import com.scientianovateam.versatile.velisp.unevaluated.FunctionCall
 
 class FormValue(override val value: Form) : IEvaluated {
     override val type = FORM
-    override fun toJson() = FunctionCall(FormFunction.name, listOf(StringValue(value.name))).toJson()
+    override fun serialize() = FunctionCall(FormFunction.name, listOf(StringValue(value.name))).serialize()
 }

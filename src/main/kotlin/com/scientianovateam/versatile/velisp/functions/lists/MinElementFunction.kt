@@ -10,6 +10,6 @@ import com.scientianovateam.versatile.velisp.unresolved.evaluate
 object MinElementFunction : IFunction {
     override val name = "versatile/min_element"
     override val inputCount = 1..1
-    override fun evaluate(inputs: List<IUnresolved>) = (inputs.first().evaluate() as ListValue).value.minBy { it.value as Double }?.let(::SomeValue)
+    override fun evaluate(inputs: List<IUnresolved>) = (inputs[0].evaluate() as ListValue).value.minBy { it.value as Double }?.let(::SomeValue)
             ?: NullValue
 }

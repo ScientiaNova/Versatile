@@ -1,215 +1,135 @@
 package com.scientianovateam.versatile.materialsystem.main
 
 import com.scientianovateam.versatile.common.extensions.toResLoc
-import com.scientianovateam.versatile.materialsystem.addition.BaseElements
-import com.scientianovateam.versatile.materialsystem.addition.BaseForms
-import com.scientianovateam.versatile.materialsystem.addition.LegacyMatProperties
+import com.scientianovateam.versatile.items.ARMOR_TIERS
+import com.scientianovateam.versatile.items.TOOL_TIERS
+import com.scientianovateam.versatile.items.tiers.ArmorTier
+import com.scientianovateam.versatile.items.tiers.ToolTier
 import com.scientianovateam.versatile.materialsystem.addition.MaterialProperties
-import com.scientianovateam.versatile.materialsystem.lists.Materials
-import com.scientianovateam.versatile.materialsystem.properties.HarvestTier
+import com.scientianovateam.versatile.materialsystem.elements.Element
+import com.scientianovateam.versatile.materialsystem.lists.ELEMENTS
+import com.scientianovateam.versatile.materialsystem.lists.MATERIALS
+import com.scientianovateam.versatile.materialsystem.properties.BlockCompaction
+import com.scientianovateam.versatile.materialsystem.properties.CompoundType
 import com.scientianovateam.versatile.materialsystem.properties.IPropertyContainer
-import com.scientianovateam.versatile.materialsystem.properties.MatLegacyProperty
-import com.scientianovateam.versatile.velisp.evaluated.IEvaluated
-import com.scientianovateam.versatile.velisp.evaluated.NumberValue
+import com.scientianovateam.versatile.velisp.evaluated.*
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.FluidTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.util.text.TranslationTextComponent
-import java.util.*
 
+@Suppress("UNCHECKED_CAST")
 class Material(override val properties: Map<String, IEvaluated>) : IPropertyContainer {
-    val names = mutableListOf<String>()
+    val names: List<String>
+        get() = ((properties[MaterialProperties.ASSOCIATED_NAMES] as ListValue).value as List<StringValue>).map(StringValue::value)
+
     val name get() = names.first()
 
-    constructor(vararg name: String) : this(mutableMapOf()) {
-        names.addAll(name) // TODO Legacy constructor
-    }
+    val formBlacklist: List<String>
+        get() = ((properties[MaterialProperties.FORM_BLACKLIST] as ListValue).value as List<StringValue>).map(StringValue::value)
 
-    val legacyProperties = mutableMapOf<MatLegacyProperty<out Any?>, Any?>()
+    val invertedBlacklist: Boolean
+        get() = (properties[MaterialProperties.INVERTED_BLACKLIST] as BoolValue).value
 
-    operator fun <T> set(property: MatLegacyProperty<T>, value: T) {
-        if (property.isValid(value)) legacyProperties[property] = value
-    }
+    val composition: List<MaterialStack>
+        get() = ((properties[MaterialProperties.COMPOSITION] as ListValue).value as List<MaterialStackValue>)
+                .map(MaterialStackValue::value)
 
-    @Suppress("UNCHECKED_CAST")
-    operator fun <T> get(property: MatLegacyProperty<T>) = legacyProperties[property] as? T ?: property.default(this)
-
-    operator fun contains(property: MatLegacyProperty<*>) = property in legacyProperties
+    val textureSet: String
+        get() = (properties[MaterialProperties.TEXTURE_SET] as StringValue).value
 
     val color: Int
         get() = (properties[MaterialProperties.COLOR] as NumberValue).value.toInt()
 
-    val typeBlacklist = ArrayList<Form>()
+    val tier: Int
+        get() = (properties[MaterialProperties.TIER] as NumberValue).value.toInt()
 
-    var invertedBlacklist = false
+    val hardness: Float
+        get() = (properties[MaterialProperties.HARDNESS] as NumberValue).value.toFloat()
 
-    var composition = listOf<MaterialStack>()
+    val resistance: Float
+        get() = (properties[MaterialProperties.RESISTANCE] as NumberValue).value.toFloat()
 
-    var textureType
-        get() = this[LegacyMatProperties.TEXTURE_TYPE]
-        set(value) {
-            this[LegacyMatProperties.TEXTURE_TYPE] = value
+    val harvestTier: Int
+        get() = (properties[MaterialProperties.HARVEST_TIER] as NumberValue).value.toInt()
+
+    val toolTier: ToolTier
+        get() = TOOL_TIERS[(properties[MaterialProperties.TOOL_TIER] as StringValue).value]!!
+
+    val armorTier: ArmorTier
+        get() = ARMOR_TIERS[(properties[MaterialProperties.ARMOR_TIER] as StringValue).value]!!
+
+    val element: Element
+        get() = ELEMENTS[(properties[MaterialProperties.ELEMENT] as StringValue).value]!!
+
+    val burnTime: Int
+        get() = (properties[MaterialProperties.BURN_TIME] as NumberValue).value.toInt()
+
+    val compoundType: CompoundType
+        get() = CompoundType.valueOf((properties[MaterialProperties.COMPOUND_TYPE] as StringValue).value.toUpperCase())
+
+    val densityMultiplier: Float
+        get() = (properties[MaterialProperties.DENSITY_MULTIPLIER] as NumberValue).value.toFloat()
+
+    val processingMultiplier: Int
+        get() = (properties[MaterialProperties.PROCESSING_MULTIPLIER] as NumberValue).value.toInt()
+
+    val refinedMaterial: Material?
+        get() = when (val optional = properties[MaterialProperties.REFINED_MATERIAL] as OptionalValue) {
+            is SomeValue -> (optional.evaluatedValue as MaterialValue).value
+            is NullValue -> null
         }
 
-    var legacyColor
-        get() = this[LegacyMatProperties.COLOR]
-        set(value) {
-            this[LegacyMatProperties.COLOR] = value
-        }
+    val unrefinedColor: Int
+        get() = (properties[MaterialProperties.UNREFINED_COLOR] as NumberValue).value.toInt()
 
-    var tier
-        get() = this[LegacyMatProperties.TIER]
-        set(value) {
-            this[LegacyMatProperties.TIER] = value
-        }
+    val liquidTemperature: Int
+        get() = (properties[MaterialProperties.LIQUID_TEMPERATURE] as NumberValue).value.toInt()
 
-    var itemTier
-        get() = this[LegacyMatProperties.ITEM_TIER]
-        set(value) {
-            this[LegacyMatProperties.ITEM_TIER] = value
-        }
+    val gasTemperature: Int
+        get() = (properties[MaterialProperties.GAS_TEMPERATURE] as NumberValue).value.toInt()
 
-    var armorMaterial
-        get() = this[LegacyMatProperties.ARMOR_MATERIAL]
-        set(value) {
-            this[LegacyMatProperties.ARMOR_MATERIAL] = value
-        }
+    val liquidName: String
+        get() = (properties[MaterialProperties.LIQUID_NAME] as StringValue).value
 
-    var element
-        get() = this[LegacyMatProperties.ELEMENT]
-        set(value) {
-            this[LegacyMatProperties.ELEMENT] = value
-        }
+    val gasName: String
+        get() = (properties[MaterialProperties.GAS_NAME] as StringValue).value
 
-    var standardBurnTime
-        get() = this[LegacyMatProperties.BURN_TIME]
-        set(value) {
-            this[LegacyMatProperties.BURN_TIME] = value
-        }
+    val pH: Float
+        get() = (properties[MaterialProperties.PH] as NumberValue).value.toFloat()
 
-    var compoundType
-        get() = this[LegacyMatProperties.COMPOUND_TYPE]
-        set(value) {
-            this[LegacyMatProperties.COMPOUND_TYPE] = value
-        }
+    val blockCompaction: BlockCompaction
+        get() = BlockCompaction.fromString((properties[MaterialProperties.BLOCK_COMPACTION] as StringValue).value)
 
-    var harvestTier
-        get(): HarvestTier {
-            val tier = this[LegacyMatProperties.HARVEST_TIER]
-            if (LegacyMatProperties.HARVEST_TIER !in this) this[LegacyMatProperties.HARVEST_TIER] = tier
-            return tier
-        }
-        set(value) {
-            this[LegacyMatProperties.HARVEST_TIER] = value
-        }
+    val transitionMaterial: Material?
+        get() = MATERIALS[(properties[MaterialProperties.TRANSITION_MATERIAL] as StringValue).value]
 
-    var densityMultiplier
-        get() = this[LegacyMatProperties.DENSITY_MULTIPLIER]
-        set(value) {
-            this[LegacyMatProperties.DENSITY_MULTIPLIER] = value
-        }
+    val transitionAmount: Int
+        get() = (properties[MaterialProperties.TRANSITION_AMOUNT] as NumberValue).value.toInt()
 
-    var processingMultiplier
-        get() = this[LegacyMatProperties.PROCESSING_MULTIPLIER]
-        set(value) {
-            this[LegacyMatProperties.PROCESSING_MULTIPLIER] = value
-        }
+    val hasOre: Boolean
+        get() = (properties[MaterialProperties.HAS_ORE] as BoolValue).value
 
-    var refinedMaterial
-        get() = this[LegacyMatProperties.REFINED_MATERIAL]
-        set(value) {
-            this[LegacyMatProperties.REFINED_MATERIAL] = value
-        }
+    val simpleProcessing: Boolean
+        get() = (properties[MaterialProperties.SIMPLE_PROCESSING] as BoolValue).value
 
-    var fluidTemperature
-        get() = this[LegacyMatProperties.FLUID_TEMPERATURE]
-        set(value) {
-            this[LegacyMatProperties.FLUID_TEMPERATURE] = value
-        }
+    val rodOutputCount: Int
+        get() = (properties[MaterialProperties.ROD_OUTPUT_COUNT] as NumberValue).value.toInt()
 
-    var boilingTemperature
-        get() = this[LegacyMatProperties.BOILING_TEMPERATURE]
-        set(value) {
-            this[LegacyMatProperties.BOILING_TEMPERATURE] = value
-        }
+    val group: Boolean
+        get() = (properties[MaterialProperties.GROUP] as BoolValue).value
 
-    var boilingMaterial
-        get() = this[LegacyMatProperties.BOILING_MATERIAL]
-        set(value) {
-            this[LegacyMatProperties.BOILING_MATERIAL] = value
-        }
+    val hasDust: Boolean
+        get() = (properties[MaterialProperties.HAS_DUST] as BoolValue).value
 
-    var unrefinedColor
-        get() = this[LegacyMatProperties.UNREFINED_COLOR]
-        set(value) {
-            this[LegacyMatProperties.UNREFINED_COLOR] = value
-        }
+    val hasIngot: Boolean
+        get() = (properties[MaterialProperties.HAS_INGOT] as BoolValue).value
 
-    var alpha
-        get() = this[LegacyMatProperties.ALPHA]
-        set(value) {
-            this[LegacyMatProperties.ALPHA] = value
-        }
+    val hasGem: Boolean
+        get() = (properties[MaterialProperties.HAS_GEM] as BoolValue).value
 
-    var pH
-        get() = this[LegacyMatProperties.PH]
-        set(value) {
-            this[LegacyMatProperties.PH] = value
-        }
-
-    var blockCompaction
-        get() = this[LegacyMatProperties.BLOCK_COMPACTION]
-        set(value) {
-            this[LegacyMatProperties.BLOCK_COMPACTION] = value
-        }
-
-    var transitionProperties
-        get() = this[LegacyMatProperties.TRANSITION_PROPERTIES]
-        set(value) {
-            this[LegacyMatProperties.TRANSITION_PROPERTIES] = value
-        }
-
-    var hasOre
-        get() = this[LegacyMatProperties.HAS_ORE]
-        set(value) {
-            this[LegacyMatProperties.HAS_ORE] = value
-        }
-
-    var isGas
-        get() = this[LegacyMatProperties.IS_GAS]
-        set(value) {
-            this[LegacyMatProperties.IS_GAS] = value
-        }
-
-    var simpleProcessing
-        get() = this[LegacyMatProperties.SIMPLE_PROCESSING]
-        set(value) {
-            this[LegacyMatProperties.SIMPLE_PROCESSING] = value
-        }
-
-    var rodOutputCount
-        get() = this[LegacyMatProperties.ROD_OUTPUT_COUNT]
-        set(value) {
-            this[LegacyMatProperties.ROD_OUTPUT_COUNT] = value
-        }
-
-    var displayType
-        get() = this[LegacyMatProperties.DISPLAY_TYPE]
-        set(value) {
-            this[LegacyMatProperties.DISPLAY_TYPE] = value
-        }
-
-    var hasDust
-        get() = this[LegacyMatProperties.HAS_DUST]
-        set(value) {
-            this[LegacyMatProperties.HAS_DUST] = value
-        }
-
-    var mainItemType
-        get() = this[LegacyMatProperties.MAIN_ITEM_TYPE]
-        set(value) {
-            this[LegacyMatProperties.MAIN_ITEM_TYPE] = value
-        }
+    val malleable: Boolean
+        get() = (properties[MaterialProperties.MALLEABLE] as BoolValue).value
 
     val localizedName get() = TranslationTextComponent("material.$name")
 
@@ -218,39 +138,15 @@ class Material(override val properties: Map<String, IEvaluated>) : IPropertyCont
             material.fullComposition.map { (material1, count1) -> material1 * (count1 * count) }
         }
 
-    val isPureElement get() = element !== BaseElements.NULL
-
-    val isItemMaterial get() = mainItemType != null
-
-    val isIngotMaterial: Boolean get() = mainItemType == BaseForms.INGOT
-
-    val isGemMaterial: Boolean get() = mainItemType == BaseForms.GEM
-
-    val isFluidMaterial get() = mainItemType == null && fluidTemperature > 0
-
     operator fun invoke(builder: Material.() -> Unit) = builder(this)
 
     override fun toString() = name
 
-    fun register(): Material {
-        Materials.add(this)
-        return Materials[name]!!
-    }
+    fun getItemTags(type: Form) = names.map { ItemTags.Wrapper("${type.itemTag}/$it".toResLoc()) }
 
-    fun merge(mat: Material): Material {
-        names union mat.names
-        mat.legacyProperties.forEach { (key, value) ->
-            key.merge(legacyProperties[key], value)?.let { legacyProperties[key] = it }
-        }
-        typeBlacklist.addAll(mat.typeBlacklist)
-        return this
-    }
+    fun getBlockTags(type: Form) = names.map { BlockTags.Wrapper("${type.itemTag}/$it".toResLoc()) }
 
-    fun getItemTags(type: Form) = names.map { ItemTags.Wrapper("${type.itemTagName}/$it".toResLoc()) }
-
-    fun getBlockTags(type: Form) = names.map { BlockTags.Wrapper("${type.itemTagName}/$it".toResLoc()) }
-
-    fun getFluidTags(type: Form) = names.map { FluidTags.Wrapper("${type.itemTagName}/$it".toResLoc()) }
+    fun getFluidTags(type: Form) = names.map { FluidTags.Wrapper("${type.itemTag}/$it".toResLoc()) }
 
     @JvmOverloads
     fun getItemTag(type: Form, nameIndex: Int = 0) = getItemTags(type).let {
@@ -266,8 +162,6 @@ class Material(override val properties: Map<String, IEvaluated>) : IPropertyCont
     fun getFluidTag(type: Form, nameIndex: Int = 0) = getFluidTags(type).let {
         it.getOrNull(nameIndex) ?: it.first()
     }
-
-    fun harvestTier(hardness: Float, resistance: Float) = HarvestTier(hardness, resistance, tier)
 
     operator fun times(count: Int) = MaterialStack(this, count)
 

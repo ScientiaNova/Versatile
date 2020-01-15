@@ -1,0 +1,6 @@
+{
+  "type": "list[material_stack]",
+  "default": [
+    "list"
+  ]
+}

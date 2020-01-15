@@ -13,6 +13,7 @@ import net.minecraft.util.math.shapes.VoxelShapes
 import net.minecraftforge.common.ToolType
 
 open class ExtendedBlockProperties(
+        val name: String,
         val material: BlockMaterialWrapper,
         val materialColor: MaterialColor = material.color,
         val blocksMovement: Boolean = material.blocksMovement,
@@ -27,9 +28,9 @@ open class ExtendedBlockProperties(
         val harvestLevel: Int = -1,
         val harvestTool: ToolType? = null,
         val isAir: Boolean = false,
-        val translationKey: String? = null,
+        val translationKey: String = "block.$name",
         val renderType: String = "solid",
-        val solid: Boolean = true,
+        val opaque: Boolean = true,
         val shape: VoxelShape = VoxelShapes.fullCube(),
         val collisionShape: VoxelShape = if (blocksMovement) shape else VoxelShapes.empty(),
         val renderShape: VoxelShape = shape,
@@ -54,22 +55,24 @@ open class ExtendedBlockProperties(
         super.sound(sound)
         super.lightValue(lightValue)
         super.hardnessAndResistance(hardness, resistance)
-        if (!solid) super.func_226896_b_()
+        if (!opaque) super.nonOpaque()
         if (ticksRandomly) super.tickRandomly()
         super.slipperiness(slipperiness)
-        super.func_226897_b_(speedMultiplier)
-        super.func_226898_c_(jumpMultiplier)
+        super.velocityMultiplier(speedMultiplier)
+        super.jumpVelocityMultiplier(jumpMultiplier)
         super.harvestLevel(harvestLevel)
         if (harvestTool != null) super.harvestTool(harvestTool)
     }
 
     object Serializer : IJSONSerializer<ExtendedBlockProperties, JsonObject> {
         override fun read(json: JsonObject): ExtendedBlockProperties {
+            val name = json.getStringOrNull("name") ?: error("Missing block mae")
             val material = json.getStringOrNull("material")?.let { BLOCK_MATERIALS[it.toResLoc()] }
                     ?: error("Missing block material")
             val blocksMovement = json.getBooleanOrNull("blocks_movement") ?: material.blocksMovement
-            val renderLayer = json.getStringOrNull("render_type") ?: "solid"
+            val renderType = json.getStringOrNull("render_type") ?: "solid"
             return ExtendedBlockProperties(
+                    name = name,
                     material = material,
                     materialColor = json.getIntOrNull("material_color")?.let { MaterialColor.COLORS[it] }
                             ?: material.color,
@@ -85,9 +88,9 @@ open class ExtendedBlockProperties(
                     harvestLevel = json.getIntOrNull("harvest_level") ?: -1,
                     harvestTool = json.getStringOrNull("harvest_tool")?.let(ToolType::get),
                     isAir = json.getBooleanOrNull("is_air") ?: false,
-                    translationKey = json.getStringOrNull("translation_key"),
-                    renderType = renderLayer,
-                    solid = json.getBooleanOrNull("solid") ?: true,
+                    translationKey = json.getStringOrNull("translation_key") ?: "block.$name",
+                    renderType = renderType,
+                    opaque = json.getBooleanOrNull("opaque") ?: true,
                     //TODO Voxel Shape Serializer
                     canDropFromExplosion = json.getBooleanOrNull("can_drop_from_explosion") ?: true,
                     climbable = json.getBooleanOrNull("climbable") ?: false,
@@ -110,38 +113,38 @@ open class ExtendedBlockProperties(
 
         override fun write(obj: ExtendedBlockProperties) = json {
             "material" to obj.material.registryName
-            "material_color" to obj.materialColor
-            "blocks_movement" to obj.blocksMovement
-            "sound" to obj.sound.registryName
-            "light_value" to obj.lightValue
-            "hardness" to obj.hardness
-            "resistance" to obj.resistance
-            "ticks_randomly" to obj.ticksRandomly
-            "slipperiness" to obj.slipperiness
-            "speed_multiplier" to obj.speedMultiplier
-            "jump_multiplier" to obj.jumpMultiplier
-            "harvest_level" to obj.harvestLevel
+            if (obj.materialColor != obj.material.color) "material_color" to obj.materialColor
+            if (obj.blocksMovement != obj.material.blocksMovement) "blocks_movement" to obj.blocksMovement
+            if (obj.sound.registryName != "stone".toResLoc()) "sound" to obj.sound.registryName
+            if (obj.lightValue > 0) "light_value" to obj.lightValue
+            if (obj.hardness != 0f) "hardness" to obj.hardness
+            if (obj.resistance != 0f) "resistance" to obj.resistance
+            if (obj.ticksRandomly) "ticks_randomly" to obj.ticksRandomly
+            if (obj.slipperiness != .6f) "slipperiness" to obj.slipperiness
+            if (obj.speedMultiplier != 1f) "speed_multiplier" to obj.speedMultiplier
+            if (obj.jumpMultiplier != 1f) "jump_multiplier" to obj.jumpMultiplier
+            if (obj.harvestLevel != -1) "harvest_level" to obj.harvestLevel
             obj.harvestTool?.let { "harvest_tool" to it.name }
-            "is_air" to obj.isAir
-            obj.translationKey?.let { "translation_key" to it }
-            "render_layer" to obj.renderType
-            "solid" to obj.solid
+            if (obj.isAir) "is_air" to obj.isAir
+            if (obj.translationKey != "block.${obj.name}") "translation_key" to obj.translationKey
+            if (obj.renderType != "solid") "render_type" to obj.renderType
+            if (!obj.opaque) "opaque" to obj.opaque
             //TODO Voxel Shape Serializer
-            "can_drop_from_explosion" to obj.canDropFromExplosion
-            "climbable" to obj.climbable
-            "burning" to obj.burning
-            "can_mobs_spawn" to obj.canMobsSpawn
-            "can_be_replaced_by_leaves" to obj.canBeReplacedByLeaves
-            "can_be_replaced_by_logs" to obj.canBeReplacedByLogs
-            "foliage" to obj.foliage
-            "fertile" to obj.fertile
-            "xp_drop" to obj.xpDrop
-            "enchanting_power_boost" to obj.enchantingPowerBonus
-            "sticky" to obj.sticky
-            "flammability" to obj.flammability
-            "fire_spread_speed" to obj.fireSpreadSpeed
-            "fire_source" to obj.fireSource
-            "push_reaction" to obj.pushReaction.name.toLowerCase()
+            if (!obj.canDropFromExplosion) "can_drop_from_explosion" to obj.canDropFromExplosion
+            if (obj.climbable) "climbable" to obj.climbable
+            if (obj.burning) "burning" to obj.burning
+            if (!obj.canMobsSpawn) "can_mobs_spawn" to obj.canMobsSpawn
+            if (obj.canBeReplacedByLeaves) "can_be_replaced_by_leaves" to obj.canBeReplacedByLeaves
+            if (obj.canBeReplacedByLogs) "can_be_replaced_by_logs" to obj.canBeReplacedByLogs
+            if (obj.foliage) "foliage" to obj.foliage
+            if (obj.fertile) "fertile" to obj.fertile
+            if (obj.xpDrop > 0) "xp_drop" to obj.xpDrop
+            if (obj.enchantingPowerBonus > 0) "enchanting_power_boost" to obj.enchantingPowerBonus
+            if (obj.sticky) "sticky" to obj.sticky
+            if (obj.flammability > 0) "flammability" to obj.flammability
+            if (obj.fireSpreadSpeed > 0) "fire_spread_speed" to obj.fireSpreadSpeed
+            if (obj.fireSource) "fire_source" to obj.fireSource
+            if (obj.pushReaction != PushReaction.NORMAL) "push_reaction" to obj.pushReaction.name.toLowerCase()
         }
     }
 }

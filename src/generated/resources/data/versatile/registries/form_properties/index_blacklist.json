@@ -1,0 +1,6 @@
+{
+  "type": "list[number]",
+  "default": [
+    "list"
+  ]
+}

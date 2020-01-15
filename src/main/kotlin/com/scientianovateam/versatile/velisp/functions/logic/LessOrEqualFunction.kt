@@ -9,5 +9,5 @@ object LessOrEqualFunction : IFunction {
     override val name = "versatile/less_or_equal"
     override val symbol = "<="
     override val inputCount = 2..2
-    override fun evaluate(inputs: List<IUnresolved>) = BoolValue((inputs.first().evaluate().value as Double) <= inputs.last().evaluate().value as Double)
+    override fun evaluate(inputs: List<IUnresolved>) = BoolValue((inputs[0].evaluate().value as Double) <= inputs[1].evaluate().value as Double)
 }

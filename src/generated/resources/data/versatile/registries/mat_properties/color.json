@@ -1,4 +1,4 @@
 {
   "type": "number",
-  "default": -1.0
+  "default": 2147483647
 }

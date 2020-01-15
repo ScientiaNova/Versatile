@@ -9,7 +9,7 @@ import com.scientianovateam.versatile.velisp.unresolved.evaluate
 object IsFunction : IFunction {
     override val name = "versatile/is"
     override val inputCount = 2..2
-    override fun evaluate(inputs: List<IUnresolved>) = BoolValue(inputs.first().evaluate().type subtypes inputs.last().evaluate().value.toString().let { type ->
+    override fun evaluate(inputs: List<IUnresolved>) = BoolValue(inputs[0].evaluate().type subtypes inputs[1].evaluate().value.toString().let { type ->
         ITypeHolder.fromName(type)
     })
 }

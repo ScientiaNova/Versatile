@@ -1,4 +1,13 @@
 {
   "type": "optional[string]",
-  "default": null
+  "default": null,
+  "valid": [
+    "unwrap_or",
+    [
+      "map",
+      "$it",
+      "tool_tier_exists"
+    ],
+    true
+  ]
 }

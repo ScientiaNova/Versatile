@@ -24,7 +24,7 @@ abstract class AbstractMachineBlock(properties: Properties, name: String) : ModB
         BaseTileEntity.USED_BY += this
     }
 
-    override fun func_225533_a_(state: BlockState, world: World, pos: BlockPos, player: PlayerEntity, hand: Hand, rayTraceResult: BlockRayTraceResult): ActionResultType? {
+    override fun onUse(state: BlockState, world: World, pos: BlockPos, player: PlayerEntity, hand: Hand, rayTraceResult: BlockRayTraceResult): ActionResultType? {
         if (!world.isRemote) {
             val te = world.getTileEntity(pos)!!
             (player as ServerPlayerEntity).connection.sendPacket(world.getTileEntity(pos)!!.updatePacket!!)

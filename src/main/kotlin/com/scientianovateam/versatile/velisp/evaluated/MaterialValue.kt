@@ -9,5 +9,5 @@ import com.scientianovateam.versatile.velisp.unevaluated.FunctionCall
 class MaterialValue(override val value: Material) : IEvaluated, IPropertyContainer {
     override val type = MATERIAL
     override val properties = value.properties
-    override fun toJson() = FunctionCall(MaterialFunction.name, listOf(StringValue(value.name))).toJson()
+    override fun serialize() = FunctionCall(MaterialFunction.name, listOf(StringValue(value.name))).serialize()
 }

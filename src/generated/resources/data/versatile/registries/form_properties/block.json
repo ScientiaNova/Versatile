@@ -1,0 +1,4 @@
+{
+  "type": "optional[struct]",
+  "default": null
+}

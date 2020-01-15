@@ -1,4 +1,4 @@
 {
-  "type": "material",
-  "default": "$mat"
+  "type": "optional[material]",
+  "default": null
 }

@@ -10,7 +10,7 @@ object MatchFunction : IFunction {
     override val name = "versatile/match"
     override val inputCount = 3..Int.MAX_VALUE
     override fun evaluate(inputs: List<IUnresolved>): IEvaluated {
-        val value = inputs.first().evaluate()
+        val value = inputs[0].evaluate()
         val list: List<Pair<IUnresolved, IUnresolved>>
         val default: IUnresolved
         if (inputs.size % 2 == 0) {

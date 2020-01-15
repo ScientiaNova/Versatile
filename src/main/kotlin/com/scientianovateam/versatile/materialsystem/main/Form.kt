@@ -1,5 +1,6 @@
 package com.scientianovateam.versatile.materialsystem.main
 
+import com.google.gson.JsonObject
 import com.scientianovateam.versatile.common.extensions.toResLoc
 import com.scientianovateam.versatile.materialsystem.addition.FormProperties
 import com.scientianovateam.versatile.materialsystem.addition.LegacyFormProperties
@@ -12,175 +13,125 @@ import com.scientianovateam.versatile.velisp.evaluated.IEvaluated
 import com.scientianovateam.versatile.velisp.evaluated.MaterialValue
 import com.scientianovateam.versatile.velisp.evaluated.StringValue
 import net.minecraft.tags.ItemTags
+import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.TranslationTextComponent
 
 class Form(val properties: Map<Material, Map<String, IEvaluated>>) {
-    val any = properties.values.iterator().next()
+    val any = properties.values.first()
 
-    val legacyProperties = mutableMapOf<FormLegacyProperty<out Any?>, Any?>()
+    fun isMaterialCompatible(mat: Material) = mat in properties
 
     val name = (any[FormProperties.NAME] as StringValue).toString()
-    val requirement: (Material) -> Boolean = {
-        (properties[it]?.get(FormProperties.GENERATE) as? BoolValue)?.value ?: false
-    }
 
-    constructor(name: String, requirement: (Material) -> Boolean) : this(mutableMapOf()) {
-        // TODO legacy constructor
-    }
+    val indexBlackList: List<Int>
+        get() = (any[FormProperties.INDEX_BLACKLIST] as ListValue).value.map { (it as NumberValue).value.toInt() }
 
-    operator fun <T> set(property: FormLegacyProperty<T>, value: T) {
-        if (property.isValid(value)) legacyProperties[property] = value
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    operator fun <T> get(property: FormLegacyProperty<T>) = legacyProperties[property] as? T ?: property.default(this)
-
-    operator fun contains(property: FormLegacyProperty<*>) = property in legacyProperties
-
-    val indexBlackList = mutableListOf<Int>()
-
-    var bucketVolume
-        get() = this[LegacyFormProperties.BUCKET_VOLUME]
-        set(value) {
-            this[LegacyFormProperties.BUCKET_VOLUME] = value
+    val bucketVolume: (Material) -> Int
+        get() = {
+            ((properties[it] ?: error("$name doesn't generate for $it"))
+                    [FormProperties.BUCKET_VOLUME] as NumberValue).value.toInt()
         }
 
-    var registryName
-        get() = this[LegacyFormProperties.REGISTRY_NAME_FUM]
-        set(value) {
-            this[LegacyFormProperties.REGISTRY_NAME_FUM] = value
+    val registryName: (Material) -> ResourceLocation
+        get() = {
+            ((properties[it] ?: error("$name doesn't generate for $it"))
+                    [FormProperties.REGISTRY_NAME] as StringValue).value.toResLoc()
         }
 
-    var itemTagName
-        get() = this[LegacyFormProperties.ITEM_TAG]
-        set(value) {
-            this[LegacyFormProperties.ITEM_TAG] = value
+    val itemTag: ResourceLocation
+        get() = (any[FormProperties.ITEM_TAG] as StringValue).value.toResLoc()
+
+    val blockTag: ResourceLocation
+        get() = (any[FormProperties.BLOCK_TAG] as StringValue).value.toResLoc()
+
+    val combinedItemTags: (Material) -> List<ResourceLocation>
+        get() = { mat ->
+            ((properties[mat] ?: error("$name doesn't generate for $mat"))
+                    [FormProperties.COMBINED_ITEM_TAGS] as ListValue).value.map { (it as StringValue).value.toResLoc() }
         }
 
-    var blockTagName
-        get() = this[LegacyFormProperties.BLOCK_TAG]
-        set(value) {
-            this[LegacyFormProperties.BLOCK_TAG] = value
+    val combinedBlockTags: (Material) -> List<ResourceLocation>
+        get() = { mat ->
+            ((properties[mat] ?: error("$name doesn't generate for $mat"))
+                    [FormProperties.COMBINED_BLOCK_TAGS] as ListValue).value.map { (it as StringValue).value.toResLoc() }
         }
 
-    var fluidTagName
-        get() = this[LegacyFormProperties.FLUID_TAG]
-        set(value) {
-            this[LegacyFormProperties.FLUID_TAG] = value
+    val combinedFluidTags: (Material) -> List<ResourceLocation>
+        get() = { mat ->
+            ((properties[mat] ?: error("$name doesn't generate for $mat"))
+                    [FormProperties.COMBINED_FLUID_TAGS] as ListValue).value.map { (it as StringValue).value.toResLoc() }
         }
 
-    var color
-        get() = this[LegacyFormProperties.COLOR_FUN]
-        set(value) {
-            this[LegacyFormProperties.COLOR_FUN] = value
+    val color: (Material) -> Int
+        get() = {
+            ((properties[it] ?: error("$name doesn't generate for $it"))
+                    [FormProperties.COLOR] as NumberValue).value.toInt()
         }
 
-    var densityMultiplier
-        get() = this[LegacyFormProperties.DENSITY_MULTIPLIER]
-        set(value) {
-            this[LegacyFormProperties.DENSITY_MULTIPLIER] = value
+    val densityMultiplier: (Material) -> Float
+        get() = {
+            ((properties[it] ?: error("$name doesn't generate for $it"))
+                    [FormProperties.DENSITY_MULTIPLIER] as NumberValue).value.toFloat()
         }
 
-    var isGas
-        get() = this[LegacyFormProperties.IS_GAS]
-        set(value) {
-            this[LegacyFormProperties.IS_GAS] = value
+    val temperature: (Material) -> Int
+        get() = {
+            ((properties[it] ?: error("$name doesn't generate for $it"))
+                    [FormProperties.TEMPERATURE] as NumberValue).value.toInt()
         }
 
-    var temperature
-        get() = this[LegacyFormProperties.TEMPERATURE]
-        set(value) {
-            this[LegacyFormProperties.TEMPERATURE] = value
+    val singleTextureSet: (Material) -> Boolean
+        get() = {
+            ((properties[it] ?: error("$name doesn't generate for $it"))
+                    [FormProperties.SINGLE_TEXTURE_SET] as BoolValue).value
         }
 
-    var singleTextureType
-        get() = this[LegacyFormProperties.SINGLE_TEXTURE_TYPE]
-        set(value) {
-            this[LegacyFormProperties.SINGLE_TEXTURE_TYPE] = value
+    val burnTime: (Material) -> Int
+        get() = {
+            ((properties[it] ?: error("$name doesn't generate for $it"))
+                    [FormProperties.BURN_TIME] as NumberValue).value.toInt()
         }
 
-    var burnTime
-        get() = this[LegacyFormProperties.BURN_TIME]
-        set(value) {
-            this[LegacyFormProperties.BURN_TIME] = value
+    val itemModel: (Material) -> JsonObject
+        get() = {
+            ((properties[it] ?: error("$name doesn't generate for $it"))
+                    [FormProperties.ITEM_MODEL] as StructValue).toJSON()
         }
 
-    var itemModel
-        get() = this[LegacyFormProperties.ITEM_MODEL]
-        set(value) {
-            this[LegacyFormProperties.ITEM_MODEL] = value
+    val blockstateJSON: (Material) -> JsonObject
+        get() = {
+            ((properties[it] ?: error("$name doesn't generate for $it"))
+                    [FormProperties.BLOCKSTATE] as StructValue).toJSON()
         }
 
-    var blockStateJSON
-        get() = this[LegacyFormProperties.BLOCKSTATE_JSON]
-        set(value) {
-            this[LegacyFormProperties.BLOCKSTATE_JSON] = value
+    val blockModels: (Material) -> Map<String, JsonObject>
+        get() = {
+            ((properties[it] ?: error("$name doesn't generate for $it"))
+                    [FormProperties.BLOCK_MODELS] as StructValue).toJSON().entrySet().map { (key, value) -> key to (value as JsonObject) }
+                    .toMap()
         }
 
-    var itemConstructor
-        get() = this[LegacyFormProperties.ITEM_CONSTRUCTOR]
-        set(value) {
-            this[LegacyFormProperties.ITEM_CONSTRUCTOR] = value
+    val itemJSON: (Material) -> JsonObject
+        get() = {
+            ((properties[it] ?: error("$name doesn't generate for $it"))
+                    [FormProperties.ITEM] as StructValue).toJSON()
         }
 
-    var itemProperties
-        get() = this[LegacyFormProperties.ITEM_PROPERTIES]
-        set(value) {
-            this[LegacyFormProperties.ITEM_PROPERTIES] = value
+    val blockJSON: (Material) -> JsonObject
+        get() = {
+            ((properties[it] ?: error("$name doesn't generate for $it"))
+                    [FormProperties.BLOCK] as StructValue).toJSON()
         }
 
-    var blockConstructor
-        get() = this[LegacyFormProperties.BLOCK_CONSTRUCTOR]
-        set(value) {
-            this[LegacyFormProperties.BLOCK_CONSTRUCTOR] = value
+    val fluidJSON: (Material) -> JsonObject
+        get() = {
+            ((properties[it] ?: error("$name doesn't generate for $it"))
+                    [FormProperties.FLUID] as StructValue).toJSON()
         }
-
-    var blockProperties
-        get() = this[LegacyFormProperties.BLOCK_PROPERTIES]
-        set(value) {
-            this[LegacyFormProperties.BLOCK_PROPERTIES] = value
-        }
-
-    var fluidPairConstructor
-        get() = this[LegacyFormProperties.FLUID_CONSTRUCTOR]
-        set(value) {
-            this[LegacyFormProperties.FLUID_CONSTRUCTOR] = value
-        }
-
-    var fluidAttributes
-        get() = this[LegacyFormProperties.FLUID_ATTRIBUTES]
-        set(value) {
-            this[LegacyFormProperties.FLUID_ATTRIBUTES] = value
-        }
-
-    var typePriority
-        get() = this[LegacyFormProperties.TYPE_PRIORITY]
-        set(value) {
-            this[LegacyFormProperties.TYPE_PRIORITY] = value
-        }
-
-    val itemTag get() = ItemTags.Wrapper(itemTagName.toResLoc())
-
-    val blockTag get() = ItemTags.Wrapper(itemTagName.toResLoc())
 
     operator fun invoke(builder: Form.() -> Unit) = builder(this)
 
     fun localize(mat: Material) = TranslationTextComponent("form.$name", mat.localizedName)
 
     override fun toString() = name
-
-    fun isMaterialCompatible(mat: Material) = requirement(mat)
-
-    fun merge(type: Form): Form {
-        type.legacyProperties.forEach { (key, value) ->
-            key.merge(legacyProperties[key], value)?.let { legacyProperties[key] = it }
-        }
-        //requirement = { requirement(it) && type.requirement(it) }
-        return this
-    }
-
-    fun register(): Form {
-        Forms.add(this)
-        return Forms[name]!!
-    }
 }

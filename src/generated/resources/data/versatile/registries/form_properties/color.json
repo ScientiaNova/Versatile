@@ -1,0 +1,10 @@
+{
+  "type": "number",
+  "default": 16777215,
+  "valid": [
+    "in_range",
+    "$it",
+    0,
+    16777215
+  ]
+}

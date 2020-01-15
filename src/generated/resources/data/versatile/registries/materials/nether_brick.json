@@ -1,0 +1,13 @@
+{
+  "associated_names": [
+    "list",
+    "nether_brick"
+  ],
+  "compound_type": "chemical",
+  "has_ingot": true,
+  "has_dust": true,
+  "tier": 1,
+  "color": -12113360,
+  "block_compaction": "2x2",
+  "malleable": false
+}

@@ -8,5 +8,5 @@ import com.scientianovateam.versatile.velisp.unresolved.evaluate
 object StringContainsFunction : IFunction {
     override val name = "versatile/string_contains"
     override val inputCount = 2..2
-    override fun evaluate(inputs: List<IUnresolved>) = BoolValue(inputs.first().evaluate().value.toString().contains(inputs.last().evaluate().value.toString()))
+    override fun evaluate(inputs: List<IUnresolved>) = BoolValue(inputs[1].evaluate().value.toString() in inputs[0].evaluate().value.toString())
 }

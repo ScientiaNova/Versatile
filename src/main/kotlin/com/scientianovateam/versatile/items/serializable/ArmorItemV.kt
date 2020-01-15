@@ -1,6 +1,8 @@
 package com.scientianovateam.versatile.items.serializable
 
 import com.google.gson.JsonObject
+import com.scientianovateam.versatile.common.extensions.json
+import com.scientianovateam.versatile.common.extensions.toResLoc
 import com.scientianovateam.versatile.common.extensions.toResLocV
 import com.scientianovateam.versatile.common.extensions.toStack
 import com.scientianovateam.versatile.common.serialization.IRegisterableJSONSerializer
@@ -12,9 +14,14 @@ import net.minecraft.inventory.EquipmentSlotType
 import net.minecraft.item.ArmorItem
 import net.minecraft.item.ItemStack
 import net.minecraft.util.text.ITextComponent
+import net.minecraft.util.text.TranslationTextComponent
 import net.minecraft.world.World
 
 class ArmorItemV(val armorProperties: ArmorItemProperties) : ArmorItem(armorProperties.tier, armorProperties.slotType, armorProperties), ISerializableItem {
+    init {
+        registryName = armorProperties.name.toResLoc()
+    }
+
     override fun getArmorTexture(stack: ItemStack?, entity: Entity?, slot: EquipmentSlotType?, type: String?) =
             "${registryName?.namespace}:textures/models/armor/${armorMaterial.name}_layer_${if (slot == EquipmentSlotType.LEGS) 2 else 1}" +
                     "${type?.let { "_$it" } ?: ""}.png"
@@ -28,13 +35,18 @@ class ArmorItemV(val armorProperties: ArmorItemProperties) : ArmorItem(armorProp
         tooltips.addAll(armorProperties.tooltips)
     }
 
-    override fun getTranslationKey(): String = armorProperties.translationKey ?: super.getTranslationKey()
+    override fun getTranslationKey(): String = armorProperties.translationKey
     override fun hasEffect(stack: ItemStack) = armorProperties.glows || super.hasEffect(stack)
     override fun isEnchantable(p_77616_1_: ItemStack) = armorProperties.isEnchantable
     override fun getItemEnchantability(stack: ItemStack?) = armorProperties.enchantability
     override fun getEntityLifespan(itemStack: ItemStack?, world: World?) = armorProperties.entityLifespan
     override fun isBookEnchantable(stack: ItemStack?, book: ItemStack?) = armorProperties.isBookEnchantable
     override fun getBurnTime(itemStack: ItemStack?) = armorProperties.burnTime
+    private var localizationFunction: () -> ITextComponent = { TranslationTextComponent(translationKey) }
+    override fun getDisplayName(stack: ItemStack) = localizationFunction()
+    override fun setLocalization(function: () -> ITextComponent) {
+        localizationFunction = function
+    }
 
     override val serializer = Serializer
 
@@ -43,6 +55,9 @@ class ArmorItemV(val armorProperties: ArmorItemProperties) : ArmorItem(armorProp
 
         override fun read(json: JsonObject) = ArmorItemV(ArmorItemProperties.Serializer.read(json))
 
-        override fun write(obj: ArmorItemV) = ArmorItemProperties.Serializer.write(obj.armorProperties)
+        override fun write(obj: ArmorItemV) = json {
+            "type" to "armor"
+            ArmorItemProperties.Serializer.write(obj.armorProperties).extract()
+        }
     }
 }

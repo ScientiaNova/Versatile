@@ -15,7 +15,7 @@ interface IUnresolved {
         return emptyList()
     }
 
-    fun toJson(): JsonElement
+    fun serialize(): JsonElement
 }
 
 fun IUnresolved.evaluate() = (this as? IUnevaluated)?.evaluate() ?: error("tried to evaluate unresolved value")

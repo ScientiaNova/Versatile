@@ -1,0 +1,18 @@
+{
+  "type": "list[string]",
+  "default": [
+    "map",
+    "$mat/associated_names",
+    [
+      "func",
+      "it",
+      [
+        "concat",
+        "forge:",
+        "$form/name",
+        "/",
+        "$it"
+      ]
+    ]
+  ]
+}

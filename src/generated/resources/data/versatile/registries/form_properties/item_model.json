@@ -1,0 +1,24 @@
+{
+  "type": "struct",
+  "default": {
+    "parent": "item/generated",
+    "textures": {
+      "layer0": [
+        "if",
+        "$form/single_texture_set",
+        [
+          "concat",
+          "versatile:item/",
+          "$form/name"
+        ],
+        [
+          "concat",
+          "versatile:item/",
+          "$mat/texture_set",
+          "/",
+          "$form/name"
+        ]
+      ]
+    }
+  }
+}

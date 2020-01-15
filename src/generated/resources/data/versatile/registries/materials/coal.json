@@ -1,0 +1,13 @@
+{
+  "associated_names": [
+    "list",
+    "coal"
+  ],
+  "has_gem": true,
+  "has_dust": true,
+  "color": -15066598,
+  "texture_set": "fuel",
+  "burn_time": 1600,
+  "element": "carbon",
+  "has_ore": true
+}

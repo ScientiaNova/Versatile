@@ -2,52 +2,57 @@ package com.scientianovateam.versatile.resources
 
 import com.scientianovateam.versatile.common.extensions.times
 import com.scientianovateam.versatile.common.extensions.toStack
-import com.scientianovateam.versatile.materialsystem.addition.BaseForms
+import com.scientianovateam.versatile.materialsystem.lists.FORMS
+import com.scientianovateam.versatile.materialsystem.lists.MATERIALS
 import com.scientianovateam.versatile.materialsystem.lists.MaterialBlocks
-import com.scientianovateam.versatile.materialsystem.lists.MaterialFluids
 import com.scientianovateam.versatile.materialsystem.lists.MaterialItems
-import com.scientianovateam.versatile.materialsystem.lists.Materials
-import com.scientianovateam.versatile.materialsystem.main.IMaterialObject
-import com.scientianovateam.versatile.materialsystem.main.Material
 import com.scientianovateam.versatile.materialsystem.properties.BlockCompaction
 import net.minecraft.util.ResourceLocation
+import net.minecraftforge.registries.ForgeRegistries
 
 object BaseDataAddition {
     @JvmStatic
     fun register() {
         //Tags
-        MaterialItems.all.filterIsInstance<IMaterialObject>().forEach { TagMaps.addMatItemToTag(it) }
-        MaterialBlocks.all.filterIsInstance<IMaterialObject>().forEach { TagMaps.addMatItemToTag(it) }
-        MaterialFluids.all.flatMap { listOf(it.stillFluid, it.flowingFluid) }.filterIsInstance<IMaterialObject>().forEach { TagMaps.addMatItemToTag(it) }
+        FORMS.forEach { form ->
+            form.properties.keys.forEach { mat ->
+                val registryName = form.registryName(mat)
+                ForgeRegistries.ITEMS.getValue(registryName)?.let { item ->
+                    TagMaps.addItemToTag(form.itemTag, item)
+                    form.combinedItemTags(mat).forEach { TagMaps.addItemToTag(it, item) }
+                }
+                ForgeRegistries.BLOCKS.getValue(registryName)?.let { block ->
+                    TagMaps.addBlockToTag(form.blockTag, block)
+                    form.combinedBlockTags(mat).forEach { TagMaps.addBlockToTag(it, block) }
+                }
+                //TODO fluids
+            }
+        }
 
         //Recipes
-        Materials.all.filter(Material::isItemMaterial).forEach { mat ->
-            val hasMaterialBlock = MaterialBlocks[mat, BaseForms.BLOCK] is IMaterialObject
-            val itemType = mat.mainItemType
-            if (MaterialBlocks.contains(mat, BaseForms.BLOCK) && itemType != null)
-                when (mat.blockCompaction) {
-                    BlockCompaction.FROM_2X2 -> {
-                        if (hasMaterialBlock)
-                            RecipeMaker.addShapedRecipe(location("${mat}_block"), MaterialBlocks[mat, BaseForms.BLOCK]!!.toStack(), "II", "II", 'I', mat.getItemTag(itemType))
-                        if (MaterialItems[mat, itemType] is IMaterialObject || hasMaterialBlock)
-                            RecipeMaker.addShapelessRecipe(location("${mat}_${itemType}_from_block"), "${mat}_${itemType}", MaterialItems[mat, itemType]!! * 4, mat.getItemTag(BaseForms.BLOCK))
-                    }
-                    BlockCompaction.FROM_3X3 -> {
-                        if (hasMaterialBlock)
-                            RecipeMaker.addShapedRecipe(location("${mat}_block"), MaterialBlocks[mat, BaseForms.BLOCK]!!.toStack(), "III", "III", "III", 'I', mat.getItemTag(itemType))
-                        if (MaterialItems[mat, itemType] is IMaterialObject || hasMaterialBlock)
-                            RecipeMaker.addShapelessRecipe(location("${mat}_${itemType}_from_block"), "${mat}_${itemType}", MaterialItems[mat, itemType]!! * 9, mat.getItemTag(BaseForms.BLOCK))
-                    }
-                    else -> {
+        MATERIALS.forEach { mat ->
+            if (MaterialBlocks.contains(mat, FORMS["storage_block"]!!))
+                for (formName in arrayOf("dust", "ingot", "gem")) {
+                    val form = FORMS[formName]!!
+                    when (mat.blockCompaction) {
+                        BlockCompaction.FROM_2X2 -> {
+                            RecipeMaker.addShapedRecipe(location("${mat}_block"), MaterialBlocks[mat, FORMS["storage_block"]!!]!!.toStack(), "II", "II", 'I', mat.getItemTag(form))
+                            RecipeMaker.addShapelessRecipe(location("${mat}_${formName}_from_block"), "${mat}_${formName}", MaterialItems[mat, form]!! * 4, mat.getItemTag(FORMS["storage_block"]!!))
+                        }
+                        BlockCompaction.FROM_3X3 -> {
+                            RecipeMaker.addShapedRecipe(location("${mat}_block"), MaterialBlocks[mat, FORMS["storage_block"]!!]!!.toStack(), "III", "III", "III", 'I', mat.getItemTag(form))
+                            RecipeMaker.addShapelessRecipe(location("${mat}_${formName}_from_block"), "${mat}_${formName}", MaterialItems[mat, form]!! * 9, mat.getItemTag(FORMS["storage_block"]!!))
+                        }
+                        BlockCompaction.NONE -> {
+                        }
                     }
                 }
-            if (mat.isIngotMaterial) {
-                if (MaterialItems[mat, BaseForms.INGOT] is IMaterialObject && MaterialItems.contains(mat, BaseForms.NUGGET))
-                    RecipeMaker.addShapedRecipe(location("${mat}_ingot_from_nuggets"), "${mat}_ingot", MaterialItems[mat, BaseForms.INGOT]!!.toStack(), "NNN", "NNN", "NNN", 'N', mat.getItemTag(BaseForms.NUGGET))
+            if (mat.hasIngot) {
+                if (MaterialItems.contains(mat, FORMS["nugget"]!!))
+                    RecipeMaker.addShapedRecipe(location("${mat}_ingot_from_nuggets"), "${mat}_ingot", MaterialItems[mat, FORMS["ingot"]!!]!!.toStack(), "NNN", "NNN", "NNN", 'N', mat.getItemTag(FORMS["ingot"]!!))
                 if (mat.simpleProcessing)
-                    RecipeMaker.addFurnaceRecipe(location("${mat}_ingot"), mat.getItemTag(BaseForms.DUST), MaterialItems[mat, BaseForms.INGOT]!!)
-                if (MaterialItems[mat, BaseForms.NUGGET] is IMaterialObject)
-                    RecipeMaker.addShapelessRecipe(location("${mat}_nuggets"), MaterialItems[mat, BaseForms.NUGGET]!! * 9, mat.getItemTag(BaseForms.INGOT))
+                    RecipeMaker.addFurnaceRecipe(location("${mat}_ingot"), mat.getItemTag(FORMS["dust"]!!), MaterialItems[mat, FORMS["ingot"]!!]!!)
+                RecipeMaker.addShapelessRecipe(location("${mat}_nuggets"), MaterialItems[mat, FORMS["nugget"]!!]!! * 9, mat.getItemTag(FORMS["ingot"]!!))
             }
         }
     }

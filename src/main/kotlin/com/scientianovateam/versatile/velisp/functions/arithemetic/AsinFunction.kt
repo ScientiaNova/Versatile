@@ -9,5 +9,5 @@ import kotlin.math.asin
 object AsinFunction : IFunction {
     override val name = "versatile/asin"
     override val inputCount = 1..1
-    override fun evaluate(inputs: List<IUnresolved>) = NumberValue(asin(inputs.first().evaluate().value as Double))
+    override fun evaluate(inputs: List<IUnresolved>) = NumberValue(asin(inputs[0].evaluate().value as Double))
 }

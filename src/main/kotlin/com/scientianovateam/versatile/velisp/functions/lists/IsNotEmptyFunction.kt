@@ -9,5 +9,5 @@ import com.scientianovateam.versatile.velisp.unresolved.evaluate
 object IsNotEmptyFunction : IFunction {
     override val name = "versatile/is_not_empty"
     override val inputCount = 1..1
-    override fun evaluate(inputs: List<IUnresolved>) = BoolValue((inputs.first().evaluate() as ListValue).value.isNotEmpty())
+    override fun evaluate(inputs: List<IUnresolved>) = BoolValue((inputs[0].evaluate() as ListValue).value.isNotEmpty())
 }

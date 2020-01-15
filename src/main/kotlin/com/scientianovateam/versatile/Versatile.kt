@@ -6,8 +6,7 @@ import com.scientianovateam.versatile.common.loaders.loadForms
 import com.scientianovateam.versatile.common.loaders.loadMaterials
 import com.scientianovateam.versatile.common.loaders.loadProperties
 import com.scientianovateam.versatile.common.registry.VersatileRegistryEvent
-import com.scientianovateam.versatile.fluids.FluidRegistry
-import com.scientianovateam.versatile.items.MaterialItem
+import com.scientianovateam.versatile.fluids.FluidEventBusSubscriber
 import com.scientianovateam.versatile.machines.BaseMachineRegistry
 import com.scientianovateam.versatile.machines.gui.BaseScreen
 import com.scientianovateam.versatile.machines.packets.NetworkHandler
@@ -59,7 +58,8 @@ object Versatile {
     val LOGGER: Logger = LogManager.getLogger()
 
     val MAIN: ItemGroup = object : ItemGroup(MOD_ID) {
-        override fun createIcon() = ItemStack(MaterialItems.all.firstOrNull { it is MaterialItem } ?: Items.AIR)
+        override fun createIcon() = ItemStack(MaterialItems.all.firstOrNull { it.registryName?.namespace == MOD_ID }
+                ?: Items.AIR)
     }
 
     private val proxy = DistExecutor.runForDist<IModProxy>({ Supplier { ClientProxy } }, { Supplier { ServerProxy } })
@@ -75,7 +75,7 @@ object Versatile {
 
     private fun clientSetup() {
         ScreenManager.registerFactory(BaseMachineRegistry.BASE_CONTAINER, ::BaseScreen)
-        SERIALIZED_BLOCKS.forEach { (_, block) ->
+        SERIALIZED_BLOCKS.forEach { block ->
             RenderTypeLookup.setRenderLayer(block as Block, renderTypeFromString(block.renderType))
         }
     }
@@ -104,7 +104,7 @@ object Versatile {
         }
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
-        fun onLateFluidRegistry(e: RegistryEvent.Register<Fluid>) = FluidRegistry.registerFluids(e)
+        fun onLateFluidRegistry(e: RegistryEvent.Register<Fluid>) = FluidEventBusSubscriber.registerFluids(e)
     }
 
     @Suppress("DEPRECATION")

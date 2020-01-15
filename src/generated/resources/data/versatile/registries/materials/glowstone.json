@@ -1,0 +1,10 @@
+{
+  "associated_names": [
+    "list",
+    "glowstone"
+  ],
+  "has_dust": true,
+  "tier": 1,
+  "color": -213408,
+  "block_compaction": "2x2"
+}

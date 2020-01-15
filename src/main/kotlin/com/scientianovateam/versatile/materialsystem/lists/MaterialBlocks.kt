@@ -1,10 +1,9 @@
 package com.scientianovateam.versatile.materialsystem.lists
 
-import com.scientianovateam.versatile.materialsystem.main.IMaterialObject
-import com.scientianovateam.versatile.materialsystem.main.Material
-import com.scientianovateam.versatile.materialsystem.main.Form
 import com.google.common.collect.HashBasedTable
 import com.google.common.collect.Table
+import com.scientianovateam.versatile.materialsystem.main.Form
+import com.scientianovateam.versatile.materialsystem.main.Material
 import net.minecraft.block.Block
 import net.minecraft.item.Items
 
@@ -42,15 +41,12 @@ object MaterialBlocks {
     fun addBlock(mat: Material, type: Form, block: () -> Block) = additionSuppliers.put(mat, type, block)
 
     @JvmStatic
-    fun <O> addBlock(block: O) where O : IMaterialObject, O : Block = materialBlocks.put(block.mat, block.form, block)
-
-    @JvmStatic
     fun getBlockCell(block: Block): Table.Cell<Material, Form, Block>? = materialBlocks.cellSet().firstOrNull { it.value === block }
 
     @JvmStatic
-    fun getBlockMaterial(block: Block): Material? = if (block is IMaterialObject) block.mat else block.tags.asSequence()
-            .filter { '/' in it.path }.map { Materials[it.path.takeLastWhile { char -> char != '/' }] }.firstOrNull()
+    fun getBlockMaterial(block: Block): Material? = block.tags.asSequence().filter { '/' in it.path }
+            .map { MATERIALS[it.path.takeLastWhile { char -> char != '/' }] }.firstOrNull()
 
     @JvmStatic
-    fun getBlockForm(block: Block): Form? = if (block is IMaterialObject) block.form else getBlockCell(block)?.columnKey
+    fun getBlockForm(block: Block): Form? = getBlockCell(block)?.columnKey
 }

@@ -8,5 +8,5 @@ import com.scientianovateam.versatile.velisp.unresolved.evaluate
 object FlattenFunction : IFunction {
     override val name = "versatile/flatten"
     override val inputCount = 1..1
-    override fun evaluate(inputs: List<IUnresolved>) = ListValue((inputs.first().evaluate() as ListValue).value.flatMap { (it as ListValue).value })
+    override fun evaluate(inputs: List<IUnresolved>) = ListValue((inputs[0].evaluate() as ListValue).value.flatMap { (it as ListValue).value })
 }

@@ -1,0 +1,28 @@
+{
+  "item": {
+    "type": "block_item",
+    "block": "$form/registry_name"
+  },
+  "block": {
+    "type": "regular",
+    "material": "rock",
+    "sound_type": "stone",
+    "hardness": "$mat/hardness",
+    "resistance": "$mat/resistance",
+    "harvest_tier": "$mat/harvest_tier"
+  },
+  "item_model": {
+    "parent": [
+      "concat",
+      "versatile:block/",
+      "$form/registry_name"
+    ]
+  },
+  "generate": "$mat/has_ore",
+  "color": "$mat/unrefined_color",
+  "index_blackList": [
+    "list",
+    1
+  ],
+  "bucket_volume": 144
+}

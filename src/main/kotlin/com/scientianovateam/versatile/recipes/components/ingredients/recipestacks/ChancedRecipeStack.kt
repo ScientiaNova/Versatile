@@ -9,7 +9,7 @@ import com.scientianovateam.versatile.recipes.RECIPE_FLUID_STACK_SERIALIZERS
 import com.scientianovateam.versatile.recipes.RECIPE_ITEM_STACK_SERIALIZERS
 import com.scientianovateam.versatile.recipes.components.ingredients.recipestacks.fluids.RecipeFluidStackIntermediate
 import com.scientianovateam.versatile.recipes.components.ingredients.recipestacks.items.RecipeItemStackIntermediate
-import com.scientianovateam.versatile.velisp.convertToExpression
+import com.scientianovateam.versatile.velisp.toExpression
 import com.scientianovateam.versatile.velisp.evaluated.NumberValue
 import net.minecraft.item.ItemStack
 import net.minecraft.network.PacketBuffer
@@ -24,7 +24,7 @@ object ChancedRecipeItemStackSerializer : IGeneralSerializer<ChancedRecipeStack<
         val stack = json.entrySet().firstOrNull { it.key != "chance" }?.let {
             RECIPE_ITEM_STACK_SERIALIZERS[it.key.toResLocV()]?.read(it.value.asJsonObject)
         } ?: RecipeItemStackIntermediate.EMPTY
-        val chance = if (json.has("chance")) convertToExpression(json.getAsJsonPrimitive("chance")) else NumberValue(1)
+        val chance = if (json.has("chance")) json.getAsJsonPrimitive("chance").toExpression() else NumberValue(1)
         return ChancedRecipeStackIntermediate(stack, chance)
     }
 
@@ -48,7 +48,7 @@ object ChancedRecipeFluidStackSerializer : IGeneralSerializer<ChancedRecipeStack
         val stack = json.entrySet().firstOrNull { it.key != "chance" }?.let {
             RECIPE_FLUID_STACK_SERIALIZERS[it.key.toResLocV()]?.read(it.value.asJsonObject)
         } ?: RecipeFluidStackIntermediate.EMPTY
-        val chance = if (json.has("chance")) convertToExpression(json.getAsJsonPrimitive("chance")) else NumberValue(1)
+        val chance = if (json.has("chance")) json.getAsJsonPrimitive("chance").toExpression() else NumberValue(1)
         return ChancedRecipeStackIntermediate(stack, chance)
     }
 

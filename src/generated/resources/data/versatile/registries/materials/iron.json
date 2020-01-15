@@ -1,0 +1,24 @@
+{
+  "associated_names": [
+    "list",
+    "iron"
+  ],
+  "compound_type": "alloy",
+  "has_ingot": true,
+  "has_dust": true,
+  "tier": 1,
+  "texture_set": "rough",
+  "element": "iron",
+  "unrefined_color": -7047580,
+  "tool_tier": [
+    "some",
+    "iron"
+  ],
+  "armor_tier": [
+    "some",
+    "iron"
+  ],
+  "liquid_temperature": 1538,
+  "gas_temperature": 2862,
+  "has_ore": true
+}

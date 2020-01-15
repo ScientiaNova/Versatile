@@ -14,6 +14,6 @@ object SumByFunction : IFunction {
     override fun evaluate(inputs: List<IUnresolved>): IEvaluated {
         val function = inputs.last().evaluate().function
         if (1 !in function.inputCount) error("Invalid amount of function parameters")
-        return NumberValue((inputs.first().evaluate() as ListValue).value.sumByDouble { function.evaluate(listOf(it)).value as Double })
+        return NumberValue((inputs[0].evaluate() as ListValue).value.sumByDouble { function.evaluate(listOf(it)).value as Double })
     }
 }

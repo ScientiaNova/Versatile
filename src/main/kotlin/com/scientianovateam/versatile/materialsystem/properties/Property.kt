@@ -16,7 +16,7 @@ data class Property(
     constructor(
             name: String,
             type: ITypeHolder,
-            default: Any,
-            valid: Any = BoolValue.TRUE
+            default: Any?,
+            valid: Any? = BoolValue.TRUE
     ) : this(name.toResLocV(), type, default.expr(), valid.expr())
 }

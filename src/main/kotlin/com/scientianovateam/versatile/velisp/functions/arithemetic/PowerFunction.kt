@@ -10,5 +10,5 @@ object PowerFunction : IFunction {
     override val name = "versatile/power"
     override val symbol = "**"
     override val inputCount = 2..2
-    override fun evaluate(inputs: List<IUnresolved>) = NumberValue((inputs.first().evaluate().value as Double).pow(inputs.last().evaluate().value as Double))
+    override fun evaluate(inputs: List<IUnresolved>) = NumberValue((inputs[0].evaluate().value as Double).pow(inputs[1].evaluate().value as Double))
 }

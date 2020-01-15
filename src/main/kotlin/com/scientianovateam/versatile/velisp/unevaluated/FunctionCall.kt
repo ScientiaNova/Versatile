@@ -25,5 +25,5 @@ data class FunctionCall(val function: IFunction, var inputs: List<IUnresolved>) 
 
     override val type = FunctionTypeHolder(inputs.size)
 
-    override fun toJson() = (listOf(StringValue(function.practicalName)) + inputs).map(IUnresolved::toJson).toJson()
+    override fun serialize() = (listOf(StringValue(function.practicalName)) + inputs).map(IUnresolved::serialize).toJson()
 }

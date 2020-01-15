@@ -7,6 +7,7 @@ import com.scientianovateam.versatile.velisp.functions.constructor.*
 import com.scientianovateam.versatile.velisp.functions.lists.*
 import com.scientianovateam.versatile.velisp.functions.logic.*
 import com.scientianovateam.versatile.velisp.functions.mics.IsFunction
+import com.scientianovateam.versatile.velisp.functions.mics.TryFunction
 import com.scientianovateam.versatile.velisp.functions.mics.TypeOfFunction
 import com.scientianovateam.versatile.velisp.functions.optional.*
 import com.scientianovateam.versatile.velisp.functions.string.*
@@ -27,7 +28,8 @@ object VELISPEventSubscriber {
         VELISP_TYPES["function"] = FunctionType
         VELISP_TYPES["material"] = MaterialType
         VELISP_TYPES["form"] = FormType
-        VELISP_TYPES["json"] = JsonType
+        VELISP_TYPES["struct"] = StructType
+        VELISP_TYPES["material_stack"] = MaterialStackType
 
         VELISP_FUNCTIONS["+"] = AddFunction
         VELISP_FUNCTIONS["-"] = SubtractFunction
@@ -76,6 +78,7 @@ object VELISPEventSubscriber {
                 TanFunction,
                 TanhFunction,
                 //Constructors
+                ColorFunction,
                 CopyFunction,
                 FormFunction,
                 LambdaFunction,
@@ -135,7 +138,9 @@ object VELISPEventSubscriber {
                 GreaterOrEqualFunction,
                 IfFunction,
                 InRangeFunction,
+                IsEventFunction,
                 IsNegativeFunction,
+                IsOddFunction,
                 IsPositiveFunction,
                 LessFunction,
                 LessOrEqualFunction,
@@ -145,6 +150,7 @@ object VELISPEventSubscriber {
                 OrFunction,
                 //Misc Functions
                 IsFunction,
+                TryFunction,
                 TypeOfFunction,
                 //Optional Function
                 ExpectFunction,
@@ -153,14 +159,17 @@ object VELISPEventSubscriber {
                 UnwrapFunction,
                 UnwrapOrFunction,
                 //String Functions
+                ArmorTierExistsFunction,
                 ConcatFunction,
                 EndsWithFunction,
+                ElementExistsFunction,
                 RepeatFunction,
                 ReplaceFunction,
                 StartsWithFunction,
                 StringContainsFunction,
                 StringEmptyFunction,
                 SubstringFunction,
+                ToolTierExistsFunction,
                 ValidResourceLocationFunction
         )
     }

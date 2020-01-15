@@ -10,6 +10,6 @@ import com.scientianovateam.versatile.velisp.unresolved.evaluate
 object NthFunction : IFunction {
     override val name = "versatile/nth"
     override val inputCount = 2..2
-    override fun evaluate(inputs: List<IUnresolved>) = (inputs.first().evaluate() as ListValue).value.getOrNull(inputs.last().evaluate().value as Int)?.let(::SomeValue)
+    override fun evaluate(inputs: List<IUnresolved>) = (inputs[0].evaluate() as ListValue).value.getOrNull(inputs.last().evaluate().value as Int)?.let(::SomeValue)
             ?: NullValue
 }

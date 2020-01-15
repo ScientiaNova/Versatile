@@ -8,5 +8,5 @@ import com.scientianovateam.versatile.velisp.unresolved.evaluate
 object StartsWithFunction : IFunction {
     override val name = "versatile/starts_with"
     override val inputCount = 2..2
-    override fun evaluate(inputs: List<IUnresolved>) = BoolValue(inputs.first().evaluate().value.toString().startsWith(inputs.last().evaluate().value.toString()))
+    override fun evaluate(inputs: List<IUnresolved>) = BoolValue(inputs[0].evaluate().value.toString().startsWith(inputs[1].evaluate().value.toString()))
 }

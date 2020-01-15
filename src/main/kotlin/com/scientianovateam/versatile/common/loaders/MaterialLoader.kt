@@ -7,10 +7,11 @@ import com.scientianovateam.versatile.common.extensions.getStringOrNull
 import com.scientianovateam.versatile.common.loaders.internal.cascadeJsons
 import com.scientianovateam.versatile.common.loaders.internal.earlyResources
 import com.scientianovateam.versatile.common.math.Graph
-import com.scientianovateam.versatile.common.registry.MATERIAL_PROPERTIES
-import com.scientianovateam.versatile.common.serialization.registries.MaterialSerializer
-import com.scientianovateam.versatile.materialsystem.lists.Materials
-import com.scientianovateam.versatile.velisp.convertToExpression
+import com.scientianovateam.versatile.materialsystem.lists.MATERIAL_PROPERTIES
+import com.scientianovateam.versatile.materialsystem.serializers.MaterialSerializer
+import com.scientianovateam.versatile.materialsystem.lists.MATERIALS
+import com.scientianovateam.versatile.materialsystem.lists.add
+import com.scientianovateam.versatile.velisp.toExpression
 import com.scientianovateam.versatile.velisp.evaluated.StringValue
 import com.scientianovateam.versatile.velisp.functions.constructor.MaterialFunction
 import com.scientianovateam.versatile.velisp.unevaluated.FunctionCall
@@ -40,9 +41,9 @@ fun loadMaterials() {
     earlyResources.loadAll("registries/materials").forEach { add(it) }
     val graph = Graph<JsonObject>()
     jsonSets.map(::cascadeJsons).forEach { material ->
-        MATERIAL_PROPERTIES.forEach { (_, property) ->
+        MATERIAL_PROPERTIES.forEach { property ->
             val value = if (material.has(property.name.toString()))
-                convertToExpression(material.get(property.name.toString()))
+                material.get(property.name.toString()).toExpression()
             else property.default
             value.find(FunctionCall::class.java) { it.function == MaterialFunction }
                     .mapNotNull { (it.inputs.firstOrNull()?.evaluate() as? StringValue)?.value?.let(::get) }
@@ -50,7 +51,7 @@ fun loadMaterials() {
         }
     }
     val materials = graph.topologicalSort() ?: error("Material dependency cycle")
-    materials.map(MaterialSerializer::read).forEach(Materials::add)
+    materials.map(MaterialSerializer::read).forEach(MATERIALS::add)
 }
 
 private fun names(json: JsonObject): List<String> {

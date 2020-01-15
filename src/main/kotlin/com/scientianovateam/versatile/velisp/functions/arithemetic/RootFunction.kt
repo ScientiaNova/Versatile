@@ -11,6 +11,6 @@ object RootFunction : IFunction {
     override val name = "versatile/root"
     override val inputCount = 1..2
     override fun evaluate(inputs: List<IUnresolved>) =
-            if (inputs.size == 1) NumberValue(sqrt(inputs.first().evaluate().value as Double))
-            else NumberValue((inputs.first().evaluate().value as Double).pow(1 / inputs.last().evaluate().value as Double))
+            if (inputs.size == 1) NumberValue(sqrt(inputs[0].evaluate().value as Double))
+            else NumberValue((inputs[0].evaluate().value as Double).pow(1 / inputs[1].evaluate().value as Double))
 }

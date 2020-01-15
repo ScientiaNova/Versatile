@@ -10,8 +10,8 @@ import com.scientianovateam.versatile.velisp.unresolved.evaluate
 object ExpectFunction : IFunction {
     override val name = "versatile/expect"
     override val inputCount = 2..2
-    override fun evaluate(inputs: List<IUnresolved>) = when (val optional = inputs.first().evaluate() as OptionalValue) {
+    override fun evaluate(inputs: List<IUnresolved>) = when (val optional = inputs[0].evaluate() as OptionalValue) {
         is SomeValue -> optional.evaluatedValue
-        is NullValue -> error(inputs.last().evaluate().value.toString())
+        is NullValue -> error(inputs[1].evaluate().value.toString())
     }
 }

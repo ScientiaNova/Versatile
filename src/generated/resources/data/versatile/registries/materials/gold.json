@@ -1,0 +1,24 @@
+{
+  "associated_names": [
+    "list",
+    "gold"
+  ],
+  "compound_type": "alloy",
+  "has_ingot": true,
+  "has_dust": true,
+  "tier": 2,
+  "color": -338358,
+  "texture_set": "shiny",
+  "element": "gold",
+  "tool_tier": [
+    "some",
+    "gold"
+  ],
+  "armor_tier": [
+    "some",
+    "gold"
+  ],
+  "liquid_temperature": 1064,
+  "gas_temperature": 2700,
+  "has_ore": true
+}

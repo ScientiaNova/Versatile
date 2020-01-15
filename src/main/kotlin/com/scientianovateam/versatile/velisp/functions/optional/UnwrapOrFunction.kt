@@ -10,8 +10,8 @@ import com.scientianovateam.versatile.velisp.unresolved.evaluate
 object UnwrapOrFunction : IFunction {
     override val name = "versatile/unwrap_or"
     override val inputCount = 2..2
-    override fun evaluate(inputs: List<IUnresolved>) = when (val optional = inputs.first().evaluate() as OptionalValue) {
+    override fun evaluate(inputs: List<IUnresolved>) = when (val optional = inputs[0].evaluate() as OptionalValue) {
         is SomeValue -> optional.evaluatedValue
-        is NullValue -> inputs.last().evaluate()
+        is NullValue -> inputs[1].evaluate()
     }
 }

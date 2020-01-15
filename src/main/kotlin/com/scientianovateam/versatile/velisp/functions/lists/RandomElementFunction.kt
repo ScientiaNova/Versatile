@@ -8,5 +8,5 @@ import com.scientianovateam.versatile.velisp.unresolved.evaluate
 object RandomElementFunction : IFunction {
     override val name = "versatile/random_element"
     override val inputCount = 1..1
-    override fun evaluate(inputs: List<IUnresolved>) = (inputs.first().evaluate() as ListValue).value.random()
+    override fun evaluate(inputs: List<IUnresolved>) = (inputs[0].evaluate() as ListValue).value.random()
 }

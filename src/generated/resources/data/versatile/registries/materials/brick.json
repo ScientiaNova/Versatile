@@ -1,0 +1,13 @@
+{
+  "associated_names": [
+    "list",
+    "brick"
+  ],
+  "compound_type": "chemical",
+  "has_ingot": true,
+  "has_dust": true,
+  "tier": 1,
+  "color": -4891582,
+  "block_compaction": "2x2",
+  "malleable": false
+}

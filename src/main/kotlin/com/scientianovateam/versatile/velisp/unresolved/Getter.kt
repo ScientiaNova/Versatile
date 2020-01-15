@@ -26,5 +26,5 @@ data class Getter(val name: String) : IUnresolved {
                 else newProperty
             }
 
-    override fun toJson() = JsonPrimitive("$$name")
+    override fun serialize() = JsonPrimitive("$$name")
 }

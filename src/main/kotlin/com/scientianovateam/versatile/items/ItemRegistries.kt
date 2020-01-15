@@ -9,6 +9,6 @@ import com.scientianovateam.versatile.items.tiers.ArmorTier
 import com.scientianovateam.versatile.items.tiers.ToolTier
 
 val TOOL_TIERS = NamespacelessRegistry<ToolTier>()
-val ARMOR_TIER = NamespacelessRegistry<ArmorTier>()
+val ARMOR_TIERS = NamespacelessRegistry<ArmorTier>()
 val SERIALIZED_ITEMS = Registry<ISerializableItem>()
 val ITEM_SERIALIZERS = Registry<IRegisterableJSONSerializer<out ISerializableItem, JsonObject>>()

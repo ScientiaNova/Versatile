@@ -13,6 +13,6 @@ object ReduceFunction : IFunction {
     override fun evaluate(inputs: List<IUnresolved>): IEvaluated {
         val function = inputs.last().evaluate().function
         if (2 !in function.inputCount) error("Invalid amount of function parameters")
-        return (inputs.first().evaluate() as ListValue).value.reduce { acc, value -> function.evaluate(listOf(acc, value)) }
+        return (inputs[0].evaluate() as ListValue).value.reduce { acc, value -> function.evaluate(listOf(acc, value)) }
     }
 }
