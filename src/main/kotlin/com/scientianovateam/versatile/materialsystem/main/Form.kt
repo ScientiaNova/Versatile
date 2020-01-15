@@ -9,6 +9,7 @@ import com.scientianovateam.versatile.materialsystem.properties.IPropertyContain
 import com.scientianovateam.versatile.materialsystem.properties.Property
 import com.scientianovateam.versatile.velisp.evaluated.BoolValue
 import com.scientianovateam.versatile.velisp.evaluated.IEvaluated
+import com.scientianovateam.versatile.velisp.evaluated.MaterialValue
 import com.scientianovateam.versatile.velisp.evaluated.StringValue
 import net.minecraft.tags.ItemTags
 import net.minecraft.util.text.TranslationTextComponent
@@ -21,6 +22,10 @@ class Form(val properties: Map<Material, Map<String, IEvaluated>>) {
     val name = (any[FormProperties.NAME] as StringValue).toString()
     val requirement: (Material) -> Boolean = {
         (properties[it]?.get(FormProperties.GENERATE) as? BoolValue)?.value ?: false
+    }
+
+    val someMaterialProperty: (Material) -> Material = {
+        (properties[it]?.get("someMaterialProperty") as? MaterialValue)?.value ?: error("Material not found")
     }
 
     constructor(name: String, requirement: (Material) -> Boolean) : this(mutableMapOf()) {

@@ -5,6 +5,7 @@ import net.minecraft.resources.FallbackResourceManager
 import net.minecraft.resources.IResource
 import net.minecraft.resources.ResourcePackType
 import net.minecraft.util.JSONUtils
+import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fml.ModList
 import net.minecraftforge.fml.loading.moddiscovery.ModFileInfo
 import net.minecraftforge.fml.packs.ModFileResourcePack
@@ -19,13 +20,13 @@ class EarlyGameResourceLoader {
         packs.forEach { CustomResourceManager.addResourcePack(it) }
     }
 
-    fun resources(path: String): List<List<IResource>> =
-            CustomResourceManager.getAllResourceLocations(path) { it.endsWith(".json") }.map(CustomResourceManager::getAllResources)
+    fun resources(path: String): List<List<WrappedResource>> =
+            CustomResourceManager.getAllResourceLocations(path) { it.endsWith(".json") }.map { location -> CustomResourceManager.getAllResources(location).map { WrappedResource(it, location) } }
 
 
     fun loadAll(path: String): List<JsonObject> = resources(path).flatMap { set ->
         set.map {
-            it.use { resource ->
+            it.resource.use { resource ->
                 JSONUtils.fromJson(InputStreamReader(resource.inputStream)).apply {
                     addProperty("name", resource.location.path.let { name -> name.substring(path.length + 1, name.length - jsonExtensionLength) })
                     addProperty("namespace", resource.location.namespace)
@@ -43,4 +44,6 @@ class EarlyGameResourceLoader {
             it.getResourceNamespaces(ResourcePackType.SERVER_DATA)
         }.toMutableSet()
     }
+
+    data class WrappedResource(val resource: IResource, val location: ResourceLocation)
 }
