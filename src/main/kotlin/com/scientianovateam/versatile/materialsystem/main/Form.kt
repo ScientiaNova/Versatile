@@ -24,10 +24,6 @@ class Form(val properties: Map<Material, Map<String, IEvaluated>>) {
         (properties[it]?.get(FormProperties.GENERATE) as? BoolValue)?.value ?: false
     }
 
-    val someMaterialProperty: (Material) -> Material = {
-        (properties[it]?.get("someMaterialProperty") as? MaterialValue)?.value ?: error("Material not found")
-    }
-
     constructor(name: String, requirement: (Material) -> Boolean) : this(mutableMapOf()) {
         // TODO legacy constructor
     }
