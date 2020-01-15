@@ -1,10 +1,7 @@
 package com.scientianovateam.versatile.items.serializable
 
 import com.google.gson.JsonObject
-import com.scientianovateam.versatile.common.extensions.getFloatOrNull
-import com.scientianovateam.versatile.common.extensions.json
-import com.scientianovateam.versatile.common.extensions.toResLocV
-import com.scientianovateam.versatile.common.extensions.toStack
+import com.scientianovateam.versatile.common.extensions.*
 import com.scientianovateam.versatile.common.serialization.IRegisterableJSONSerializer
 import com.scientianovateam.versatile.items.properties.ToolTierBasedProperties
 import net.minecraft.client.util.ITooltipFlag
@@ -15,6 +12,10 @@ import net.minecraft.util.text.TranslationTextComponent
 import net.minecraft.world.World
 
 class HoeItemV(val tierBasedProperties: ToolTierBasedProperties, val attackSpeed: Float = tierBasedProperties.tier.attackDamage + 1) : HoeItem(tierBasedProperties.tier, attackSpeed, tierBasedProperties), ISerializableItem {
+    init {
+        registryName = tierBasedProperties.name.toResLoc()
+    }
+
     override fun hasContainerItem(stack: ItemStack?) = tierBasedProperties.containerItem != null
 
     override fun getContainerItem(itemStack: ItemStack?): ItemStack = tierBasedProperties.containerItem?.toStack()
@@ -24,7 +25,7 @@ class HoeItemV(val tierBasedProperties: ToolTierBasedProperties, val attackSpeed
         tooltips.addAll(tierBasedProperties.tooltips)
     }
 
-    override fun getTranslationKey(): String = tierBasedProperties.translationKey ?: super.getTranslationKey()
+    override fun getTranslationKey(): String = tierBasedProperties.translationKey
     override fun hasEffect(stack: ItemStack) = tierBasedProperties.glows || super.hasEffect(stack)
     override fun isEnchantable(stack: ItemStack) = tierBasedProperties.isEnchantable
     override fun getItemEnchantability(stack: ItemStack?) = tierBasedProperties.enchantability

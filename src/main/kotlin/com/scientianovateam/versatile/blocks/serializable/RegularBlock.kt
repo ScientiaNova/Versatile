@@ -3,6 +3,7 @@ package com.scientianovateam.versatile.blocks.serializable
 import com.google.gson.JsonObject
 import com.scientianovateam.versatile.blocks.properties.ExtendedBlockProperties
 import com.scientianovateam.versatile.common.extensions.json
+import com.scientianovateam.versatile.common.extensions.toResLoc
 import com.scientianovateam.versatile.common.extensions.toResLocV
 import com.scientianovateam.versatile.common.serialization.IRegisterableJSONSerializer
 import net.minecraft.block.Block
@@ -20,8 +21,12 @@ import net.minecraft.world.IBlockReader
 import net.minecraft.world.IWorldReader
 
 open class RegularBlock(val extendedProperties: ExtendedBlockProperties) : Block(extendedProperties), ISerializableBlock {
+    init {
+        registryName = extendedProperties.name.toResLoc()
+    }
+
     override fun isAir(state: BlockState?, world: IBlockReader?, pos: BlockPos?) = extendedProperties.isAir
-    override fun getTranslationKey(): String = extendedProperties.translationKey ?: super.getTranslationKey()
+    override fun getTranslationKey(): String = extendedProperties.translationKey
     override val renderType = extendedProperties.renderType
     override fun getShape(state: BlockState, blockReader: IBlockReader, pos: BlockPos, context: ISelectionContext) = extendedProperties.shape
     override fun getCollisionShape(state: BlockState, blockReader: IBlockReader, pos: BlockPos, context: ISelectionContext) = extendedProperties.collisionShape
@@ -43,6 +48,7 @@ open class RegularBlock(val extendedProperties: ExtendedBlockProperties) : Block
     override fun setLocalization(function: () -> ITextComponent) {
         localizationFunction = function
     }
+
     override fun getNameTextComponent() = localizationFunction()
 
     override val serializer = Serializer

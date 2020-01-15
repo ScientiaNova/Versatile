@@ -12,6 +12,10 @@ import net.minecraft.util.text.TranslationTextComponent
 import net.minecraft.world.World
 
 class SwordItemV(val tierBasedProperties: ToolTierBasedProperties, val extraAttackDamage: Int = 3, val attackSpeed: Float = 2.4f) : SwordItem(tierBasedProperties.tier, extraAttackDamage, attackSpeed, tierBasedProperties), ISerializableItem {
+    init {
+        registryName = tierBasedProperties.name.toResLoc()
+    }
+
     override fun hasContainerItem(stack: ItemStack?) = tierBasedProperties.containerItem != null
 
     override fun getContainerItem(itemStack: ItemStack?): ItemStack = tierBasedProperties.containerItem?.toStack()
@@ -21,7 +25,7 @@ class SwordItemV(val tierBasedProperties: ToolTierBasedProperties, val extraAtta
         tooltips.addAll(tierBasedProperties.tooltips)
     }
 
-    override fun getTranslationKey(): String = tierBasedProperties.translationKey ?: super.getTranslationKey()
+    override fun getTranslationKey(): String = tierBasedProperties.translationKey
     override fun hasEffect(stack: ItemStack) = tierBasedProperties.glows || super.hasEffect(stack)
     override fun isEnchantable(stack: ItemStack) = tierBasedProperties.isEnchantable
     override fun getItemEnchantability(stack: ItemStack?) = tierBasedProperties.enchantability

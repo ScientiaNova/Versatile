@@ -6,7 +6,7 @@ import com.scientianovateam.versatile.common.loaders.loadForms
 import com.scientianovateam.versatile.common.loaders.loadMaterials
 import com.scientianovateam.versatile.common.loaders.loadProperties
 import com.scientianovateam.versatile.common.registry.VersatileRegistryEvent
-import com.scientianovateam.versatile.fluids.FluidRegistry
+import com.scientianovateam.versatile.fluids.FluidEventBusSubscriber
 import com.scientianovateam.versatile.machines.BaseMachineRegistry
 import com.scientianovateam.versatile.machines.gui.BaseScreen
 import com.scientianovateam.versatile.machines.packets.NetworkHandler
@@ -104,7 +104,7 @@ object Versatile {
         }
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
-        fun onLateFluidRegistry(e: RegistryEvent.Register<Fluid>) = FluidRegistry.registerFluids(e)
+        fun onLateFluidRegistry(e: RegistryEvent.Register<Fluid>) = FluidEventBusSubscriber.registerFluids(e)
     }
 
     @Suppress("DEPRECATION")

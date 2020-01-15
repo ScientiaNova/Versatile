@@ -1,10 +1,7 @@
 package com.scientianovateam.versatile.items.serializable
 
 import com.google.gson.JsonObject
-import com.scientianovateam.versatile.common.extensions.getFloatOrNull
-import com.scientianovateam.versatile.common.extensions.json
-import com.scientianovateam.versatile.common.extensions.toResLocV
-import com.scientianovateam.versatile.common.extensions.toStack
+import com.scientianovateam.versatile.common.extensions.*
 import com.scientianovateam.versatile.common.serialization.IRegisterableJSONSerializer
 import com.scientianovateam.versatile.items.properties.ToolTierBasedProperties
 import net.minecraft.block.BlockState
@@ -16,6 +13,10 @@ import net.minecraft.util.text.TranslationTextComponent
 import net.minecraft.world.World
 
 class AxeItemV(val tierBasedProperties: ToolTierBasedProperties, val extraAttackDamage: Float = 7f, attackSpeed: Float = -3.1f) : AxeItem(tierBasedProperties.tier, tierBasedProperties.tier.attackDamage + extraAttackDamage, attackSpeed, tierBasedProperties), ISerializableItem {
+    init {
+        registryName = tierBasedProperties.name.toResLoc()
+    }
+
     override fun hasContainerItem(stack: ItemStack?) = tierBasedProperties.containerItem != null
 
     override fun getContainerItem(itemStack: ItemStack?): ItemStack = tierBasedProperties.containerItem?.toStack()
@@ -30,7 +31,7 @@ class AxeItemV(val tierBasedProperties: ToolTierBasedProperties, val extraAttack
         return if (regularSpeed == efficiency) tierBasedProperties.destroySpeed else regularSpeed
     }
 
-    override fun getTranslationKey(): String = tierBasedProperties.translationKey ?: super.getTranslationKey()
+    override fun getTranslationKey(): String = tierBasedProperties.translationKey
     override fun hasEffect(stack: ItemStack) = tierBasedProperties.glows || super.hasEffect(stack)
     override fun isEnchantable(stack: ItemStack) = tierBasedProperties.isEnchantable
     override fun getItemEnchantability(stack: ItemStack?) = tierBasedProperties.enchantability

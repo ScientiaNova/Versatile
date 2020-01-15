@@ -2,6 +2,7 @@ package com.scientianovateam.versatile.items.serializable
 
 import com.google.gson.JsonObject
 import com.scientianovateam.versatile.common.extensions.json
+import com.scientianovateam.versatile.common.extensions.toResLoc
 import com.scientianovateam.versatile.common.extensions.toResLocV
 import com.scientianovateam.versatile.common.extensions.toStack
 import com.scientianovateam.versatile.common.serialization.IRegisterableJSONSerializer
@@ -15,6 +16,10 @@ import net.minecraft.util.text.TranslationTextComponent
 import net.minecraft.world.World
 
 open class RegularItem(val extendedProperties: ExtendedItemProperties) : Item(extendedProperties), ISerializableItem {
+    init {
+        registryName = extendedProperties.name.toResLoc()
+    }
+
     override fun getDestroySpeed(stack: ItemStack, state: BlockState) = extendedProperties.destroySpeed
     override fun hasContainerItem(stack: ItemStack?) = extendedProperties.containerItem != null
     override fun getContainerItem(itemStack: ItemStack?): ItemStack = extendedProperties.containerItem?.toStack()
@@ -24,7 +29,7 @@ open class RegularItem(val extendedProperties: ExtendedItemProperties) : Item(ex
         tooltips.addAll(extendedProperties.tooltips)
     }
 
-    override fun getTranslationKey(): String = extendedProperties.translationKey ?: super.getTranslationKey()
+    override fun getTranslationKey(): String = extendedProperties.translationKey
     override fun hasEffect(stack: ItemStack) = extendedProperties.glows || super.hasEffect(stack)
     override fun isEnchantable(p_77616_1_: ItemStack) = extendedProperties.isEnchantable
     override fun getItemEnchantability(stack: ItemStack?) = extendedProperties.enchantability

@@ -10,11 +10,14 @@ import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.item.BlockItem
 import net.minecraft.item.ItemStack
 import net.minecraft.util.text.ITextComponent
-import net.minecraft.util.text.TranslationTextComponent
 import net.minecraft.world.World
 import net.minecraftforge.registries.ForgeRegistries
 
 open class BlockItemV(block: Block, val extendedProperties: ExtendedItemProperties) : BlockItem(block, extendedProperties), ISerializableItem {
+    init {
+        registryName = extendedProperties.name.toResLoc()
+    }
+
     override fun getDestroySpeed(stack: ItemStack, state: BlockState) = extendedProperties.destroySpeed
     override fun hasContainerItem(stack: ItemStack?) = extendedProperties.containerItem != null
     override fun getContainerItem(itemStack: ItemStack?): ItemStack = extendedProperties.containerItem?.toStack()
@@ -24,14 +27,13 @@ open class BlockItemV(block: Block, val extendedProperties: ExtendedItemProperti
         tooltips.addAll(extendedProperties.tooltips)
     }
 
-    override fun getTranslationKey(): String = extendedProperties.translationKey ?: super.getTranslationKey()
     override fun hasEffect(stack: ItemStack) = extendedProperties.glows || super.hasEffect(stack)
     override fun isEnchantable(p_77616_1_: ItemStack) = extendedProperties.isEnchantable
     override fun getItemEnchantability(stack: ItemStack?) = extendedProperties.enchantability
     override fun getEntityLifespan(itemStack: ItemStack?, world: World?) = extendedProperties.entityLifespan
     override fun isBookEnchantable(stack: ItemStack?, book: ItemStack?) = extendedProperties.isBookEnchantable
     override fun getBurnTime(itemStack: ItemStack?) = extendedProperties.burnTime
-    private var localizationFunction: () -> ITextComponent = { TranslationTextComponent(translationKey) }
+    private var localizationFunction: () -> ITextComponent = { block.nameTextComponent }
     override fun getDisplayName(stack: ItemStack) = localizationFunction()
     override fun setLocalization(function: () -> ITextComponent) {
         localizationFunction = function

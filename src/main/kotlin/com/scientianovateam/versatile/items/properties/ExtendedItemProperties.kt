@@ -12,6 +12,7 @@ import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.registries.ForgeRegistries
 
 open class ExtendedItemProperties(
+        val name: String,
         val maxStackSize: Int = 64,
         val maxDurability: Int = 0,
         containerItemSupplier: () -> Item? = { null },
@@ -20,7 +21,7 @@ open class ExtendedItemProperties(
         val destroySpeed: Float = 1f,
         val food: Food? = null,
         val tooltips: List<TranslationTextComponent> = emptyList(),
-        val translationKey: String? = null,
+        val translationKey: String = "item.$name",
         val glows: Boolean = false,
         val isEnchantable: Boolean = maxStackSize == 1 && maxDurability > 0,
         val enchantability: Int = 0,
@@ -40,26 +41,30 @@ open class ExtendedItemProperties(
     }
 
     object Serializer : IJSONSerializer<ExtendedItemProperties, JsonObject> {
-        override fun read(json: JsonObject) = ExtendedItemProperties(
-                maxStackSize = json.getIntOrNull("max_stack_size") ?: 64,
-                maxDurability = json.getIntOrNull("max_durability") ?: -1,
-                containerItemSupplier = {
-                    json.getStringOrNull("container_item")?.let { ForgeRegistries.ITEMS.getValue(it.toResLoc()) }
-                },
-                rarity = json.getStringOrNull("rarity")?.let { Rarity.valueOf(it.toUpperCase()) } ?: Rarity.COMMON,
-                canRepair = json.getBooleanOrNull("can_repair") ?: true,
-                destroySpeed = json.getFloatOrNull("destroy_speed") ?: 1f,
-                food = json.getObjectOrNull("food")?.let { FoodSerializer.read(it) },
-                tooltips = json.getArrayOrNull("tooltips")?.map { TranslationTextComponent(it.asString) }
-                        ?: emptyList(),
-                translationKey = json.getStringOrNull("translation_key"),
-                glows = json.getBooleanOrNull("glows") ?: false,
-                isEnchantable = json.getBooleanOrNull("is_enchantable") ?: true,
-                enchantability = json.getIntOrNull("enchantability") ?: 0,
-                entityLifespan = json.getIntOrNull("entity_lifespan") ?: 6000,
-                isBookEnchantable = json.getBooleanOrNull("is_book_enchantable") ?: true,
-                burnTime = json.getIntOrNull("burn_time") ?: -1
-        )
+        override fun read(json: JsonObject): ExtendedItemProperties {
+            val name = json.getStringOrNull("name") ?: error("Missing item name")
+            return ExtendedItemProperties(
+                    name = name,
+                    maxStackSize = json.getIntOrNull("max_stack_size") ?: 64,
+                    maxDurability = json.getIntOrNull("max_durability") ?: -1,
+                    containerItemSupplier = {
+                        json.getStringOrNull("container_item")?.let { ForgeRegistries.ITEMS.getValue(it.toResLoc()) }
+                    },
+                    rarity = json.getStringOrNull("rarity")?.let { Rarity.valueOf(it.toUpperCase()) } ?: Rarity.COMMON,
+                    canRepair = json.getBooleanOrNull("can_repair") ?: true,
+                    destroySpeed = json.getFloatOrNull("destroy_speed") ?: 1f,
+                    food = json.getObjectOrNull("food")?.let { FoodSerializer.read(it) },
+                    tooltips = json.getArrayOrNull("tooltips")?.map { TranslationTextComponent(it.asString) }
+                            ?: emptyList(),
+                    translationKey = json.getStringOrNull("translation_key") ?: "item.$name",
+                    glows = json.getBooleanOrNull("glows") ?: false,
+                    isEnchantable = json.getBooleanOrNull("is_enchantable") ?: true,
+                    enchantability = json.getIntOrNull("enchantability") ?: 0,
+                    entityLifespan = json.getIntOrNull("entity_lifespan") ?: 6000,
+                    isBookEnchantable = json.getBooleanOrNull("is_book_enchantable") ?: true,
+                    burnTime = json.getIntOrNull("burn_time") ?: -1
+            )
+        }
 
         override fun write(obj: ExtendedItemProperties) = json {
             if (obj.maxStackSize != 64) "max_stack_size" to obj.maxStackSize
@@ -70,7 +75,7 @@ open class ExtendedItemProperties(
             if (obj.destroySpeed != 1f) "destroy_speed" to obj.destroySpeed
             obj.food?.let { "food" to FoodSerializer.write(it) }
             if (obj.tooltips.isNotEmpty()) "tooltips" to obj.tooltips.map { JsonPrimitive(it.key) }
-            obj.translationKey?.let { "translation_key" to it }
+            if (obj.translationKey != "item.${obj.name}") "translation_key" to obj.translationKey
             if (obj.glows) "glows" to obj.glows
             if (obj.isEnchantable != (obj.maxDurability > 0)) "is_enchantable" to obj.isEnchantable
             if (obj.enchantability > 0) "enchantability" to obj.enchantability

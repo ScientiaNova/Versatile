@@ -9,6 +9,7 @@ import com.scientianovateam.versatile.materialsystem.main.Material
 import com.scientianovateam.versatile.materialsystem.properties.Property
 import com.scientianovateam.versatile.velisp.evaluated.BoolValue
 import com.scientianovateam.versatile.velisp.evaluated.IEvaluated
+import com.scientianovateam.versatile.velisp.evaluated.StringValue
 import com.scientianovateam.versatile.velisp.evaluated.StructValue
 import com.scientianovateam.versatile.velisp.toExpression
 import com.scientianovateam.versatile.velisp.unresolved.Getter
@@ -46,8 +47,9 @@ object FormSerializer {
             }
 
             // Special case to avoid wasting memory on forms that will not be generated
-            if (!(localProperties["generate"]?.value as? BoolValue
-                            ?: error("Form predicate did not return a boolean")).value)
+            if (!(localProperties["generate"] as? BoolValue ?: error("Form predicate did not return a boolean")).value
+                    && material.invertedBlacklist != ((localProperties["name"] as? StringValue
+                            ?: error("Form make isn't a string")).value in material.formBlacklist))
                 return@forEach
 
             properties[material] = localProperties

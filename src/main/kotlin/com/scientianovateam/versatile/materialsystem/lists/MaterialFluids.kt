@@ -1,11 +1,10 @@
 package com.scientianovateam.versatile.materialsystem.lists
 
-import com.scientianovateam.versatile.fluids.IFluidPairHolder
-import com.scientianovateam.versatile.materialsystem.main.IMaterialObject
-import com.scientianovateam.versatile.materialsystem.main.Material
-import com.scientianovateam.versatile.materialsystem.main.Form
 import com.google.common.collect.HashBasedTable
 import com.google.common.collect.Table
+import com.scientianovateam.versatile.fluids.IFluidPairHolder
+import com.scientianovateam.versatile.materialsystem.main.Form
+import com.scientianovateam.versatile.materialsystem.main.Material
 import net.minecraft.fluid.FlowingFluid
 import net.minecraft.fluid.Fluid
 
@@ -56,14 +55,11 @@ object MaterialFluids {
     fun addFluidPair(mat: Material, type: Form, fluidPair: () -> IFluidPairHolder) = additionSuppliers.put(mat, type, fluidPair)
 
     @JvmStatic
-    fun <O> addFluidPair(fluidPair: O) where O : IMaterialObject, O : IFluidPairHolder = materialFluids.put(fluidPair.mat, fluidPair.form, fluidPair)
-
-    @JvmStatic
     fun getFluidCell(fluid: FlowingFluid): Table.Cell<Material, Form, IFluidPairHolder>? = materialFluids.cellSet().firstOrNull { it.value?.still === fluid }
 
     @JvmStatic
-    fun getFluidMaterial(fluid: FlowingFluid): Material? = if (fluid is IMaterialObject) fluid.mat else getFluidCell(fluid)?.rowKey
+    fun getFluidMaterial(fluid: FlowingFluid): Material? = getFluidCell(fluid)?.rowKey
 
     @JvmStatic
-    fun getFluidForm(fluid: FlowingFluid): Form? = if (fluid is IMaterialObject) fluid.form else getFluidCell(fluid)?.columnKey
+    fun getFluidForm(fluid: FlowingFluid): Form? = getFluidCell(fluid)?.columnKey
 }
