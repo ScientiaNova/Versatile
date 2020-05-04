@@ -1,8 +1,8 @@
 package com.scientianova.versatile.machines.capabilities.fluids
 
-import com.scientianovateam.versatile.common.extensions.isNotEmpty
-import com.scientianovateam.versatile.common.extensions.nbt
-import com.scientianovateam.versatile.common.extensions.times
+import com.scientianova.versatile.common.extensions.isNotEmpty
+import com.scientianova.versatile.common.extensions.nbt
+import com.scientianova.versatile.common.extensions.times
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.util.NonNullList
 import net.minecraftforge.common.util.Constants

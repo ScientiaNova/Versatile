@@ -1,6 +1,6 @@
 package com.scientianova.versatile.machines.capabilities.fluids
 
-import com.scientianovateam.versatile.common.extensions.times
+import com.scientianova.versatile.common.extensions.times
 import net.minecraft.fluid.Fluids
 import net.minecraft.util.Direction
 import net.minecraftforge.common.capabilities.Capability

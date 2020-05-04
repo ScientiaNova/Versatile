@@ -1,7 +1,7 @@
 package com.scientianova.versatile.resources
 
-import com.scientianovateam.versatile.common.extensions.toResLoc
-import com.scientianovateam.versatile.materialsystem.main.IMaterialObject
+import com.scientianova.versatile.common.extensions.toResLoc
+import com.scientianova.versatile.materialsystem.main.IMaterialObject
 import com.google.common.collect.ListMultimap
 import com.google.common.collect.MultimapBuilder
 import net.minecraft.block.Block

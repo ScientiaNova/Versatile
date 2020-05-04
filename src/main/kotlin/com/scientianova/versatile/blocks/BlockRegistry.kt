@@ -1,8 +1,8 @@
 package com.scientianova.versatile.blocks
 
-import com.scientianovateam.versatile.materialsystem.lists.MaterialBlocks
-import com.scientianovateam.versatile.materialsystem.lists.Materials
-import com.scientianovateam.versatile.materialsystem.lists.ObjTypes
+import com.scientianova.versatile.materialsystem.lists.MaterialBlocks
+import com.scientianova.versatile.materialsystem.lists.Materials
+import com.scientianova.versatile.materialsystem.lists.ObjTypes
 import net.minecraft.block.Block
 import net.minecraftforge.event.RegistryEvent
 

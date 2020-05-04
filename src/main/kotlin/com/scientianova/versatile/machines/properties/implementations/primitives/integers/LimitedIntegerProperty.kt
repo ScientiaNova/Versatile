@@ -1,6 +1,6 @@
 package com.scientianova.versatile.machines.properties.implementations.primitives.integers
 
-import com.scientianovateam.versatile.machines.properties.ILimitedIntegerProperty
+import com.scientianova.versatile.machines.properties.ILimitedIntegerProperty
 
 open class LimitedIntegerProperty(override val min: Int, override val max: Int) : ILimitedIntegerProperty {
     override fun setValue(new: Int, causeUpdate: Boolean) {

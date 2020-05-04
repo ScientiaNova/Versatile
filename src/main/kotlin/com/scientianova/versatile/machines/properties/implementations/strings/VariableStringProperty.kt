@@ -1,6 +1,6 @@
 package com.scientianova.versatile.machines.properties.implementations.strings
 
-import com.scientianovateam.versatile.machines.properties.IVariableProperty
+import com.scientianova.versatile.machines.properties.IVariableProperty
 
 open class VariableStringProperty(value: String = "") : IVariableProperty<String> {
     override var value = value

@@ -1,9 +1,9 @@
 package com.scientianova.versatile.items
 
-import com.scientianovateam.versatile.materialsystem.lists.MaterialItems
-import com.scientianovateam.versatile.materialsystem.main.IMaterialObject
-import com.scientianovateam.versatile.materialsystem.main.Material
-import com.scientianovateam.versatile.materialsystem.main.ObjectType
+import com.scientianova.versatile.materialsystem.lists.MaterialItems
+import com.scientianova.versatile.materialsystem.main.IMaterialObject
+import com.scientianova.versatile.materialsystem.main.Material
+import com.scientianova.versatile.materialsystem.main.ObjectType
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.util.text.LanguageMap

@@ -1,8 +1,8 @@
 package com.scientianova.versatile.machines.gui.textures
 
-import com.scientianovateam.versatile.machines.gui.textures.interactable.ButtonTextureGroup
-import com.scientianovateam.versatile.machines.gui.textures.still.GUITexture
-import com.scientianovateam.versatile.machines.gui.textures.updating.ProgressBar
+import com.scientianova.versatile.machines.gui.textures.interactable.ButtonTextureGroup
+import com.scientianova.versatile.machines.gui.textures.still.GUITexture
+import com.scientianova.versatile.machines.gui.textures.updating.ProgressBar
 
 object BaseTextures {
     @JvmField

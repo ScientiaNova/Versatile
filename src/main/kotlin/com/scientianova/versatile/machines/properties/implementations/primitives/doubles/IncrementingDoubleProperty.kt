@@ -1,6 +1,6 @@
 package com.scientianova.versatile.machines.properties.implementations.primitives.doubles
 
-import com.scientianovateam.versatile.machines.properties.IValueProperty
+import com.scientianova.versatile.machines.properties.IValueProperty
 
 open class IncrementingDoubleProperty(private val increment: Double = 0.01) : IValueProperty<Double> {
     private var lastAccessed = System.currentTimeMillis()

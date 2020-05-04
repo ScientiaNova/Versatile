@@ -1,6 +1,6 @@
 package com.scientianova.versatile.machines.packets.reopening
 
-import com.scientianovateam.versatile.machines.packets.NetworkHandler
+import com.scientianova.versatile.machines.packets.NetworkHandler
 import net.minecraft.client.Minecraft
 import net.minecraft.inventory.container.ContainerType
 import net.minecraft.network.PacketBuffer

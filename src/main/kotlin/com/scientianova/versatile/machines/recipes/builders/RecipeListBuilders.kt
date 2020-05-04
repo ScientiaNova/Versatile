@@ -1,17 +1,17 @@
 package com.scientianova.versatile.machines.recipes.builders
 
-import com.scientianovateam.versatile.machines.gui.textures.BaseTextures
-import com.scientianovateam.versatile.machines.gui.textures.updating.ProgressBar
-import com.scientianovateam.versatile.machines.recipes.AutomationRecipeList
-import com.scientianovateam.versatile.machines.recipes.RecipeList
-import com.scientianovateam.versatile.machines.recipes.components.IRecipeComponent
-import com.scientianovateam.versatile.machines.recipes.components.ingredients.fluids.FluidInputsComponent
-import com.scientianovateam.versatile.machines.recipes.components.ingredients.fluids.FluidOutputsComponent
-import com.scientianovateam.versatile.machines.recipes.components.ingredients.items.ItemInputsComponent
-import com.scientianovateam.versatile.machines.recipes.components.ingredients.items.ItemOutputsComponent
-import com.scientianovateam.versatile.machines.recipes.components.energy.EnergyConsumptionComponent
-import com.scientianovateam.versatile.machines.recipes.components.energy.EnergyGenerationComponent
-import com.scientianovateam.versatile.machines.recipes.components.stats.TimeComponent
+import com.scientianova.versatile.machines.gui.textures.BaseTextures
+import com.scientianova.versatile.machines.gui.textures.updating.ProgressBar
+import com.scientianova.versatile.machines.recipes.AutomationRecipeList
+import com.scientianova.versatile.machines.recipes.RecipeList
+import com.scientianova.versatile.machines.recipes.components.IRecipeComponent
+import com.scientianova.versatile.machines.recipes.components.ingredients.fluids.FluidInputsComponent
+import com.scientianova.versatile.machines.recipes.components.ingredients.fluids.FluidOutputsComponent
+import com.scientianova.versatile.machines.recipes.components.ingredients.items.ItemInputsComponent
+import com.scientianova.versatile.machines.recipes.components.ingredients.items.ItemOutputsComponent
+import com.scientianova.versatile.machines.recipes.components.energy.EnergyConsumptionComponent
+import com.scientianova.versatile.machines.recipes.components.energy.EnergyGenerationComponent
+import com.scientianova.versatile.machines.recipes.components.stats.TimeComponent
 import net.minecraft.util.ResourceLocation
 
 open class StandardRecipeListBuilder(protected val name: ResourceLocation) {

@@ -1,12 +1,12 @@
 package com.scientianova.versatile.machines.gui.layout.components.buttons
 
-import com.scientianovateam.versatile.common.extensions.alphaF
-import com.scientianovateam.versatile.common.extensions.blueF
-import com.scientianovateam.versatile.common.extensions.greenF
-import com.scientianovateam.versatile.common.extensions.redF
-import com.scientianovateam.versatile.machines.gui.layout.components.ITexturedGUIComponent
-import com.scientianovateam.versatile.machines.gui.textures.still.GUITexture
-import com.scientianovateam.versatile.machines.properties.ILimitedIntegerProperty
+import com.scientianova.versatile.common.extensions.alphaF
+import com.scientianova.versatile.common.extensions.blueF
+import com.scientianova.versatile.common.extensions.greenF
+import com.scientianova.versatile.common.extensions.redF
+import com.scientianova.versatile.machines.gui.layout.components.ITexturedGUIComponent
+import com.scientianova.versatile.machines.gui.textures.still.GUITexture
+import com.scientianova.versatile.machines.properties.ILimitedIntegerProperty
 import com.mojang.blaze3d.platform.GlStateManager
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn

@@ -2,10 +2,10 @@ package com.scientianova.versatile.machines.gui
 
 import com.mojang.blaze3d.platform.GlStateManager
 import com.mojang.blaze3d.systems.RenderSystem
-import com.scientianovateam.versatile.common.extensions.alphaF
-import com.scientianovateam.versatile.common.extensions.blueF
-import com.scientianovateam.versatile.common.extensions.greenF
-import com.scientianovateam.versatile.common.extensions.redF
+import com.scientianova.versatile.common.extensions.alphaF
+import com.scientianova.versatile.common.extensions.blueF
+import com.scientianova.versatile.common.extensions.greenF
+import com.scientianova.versatile.common.extensions.redF
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.WorldVertexBufferUploader
@@ -19,7 +19,7 @@ import net.minecraft.util.text.ITextComponent
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.fluids.FluidStack
-import net.minecraftforge.fml.client.config.GuiUtils
+import net.minecraftforge.fml.client.gui.GuiUtils
 
 @OnlyIn(Dist.CLIENT)
 object GUiUtils {

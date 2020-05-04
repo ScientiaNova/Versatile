@@ -1,15 +1,15 @@
 package com.scientianova.versatile.materialsystem.addition
 
-import com.scientianovateam.versatile.fluids.FluidPairHolder
-import com.scientianovateam.versatile.materialsystem.builders.dustMaterial
-import com.scientianovateam.versatile.materialsystem.builders.fluidMaterial
-import com.scientianovateam.versatile.materialsystem.builders.gemMaterial
-import com.scientianovateam.versatile.materialsystem.builders.ingotMaterial
-import com.scientianovateam.versatile.materialsystem.lists.MaterialBlocks
-import com.scientianovateam.versatile.materialsystem.lists.MaterialFluids
-import com.scientianovateam.versatile.materialsystem.lists.MaterialItems
-import com.scientianovateam.versatile.materialsystem.properties.BlockCompaction
-import com.scientianovateam.versatile.materialsystem.properties.CompoundType
+import com.scientianova.versatile.fluids.FluidPairHolder
+import com.scientianova.versatile.materialsystem.builders.dustMaterial
+import com.scientianova.versatile.materialsystem.builders.fluidMaterial
+import com.scientianova.versatile.materialsystem.builders.gemMaterial
+import com.scientianova.versatile.materialsystem.builders.ingotMaterial
+import com.scientianova.versatile.materialsystem.lists.MaterialBlocks
+import com.scientianova.versatile.materialsystem.lists.MaterialFluids
+import com.scientianova.versatile.materialsystem.lists.MaterialItems
+import com.scientianova.versatile.materialsystem.properties.BlockCompaction
+import com.scientianova.versatile.materialsystem.properties.CompoundType
 import net.minecraft.block.Blocks
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.ArmorMaterial
@@ -17,8 +17,6 @@ import net.minecraft.item.ItemTier
 import net.minecraft.item.Items
 import net.minecraftforge.eventbus.api.EventPriority
 
-//This class is used for registering the vanilla materials and object types
-@VersatileRegistry(EventPriority.HIGH)
 object BaseMaterials {
     @JvmField
     val BRICK = ingotMaterial("brick") {

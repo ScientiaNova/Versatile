@@ -1,10 +1,9 @@
 package com.scientianova.versatile.materialsystem.properties
 
-import com.scientianovateam.versatile.common.registry.BaseRegistries
-import com.scientianovateam.versatile.common.registry.MATERIAL_PROPERTIES
-import com.scientianovateam.versatile.common.registry.FORM_PROPERTIES
-import com.scientianovateam.versatile.materialsystem.main.Material
-import com.scientianovateam.versatile.materialsystem.main.ObjectType
+import com.scientianova.versatile.common.registry.MATERIAL_PROPERTIES
+import com.scientianova.versatile.common.registry.FORM_PROPERTIES
+import com.scientianova.versatile.materialsystem.main.Material
+import com.scientianova.versatile.materialsystem.main.ObjectType
 import net.minecraft.util.ResourceLocation
 
 sealed class Property<T, S> {

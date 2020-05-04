@@ -1,7 +1,7 @@
 package com.scientianova.versatile.materialsystem.addition
 
-import com.scientianovateam.versatile.materialsystem.elements.Element
-import com.scientianovateam.versatile.materialsystem.elements.Isotope
+import com.scientianova.versatile.materialsystem.elements.Element
+import com.scientianova.versatile.materialsystem.elements.Isotope
 
 //This class contains all the elements of the periodic table and a few common isotopes
 object BaseElements {

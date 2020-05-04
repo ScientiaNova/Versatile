@@ -1,6 +1,6 @@
 package com.scientianova.versatile.integration.jei
 
-import com.scientianovateam.versatile.machines.gui.GUiUtils
+import com.scientianova.versatile.machines.gui.GUiUtils
 import mezz.jei.plugins.vanilla.ingredients.fluid.FluidStackRenderer
 import net.minecraftforge.fluids.FluidStack
 

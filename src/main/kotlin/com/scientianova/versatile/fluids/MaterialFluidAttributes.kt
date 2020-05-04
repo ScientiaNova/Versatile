@@ -1,9 +1,9 @@
 package com.scientianova.versatile.fluids
 
-import com.scientianovateam.versatile.common.extensions.plus
-import com.scientianovateam.versatile.materialsystem.elements.ElementUtils
-import com.scientianovateam.versatile.materialsystem.main.Material
-import com.scientianovateam.versatile.materialsystem.main.ObjectType
+import com.scientianova.versatile.common.extensions.plus
+import com.scientianova.versatile.materialsystem.elements.ElementUtils
+import com.scientianova.versatile.materialsystem.main.Material
+import com.scientianova.versatile.materialsystem.main.ObjectType
 import net.minecraft.fluid.Fluid
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.SoundEvents

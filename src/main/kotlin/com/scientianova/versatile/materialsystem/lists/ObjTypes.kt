@@ -1,6 +1,6 @@
 package com.scientianova.versatile.materialsystem.lists
 
-import com.scientianovateam.versatile.materialsystem.main.ObjectType
+import com.scientianova.versatile.materialsystem.main.ObjectType
 
 object ObjTypes {
     private val objTypes = hashMapOf<String, ObjectType>()

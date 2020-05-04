@@ -1,13 +1,13 @@
 package com.scientianova.versatile.integration.jei
 
-import com.scientianovateam.versatile.common.extensions.toStack
-import com.scientianovateam.versatile.machines.gui.BaseContainer
-import com.scientianovateam.versatile.machines.gui.layout.OffsetGUIComponent
-import com.scientianovateam.versatile.machines.gui.layout.components.stacksuppliers.IStackSupplierComponent
-import com.scientianovateam.versatile.machines.properties.implementations.recipes.RecipeProperty
-import com.scientianovateam.versatile.machines.recipes.Recipe
-import com.scientianovateam.versatile.machines.recipes.RecipeList
-import com.scientianovateam.versatile.machines.recipes.components.grouping.IOType
+import com.scientianova.versatile.common.extensions.toStack
+import com.scientianova.versatile.machines.gui.BaseContainer
+import com.scientianova.versatile.machines.gui.layout.OffsetGUIComponent
+import com.scientianova.versatile.machines.gui.layout.components.stacksuppliers.IStackSupplierComponent
+import com.scientianova.versatile.machines.properties.implementations.recipes.RecipeProperty
+import com.scientianova.versatile.machines.recipes.Recipe
+import com.scientianova.versatile.machines.recipes.RecipeList
+import com.scientianova.versatile.machines.recipes.components.grouping.IOType
 import mezz.jei.api.constants.VanillaTypes
 import mezz.jei.api.gui.IRecipeLayout
 import mezz.jei.api.gui.drawable.IDrawable

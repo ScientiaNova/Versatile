@@ -1,15 +1,15 @@
 package com.scientianova.versatile.machines.recipes
 
-import com.scientianovateam.versatile.machines.BaseTileEntity
-import com.scientianovateam.versatile.machines.gui.BaseContainer
-import com.scientianovateam.versatile.machines.gui.layout.GUIComponentGroup
-import com.scientianovateam.versatile.machines.gui.layout.GUIPage
-import com.scientianovateam.versatile.machines.gui.layout.IGUIComponent
-import com.scientianovateam.versatile.machines.gui.textures.BaseTextures
-import com.scientianovateam.versatile.machines.gui.textures.updating.ProgressBar
-import com.scientianovateam.versatile.machines.properties.implementations.recipes.RecipeProperty
-import com.scientianovateam.versatile.machines.recipes.components.IRecipeComponent
-import com.scientianovateam.versatile.machines.recipes.components.grouping.IOType
+import com.scientianova.versatile.machines.BaseTileEntity
+import com.scientianova.versatile.machines.gui.BaseContainer
+import com.scientianova.versatile.machines.gui.layout.GUIComponentGroup
+import com.scientianova.versatile.machines.gui.layout.GUIPage
+import com.scientianova.versatile.machines.gui.layout.IGUIComponent
+import com.scientianova.versatile.machines.gui.textures.BaseTextures
+import com.scientianova.versatile.machines.gui.textures.updating.ProgressBar
+import com.scientianova.versatile.machines.properties.implementations.recipes.RecipeProperty
+import com.scientianova.versatile.machines.recipes.components.IRecipeComponent
+import com.scientianova.versatile.machines.recipes.components.grouping.IOType
 import net.minecraft.util.ResourceLocation
 import kotlin.math.ceil
 import kotlin.math.max

@@ -1,11 +1,11 @@
 package com.scientianova.versatile.materialsystem.commands
 
-import com.scientianovateam.versatile.common.extensions.*
-import com.scientianovateam.versatile.materialsystem.lists.MaterialBlocks
-import com.scientianovateam.versatile.materialsystem.lists.MaterialFluids
-import com.scientianovateam.versatile.materialsystem.lists.MaterialItems
-import com.scientianovateam.versatile.materialsystem.lists.Materials
-import com.scientianovateam.versatile.materialsystem.main.Material
+import com.scientianova.versatile.common.extensions.*
+import com.scientianova.versatile.materialsystem.lists.MaterialBlocks
+import com.scientianova.versatile.materialsystem.lists.MaterialFluids
+import com.scientianova.versatile.materialsystem.lists.MaterialItems
+import com.scientianova.versatile.materialsystem.lists.Materials
+import com.scientianova.versatile.materialsystem.main.Material
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.StringArgumentType
 import net.minecraft.command.CommandSource

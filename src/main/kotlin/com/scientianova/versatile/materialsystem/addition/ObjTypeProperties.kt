@@ -1,13 +1,13 @@
 package com.scientianova.versatile.materialsystem.addition
 
-import com.scientianovateam.versatile.common.extensions.json
-import com.scientianovateam.versatile.common.extensions.toResLoc
-import com.scientianovateam.versatile.fluids.IFluidPairHolder
-import com.scientianovateam.versatile.fluids.MaterialFluidAttributes
-import com.scientianovateam.versatile.materialsystem.main.Material
-import com.scientianovateam.versatile.materialsystem.properties.HarvestTier
-import com.scientianovateam.versatile.materialsystem.properties.FormProperty
-import com.scientianovateam.versatile.materialsystem.properties.merge
+import com.scientianova.versatile.common.extensions.json
+import com.scientianova.versatile.common.extensions.toResLoc
+import com.scientianova.versatile.fluids.IFluidPairHolder
+import com.scientianova.versatile.fluids.MaterialFluidAttributes
+import com.scientianova.versatile.materialsystem.main.Material
+import com.scientianova.versatile.materialsystem.properties.HarvestTier
+import com.scientianova.versatile.materialsystem.properties.FormProperty
+import com.scientianova.versatile.materialsystem.properties.merge
 import com.google.gson.JsonObject
 import com.scientianova.versatile.Versatile
 import net.minecraft.block.Block
@@ -66,7 +66,7 @@ object ObjTypeProperties {
     @JvmStatic
     val ITEM_CONSTRUCTOR = FormProperty<((Material) -> Item)?>("versatile:item_constructor".toResLoc(), ::merge) { null }
     @JvmStatic
-    val ITEM_PROPERTIES = FormProperty<(Material) -> Item.Properties>("versatile:item_properties".toResLoc(), ::merge) { { Item.Properties().group(_root_ide_package_.com.scientianova.versatile.Versatile.MAIN) } }
+    val ITEM_PROPERTIES = FormProperty<(Material) -> Item.Properties>("versatile:item_properties".toResLoc(), ::merge) { { Item.Properties().group(Versatile.MAIN) } }
     @JvmStatic
     val BLOCK_CONSTRUCTOR = FormProperty<((Material) -> Block)?>("versatile:block_constructor".toResLoc(), ::merge) { null }
     @JvmStatic

@@ -1,13 +1,13 @@
 package com.scientianova.versatile.machines.recipes.components.energy
 
-import com.scientianovateam.versatile.machines.BaseTileEntity
-import com.scientianovateam.versatile.machines.properties.ITEBoundProperty
-import com.scientianovateam.versatile.machines.properties.implementations.energy.TEEnergyOutputProperty
-import com.scientianovateam.versatile.machines.properties.implementations.processing.handlers.EnergyOutputProcessingHandler
-import com.scientianovateam.versatile.machines.recipes.Recipe
-import com.scientianovateam.versatile.machines.recipes.components.IRecipeComponent
-import com.scientianovateam.versatile.machines.recipes.components.grouping.RecipeComponentFamilies
-import com.scientianovateam.versatile.machines.recipes.components.stats.TimeComponent
+import com.scientianova.versatile.machines.BaseTileEntity
+import com.scientianova.versatile.machines.properties.ITEBoundProperty
+import com.scientianova.versatile.machines.properties.implementations.energy.TEEnergyOutputProperty
+import com.scientianova.versatile.machines.properties.implementations.processing.handlers.EnergyOutputProcessingHandler
+import com.scientianova.versatile.machines.recipes.Recipe
+import com.scientianova.versatile.machines.recipes.components.IRecipeComponent
+import com.scientianova.versatile.machines.recipes.components.grouping.RecipeComponentFamilies
+import com.scientianova.versatile.machines.recipes.components.stats.TimeComponent
 import net.minecraft.util.text.TranslationTextComponent
 
 class EnergyGenerationComponent(val maxPerTick: Int) : IRecipeComponent<Int> {

@@ -1,12 +1,12 @@
 package com.scientianova.versatile.machines.gui.layout.components.textboxes
 
-import com.scientianovateam.versatile.common.extensions.max
-import com.scientianovateam.versatile.common.extensions.min
-import com.scientianovateam.versatile.machines.gui.GUiUtils
-import com.scientianovateam.versatile.machines.gui.layout.components.ITexturedGUIComponent
-import com.scientianovateam.versatile.machines.gui.textures.BaseTextures
-import com.scientianovateam.versatile.machines.gui.textures.interactable.ButtonDrawMode
-import com.scientianovateam.versatile.machines.properties.implementations.strings.VariableStringProperty
+import com.scientianova.versatile.common.extensions.max
+import com.scientianova.versatile.common.extensions.min
+import com.scientianova.versatile.machines.gui.GUiUtils
+import com.scientianova.versatile.machines.gui.layout.components.ITexturedGUIComponent
+import com.scientianova.versatile.machines.gui.textures.BaseTextures
+import com.scientianova.versatile.machines.gui.textures.interactable.ButtonDrawMode
+import com.scientianova.versatile.machines.properties.implementations.strings.VariableStringProperty
 import com.mojang.blaze3d.platform.GlStateManager
 import com.mojang.blaze3d.platform.GlStateManager.LogicOp
 import net.minecraft.client.Minecraft

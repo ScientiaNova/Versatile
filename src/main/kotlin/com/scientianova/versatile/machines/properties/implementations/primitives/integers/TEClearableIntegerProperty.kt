@@ -1,6 +1,6 @@
 package com.scientianova.versatile.machines.properties.implementations.primitives.integers
 
-import com.scientianovateam.versatile.machines.BaseTileEntity
+import com.scientianova.versatile.machines.BaseTileEntity
 
 class TEClearableIntegerProperty(id: String, te: BaseTileEntity) : TEIntegerProperty(id, te) {
     override fun clear() {

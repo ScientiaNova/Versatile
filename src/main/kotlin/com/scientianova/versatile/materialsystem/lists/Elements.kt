@@ -1,6 +1,6 @@
 package com.scientianova.versatile.materialsystem.lists
 
-import com.scientianovateam.versatile.materialsystem.elements.Element
+import com.scientianova.versatile.materialsystem.elements.Element
 
 object Elements {
     private val elements = hashMapOf<String, Element>()

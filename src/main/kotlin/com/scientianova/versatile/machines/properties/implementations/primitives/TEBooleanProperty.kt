@@ -1,12 +1,12 @@
 package com.scientianova.versatile.machines.properties.implementations.primitives
 
-import com.scientianovateam.versatile.common.extensions.nbt
-import com.scientianovateam.versatile.machines.BaseTileEntity
-import com.scientianovateam.versatile.machines.gui.BaseContainer
-import com.scientianovateam.versatile.machines.packets.NetworkHandler
-import com.scientianovateam.versatile.machines.packets.primitives.UpdateBooleanPacket
-import com.scientianovateam.versatile.machines.properties.ITEBoundProperty
-import com.scientianovateam.versatile.machines.properties.IVariableProperty
+import com.scientianova.versatile.common.extensions.nbt
+import com.scientianova.versatile.machines.BaseTileEntity
+import com.scientianova.versatile.machines.gui.BaseContainer
+import com.scientianova.versatile.machines.packets.NetworkHandler
+import com.scientianova.versatile.machines.packets.primitives.UpdateBooleanPacket
+import com.scientianova.versatile.machines.properties.ITEBoundProperty
+import com.scientianova.versatile.machines.properties.IVariableProperty
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.nbt.CompoundNBT
 import net.minecraftforge.fml.network.NetworkDirection

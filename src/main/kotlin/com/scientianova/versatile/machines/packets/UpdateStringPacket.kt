@@ -1,7 +1,7 @@
 package com.scientianova.versatile.machines.packets
 
-import com.scientianovateam.versatile.machines.gui.BaseContainer
-import com.scientianovateam.versatile.machines.properties.IVariableProperty
+import com.scientianova.versatile.machines.gui.BaseContainer
+import com.scientianova.versatile.machines.properties.IVariableProperty
 import net.minecraft.client.Minecraft
 import net.minecraft.network.PacketBuffer
 import net.minecraftforge.fml.DistExecutor
@@ -26,7 +26,7 @@ class UpdateStringPacket(val property: String, val value: String) {
                 val container = DistExecutor.runForDist(
                         {
                             Supplier {
-                                serverSideContainer ?: Minecraft.getInstance().player.openContainer as? BaseContainer
+                                serverSideContainer ?: Minecraft.getInstance().player!!.openContainer as? BaseContainer
                             }
                         },
                         { Supplier { serverSideContainer } }

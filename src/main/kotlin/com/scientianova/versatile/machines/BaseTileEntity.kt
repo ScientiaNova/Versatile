@@ -1,8 +1,8 @@
 package com.scientianova.versatile.machines
 
-import com.scientianovateam.versatile.common.extensions.plusAssign
-import com.scientianovateam.versatile.machines.gui.layout.GUIBook
-import com.scientianovateam.versatile.machines.properties.ITEBoundProperty
+import com.scientianova.versatile.common.extensions.plusAssign
+import com.scientianova.versatile.machines.gui.layout.GUIBook
+import com.scientianova.versatile.machines.properties.ITEBoundProperty
 import com.google.common.reflect.MutableTypeToInstanceMap
 import net.minecraft.block.Block
 import net.minecraft.entity.player.PlayerEntity

@@ -1,13 +1,13 @@
 package com.scientianova.versatile.materialsystem.builders
 
-import com.scientianovateam.versatile.materialsystem.addition.BaseObjTypes
-import com.scientianovateam.versatile.materialsystem.addition.BaseTextureTypes
-import com.scientianovateam.versatile.materialsystem.addition.MatProperties
-import com.scientianovateam.versatile.materialsystem.elements.Element
-import com.scientianovateam.versatile.materialsystem.main.Material
-import com.scientianovateam.versatile.materialsystem.main.MaterialStack
-import com.scientianovateam.versatile.materialsystem.main.ObjectType
-import com.scientianovateam.versatile.materialsystem.properties.*
+import com.scientianova.versatile.materialsystem.addition.BaseObjTypes
+import com.scientianova.versatile.materialsystem.addition.BaseTextureTypes
+import com.scientianova.versatile.materialsystem.addition.MatProperties
+import com.scientianova.versatile.materialsystem.elements.Element
+import com.scientianova.versatile.materialsystem.main.Material
+import com.scientianova.versatile.materialsystem.main.MaterialStack
+import com.scientianova.versatile.materialsystem.main.ObjectType
+import com.scientianova.versatile.materialsystem.properties.*
 import net.minecraft.item.IArmorMaterial
 import net.minecraft.item.IItemTier
 

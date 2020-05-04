@@ -1,10 +1,10 @@
 package com.scientianova.versatile.machines.gui.layout.components.slots
 
-import com.scientianovateam.versatile.machines.gui.layout.DefaultSizeConstants
-import com.scientianovateam.versatile.machines.gui.layout.components.ITexturedGUIComponent
-import com.scientianovateam.versatile.machines.gui.slots.ItemHandlerSlot
-import com.scientianovateam.versatile.machines.gui.textures.BaseTextures
-import com.scientianovateam.versatile.machines.properties.IValueProperty
+import com.scientianova.versatile.machines.gui.layout.DefaultSizeConstants
+import com.scientianova.versatile.machines.gui.layout.components.ITexturedGUIComponent
+import com.scientianova.versatile.machines.gui.slots.ItemHandlerSlot
+import com.scientianova.versatile.machines.gui.textures.BaseTextures
+import com.scientianova.versatile.machines.properties.IValueProperty
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraftforge.items.IItemHandlerModifiable
 

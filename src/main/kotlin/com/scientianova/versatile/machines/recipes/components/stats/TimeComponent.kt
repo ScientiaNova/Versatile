@@ -1,18 +1,18 @@
 package com.scientianova.versatile.machines.recipes.components.stats
 
-import com.scientianovateam.versatile.common.extensions.shorten
-import com.scientianovateam.versatile.machines.BaseTileEntity
-import com.scientianovateam.versatile.machines.properties.ITEBoundProperty
-import com.scientianovateam.versatile.machines.properties.implementations.primitives.doubles.IncrementingDoubleProperty
-import com.scientianovateam.versatile.machines.properties.implementations.primitives.doubles.IntegerBasedDoubleProperty
-import com.scientianovateam.versatile.machines.properties.implementations.primitives.doubles.RecipeTimeBasedDoubleProperty
-import com.scientianovateam.versatile.machines.properties.implementations.primitives.integers.TEClearableIntegerProperty
-import com.scientianovateam.versatile.machines.properties.implementations.primitives.integers.TEIntegerProperty
-import com.scientianovateam.versatile.machines.properties.implementations.processing.handlers.TimeProcessingHandler
-import com.scientianovateam.versatile.machines.properties.implementations.recipes.RecipeProperty
-import com.scientianovateam.versatile.machines.recipes.Recipe
-import com.scientianovateam.versatile.machines.recipes.components.IRecipeComponent
-import com.scientianovateam.versatile.machines.recipes.components.grouping.RecipeComponentFamilies
+import com.scientianova.versatile.common.extensions.shorten
+import com.scientianova.versatile.machines.BaseTileEntity
+import com.scientianova.versatile.machines.properties.ITEBoundProperty
+import com.scientianova.versatile.machines.properties.implementations.primitives.doubles.IncrementingDoubleProperty
+import com.scientianova.versatile.machines.properties.implementations.primitives.doubles.IntegerBasedDoubleProperty
+import com.scientianova.versatile.machines.properties.implementations.primitives.doubles.RecipeTimeBasedDoubleProperty
+import com.scientianova.versatile.machines.properties.implementations.primitives.integers.TEClearableIntegerProperty
+import com.scientianova.versatile.machines.properties.implementations.primitives.integers.TEIntegerProperty
+import com.scientianova.versatile.machines.properties.implementations.processing.handlers.TimeProcessingHandler
+import com.scientianova.versatile.machines.properties.implementations.recipes.RecipeProperty
+import com.scientianova.versatile.machines.recipes.Recipe
+import com.scientianova.versatile.machines.recipes.components.IRecipeComponent
+import com.scientianova.versatile.machines.recipes.components.grouping.RecipeComponentFamilies
 import net.minecraft.util.text.TranslationTextComponent
 
 object TimeComponent : IRecipeComponent<Int> {

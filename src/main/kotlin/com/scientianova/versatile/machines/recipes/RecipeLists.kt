@@ -1,6 +1,6 @@
 package com.scientianova.versatile.machines.recipes
 
-import com.scientianovateam.versatile.common.extensions.toResLoc
+import com.scientianova.versatile.common.extensions.toResLoc
 import net.minecraft.util.ResourceLocation
 
 object RecipeLists {

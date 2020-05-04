@@ -1,8 +1,8 @@
 package com.scientianova.versatile.machines.recipes.components.ingredients.recipestacks
 
-import com.scientianovateam.versatile.common.extensions.times
-import com.scientianovateam.versatile.machines.recipes.components.ingredients.utility.TagStack
-import com.scientianovateam.versatile.machines.recipes.components.ingredients.utility.toStack
+import com.scientianova.versatile.common.extensions.times
+import com.scientianova.versatile.machines.recipes.components.ingredients.utility.TagStack
+import com.scientianova.versatile.machines.recipes.components.ingredients.utility.toStack
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.tags.Tag

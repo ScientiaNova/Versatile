@@ -1,15 +1,15 @@
 package com.scientianova.versatile.machines.packets
 
 import com.scientianova.versatile.Versatile
-import com.scientianovateam.versatile.machines.packets.handlers.UpdateEnergyPacket
-import com.scientianovateam.versatile.machines.packets.handlers.UpdateSlotPacket
-import com.scientianovateam.versatile.machines.packets.handlers.UpdateTankPacket
-import com.scientianovateam.versatile.machines.packets.primitives.UpdateBooleanPacket
-import com.scientianovateam.versatile.machines.packets.primitives.UpdateIntPacket
-import com.scientianovateam.versatile.machines.packets.reopening.ChangePagePacket
-import com.scientianovateam.versatile.machines.packets.reopening.OpenGUIPacket
-import com.scientianovateam.versatile.machines.packets.reopening.ReopenGUIPacket
-import com.scientianovateam.versatile.machines.packets.reopening.UpdateRecipePacket
+import com.scientianova.versatile.machines.packets.handlers.UpdateEnergyPacket
+import com.scientianova.versatile.machines.packets.handlers.UpdateSlotPacket
+import com.scientianova.versatile.machines.packets.handlers.UpdateTankPacket
+import com.scientianova.versatile.machines.packets.primitives.UpdateBooleanPacket
+import com.scientianova.versatile.machines.packets.primitives.UpdateIntPacket
+import com.scientianova.versatile.machines.packets.reopening.ChangePagePacket
+import com.scientianova.versatile.machines.packets.reopening.OpenGUIPacket
+import com.scientianova.versatile.machines.packets.reopening.ReopenGUIPacket
+import com.scientianova.versatile.machines.packets.reopening.UpdateRecipePacket
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fml.network.NetworkRegistry
 import net.minecraftforge.fml.network.simple.SimpleChannel
@@ -17,7 +17,7 @@ import org.apache.http.params.CoreProtocolPNames.PROTOCOL_VERSION
 
 object NetworkHandler {
     val CHANNEL: SimpleChannel = NetworkRegistry.ChannelBuilder
-            .named(ResourceLocation(_root_ide_package_.com.scientianova.versatile.Versatile.MOD_ID, "main"))
+            .named(ResourceLocation(Versatile.MOD_ID, "main"))
             .clientAcceptedVersions(PROTOCOL_VERSION::equals)
             .serverAcceptedVersions(PROTOCOL_VERSION::equals)
             .networkProtocolVersion(::PROTOCOL_VERSION)

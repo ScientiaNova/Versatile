@@ -1,17 +1,17 @@
 package com.scientianova.versatile.machines.recipes.components.ingredients.fluids
 
-import com.scientianovateam.versatile.machines.BaseTileEntity
-import com.scientianovateam.versatile.machines.gui.layout.IGUIComponent
-import com.scientianovateam.versatile.machines.gui.layout.components.slots.FluidSlotComponent
-import com.scientianovateam.versatile.machines.gui.layout.components.stacksuppliers.RecipeOutputFluidStackSupplierSlot
-import com.scientianovateam.versatile.machines.properties.ITEBoundProperty
-import com.scientianovateam.versatile.machines.properties.implementations.fluids.TEFluidInventoryProperty
-import com.scientianovateam.versatile.machines.properties.implementations.fluids.TEFluidOutputProperty
-import com.scientianovateam.versatile.machines.properties.implementations.processing.handlers.FluidOutputsProcessingHandler
-import com.scientianovateam.versatile.machines.recipes.Recipe
-import com.scientianovateam.versatile.machines.recipes.components.IRecipeComponent
-import com.scientianovateam.versatile.machines.recipes.components.grouping.RecipeComponentFamilies
-import com.scientianovateam.versatile.machines.recipes.components.ingredients.recipestacks.ChancedRecipeStack
+import com.scientianova.versatile.machines.BaseTileEntity
+import com.scientianova.versatile.machines.gui.layout.IGUIComponent
+import com.scientianova.versatile.machines.gui.layout.components.slots.FluidSlotComponent
+import com.scientianova.versatile.machines.gui.layout.components.stacksuppliers.RecipeOutputFluidStackSupplierSlot
+import com.scientianova.versatile.machines.properties.ITEBoundProperty
+import com.scientianova.versatile.machines.properties.implementations.fluids.TEFluidInventoryProperty
+import com.scientianova.versatile.machines.properties.implementations.fluids.TEFluidOutputProperty
+import com.scientianova.versatile.machines.properties.implementations.processing.handlers.FluidOutputsProcessingHandler
+import com.scientianova.versatile.machines.recipes.Recipe
+import com.scientianova.versatile.machines.recipes.components.IRecipeComponent
+import com.scientianova.versatile.machines.recipes.components.grouping.RecipeComponentFamilies
+import com.scientianova.versatile.machines.recipes.components.ingredients.recipestacks.ChancedRecipeStack
 import net.minecraftforge.fluids.FluidStack
 import kotlin.math.min
 

@@ -1,7 +1,7 @@
 package com.scientianova.versatile.machines.gui.layout.components
 
-import com.scientianovateam.versatile.machines.gui.layout.IGUIComponent
-import com.scientianovateam.versatile.machines.gui.textures.IDrawable
+import com.scientianova.versatile.machines.gui.layout.IGUIComponent
+import com.scientianova.versatile.machines.gui.textures.IDrawable
 
 interface ITexturedGUIComponent : IGUIComponent {
     val texture: IDrawable

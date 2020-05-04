@@ -1,15 +1,15 @@
 package com.scientianova.versatile.machines.recipes
 
-import com.scientianovateam.versatile.machines.BaseTileEntity
-import com.scientianovateam.versatile.machines.gui.BaseContainer
-import com.scientianovateam.versatile.machines.gui.layout.DefaultSizeConstants
-import com.scientianovateam.versatile.machines.gui.layout.GUIComponentGroup
-import com.scientianovateam.versatile.machines.gui.layout.GUIPage
-import com.scientianovateam.versatile.machines.gui.layout.IGUIComponent
-import com.scientianovateam.versatile.machines.gui.textures.BaseTextures
-import com.scientianovateam.versatile.machines.gui.textures.updating.ProgressBar
-import com.scientianovateam.versatile.machines.recipes.components.IRecipeComponent
-import com.scientianovateam.versatile.machines.recipes.components.grouping.IOType
+import com.scientianova.versatile.machines.BaseTileEntity
+import com.scientianova.versatile.machines.gui.BaseContainer
+import com.scientianova.versatile.machines.gui.layout.DefaultSizeConstants
+import com.scientianova.versatile.machines.gui.layout.GUIComponentGroup
+import com.scientianova.versatile.machines.gui.layout.GUIPage
+import com.scientianova.versatile.machines.gui.layout.IGUIComponent
+import com.scientianova.versatile.machines.gui.textures.BaseTextures
+import com.scientianova.versatile.machines.gui.textures.updating.ProgressBar
+import com.scientianova.versatile.machines.recipes.components.IRecipeComponent
+import com.scientianova.versatile.machines.recipes.components.grouping.IOType
 import com.google.common.collect.HashMultimap
 import com.scientianova.versatile.Versatile
 import net.minecraft.block.Block
@@ -38,7 +38,7 @@ open class RecipeList(val name: ResourceLocation, vararg components: IRecipeComp
         if (recipeComponents.values.all { it.isRecipeValid(recipe) }) {
             recipes[recipe.name] = recipe
             recipeComponents.values.forEach { it.onRecipeAdded(recipe) }
-        } else _root_ide_package_.com.scientianova.versatile.Versatile.LOGGER.error("Invalid recipe ${recipe.name} for recipe list $name")
+        } else Versatile.LOGGER.error("Invalid recipe ${recipe.name} for recipe list $name")
     }
 
     fun findRecipe(machine: BaseTileEntity) = recipeComponents.values.fold(recipes.values.toList()) { list, component ->

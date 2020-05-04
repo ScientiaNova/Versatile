@@ -15,7 +15,7 @@ import java.util.function.Supplier
 //This is used for providing the fake data pack
 object FakeDataPackFinder : IPackFinder {
     override fun <T : ResourcePackInfo> addPackInfosToMap(nameToPackMap: MutableMap<String, T>, packInfoFactory: ResourcePackInfo.IFactory<T>) {
-        ResourcePackInfo.createResourcePack("fake_server:versatile", true, Supplier {
+        ResourcePackInfo.createResourcePack("fake_server:versatile", true, Supplier<IResourcePack> {
             val pack = FakePack("fake_server:versatile")
 
             TagMaps.ITEM_TAGS.asMap().forEach { (name, items) ->

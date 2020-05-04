@@ -1,16 +1,16 @@
 package com.scientianova.versatile.machines.properties.implementations.energy
 
-import com.scientianovateam.versatile.common.extensions.getOrAddInstance
-import com.scientianovateam.versatile.common.extensions.nbt
-import com.scientianovateam.versatile.machines.BaseTileEntity
-import com.scientianovateam.versatile.machines.capabilities.energy.EnergyCapabilityWrapper
-import com.scientianovateam.versatile.machines.capabilities.energy.EnergyHandler
-import com.scientianovateam.versatile.machines.capabilities.energy.IEnergyStorageModifiable
-import com.scientianovateam.versatile.machines.gui.BaseContainer
-import com.scientianovateam.versatile.machines.packets.NetworkHandler
-import com.scientianovateam.versatile.machines.packets.primitives.UpdateIntPacket
-import com.scientianovateam.versatile.machines.properties.ITEBoundProperty
-import com.scientianovateam.versatile.machines.properties.IValueProperty
+import com.scientianova.versatile.common.extensions.getOrAddInstance
+import com.scientianova.versatile.common.extensions.nbt
+import com.scientianova.versatile.machines.BaseTileEntity
+import com.scientianova.versatile.machines.capabilities.energy.EnergyCapabilityWrapper
+import com.scientianova.versatile.machines.capabilities.energy.EnergyHandler
+import com.scientianova.versatile.machines.capabilities.energy.IEnergyStorageModifiable
+import com.scientianova.versatile.machines.gui.BaseContainer
+import com.scientianova.versatile.machines.packets.NetworkHandler
+import com.scientianova.versatile.machines.packets.primitives.UpdateIntPacket
+import com.scientianova.versatile.machines.properties.ITEBoundProperty
+import com.scientianova.versatile.machines.properties.IValueProperty
 import com.google.common.reflect.MutableTypeToInstanceMap
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.nbt.CompoundNBT

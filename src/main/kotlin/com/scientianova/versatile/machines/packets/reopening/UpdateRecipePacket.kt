@@ -1,8 +1,8 @@
 package com.scientianova.versatile.machines.packets.reopening
 
-import com.scientianovateam.versatile.machines.gui.BaseContainer
-import com.scientianovateam.versatile.machines.packets.NetworkHandler
-import com.scientianovateam.versatile.machines.properties.implementations.recipes.RecipeProperty
+import com.scientianova.versatile.machines.gui.BaseContainer
+import com.scientianova.versatile.machines.packets.NetworkHandler
+import com.scientianova.versatile.machines.properties.implementations.recipes.RecipeProperty
 import net.minecraft.client.Minecraft
 import net.minecraft.network.PacketBuffer
 import net.minecraftforge.fml.DistExecutor
@@ -28,7 +28,7 @@ class UpdateRecipePacket(val property: String, val name: String) {
                 val container = DistExecutor.runForDist(
                         {
                             Supplier {
-                                serverSideContainer ?: Minecraft.getInstance().player.openContainer as? BaseContainer
+                                serverSideContainer ?: Minecraft.getInstance().player!!.openContainer as? BaseContainer
                             }
                         },
                         { Supplier { serverSideContainer } }

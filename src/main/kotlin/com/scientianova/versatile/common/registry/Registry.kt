@@ -9,7 +9,7 @@ open class Registry<T: Any> {
     operator fun get(registryName: ResourceLocation) = map[registryName]
 
     operator fun set(registryName: ResourceLocation, thing: T) {
-        if (registryName in map) _root_ide_package_.com.scientianova.versatile.Versatile.LOGGER.warn("Overriding registry: $registryName")
+        if (registryName in map) Versatile.LOGGER.warn("Overriding registry: $registryName")
         map[registryName] = thing
     }
 

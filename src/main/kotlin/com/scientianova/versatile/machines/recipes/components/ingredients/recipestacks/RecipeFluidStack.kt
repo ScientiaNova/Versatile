@@ -1,6 +1,6 @@
 package com.scientianova.versatile.machines.recipes.components.ingredients.recipestacks
 
-import com.scientianovateam.versatile.common.extensions.toStack
+import com.scientianova.versatile.common.extensions.toStack
 import net.minecraft.fluid.Fluid
 import net.minecraftforge.fluids.FluidStack
 

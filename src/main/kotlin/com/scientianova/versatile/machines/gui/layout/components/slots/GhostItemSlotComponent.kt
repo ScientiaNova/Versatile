@@ -1,6 +1,6 @@
 package com.scientianova.versatile.machines.gui.layout.components.slots
 
-import com.scientianovateam.versatile.machines.properties.IValueProperty
+import com.scientianova.versatile.machines.properties.IValueProperty
 import net.minecraft.client.Minecraft
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn

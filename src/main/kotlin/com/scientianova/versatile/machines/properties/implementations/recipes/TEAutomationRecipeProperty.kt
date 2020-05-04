@@ -1,13 +1,13 @@
 package com.scientianova.versatile.machines.properties.implementations.recipes
 
-import com.scientianovateam.versatile.machines.BaseTileEntity
-import com.scientianovateam.versatile.machines.gui.BaseContainer
-import com.scientianovateam.versatile.machines.packets.NetworkHandler
-import com.scientianovateam.versatile.machines.packets.reopening.ReopenGUIPacket
-import com.scientianovateam.versatile.machines.packets.reopening.UpdateRecipePacket
-import com.scientianovateam.versatile.machines.properties.ITEBoundProperty
-import com.scientianovateam.versatile.machines.recipes.Recipe
-import com.scientianovateam.versatile.machines.recipes.RecipeList
+import com.scientianova.versatile.machines.BaseTileEntity
+import com.scientianova.versatile.machines.gui.BaseContainer
+import com.scientianova.versatile.machines.packets.NetworkHandler
+import com.scientianova.versatile.machines.packets.reopening.ReopenGUIPacket
+import com.scientianova.versatile.machines.packets.reopening.UpdateRecipePacket
+import com.scientianova.versatile.machines.properties.ITEBoundProperty
+import com.scientianova.versatile.machines.recipes.Recipe
+import com.scientianova.versatile.machines.recipes.RecipeList
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraftforge.fml.network.NetworkDirection
 

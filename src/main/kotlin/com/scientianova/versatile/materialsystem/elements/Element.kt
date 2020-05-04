@@ -1,6 +1,6 @@
 package com.scientianova.versatile.materialsystem.elements
 
-import com.scientianovateam.versatile.materialsystem.lists.Elements
+import com.scientianova.versatile.materialsystem.lists.Elements
 
 /*
 Elements are objects with a few properties, that can be assigned to materials. They're mainly meant to be used for tech mods.

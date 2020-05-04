@@ -1,9 +1,9 @@
 package com.scientianova.versatile.machines.gui.layout.components.buttons
 
-import com.scientianovateam.versatile.machines.gui.layout.components.ITexturedGUIComponent
-import com.scientianovateam.versatile.machines.gui.textures.interactable.ButtonDrawMode
-import com.scientianovateam.versatile.machines.gui.textures.interactable.ButtonTextureGroup
-import com.scientianovateam.versatile.machines.properties.IVariableProperty
+import com.scientianova.versatile.machines.gui.layout.components.ITexturedGUIComponent
+import com.scientianova.versatile.machines.gui.textures.interactable.ButtonDrawMode
+import com.scientianova.versatile.machines.gui.textures.interactable.ButtonTextureGroup
+import com.scientianova.versatile.machines.properties.IVariableProperty
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 

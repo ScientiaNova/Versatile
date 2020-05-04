@@ -1,11 +1,11 @@
 package com.scientianova.versatile.machines.properties.implementations.processing
 
-import com.scientianovateam.versatile.common.extensions.nbt
-import com.scientianovateam.versatile.machines.BaseTileEntity
-import com.scientianovateam.versatile.machines.gui.BaseContainer
-import com.scientianovateam.versatile.machines.properties.ITEBoundProperty
-import com.scientianovateam.versatile.machines.properties.implementations.recipes.RecipeProperty
-import com.scientianovateam.versatile.machines.recipes.Recipe
+import com.scientianova.versatile.common.extensions.nbt
+import com.scientianova.versatile.machines.BaseTileEntity
+import com.scientianova.versatile.machines.gui.BaseContainer
+import com.scientianova.versatile.machines.properties.ITEBoundProperty
+import com.scientianova.versatile.machines.properties.implementations.recipes.RecipeProperty
+import com.scientianova.versatile.machines.recipes.Recipe
 import net.minecraft.nbt.CompoundNBT
 
 open class StandardProcessingProperty(override val id: String, override val te: BaseTileEntity, val recipeProperty: RecipeProperty) : ITEBoundProperty {

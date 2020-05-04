@@ -1,6 +1,6 @@
 package com.scientianova.versatile.machines.capabilities.fluids
 
-import com.scientianovateam.versatile.common.extensions.times
+import com.scientianova.versatile.common.extensions.times
 import net.minecraftforge.fluids.FluidStack
 import net.minecraftforge.fluids.capability.IFluidHandler
 

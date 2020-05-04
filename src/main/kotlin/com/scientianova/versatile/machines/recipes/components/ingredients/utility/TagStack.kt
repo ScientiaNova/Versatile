@@ -1,6 +1,6 @@
 package com.scientianova.versatile.machines.recipes.components.ingredients.utility
 
-import com.scientianovateam.versatile.common.extensions.times
+import com.scientianova.versatile.common.extensions.times
 import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.Item

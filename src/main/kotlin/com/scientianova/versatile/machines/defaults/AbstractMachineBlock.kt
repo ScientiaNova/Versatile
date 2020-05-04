@@ -1,11 +1,11 @@
 package com.scientianova.versatile.machines.defaults
 
 import com.scientianova.versatile.blocks.ModBlock
-import com.scientianovateam.versatile.machines.BaseTileEntity
-import com.scientianovateam.versatile.machines.IMachineBlock
-import com.scientianovateam.versatile.machines.gui.BaseContainerProvider
-import com.scientianovateam.versatile.machines.packets.NetworkHandler
-import com.scientianovateam.versatile.machines.packets.reopening.ChangePagePacket
+import com.scientianova.versatile.machines.BaseTileEntity
+import com.scientianova.versatile.machines.IMachineBlock
+import com.scientianova.versatile.machines.gui.BaseContainerProvider
+import com.scientianova.versatile.machines.packets.NetworkHandler
+import com.scientianova.versatile.machines.packets.reopening.ChangePagePacket
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.ServerPlayerEntity
@@ -19,7 +19,7 @@ import net.minecraft.world.World
 import net.minecraftforge.fml.network.NetworkDirection
 import net.minecraftforge.fml.network.NetworkHooks
 
-abstract class AbstractMachineBlock(properties: Properties, name: String) : _root_ide_package_.com.scientianova.versatile.blocks.ModBlock(properties, name), IMachineBlock {
+abstract class AbstractMachineBlock(properties: Properties, name: String) : ModBlock(properties, name), IMachineBlock {
     init {
         BaseTileEntity.USED_BY += this
     }

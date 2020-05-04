@@ -1,7 +1,7 @@
 package com.scientianova.versatile.integration.jei
 
-import com.scientianovateam.versatile.machines.gui.GUiUtils
-import com.scientianovateam.versatile.machines.gui.layout.IGUIComponent
+import com.scientianova.versatile.machines.gui.GUiUtils
+import com.scientianova.versatile.machines.gui.layout.IGUIComponent
 import mezz.jei.Internal
 import net.minecraft.util.text.TranslationTextComponent
 

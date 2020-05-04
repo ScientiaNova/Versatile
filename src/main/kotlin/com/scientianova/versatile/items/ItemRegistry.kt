@@ -1,8 +1,8 @@
 package com.scientianova.versatile.items
 
-import com.scientianovateam.versatile.materialsystem.lists.MaterialItems
-import com.scientianovateam.versatile.materialsystem.lists.Materials
-import com.scientianovateam.versatile.materialsystem.lists.ObjTypes
+import com.scientianova.versatile.materialsystem.lists.MaterialItems
+import com.scientianova.versatile.materialsystem.lists.Materials
+import com.scientianova.versatile.materialsystem.lists.ObjTypes
 import net.minecraft.item.Item
 import net.minecraftforge.event.RegistryEvent
 

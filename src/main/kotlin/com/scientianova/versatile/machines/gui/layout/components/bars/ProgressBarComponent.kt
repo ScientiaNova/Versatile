@@ -1,9 +1,9 @@
 package com.scientianova.versatile.machines.gui.layout.components.bars
 
-import com.scientianovateam.versatile.machines.gui.layout.components.ITexturedGUIComponent
-import com.scientianovateam.versatile.machines.gui.textures.BaseTextures
-import com.scientianovateam.versatile.machines.gui.textures.updating.Direction2D
-import com.scientianovateam.versatile.machines.properties.IValueProperty
+import com.scientianova.versatile.machines.gui.layout.components.ITexturedGUIComponent
+import com.scientianova.versatile.machines.gui.textures.BaseTextures
+import com.scientianova.versatile.machines.gui.textures.updating.Direction2D
+import com.scientianova.versatile.machines.properties.IValueProperty
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 

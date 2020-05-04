@@ -1,6 +1,6 @@
 package com.scientianova.versatile.machines.capabilities.energy
 
-import com.scientianovateam.versatile.common.extensions.nbt
+import com.scientianova.versatile.common.extensions.nbt
 import net.minecraft.nbt.CompoundNBT
 import net.minecraftforge.common.util.INBTSerializable
 

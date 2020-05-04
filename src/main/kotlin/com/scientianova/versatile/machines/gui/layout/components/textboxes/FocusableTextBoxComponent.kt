@@ -1,6 +1,6 @@
 package com.scientianova.versatile.machines.gui.layout.components.textboxes
 
-import com.scientianovateam.versatile.machines.properties.implementations.strings.VariableStringProperty
+import com.scientianova.versatile.machines.properties.implementations.strings.VariableStringProperty
 import org.lwjgl.glfw.GLFW
 
 open class FocusableTextBoxComponent(property: VariableStringProperty) : TextBoxComponent(property) {

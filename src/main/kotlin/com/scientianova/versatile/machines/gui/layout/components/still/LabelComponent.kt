@@ -1,7 +1,7 @@
 package com.scientianova.versatile.machines.gui.layout.components.still
 
-import com.scientianovateam.versatile.machines.gui.layout.DefaultSizeConstants
-import com.scientianovateam.versatile.machines.gui.layout.IGUIComponent
+import com.scientianova.versatile.machines.gui.layout.DefaultSizeConstants
+import com.scientianova.versatile.machines.gui.layout.IGUIComponent
 import net.minecraft.client.Minecraft
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn

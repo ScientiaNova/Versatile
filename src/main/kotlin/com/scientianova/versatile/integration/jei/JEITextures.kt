@@ -1,6 +1,6 @@
 package com.scientianova.versatile.integration.jei
 
-import com.scientianovateam.versatile.machines.gui.textures.still.GUITexture
+import com.scientianova.versatile.machines.gui.textures.still.GUITexture
 
 object JEITextures {
     @JvmStatic

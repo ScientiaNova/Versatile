@@ -1,13 +1,13 @@
 package com.scientianova.versatile.machines.properties.implementations.items
 
-import com.scientianovateam.versatile.common.extensions.*
-import com.scientianovateam.versatile.machines.BaseTileEntity
-import com.scientianovateam.versatile.machines.capabilities.items.ItemCapabilityWrapper
-import com.scientianovateam.versatile.machines.gui.BaseContainer
-import com.scientianovateam.versatile.machines.packets.NetworkHandler
-import com.scientianovateam.versatile.machines.packets.handlers.UpdateSlotPacket
-import com.scientianovateam.versatile.machines.properties.ITEBoundProperty
-import com.scientianovateam.versatile.machines.properties.IValueProperty
+import com.scientianova.versatile.common.extensions.*
+import com.scientianova.versatile.machines.BaseTileEntity
+import com.scientianova.versatile.machines.capabilities.items.ItemCapabilityWrapper
+import com.scientianova.versatile.machines.gui.BaseContainer
+import com.scientianova.versatile.machines.packets.NetworkHandler
+import com.scientianova.versatile.machines.packets.handlers.UpdateSlotPacket
+import com.scientianova.versatile.machines.properties.ITEBoundProperty
+import com.scientianova.versatile.machines.properties.IValueProperty
 import com.google.common.reflect.MutableTypeToInstanceMap
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.item.ItemStack

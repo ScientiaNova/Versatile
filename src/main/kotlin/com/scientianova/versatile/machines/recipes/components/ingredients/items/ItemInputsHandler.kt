@@ -1,7 +1,7 @@
 package com.scientianova.versatile.machines.recipes.components.ingredients.items
 
-import com.scientianovateam.versatile.machines.recipes.components.IRecipeComponentHandler
-import com.scientianovateam.versatile.machines.recipes.components.ingredients.recipestacks.ChancedRecipeStack
+import com.scientianova.versatile.machines.recipes.components.IRecipeComponentHandler
+import com.scientianova.versatile.machines.recipes.components.ingredients.recipestacks.ChancedRecipeStack
 import net.minecraft.item.ItemStack
 
 class ItemInputsHandler(override val value: List<ChancedRecipeStack<ItemStack>>) : IRecipeComponentHandler<List<ChancedRecipeStack<ItemStack>>> {

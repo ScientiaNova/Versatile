@@ -1,17 +1,17 @@
 package com.scientianova.versatile.machines.recipes.components.ingredients.items
 
-import com.scientianovateam.versatile.machines.BaseTileEntity
-import com.scientianovateam.versatile.machines.gui.layout.IGUIComponent
-import com.scientianovateam.versatile.machines.gui.layout.components.slots.ItemSlotComponent
-import com.scientianovateam.versatile.machines.gui.layout.components.stacksuppliers.RecipeOutputItemStackSupplierSlot
-import com.scientianovateam.versatile.machines.properties.ITEBoundProperty
-import com.scientianovateam.versatile.machines.properties.implementations.items.TEItemInventoryProperty
-import com.scientianovateam.versatile.machines.properties.implementations.items.TEItemOutputProperty
-import com.scientianovateam.versatile.machines.properties.implementations.processing.handlers.ItemOutputsProcessingHandler
-import com.scientianovateam.versatile.machines.recipes.Recipe
-import com.scientianovateam.versatile.machines.recipes.components.IRecipeComponent
-import com.scientianovateam.versatile.machines.recipes.components.grouping.RecipeComponentFamilies
-import com.scientianovateam.versatile.machines.recipes.components.ingredients.recipestacks.ChancedRecipeStack
+import com.scientianova.versatile.machines.BaseTileEntity
+import com.scientianova.versatile.machines.gui.layout.IGUIComponent
+import com.scientianova.versatile.machines.gui.layout.components.slots.ItemSlotComponent
+import com.scientianova.versatile.machines.gui.layout.components.stacksuppliers.RecipeOutputItemStackSupplierSlot
+import com.scientianova.versatile.machines.properties.ITEBoundProperty
+import com.scientianova.versatile.machines.properties.implementations.items.TEItemInventoryProperty
+import com.scientianova.versatile.machines.properties.implementations.items.TEItemOutputProperty
+import com.scientianova.versatile.machines.properties.implementations.processing.handlers.ItemOutputsProcessingHandler
+import com.scientianova.versatile.machines.recipes.Recipe
+import com.scientianova.versatile.machines.recipes.components.IRecipeComponent
+import com.scientianova.versatile.machines.recipes.components.grouping.RecipeComponentFamilies
+import com.scientianova.versatile.machines.recipes.components.ingredients.recipestacks.ChancedRecipeStack
 import net.minecraft.item.ItemStack
 import kotlin.math.min
 

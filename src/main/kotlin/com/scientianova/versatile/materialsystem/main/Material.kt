@@ -1,13 +1,13 @@
 package com.scientianova.versatile.materialsystem.main
 
-import com.scientianovateam.versatile.common.extensions.toResLoc
-import com.scientianovateam.versatile.materialsystem.addition.BaseElements
-import com.scientianovateam.versatile.materialsystem.addition.BaseObjTypes
-import com.scientianovateam.versatile.materialsystem.addition.MatProperties
-import com.scientianovateam.versatile.materialsystem.lists.Materials
-import com.scientianovateam.versatile.materialsystem.properties.HarvestTier
-import com.scientianovateam.versatile.materialsystem.properties.IBranchingProperty
-import com.scientianovateam.versatile.materialsystem.properties.MatProperty
+import com.scientianova.versatile.common.extensions.toResLoc
+import com.scientianova.versatile.materialsystem.addition.BaseElements
+import com.scientianova.versatile.materialsystem.addition.BaseObjTypes
+import com.scientianova.versatile.materialsystem.addition.MatProperties
+import com.scientianova.versatile.materialsystem.lists.Materials
+import com.scientianova.versatile.materialsystem.properties.HarvestTier
+import com.scientianova.versatile.materialsystem.properties.IBranchingProperty
+import com.scientianova.versatile.materialsystem.properties.MatProperty
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.FluidTags
 import net.minecraft.tags.ItemTags

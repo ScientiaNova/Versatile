@@ -1,9 +1,9 @@
 package com.scientianova.versatile.machines.gui
 
-import com.scientianovateam.versatile.machines.BaseMachineRegistry
-import com.scientianovateam.versatile.machines.BaseTileEntity
-import com.scientianovateam.versatile.machines.gui.slots.IImprovedSlot
-import com.scientianovateam.versatile.machines.gui.slots.SlotLogic
+import com.scientianova.versatile.machines.BaseMachineRegistry
+import com.scientianova.versatile.machines.BaseTileEntity
+import com.scientianova.versatile.machines.gui.slots.IImprovedSlot
+import com.scientianova.versatile.machines.gui.slots.SlotLogic
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.container.ClickType

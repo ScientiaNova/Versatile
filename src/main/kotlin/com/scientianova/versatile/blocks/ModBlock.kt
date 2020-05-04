@@ -1,6 +1,6 @@
 package com.scientianova.versatile.blocks
 
-import com.scientianovateam.versatile.common.extensions.toResLoc
+import com.scientianova.versatile.common.extensions.toResLoc
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.client.renderer.RenderType

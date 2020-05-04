@@ -1,11 +1,11 @@
 package com.scientianova.versatile.machines.gui.layout.components.bars
 
-import com.scientianovateam.versatile.machines.capabilities.fluids.IFluidHandlerModifiable
-import com.scientianovateam.versatile.machines.gui.GUiUtils
-import com.scientianovateam.versatile.machines.gui.layout.components.ITexturedGUIComponent
-import com.scientianovateam.versatile.machines.gui.textures.updating.Direction2D
-import com.scientianovateam.versatile.machines.gui.textures.still.GUITexture
-import com.scientianovateam.versatile.machines.properties.IValueProperty
+import com.scientianova.versatile.machines.capabilities.fluids.IFluidHandlerModifiable
+import com.scientianova.versatile.machines.gui.GUiUtils
+import com.scientianova.versatile.machines.gui.layout.components.ITexturedGUIComponent
+import com.scientianova.versatile.machines.gui.textures.updating.Direction2D
+import com.scientianova.versatile.machines.gui.textures.still.GUITexture
+import com.scientianova.versatile.machines.properties.IValueProperty
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 

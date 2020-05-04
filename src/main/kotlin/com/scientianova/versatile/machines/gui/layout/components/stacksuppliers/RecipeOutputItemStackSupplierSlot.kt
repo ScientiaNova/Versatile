@@ -1,12 +1,12 @@
 package com.scientianova.versatile.machines.gui.layout.components.stacksuppliers
 
-import com.scientianovateam.versatile.common.extensions.isNotEmpty
-import com.scientianovateam.versatile.common.extensions.shorten
-import com.scientianovateam.versatile.machines.gui.layout.components.ITexturedGUIComponent
-import com.scientianovateam.versatile.machines.gui.textures.BaseTextures
-import com.scientianovateam.versatile.machines.recipes.Recipe
-import com.scientianovateam.versatile.machines.recipes.components.grouping.IOType
-import com.scientianovateam.versatile.machines.recipes.components.ingredients.items.ItemOutputsComponent
+import com.scientianova.versatile.common.extensions.isNotEmpty
+import com.scientianova.versatile.common.extensions.shorten
+import com.scientianova.versatile.machines.gui.layout.components.ITexturedGUIComponent
+import com.scientianova.versatile.machines.gui.textures.BaseTextures
+import com.scientianova.versatile.machines.recipes.Recipe
+import com.scientianova.versatile.machines.recipes.components.grouping.IOType
+import com.scientianova.versatile.machines.recipes.components.ingredients.items.ItemOutputsComponent
 import net.minecraft.item.ItemStack
 import net.minecraft.util.text.TranslationTextComponent
 

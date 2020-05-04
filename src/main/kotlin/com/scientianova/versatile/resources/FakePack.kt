@@ -1,6 +1,6 @@
 package com.scientianova.versatile.resources
 
-import com.scientianovateam.versatile.common.extensions.JsonBuilder
+import com.scientianova.versatile.common.extensions.JsonBuilder
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonElement
 import com.google.gson.JsonParser
@@ -42,7 +42,7 @@ internal class FakePack constructor(private val name: String) : IResourcePack {
     fun putJSON(type: ResourcePackType, location: ResourceLocation, json: JsonElement) = putString(type, location, GSON.toJson(json))
 
     fun putJSON(type: ResourcePackType, location: ResourceLocation, json: JsonBuilder.() -> Unit) =
-            putString(type, location, GSON.toJson(com.scientianovateam.versatile.common.extensions.json(json)))
+            putString(type, location, GSON.toJson(com.scientianova.versatile.common.extensions.json(json)))
 
     @Throws(IOException::class)
     override fun getRootResourceStream(fileName: String): InputStream {

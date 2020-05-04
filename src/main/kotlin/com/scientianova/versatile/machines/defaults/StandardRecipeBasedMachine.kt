@@ -1,14 +1,14 @@
 package com.scientianova.versatile.machines.defaults
 
-import com.scientianovateam.versatile.machines.BaseTileEntity
-import com.scientianovateam.versatile.machines.gui.layout.DefaultSizeConstants
-import com.scientianovateam.versatile.machines.gui.layout.GUIBook
-import com.scientianovateam.versatile.machines.gui.layout.book
-import com.scientianovateam.versatile.machines.gui.layout.components.still.LabelComponent
-import com.scientianovateam.versatile.machines.properties.ITEBoundProperty
-import com.scientianovateam.versatile.machines.properties.implementations.processing.StandardProcessingProperty
-import com.scientianovateam.versatile.machines.properties.implementations.recipes.TEStandardRecipeProperty
-import com.scientianovateam.versatile.machines.recipes.RecipeList
+import com.scientianova.versatile.machines.BaseTileEntity
+import com.scientianova.versatile.machines.gui.layout.DefaultSizeConstants
+import com.scientianova.versatile.machines.gui.layout.GUIBook
+import com.scientianova.versatile.machines.gui.layout.book
+import com.scientianova.versatile.machines.gui.layout.components.still.LabelComponent
+import com.scientianova.versatile.machines.properties.ITEBoundProperty
+import com.scientianova.versatile.machines.properties.implementations.processing.StandardProcessingProperty
+import com.scientianova.versatile.machines.properties.implementations.recipes.TEStandardRecipeProperty
+import com.scientianova.versatile.machines.recipes.RecipeList
 import kotlin.math.max
 
 open class StandardRecipeBasedMachine(recipeList: RecipeList, properties: Properties, name: String = recipeList.name.toString()) : AbstractMachineBlock(properties, name) {

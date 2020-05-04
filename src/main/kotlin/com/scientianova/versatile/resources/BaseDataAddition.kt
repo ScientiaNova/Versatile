@@ -1,15 +1,15 @@
 package com.scientianova.versatile.resources
 
-import com.scientianovateam.versatile.common.extensions.times
-import com.scientianovateam.versatile.common.extensions.toStack
-import com.scientianovateam.versatile.materialsystem.addition.BaseObjTypes
-import com.scientianovateam.versatile.materialsystem.lists.MaterialBlocks
-import com.scientianovateam.versatile.materialsystem.lists.MaterialFluids
-import com.scientianovateam.versatile.materialsystem.lists.MaterialItems
-import com.scientianovateam.versatile.materialsystem.lists.Materials
-import com.scientianovateam.versatile.materialsystem.main.IMaterialObject
-import com.scientianovateam.versatile.materialsystem.main.Material
-import com.scientianovateam.versatile.materialsystem.properties.BlockCompaction
+import com.scientianova.versatile.common.extensions.times
+import com.scientianova.versatile.common.extensions.toStack
+import com.scientianova.versatile.materialsystem.addition.BaseObjTypes
+import com.scientianova.versatile.materialsystem.lists.MaterialBlocks
+import com.scientianova.versatile.materialsystem.lists.MaterialFluids
+import com.scientianova.versatile.materialsystem.lists.MaterialItems
+import com.scientianova.versatile.materialsystem.lists.Materials
+import com.scientianova.versatile.materialsystem.main.IMaterialObject
+import com.scientianova.versatile.materialsystem.main.Material
+import com.scientianova.versatile.materialsystem.properties.BlockCompaction
 import net.minecraft.util.ResourceLocation
 
 object BaseDataAddition {

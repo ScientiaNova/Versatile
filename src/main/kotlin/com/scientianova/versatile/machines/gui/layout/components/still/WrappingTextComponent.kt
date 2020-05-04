@@ -1,6 +1,6 @@
 package com.scientianova.versatile.machines.gui.layout.components.still
 
-import com.scientianovateam.versatile.machines.gui.layout.DefaultSizeConstants
+import com.scientianova.versatile.machines.gui.layout.DefaultSizeConstants
 import net.minecraft.client.Minecraft
 import net.minecraftforge.fml.DistExecutor
 import java.util.function.Supplier

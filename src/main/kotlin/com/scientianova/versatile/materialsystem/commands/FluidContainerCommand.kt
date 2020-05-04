@@ -1,8 +1,8 @@
 package com.scientianova.versatile.materialsystem.commands
 
-import com.scientianovateam.versatile.common.extensions.does
-import com.scientianovateam.versatile.common.extensions.literal
-import com.scientianovateam.versatile.common.extensions.register
+import com.scientianova.versatile.common.extensions.does
+import com.scientianova.versatile.common.extensions.literal
+import com.scientianova.versatile.common.extensions.register
 import com.mojang.brigadier.CommandDispatcher
 import net.minecraft.command.CommandSource
 import net.minecraft.entity.player.ServerPlayerEntity

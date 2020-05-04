@@ -1,10 +1,10 @@
 package com.scientianova.versatile.fluids
 
-import com.scientianovateam.versatile.materialsystem.lists.MaterialBlocks
-import com.scientianovateam.versatile.materialsystem.lists.MaterialFluids
-import com.scientianovateam.versatile.materialsystem.main.IMaterialObject
-import com.scientianovateam.versatile.materialsystem.main.Material
-import com.scientianovateam.versatile.materialsystem.main.ObjectType
+import com.scientianova.versatile.materialsystem.lists.MaterialBlocks
+import com.scientianova.versatile.materialsystem.lists.MaterialFluids
+import com.scientianova.versatile.materialsystem.main.IMaterialObject
+import com.scientianova.versatile.materialsystem.main.Material
+import com.scientianova.versatile.materialsystem.main.ObjectType
 import net.minecraft.block.BlockState
 import net.minecraft.block.FlowingFluidBlock
 import net.minecraft.entity.Entity

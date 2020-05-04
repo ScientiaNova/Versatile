@@ -1,6 +1,6 @@
 package com.scientianova.versatile.machines.packets.reopening
 
-import com.scientianovateam.versatile.machines.gui.BaseContainerProvider
+import com.scientianova.versatile.machines.gui.BaseContainerProvider
 import net.minecraft.network.PacketBuffer
 import net.minecraft.util.math.BlockPos
 import net.minecraftforge.fml.network.NetworkEvent

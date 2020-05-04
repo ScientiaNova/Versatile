@@ -1,11 +1,11 @@
 package com.scientianova.versatile.proxy
 
-import com.scientianovateam.versatile.materialsystem.lists.MaterialBlocks
-import com.scientianovateam.versatile.materialsystem.lists.MaterialFluids
-import com.scientianovateam.versatile.materialsystem.lists.MaterialItems
-import com.scientianovateam.versatile.materialsystem.main.IMaterialObject
-import com.scientianovateam.versatile.resources.FakeResourcePackFinder
-import com.scientianovateam.versatile.resources.JSONAdder
+import com.scientianova.versatile.materialsystem.lists.MaterialBlocks
+import com.scientianova.versatile.materialsystem.lists.MaterialFluids
+import com.scientianova.versatile.materialsystem.lists.MaterialItems
+import com.scientianova.versatile.materialsystem.main.IMaterialObject
+import com.scientianova.versatile.resources.FakeResourcePackFinder
+import com.scientianova.versatile.resources.JSONAdder
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.FlowingFluidBlock

@@ -1,6 +1,6 @@
 package com.scientianova.versatile.common.extensions
 
-import com.scientianovateam.versatile.machines.capabilities.fluids.IFluidHandlerModifiable
+import com.scientianova.versatile.machines.capabilities.fluids.IFluidHandlerModifiable
 import net.minecraft.item.ItemStack
 import net.minecraftforge.fluids.FluidStack
 import net.minecraftforge.fluids.capability.IFluidHandler

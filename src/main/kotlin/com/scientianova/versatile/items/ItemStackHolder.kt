@@ -1,7 +1,7 @@
 package com.scientianova.versatile.items
 
-import com.scientianovateam.versatile.common.extensions.isNotEmpty
-import com.scientianovateam.versatile.common.extensions.times
+import com.scientianova.versatile.common.extensions.isNotEmpty
+import com.scientianova.versatile.common.extensions.times
 import net.minecraft.item.ItemStack
 
 class ItemStackHolder @JvmOverloads constructor(var stack: ItemStack = ItemStack.EMPTY) {

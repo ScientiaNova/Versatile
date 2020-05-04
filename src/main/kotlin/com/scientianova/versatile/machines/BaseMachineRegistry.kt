@@ -1,6 +1,6 @@
 package com.scientianova.versatile.machines
 
-import com.scientianovateam.versatile.machines.gui.BaseContainer
+import com.scientianova.versatile.machines.gui.BaseContainer
 import net.minecraft.inventory.container.ContainerType
 import net.minecraft.tileentity.TileEntityType
 import net.minecraftforge.common.extensions.IForgeContainerType

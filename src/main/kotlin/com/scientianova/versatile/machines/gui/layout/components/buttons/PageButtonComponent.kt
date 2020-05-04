@@ -1,8 +1,8 @@
 package com.scientianova.versatile.machines.gui.layout.components.buttons
 
-import com.scientianovateam.versatile.machines.gui.layout.components.ITexturedGUIComponent
-import com.scientianovateam.versatile.machines.gui.textures.still.GUITexture
-import com.scientianovateam.versatile.machines.properties.implementations.TEPageProperty
+import com.scientianova.versatile.machines.gui.layout.components.ITexturedGUIComponent
+import com.scientianova.versatile.machines.gui.textures.still.GUITexture
+import com.scientianova.versatile.machines.properties.implementations.TEPageProperty
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 

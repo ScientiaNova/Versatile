@@ -1,6 +1,6 @@
 package com.scientianova.versatile.machines.gui
 
-import com.scientianovateam.versatile.machines.BaseTileEntity
+import com.scientianova.versatile.machines.BaseTileEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.container.INamedContainerProvider

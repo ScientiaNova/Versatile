@@ -1,9 +1,9 @@
 package com.scientianova.versatile.materialsystem.main
 
-import com.scientianovateam.versatile.common.extensions.toResLoc
-import com.scientianovateam.versatile.materialsystem.addition.ObjTypeProperties
-import com.scientianovateam.versatile.materialsystem.lists.ObjTypes
-import com.scientianovateam.versatile.materialsystem.properties.FormProperty
+import com.scientianova.versatile.common.extensions.toResLoc
+import com.scientianova.versatile.materialsystem.addition.ObjTypeProperties
+import com.scientianova.versatile.materialsystem.lists.ObjTypes
+import com.scientianova.versatile.materialsystem.properties.FormProperty
 import net.minecraft.tags.ItemTags
 import net.minecraft.util.text.TranslationTextComponent
 

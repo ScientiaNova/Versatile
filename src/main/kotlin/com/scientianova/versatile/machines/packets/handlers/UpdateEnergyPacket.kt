@@ -1,8 +1,8 @@
 package com.scientianova.versatile.machines.packets.handlers
 
-import com.scientianovateam.versatile.machines.capabilities.energy.IEnergyStorageModifiable
-import com.scientianovateam.versatile.machines.gui.BaseContainer
-import com.scientianovateam.versatile.machines.properties.IValueProperty
+import com.scientianova.versatile.machines.capabilities.energy.IEnergyStorageModifiable
+import com.scientianova.versatile.machines.gui.BaseContainer
+import com.scientianova.versatile.machines.properties.IValueProperty
 import net.minecraft.client.Minecraft
 import net.minecraft.network.PacketBuffer
 import net.minecraftforge.fml.DistExecutor
@@ -27,7 +27,7 @@ class UpdateEnergyPacket(val property: String, val value: Int) {
                 val container = DistExecutor.runForDist(
                         {
                             Supplier {
-                                serverSideContainer ?: Minecraft.getInstance().player.openContainer as? BaseContainer
+                                serverSideContainer ?: Minecraft.getInstance().player!!.openContainer as? BaseContainer
                             }
                         },
                         { Supplier { serverSideContainer } }

@@ -7,7 +7,7 @@ import net.minecraftforge.event.RegistryEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod
 
-@Mod.EventBusSubscriber(modid = _root_ide_package_.com.scientianova.versatile.Versatile.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = Versatile.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 object VanillaRecipeRegistry {
     lateinit var MATERIAL_BASED_RECIPE_TYPE: IRecipeType<MaterialBasedCodeRecipe>
         private set

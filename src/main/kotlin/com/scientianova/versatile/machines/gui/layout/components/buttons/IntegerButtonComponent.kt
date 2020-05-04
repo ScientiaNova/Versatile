@@ -1,8 +1,8 @@
 package com.scientianova.versatile.machines.gui.layout.components.buttons
 
-import com.scientianovateam.versatile.machines.gui.layout.components.ITexturedGUIComponent
-import com.scientianovateam.versatile.machines.gui.textures.updating.AnimatedGUITexture
-import com.scientianovateam.versatile.machines.properties.ILimitedIntegerProperty
+import com.scientianova.versatile.machines.gui.layout.components.ITexturedGUIComponent
+import com.scientianova.versatile.machines.gui.textures.updating.AnimatedGUITexture
+import com.scientianova.versatile.machines.properties.ILimitedIntegerProperty
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 

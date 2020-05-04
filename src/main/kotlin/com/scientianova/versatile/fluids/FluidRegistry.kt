@@ -1,8 +1,8 @@
 package com.scientianova.versatile.fluids
 
-import com.scientianovateam.versatile.materialsystem.lists.MaterialFluids
-import com.scientianovateam.versatile.materialsystem.lists.Materials
-import com.scientianovateam.versatile.materialsystem.lists.ObjTypes
+import com.scientianova.versatile.materialsystem.lists.MaterialFluids
+import com.scientianova.versatile.materialsystem.lists.Materials
+import com.scientianova.versatile.materialsystem.lists.ObjTypes
 import net.minecraft.fluid.Fluid
 import net.minecraftforge.event.RegistryEvent
 

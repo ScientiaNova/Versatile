@@ -1,7 +1,7 @@
 package com.scientianova.versatile.machines.properties
 
-import com.scientianovateam.versatile.machines.BaseTileEntity
-import com.scientianovateam.versatile.machines.gui.BaseContainer
+import com.scientianova.versatile.machines.BaseTileEntity
+import com.scientianova.versatile.machines.gui.BaseContainer
 import com.google.common.reflect.MutableTypeToInstanceMap
 import net.minecraft.nbt.CompoundNBT
 import net.minecraftforge.common.capabilities.ICapabilityProvider

@@ -1,7 +1,7 @@
 package com.scientianova.versatile.machines.recipes.syncing
 
-import com.scientianovateam.versatile.common.extensions.toResLoc
-import com.scientianovateam.versatile.machines.recipes.Recipe
+import com.scientianova.versatile.common.extensions.toResLoc
+import com.scientianova.versatile.machines.recipes.Recipe
 import com.google.gson.JsonObject
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.item.ItemStack

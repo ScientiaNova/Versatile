@@ -1,9 +1,9 @@
 package com.scientianova.versatile.materialsystem.elements
 
-import com.scientianovateam.versatile.materialsystem.addition.BaseElements
-import com.scientianovateam.versatile.materialsystem.properties.CompoundType
-import com.scientianovateam.versatile.materialsystem.main.Material
-import com.scientianovateam.versatile.materialsystem.main.ObjectType
+import com.scientianova.versatile.materialsystem.addition.BaseElements
+import com.scientianova.versatile.materialsystem.properties.CompoundType
+import com.scientianova.versatile.materialsystem.main.Material
+import com.scientianova.versatile.materialsystem.main.ObjectType
 
 //This class contains functions used for determining the elemental properties of compounds
 object ElementUtils {

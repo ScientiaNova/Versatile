@@ -1,8 +1,8 @@
 package com.scientianova.versatile.machines.gui.layout.components.slots
 
-import com.scientianovateam.versatile.machines.gui.layout.components.ITexturedGUIComponent
-import com.scientianovateam.versatile.machines.gui.slots.PlayerSlot
-import com.scientianovateam.versatile.machines.gui.textures.BaseTextures
+import com.scientianova.versatile.machines.gui.layout.components.ITexturedGUIComponent
+import com.scientianova.versatile.machines.gui.slots.PlayerSlot
+import com.scientianova.versatile.machines.gui.textures.BaseTextures
 import net.minecraft.entity.player.PlayerInventory
 
 open class PlayerSlotComponent(val slotIndex: Int, override var x: Int, override var y: Int) : ITexturedGUIComponent {

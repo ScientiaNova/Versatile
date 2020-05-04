@@ -1,9 +1,9 @@
 package com.scientianova.versatile.materialsystem.addition
 
-import com.scientianovateam.versatile.common.extensions.toResLoc
-import com.scientianovateam.versatile.materialsystem.main.Material
-import com.scientianovateam.versatile.materialsystem.main.ObjectType
-import com.scientianovateam.versatile.materialsystem.properties.*
+import com.scientianova.versatile.common.extensions.toResLoc
+import com.scientianova.versatile.materialsystem.main.Material
+import com.scientianova.versatile.materialsystem.main.ObjectType
+import com.scientianova.versatile.materialsystem.properties.*
 import net.minecraft.item.IArmorMaterial
 import net.minecraft.item.IItemTier
 

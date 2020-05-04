@@ -1,7 +1,7 @@
 package com.scientianova.versatile.machines.gui.slots
 
-import com.scientianovateam.versatile.common.extensions.isNotEmpty
-import com.scientianovateam.versatile.machines.capabilities.items.IContainerItemHandler
+import com.scientianova.versatile.common.extensions.isNotEmpty
+import com.scientianova.versatile.machines.capabilities.items.IContainerItemHandler
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraftforge.items.IItemHandler

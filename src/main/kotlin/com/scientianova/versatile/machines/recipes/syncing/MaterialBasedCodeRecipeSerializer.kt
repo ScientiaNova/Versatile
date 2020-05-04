@@ -1,6 +1,6 @@
 package com.scientianova.versatile.machines.recipes.syncing
 
-import com.scientianovateam.versatile.common.extensions.toResLoc
+import com.scientianova.versatile.common.extensions.toResLoc
 import com.google.gson.JsonObject
 import net.minecraft.item.crafting.IRecipeSerializer
 import net.minecraft.network.PacketBuffer

@@ -1,8 +1,8 @@
 package com.scientianova.versatile.machines.gui.layout.components.slots
 
-import com.scientianovateam.versatile.machines.gui.GUiUtils
-import com.scientianovateam.versatile.machines.properties.implementations.items.TERecipeItemInputProperty
-import com.scientianovateam.versatile.machines.recipes.components.ingredients.items.ItemInputsComponent
+import com.scientianova.versatile.machines.gui.GUiUtils
+import com.scientianova.versatile.machines.properties.implementations.items.TERecipeItemInputProperty
+import com.scientianova.versatile.machines.recipes.components.ingredients.items.ItemInputsComponent
 import net.minecraft.client.Minecraft
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn

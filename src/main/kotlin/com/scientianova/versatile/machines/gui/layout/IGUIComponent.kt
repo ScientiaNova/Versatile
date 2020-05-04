@@ -1,7 +1,7 @@
 package com.scientianova.versatile.machines.gui.layout
 
-import com.scientianovateam.versatile.machines.gui.slots.IImprovedSlot
-import com.scientianovateam.versatile.machines.properties.IMachineProperty
+import com.scientianova.versatile.machines.gui.slots.IImprovedSlot
+import com.scientianova.versatile.machines.properties.IMachineProperty
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn

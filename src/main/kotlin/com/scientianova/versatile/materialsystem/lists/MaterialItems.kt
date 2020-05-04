@@ -1,8 +1,8 @@
 package com.scientianova.versatile.materialsystem.lists
 
-import com.scientianovateam.versatile.materialsystem.main.IMaterialObject
-import com.scientianovateam.versatile.materialsystem.main.Material
-import com.scientianovateam.versatile.materialsystem.main.ObjectType
+import com.scientianova.versatile.materialsystem.main.IMaterialObject
+import com.scientianova.versatile.materialsystem.main.Material
+import com.scientianova.versatile.materialsystem.main.ObjectType
 import com.google.common.collect.HashBasedTable
 import com.google.common.collect.Table
 import net.minecraft.item.Item

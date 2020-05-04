@@ -4,16 +4,16 @@ import com.google.gson.JsonObject
 import com.scientianova.versatile.Versatile
 import com.scientianova.versatile.blocks.MaterialBlock
 import com.scientianova.versatile.blocks.MaterialBlockItem
-import com.scientianovateam.versatile.common.extensions.json
-import com.scientianovateam.versatile.fluids.IFluidPairHolder
-import com.scientianovateam.versatile.fluids.MaterialBucketItem
-import com.scientianovateam.versatile.fluids.MaterialFluidBlock
-import com.scientianovateam.versatile.fluids.MaterialFluidHolder
-import com.scientianovateam.versatile.items.MaterialItem
-import com.scientianovateam.versatile.materialsystem.addition.ObjTypeProperties
-import com.scientianovateam.versatile.materialsystem.main.Material
-import com.scientianovateam.versatile.materialsystem.main.ObjectType
-import com.scientianovateam.versatile.materialsystem.properties.FormProperty
+import com.scientianova.versatile.common.extensions.json
+import com.scientianova.versatile.fluids.IFluidPairHolder
+import com.scientianova.versatile.fluids.MaterialBucketItem
+import com.scientianova.versatile.fluids.MaterialFluidBlock
+import com.scientianova.versatile.fluids.MaterialFluidHolder
+import com.scientianova.versatile.items.MaterialItem
+import com.scientianova.versatile.materialsystem.addition.ObjTypeProperties
+import com.scientianova.versatile.materialsystem.main.Material
+import com.scientianova.versatile.materialsystem.main.ObjectType
+import com.scientianova.versatile.materialsystem.properties.FormProperty
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.item.Item
@@ -95,7 +95,7 @@ class FluidTypeBuilder(name: String, requirement: (Material) -> Boolean) : ObjTy
         itemConstructor(::MaterialBucketItem)
         blockConstructor(::MaterialFluidBlock)
         fluidPairConstructor(::MaterialFluidHolder)
-        itemPropertiesFunc { _, _ -> Item.Properties().group(_root_ide_package_.com.scientianova.versatile.Versatile.MAIN).containerItem(Items.BUCKET).maxStackSize(1) }
+        itemPropertiesFunc { _, _ -> Item.Properties().group(Versatile.MAIN).containerItem(Items.BUCKET).maxStackSize(1) }
         blockPropertiesFunc { _, _ -> Block.Properties.from(Blocks.WATER) }
         singleTextureType()
         blacklistIndices(0)

@@ -3,17 +3,17 @@ package com.scientianova.versatile.materialsystem.builders
 import com.scientianova.versatile.Versatile
 import com.scientianova.versatile.blocks.MaterialBlock
 import com.scientianova.versatile.blocks.MaterialBlockItem
-import com.scientianovateam.versatile.common.extensions.json
-import com.scientianovateam.versatile.fluids.MaterialBucketItem
-import com.scientianovateam.versatile.fluids.MaterialFluidBlock
-import com.scientianovateam.versatile.fluids.MaterialFluidHolder
-import com.scientianovateam.versatile.items.MaterialItem
-import com.scientianovateam.versatile.materialsystem.addition.BaseObjTypes
-import com.scientianovateam.versatile.materialsystem.addition.BaseTextureTypes
-import com.scientianovateam.versatile.materialsystem.main.Material
-import com.scientianovateam.versatile.materialsystem.main.ObjectType
-import com.scientianovateam.versatile.materialsystem.properties.CompoundType
-import com.scientianovateam.versatile.materialsystem.properties.DisplayType
+import com.scientianova.versatile.common.extensions.json
+import com.scientianova.versatile.fluids.MaterialBucketItem
+import com.scientianova.versatile.fluids.MaterialFluidBlock
+import com.scientianova.versatile.fluids.MaterialFluidHolder
+import com.scientianova.versatile.items.MaterialItem
+import com.scientianova.versatile.materialsystem.addition.BaseObjTypes
+import com.scientianova.versatile.materialsystem.addition.BaseTextureTypes
+import com.scientianova.versatile.materialsystem.main.Material
+import com.scientianova.versatile.materialsystem.main.ObjectType
+import com.scientianova.versatile.materialsystem.properties.CompoundType
+import com.scientianova.versatile.materialsystem.properties.DisplayType
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.item.Item
@@ -70,8 +70,8 @@ fun itemType(name: String, requirement: (Material) -> Boolean, builder: ObjectTy
 
 @JvmOverloads
 fun blockType(name: String, requirement: (Material) -> Boolean, builder: ObjectType.() -> Unit = { }) = ObjectType(name) { requirement(it) }.apply {
-    itemConstructor = { mat -> _root_ide_package_.com.scientianova.versatile.blocks.MaterialBlockItem(mat, this) }
-    blockConstructor = { mat -> _root_ide_package_.com.scientianova.versatile.blocks.MaterialBlock(mat, this) }
+    itemConstructor = { mat -> MaterialBlockItem(mat, this) }
+    blockConstructor = { mat -> MaterialBlock(mat, this) }
     itemModel = { mat ->
         json {
             "parent" to "versatile:block/materialblocks/" + (if (singleTextureType) "" else "${mat.textureType}/") + name
@@ -85,7 +85,7 @@ fun fluidType(name: String, requirement: (Material) -> Boolean, builder: ObjectT
     itemConstructor = { mat -> MaterialBucketItem(mat, this) }
     blockConstructor = { mat -> MaterialFluidBlock(mat, this) }
     fluidPairConstructor = { mat -> MaterialFluidHolder(mat, this) }
-    itemProperties = { Item.Properties().group(_root_ide_package_.com.scientianova.versatile.Versatile.MAIN).containerItem(Items.BUCKET).maxStackSize(1) }
+    itemProperties = { Item.Properties().group(Versatile.MAIN).containerItem(Items.BUCKET).maxStackSize(1) }
     blockProperties = { Block.Properties.from(Blocks.WATER) }
     singleTextureType = true
     indexBlackList += 0

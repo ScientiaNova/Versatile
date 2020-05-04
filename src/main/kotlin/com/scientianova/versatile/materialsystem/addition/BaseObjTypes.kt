@@ -1,12 +1,12 @@
 package com.scientianova.versatile.materialsystem.addition
 
-import com.scientianovateam.versatile.common.extensions.toResLoc
-import com.scientianovateam.versatile.fluids.MaterialFluidAttributes
-import com.scientianovateam.versatile.materialsystem.builders.blockType
-import com.scientianovateam.versatile.materialsystem.builders.fluidType
-import com.scientianovateam.versatile.materialsystem.builders.itemType
-import com.scientianovateam.versatile.materialsystem.main.Material
-import com.scientianovateam.versatile.materialsystem.properties.BlockCompaction
+import com.scientianova.versatile.common.extensions.toResLoc
+import com.scientianova.versatile.fluids.MaterialFluidAttributes
+import com.scientianova.versatile.materialsystem.builders.blockType
+import com.scientianova.versatile.materialsystem.builders.fluidType
+import com.scientianova.versatile.materialsystem.builders.itemType
+import com.scientianova.versatile.materialsystem.main.Material
+import com.scientianova.versatile.materialsystem.properties.BlockCompaction
 import net.minecraft.block.Block
 import net.minecraft.block.SoundType
 import net.minecraft.util.ResourceLocation

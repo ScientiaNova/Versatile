@@ -1,9 +1,9 @@
 package com.scientianova.versatile.machines.properties.implementations.fluids
 
-import com.scientianovateam.versatile.common.extensions.get
-import com.scientianovateam.versatile.common.extensions.set
-import com.scientianovateam.versatile.machines.BaseTileEntity
-import com.scientianovateam.versatile.machines.capabilities.fluids.OutputFluidStackHandler
+import com.scientianova.versatile.common.extensions.get
+import com.scientianova.versatile.common.extensions.set
+import com.scientianova.versatile.machines.BaseTileEntity
+import com.scientianova.versatile.machines.capabilities.fluids.OutputFluidStackHandler
 
 open class TEFluidOutputProperty(override val value: OutputFluidStackHandler, id: String, te: BaseTileEntity) : TEFluidInventoryProperty(value, id, te) {
     constructor(tanks: Int, id: String, te: BaseTileEntity, capacity: Int = 10_000) : this(object : OutputFluidStackHandler(tanks, capacity) {

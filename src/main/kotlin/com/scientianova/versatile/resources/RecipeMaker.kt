@@ -1,8 +1,8 @@
 package com.scientianova.versatile.resources
 
-import com.scientianovateam.versatile.common.extensions.json
-import com.scientianovateam.versatile.common.extensions.toJson
-import com.scientianovateam.versatile.common.extensions.toResLoc
+import com.scientianova.versatile.common.extensions.json
+import com.scientianova.versatile.common.extensions.toJson
+import com.scientianova.versatile.common.extensions.toResLoc
 import com.google.gson.JsonObject
 import net.minecraft.block.Block
 import net.minecraft.item.Item
