@@ -1,12 +1,12 @@
 modLoader="kotlinfml"
 loaderVersion="[1,)"
-issueTrackerURL="https://github.com/scientianovateam/Versatile/issues"
+issueTrackerURL="https://github.com/ScientiaNova/Versatile/issues"
 [[mods]]
 modId="versatile"
 version="${file.jarVersion}"
 displayName="Versatile"
 logoFile="versatile.png"
-authors="TheEmosewaPixel, Quantum64"
+authors="TheEmosewaPixel - Main Developer, Quantum64 - Former Developer"
 description="A mod for adding a large number of items, blocks, fluids, machines and more through a data-driven system."
 [[dependencies.versatile]]
     modId="forge"
@@ -17,12 +17,12 @@ description="A mod for adding a large number of items, blocks, fluids, machines 
 [[dependencies.versatile]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.14.,]"
+    versionRange="[1.15.2,]"
     ordering="NONE"
     side="BOTH"
 [[dependencies.versatile]]
     modId="jei"
     mandatory=false
-    versionRange="[6.0.0.25,)"
+    versionRange="[6.0.0.4,)"
     ordering="AFTER"
     side="BOTH"
