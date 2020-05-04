@@ -2,7 +2,10 @@ package com.scientianova.versatile.resources
 
 import com.scientianova.versatile.common.extensions.times
 import com.scientianova.versatile.common.extensions.toStack
+import com.scientianova.versatile.materialsystem.addition.BLOCK_FORM
 import com.scientianova.versatile.materialsystem.addition.BaseObjTypes
+import com.scientianova.versatile.materialsystem.addition.INGOT_FORM
+import com.scientianova.versatile.materialsystem.addition.NUGGET_FORM
 import com.scientianova.versatile.materialsystem.lists.MaterialBlocks
 import com.scientianova.versatile.materialsystem.lists.MaterialFluids
 import com.scientianova.versatile.materialsystem.lists.MaterialItems
@@ -22,9 +25,8 @@ object BaseDataAddition {
 
         //Recipes
         Materials.all.filter(Material::isItemMaterial).forEach { mat ->
-            val hasMaterialBlock = MaterialBlocks[mat, BaseObjTypes.BLOCK] is IMaterialObject
-            val itemType = mat.mainItemType
-            if (MaterialBlocks.contains(mat, BaseObjTypes.BLOCK) && itemType != null)
+            val hasMaterialBlock = MaterialBlocks[mat, BLOCK_FORM] is IMaterialObject
+            if (MaterialBlocks.contains(mat, BLOCK_FORM) && itemType != null)
                 when (mat.blockCompaction) {
                     BlockCompaction.FROM_2X2 -> {
                         if (hasMaterialBlock)
@@ -41,12 +43,12 @@ object BaseDataAddition {
                     else -> {
                     }
                 }
-            if (mat.isIngotMaterial) {
-                if (MaterialItems[mat, BaseObjTypes.INGOT] is IMaterialObject && MaterialItems.contains(mat, BaseObjTypes.NUGGET))
+            if (mat.hasIngot) {
+                if (MaterialItems[mat, INGOT_FORM] is IMaterialObject && MaterialItems.contains(mat, BaseObjTypes.NUGGET))
                     RecipeMaker.addShapedRecipe(location("${mat}_ingot_from_nuggets"), "${mat}_ingot", MaterialItems[mat, BaseObjTypes.INGOT]!!.toStack(), "NNN", "NNN", "NNN", 'N', mat.getItemTag(BaseObjTypes.NUGGET))
                 if (mat.simpleProcessing)
                     RecipeMaker.addFurnaceRecipe(location("${mat}_ingot"), mat.getItemTag(BaseObjTypes.DUST), MaterialItems[mat, BaseObjTypes.INGOT]!!)
-                if (MaterialItems[mat, BaseObjTypes.NUGGET] is IMaterialObject)
+                if (MaterialItems[mat, NUGGET_FORM] is IMaterialObject)
                     RecipeMaker.addShapelessRecipe(location("${mat}_nuggets"), MaterialItems[mat, BaseObjTypes.NUGGET]!! * 9, mat.getItemTag(BaseObjTypes.INGOT))
             }
         }

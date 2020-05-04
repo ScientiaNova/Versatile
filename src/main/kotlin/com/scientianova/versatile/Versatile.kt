@@ -1,9 +1,9 @@
 package com.scientianova.versatile
 
-import com.scientianova.versatile.blocks.BlockRegistry
-import com.scientianova.versatile.fluids.FluidRegistry
-import com.scientianova.versatile.items.ItemRegistry
+import com.scientianova.versatile.blocks.registerBlocks
+import com.scientianova.versatile.fluids.registerFluids
 import com.scientianova.versatile.items.MaterialItem
+import com.scientianova.versatile.items.registerItems
 import com.scientianova.versatile.machines.BaseMachineRegistry
 import com.scientianova.versatile.machines.gui.BaseScreen
 import com.scientianova.versatile.machines.packets.NetworkHandler
@@ -83,17 +83,17 @@ object Versatile {
     object RegistryEvents {
         @SubscribeEvent(priority = EventPriority.LOWEST)
         fun onLateBlockRegistry(e: RegistryEvent.Register<Block>) {
-            BlockRegistry.registerBlocks(e)
+            registerBlocks(e)
         }
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
         fun onLateItemRegistry(e: RegistryEvent.Register<Item>) {
-            ItemRegistry.registerItems(e)
+            registerItems(e)
             addModelJSONs()
         }
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
-        fun onLateFluidRegistry(e: RegistryEvent.Register<Fluid>) = FluidRegistry.registerFluids(e)
+        fun onLateFluidRegistry(e: RegistryEvent.Register<Fluid>) = registerFluids(e)
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, modid = MOD_ID)
@@ -111,7 +111,7 @@ object Versatile {
         @SubscribeEvent
         fun fuelTime(e: FurnaceFuelBurnTimeEvent) {
             val item = e.itemStack.item
-            if (item is IMaterialObject) item.objType.burnTime(item.mat).let { if (it > 0) e.burnTime = it }
+            if (item is IMaterialObject) item.form.burnTime.let { if (it > 0) e.burnTime = it }
         }
     }
 }

@@ -3,7 +3,7 @@ package com.scientianova.versatile.materialsystem.elements
 import com.scientianova.versatile.materialsystem.addition.BaseElements
 import com.scientianova.versatile.materialsystem.properties.CompoundType
 import com.scientianova.versatile.materialsystem.main.Material
-import com.scientianova.versatile.materialsystem.main.ObjectType
+import com.scientianova.versatile.materialsystem.main.Form
 
 //This class contains functions used for determining the elemental properties of compounds
 object ElementUtils {
@@ -27,7 +27,7 @@ object ElementUtils {
     fun getMolarMass(mat: Material) = getElementalComposition(mat).map { (element, count) -> element.atomicMass * count }.sum()
 
     @JvmStatic
-    fun getTotalDensity(mat: Material, type: ObjectType): Double {
+    fun getTotalDensity(mat: Material, type: Form): Double {
         val list = getElementalComposition(mat).map { (element, count) -> element.density * count }
         return (if (mat.compoundType === CompoundType.CHEMICAL) list.sum() else list.average()) * type.densityMultiplier * mat.densityMultiplier
     }

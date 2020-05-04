@@ -1,5 +1,6 @@
 package com.scientianova.versatile.machines.gui.layout.components.textboxes
 
+import com.mojang.blaze3d.platform.GlStateManager
 import com.scientianova.versatile.common.extensions.max
 import com.scientianova.versatile.common.extensions.min
 import com.scientianova.versatile.machines.gui.GUiUtils
@@ -7,8 +8,7 @@ import com.scientianova.versatile.machines.gui.layout.components.ITexturedGUICom
 import com.scientianova.versatile.machines.gui.textures.BaseTextures
 import com.scientianova.versatile.machines.gui.textures.interactable.ButtonDrawMode
 import com.scientianova.versatile.machines.properties.implementations.strings.VariableStringProperty
-import com.mojang.blaze3d.platform.GlStateManager
-import com.mojang.blaze3d.platform.GlStateManager.LogicOp
+import com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.util.SharedConstants
@@ -58,15 +58,15 @@ open class TextBoxComponent(val property: VariableStringProperty) : ITexturedGUI
                 fontRenderer.drawStringWithShadow("_", cursorDrawX, yOffset + y + 4f, 0xffffffff.toInt())
             else GUiUtils.drawColoredRectangle(0xffffff, cursorPos, yOffset + y + 3, 1, height - 6)
         } else {
-            GlStateManager.enableColorLogicOp()
-            GlStateManager.logicOp(LogicOp.OR_REVERSE.opcode)
+            RenderSystem.enableColorLogicOp()
+            RenderSystem.logicOp(GlStateManager.LogicOp.OR_REVERSE)
 
             val selectionStart = max(selection.min(), indicesIn) - indicesIn
             val selectedXStart = fontRenderer.getStringWidth(displayedLine.substring(selectionStart))
             val selectionWidth = fontRenderer.getStringWidth(displayedLine.substring(selectionStart, min(selection.max() - indicesIn, displayedLine.length)))
             GUiUtils.drawColoredRectangle(0xff0000ff.toInt(), selectedXStart, yOffset + y + 3, selectionWidth, height - 6)
 
-            GlStateManager.disableColorLogicOp()
+            RenderSystem.disableColorLogicOp()
         }
     }
 

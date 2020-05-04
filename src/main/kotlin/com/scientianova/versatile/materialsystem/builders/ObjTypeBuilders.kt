@@ -12,7 +12,7 @@ import com.scientianova.versatile.fluids.MaterialFluidHolder
 import com.scientianova.versatile.items.MaterialItem
 import com.scientianova.versatile.materialsystem.addition.ObjTypeProperties
 import com.scientianova.versatile.materialsystem.main.Material
-import com.scientianova.versatile.materialsystem.main.ObjectType
+import com.scientianova.versatile.materialsystem.main.Form
 import com.scientianova.versatile.materialsystem.properties.FormProperty
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
@@ -22,7 +22,7 @@ import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fluids.FluidAttributes
 
 open class ObjTypeBuilder(name: String, requirement: (Material) -> Boolean) {
-    protected val result = ObjectType(name, requirement)
+    protected val result = Form(name, requirement)
 
     fun <T> property(property: FormProperty<T>, value: T) = this.also { result[property] = value }
 
@@ -55,17 +55,17 @@ open class ObjTypeBuilder(name: String, requirement: (Material) -> Boolean) {
 
     fun blockStateFunc(value: (Material) -> JsonObject) = property(ObjTypeProperties.BLOCKSTATE_JSON, value)
 
-    fun itemConstructor(value: (Material, ObjectType) -> Item) = property(ObjTypeProperties.ITEM_CONSTRUCTOR) { mat -> value(mat, result) }
+    fun itemConstructor(value: (Material, Form) -> Item) = property(ObjTypeProperties.ITEM_CONSTRUCTOR) { mat -> value(mat, result) }
 
-    fun itemPropertiesFunc(value: (Material, ObjectType) -> Item.Properties) = property(ObjTypeProperties.ITEM_PROPERTIES) { mat -> value(mat, result) }
+    fun itemPropertiesFunc(value: (Material, Form) -> Item.Properties) = property(ObjTypeProperties.ITEM_PROPERTIES) { mat -> value(mat, result) }
 
-    fun blockConstructor(value: (Material, ObjectType) -> Block) = property(ObjTypeProperties.BLOCK_CONSTRUCTOR) { mat -> value(mat, result) }
+    fun blockConstructor(value: (Material, Form) -> Block) = property(ObjTypeProperties.BLOCK_CONSTRUCTOR) { mat -> value(mat, result) }
 
-    fun blockPropertiesFunc(value: (Material, ObjectType) -> Block.Properties) = property(ObjTypeProperties.BLOCK_PROPERTIES) { mat -> value(mat, result) }
+    fun blockPropertiesFunc(value: (Material, Form) -> Block.Properties) = property(ObjTypeProperties.BLOCK_PROPERTIES) { mat -> value(mat, result) }
 
-    fun fluidPairConstructor(value: (Material, ObjectType) -> IFluidPairHolder) = property(ObjTypeProperties.FLUID_CONSTRUCTOR) { mat -> value(mat, result) }
+    fun fluidPairConstructor(value: (Material, Form) -> IFluidPairHolder) = property(ObjTypeProperties.FLUID_CONSTRUCTOR) { mat -> value(mat, result) }
 
-    fun fluidAttributesFunc(value: (Material, ObjectType) -> FluidAttributes.Builder) = property(ObjTypeProperties.FLUID_ATTRIBUTES) { mat -> value(mat, result) }
+    fun fluidAttributesFunc(value: (Material, Form) -> FluidAttributes.Builder) = property(ObjTypeProperties.FLUID_ATTRIBUTES) { mat -> value(mat, result) }
 
     fun typePriority(value: Int) = property(ObjTypeProperties.TYPE_PRIORITY, value)
 
@@ -84,7 +84,7 @@ class BlockTypeBuilder(name: String, requirement: (Material) -> Boolean) : ObjTy
         blockConstructor(::MaterialBlock)
         itemModelFunc { mat ->
             json {
-                "parent" to "versatile:block/materialblocks/" + (if (this@BlockTypeBuilder.result.singleTextureType) "" else "${mat.textureType}/") + name
+                "parent" to "versatile:block/materialblocks/" + (if (this@BlockTypeBuilder.result.singleTextureSet) "" else "${mat.textureSet}/") + name
             }
         }
     }
@@ -104,7 +104,7 @@ class FluidTypeBuilder(name: String, requirement: (Material) -> Boolean) : ObjTy
         blockTagName("")
         itemModelFunc { mat ->
             json {
-                "parent" to "versatile:block/materialblocks/" + (if (this@FluidTypeBuilder.result.singleTextureType) "" else "${mat.textureType}/") + name
+                "parent" to "versatile:block/materialblocks/" + (if (this@FluidTypeBuilder.result.singleTextureSet) "" else "${mat.textureSet}/") + name
             }
         }
     }

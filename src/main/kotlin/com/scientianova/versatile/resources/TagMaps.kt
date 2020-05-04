@@ -24,7 +24,7 @@ object TagMaps {
     fun addMatItemToTag(obj: IMaterialObject) {
         when (obj) {
             is Item -> {
-                val tag = obj.objType.itemTagName
+                val tag = obj.form.itemTagNames
                 if (tag.isNotEmpty()) {
                     addItemToTag(tag, obj)
                     obj.mat.names.forEach {
@@ -33,7 +33,7 @@ object TagMaps {
                 }
             }
             is Block -> {
-                val tag = obj.objType.blockTagName
+                val tag = obj.form.blockTagNames
                 if (tag.isNotEmpty()) {
                     addBlockToTag(tag, obj)
                     obj.mat.names.forEach {
@@ -42,7 +42,7 @@ object TagMaps {
                 }
             }
             is Fluid -> {
-                val tag = obj.objType.fluidTagName
+                val tag = obj.form.fluidTagNames
                 if (tag.isNotEmpty()) {
                     obj.mat.names.forEach {
                         addFluidToTag(tag + it, obj)

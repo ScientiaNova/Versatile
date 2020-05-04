@@ -7,7 +7,7 @@ import com.scientianova.versatile.common.extensions.redF
 import com.scientianova.versatile.machines.gui.layout.components.ITexturedGUIComponent
 import com.scientianova.versatile.machines.gui.textures.still.GUITexture
 import com.scientianova.versatile.machines.properties.ILimitedIntegerProperty
-import com.mojang.blaze3d.platform.GlStateManager
+import com.mojang.blaze3d.systems.RenderSystem
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 
@@ -17,11 +17,11 @@ open class ColorButtonComponent(val property: ILimitedIntegerProperty, override 
 
     @OnlyIn(Dist.CLIENT)
     override fun drawInBackground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int, guiLeft: Int, guiTop: Int) {
-        GlStateManager.enableBlend()
+        RenderSystem.enableBlend()
         val color = colors.getOrElse(property.value) { colors[0] }
-        GlStateManager.color4f(color.redF, color.greenF, color.blueF, color.alphaF)
+        RenderSystem.color4f(color.redF, color.greenF, color.blueF, color.alphaF)
         texture.draw(xOffset + x, yOffset + y, width, height)
-        GlStateManager.disableBlend()
+        RenderSystem.disableBlend()
     }
 
     @OnlyIn(Dist.CLIENT)

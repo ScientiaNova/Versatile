@@ -33,8 +33,8 @@ object ClientProxy : IModProxy {
         MaterialItems.all.filterIsInstance<IMaterialObject>().forEach {
             Minecraft.getInstance().itemColors.register(IItemColor { stack: ItemStack, index ->
                 val sItem = stack.item as IMaterialObject
-                if (index !in sItem.objType.indexBlackList)
-                    sItem.objType.color(sItem.mat)
+                if (index !in sItem.form.global.indexBlacklist)
+                    sItem.form.color
                 else -1
             }, it as Item)
         }
@@ -42,8 +42,8 @@ object ClientProxy : IModProxy {
         MaterialBlocks.all.filterIsInstance<IMaterialObject>().forEach {
             Minecraft.getInstance().blockColors.register(IBlockColor { state: BlockState, _, _, index: Int ->
                 val sBlock = state.block as IMaterialObject
-                if (index !in sBlock.objType.indexBlackList)
-                    sBlock.objType.color(sBlock.mat)
+                if (index !in sBlock.form.global.indexBlacklist)
+                    sBlock.form.color
                 else -1
             }, it as Block)
         }
@@ -53,18 +53,18 @@ object ClientProxy : IModProxy {
 fun addModelJSONs() {
     MaterialItems.all.filterIsInstance<IMaterialObject>().forEach {
         val registryName = (it as Item).registryName!!
-        JSONAdder.addAssetsJSON(ResourceLocation(registryName.namespace, "models/item/" + registryName.path + ".json"), it.objType.itemModel(it.mat))
+        JSONAdder.addAssetsJSON(ResourceLocation(registryName.namespace, "models/item/" + registryName.path + ".json"), it.form.itemModel)
     }
 
     MaterialBlocks.all.filter { it is IMaterialObject && it !is FlowingFluidBlock }.forEach {
         val registryName = it.registryName!!
-        val type = (it as IMaterialObject).objType
-        JSONAdder.addAssetsJSON(ResourceLocation(registryName.namespace, "blockstates/" + registryName.path + ".json"), type.blockStateJSON(it.mat))
+        val form = (it as IMaterialObject).form
+        JSONAdder.addAssetsJSON(ResourceLocation(registryName.namespace, "blockstates/" + registryName.path + ".json"), form.blockStateJSON)
     }
 
     MaterialFluids.all.filterIsInstance<IMaterialObject>().forEach {
-        val type = it.objType
-        val registryName = it.objType.registryName(it.mat)
-        JSONAdder.addAssetsJSON(ResourceLocation(registryName.namespace, "blockstates/" + registryName.path + ".json"), type.blockStateJSON(it.mat))
+        val form = it.form
+        val registryName = it.form.registryName
+        JSONAdder.addAssetsJSON(ResourceLocation(registryName.namespace, "blockstates/" + registryName.path + ".json"), form.blockStateJSON)
     }
 }

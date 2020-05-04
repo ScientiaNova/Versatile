@@ -1,52 +1,37 @@
 package com.scientianova.versatile.materialsystem.properties
 
-import com.scientianova.versatile.common.registry.MATERIAL_PROPERTIES
-import com.scientianova.versatile.common.registry.FORM_PROPERTIES
+import com.scientianova.versatile.materialsystem.main.Form
+import com.scientianova.versatile.materialsystem.main.GlobalForm
 import com.scientianova.versatile.materialsystem.main.Material
-import com.scientianova.versatile.materialsystem.main.ObjectType
 import net.minecraft.util.ResourceLocation
 
-sealed class Property<T, S> {
-    abstract val name: ResourceLocation
-    abstract val default: (S) -> T
-    abstract val isValid: (T) -> Boolean
-    abstract val merge: (Any?, Any?) -> T?
-}
 
 data class MatProperty<T>(
-        override val name: ResourceLocation,
-        override val merge: (Any?, Any?) -> T?,
-        override val isValid: (T) -> Boolean = { true },
-        override val default: (Material) -> T
-) : Property<T, Material>() {
-
-    init {
-        MATERIAL_PROPERTIES[name] = this
-    }
-
+        val name: ResourceLocation,
+        val isValid: (T) -> Boolean = { true },
+        val defaultFun: Material.() -> T
+) {
     override fun hashCode() = name.hashCode()
 
     override fun equals(other: Any?) = other is MatProperty<*> && other.name == name
 }
 
-data class FormProperty<T>(
-        override val name: ResourceLocation,
-        override val merge: (Any?, Any?) -> T?,
-        override val isValid: (T) -> Boolean = { true },
-        override val default: (ObjectType) -> T
-) : Property<T, ObjectType>() {
-
-    init {
-        FORM_PROPERTIES[name] = this
-    }
-
+data class GlobalFormProperty<T>(
+        val name: ResourceLocation,
+        val isValid: (T) -> Boolean = { true },
+        val defaultFun: GlobalForm.() -> T
+) {
     override fun hashCode() = name.hashCode()
 
     override fun equals(other: Any?) = other is FormProperty<*> && other.name == name
 }
 
-inline fun <reified T> merge(first: Any?, second: Any?): T? = when (first) {
-    null -> second as? T
-    is T -> first
-    else -> second as? T
+data class FormProperty<T>(
+        val name: ResourceLocation,
+        val isValid: (T) -> Boolean = { true },
+        val defaultFun: Form.() -> T
+) {
+    override fun hashCode() = name.hashCode()
+
+    override fun equals(other: Any?) = other is FormProperty<*> && other.name == name
 }

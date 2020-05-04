@@ -4,7 +4,7 @@ import com.scientianova.versatile.common.extensions.*
 import com.scientianova.versatile.materialsystem.lists.MaterialBlocks
 import com.scientianova.versatile.materialsystem.lists.MaterialFluids
 import com.scientianova.versatile.materialsystem.lists.MaterialItems
-import com.scientianova.versatile.materialsystem.lists.ObjTypes
+import com.scientianova.versatile.materialsystem.lists.Forms
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.StringArgumentType
 import net.minecraft.command.CommandSource
@@ -38,21 +38,21 @@ class ObjTypeCommand(dispatcher: CommandDispatcher<CommandSource>) {
                 literal("tag") {
                     literal("item") {
                         does {
-                            ObjTypes[StringArgumentType.getString(this, "name")]?.let {
+                            Forms[StringArgumentType.getString(this, "name")]?.let {
                                 source.sendFeedback(it.itemTagName.toComponent(), false)
                             } ?: source.sendErrorMessage(TranslationTextComponent("command.objtype.error"))
                         }
                     }
                     literal("block") {
                         does {
-                            ObjTypes[StringArgumentType.getString(this, "name")]?.let {
+                            Forms[StringArgumentType.getString(this, "name")]?.let {
                                 source.sendFeedback(it.blockTagName.toComponent(), false)
                             } ?: source.sendErrorMessage(TranslationTextComponent("command.objtype.error"))
                         }
                     }
                     literal("fluid") {
                         does {
-                            ObjTypes[StringArgumentType.getString(this, "name")]?.let {
+                            Forms[StringArgumentType.getString(this, "name")]?.let {
                                 source.sendFeedback(it.fluidTagName.toComponent(), false)
                             } ?: source.sendErrorMessage(TranslationTextComponent("command.objtype.error"))
                         }
@@ -60,7 +60,7 @@ class ObjTypeCommand(dispatcher: CommandDispatcher<CommandSource>) {
                 }
                 literal("items") {
                     does {
-                        ObjTypes[StringArgumentType.getString(this, "name")]?.let {
+                        Forms[StringArgumentType.getString(this, "name")]?.let {
                             MaterialItems[it]?.values?.forEach { item ->
                                 source.sendFeedback(item.registryName!!.toString().toComponent(), false)
                             }
@@ -69,7 +69,7 @@ class ObjTypeCommand(dispatcher: CommandDispatcher<CommandSource>) {
                 }
                 literal("blocks") {
                     does {
-                        ObjTypes[StringArgumentType.getString(this, "name")]?.let {
+                        Forms[StringArgumentType.getString(this, "name")]?.let {
                             MaterialBlocks[it]?.values?.forEach { block ->
                                 source.sendFeedback(block.registryName!!.toString().toComponent(), false)
                             }
@@ -78,7 +78,7 @@ class ObjTypeCommand(dispatcher: CommandDispatcher<CommandSource>) {
                 }
                 literal("fluids") {
                     does {
-                        ObjTypes[StringArgumentType.getString(this, "name")]?.let {
+                        Forms[StringArgumentType.getString(this, "name")]?.let {
                             MaterialFluids[it]?.values?.forEach { fluid ->
                                 source.sendFeedback(fluid.registryName!!.toString().toComponent(), false)
                             }

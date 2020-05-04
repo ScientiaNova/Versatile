@@ -2,8 +2,6 @@ package com.scientianova.versatile.machines.gui
 
 import com.scientianova.versatile.machines.packets.NetworkHandler
 import com.scientianova.versatile.machines.packets.reopening.OpenGUIPacket
-import com.mojang.blaze3d.platform.GLX
-import com.mojang.blaze3d.platform.GlStateManager
 import com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.client.gui.screen.inventory.ContainerScreen
 import net.minecraft.client.renderer.RenderHelper

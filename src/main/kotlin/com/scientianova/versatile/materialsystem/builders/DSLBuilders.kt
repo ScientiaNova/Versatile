@@ -1,6 +1,5 @@
 package com.scientianova.versatile.materialsystem.builders
 
-import com.scientianova.versatile.Versatile
 import com.scientianova.versatile.blocks.MaterialBlock
 import com.scientianova.versatile.blocks.MaterialBlockItem
 import com.scientianova.versatile.common.extensions.json
@@ -8,94 +7,83 @@ import com.scientianova.versatile.fluids.MaterialBucketItem
 import com.scientianova.versatile.fluids.MaterialFluidBlock
 import com.scientianova.versatile.fluids.MaterialFluidHolder
 import com.scientianova.versatile.items.MaterialItem
-import com.scientianova.versatile.materialsystem.addition.BaseObjTypes
-import com.scientianova.versatile.materialsystem.addition.BaseTextureTypes
+import com.scientianova.versatile.materialsystem.addition.*
+import com.scientianova.versatile.materialsystem.main.GlobalForm
 import com.scientianova.versatile.materialsystem.main.Material
-import com.scientianova.versatile.materialsystem.main.ObjectType
 import com.scientianova.versatile.materialsystem.properties.CompoundType
 import com.scientianova.versatile.materialsystem.properties.DisplayType
-import net.minecraft.block.Block
-import net.minecraft.block.Blocks
-import net.minecraft.item.Item
-import net.minecraft.item.Items
 
-@JvmOverloads
-fun material(vararg names: String, builder: Material.() -> Unit = { }) = Material(*names).apply { builder() }.register()
+fun material(vararg names: String, builder: Material.() -> Unit) = Material().apply {
+    associatedNames = listOf(*names)
+    builder()
+}.register()
 
-@JvmOverloads
-fun dustMaterial(vararg names: String, builder: Material.() -> Unit = { }) = Material(*names).apply {
-    mainItemType = BaseObjTypes.DUST
+fun dustMaterial(vararg names: String, builder: Material.() -> Unit) = Material().apply {
+    associatedNames = listOf(*names)
     hasDust = true
     builder()
 }.register()
 
-@JvmOverloads
-fun gemMaterial(vararg names: String, builder: Material.() -> Unit = { }) = Material(*names).apply {
-    mainItemType = BaseObjTypes.GEM
+fun gemMaterial(vararg names: String, builder: Material.() -> Unit) = Material().apply {
+    associatedNames = listOf(*names)
     hasDust = true
+    hasGem = true
     builder()
 }.register()
 
-@JvmOverloads
-fun ingotMaterial(vararg names: String, builder: Material.() -> Unit = { }) = Material(*names).apply {
-    mainItemType = BaseObjTypes.INGOT
+fun ingotMaterial(vararg names: String, builder: Material.() -> Unit) = Material().apply {
+    associatedNames = listOf(*names)
+    liquidNames = listOf("molten_$name")
     compoundType = CompoundType.ALLOY
     hasDust = true
+    hasIngot = true
     builder()
 }.register()
 
-@JvmOverloads
-fun fluidMaterial(vararg names: String, builder: Material.() -> Unit = { }) = Material(*names).apply {
-    textureType = BaseTextureTypes.FLUID
-    fluidTemperature = 300
+fun fluidMaterial(vararg names: String, builder: Material.() -> Unit) = Material().apply {
+    associatedNames = listOf(*names)
+    textureSet = BaseTextureTypes.FLUID
+    liquidTemperature = 300
     builder()
 }.register()
 
-@JvmOverloads
-fun groupMaterial(vararg names: String, builder: Material.() -> Unit = { }) = Material(*names).apply {
+fun groupMaterial(vararg names: String, builder: Material.() -> Unit) = Material().apply {
     displayType = DisplayType.GROUP
     builder()
 }.register()
 
-@JvmOverloads
-fun objType(name: String, requirement: (Material) -> Boolean, builder: ObjectType.() -> Unit = { }) = ObjectType(name) { requirement(it) }.apply {
+fun form(name: String, builder: GlobalForm.() -> Unit) = GlobalForm().apply {
+    this.name = name
     builder()
 }.register()
 
-@JvmOverloads
-fun itemType(name: String, requirement: (Material) -> Boolean, builder: ObjectType.() -> Unit = { }) = ObjectType(name) { requirement(it) }.apply {
-    itemConstructor = { mat -> MaterialItem(mat, this) }
+fun itemForm(name: String, builder: GlobalForm.() -> Unit) = GlobalForm().apply {
+    this.name = name
+    ITEM { MaterialItem(mat, this) }
     builder()
 }.register()
 
-@JvmOverloads
-fun blockType(name: String, requirement: (Material) -> Boolean, builder: ObjectType.() -> Unit = { }) = ObjectType(name) { requirement(it) }.apply {
-    itemConstructor = { mat -> MaterialBlockItem(mat, this) }
-    blockConstructor = { mat -> MaterialBlock(mat, this) }
-    itemModel = { mat ->
+fun blockForm(name: String, builder: GlobalForm.() -> Unit) = GlobalForm().apply {
+    this.name = name
+    ITEM { MaterialBlockItem(mat, this) }
+    BLOCK { MaterialBlock(mat, this) }
+    ITEM_MODEL {
         json {
-            "parent" to "versatile:block/materialblocks/" + (if (singleTextureType) "" else "${mat.textureType}/") + name
+            "parent" to "versatile:block/materialblocks/" + (if (singleTextureSet) "" else "${mat.textureSet}/") + name
         }
     }
     builder()
 }.register()
 
-@JvmOverloads
-fun fluidType(name: String, requirement: (Material) -> Boolean, builder: ObjectType.() -> Unit = { }) = ObjectType(name) { requirement(it) }.apply {
-    itemConstructor = { mat -> MaterialBucketItem(mat, this) }
-    blockConstructor = { mat -> MaterialFluidBlock(mat, this) }
-    fluidPairConstructor = { mat -> MaterialFluidHolder(mat, this) }
-    itemProperties = { Item.Properties().group(Versatile.MAIN).containerItem(Items.BUCKET).maxStackSize(1) }
-    blockProperties = { Block.Properties.from(Blocks.WATER) }
-    singleTextureType = true
-    indexBlackList += 0
+fun fluidForm(name: String, builder: GlobalForm.() -> Unit) = GlobalForm().apply {
+    this.name = name
+    singleTextureSet = true
+    indexBlacklist = listOf(0)
     bucketVolume = 1000
-    itemTagName = "forge:buckets/$name"
-    blockTagName = ""
-    itemModel = { mat ->
-        json {
-            "parent" to "versatile:item/materialitems/" + (if (singleTextureType) "" else "${mat.textureType}/") + name + (if (isGas(mat)) "_gas" else "") + "_bucket"
-        }
-    }
+    ITEM { MaterialBucketItem(mat, this) }
+    BLOCK { MaterialFluidBlock(mat, this) }
+    FLUID { MaterialFluidHolder(mat, this) }
+    COMBINED_ITEM_TAGS { emptyList() }
+    COMBINED_BLOCK_TAGS { emptyList() }
     builder()
 }.register()

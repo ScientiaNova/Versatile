@@ -1,206 +1,231 @@
 package com.scientianova.versatile.materialsystem.main
 
 import com.scientianova.versatile.common.extensions.toResLoc
-import com.scientianova.versatile.materialsystem.addition.BaseElements
-import com.scientianova.versatile.materialsystem.addition.BaseObjTypes
-import com.scientianova.versatile.materialsystem.addition.MatProperties
+import com.scientianova.versatile.materialsystem.addition.*
 import com.scientianova.versatile.materialsystem.lists.Materials
 import com.scientianova.versatile.materialsystem.properties.HarvestTier
-import com.scientianova.versatile.materialsystem.properties.IBranchingProperty
 import com.scientianova.versatile.materialsystem.properties.MatProperty
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.FluidTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.util.text.TranslationTextComponent
-import java.util.*
 
-class Material(vararg names: String) : IBranchingProperty {
-    val names = linkedSetOf(*names)
-    val name get() = names.first()
-
+class Material {
     val properties = mutableMapOf<MatProperty<out Any?>, Any?>()
 
     operator fun <T> set(property: MatProperty<T>, value: T) {
-        if (property.isValid(value)) properties[property] = value
+        if (property.isValid(value)) error("Invalid value for property: $property")
+        else properties[property] = value
     }
 
     @Suppress("UNCHECKED_CAST")
-    operator fun <T> get(property: MatProperty<T>) = properties[property] as? T ?: property.default(this)
+    operator fun <T> get(property: MatProperty<T>) =
+            if (property in properties)
+                properties[property] as T
+            else property.defaultFun(this).also { this[property] = it }
 
     operator fun contains(property: MatProperty<*>) = property in properties
 
-    override fun get(name: String): Any? = null
-
-    val typeBlacklist = ArrayList<ObjectType>()
-
-    var invertedBlacklist = false
-
-    var composition = listOf<MaterialStack>()
-
-    var textureType
-        get() = this[MatProperties.TEXTURE_TYPE]
+    var associatedNames
+        get() = this[ASSOCIATED_NAMES]
         set(value) {
-            this[MatProperties.TEXTURE_TYPE] = value
+            this[ASSOCIATED_NAMES] = value
+        }
+
+    var name
+        get() = associatedNames[0]
+        set(value) {
+            this[ASSOCIATED_NAMES] = listOf(value)
+        }
+
+    var composition
+        get() = this[COMPOSITION]
+        set(value) {
+            this[COMPOSITION] = value
+        }
+
+    var textureSet
+        get() = this[TEXTURE_SET]
+        set(value) {
+            this[TEXTURE_SET] = value
         }
 
     var color
-        get() = this[MatProperties.COLOR]
+        get() = this[COLOR]
         set(value) {
-            this[MatProperties.COLOR] = value
+            this[COLOR] = value
         }
 
     var tier
-        get() = this[MatProperties.TIER]
+        get() = this[TIER]
         set(value) {
-            this[MatProperties.TIER] = value
+            this[TIER] = value
         }
 
     var itemTier
-        get() = this[MatProperties.ITEM_TIER]
+        get() = this[ITEM_TIER]
         set(value) {
-            this[MatProperties.ITEM_TIER] = value
+            this[ITEM_TIER] = value
         }
 
     var armorMaterial
-        get() = this[MatProperties.ARMOR_MATERIAL]
+        get() = this[ARMOR_MATERIAL]
         set(value) {
-            this[MatProperties.ARMOR_MATERIAL] = value
+            this[ARMOR_MATERIAL] = value
         }
 
     var element
-        get() = this[MatProperties.ELEMENT]
+        get() = this[ELEMENT]
         set(value) {
-            this[MatProperties.ELEMENT] = value
+            this[ELEMENT] = value
         }
 
     var standardBurnTime
-        get() = this[MatProperties.BURN_TIME]
+        get() = this[BASE_BURN_TIME]
         set(value) {
-            this[MatProperties.BURN_TIME] = value
+            this[BASE_BURN_TIME] = value
         }
 
     var compoundType
-        get() = this[MatProperties.COMPOUND_TYPE]
+        get() = this[COMPOUND_TYPE]
         set(value) {
-            this[MatProperties.COMPOUND_TYPE] = value
+            this[COMPOUND_TYPE] = value
         }
 
     var harvestTier
         get(): HarvestTier {
-            val tier = this[MatProperties.HARVEST_TIER]
-            if (MatProperties.HARVEST_TIER !in this) this[MatProperties.HARVEST_TIER] = tier
+            val tier = this[HARVEST_TIER]
+            if (HARVEST_TIER !in this) this[HARVEST_TIER] = tier
             return tier
         }
         set(value) {
-            this[MatProperties.HARVEST_TIER] = value
+            this[HARVEST_TIER] = value
         }
 
     var densityMultiplier
-        get() = this[MatProperties.DENSITY_MULTIPLIER]
+        get() = this[MAT_DENSITY_MULTIPLIER]
         set(value) {
-            this[MatProperties.DENSITY_MULTIPLIER] = value
+            this[MAT_DENSITY_MULTIPLIER] = value
         }
 
     var processingMultiplier
-        get() = this[MatProperties.PROCESSING_MULTIPLIER]
+        get() = this[PROCESSING_MULTIPLIER]
         set(value) {
-            this[MatProperties.PROCESSING_MULTIPLIER] = value
+            this[PROCESSING_MULTIPLIER] = value
         }
 
     var refinedMaterial
-        get() = this[MatProperties.REFINED_MATERIAL]
+        get() = this[REFINED_MATERIAL]
         set(value) {
-            this[MatProperties.REFINED_MATERIAL] = value
+            this[REFINED_MATERIAL] = value
         }
 
-    var fluidTemperature
-        get() = this[MatProperties.FLUID_TEMPERATURE]
+    var liquidTemperature
+        get() = this[LIQUID_TEMPERATURE]
         set(value) {
-            this[MatProperties.FLUID_TEMPERATURE] = value
+            this[LIQUID_TEMPERATURE] = value
         }
 
-    var boilingTemperature
-        get() = this[MatProperties.BOILING_TEMPERATURE]
+    var gasTemperature
+        get() = this[GAS_TEMPERATURE]
         set(value) {
-            this[MatProperties.BOILING_TEMPERATURE] = value
+            this[GAS_TEMPERATURE] = value
         }
 
-    var boilingMaterial
-        get() = this[MatProperties.BOILING_MATERIAL]
+    var liquidNames
+        get() = this[LIQUID_NAMES]
         set(value) {
-            this[MatProperties.BOILING_MATERIAL] = value
+            this[LIQUID_NAMES] = value
+        }
+
+    var gasNames
+        get() = this[GAS_NAMES]
+        set(value) {
+            this[GAS_NAMES] = value
+        }
+
+    var gasColor
+        get() = this[GAS_COLOR]
+        set(value) {
+            this[GAS_COLOR] = value
         }
 
     var unrefinedColor
-        get() = this[MatProperties.UNREFINED_COLOR]
+        get() = this[UNREFINED_COLOR]
         set(value) {
-            this[MatProperties.UNREFINED_COLOR] = value
+            this[UNREFINED_COLOR] = value
         }
 
     var alpha
-        get() = this[MatProperties.ALPHA]
+        get() = this[ALPHA]
         set(value) {
-            this[MatProperties.ALPHA] = value
+            this[ALPHA] = value
         }
 
     var pH
-        get() = this[MatProperties.PH]
+        get() = this[PH]
         set(value) {
-            this[MatProperties.PH] = value
+            this[PH] = value
         }
 
     var blockCompaction
-        get() = this[MatProperties.BLOCK_COMPACTION]
+        get() = this[BLOCK_COMPACTION]
         set(value) {
-            this[MatProperties.BLOCK_COMPACTION] = value
+            this[BLOCK_COMPACTION] = value
         }
 
     var transitionProperties
-        get() = this[MatProperties.TRANSITION_PROPERTIES]
+        get() = this[TRANSITION_PROPERTIES]
         set(value) {
-            this[MatProperties.TRANSITION_PROPERTIES] = value
+            this[TRANSITION_PROPERTIES] = value
         }
 
     var hasOre
-        get() = this[MatProperties.HAS_ORE]
+        get() = this[HAS_ORE]
         set(value) {
-            this[MatProperties.HAS_ORE] = value
-        }
-
-    var isGas
-        get() = this[MatProperties.IS_GAS]
-        set(value) {
-            this[MatProperties.IS_GAS] = value
+            this[HAS_ORE] = value
         }
 
     var simpleProcessing
-        get() = this[MatProperties.SIMPLE_PROCESSING]
+        get() = this[SIMPLE_PROCESSING]
         set(value) {
-            this[MatProperties.SIMPLE_PROCESSING] = value
+            this[SIMPLE_PROCESSING] = value
         }
 
     var rodOutputCount
-        get() = this[MatProperties.ROD_OUTPUT_COUNT]
+        get() = this[ROD_OUTPUT_COUNT]
         set(value) {
-            this[MatProperties.ROD_OUTPUT_COUNT] = value
+            this[ROD_OUTPUT_COUNT] = value
         }
 
     var displayType
-        get() = this[MatProperties.DISPLAY_TYPE]
+        get() = this[DISPLAY_TYPE]
         set(value) {
-            this[MatProperties.DISPLAY_TYPE] = value
+            this[DISPLAY_TYPE] = value
         }
 
     var hasDust
-        get() = this[MatProperties.HAS_DUST]
+        get() = this[HAS_DUST]
         set(value) {
-            this[MatProperties.HAS_DUST] = value
+            this[HAS_DUST] = value
         }
 
-    var mainItemType
-        get() = this[MatProperties.MAIN_ITEM_TYPE]
+    var hasIngot
+        get() = this[HAS_INGOT]
         set(value) {
-            this[MatProperties.MAIN_ITEM_TYPE] = value
+            this[HAS_INGOT] = value
+        }
+
+    var hasGem
+        get() = this[HAS_GEM]
+        set(value) {
+            this[HAS_GEM] = value
+        }
+
+    var malleable
+        get() = this[MALLEABLE]
+        set(value) {
+            this[MALLEABLE] = value
         }
 
     val localizedName get() = TranslationTextComponent("material.$name")
@@ -212,14 +237,6 @@ class Material(vararg names: String) : IBranchingProperty {
 
     val isPureElement get() = element !== BaseElements.NULL
 
-    val isItemMaterial get() = mainItemType != null
-
-    val isIngotMaterial: Boolean get() = mainItemType == BaseObjTypes.INGOT
-
-    val isGemMaterial: Boolean get() = mainItemType == BaseObjTypes.GEM
-
-    val isFluidMaterial get() = mainItemType == null && fluidTemperature > 0
-
     operator fun invoke(builder: Material.() -> Unit) = builder(this)
 
     override fun toString() = name
@@ -229,33 +246,24 @@ class Material(vararg names: String) : IBranchingProperty {
         return Materials[name]!!
     }
 
-    fun merge(mat: Material): Material {
-        names union mat.names
-        mat.properties.forEach { (key, value) ->
-            key.merge(properties[key], value)?.let { properties[key] = it }
-        }
-        typeBlacklist.addAll(mat.typeBlacklist)
-        return this
-    }
+    fun getItemTags(type: Form) = associatedNames.map { ItemTags.Wrapper("${type.itemTagNames}/$it".toResLoc()) }
 
-    fun getItemTags(type: ObjectType) = names.map { ItemTags.Wrapper("${type.itemTagName}/$it".toResLoc()) }
+    fun getBlockTags(type: Form) = associatedNames.map { BlockTags.Wrapper("${type.itemTagNames}/$it".toResLoc()) }
 
-    fun getBlockTags(type: ObjectType) = names.map { BlockTags.Wrapper("${type.itemTagName}/$it".toResLoc()) }
-
-    fun getFluidTags(type: ObjectType) = names.map { FluidTags.Wrapper("${type.itemTagName}/$it".toResLoc()) }
+    fun getFluidTags(type: Form) = associatedNames.map { FluidTags.Wrapper("${type.itemTagNames}/$it".toResLoc()) }
 
     @JvmOverloads
-    fun getItemTag(type: ObjectType, nameIndex: Int = 0) = getItemTags(type).let {
+    fun getItemTag(form: Form, nameIndex: Int = 0) = getItemTags(form).let {
         it.getOrNull(nameIndex) ?: it.first()
     }
 
     @JvmOverloads
-    fun getBlockTag(type: ObjectType, nameIndex: Int = 0) = getBlockTags(type).let {
+    fun getBlockTag(form: Form, nameIndex: Int = 0) = getBlockTags(form).let {
         it.getOrNull(nameIndex) ?: it.first()
     }
 
     @JvmOverloads
-    fun getFluidTag(type: ObjectType, nameIndex: Int = 0) = getFluidTags(type).let {
+    fun getFluidTag(form: Form, nameIndex: Int = 0) = getFluidTags(form).let {
         it.getOrNull(nameIndex) ?: it.first()
     }
 
