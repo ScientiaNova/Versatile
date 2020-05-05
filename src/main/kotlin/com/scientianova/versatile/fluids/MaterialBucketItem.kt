@@ -1,8 +1,5 @@
 package com.scientianova.versatile.fluids
 
-import com.scientianova.versatile.materialsystem.lists.MaterialFluids
-import com.scientianova.versatile.materialsystem.lists.MaterialItems
-import com.scientianova.versatile.materialsystem.main.IMaterialObject
 import com.scientianova.versatile.materialsystem.main.Material
 import com.scientianova.versatile.materialsystem.main.Form
 import net.minecraft.item.BucketItem

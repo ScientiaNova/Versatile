@@ -1,9 +1,6 @@
 package com.scientianova.versatile.materialsystem.commands
 
 import com.scientianova.versatile.common.extensions.*
-import com.scientianova.versatile.materialsystem.lists.MaterialBlocks
-import com.scientianova.versatile.materialsystem.lists.MaterialFluids
-import com.scientianova.versatile.materialsystem.lists.MaterialItems
 import com.scientianova.versatile.materialsystem.lists.Materials
 import com.scientianova.versatile.materialsystem.main.Material
 import com.mojang.brigadier.CommandDispatcher

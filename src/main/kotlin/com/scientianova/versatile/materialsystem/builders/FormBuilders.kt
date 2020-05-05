@@ -2,14 +2,11 @@ package com.scientianova.versatile.materialsystem.builders
 
 import com.google.gson.JsonObject
 import com.scientianova.versatile.Versatile
-import com.scientianova.versatile.blocks.MaterialBlock
-import com.scientianova.versatile.blocks.MaterialBlockItem
 import com.scientianova.versatile.common.extensions.json
 import com.scientianova.versatile.fluids.IFluidPairHolder
 import com.scientianova.versatile.fluids.MaterialBucketItem
 import com.scientianova.versatile.fluids.MaterialFluidBlock
 import com.scientianova.versatile.fluids.MaterialFluidHolder
-import com.scientianova.versatile.items.MaterialItem
 import com.scientianova.versatile.materialsystem.addition.ObjTypeProperties
 import com.scientianova.versatile.materialsystem.main.Material
 import com.scientianova.versatile.materialsystem.main.Form
@@ -21,7 +18,7 @@ import net.minecraft.item.Items
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fluids.FluidAttributes
 
-open class ObjTypeBuilder(name: String, requirement: (Material) -> Boolean) {
+open class FormBuilder(name: String, requirement: (Material) -> Boolean) {
     protected val result = Form(name, requirement)
 
     fun <T> property(property: FormProperty<T>, value: T) = this.also { result[property] = value }
@@ -72,25 +69,25 @@ open class ObjTypeBuilder(name: String, requirement: (Material) -> Boolean) {
     fun buildAndRegister() = result.register()
 }
 
-class ItemTypeBuilder(name: String, requirement: (Material) -> Boolean) : ObjTypeBuilder(name, requirement) {
+class ItemFormBuilder(name: String, requirement: (Material) -> Boolean) : FormBuilder(name, requirement) {
     init {
         itemConstructor(::MaterialItem)
     }
 }
 
-class BlockTypeBuilder(name: String, requirement: (Material) -> Boolean) : ObjTypeBuilder(name, requirement) {
+class BlockFormBuilder(name: String, requirement: (Material) -> Boolean) : FormBuilder(name, requirement) {
     init {
         itemConstructor(::MaterialBlockItem)
         blockConstructor(::MaterialBlock)
         itemModelFunc { mat ->
             json {
-                "parent" to "versatile:block/materialblocks/" + (if (this@BlockTypeBuilder.result.singleTextureSet) "" else "${mat.textureSet}/") + name
+                "parent" to "versatile:block/materialblocks/" + (if (this@BlockFormBuilder.result.singleTextureSet) "" else "${mat.textureSet}/") + name
             }
         }
     }
 }
 
-class FluidTypeBuilder(name: String, requirement: (Material) -> Boolean) : ObjTypeBuilder(name, requirement) {
+class FluidFormBuilder(name: String, requirement: (Material) -> Boolean) : FormBuilder(name, requirement) {
     init {
         itemConstructor(::MaterialBucketItem)
         blockConstructor(::MaterialFluidBlock)
@@ -104,7 +101,7 @@ class FluidTypeBuilder(name: String, requirement: (Material) -> Boolean) : ObjTy
         blockTagName("")
         itemModelFunc { mat ->
             json {
-                "parent" to "versatile:block/materialblocks/" + (if (this@FluidTypeBuilder.result.singleTextureSet) "" else "${mat.textureSet}/") + name
+                "parent" to "versatile:block/materialblocks/" + (if (this@FluidFormBuilder.result.singleTextureSet) "" else "${mat.textureSet}/") + name
             }
         }
     }

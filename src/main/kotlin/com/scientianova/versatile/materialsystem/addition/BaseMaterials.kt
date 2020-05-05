@@ -31,7 +31,7 @@ val NETHER_BRICK = ingotMaterial("nether_brick") {
 }
 val IRON = ingotMaterial("iron") {
     tier = 1
-    textureSet = BaseTextureTypes.ROUGH
+    textureSet = BaseTextureSets.ROUGH
     element = BaseElements.IRON
     unrefinedColor = 0x947664
     itemTier = ItemTier.IRON
@@ -43,7 +43,7 @@ val IRON = ingotMaterial("iron") {
 val GOLD = ingotMaterial("gold") {
     tier = 2
     color = 0xfad64a
-    textureSet = BaseTextureTypes.SHINY
+    textureSet = BaseTextureSets.SHINY
     element = BaseElements.GOLD
     itemTier = ItemTier.GOLD
     armorMaterial = ArmorMaterial.GOLD
@@ -53,20 +53,20 @@ val GOLD = ingotMaterial("gold") {
 }
 val COAL = gemMaterial("coal") {
     color = 0x1a1a1a
-    textureSet = BaseTextureTypes.FUEL
+    textureSet = BaseTextureSets.FUEL
     standardBurnTime = 1600
     element = BaseElements.CARBON
     hasOre = true
 }
 val CHARCOAL = gemMaterial("charcoal") {
     color = 0x443e33
-    textureSet = BaseTextureTypes.FUEL
+    textureSet = BaseTextureSets.FUEL
     standardBurnTime = 1600
     element = BaseElements.CARBON
 }
 val FLINT = gemMaterial("flint") {
     color = 0x222020
-    textureSet = BaseTextureTypes.SHARP
+    textureSet = BaseTextureSets.SHARP
     blockCompaction = BlockCompaction.NONE
 }
 val LAPIS = gemMaterial("lapis") {
@@ -75,14 +75,14 @@ val LAPIS = gemMaterial("lapis") {
 }
 val QUARTZ = gemMaterial("quartz") {
     color = 0xe8dfd0
-    textureSet = BaseTextureTypes.CRYSTAL
+    textureSet = BaseTextureSets.CRYSTAL
     blockCompaction = BlockCompaction.FROM_2X2
     hasOre = true
 }
 val DIAMOND = gemMaterial("diamond") {
     tier = 2
     color = 0x34ebe3
-    textureSet = BaseTextureTypes.PENTAGONAL
+    textureSet = BaseTextureSets.PENTAGONAL
     element = BaseElements.CARBON
     itemTier = ItemTier.DIAMOND
     armorMaterial = ArmorMaterial.DIAMOND
@@ -91,19 +91,19 @@ val DIAMOND = gemMaterial("diamond") {
 val EMERALD = gemMaterial("emerald") {
     tier = 2
     color = 0x08ad2c
-    textureSet = BaseTextureTypes.OCTAGONAL
+    textureSet = BaseTextureSets.OCTAGONAL
     hasOre = true
 }
 val WOODEN = dustMaterial("wooden") {
     tier = -1
     color = 0x87672c
-    textureSet = BaseTextureTypes.FINE
+    textureSet = BaseTextureSets.FINE
     standardBurnTime = 200
     itemTier = ItemTier.WOOD
 }
 val STONE = dustMaterial("stone") {
     color = 0xb1b0ae
-    textureSet = BaseTextureTypes.FINE
+    textureSet = BaseTextureSets.FINE
     itemTier = ItemTier.STONE
 }
 val BONE = dustMaterial("bone") {
@@ -127,11 +127,11 @@ val GLOWSTONE = dustMaterial("glowstone") {
 val OBSIDIAN = dustMaterial("obsidian") {
     tier = 1
     color = 0x3c2a53
-    textureSet = BaseTextureTypes.FINE
+    textureSet = BaseTextureSets.FINE
 }
 val WATER = fluidMaterial("water") {
     color = 0x3e4ac6
-    textureSet = BaseTextureTypes.FLUID
+    textureSet = BaseTextureSets.FLUID
     liquidTemperature = 300
     gasNames = listOf("steam")
     gasTemperature = 373
@@ -139,7 +139,7 @@ val WATER = fluidMaterial("water") {
 }
 val LAVA = fluidMaterial("lava") {
     color = 0xc54c13
-    textureSet = BaseTextureTypes.FLUID
+    textureSet = BaseTextureSets.FLUID
 }
 
 fun addVanilla() {

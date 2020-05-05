@@ -103,7 +103,6 @@ minecraft {
 
 repositories {
     maven {
-        name = "Progwml6 maven"
         url = "https://dvs1.progwml6.com/files/maven/"
     }
     maven {

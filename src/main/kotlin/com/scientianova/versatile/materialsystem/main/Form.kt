@@ -15,6 +15,8 @@ class GlobalForm {
     private val properties = mutableMapOf<GlobalFormProperty<out Any?>, Any?>()
     private val defaults = mutableMapOf<FormProperty<out Any?>, Form.() -> Any?>()
 
+    val specialized get() = forMaterials.values.filterNotNull()
+
     operator fun get(mat: Material) =
             if (mat in forMaterials) forMaterials[mat]
             else (if (generate(mat)) Form(mat, this) else null)?.also { forMaterials[mat] = it }
@@ -113,6 +115,18 @@ class Form(val mat: Material, val global: GlobalForm) {
             this[REGISTRY_NAME] = value
         }
 
+    var renderType
+        get() = this[RENDER_TYPE]
+        set(value) {
+            this[RENDER_TYPE] = value
+        }
+
+    var alreadyImplemented
+        get() = this[ALREADY_IMPLEMENTED]
+        set(value) {
+            this[ALREADY_IMPLEMENTED] = value
+        }
+
     var itemTagNames
         get() = this[COMBINED_ITEM_TAGS]
         set(value) {
@@ -171,18 +185,21 @@ class Form(val mat: Material, val global: GlobalForm) {
         get() = this[ITEM]
         set(value) {
             this[ITEM] = value
+            alreadyImplemented = true
         }
 
     var block
         get() = this[BLOCK]
         set(value) {
             this[BLOCK] = value
+            alreadyImplemented = true
         }
 
     var fluidPair
         get() = this[FLUID]
         set(value) {
             this[FLUID] = value
+            alreadyImplemented = true
         }
 
     val itemTags get() = itemTagNames.map { ItemTags.Wrapper(it.toResLoc()) }

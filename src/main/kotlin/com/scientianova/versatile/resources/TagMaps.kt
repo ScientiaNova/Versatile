@@ -1,7 +1,6 @@
 package com.scientianova.versatile.resources
 
 import com.scientianova.versatile.common.extensions.toResLoc
-import com.scientianova.versatile.materialsystem.main.IMaterialObject
 import com.google.common.collect.ListMultimap
 import com.google.common.collect.MultimapBuilder
 import net.minecraft.block.Block
@@ -19,38 +18,6 @@ object TagMaps {
 
     @JvmField
     val FLUID_TAGS: ListMultimap<ResourceLocation, Fluid> = MultimapBuilder.treeKeys().arrayListValues().build<ResourceLocation, Fluid>()
-
-    @JvmStatic
-    fun addMatItemToTag(obj: IMaterialObject) {
-        when (obj) {
-            is Item -> {
-                val tag = obj.form.itemTagNames
-                if (tag.isNotEmpty()) {
-                    addItemToTag(tag, obj)
-                    obj.mat.names.forEach {
-                        addItemToTag("$tag/$it", obj)
-                    }
-                }
-            }
-            is Block -> {
-                val tag = obj.form.blockTagNames
-                if (tag.isNotEmpty()) {
-                    addBlockToTag(tag, obj)
-                    obj.mat.names.forEach {
-                        addBlockToTag("$tag/$it", obj)
-                    }
-                }
-            }
-            is Fluid -> {
-                val tag = obj.form.fluidTagNames
-                if (tag.isNotEmpty()) {
-                    obj.mat.names.forEach {
-                        addFluidToTag(tag + it, obj)
-                    }
-                }
-            }
-        }
-    }
 
     @JvmStatic
     fun addItemToTag(tag: ResourceLocation, item: Item) = ITEM_TAGS.put(tag, item)

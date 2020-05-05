@@ -1,7 +1,7 @@
 package com.scientianova.versatile.materialsystem.builders
 
 import com.scientianova.versatile.materialsystem.addition.BaseObjTypes
-import com.scientianova.versatile.materialsystem.addition.BaseTextureTypes
+import com.scientianova.versatile.materialsystem.addition.BaseTextureSets
 import com.scientianova.versatile.materialsystem.addition.MatProperties
 import com.scientianova.versatile.materialsystem.elements.Element
 import com.scientianova.versatile.materialsystem.main.Material
@@ -108,7 +108,7 @@ class IngotMaterialBuilder(vararg names: String) : MaterialBuilder(*names) {
 
 class FluidMaterialBuilder(vararg names: String) : MaterialBuilder(*names) {
     init {
-        textureType(BaseTextureTypes.FLUID)
+        textureType(BaseTextureSets.FLUID)
         fluidTemperature(300)
     }
 }

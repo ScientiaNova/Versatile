@@ -6,11 +6,7 @@ import com.scientianova.versatile.materialsystem.addition.BLOCK_FORM
 import com.scientianova.versatile.materialsystem.addition.BaseObjTypes
 import com.scientianova.versatile.materialsystem.addition.INGOT_FORM
 import com.scientianova.versatile.materialsystem.addition.NUGGET_FORM
-import com.scientianova.versatile.materialsystem.lists.MaterialBlocks
-import com.scientianova.versatile.materialsystem.lists.MaterialFluids
-import com.scientianova.versatile.materialsystem.lists.MaterialItems
-import com.scientianova.versatile.materialsystem.lists.Materials
-import com.scientianova.versatile.materialsystem.main.IMaterialObject
+import com.scientianova.versatile.materialsystem.lists.*
 import com.scientianova.versatile.materialsystem.main.Material
 import com.scientianova.versatile.materialsystem.properties.BlockCompaction
 import net.minecraft.util.ResourceLocation
@@ -19,9 +15,24 @@ object BaseDataAddition {
     @JvmStatic
     fun register() {
         //Tags
-        MaterialItems.all.filterIsInstance<IMaterialObject>().forEach { TagMaps.addMatItemToTag(it) }
-        MaterialBlocks.all.filterIsInstance<IMaterialObject>().forEach { TagMaps.addMatItemToTag(it) }
-        MaterialFluids.all.flatMap { listOf(it.stillFluid, it.flowingFluid) }.filterIsInstance<IMaterialObject>().forEach { TagMaps.addMatItemToTag(it) }
+        Forms.all.forEach { global ->
+            global.specialized.forEach { regular ->
+                regular.item?.let {
+                    TagMaps.addItemToTag(global.itemTagName, it)
+                    regular.itemTagNames.forEach { tag -> TagMaps.addItemToTag(tag, it) }
+                }
+                regular.block?.let {
+                    TagMaps.addBlockToTag(global.blockTagName, it)
+                    regular.blockTagNames.forEach { tag -> TagMaps.addBlockToTag(tag, it) }
+                }
+                regular.fluidPair?.let {
+                    regular.fluidTagNames.forEach { tag ->
+                        TagMaps.addFluidToTag(tag, it.still)
+                        TagMaps.addFluidToTag(tag, it.flowing)
+                    }
+                }
+            }
+        }
 
         //Recipes
         Materials.all.filter(Material::isItemMaterial).forEach { mat ->

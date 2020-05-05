@@ -1,17 +1,19 @@
 package com.scientianova.versatile
 
 import com.scientianova.versatile.blocks.registerBlocks
+import com.scientianova.versatile.common.extensions.toStack
 import com.scientianova.versatile.fluids.registerFluids
-import com.scientianova.versatile.items.MaterialItem
 import com.scientianova.versatile.items.registerItems
 import com.scientianova.versatile.machines.BaseMachineRegistry
 import com.scientianova.versatile.machines.gui.BaseScreen
 import com.scientianova.versatile.machines.packets.NetworkHandler
+import com.scientianova.versatile.materialsystem.addition.COAL
+import com.scientianova.versatile.materialsystem.addition.DUST_FORM
+import com.scientianova.versatile.materialsystem.addition.ITEM
 import com.scientianova.versatile.materialsystem.commands.FluidContainerCommand
 import com.scientianova.versatile.materialsystem.commands.MaterialCommand
 import com.scientianova.versatile.materialsystem.commands.ObjTypeCommand
-import com.scientianova.versatile.materialsystem.lists.MaterialItems
-import com.scientianova.versatile.materialsystem.main.IMaterialObject
+import com.scientianova.versatile.materialsystem.lists.Forms
 import com.scientianova.versatile.proxy.ClientProxy
 import com.scientianova.versatile.proxy.IModProxy
 import com.scientianova.versatile.proxy.ServerProxy
@@ -21,12 +23,12 @@ import com.scientianova.versatile.resources.FakeDataPackFinder
 import net.alexwells.kottle.FMLKotlinModLoadingContext
 import net.minecraft.block.Block
 import net.minecraft.client.gui.ScreenManager
+import net.minecraft.client.renderer.RenderTypeLookup
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemStack
 import net.minecraftforge.event.RegistryEvent
-import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent
 import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.DistExecutor
@@ -48,10 +50,10 @@ object Versatile {
     val LOGGER: Logger = LogManager.getLogger()
 
     val MAIN: ItemGroup = object : ItemGroup(MOD_ID) {
-        override fun createIcon() = ItemStack(MaterialItems.all.first { it is MaterialItem })
+        override fun createIcon() = DUST_FORM[COAL]!![ITEM]?.toStack() ?: ItemStack.EMPTY
     }
 
-    private val proxy = DistExecutor.runForDist({ Supplier<IModProxy> { ClientProxy } }, { Supplier<IModProxy> { ServerProxy } })
+    private val proxy = DistExecutor.runForDist<IModProxy>({ Supplier { ClientProxy } }, { Supplier { ServerProxy } })
 
     init {
         FMLKotlinModLoadingContext.get().modEventBus.addListener<FMLClientSetupEvent> { clientSetup() }
@@ -64,6 +66,13 @@ object Versatile {
 
     private fun clientSetup() {
         ScreenManager.registerFactory(BaseMachineRegistry.BASE_CONTAINER, ::BaseScreen)
+        Forms.all.forEach { global ->
+            global.specialized.forEach { regular ->
+                if (!regular.alreadyImplemented) regular.block?.let {
+                    RenderTypeLookup.setRenderLayer(it, regular.renderType ?: return@let)
+                }
+            }
+        }
     }
 
     private fun commonSetup() {
@@ -106,12 +115,6 @@ object Versatile {
             MaterialCommand(e.commandDispatcher)
             ObjTypeCommand(e.commandDispatcher)
             FluidContainerCommand(e.commandDispatcher)
-        }
-
-        @SubscribeEvent
-        fun fuelTime(e: FurnaceFuelBurnTimeEvent) {
-            val item = e.itemStack.item
-            if (item is IMaterialObject) item.form.burnTime.let { if (it > 0) e.burnTime = it }
         }
     }
 }

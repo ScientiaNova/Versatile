@@ -1,6 +1,6 @@
 package com.scientianova.versatile.materialsystem.addition
 
-object BaseTextureTypes {
+object BaseTextureSets {
     const val ROUGH = "rough"
     const val REGULAR = "regular"
     const val SHINY = "shiny"

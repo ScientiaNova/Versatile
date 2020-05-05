@@ -10,7 +10,10 @@ import com.scientianova.versatile.materialsystem.properties.FormProperty
 import com.scientianova.versatile.materialsystem.properties.GlobalFormProperty
 import com.scientianova.versatile.materialsystem.properties.HarvestTier
 import net.minecraft.block.Block
+import net.minecraft.client.renderer.RenderType
 import net.minecraft.item.Item
+import net.minecraftforge.fml.DistExecutor
+import java.util.function.Supplier
 
 val NAME = GlobalFormProperty("versatile:name".toResLoc(), String::isNotBlank) { "" }
 val GENERATE = GlobalFormProperty<(Material) -> Boolean>("versatile:generate".toResLoc()) { { false } }
@@ -36,6 +39,10 @@ val COMBINED_BLOCK_TAGS = FormProperty("versatile:combined_block_tags".toResLoc(
 }
 val COMBINED_FLUID_TAGS = FormProperty("versatile:combined_fluid_tags".toResLoc()) {
     mat.associatedNames.map { "forge:${global}_$it" }
+}
+val ALREADY_IMPLEMENTED = FormProperty("versatile:already_implemented".toResLoc()) { false }
+val RENDER_TYPE = FormProperty("versatile:render_type".toResLoc()) {
+    DistExecutor.runForDist<RenderType?>({ Supplier { RenderType.getSolid() } }, { Supplier { null } })
 }
 val ITEM_MODEL = FormProperty("versatile:item_model".toResLoc()) {
     json {

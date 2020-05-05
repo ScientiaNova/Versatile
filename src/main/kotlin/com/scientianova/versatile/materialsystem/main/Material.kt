@@ -26,6 +26,12 @@ class Material {
 
     operator fun contains(property: MatProperty<*>) = property in properties
 
+    infix fun merge(other: Material): Material {
+        properties += other.properties
+        associatedNames = (associatedNames + other.associatedNames).distinct()
+        return this
+    }
+
     var associatedNames
         get() = this[ASSOCIATED_NAMES]
         set(value) {

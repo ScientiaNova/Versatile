@@ -3,7 +3,6 @@
 package com.scientianova.versatile.materialsystem.addition
 
 import com.scientianova.versatile.common.extensions.toResLoc
-import com.scientianova.versatile.materialsystem.main.Form
 import com.scientianova.versatile.materialsystem.main.Material
 import com.scientianova.versatile.materialsystem.main.MaterialStack
 import com.scientianova.versatile.materialsystem.properties.*
@@ -12,7 +11,7 @@ import net.minecraft.item.IItemTier
 
 val ASSOCIATED_NAMES = MatProperty("versatile:associated_names".toResLoc(), List<String>::isNotEmpty) { emptyList() }
 val COMPOSITION = MatProperty("versatile:composition".toResLoc()) { emptyList<MaterialStack>() }
-val TEXTURE_SET = MatProperty("versatile:texture_set".toResLoc()) { BaseTextureTypes.REGULAR }
+val TEXTURE_SET = MatProperty("versatile:texture_set".toResLoc()) { BaseTextureSets.REGULAR }
 val COLOR = MatProperty("versatile:color".toResLoc()) { -1 }
 val TIER = MatProperty("versatile:tier".toResLoc()) { 0 }
 val HARVEST_TIER = MatProperty("versatile:harvest_tier".toResLoc()) {
