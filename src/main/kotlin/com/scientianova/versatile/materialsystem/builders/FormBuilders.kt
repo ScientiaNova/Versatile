@@ -72,7 +72,7 @@ open class FormBuilder(name: String) {
 
     fun fluidAttributesFunc(value: (Form) -> ForgeFlowingFluid.Properties) = property(FLUID_PROPERTIES, value)
 
-    fun stillFluid(value: (Form) -> Fluid) = property(STILL_FLUID, value)
+    fun stillFluid(value: (Form) -> FlowingFluid) = property(STILL_FLUID, value)
 
     fun flowingFluid(value: (Form) -> FlowingFluid) = property(FLOWING_FLUID, value)
 

@@ -5,6 +5,7 @@ import com.scientianova.versatile.materialsystem.addition.*
 import com.scientianova.versatile.materialsystem.lists.addForm
 import com.scientianova.versatile.materialsystem.properties.FormProperty
 import com.scientianova.versatile.materialsystem.properties.GlobalFormProperty
+import net.minecraft.fluid.FlowingFluid
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.FluidTags
 import net.minecraft.tags.ItemTags
@@ -217,7 +218,7 @@ class Form(val mat: Material, val global: GlobalForm) {
             this[FLUID_PROPERTIES] = value
         }
 
-    var stillFluid
+    var stillFluid: FlowingFluid?
         get() = this[STILL_FLUID]
         set(value) {
             this[STILL_FLUID] = value

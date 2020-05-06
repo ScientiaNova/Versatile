@@ -12,9 +12,11 @@ import com.scientianova.versatile.items.VersatileItem
 import com.scientianova.versatile.materialsystem.addition.*
 import com.scientianova.versatile.materialsystem.main.GlobalForm
 import com.scientianova.versatile.materialsystem.main.Material
+import com.scientianova.versatile.materialsystem.properties.BlockCompaction
 import com.scientianova.versatile.materialsystem.properties.CompoundType
 import com.scientianova.versatile.materialsystem.properties.DisplayType
 import net.minecraft.client.renderer.RenderType
+import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.LanguageMap
 import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.fluids.ForgeFlowingFluid
@@ -51,6 +53,7 @@ fun ingotMaterial(vararg names: String, builder: Material.() -> Unit) = Material
 }.register()
 
 fun liquidMaterial(vararg names: String, builder: Material.() -> Unit) = Material().apply {
+    blockCompaction = BlockCompaction.NONE
     associatedNames = listOf(*names)
     textureSet = FLUID
     liquidTemperature = 300
@@ -58,6 +61,7 @@ fun liquidMaterial(vararg names: String, builder: Material.() -> Unit) = Materia
 }.register()
 
 fun gasMaterial(vararg names: String, builder: Material.() -> Unit) = Material().apply {
+    blockCompaction = BlockCompaction.NONE
     associatedNames = listOf(*names)
     textureSet = FLUID
     gasTemperature = 300
@@ -125,16 +129,27 @@ fun fluidForm(name: String, builder: GlobalForm.() -> Unit) = GlobalForm().apply
     ITEM {
         VersatileBucketItem({ stillFluid!! }, ExtendedItemProperties(
                 group = Versatile.MAIN,
-                burnTime = burnTime)
-        ).setRegistryName(registryName)
-    }
-    BLOCK {
-        VersatileFluidBlock({ flowingFluid!! }, ExtendedBlockProperties(
-                material = BlockMaterial.WATER
+                maxStackSize = 1,
+                burnTime = burnTime
         )).setRegistryName(registryName)
     }
-    STILL_FLUID { ForgeFlowingFluid.Source(fluidProperties!!).apply { registryName = this@STILL_FLUID.registryName } }
-    FLOWING_FLUID { ForgeFlowingFluid.Flowing(fluidProperties!!).apply { registryName = this@FLOWING_FLUID.registryName } }
+    BLOCK {
+        VersatileFluidBlock({ stillFluid!! }, ExtendedBlockProperties(
+                material = BlockMaterial.WATER,
+                blocksMovement = false
+        )).setRegistryName(registryName)
+    }
+    STILL_FLUID {
+        ForgeFlowingFluid.Source(fluidProperties!!).apply {
+            registryName = this@STILL_FLUID.registryName
+        }
+    }
+    FLOWING_FLUID {
+        ForgeFlowingFluid.Flowing(fluidProperties!!).apply {
+            val stillRegName = this@FLOWING_FLUID.registryName
+            registryName = ResourceLocation(stillRegName.namespace, "flowing_${stillRegName.path}")
+        }
+    }
     RENDER_TYPE { DistExecutor.runForDist<RenderType?>({ Supplier { RenderType.getTranslucent() } }, { Supplier { null } }) }
     COMBINED_ITEM_TAGS { emptyList() }
     COMBINED_BLOCK_TAGS { emptyList() }

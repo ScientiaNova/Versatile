@@ -7,11 +7,9 @@ import com.scientianova.versatile.common.extensions.toResLoc
 import com.scientianova.versatile.materialsystem.main.Material
 import com.scientianova.versatile.materialsystem.properties.FormProperty
 import com.scientianova.versatile.materialsystem.properties.GlobalFormProperty
-import com.scientianova.versatile.materialsystem.properties.HarvestTier
 import net.minecraft.block.Block
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.fluid.FlowingFluid
-import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraftforge.fluids.ForgeFlowingFluid
 import net.minecraftforge.fml.DistExecutor
@@ -63,7 +61,5 @@ val BLOCKSTATE_JSON = FormProperty("versatile:blockstate_json".toResLoc()) {
 val ITEM = FormProperty<Item?>("versatile:item".toResLoc()) { null }
 val BLOCK = FormProperty<Block?>("versatile:block".toResLoc()) { null }
 val FLUID_PROPERTIES = FormProperty<ForgeFlowingFluid.Properties?>("versatile:fluid_properties".toResLoc()) { null }
-val STILL_FLUID = FormProperty<Fluid?>("versatile:still_fluid".toResLoc()) { null }
+val STILL_FLUID = FormProperty<FlowingFluid?>("versatile:still_fluid".toResLoc()) { null }
 val FLOWING_FLUID = FormProperty<FlowingFluid?>("versatile:flowing_fluid".toResLoc()) { null }
-
-fun Block.Properties.fromTier(tier: HarvestTier): Block.Properties = this.hardnessAndResistance(tier.hardness, tier.resistance).harvestLevel(tier.harvestLevel)

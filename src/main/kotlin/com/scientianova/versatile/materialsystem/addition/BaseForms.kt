@@ -10,6 +10,7 @@ import com.scientianova.versatile.materialsystem.builders.fluidForm
 import com.scientianova.versatile.materialsystem.builders.itemForm
 import com.scientianova.versatile.materialsystem.main.Material
 import com.scientianova.versatile.materialsystem.properties.BlockCompaction
+import net.minecraft.block.FlowingFluidBlock
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fluids.ForgeFlowingFluid
 
@@ -50,7 +51,7 @@ val LIQUID_FORM = fluidForm("liquid") {
                 "minecraft:block/water_flow".toResLoc(),
                 temperature = mat.liquidTemperature,
                 isGas = false
-        ))
+        )).block { block as FlowingFluidBlock }.bucket { item!! }
     }
     ITEM_MODEL {
         json {
@@ -69,7 +70,7 @@ val GAS_FORM = fluidForm("gas") {
                 "minecraft:block/water_flow".toResLoc(),
                 temperature = mat.gasTemperature,
                 isGas = true
-        ))
+        )).block { block as FlowingFluidBlock }.bucket { item!! }
     }
     ITEM_MODEL {
         json {
