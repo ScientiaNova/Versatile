@@ -4,26 +4,28 @@ package com.scientianova.versatile.materialsystem.addition
 
 import com.scientianova.versatile.common.extensions.json
 import com.scientianova.versatile.common.extensions.toResLoc
-import com.scientianova.versatile.fluids.IFluidPairHolder
 import com.scientianova.versatile.materialsystem.main.Material
 import com.scientianova.versatile.materialsystem.properties.FormProperty
 import com.scientianova.versatile.materialsystem.properties.GlobalFormProperty
 import com.scientianova.versatile.materialsystem.properties.HarvestTier
 import net.minecraft.block.Block
 import net.minecraft.client.renderer.RenderType
+import net.minecraft.fluid.FlowingFluid
+import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
+import net.minecraftforge.fluids.ForgeFlowingFluid
 import net.minecraftforge.fml.DistExecutor
 import java.util.function.Supplier
 
 val NAME = GlobalFormProperty("versatile:name".toResLoc(), String::isNotBlank) { "" }
-val GENERATE = GlobalFormProperty<(Material) -> Boolean>("versatile:generate".toResLoc()) { { false } }
+val PREDICATE = GlobalFormProperty<(Material) -> Boolean>("versatile:generate".toResLoc()) { { false } }
 val INDEX_BLACKLIST = GlobalFormProperty("versatile:index_blacklist".toResLoc()) { emptyList<Int>() }
 val BUCKET_VOLUME = GlobalFormProperty("versatile:bucket_volume".toResLoc()) { 0 }
 val REGISTRY_NAME = FormProperty("versatile:registry_name".toResLoc()) {
     "versatile:${mat.name}_${global.name}".toResLoc()
 }
 val FORM_COLOR = FormProperty("versatile:color".toResLoc()) { mat.color }
-val FORM_DENSITY_MULTIPLIER = FormProperty("versatile:density_multiplier".toResLoc()) { 1f }
+val FORM_DENSITY_MULTIPLIER = FormProperty("versatile:density_multiplier".toResLoc()) { mat.densityMultiplier }
 val TEMPERATURE = FormProperty("versatile:temperature".toResLoc()) { 300 }
 val SINGLE_TEXTURE_SET = GlobalFormProperty("versatile:single_texture_set".toResLoc()) { false }
 val BURN_TIME = FormProperty("versatile:burn_time".toResLoc()) {
@@ -60,6 +62,8 @@ val BLOCKSTATE_JSON = FormProperty("versatile:blockstate_json".toResLoc()) {
 }
 val ITEM = FormProperty<Item?>("versatile:item".toResLoc()) { null }
 val BLOCK = FormProperty<Block?>("versatile:block".toResLoc()) { null }
-val FLUID = FormProperty<IFluidPairHolder?>("versatile:fluid".toResLoc()) { null }
+val FLUID_PROPERTIES = FormProperty<ForgeFlowingFluid.Properties?>("versatile:fluid_properties".toResLoc()) { null }
+val STILL_FLUID = FormProperty<Fluid?>("versatile:still_fluid".toResLoc()) { null }
+val FLOWING_FLUID = FormProperty<FlowingFluid?>("versatile:flowing_fluid".toResLoc()) { null }
 
 fun Block.Properties.fromTier(tier: HarvestTier): Block.Properties = this.hardnessAndResistance(tier.hardness, tier.resistance).harvestLevel(tier.harvestLevel)

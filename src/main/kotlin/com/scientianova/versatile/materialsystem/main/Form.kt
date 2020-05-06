@@ -2,7 +2,7 @@ package com.scientianova.versatile.materialsystem.main
 
 import com.scientianova.versatile.common.extensions.toResLoc
 import com.scientianova.versatile.materialsystem.addition.*
-import com.scientianova.versatile.materialsystem.lists.Forms
+import com.scientianova.versatile.materialsystem.lists.addForm
 import com.scientianova.versatile.materialsystem.properties.FormProperty
 import com.scientianova.versatile.materialsystem.properties.GlobalFormProperty
 import net.minecraft.tags.BlockTags
@@ -22,8 +22,8 @@ class GlobalForm {
             else (if (generate(mat)) Form(mat, this) else null)?.also { forMaterials[mat] = it }
 
     operator fun <T> set(property: GlobalFormProperty<T>, value: T) {
-        if (property.isValid(value)) error("Invalid value for property: $property")
-        else properties[property] = value
+        if (property.isValid(value)) properties[property] = value
+        else error("Invalid value for property: $property")
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -36,8 +36,23 @@ class GlobalForm {
     @Suppress("UNCHECKED_CAST")
     operator fun <T> get(property: FormProperty<T>) = defaults[property] as? Form.() -> T
 
+    operator fun <T> set(property: FormProperty<T>, value: Form.() -> T) {
+        defaults[property] = value
+    }
+
     operator fun <T> FormProperty<T>.invoke(value: Form.() -> T) {
         defaults[this] = value
+    }
+
+    internal fun merge(other: GlobalForm): GlobalForm {
+        other.generate = { generate(it) || other.generate(it) }
+        other.forMaterials.forEach { (mat, form) ->
+            if (form == null) return@forEach
+            forMaterials[mat]?.merge(form) ?: run { forMaterials[mat] = form }
+        }
+        properties += other.properties
+        defaults += other.defaults
+        return this
     }
 
     var name
@@ -53,9 +68,9 @@ class GlobalForm {
         }
 
     var generate
-        get() = this[GENERATE]
+        get() = this[PREDICATE]
         set(value) {
-            this[GENERATE] = value
+            this[PREDICATE] = value
         }
 
     var indexBlacklist
@@ -88,18 +103,19 @@ class GlobalForm {
 
     val blockTag get() = ItemTags.Wrapper(itemTagName.toResLoc())
 
-    fun register(): GlobalForm {
-        Forms.add(this)
-        return Forms[name]!!
-    }
+    fun register() = addForm(this)
 }
 
 class Form(val mat: Material, val global: GlobalForm) {
     private val properties = mutableMapOf<FormProperty<out Any?>, Any?>()
 
+    internal fun merge(other: Form) {
+        properties += other.properties
+    }
+
     operator fun <T> set(property: FormProperty<T>, value: T) {
-        if (property.isValid(value)) error("Invalid value for property: $property")
-        else properties[property] = value
+        if (property.isValid(value)) properties[property] = value
+        else error("Invalid value for property: $property")
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -195,10 +211,23 @@ class Form(val mat: Material, val global: GlobalForm) {
             alreadyImplemented = true
         }
 
-    var fluidPair
-        get() = this[FLUID]
+    var fluidProperties
+        get() = this[FLUID_PROPERTIES]
         set(value) {
-            this[FLUID] = value
+            this[FLUID_PROPERTIES] = value
+        }
+
+    var stillFluid
+        get() = this[STILL_FLUID]
+        set(value) {
+            this[STILL_FLUID] = value
+            alreadyImplemented = true
+        }
+
+    var flowingFluid
+        get() = this[FLOWING_FLUID]
+        set(value) {
+            this[FLOWING_FLUID] = value
             alreadyImplemented = true
         }
 

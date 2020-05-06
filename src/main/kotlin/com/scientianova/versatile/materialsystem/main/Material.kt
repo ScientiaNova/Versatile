@@ -1,8 +1,9 @@
 package com.scientianova.versatile.materialsystem.main
 
+import com.scientianova.versatile.Versatile
 import com.scientianova.versatile.common.extensions.toResLoc
 import com.scientianova.versatile.materialsystem.addition.*
-import com.scientianova.versatile.materialsystem.lists.Materials
+import com.scientianova.versatile.materialsystem.lists.addMaterial
 import com.scientianova.versatile.materialsystem.properties.HarvestTier
 import com.scientianova.versatile.materialsystem.properties.MatProperty
 import net.minecraft.tags.BlockTags
@@ -14,8 +15,8 @@ class Material {
     val properties = mutableMapOf<MatProperty<out Any?>, Any?>()
 
     operator fun <T> set(property: MatProperty<T>, value: T) {
-        if (property.isValid(value)) error("Invalid value for property: $property")
-        else properties[property] = value
+        if (property.isValid(value)) properties[property] = value
+        else error("Invalid value for property: $property")
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -26,9 +27,9 @@ class Material {
 
     operator fun contains(property: MatProperty<*>) = property in properties
 
-    infix fun merge(other: Material): Material {
+    internal fun merge(other: Material): Material {
+        other.associatedNames = (associatedNames + other.associatedNames).distinct()
         properties += other.properties
-        associatedNames = (associatedNames + other.associatedNames).distinct()
         return this
     }
 
@@ -109,9 +110,9 @@ class Material {
         }
 
     var densityMultiplier
-        get() = this[MAT_DENSITY_MULTIPLIER]
+        get() = this[DENSITY_MULTIPLIER]
         set(value) {
-            this[MAT_DENSITY_MULTIPLIER] = value
+            this[DENSITY_MULTIPLIER] = value
         }
 
     var processingMultiplier
@@ -247,10 +248,7 @@ class Material {
 
     override fun toString() = name
 
-    fun register(): Material {
-        Materials.add(this)
-        return Materials[name]!!
-    }
+    fun register() = addMaterial(this)
 
     fun getItemTags(type: Form) = associatedNames.map { ItemTags.Wrapper("${type.itemTagNames}/$it".toResLoc()) }
 

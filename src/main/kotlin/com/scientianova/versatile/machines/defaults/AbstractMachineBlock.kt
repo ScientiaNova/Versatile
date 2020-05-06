@@ -19,7 +19,7 @@ import net.minecraft.world.World
 import net.minecraftforge.fml.network.NetworkDirection
 import net.minecraftforge.fml.network.NetworkHooks
 
-abstract class AbstractMachineBlock(properties: Block.Properties, name: String) : Block(properties), IMachineBlock {
+abstract class AbstractMachineBlock(properties: Properties) : Block(properties), IMachineBlock {
     init {
         BaseTileEntity.USED_BY += this
     }

@@ -13,7 +13,7 @@ import com.scientianova.versatile.machines.recipes.RecipeList
 import net.minecraft.util.text.TranslationTextComponent
 import kotlin.math.max
 
-open class AutomationRecipeBasedMachine(recipeList: RecipeList, properties: Properties, name: String = recipeList.name.toString()) : AbstractMachineBlock(properties, name) {
+open class AutomationRecipeBasedMachine(recipeList: RecipeList, properties: Properties) : AbstractMachineBlock(properties) {
     init {
         recipeList.blocksImplementing += this
     }

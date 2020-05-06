@@ -6,12 +6,8 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
 import net.minecraft.item.ItemStack
 
-class JsonBuilder(builder: JsonBuilder.() -> Unit) {
+class JsonBuilder() {
     val result = JsonObject()
-
-    init {
-        builder()
-    }
 
     infix fun String.to(property: Number) = result.addProperty(this, property)
     infix fun String.to(property: Char) = result.addProperty(this, property)
@@ -30,10 +26,11 @@ class JsonBuilder(builder: JsonBuilder.() -> Unit) {
         result.add(this, arr)
     }
 
-    operator fun String.invoke(builder: JsonBuilder.() -> Unit) = result.add(this, JsonBuilder(builder).result)
+    inline operator fun String.invoke(builder: JsonBuilder.() -> Unit) =
+            result.add(this, JsonBuilder().apply(builder).result)
 }
 
-fun json(builder: JsonBuilder.() -> Unit) = JsonBuilder(builder).result
+inline fun json(builder: JsonBuilder.() -> Unit) = JsonBuilder().apply(builder).result
 
 fun Number.toJson() = JsonPrimitive(this)
 fun Char.toJson() = JsonPrimitive(this)

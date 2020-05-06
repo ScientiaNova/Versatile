@@ -1,22 +1,17 @@
+@file:JvmName("Elements")
+
 package com.scientianova.versatile.materialsystem.lists
 
 import com.scientianova.versatile.materialsystem.elements.Element
 
-object Elements {
-    private val elements = hashMapOf<String, Element>()
+private val elements = hashMapOf<String, Element>()
 
-    @JvmStatic
-    val all
-        get() = elements.values
+val allElements get() = elements.values
 
-    @JvmStatic
-    fun add(element: Element) {
-        elements[element.symbol.toLowerCase()] = element
-    }
-
-    @JvmStatic
-    operator fun get(name: String) = elements[name]
-
-    @JvmStatic
-    operator fun contains(name: String) = name in elements
+fun addElement(element: Element) {
+    elements[element.symbol.toLowerCase()] = element
 }
+
+fun elementFor(name: String) = elements[name]
+
+fun elementExists(name: String) = name in elements

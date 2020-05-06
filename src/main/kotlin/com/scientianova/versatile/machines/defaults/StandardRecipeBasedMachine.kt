@@ -11,7 +11,7 @@ import com.scientianova.versatile.machines.properties.implementations.recipes.TE
 import com.scientianova.versatile.machines.recipes.RecipeList
 import kotlin.math.max
 
-open class StandardRecipeBasedMachine(recipeList: RecipeList, properties: Properties, name: String = recipeList.name.toString()) : AbstractMachineBlock(properties, name) {
+open class StandardRecipeBasedMachine(recipeList: RecipeList, properties: Properties) : AbstractMachineBlock(properties) {
     init {
         recipeList.blocksImplementing += this
     }

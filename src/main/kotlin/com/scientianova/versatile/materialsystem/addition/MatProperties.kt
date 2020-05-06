@@ -11,7 +11,7 @@ import net.minecraft.item.IItemTier
 
 val ASSOCIATED_NAMES = MatProperty("versatile:associated_names".toResLoc(), List<String>::isNotEmpty) { emptyList() }
 val COMPOSITION = MatProperty("versatile:composition".toResLoc()) { emptyList<MaterialStack>() }
-val TEXTURE_SET = MatProperty("versatile:texture_set".toResLoc()) { BaseTextureSets.REGULAR }
+val TEXTURE_SET = MatProperty("versatile:texture_set".toResLoc()) { REGULAR }
 val COLOR = MatProperty("versatile:color".toResLoc()) { -1 }
 val TIER = MatProperty("versatile:tier".toResLoc()) { 0 }
 val HARVEST_TIER = MatProperty("versatile:harvest_tier".toResLoc()) {
@@ -22,7 +22,7 @@ val ARMOR_MATERIAL = MatProperty<IArmorMaterial?>("versatile:armor_material".toR
 val ELEMENT = MatProperty("versatile:element".toResLoc()) { BaseElements.NULL }
 val BASE_BURN_TIME = MatProperty("versatile:burn_time".toResLoc()) { 0 }
 val COMPOUND_TYPE = MatProperty("versatile:compound_type".toResLoc()) { CompoundType.CHEMICAL }
-val MAT_DENSITY_MULTIPLIER = MatProperty("versatile:density_multiplier".toResLoc()) { 1f }
+val DENSITY_MULTIPLIER = MatProperty("versatile:density_multiplier".toResLoc()) { 1f }
 val PROCESSING_MULTIPLIER = MatProperty("versatile:processing_multiplier".toResLoc()) { 1 }
 val UNREFINED_COLOR = MatProperty("versatile:unrefined_color".toResLoc(), defaultFun = Material::color)
 val LIQUID_TEMPERATURE = MatProperty("versatile:liquid_temperature".toResLoc()) { 0 }

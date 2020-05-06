@@ -1,115 +1,118 @@
 package com.scientianova.versatile.materialsystem.builders
 
-import com.scientianova.versatile.materialsystem.addition.BaseObjTypes
-import com.scientianova.versatile.materialsystem.addition.BaseTextureSets
-import com.scientianova.versatile.materialsystem.addition.MatProperties
+import com.scientianova.versatile.materialsystem.addition.*
 import com.scientianova.versatile.materialsystem.elements.Element
 import com.scientianova.versatile.materialsystem.main.Material
 import com.scientianova.versatile.materialsystem.main.MaterialStack
-import com.scientianova.versatile.materialsystem.main.Form
 import com.scientianova.versatile.materialsystem.properties.*
 import net.minecraft.item.IArmorMaterial
 import net.minecraft.item.IItemTier
 
 open class MaterialBuilder(vararg names: String) {
-    protected val result = Material(*names)
+    private val result = Material()
+
+    init {
+        result.associatedNames = listOf(*names)
+    }
 
     fun <T> property(property: MatProperty<T>, value: T) = this.also { result[property] = value }
 
-    fun blacklistTypes(vararg types: Form) = this.also { result.typeBlacklist += types }
-
-    fun invertedBlacklist() = this.also { result.invertedBlacklist = true }
-
     fun composition(value: List<MaterialStack>) = this.also { result.composition = value }
 
-    fun color(value: Int) = property(MatProperties.COLOR, value)
+    fun color(value: Int) = property(COLOR, value)
 
-    fun textureType(value: String) = property(MatProperties.TEXTURE_TYPE, value)
+    fun textureSet(value: String) = property(TEXTURE_SET, value)
 
-    fun tier(value: Int) = property(MatProperties.TIER, value)
+    fun tier(value: Int) = property(TIER, value)
 
-    fun itemTier(value: IItemTier) = property(MatProperties.ITEM_TIER, value)
+    fun itemTier(value: IItemTier) = property(ITEM_TIER, value)
 
-    fun armorMaterial(value: IArmorMaterial) = property(MatProperties.ARMOR_MATERIAL, value)
+    fun armorMaterial(value: IArmorMaterial) = property(ARMOR_MATERIAL, value)
 
-    fun element(value: Element) = property(MatProperties.ELEMENT, value)
+    fun element(value: Element) = property(ELEMENT, value)
 
-    fun standardBurnTime(value: Int) = property(MatProperties.BURN_TIME, value)
+    fun standardBurnTime(value: Int) = property(BASE_BURN_TIME, value)
 
-    fun compoundType(value: CompoundType) = property(MatProperties.COMPOUND_TYPE, value)
+    fun compoundType(value: CompoundType) = property(COMPOUND_TYPE, value)
 
-    fun harvestTier(value: HarvestTier) = property(MatProperties.HARVEST_TIER, value)
+    fun harvestTier(value: HarvestTier) = property(HARVEST_TIER, value)
 
-    fun densityMultiplier(value: Float) = property(MatProperties.DENSITY_MULTIPLIER, value)
+    fun densityMultiplier(value: Float) = property(DENSITY_MULTIPLIER, value)
 
-    fun processingMultiplier(value: Int) = property(MatProperties.PROCESSING_MULTIPLIER, value)
+    fun processingMultiplier(value: Int) = property(PROCESSING_MULTIPLIER, value)
 
-    fun refinedMaterial(value: Material) = property(MatProperties.REFINED_MATERIAL, value)
+    fun refinedMaterial(value: Material) = property(REFINED_MATERIAL, value)
 
-    fun fluidTemperature(value: Int) = property(MatProperties.FLUID_TEMPERATURE, value)
+    fun liquidTemperature(value: Int) = property(LIQUID_TEMPERATURE, value)
 
-    fun boilingTemperature(value: Int) = property(MatProperties.BOILING_TEMPERATURE, value)
+    fun gasTemperature(value: Int) = property(GAS_TEMPERATURE, value)
 
-    fun boilingMaterial(value: Material) = property(MatProperties.BOILING_MATERIAL, value)
+    fun liquidNames(vararg names: String) = property(LIQUID_NAMES, listOf(*names))
 
-    fun unrefinedColor(value: Int) = property(MatProperties.UNREFINED_COLOR, value)
+    fun gasNames(vararg names: String) = property(GAS_NAMES, listOf(*names))
 
-    fun alpha(value: Int) = property(MatProperties.ALPHA, value)
+    fun unrefinedColor(value: Int) = property(UNREFINED_COLOR, value)
 
-    fun pH(value: Float) = property(MatProperties.PH, value)
+    fun alpha(value: Int) = property(ALPHA, value)
 
-    fun blockCompaction(value: BlockCompaction) = property(MatProperties.BLOCK_COMPACTION, value)
+    fun pH(value: Float) = property(PH, value)
 
-    fun transitionProperties(transitionProperties: TransitionProperties) = property(MatProperties.TRANSITION_PROPERTIES, transitionProperties)
+    fun blockCompaction(value: BlockCompaction) = property(BLOCK_COMPACTION, value)
+
+    fun transitionProperties(transitionProperties: TransitionProperties) = property(TRANSITION_PROPERTIES, transitionProperties)
 
     fun transitionProperties(neededAmount: Int, endMaterial: String) = transitionProperties(TransitionProperties(neededAmount, endMaterial))
 
     @JvmOverloads
-    fun hasOre(value: Boolean = true) = property(MatProperties.HAS_ORE, value)
+    fun hasOre(value: Boolean = true) = property(HAS_ORE, value)
 
-    @JvmOverloads
-    fun isGas(value: Boolean = true) = property(MatProperties.IS_GAS, value)
+    fun simpleProcessing(value: Boolean) = property(SIMPLE_PROCESSING, value)
 
-    fun simpleProcessing(value: Boolean) = property(MatProperties.SIMPLE_PROCESSING, value)
+    fun rodOutputCount(value: Int) = property(ROD_OUTPUT_COUNT, value)
 
-    fun rodOutputCount(value: Int) = property(MatProperties.ROD_OUTPUT_COUNT, value)
+    fun displayType(value: DisplayType) = property(DISPLAY_TYPE, value)
 
-    fun displayType(value: DisplayType) = property(MatProperties.DISPLAY_TYPE, value)
+    fun hasDust() = property(HAS_ORE, true)
 
-    @JvmOverloads
-    fun hasDust(value: Boolean = true) = property(MatProperties.HAS_ORE, value)
+    fun hasGem() = property(HAS_GEM, true)
 
-    fun mainItemType(value: Form) = property(MatProperties.MAIN_ITEM_TYPE, value)
+    fun hasIngot() = property(HAS_INGOT, true)
+
+    fun notMalleable() = property(MALLEABLE, false)
 
     fun buildAndRegister() = result.register()
 }
 
 class DustMaterialBuilder(vararg names: String) : MaterialBuilder(*names) {
     init {
-        mainItemType(BaseObjTypes.DUST)
         hasDust()
     }
 }
 
 class GemMaterialBuilder(vararg names: String) : MaterialBuilder(*names) {
     init {
-        mainItemType(BaseObjTypes.GEM)
         hasDust()
+        hasGem()
     }
 }
 
 class IngotMaterialBuilder(vararg names: String) : MaterialBuilder(*names) {
     init {
         compoundType(CompoundType.ALLOY)
-        mainItemType(BaseObjTypes.INGOT)
         hasDust()
+        hasIngot()
     }
 }
 
 class FluidMaterialBuilder(vararg names: String) : MaterialBuilder(*names) {
     init {
-        textureType(BaseTextureSets.FLUID)
-        fluidTemperature(300)
+        liquidTemperature(300)
+    }
+}
+
+class GasMaterialBuilder(vararg names: String) : MaterialBuilder(*names) {
+    init {
+        gasTemperature(300)
     }
 }
 

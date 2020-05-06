@@ -1,9 +1,9 @@
 package com.scientianova.versatile.proxy
 
 import com.scientianova.versatile.common.extensions.toResLoc
-import com.scientianova.versatile.materialsystem.lists.Forms
+import com.scientianova.versatile.materialsystem.lists.allForms
 import com.scientianova.versatile.resources.FakeResourcePackFinder
-import com.scientianova.versatile.resources.JSONAdder
+import com.scientianova.versatile.resources.addAssetsJSON
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.color.IBlockColor
 import net.minecraft.client.renderer.color.IItemColor
@@ -22,7 +22,7 @@ object ClientProxy : IModProxy {
     override fun process(e: InterModProcessEvent) {}
 
     private fun color() {
-        Forms.all.forEach { global ->
+        allForms.forEach { global ->
             global.specialized.forEach inner@{ regular ->
                 if (regular.alreadyImplemented) return@inner
 
@@ -46,15 +46,15 @@ object ClientProxy : IModProxy {
 }
 
 fun addModelJSONs() {
-    Forms.all.forEach { global ->
+    allForms.forEach { global ->
         global.specialized.forEach inner@{ regular ->
             if (regular.alreadyImplemented) return@inner
 
             val itemReg = (regular.item ?: return@inner).registryName!!
-            JSONAdder.addAssetsJSON("${itemReg.namespace}:models/item/${itemReg.path}.json".toResLoc(), regular.itemModel)
+            addAssetsJSON("${itemReg.namespace}:models/item/${itemReg.path}.json".toResLoc(), regular.itemModel)
 
             val blockReg = (regular.block ?: return@inner).registryName!!
-            JSONAdder.addAssetsJSON("${blockReg.namespace}:blockstates/${blockReg.path}.json".toResLoc(), regular.itemModel)
+            addAssetsJSON("${blockReg.namespace}:blockstates/${blockReg.path}.json".toResLoc(), regular.itemModel)
         }
     }
 }

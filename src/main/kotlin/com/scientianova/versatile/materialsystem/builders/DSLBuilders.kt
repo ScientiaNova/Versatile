@@ -5,9 +5,8 @@ import com.scientianova.versatile.blocks.ExtendedBlockProperties
 import com.scientianova.versatile.blocks.VersatileBlock
 import com.scientianova.versatile.blocks.VersatileBlockItem
 import com.scientianova.versatile.common.extensions.json
-import com.scientianova.versatile.fluids.MaterialBucketItem
-import com.scientianova.versatile.fluids.MaterialFluidBlock
-import com.scientianova.versatile.fluids.MaterialFluidHolder
+import com.scientianova.versatile.fluids.VersatileBucketItem
+import com.scientianova.versatile.fluids.VersatileFluidBlock
 import com.scientianova.versatile.items.ExtendedItemProperties
 import com.scientianova.versatile.items.VersatileItem
 import com.scientianova.versatile.materialsystem.addition.*
@@ -15,8 +14,12 @@ import com.scientianova.versatile.materialsystem.main.GlobalForm
 import com.scientianova.versatile.materialsystem.main.Material
 import com.scientianova.versatile.materialsystem.properties.CompoundType
 import com.scientianova.versatile.materialsystem.properties.DisplayType
+import net.minecraft.client.renderer.RenderType
 import net.minecraft.util.text.LanguageMap
 import net.minecraft.util.text.TranslationTextComponent
+import net.minecraftforge.fluids.ForgeFlowingFluid
+import net.minecraftforge.fml.DistExecutor
+import java.util.function.Supplier
 import net.minecraft.block.material.Material as BlockMaterial
 
 fun material(vararg names: String, builder: Material.() -> Unit) = Material().apply {
@@ -39,21 +42,30 @@ fun gemMaterial(vararg names: String, builder: Material.() -> Unit) = Material()
 
 fun ingotMaterial(vararg names: String, builder: Material.() -> Unit) = Material().apply {
     associatedNames = listOf(*names)
-    liquidNames = listOf("molten_$name")
+    liquidNames = names.map { "molten_$it" }
+    liquidNames = names.map { "${it}_gas" }
     compoundType = CompoundType.ALLOY
     hasDust = true
     hasIngot = true
     builder()
 }.register()
 
-fun fluidMaterial(vararg names: String, builder: Material.() -> Unit) = Material().apply {
+fun liquidMaterial(vararg names: String, builder: Material.() -> Unit) = Material().apply {
     associatedNames = listOf(*names)
-    textureSet = BaseTextureSets.FLUID
+    textureSet = FLUID
     liquidTemperature = 300
     builder()
 }.register()
 
+fun gasMaterial(vararg names: String, builder: Material.() -> Unit) = Material().apply {
+    associatedNames = listOf(*names)
+    textureSet = FLUID
+    gasTemperature = 300
+    builder()
+}.register()
+
 fun groupMaterial(vararg names: String, builder: Material.() -> Unit) = Material().apply {
+    associatedNames = listOf(*names)
     displayType = DisplayType.GROUP
     builder()
 }.register()
@@ -89,11 +101,13 @@ fun blockForm(name: String, builder: GlobalForm.() -> Unit) = GlobalForm().apply
     BLOCK {
         VersatileBlock(ExtendedBlockProperties(
                 material = BlockMaterial.IRON,
+                hardness = mat.harvestTier.hardness,
+                resistance = mat.harvestTier.resistance,
                 localizedNameFun = {
                     if (LanguageMap.getInstance().exists(translationKey)) TranslationTextComponent(translationKey)
                     else localize()
                 }
-        ))
+        )).setRegistryName(registryName)
     }
     ITEM_MODEL {
         json {
@@ -108,9 +122,20 @@ fun fluidForm(name: String, builder: GlobalForm.() -> Unit) = GlobalForm().apply
     singleTextureSet = true
     indexBlacklist = listOf(0)
     bucketVolume = 1000
-    ITEM { MaterialBucketItem(mat, this) }
-    BLOCK { MaterialFluidBlock(mat, this) }
-    FLUID { MaterialFluidHolder(mat, this) }
+    ITEM {
+        VersatileBucketItem({ stillFluid!! }, ExtendedItemProperties(
+                group = Versatile.MAIN,
+                burnTime = burnTime)
+        ).setRegistryName(registryName)
+    }
+    BLOCK {
+        VersatileFluidBlock({ flowingFluid!! }, ExtendedBlockProperties(
+                material = BlockMaterial.WATER
+        )).setRegistryName(registryName)
+    }
+    STILL_FLUID { ForgeFlowingFluid.Source(fluidProperties!!).apply { registryName = this@STILL_FLUID.registryName } }
+    FLOWING_FLUID { ForgeFlowingFluid.Flowing(fluidProperties!!).apply { registryName = this@FLOWING_FLUID.registryName } }
+    RENDER_TYPE { DistExecutor.runForDist<RenderType?>({ Supplier { RenderType.getTranslucent() } }, { Supplier { null } }) }
     COMBINED_ITEM_TAGS { emptyList() }
     COMBINED_BLOCK_TAGS { emptyList() }
     builder()

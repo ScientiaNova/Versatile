@@ -2,10 +2,10 @@ package com.scientianova.versatile.items
 
 import com.scientianova.versatile.common.extensions.isNotEmpty
 import com.scientianova.versatile.common.extensions.times
+import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 
 class ItemStackHolder @JvmOverloads constructor(var stack: ItemStack = ItemStack.EMPTY) {
-    //Changes the held stack if it's empty, increments the count if they're the same and otherwise returns the input
     fun changeOrAdd(other: ItemStack): ItemStack {
         when {
             other.isItemEqual(stack) && stack.tag == other.tag -> {
@@ -21,7 +21,7 @@ class ItemStackHolder @JvmOverloads constructor(var stack: ItemStack = ItemStack
         return other
     }
 
-    var item
+    var item: Item
         get() = stack.item
         set(value) {
             if (stack.item != value) stack = value * stack.count

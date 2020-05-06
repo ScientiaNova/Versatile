@@ -2,11 +2,10 @@
 
 package com.scientianova.versatile.materialsystem.addition
 
-import com.scientianova.versatile.fluids.FluidPairHolder
 import com.scientianova.versatile.materialsystem.builders.dustMaterial
-import com.scientianova.versatile.materialsystem.builders.fluidMaterial
 import com.scientianova.versatile.materialsystem.builders.gemMaterial
 import com.scientianova.versatile.materialsystem.builders.ingotMaterial
+import com.scientianova.versatile.materialsystem.builders.liquidMaterial
 import com.scientianova.versatile.materialsystem.properties.BlockCompaction
 import com.scientianova.versatile.materialsystem.properties.CompoundType
 import net.minecraft.block.Blocks
@@ -31,42 +30,40 @@ val NETHER_BRICK = ingotMaterial("nether_brick") {
 }
 val IRON = ingotMaterial("iron") {
     tier = 1
-    textureSet = BaseTextureSets.ROUGH
+    textureSet = ROUGH
     element = BaseElements.IRON
     unrefinedColor = 0x947664
     itemTier = ItemTier.IRON
     armorMaterial = ArmorMaterial.IRON
     liquidTemperature = 1538
-    gasTemperature = 2862
     hasOre = true
 }
 val GOLD = ingotMaterial("gold") {
     tier = 2
     color = 0xfad64a
-    textureSet = BaseTextureSets.SHINY
+    textureSet = SHINY
     element = BaseElements.GOLD
     itemTier = ItemTier.GOLD
     armorMaterial = ArmorMaterial.GOLD
     liquidTemperature = 1064
-    gasTemperature = 2700
     hasOre = true
 }
 val COAL = gemMaterial("coal") {
     color = 0x1a1a1a
-    textureSet = BaseTextureSets.FUEL
+    textureSet = FUEL
     standardBurnTime = 1600
     element = BaseElements.CARBON
     hasOre = true
 }
 val CHARCOAL = gemMaterial("charcoal") {
     color = 0x443e33
-    textureSet = BaseTextureSets.FUEL
+    textureSet = FUEL
     standardBurnTime = 1600
     element = BaseElements.CARBON
 }
 val FLINT = gemMaterial("flint") {
     color = 0x222020
-    textureSet = BaseTextureSets.SHARP
+    textureSet = SHARP
     blockCompaction = BlockCompaction.NONE
 }
 val LAPIS = gemMaterial("lapis") {
@@ -75,14 +72,14 @@ val LAPIS = gemMaterial("lapis") {
 }
 val QUARTZ = gemMaterial("quartz") {
     color = 0xe8dfd0
-    textureSet = BaseTextureSets.CRYSTAL
+    textureSet = CRYSTAL
     blockCompaction = BlockCompaction.FROM_2X2
     hasOre = true
 }
 val DIAMOND = gemMaterial("diamond") {
     tier = 2
     color = 0x34ebe3
-    textureSet = BaseTextureSets.PENTAGONAL
+    textureSet = PENTAGONAL
     element = BaseElements.CARBON
     itemTier = ItemTier.DIAMOND
     armorMaterial = ArmorMaterial.DIAMOND
@@ -91,19 +88,19 @@ val DIAMOND = gemMaterial("diamond") {
 val EMERALD = gemMaterial("emerald") {
     tier = 2
     color = 0x08ad2c
-    textureSet = BaseTextureSets.OCTAGONAL
+    textureSet = OCTAGONAL
     hasOre = true
 }
 val WOODEN = dustMaterial("wooden") {
     tier = -1
     color = 0x87672c
-    textureSet = BaseTextureSets.FINE
+    textureSet = FINE
     standardBurnTime = 200
     itemTier = ItemTier.WOOD
 }
 val STONE = dustMaterial("stone") {
     color = 0xb1b0ae
-    textureSet = BaseTextureSets.FINE
+    textureSet = FINE
     itemTier = ItemTier.STONE
 }
 val BONE = dustMaterial("bone") {
@@ -127,19 +124,19 @@ val GLOWSTONE = dustMaterial("glowstone") {
 val OBSIDIAN = dustMaterial("obsidian") {
     tier = 1
     color = 0x3c2a53
-    textureSet = BaseTextureSets.FINE
+    textureSet = FINE
 }
-val WATER = fluidMaterial("water") {
+val WATER = liquidMaterial("water") {
     color = 0x3e4ac6
-    textureSet = BaseTextureSets.FLUID
+    textureSet = FLUID
     liquidTemperature = 300
     gasNames = listOf("steam")
     gasTemperature = 373
     gasColor = -1
 }
-val LAVA = fluidMaterial("lava") {
+val LAVA = liquidMaterial("lava") {
     color = 0xc54c13
-    textureSet = BaseTextureSets.FLUID
+    textureSet = FLUID
 }
 
 fun addVanilla() {
@@ -197,9 +194,11 @@ fun addVanilla() {
 
     LIQUID_FORM[WATER]?.set(ITEM, Items.WATER_BUCKET)
     LIQUID_FORM[WATER]?.set(BLOCK, Blocks.WATER)
-    LIQUID_FORM[WATER]?.set(FLUID, FluidPairHolder(Fluids.WATER, Fluids.FLOWING_WATER))
+    LIQUID_FORM[WATER]?.set(STILL_FLUID, Fluids.WATER)
+    LIQUID_FORM[WATER]?.set(FLOWING_FLUID, Fluids.FLOWING_WATER)
 
     LIQUID_FORM[LAVA]?.set(ITEM, Items.LAVA_BUCKET)
     LIQUID_FORM[LAVA]?.set(BLOCK, Blocks.LAVA)
-    LIQUID_FORM[LAVA]?.set(FLUID, FluidPairHolder(Fluids.LAVA, Fluids.FLOWING_LAVA))
+    LIQUID_FORM[LAVA]?.set(STILL_FLUID, Fluids.LAVA)
+    LIQUID_FORM[LAVA]?.set(FLOWING_FLUID, Fluids.FLOWING_LAVA)
 }
