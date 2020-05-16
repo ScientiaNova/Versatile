@@ -1,9 +1,9 @@
 package com.scientianova.versatile.resources
 
-import com.scientianova.versatile.common.extensions.JsonBuilder
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonElement
 import com.google.gson.JsonParser
+import com.scientianova.versatile.common.extensions.JsonBuilder
 import net.minecraft.resources.IResourcePack
 import net.minecraft.resources.ResourcePack
 import net.minecraft.resources.ResourcePackType
@@ -17,7 +17,6 @@ import java.io.InputStream
 import java.util.*
 import java.util.function.Predicate
 
-//This is the fake data/resource pack used for adding data and asset JSONs
 internal class FakePack constructor(private val name: String) : IResourcePack {
     private val root = TreeMap<String, InputStream>()
     private val assets = TreeMap<ResourceLocation, InputStream>()
@@ -59,24 +58,27 @@ internal class FakePack constructor(private val name: String) : IResourcePack {
             (if (type == ResourcePackType.CLIENT_RESOURCES) assets else data).keys.filter {
                 val path = it.path
                 val lastSlash = path.lastIndexOf('/')
-                StringUtils.countMatches(path, '/') < maxDepth && path.startsWith(pathIn) && filter.test(path.substring(if (lastSlash < 0) 0 else lastSlash))
-                StringUtils.countMatches(path, '/') < maxDepth && it.namespace == namespaceIn && path.startsWith(path) && filter.test(path.substring(if (lastSlash < 0) 0 else lastSlash))
+                StringUtils.countMatches(path, '/') < maxDepth
+                        && it.namespace == namespaceIn
+                        && path.startsWith(pathIn)
+                        && StringUtils.countMatches(path, '/') < maxDepth
+                        && filter.test(path.substring(if (lastSlash < 0) 0 else lastSlash))
             }
 
     override fun resourceExists(type: ResourcePackType, location: ResourceLocation) =
-            (if (type == ResourcePackType.CLIENT_RESOURCES) assets else data).containsKey(location)
+            location in if (type == ResourcePackType.CLIENT_RESOURCES) assets else data
 
-    override fun getResourceNamespaces(type: ResourcePackType) = (if (type == ResourcePackType.CLIENT_RESOURCES) assets else data).keys.map { it.namespace }.toSet()
+    override fun getResourceNamespaces(type: ResourcePackType) =
+            (if (type == ResourcePackType.CLIENT_RESOURCES) assets else data).keys.map { it.namespace }.toSet()
 
-    override fun <T> getMetadata(deserializer: IMetadataSectionSerializer<T>): T? = ResourcePack.getResourceMetadata(deserializer, assets[ResourceLocation("pack.mcmeta")]!!)
+    override fun <T> getMetadata(deserializer: IMetadataSectionSerializer<T>): T? =
+            ResourcePack.getResourceMetadata(deserializer, assets[ResourceLocation("pack.mcmeta")]!!)
 
     override fun getName() = name
 
     override fun close() {}
 
     override fun isHidden() = true
-
-    companion object {
-        private val GSON = GsonBuilder().create()
-    }
 }
+
+private val GSON = GsonBuilder().create()

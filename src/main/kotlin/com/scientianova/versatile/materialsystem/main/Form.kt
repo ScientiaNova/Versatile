@@ -209,6 +209,7 @@ class Form(val mat: Material, val global: GlobalForm) {
         get() = this[BLOCK]
         set(value) {
             this[BLOCK] = value
+            value?.asItem()?.let { item = it }
             alreadyImplemented = true
         }
 

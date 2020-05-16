@@ -100,6 +100,7 @@ object Versatile {
             allMaterials.forEach { mat ->
                 allForms.forEach { form ->
                     form[mat]?.let { regular ->
+                        if (regular.alreadyImplemented) return@let
                         e.registry.register(regular.block ?: return@let)
                     }
                 }
@@ -111,6 +112,7 @@ object Versatile {
             allMaterials.forEach { mat ->
                 allForms.forEach { form ->
                     form[mat]?.let { regular ->
+                        if (regular.alreadyImplemented) return@let
                         e.registry.register(regular.item ?: return@let)
                     }
                 }
@@ -122,6 +124,7 @@ object Versatile {
         fun onLateFluidRegistry(e: RegistryEvent.Register<Fluid>) = allMaterials.forEach { mat ->
             allForms.forEach inner@{ form ->
                 form[mat]?.let { regular ->
+                    if (regular.alreadyImplemented) return@let
                     e.registry.register(regular.stillFluid ?: return@inner)
                     e.registry.register(regular.flowingFluid ?: return@inner)
                 }
@@ -131,7 +134,7 @@ object Versatile {
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, modid = MOD_ID)
     object GameEvents {
-        @SubscribeEvent(priority = EventPriority.HIGH)
+        @SubscribeEvent
         fun onServerAboutToStart(e: FMLServerAboutToStartEvent) = e.server.resourcePacks.addPackFinder(FakeDataPackFinder)
 
         @SubscribeEvent
