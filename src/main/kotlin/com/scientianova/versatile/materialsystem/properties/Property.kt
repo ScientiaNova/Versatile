@@ -1,8 +1,8 @@
 package com.scientianova.versatile.materialsystem.properties
 
-import com.scientianova.versatile.materialsystem.main.Form
-import com.scientianova.versatile.materialsystem.main.GlobalForm
-import com.scientianova.versatile.materialsystem.main.Material
+import com.scientianova.versatile.materialsystem.forms.Form
+import com.scientianova.versatile.materialsystem.forms.GlobalForm
+import com.scientianova.versatile.materialsystem.materials.Material
 import net.minecraft.util.ResourceLocation
 
 

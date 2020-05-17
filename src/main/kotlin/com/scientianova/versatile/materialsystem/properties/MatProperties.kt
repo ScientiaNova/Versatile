@@ -1,11 +1,13 @@
 @file:JvmName("MatProperties")
 
-package com.scientianova.versatile.materialsystem.addition
+package com.scientianova.versatile.materialsystem.properties
 
 import com.scientianova.versatile.common.extensions.toResLoc
-import com.scientianova.versatile.materialsystem.main.Material
-import com.scientianova.versatile.materialsystem.main.MaterialStack
-import com.scientianova.versatile.materialsystem.properties.*
+import com.scientianova.versatile.common.registry.ELEMENTS
+import com.scientianova.versatile.materialsystem.materials.REGULAR
+import com.scientianova.versatile.materialsystem.elements.NULL
+import com.scientianova.versatile.materialsystem.materials.Material
+import com.scientianova.versatile.materialsystem.materials.MaterialStack
 import net.minecraft.item.IArmorMaterial
 import net.minecraft.item.IItemTier
 
@@ -19,7 +21,7 @@ val HARVEST_TIER = MatProperty("versatile:harvest_tier".toResLoc()) {
 }
 val ITEM_TIER = MatProperty<IItemTier?>("versatile:item_tier".toResLoc()) { null }
 val ARMOR_MATERIAL = MatProperty<IArmorMaterial?>("versatile:armor_material".toResLoc()) { null }
-val ELEMENT = MatProperty("versatile:element".toResLoc()) { BaseElements.NULL }
+val ELEMENT = MatProperty("versatile:element".toResLoc()) { associatedNames.map(ELEMENTS::get).firstOrNull() ?: NULL }
 val BASE_BURN_TIME = MatProperty("versatile:burn_time".toResLoc()) { 0 }
 val COMPOUND_TYPE = MatProperty("versatile:compound_type".toResLoc()) { CompoundType.CHEMICAL }
 val DENSITY_MULTIPLIER = MatProperty("versatile:density_multiplier".toResLoc()) { 1f }

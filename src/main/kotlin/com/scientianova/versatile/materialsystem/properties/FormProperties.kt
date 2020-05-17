@@ -1,12 +1,10 @@
 @file:JvmName("FormProperties")
 
-package com.scientianova.versatile.materialsystem.addition
+package com.scientianova.versatile.materialsystem.properties
 
 import com.scientianova.versatile.common.extensions.json
 import com.scientianova.versatile.common.extensions.toResLoc
-import com.scientianova.versatile.materialsystem.main.Material
-import com.scientianova.versatile.materialsystem.properties.FormProperty
-import com.scientianova.versatile.materialsystem.properties.GlobalFormProperty
+import com.scientianova.versatile.materialsystem.materials.Material
 import net.minecraft.block.Block
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.fluid.FlowingFluid

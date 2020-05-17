@@ -1,49 +1,49 @@
 @file:JvmName("BaseForms")
 
-package com.scientianova.versatile.materialsystem.addition
+package com.scientianova.versatile.materialsystem.forms
 
 import com.scientianova.versatile.common.extensions.json
 import com.scientianova.versatile.common.extensions.toResLoc
 import com.scientianova.versatile.fluids.ExtendedFluidAttributes
-import com.scientianova.versatile.materialsystem.builders.blockForm
-import com.scientianova.versatile.materialsystem.builders.fluidForm
-import com.scientianova.versatile.materialsystem.builders.itemForm
-import com.scientianova.versatile.materialsystem.main.Material
-import com.scientianova.versatile.materialsystem.properties.BlockCompaction
+import com.scientianova.versatile.materialsystem.events.DeferredFormRegister
+import com.scientianova.versatile.materialsystem.materials.Material
+import com.scientianova.versatile.materialsystem.properties.*
 import net.minecraft.block.FlowingFluidBlock
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fluids.ForgeFlowingFluid
 
-val DUST_FORM = itemForm("dust") {
+internal val formReg = DeferredFormRegister()
+
+val DUST_FORM by formReg.item("dust") {
     generate = Material::hasDust
     bucketVolume = 144
 }
-val GEM_FORM = itemForm("gem") {
+val GEM_FORM by formReg.item("gem") {
     generate = Material::hasGem
     bucketVolume = 144
 }
-val INGOT_FORM = itemForm("ingot") {
+val INGOT_FORM by formReg.item("ingot") {
     generate = Material::hasIngot
     bucketVolume = 144
 }
-val NUGGET_FORM = itemForm("nugget") {
+val NUGGET_FORM by formReg.item("nugget") {
     generate = { it.hasIngot && it.malleable }
     bucketVolume = 16
 }
-val BLOCK_FORM = blockForm("storage_block") {
+val BLOCK_FORM by formReg.block("storage_block") {
     generate = { it.blockCompaction != BlockCompaction.NONE }
     REGISTRY_NAME { ResourceLocation("versatile:${mat}_block") }
     BURN_TIME { mat.standardBurnTime * 10 }
     bucketVolume = 1296
 }
-val ORE_FORM = blockForm("ore") {
+val ORE_FORM by formReg.block("ore") {
     generate = { it.hasOre }
     FORM_COLOR { mat.unrefinedColor }
     indexBlacklist = listOf(1)
     bucketVolume = 144
     BURN_TIME { 0 }
 }
-val LIQUID_FORM = fluidForm("liquid") {
+val LIQUID_FORM by formReg.fluid("liquid") {
     generate = { it.liquidTemperature > 0 }
     FLUID_PROPERTIES {
         ForgeFlowingFluid.Properties({ stillFluid!! }, { flowingFluid!! }, ExtendedFluidAttributes.Builder(
@@ -62,7 +62,7 @@ val LIQUID_FORM = fluidForm("liquid") {
     COMBINED_FLUID_TAGS { mat.liquidNames.map { "forge:$it" } }
 }
 
-val GAS_FORM = fluidForm("gas") {
+val GAS_FORM by formReg.fluid("gas") {
     generate = { it.gasTemperature > 0 }
     FLUID_PROPERTIES {
         ForgeFlowingFluid.Properties({ stillFluid!! }, { flowingFluid!! }, ExtendedFluidAttributes.Builder(

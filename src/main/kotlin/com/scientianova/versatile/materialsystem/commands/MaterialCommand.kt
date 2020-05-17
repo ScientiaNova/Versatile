@@ -1,15 +1,15 @@
 package com.scientianova.versatile.materialsystem.commands
 
 import com.scientianova.versatile.common.extensions.*
-import com.scientianova.versatile.materialsystem.main.Material
+import com.scientianova.versatile.materialsystem.materials.Material
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.StringArgumentType
-import com.scientianova.versatile.materialsystem.addition.BLOCK
-import com.scientianova.versatile.materialsystem.addition.ITEM
-import com.scientianova.versatile.materialsystem.addition.STILL_FLUID
-import com.scientianova.versatile.materialsystem.lists.allForms
-import com.scientianova.versatile.materialsystem.lists.material
-import com.scientianova.versatile.materialsystem.lists.materialFor
+import com.scientianova.versatile.common.registry.FORMS
+import com.scientianova.versatile.common.registry.MATERIALS
+import com.scientianova.versatile.materialsystem.materials.material
+import com.scientianova.versatile.materialsystem.properties.BLOCK
+import com.scientianova.versatile.materialsystem.properties.ITEM
+import com.scientianova.versatile.materialsystem.properties.STILL_FLUID
 import net.minecraft.command.CommandSource
 import net.minecraft.command.arguments.ItemArgument
 import net.minecraft.entity.player.ServerPlayerEntity
@@ -47,14 +47,14 @@ class MaterialCommand(dispatcher: CommandDispatcher<CommandSource>) {
                             )
                             composition.forEach { it.material.sendHierarchy(level + 1) }
                         }
-                        materialFor(StringArgumentType.getString(this, "name"))?.sendHierarchy()
+                        MATERIALS[StringArgumentType.getString(this, "name")]?.sendHierarchy()
                                 ?: source.sendErrorMessage(TranslationTextComponent("command.material.error"))
                     }
                 }
                 literal("items") {
                     does {
-                        materialFor(StringArgumentType.getString(this, "name"))?.let { mat ->
-                            allForms.forEach { global ->
+                        MATERIALS[StringArgumentType.getString(this, "name")]?.let { mat ->
+                            FORMS.forEach { global ->
                                 val item = global[mat]?.get(ITEM) ?: return@forEach
                                 source.sendFeedback(item.registryName!!.toString().toComponent(), false)
                             }
@@ -63,8 +63,8 @@ class MaterialCommand(dispatcher: CommandDispatcher<CommandSource>) {
                 }
                 literal("blocks") {
                     does {
-                        materialFor(StringArgumentType.getString(this, "name"))?.let { mat ->
-                            allForms.forEach { global ->
+                        MATERIALS[StringArgumentType.getString(this, "name")]?.let { mat ->
+                            FORMS.forEach { global ->
                                 val block = global[mat]?.get(BLOCK) ?: return@forEach
                                 source.sendFeedback(block.registryName!!.toString().toComponent(), false)
                             }
@@ -73,8 +73,8 @@ class MaterialCommand(dispatcher: CommandDispatcher<CommandSource>) {
                 }
                 literal("fluids") {
                     does {
-                        materialFor(StringArgumentType.getString(this, "name"))?.let { mat ->
-                            allForms.forEach { global ->
+                        MATERIALS[StringArgumentType.getString(this, "name")]?.let { mat ->
+                            FORMS.forEach { global ->
                                 val fluid = global[mat]?.get(STILL_FLUID) ?: return@forEach
                                 source.sendFeedback(fluid.registryName!!.toString().toComponent(), false)
                             }

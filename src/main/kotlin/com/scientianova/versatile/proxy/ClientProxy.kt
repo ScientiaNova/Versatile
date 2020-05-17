@@ -1,7 +1,7 @@
 package com.scientianova.versatile.proxy
 
 import com.scientianova.versatile.common.extensions.toResLoc
-import com.scientianova.versatile.materialsystem.lists.allForms
+import com.scientianova.versatile.common.registry.FORMS
 import com.scientianova.versatile.resources.FakeResourcePackFinder
 import com.scientianova.versatile.resources.addAssetsJSON
 import net.minecraft.client.Minecraft
@@ -22,7 +22,7 @@ object ClientProxy : IModProxy {
     override fun process(e: InterModProcessEvent) {}
 
     private fun color() {
-        allForms.forEach { global ->
+        FORMS.forEach { global ->
             global.specialized.forEach inner@{ regular ->
                 if (regular.alreadyImplemented) return@inner
 
@@ -46,7 +46,7 @@ object ClientProxy : IModProxy {
 }
 
 fun addModelJSONs() {
-    allForms.forEach { global ->
+    FORMS.forEach { global ->
         global.specialized.forEach inner@{ regular ->
             if (regular.alreadyImplemented) return@inner
 

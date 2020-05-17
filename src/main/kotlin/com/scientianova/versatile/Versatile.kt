@@ -1,18 +1,21 @@
 package com.scientianova.versatile
 
 import com.scientianova.versatile.common.extensions.toStack
+import com.scientianova.versatile.common.registry.*
 import com.scientianova.versatile.machines.BaseMachineRegistry
 import com.scientianova.versatile.machines.gui.BaseScreen
 import com.scientianova.versatile.machines.packets.NetworkHandler
-import com.scientianova.versatile.materialsystem.addition.COAL
-import com.scientianova.versatile.materialsystem.addition.DUST_FORM
-import com.scientianova.versatile.materialsystem.addition.ITEM
-import com.scientianova.versatile.materialsystem.addition.addVanilla
 import com.scientianova.versatile.materialsystem.commands.FluidContainerCommand
 import com.scientianova.versatile.materialsystem.commands.FormCommands
 import com.scientianova.versatile.materialsystem.commands.MaterialCommand
-import com.scientianova.versatile.materialsystem.lists.allForms
-import com.scientianova.versatile.materialsystem.lists.allMaterials
+import com.scientianova.versatile.materialsystem.elements.elemReg
+import com.scientianova.versatile.materialsystem.events.*
+import com.scientianova.versatile.materialsystem.forms.DUST_FORM
+import com.scientianova.versatile.materialsystem.forms.formReg
+import com.scientianova.versatile.materialsystem.materials.COAL
+import com.scientianova.versatile.materialsystem.materials.addVanilla
+import com.scientianova.versatile.materialsystem.materials.matReg
+import com.scientianova.versatile.materialsystem.properties.ITEM
 import com.scientianova.versatile.proxy.ClientProxy
 import com.scientianova.versatile.proxy.IModProxy
 import com.scientianova.versatile.proxy.ServerProxy
@@ -31,6 +34,7 @@ import net.minecraftforge.event.RegistryEvent
 import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.DistExecutor
+import net.minecraftforge.fml.ModLoader
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
@@ -55,17 +59,23 @@ object Versatile {
     private val proxy = DistExecutor.runForDist<IModProxy>({ Supplier { ClientProxy } }, { Supplier { ServerProxy } })
 
     init {
-        FMLKotlinModLoadingContext.get().modEventBus.addListener<FMLClientSetupEvent> { clientSetup() }
-        FMLKotlinModLoadingContext.get().modEventBus.addListener<FMLCommonSetupEvent> { commonSetup() }
-        FMLKotlinModLoadingContext.get().modEventBus.addListener<InterModEnqueueEvent> { enqueueIMC(it) }
-        FMLKotlinModLoadingContext.get().modEventBus.addListener<InterModProcessEvent> { processIMC(it) }
+        val bus = FMLKotlinModLoadingContext.get().modEventBus
+
+        bus.addListener<FMLClientSetupEvent> { clientSetup() }
+        bus.addListener<FMLCommonSetupEvent> { commonSetup() }
+        bus.addListener<InterModEnqueueEvent> { enqueueIMC(it) }
+        bus.addListener<InterModProcessEvent> { processIMC(it) }
+
+        elemReg.register(bus)
+        matReg.register(bus)
+        formReg.register(bus)
 
         proxy.init()
     }
 
     private fun clientSetup() {
         ScreenManager.registerFactory(BaseMachineRegistry.BASE_CONTAINER, ::BaseScreen)
-        allForms.forEach { global ->
+        FORMS.forEach { global ->
             global.specialized.forEach inner@{ regular ->
                 if (regular.alreadyImplemented) return@inner
                 regular.block?.let { RenderTypeLookup.setRenderLayer(it, regular.renderType ?: return@inner) }
@@ -92,13 +102,25 @@ object Versatile {
     object RegistryEvents {
         @SubscribeEvent(priority = EventPriority.HIGHEST)
         fun onEarlyBlockRegistry(e: RegistryEvent.Register<Block>) {
+            val elements = ElementRegistry()
+            ModLoader.get().postEvent(ElementRegistryEvent(elements))
+            ELEMENTS = StringBasedRegistry(elements.map)
+
+            val materials = MaterialRegistry()
+            ModLoader.get().postEvent(MaterialRegistryEvent(materials))
+            MATERIALS = StringBasedRegistry(materials.map)
+
+            val forms = FormRegistry()
+            ModLoader.get().postEvent(FormRegistryEvent(forms))
+            FORMS = StringBasedRegistry(forms.map)
+
             addVanilla()
         }
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
         fun onLateBlockRegistry(e: RegistryEvent.Register<Block>) {
-            allMaterials.forEach { mat ->
-                allForms.forEach { form ->
+            MATERIALS.forEach { mat ->
+                FORMS.forEach { form ->
                     form[mat]?.let { regular ->
                         if (regular.alreadyImplemented) return@let
                         e.registry.register(regular.block ?: return@let)
@@ -109,8 +131,8 @@ object Versatile {
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
         fun onLateItemRegistry(e: RegistryEvent.Register<Item>) {
-            allMaterials.forEach { mat ->
-                allForms.forEach { form ->
+            MATERIALS.forEach { mat ->
+                FORMS.forEach { form ->
                     form[mat]?.let { regular ->
                         if (regular.alreadyImplemented) return@let
                         e.registry.register(regular.item ?: return@let)
@@ -121,8 +143,8 @@ object Versatile {
         }
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
-        fun onLateFluidRegistry(e: RegistryEvent.Register<Fluid>) = allMaterials.forEach { mat ->
-            allForms.forEach inner@{ form ->
+        fun onLateFluidRegistry(e: RegistryEvent.Register<Fluid>) = MATERIALS.forEach { mat ->
+            FORMS.forEach inner@{ form ->
                 form[mat]?.let { regular ->
                     if (regular.alreadyImplemented) return@let
                     e.registry.register(regular.stillFluid ?: return@inner)

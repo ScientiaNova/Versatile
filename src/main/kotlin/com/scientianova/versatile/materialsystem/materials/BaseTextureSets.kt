@@ -1,6 +1,6 @@
 @file:JvmName("TextureSets")
 
-package com.scientianova.versatile.materialsystem.addition
+package com.scientianova.versatile.materialsystem.materials
 
 const val ROUGH = "rough"
 const val REGULAR = "regular"

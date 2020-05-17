@@ -1,11 +1,12 @@
 @file:JvmName("BaseMaterials")
 
-package com.scientianova.versatile.materialsystem.addition
+package com.scientianova.versatile.materialsystem.materials
 
-import com.scientianova.versatile.materialsystem.builders.dustMaterial
-import com.scientianova.versatile.materialsystem.builders.gemMaterial
-import com.scientianova.versatile.materialsystem.builders.ingotMaterial
-import com.scientianova.versatile.materialsystem.builders.liquidMaterial
+import com.scientianova.versatile.materialsystem.elements.CARBON
+import com.scientianova.versatile.materialsystem.elements.GOLD_E
+import com.scientianova.versatile.materialsystem.elements.IRON_E
+import com.scientianova.versatile.materialsystem.events.DeferredMatRegister
+import com.scientianova.versatile.materialsystem.forms.*
 import com.scientianova.versatile.materialsystem.properties.BlockCompaction
 import com.scientianova.versatile.materialsystem.properties.CompoundType
 import net.minecraft.block.Blocks
@@ -14,119 +15,121 @@ import net.minecraft.item.ArmorMaterial
 import net.minecraft.item.ItemTier
 import net.minecraft.item.Items
 
-val BRICK = ingotMaterial("brick") {
+internal val matReg = DeferredMatRegister()
+
+val BRICK by matReg.ingot("brick") {
     tier = 1
     color = 0xb55c42
     blockCompaction = BlockCompaction.FROM_2X2
     compoundType = CompoundType.CHEMICAL
     malleable = false
 }
-val NETHER_BRICK = ingotMaterial("nether_brick") {
+val NETHER_BRICK by matReg.ingot("nether_brick") {
     tier = 1
     color = 0x472a30
     blockCompaction = BlockCompaction.FROM_2X2
     compoundType = CompoundType.CHEMICAL
     malleable = false
 }
-val IRON = ingotMaterial("iron") {
+val IRON by matReg.ingot("iron") {
     tier = 1
     textureSet = ROUGH
-    element = BaseElements.IRON
+    element = IRON_E
     unrefinedColor = 0x947664
     itemTier = ItemTier.IRON
     armorMaterial = ArmorMaterial.IRON
     liquidTemperature = 1538
     hasOre = true
 }
-val GOLD = ingotMaterial("gold") {
+val GOLD by matReg.ingot("gold") {
     tier = 2
     color = 0xfad64a
     textureSet = SHINY
-    element = BaseElements.GOLD
+    element = GOLD_E
     itemTier = ItemTier.GOLD
     armorMaterial = ArmorMaterial.GOLD
     liquidTemperature = 1064
     hasOre = true
 }
-val COAL = gemMaterial("coal") {
+val COAL by matReg.gem("coal") {
     color = 0x1a1a1a
     textureSet = FUEL
     standardBurnTime = 1600
-    element = BaseElements.CARBON
+    element = CARBON
     hasOre = true
 }
-val CHARCOAL = gemMaterial("charcoal") {
+val CHARCOAL by matReg.gem("charcoal") {
     color = 0x443e33
     textureSet = FUEL
     standardBurnTime = 1600
-    element = BaseElements.CARBON
+    element = CARBON
 }
-val FLINT = gemMaterial("flint") {
+val FLINT by matReg.gem("flint") {
     color = 0x222020
     textureSet = SHARP
     blockCompaction = BlockCompaction.NONE
 }
-val LAPIS = gemMaterial("lapis") {
+val LAPIS by matReg.gem("lapis") {
     color = 0x2351be
     hasOre = true
 }
-val QUARTZ = gemMaterial("quartz") {
+val QUARTZ by matReg.gem("quartz") {
     color = 0xe8dfd0
     textureSet = CRYSTAL
     blockCompaction = BlockCompaction.FROM_2X2
     hasOre = true
 }
-val DIAMOND = gemMaterial("diamond") {
+val DIAMOND by matReg.gem("diamond") {
     tier = 2
     color = 0x34ebe3
     textureSet = PENTAGONAL
-    element = BaseElements.CARBON
+    element = CARBON
     itemTier = ItemTier.DIAMOND
     armorMaterial = ArmorMaterial.DIAMOND
     hasOre = true
 }
-val EMERALD = gemMaterial("emerald") {
+val EMERALD by matReg.gem("emerald") {
     tier = 2
     color = 0x08ad2c
     textureSet = OCTAGONAL
     hasOre = true
 }
-val WOODEN = dustMaterial("wooden") {
+val WOODEN by matReg.dust("wooden") {
     tier = -1
     color = 0x87672c
     textureSet = FINE
     standardBurnTime = 200
     itemTier = ItemTier.WOOD
 }
-val STONE = dustMaterial("stone") {
+val STONE by matReg.dust("stone") {
     color = 0xb1b0ae
     textureSet = FINE
     itemTier = ItemTier.STONE
 }
-val BONE = dustMaterial("bone") {
+val BONE by matReg.dust("bone") {
     color = 0xfcfaed
     rodOutputCount = 3
 }
-val BLAZE = dustMaterial("blaze") {
+val BLAZE by matReg.dust("blaze") {
     color = 0xffc20c
     rodOutputCount = 3
 }
-val REDSTONE = dustMaterial("redstone") {
+val REDSTONE by matReg.dust("redstone") {
     tier = 1
     color = 0xfc1a19
     hasOre = true
 }
-val GLOWSTONE = dustMaterial("glowstone") {
+val GLOWSTONE by matReg.dust("glowstone") {
     tier = 1
     color = 0xfcbe60
     blockCompaction = BlockCompaction.FROM_2X2
 }
-val OBSIDIAN = dustMaterial("obsidian") {
+val OBSIDIAN by matReg.dust("obsidian") {
     tier = 1
     color = 0x3c2a53
     textureSet = FINE
 }
-val WATER = liquidMaterial("water") {
+val WATER by matReg.liquid("water") {
     color = 0x3e4ac6
     textureSet = FLUID
     liquidTemperature = 300
@@ -134,7 +137,7 @@ val WATER = liquidMaterial("water") {
     gasTemperature = 373
     gasColor = -1
 }
-val LAVA = liquidMaterial("lava") {
+val LAVA by matReg.liquid("lava") {
     color = 0xc54c13
     textureSet = FLUID
 }
@@ -199,6 +202,6 @@ fun addVanilla() {
 
     LIQUID_FORM[LAVA]?.item = Items.LAVA_BUCKET
     LIQUID_FORM[LAVA]?.block = Blocks.LAVA
-    LIQUID_FORM[LAVA]?.stillFluid =  Fluids.LAVA
+    LIQUID_FORM[LAVA]?.stillFluid = Fluids.LAVA
     LIQUID_FORM[LAVA]?.flowingFluid = Fluids.FLOWING_LAVA
 }

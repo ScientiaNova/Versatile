@@ -1,9 +1,6 @@
-package com.scientianova.versatile.materialsystem.builders
+package com.scientianova.versatile.materialsystem.materials
 
-import com.scientianova.versatile.materialsystem.addition.*
 import com.scientianova.versatile.materialsystem.elements.Element
-import com.scientianova.versatile.materialsystem.main.Material
-import com.scientianova.versatile.materialsystem.main.MaterialStack
 import com.scientianova.versatile.materialsystem.properties.*
 import net.minecraft.item.IArmorMaterial
 import net.minecraft.item.IItemTier
@@ -80,7 +77,7 @@ open class MaterialBuilder(vararg names: String) {
 
     fun notMalleable() = property(MALLEABLE, false)
 
-    fun buildAndRegister() = result.register()
+    fun build() = result
 }
 
 class DustMaterialBuilder(vararg names: String) : MaterialBuilder(*names) {

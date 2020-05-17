@@ -1,4 +1,4 @@
-package com.scientianova.versatile.materialsystem.builders
+package com.scientianova.versatile.materialsystem.forms
 
 import com.google.gson.JsonObject
 import com.scientianova.versatile.Versatile
@@ -10,15 +10,10 @@ import com.scientianova.versatile.fluids.VersatileBucketItem
 import com.scientianova.versatile.fluids.VersatileFluidBlock
 import com.scientianova.versatile.items.ExtendedItemProperties
 import com.scientianova.versatile.items.VersatileItem
-import com.scientianova.versatile.materialsystem.addition.*
-import com.scientianova.versatile.materialsystem.main.Form
-import com.scientianova.versatile.materialsystem.main.GlobalForm
-import com.scientianova.versatile.materialsystem.main.Material
-import com.scientianova.versatile.materialsystem.properties.FormProperty
-import com.scientianova.versatile.materialsystem.properties.GlobalFormProperty
+import com.scientianova.versatile.materialsystem.materials.Material
+import com.scientianova.versatile.materialsystem.properties.*
 import net.minecraft.block.Block
 import net.minecraft.fluid.FlowingFluid
-import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.LanguageMap
@@ -76,7 +71,7 @@ open class FormBuilder(name: String) {
 
     fun flowingFluid(value: (Form) -> FlowingFluid) = property(FLOWING_FLUID, value)
 
-    fun buildAndRegister() = result.register()
+    fun build() = result
 }
 
 class ItemFormBuilder(name: String) : FormBuilder(name) {

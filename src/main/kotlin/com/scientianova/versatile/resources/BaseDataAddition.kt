@@ -1,10 +1,10 @@
 package com.scientianova.versatile.resources
 
-import com.scientianova.versatile.materialsystem.lists.allForms
+import com.scientianova.versatile.common.registry.FORMS
 import net.minecraft.util.ResourceLocation
 
 fun registerData() {
-    allForms.forEach { global ->
+    FORMS.forEach { global ->
         global.specialized.forEach inner@{ regular ->
             if (regular.alreadyImplemented) return@inner
             regular.item?.let {

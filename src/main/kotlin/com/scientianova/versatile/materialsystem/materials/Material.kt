@@ -1,11 +1,9 @@
-package com.scientianova.versatile.materialsystem.main
+package com.scientianova.versatile.materialsystem.materials
 
-import com.scientianova.versatile.Versatile
 import com.scientianova.versatile.common.extensions.toResLoc
-import com.scientianova.versatile.materialsystem.addition.*
-import com.scientianova.versatile.materialsystem.lists.addMaterial
-import com.scientianova.versatile.materialsystem.properties.HarvestTier
-import com.scientianova.versatile.materialsystem.properties.MatProperty
+import com.scientianova.versatile.materialsystem.elements.NULL
+import com.scientianova.versatile.materialsystem.forms.Form
+import com.scientianova.versatile.materialsystem.properties.*
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.FluidTags
 import net.minecraft.tags.ItemTags
@@ -242,13 +240,11 @@ class Material {
             material.fullComposition.map { (material1, count1) -> material1 * (count1 * count) }
         }
 
-    val isPureElement get() = element !== BaseElements.NULL
+    val isPureElement get() = element !== NULL
 
     operator fun invoke(builder: Material.() -> Unit) = builder(this)
 
     override fun toString() = name
-
-    fun register() = addMaterial(this)
 
     fun getItemTags(type: Form) = associatedNames.map { ItemTags.Wrapper("${type.itemTagNames}/$it".toResLoc()) }
 

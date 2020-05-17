@@ -1,10 +1,8 @@
-package com.scientianova.versatile.materialsystem.main
+package com.scientianova.versatile.materialsystem.forms
 
 import com.scientianova.versatile.common.extensions.toResLoc
-import com.scientianova.versatile.materialsystem.addition.*
-import com.scientianova.versatile.materialsystem.lists.addForm
-import com.scientianova.versatile.materialsystem.properties.FormProperty
-import com.scientianova.versatile.materialsystem.properties.GlobalFormProperty
+import com.scientianova.versatile.materialsystem.materials.Material
+import com.scientianova.versatile.materialsystem.properties.*
 import net.minecraft.fluid.FlowingFluid
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.FluidTags
@@ -103,8 +101,6 @@ class GlobalForm {
     val itemTag get() = ItemTags.Wrapper(itemTagName.toResLoc())
 
     val blockTag get() = ItemTags.Wrapper(itemTagName.toResLoc())
-
-    fun register() = addForm(this)
 }
 
 class Form(val mat: Material, val global: GlobalForm) {
