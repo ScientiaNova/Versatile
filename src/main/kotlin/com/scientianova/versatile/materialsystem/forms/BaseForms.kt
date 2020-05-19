@@ -49,6 +49,7 @@ val LIQUID_FORM by formReg.fluid("liquid") {
         ForgeFlowingFluid.Properties({ stillFluid!! }, { flowingFluid!! }, ExtendedFluidAttributes.Builder(
                 "minecraft:block/water_still".toResLoc(),
                 "minecraft:block/water_flow".toResLoc(),
+                color = mat.color,
                 temperature = mat.liquidTemperature,
                 isGas = false
         )).block { block as FlowingFluidBlock }.bucket { item!! }
@@ -68,6 +69,7 @@ val GAS_FORM by formReg.fluid("gas") {
         ForgeFlowingFluid.Properties({ stillFluid!! }, { flowingFluid!! }, ExtendedFluidAttributes.Builder(
                 "minecraft:block/water_still".toResLoc(),
                 "minecraft:block/water_flow".toResLoc(),
+                color = mat.color,
                 temperature = mat.gasTemperature,
                 isGas = true
         )).block { block as FlowingFluidBlock }.bucket { item!! }
@@ -78,5 +80,6 @@ val GAS_FORM by formReg.fluid("gas") {
         }
     }
     REGISTRY_NAME { ResourceLocation("versatile:${mat.gasNames[0]}") }
+    COMBINED_ITEM_TAGS { mat.gasNames.map { "forge:buckets/$it" } }
     COMBINED_FLUID_TAGS { mat.gasNames.map { "forge:$it" } }
 }

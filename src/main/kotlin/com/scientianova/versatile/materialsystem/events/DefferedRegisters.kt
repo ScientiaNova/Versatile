@@ -198,6 +198,7 @@ class DeferredFormRegister(override val priority: EventPriority = EventPriority.
             singleTextureSet = true
             indexBlacklist = listOf(0)
             bucketVolume = 1000
+            itemTagName = "forge:buckets"
             ITEM {
                 VersatileBucketItem({ stillFluid!! }, ExtendedItemProperties(
                         group = Versatile.MAIN,
@@ -223,7 +224,6 @@ class DeferredFormRegister(override val priority: EventPriority = EventPriority.
                 }
             }
             RENDER_TYPE { DistExecutor.runForDist<RenderType?>({ Supplier { RenderType.getTranslucent() } }, { Supplier { null } }) }
-            COMBINED_ITEM_TAGS { emptyList() }
             COMBINED_BLOCK_TAGS { emptyList() }
             builder()
         }
