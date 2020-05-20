@@ -23,12 +23,17 @@ import com.scientianova.versatile.proxy.ClientProxy
 import com.scientianova.versatile.proxy.IModProxy
 import com.scientianova.versatile.proxy.ServerProxy
 import com.scientianova.versatile.proxy.addModelJSONs
+import com.scientianova.versatile.resources.advancements.AdvancementEvent
+import com.scientianova.versatile.resources.advancements.AdvancementHandler
+import com.scientianova.versatile.resources.loot.LootTableEvent
+import com.scientianova.versatile.resources.loot.LootTableHandler
 import com.scientianova.versatile.resources.recipes.RecipeEvent
 import com.scientianova.versatile.resources.recipes.RecipeHandler
 import com.scientianova.versatile.resources.tags.TagEvent
 import com.scientianova.versatile.resources.tags.TagHandler
 import com.scientianova.versatile.resources.tags.tagEvent
 import net.alexwells.kottle.FMLKotlinModLoadingContext
+import net.minecraft.advancements.AdvancementTreeNode
 import net.minecraft.block.Block
 import net.minecraft.client.gui.ScreenManager
 import net.minecraft.client.renderer.RenderTypeLookup
@@ -129,7 +134,7 @@ object Versatile {
             ModLoader.get().postEvent(FormRegistryEvent(forms))
             FORMS = StringBasedRegistry(forms.map)
 
-            addVanilla()
+            ModLoader.get().postEvent(FormOverrideEvent(FORMS, MATERIALS))
         }
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -167,6 +172,12 @@ object Versatile {
                 }
             }
         }
+
+
+        @SubscribeEvent(priority = EventPriority.HIGH)
+        fun onFormOverride(e: FormOverrideEvent) {
+            addVanilla()
+        }
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, modid = MOD_ID)
@@ -192,6 +203,18 @@ object Versatile {
                 val newEntityTags = EntityTypeTags.getCollection().getTagMap().toMutableMap()
                 MinecraftForge.EVENT_BUS.post(tagEvent(TagHandler(newEntityTags)))
                 EntityTypeTags.getCollection().tagMap = newEntityTags
+            })
+
+            listeners.add(listeners.indexOf(server.advancementManager) + 1, ISelectiveResourceReloadListener { _, _ ->
+                val list = server.advancementManager.advancementList
+                MinecraftForge.EVENT_BUS.post(AdvancementEvent(AdvancementHandler(list)))
+                list.roots.forEach { if (it.display != null) AdvancementTreeNode.layout(it) }
+            })
+
+            listeners.add(listeners.indexOf(server.lootTableManager) + 1, ISelectiveResourceReloadListener { _, _ ->
+                val replacement = server.lootTableManager.registeredLootTables.toMutableMap()
+                MinecraftForge.EVENT_BUS.post(LootTableEvent(LootTableHandler(replacement)))
+                server.lootTableManager.registeredLootTables = replacement
             })
 
             listeners.add(listeners.indexOf(server.recipeManager) + 1, ISelectiveResourceReloadListener { _, _ ->

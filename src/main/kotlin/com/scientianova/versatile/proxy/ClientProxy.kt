@@ -45,16 +45,14 @@ object ClientProxy : IModProxy {
     }
 }
 
-fun addModelJSONs() {
-    FORMS.forEach { global ->
-        global.specialized.forEach inner@{ regular ->
-            if (regular.alreadyImplemented) return@inner
+fun addModelJSONs() = FORMS.forEach { global ->
+    global.specialized.forEach inner@{ regular ->
+        if (regular.alreadyImplemented) return@inner
 
-            val itemReg = (regular.item ?: return@inner).registryName!!
-            addAssetsJSON("${itemReg.namespace}:models/item/${itemReg.path}.json".toResLoc(), regular.itemModel)
+        val itemReg = (regular.item ?: return@inner).registryName!!
+        addAssetsJSON("${itemReg.namespace}:models/item/${itemReg.path}.json".toResLoc(), regular.itemModel)
 
-            val blockReg = (regular.block ?: return@inner).registryName!!
-            addAssetsJSON("${blockReg.namespace}:blockstates/${blockReg.path}.json".toResLoc(), regular.itemModel)
-        }
+        val blockReg = (regular.block ?: return@inner).registryName!!
+        addAssetsJSON("${blockReg.namespace}:blockstates/${blockReg.path}.json".toResLoc(), regular.blockStateJSON)
     }
 }

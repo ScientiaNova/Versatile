@@ -24,7 +24,7 @@ class ExtendedBlockProperties(
         variableOpacity: Boolean = false,
         harvestLevel: Int = -1,
         harvestTool: ToolType = ToolType.PICKAXE,
-        val isAir: Boolean = true,
+        val isAir: Boolean = false,
         val localizedNameFun: Block.() -> ITextComponent? = { TranslationTextComponent(translationKey) },
         val isBurning: Boolean = false,
         val isFoliage: Boolean = false,

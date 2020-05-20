@@ -91,10 +91,10 @@ class Material {
             this[BASE_BURN_TIME] = value
         }
 
-    var compoundType
-        get() = this[COMPOUND_TYPE]
+    var alloy
+        get() = this[ALLOY]
         set(value) {
-            this[COMPOUND_TYPE] = value
+            this[ALLOY] = value
         }
 
     var harvestTier
@@ -147,6 +147,12 @@ class Material {
         get() = this[GAS_NAMES]
         set(value) {
             this[GAS_NAMES] = value
+        }
+
+    var liquidColor
+        get() = this[LIQUID_COLOR]
+        set(value) {
+            this[LIQUID_COLOR] = value
         }
 
     var gasColor
@@ -203,10 +209,10 @@ class Material {
             this[ROD_OUTPUT_COUNT] = value
         }
 
-    var displayType
-        get() = this[DISPLAY_TYPE]
+    var chemicalGroup
+        get() = this[CHEMICAL_GROUP]
         set(value) {
-            this[DISPLAY_TYPE] = value
+            this[CHEMICAL_GROUP] = value
         }
 
     var hasDust

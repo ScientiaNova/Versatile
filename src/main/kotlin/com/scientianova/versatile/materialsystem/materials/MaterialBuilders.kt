@@ -30,7 +30,8 @@ open class MaterialBuilder(vararg names: String) {
 
     fun standardBurnTime(value: Int) = property(BASE_BURN_TIME, value)
 
-    fun compoundType(value: CompoundType) = property(COMPOUND_TYPE, value)
+    @JvmOverloads
+    fun alloy(value: Boolean = true) = property(ALLOY, value)
 
     fun harvestTier(value: HarvestTier) = property(HARVEST_TIER, value)
 
@@ -58,7 +59,7 @@ open class MaterialBuilder(vararg names: String) {
 
     fun transitionProperties(transitionProperties: TransitionProperties) = property(TRANSITION_PROPERTIES, transitionProperties)
 
-    fun transitionProperties(neededAmount: Int, endMaterial: String) = transitionProperties(TransitionProperties(neededAmount, endMaterial))
+    fun transitionProperties(neededAmount: Int, to: () -> Material) = transitionProperties(TransitionProperties(neededAmount, to))
 
     @JvmOverloads
     fun hasOre(value: Boolean = true) = property(HAS_ORE, value)
@@ -67,7 +68,8 @@ open class MaterialBuilder(vararg names: String) {
 
     fun rodOutputCount(value: Int) = property(ROD_OUTPUT_COUNT, value)
 
-    fun displayType(value: DisplayType) = property(DISPLAY_TYPE, value)
+    @JvmOverloads
+    fun chemicalGroup(value: Boolean = true) = property(CHEMICAL_GROUP, value)
 
     fun hasDust() = property(HAS_ORE, true)
 
@@ -95,7 +97,7 @@ class GemMaterialBuilder(vararg names: String) : MaterialBuilder(*names) {
 
 class IngotMaterialBuilder(vararg names: String) : MaterialBuilder(*names) {
     init {
-        compoundType(CompoundType.ALLOY)
+        alloy()
         hasDust()
         hasIngot()
     }
@@ -115,6 +117,6 @@ class GasMaterialBuilder(vararg names: String) : MaterialBuilder(*names) {
 
 class GroupMaterialBuilder(vararg names: String) : MaterialBuilder(*names) {
     init {
-        displayType(DisplayType.GROUP)
+        chemicalGroup()
     }
 }

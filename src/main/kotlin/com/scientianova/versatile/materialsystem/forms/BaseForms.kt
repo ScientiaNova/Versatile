@@ -10,6 +10,8 @@ import com.scientianova.versatile.materialsystem.materials.Material
 import com.scientianova.versatile.materialsystem.properties.*
 import net.minecraft.block.FlowingFluidBlock
 import net.minecraft.util.ResourceLocation
+import net.minecraft.util.text.LanguageMap
+import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.fluids.ForgeFlowingFluid
 
 internal val formReg = DeferredFormRegister()
@@ -49,9 +51,13 @@ val LIQUID_FORM by formReg.fluid("liquid") {
         ForgeFlowingFluid.Properties({ stillFluid!! }, { flowingFluid!! }, ExtendedFluidAttributes.Builder(
                 "minecraft:block/water_still".toResLoc(),
                 "minecraft:block/water_flow".toResLoc(),
-                color = mat.color,
+                color = if (mat.liquidColor !in 0xffffffff.toInt()..0x1000000) mat.liquidColor else mat.liquidColor or 0xff000000.toInt(),
                 temperature = mat.liquidTemperature,
-                isGas = false
+                isGas = false,
+                localizedNameFun = {
+                    if (LanguageMap.getInstance().exists(translationKey)) TranslationTextComponent(translationKey)
+                    else TranslationTextComponent("material.${mat.liquidNames.first()}")
+                }
         )).block { block as FlowingFluidBlock }.bucket { item!! }
     }
     ITEM_MODEL {
@@ -59,6 +65,7 @@ val LIQUID_FORM by formReg.fluid("liquid") {
             "parent" to "versatile:item/materialitems/fluid_bucket"
         }
     }
+    FORM_COLOR { mat.liquidColor }
     REGISTRY_NAME { ResourceLocation("versatile:${mat.liquidNames[0]}") }
     COMBINED_FLUID_TAGS { mat.liquidNames.map { "forge:$it" } }
 }
@@ -69,9 +76,13 @@ val GAS_FORM by formReg.fluid("gas") {
         ForgeFlowingFluid.Properties({ stillFluid!! }, { flowingFluid!! }, ExtendedFluidAttributes.Builder(
                 "minecraft:block/water_still".toResLoc(),
                 "minecraft:block/water_flow".toResLoc(),
-                color = mat.color,
+                color = if (mat.gasColor !in 0xffffffff.toInt()..0x1000000) mat.gasColor else mat.gasColor or 0xff000000.toInt(),
                 temperature = mat.gasTemperature,
-                isGas = true
+                isGas = true,
+                localizedNameFun = {
+                    if (LanguageMap.getInstance().exists(translationKey)) TranslationTextComponent(translationKey)
+                    else TranslationTextComponent("material.${mat.gasNames.first()}")
+                }
         )).block { block as FlowingFluidBlock }.bucket { item!! }
     }
     ITEM_MODEL {
@@ -79,6 +90,7 @@ val GAS_FORM by formReg.fluid("gas") {
             "parent" to "versatile:item/materialitems/fluid_gas_bucket"
         }
     }
+    FORM_COLOR { mat.gasColor }
     REGISTRY_NAME { ResourceLocation("versatile:${mat.gasNames[0]}") }
     COMBINED_ITEM_TAGS { mat.gasNames.map { "forge:buckets/$it" } }
     COMBINED_FLUID_TAGS { mat.gasNames.map { "forge:$it" } }

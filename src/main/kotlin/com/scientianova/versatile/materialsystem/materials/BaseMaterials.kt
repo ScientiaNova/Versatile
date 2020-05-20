@@ -8,7 +8,6 @@ import com.scientianova.versatile.materialsystem.elements.IRON_E
 import com.scientianova.versatile.materialsystem.events.DeferredMatRegister
 import com.scientianova.versatile.materialsystem.forms.*
 import com.scientianova.versatile.materialsystem.properties.BlockCompaction
-import com.scientianova.versatile.materialsystem.properties.CompoundType
 import net.minecraft.block.Blocks
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.ArmorMaterial
@@ -21,14 +20,14 @@ val BRICK by matReg.ingot("brick") {
     tier = 1
     color = 0xb55c42
     blockCompaction = BlockCompaction.FROM_2X2
-    compoundType = CompoundType.CHEMICAL
+    alloy = false
     malleable = false
 }
 val NETHER_BRICK by matReg.ingot("nether_brick") {
     tier = 1
     color = 0x472a30
     blockCompaction = BlockCompaction.FROM_2X2
-    compoundType = CompoundType.CHEMICAL
+    alloy = false
     malleable = false
 }
 val IRON by matReg.ingot("iron") {

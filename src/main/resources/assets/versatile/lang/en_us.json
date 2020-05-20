@@ -32,7 +32,10 @@
 	"material.blaze": "Blaze",
 	"material.water": "Water",
 	"material.lava": "Lava",
-
+	"material.steam": "Steam",
+	"material.molten_gold": "Molten Gold",
+	"material.molten_iron": "Molten Iron",
+	
 	"item.versatile.wooden_dust": "Sawdust",
 	"block.versatile.wooden_block": "Block of Sawdust",
 	"block.versatile.stone_block": "Block of Stone Dust",

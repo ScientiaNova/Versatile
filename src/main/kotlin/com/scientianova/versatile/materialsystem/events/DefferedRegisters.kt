@@ -92,7 +92,7 @@ class DeferredMatRegister(override val priority: EventPriority = EventPriority.N
             associatedNames = listOf(*names)
             liquidNames = names.map { "molten_$it" }
             gasNames = names.map { "${it}_gas" }
-            compoundType = CompoundType.ALLOY
+            alloy = true
             hasDust = true
             hasIngot = true
             builder()
@@ -122,7 +122,7 @@ class DeferredMatRegister(override val priority: EventPriority = EventPriority.N
     inline fun group(vararg names: String, crossinline builder: Material.() -> Unit) = set(names.first()) {
         Material().apply {
             associatedNames = listOf(*names)
-            displayType = DisplayType.GROUP
+            chemicalGroup = true
             builder()
         }
     }
