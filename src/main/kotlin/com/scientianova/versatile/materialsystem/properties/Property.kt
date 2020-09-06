@@ -1,37 +1,77 @@
 package com.scientianova.versatile.materialsystem.properties
 
 import com.scientianova.versatile.materialsystem.forms.Form
-import com.scientianova.versatile.materialsystem.forms.GlobalForm
+import com.scientianova.versatile.materialsystem.forms.FormInstance
 import com.scientianova.versatile.materialsystem.materials.Material
 import net.minecraft.util.ResourceLocation
 
-
-data class MatProperty<T>(
+open class Property<T : Any, S>(
         val name: ResourceLocation,
-        val isValid: (T) -> Boolean = { true },
-        val defaultFun: Material.() -> T
+        protected val default: (T) -> S,
+        val predicate: (S) -> Boolean
 ) {
-    override fun hashCode() = name.hashCode()
+    protected val lazyValues = mutableMapOf<T, (T) -> S>()
+    protected val values = mutableMapOf<T, S>()
 
-    override fun equals(other: Any?) = other is MatProperty<*> && other.name == name
+    operator fun set(thing: T, value: (T) -> S) = lazyValues.set(thing, value)
+
+    open operator fun get(thing: T): S = if (thing in values) values[thing]!! else {
+        val fn = if (thing in lazyValues) lazyValues[thing]!! else default
+        fn(thing).also { assert(predicate(it)) { "Invalid $name for $thing" } }
+    }
 }
 
-data class GlobalFormProperty<T>(
-        val name: ResourceLocation,
-        val isValid: (T) -> Boolean = { true },
-        val defaultFun: GlobalForm.() -> T
-) {
-    override fun hashCode() = name.hashCode()
+class MatProperty<T>(
+        name: ResourceLocation,
+        predicate: (T) -> Boolean = { true },
+        default: Material.() -> T
+) : Property<Material, T>(name, default, predicate)
 
-    override fun equals(other: Any?) = other is FormProperty<*> && other.name == name
+class FormProperty<T>(
+        name: ResourceLocation,
+        predicate: (T) -> Boolean = { true },
+        default: Form.() -> T
+) : Property<Form, T>(name, default, predicate)
+
+open class FormInstanceProperty<T>(
+        name: ResourceLocation,
+        predicate: (T) -> Boolean = { true },
+        default: FormInstance.() -> T
+) : Property<FormInstance, T>(name, default, predicate) {
+    protected val lazyForForms = mutableMapOf<Form, (FormInstance) -> T>()
+
+    operator fun set(mat: Material, form: Form, value: (FormInstance) -> T) =
+            lazyValues.set(FormInstance(mat, form), value)
+
+    operator fun set(form: Form, value: (FormInstance) -> T) = lazyForForms.set(form, value)
+
+    operator fun get(mat: Material, form: Form) = get(FormInstance(mat, form))
+
+    override fun get(thing: FormInstance): T = if (thing in values) values[thing]!! else {
+        val fn = when {
+            thing in lazyValues -> lazyValues[thing]!!
+            thing.form in lazyForForms -> lazyForForms[thing.form]!!
+            else -> default
+        }
+        fn(thing).also { assert(predicate(it)) { "Invalid $name for $thing" } }
+    }
 }
 
-data class FormProperty<T>(
-        val name: ResourceLocation,
-        val isValid: (T) -> Boolean = { true },
-        val defaultFun: Form.() -> T
-) {
-    override fun hashCode() = name.hashCode()
-
-    override fun equals(other: Any?) = other is FormProperty<*> && other.name == name
+open class RegistryProperty<T>(
+        name: ResourceLocation,
+        predicate: (T?) -> Boolean = { true },
+        default: FormInstance.() -> T? = { null }
+) : FormInstanceProperty<T?>(name, predicate, default) {
+    override fun get(thing: FormInstance): T? = when {
+        thing in values -> values[thing]!!
+        thing.form[matPredicate](thing.mat) -> null.also { values[thing] = null }
+        else -> {
+            val fn = when {
+                thing in lazyValues -> lazyValues[thing]!!
+                thing.form in lazyForForms -> lazyForForms[thing.form]!!
+                else -> default
+            }
+            fn(thing).also { assert(predicate(it)) { "Invalid $name for $thing" } }
+        }
+    }
 }

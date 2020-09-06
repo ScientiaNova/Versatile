@@ -106,9 +106,6 @@ repositories {
         url = "https://dvs1.progwml6.com/files/maven/"
     }
     maven {
-        url = "https://maven.blamejared.com/"
-    }
-    maven {
         url = 'https://minecraft.curseforge.com/api/maven/'
     }
 }
@@ -116,7 +113,6 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:$mcVersion-$forgeVersion"
     compile "kottle:Kottle:$kottleVersion"
-    compile "com.scientianova.palm:Palm:$palmVersion"
     compileOnly fg.deobf("mezz.jei:jei-$mcVersion:$jeiVersion:api")
     compile fg.deobf("mezz.jei:jei-$mcVersion:$jeiVersion")
 }
@@ -139,7 +135,6 @@ shadowJar {
     classifier = ''
 
     dependencies {
-        include(dependency("com.scientianova.palm:Palm:$palmVersion"))
     }
 }
 

@@ -1,6 +1,7 @@
 package com.scientianova.versatile.materialsystem.elements
 
-sealed class Element(val name: String) {
+sealed class Element {
+    abstract val name: String
     abstract val symbol: String
     abstract val protons: Int
     abstract val neutrons: Int
@@ -17,10 +18,19 @@ sealed class Element(val name: String) {
     fun toStack(count: Int = 1) = ElementStack(this, count)
 }
 
-class BaseElement(name: String, override val protons: Int, override val neutrons: Int, override val symbol: String) : Element(name)
-class Isotope(name: String, standard: () -> BaseElement, val nucleons: Int, symbolFn: (() -> String)?) : Element(name) {
-    val standard by lazy(standard)
-    override val symbol by lazy { symbolFn?.invoke() ?: "${this.standard.symbol}-$nucleons" }
+data class BaseElement(
+        override val name: String,
+        override val protons: Int,
+        override val neutrons: Int,
+        override val symbol: String
+) : Element()
+
+data class Isotope(
+        override val name: String,
+        val standard: Element,
+        val nucleons: Int,
+        override val symbol: String
+) : Element() {
     override val protons get() = standard.protons
     override val neutrons get() = nucleons - standard.protons
 }

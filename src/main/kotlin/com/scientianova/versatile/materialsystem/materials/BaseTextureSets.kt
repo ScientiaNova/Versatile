@@ -2,13 +2,13 @@
 
 package com.scientianova.versatile.materialsystem.materials
 
-const val ROUGH = "rough"
-const val REGULAR = "regular"
-const val SHINY = "shiny"
-const val FUEL = "fuel"
-const val PENTAGONAL = "pentagonal"
-const val OCTAGONAL = "octagonal"
-const val CRYSTAL = "crystal"
-const val SHARP = "sharp"
-const val FINE = "fine"
-const val FLUID = "fluid"
+const val rough = "rough"
+const val regular = "regular"
+const val shiny = "shiny"
+const val fuel = "fuel"
+const val pentagonal = "pentagonal"
+const val octagonal = "octagonal"
+const val crystal = "crystal"
+const val sharp = "sharp"
+const val fine = "fine"
+const val fluid = "fluid"

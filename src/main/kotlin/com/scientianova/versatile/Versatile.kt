@@ -1,10 +1,9 @@
 package com.scientianova.versatile
 
 import com.scientianova.versatile.common.extensions.toStack
-import com.scientianova.versatile.common.registry.ELEMENTS
-import com.scientianova.versatile.common.registry.FORMS
-import com.scientianova.versatile.common.registry.MATERIALS
 import com.scientianova.versatile.common.registry.StringBasedRegistry
+import com.scientianova.versatile.common.registry.forms
+import com.scientianova.versatile.common.registry.materials
 import com.scientianova.versatile.machines.BaseMachineRegistry
 import com.scientianova.versatile.machines.gui.BaseScreen
 import com.scientianova.versatile.machines.packets.NetworkHandler
@@ -13,12 +12,13 @@ import com.scientianova.versatile.materialsystem.commands.FormCommands
 import com.scientianova.versatile.materialsystem.commands.MaterialCommand
 import com.scientianova.versatile.materialsystem.elements.elemReg
 import com.scientianova.versatile.materialsystem.events.*
-import com.scientianova.versatile.materialsystem.forms.DUST_FORM
+import com.scientianova.versatile.materialsystem.forms.FormInstance
+import com.scientianova.versatile.materialsystem.forms.dustForm
 import com.scientianova.versatile.materialsystem.forms.formReg
-import com.scientianova.versatile.materialsystem.materials.COAL
 import com.scientianova.versatile.materialsystem.materials.addVanilla
+import com.scientianova.versatile.materialsystem.materials.coal
 import com.scientianova.versatile.materialsystem.materials.matReg
-import com.scientianova.versatile.materialsystem.properties.ITEM
+import com.scientianova.versatile.materialsystem.properties.*
 import com.scientianova.versatile.proxy.ClientProxy
 import com.scientianova.versatile.proxy.IModProxy
 import com.scientianova.versatile.proxy.ServerProxy
@@ -74,7 +74,7 @@ object Versatile {
     val LOGGER: Logger = LogManager.getLogger()
 
     val MAIN: ItemGroup = object : ItemGroup(MOD_ID) {
-        override fun createIcon() = DUST_FORM[COAL]!![ITEM]?.toStack() ?: ItemStack.EMPTY
+        override fun createIcon() = item[coal, dustForm]?.toStack() ?: ItemStack.EMPTY
     }
 
     private val proxy = DistExecutor.runForDist<IModProxy>({ Supplier { ClientProxy } }, { Supplier { ServerProxy } })
@@ -96,12 +96,19 @@ object Versatile {
 
     private fun clientSetup() {
         ScreenManager.registerFactory(BaseMachineRegistry.BASE_CONTAINER, ::BaseScreen)
-        FORMS.forEach { global ->
-            global.specialized.forEach inner@{ regular ->
-                if (regular.alreadyImplemented) return@inner
-                regular.block?.let { RenderTypeLookup.setRenderLayer(it, regular.renderType ?: return@inner) }
-                regular.stillFluid?.let { RenderTypeLookup.setRenderLayer(it, regular.renderType ?: return@inner) }
-                regular.flowingFluid?.let { RenderTypeLookup.setRenderLayer(it, regular.renderType ?: return@inner) }
+        forms.forEach { form ->
+            materials.forEach inner@{ mat ->
+                val instance = FormInstance(mat, form)
+                if (instance[alreadyImplemented]) return@inner
+                instance[block]?.let {
+                    RenderTypeLookup.setRenderLayer(it, instance[renderType] ?: return@inner)
+                }
+                instance[stillFluid]?.let {
+                    RenderTypeLookup.setRenderLayer(it, instance[renderType] ?: return@inner)
+                }
+                instance[flowingFluid]?.let {
+                    RenderTypeLookup.setRenderLayer(it, instance[renderType] ?: return@inner)
+                }
             }
         }
     }
@@ -124,26 +131,26 @@ object Versatile {
         fun onEarlyBlockRegistry(e: RegistryEvent.Register<Block>) {
             val elements = ElementRegistry()
             ModLoader.get().postEvent(ElementRegistryEvent(elements))
-            ELEMENTS = StringBasedRegistry(elements.map)
+            com.scientianova.versatile.common.registry.elements = StringBasedRegistry(elements.map)
 
             val materials = MaterialRegistry()
             ModLoader.get().postEvent(MaterialRegistryEvent(materials))
-            MATERIALS = StringBasedRegistry(materials.map)
+            com.scientianova.versatile.common.registry.materials = StringBasedRegistry(materials.map)
 
             val forms = FormRegistry()
             ModLoader.get().postEvent(FormRegistryEvent(forms))
-            FORMS = StringBasedRegistry(forms.map)
+            com.scientianova.versatile.common.registry.forms = StringBasedRegistry(forms.map)
 
-            ModLoader.get().postEvent(FormOverrideEvent(FORMS, MATERIALS))
+            ModLoader.get().postEvent(FormOverrideEvent(com.scientianova.versatile.common.registry.forms, com.scientianova.versatile.common.registry.materials))
         }
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
         fun onLateBlockRegistry(e: RegistryEvent.Register<Block>) {
-            MATERIALS.forEach { mat ->
-                FORMS.forEach { form ->
-                    form[mat]?.let { regular ->
-                        if (regular.alreadyImplemented) return@let
-                        e.registry.register(regular.block ?: return@let)
+            materials.forEach { mat ->
+                forms.forEach { form ->
+                    FormInstance(mat, form).let { instance ->
+                        if (instance[alreadyImplemented]) return@let
+                        e.registry.register(instance[block] ?: return@let)
                     }
                 }
             }
@@ -151,11 +158,11 @@ object Versatile {
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
         fun onLateItemRegistry(e: RegistryEvent.Register<Item>) {
-            MATERIALS.forEach { mat ->
-                FORMS.forEach { form ->
-                    form[mat]?.let { regular ->
-                        if (regular.alreadyImplemented) return@let
-                        e.registry.register(regular.item ?: return@let)
+            materials.forEach { mat ->
+                forms.forEach { form ->
+                    FormInstance(mat, form).let { instance ->
+                        if (instance[alreadyImplemented]) return@let
+                        e.registry.register(instance[item] ?: return@let)
                     }
                 }
             }
@@ -163,12 +170,12 @@ object Versatile {
         }
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
-        fun onLateFluidRegistry(e: RegistryEvent.Register<Fluid>) = MATERIALS.forEach { mat ->
-            FORMS.forEach inner@{ form ->
-                form[mat]?.let { regular ->
-                    if (regular.alreadyImplemented) return@let
-                    e.registry.register(regular.stillFluid ?: return@inner)
-                    e.registry.register(regular.flowingFluid ?: return@inner)
+        fun onLateFluidRegistry(e: RegistryEvent.Register<Fluid>) = materials.forEach { mat ->
+            forms.forEach inner@{ form ->
+                FormInstance(mat, form).let { instance ->
+                    if (instance[alreadyImplemented]) return@let
+                    e.registry.register(instance[stillFluid] ?: return@inner)
+                    e.registry.register(instance[flowingFluid] ?: return@inner)
                 }
             }
         }
@@ -235,34 +242,37 @@ object Versatile {
         }
 
         @SubscribeEvent
-        fun onItemTagAddition(e: TagEvent<Item>) = FORMS.forEach { global ->
-            global.specialized.forEach inner@{ regular ->
-                if (regular.alreadyImplemented) return@inner
-                regular.item?.let {
-                    e.handler.addTo(global.itemTagName, it)
-                    regular.itemTagNames.forEach { tag -> e.handler.addTo(tag, it) }
+        fun onItemTagAddition(e: TagEvent<Item>) = forms.forEach { form ->
+            materials.forEach inner@{ mat ->
+                val instance = FormInstance(mat, form)
+                if (instance[alreadyImplemented]) return@inner
+                instance[item]?.let {
+                    e.handler.addTo(form[itemTag], it)
+                    instance[combinedItemTags].forEach { tag -> e.handler.addTo(tag, it) }
                 }
             }
         }
 
         @SubscribeEvent
-        fun onBlockTagAddition(e: TagEvent<Block>) = FORMS.forEach { global ->
-            global.specialized.forEach inner@{ regular ->
-                if (regular.alreadyImplemented) return@inner
-                regular.block?.let {
-                    e.handler.addTo(global.blockTagName, it)
-                    regular.blockTagNames.forEach { tag -> e.handler.addTo(tag, it) }
+        fun onBlockTagAddition(e: TagEvent<Block>) = forms.forEach { form ->
+            materials.forEach inner@{ mat ->
+                val instance = FormInstance(mat, form)
+                if (instance[alreadyImplemented]) return@inner
+                instance[block]?.let {
+                    e.handler.addTo(form[blockTag], it)
+                    instance[combinedBlocKTags].forEach { tag -> e.handler.addTo(tag, it) }
                 }
             }
         }
 
         @SubscribeEvent
-        fun onFluidTagAddition(e: TagEvent<Fluid>) = FORMS.forEach { global ->
-            global.specialized.forEach inner@{ regular ->
-                if (regular.alreadyImplemented) return@inner
-                regular.fluidTagNames.forEach { tag ->
-                    regular.stillFluid?.let { e.handler.addTo(tag, it) }
-                    regular.flowingFluid?.let { e.handler.addTo(tag, it) }
+        fun onFluidTagAddition(e: TagEvent<Fluid>) = forms.forEach { form ->
+            materials.forEach inner@{ mat ->
+                val instance = FormInstance(mat, form)
+                if (instance[alreadyImplemented]) return@inner
+                instance[combinedFluidTags].forEach { tag ->
+                    instance[stillFluid]?.let { e.handler.addTo(tag, it) }
+                    instance[flowingFluid]?.let { e.handler.addTo(tag, it) }
                 }
             }
         }

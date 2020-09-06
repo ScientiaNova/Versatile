@@ -13,9 +13,9 @@ import com.scientianova.versatile.items.VersatileItem
 import com.scientianova.versatile.materialsystem.elements.BaseElement
 import com.scientianova.versatile.materialsystem.elements.Element
 import com.scientianova.versatile.materialsystem.elements.Isotope
-import com.scientianova.versatile.materialsystem.forms.GlobalForm
-import com.scientianova.versatile.materialsystem.materials.FLUID
+import com.scientianova.versatile.materialsystem.forms.Form
 import com.scientianova.versatile.materialsystem.materials.Material
+import com.scientianova.versatile.materialsystem.materials.fluid
 import com.scientianova.versatile.materialsystem.properties.*
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.util.ResourceLocation
@@ -28,25 +28,24 @@ import net.minecraftforge.fml.DistExecutor
 import java.util.function.Consumer
 import java.util.function.Supplier
 
-@Suppress("UNCHECKED_CAST")
 class DeferredElemRegister(override val priority: EventPriority = EventPriority.NORMAL) : DeferredStringRegister<Element> {
     private val list = mutableListOf<() -> Element>()
     override fun set(name: String, thing: () -> Element): StringRegistryObject<Element> {
         list += thing
-        return StringRegistryObject(name, ::ELEMENTS)
+        return StringRegistryObject(name, ::elements)
     }
 
     private fun addAll(e: ElementRegistryEvent) {
         list.forEach { e.registry.register(it()) }
     }
 
-    override fun register(bus: IEventBus)  = bus.addListener(priority, Consumer<ElementRegistryEvent> { addAll(it) })
+    override fun register(bus: IEventBus) = bus.addListener(priority, Consumer<ElementRegistryEvent> { addAll(it) })
 
     fun base(name: String, protons: Int, neutrons: Int, symbol: String) =
-            set(name) { BaseElement(name, protons, neutrons, symbol) } as StringRegistryObject<BaseElement>
+            set(name) { BaseElement(name, protons, neutrons, symbol) }
 
-    fun iso(name: String, standard: () -> BaseElement, nucleons: Int, symbol: String? = null) =
-            set(name) { Isotope(name, standard, nucleons, symbol?.let { { it } }) } as StringRegistryObject<Isotope>
+    fun iso(name: String, standard: Element, nucleons: Int, symbol: String? = null) =
+            set(name) { Isotope(name, standard, nucleons, symbol ?: "${standard.symbol}-$nucleons") }
 }
 
 class DeferredMatRegister(override val priority: EventPriority = EventPriority.NORMAL) : DeferredStringRegister<Material> {
@@ -54,177 +53,161 @@ class DeferredMatRegister(override val priority: EventPriority = EventPriority.N
 
     override fun set(name: String, thing: () -> Material): StringRegistryObject<Material> {
         list += thing
-        return StringRegistryObject(name, ::MATERIALS)
+        return StringRegistryObject(name, ::materials)
     }
 
     private fun addAll(e: MaterialRegistryEvent) {
         list.forEach { e.registry.register(it()) }
     }
 
-    override fun register(bus: IEventBus)  = bus.addListener(priority, Consumer<MaterialRegistryEvent> { addAll(it) })
+    override fun register(bus: IEventBus) = bus.addListener(priority, Consumer<MaterialRegistryEvent> { addAll(it) })
 
-    inline operator fun invoke(vararg names: String, crossinline builder: Material.() -> Unit) = set(names.first()) {
-        Material().apply {
-            associatedNames = listOf(*names)
+    inline operator fun invoke(name: String, crossinline builder: Material.() -> Unit) = set(name) {
+        Material(name).apply {
             builder()
         }
     }
 
-    inline fun dust(vararg names: String, crossinline builder: Material.() -> Unit) = set(names.first()) {
-        Material().apply {
-            associatedNames = listOf(*names)
-            hasDust = true
+    inline fun dust(name: String, crossinline builder: Material.() -> Unit) = set(name) {
+        Material(name).apply {
+            set(hasDust) { true }
             builder()
         }
     }
 
-    inline fun gem(vararg names: String, crossinline builder: Material.() -> Unit) = set(names.first()) {
-        Material().apply {
-            associatedNames = listOf(*names)
-            hasDust = true
-            hasGem = true
+    inline fun gem(name: String, crossinline builder: Material.() -> Unit) = set(name) {
+        Material(name).apply {
+            set(hasDust) { true }
+            set(hasGem) { true }
             builder()
         }
     }
 
-    inline fun ingot(vararg names: String, crossinline builder: Material.() -> Unit) = set(names.first()) {
-        Material().apply {
-            associatedNames = listOf(*names)
-            liquidNames = names.map { "molten_$it" }
-            gasNames = names.map { "${it}_gas" }
-            alloy = true
-            hasDust = true
-            hasIngot = true
-            builder()
-        }
+    inline fun ingot(name: String, crossinline builder: Material.() -> Unit) = set(name) {
+        Material(name)
+                .set(liquidNames) { listOf("molten_$name") }
+                .set(gasNames) { listOf("${name}_gas") }
+                .set(isAlloy) { true }
+                .set(hasDust) { true }
+                .set(hasIngot) { true }
+                .apply(builder)
     }
 
-    inline fun liquid(vararg names: String, crossinline builder: Material.() -> Unit) = set(names.first()) {
-        Material().apply {
-            blockCompaction = BlockCompaction.NONE
-            associatedNames = listOf(*names)
-            textureSet = FLUID
-            liquidTemperature = 300
-            builder()
-        }
+    inline fun liquid(name: String, crossinline builder: Material.() -> Unit) = set(name) {
+        Material(name)
+                .set(blockCompaction) { BlockCompaction.NONE }
+                .set(textureSet) { fluid }
+                .set(liquidTemp) { 300 }
+                .apply(builder)
     }
 
-    inline fun gas(vararg names: String, crossinline builder: Material.() -> Unit) = set(names.first()) {
-        Material().apply {
-            blockCompaction = BlockCompaction.NONE
-            associatedNames = listOf(*names)
-            textureSet = FLUID
-            gasTemperature = 300
-            builder()
-        }
+    inline fun gas(name: String, crossinline builder: Material.() -> Unit) = set(name) {
+        Material(name)
+                .set(blockCompaction) { BlockCompaction.NONE }
+                .set(textureSet) { fluid }
+                .set(gasTemp) { 300 }
+                .apply(builder)
     }
 
-    inline fun group(vararg names: String, crossinline builder: Material.() -> Unit) = set(names.first()) {
-        Material().apply {
-            associatedNames = listOf(*names)
-            chemicalGroup = true
+    inline fun group(name: String, crossinline builder: Material.() -> Unit) = set(name) {
+        Material(name).apply {
+            set(chemicalGroup) { true }
             builder()
         }
     }
 }
 
-class DeferredFormRegister(override val priority: EventPriority = EventPriority.NORMAL) : DeferredStringRegister<GlobalForm> {
-    private val list = mutableListOf<() -> GlobalForm>()
-    override fun set(name: String, thing: () -> GlobalForm): StringRegistryObject<GlobalForm> {
+class DeferredFormRegister(override val priority: EventPriority = EventPriority.NORMAL) : DeferredStringRegister<Form> {
+    private val list = mutableListOf<() -> Form>()
+    override fun set(name: String, thing: () -> Form): StringRegistryObject<Form> {
         list += thing
-        return StringRegistryObject(name, ::FORMS)
+        return StringRegistryObject(name, ::forms)
     }
 
     private fun addAll(e: FormRegistryEvent) {
         list.forEach { e.registry.register(it()) }
     }
 
-    override fun register(bus: IEventBus)  = bus.addListener(priority, Consumer<FormRegistryEvent> { addAll(it) })
+    override fun register(bus: IEventBus) = bus.addListener(priority, Consumer<FormRegistryEvent> { addAll(it) })
 
-    inline operator fun invoke(name: String, crossinline builder: GlobalForm.() -> Unit) = GlobalForm().apply {
-        this.name = name
-        builder()
-    }
+    inline operator fun invoke(name: String, crossinline builder: Form.() -> Unit) = Form(name).apply(builder)
 
-    inline fun item(name: String, crossinline builder: GlobalForm.() -> Unit) = set(name) {
-        GlobalForm().apply {
-            this.name = name
-            ITEM {
+    inline fun item(name: String, crossinline builder: Form.() -> Unit) = set(name) {
+        Form(name).apply {
+            set(item) {
                 VersatileItem(ExtendedItemProperties(
                         group = Versatile.MAIN,
-                        burnTime = burnTime,
+                        burnTime = get(burnTime),
                         localizedNameFun = {
                             if (LanguageMap.getInstance().exists(translationKey)) TranslationTextComponent(translationKey)
                             else localize()
                         }
-                )).setRegistryName(registryName)
+                )).setRegistryName(get(registryName))
             }
             builder()
         }
     }
 
-    inline fun block(name: String, crossinline builder: GlobalForm.() -> Unit) = set(name) {
-        GlobalForm().apply {
-            this.name = name
-            ITEM {
-                VersatileBlockItem(block!!, ExtendedItemProperties(
+    inline fun block(name: String, crossinline builder: Form.() -> Unit) = set(name) {
+        Form(name).apply {
+            set(item) {
+                VersatileBlockItem(get(block)!!, ExtendedItemProperties(
                         group = Versatile.MAIN,
-                        burnTime = burnTime
-                )).setRegistryName(registryName)
+                        burnTime = get(burnTime)
+                )).setRegistryName(get(registryName))
             }
-            BLOCK {
+            set(block) {
                 VersatileBlock(ExtendedBlockProperties(
                         material = net.minecraft.block.material.Material.IRON,
-                        hardness = mat.harvestTier.hardness,
-                        resistance = mat.harvestTier.resistance,
+                        hardness = mat[harvestTier].hardness,
+                        resistance = mat[harvestTier].resistance,
                         localizedNameFun = {
                             if (LanguageMap.getInstance().exists(translationKey)) TranslationTextComponent(translationKey)
                             else localize()
                         }
-                )).setRegistryName(registryName)
+                )).setRegistryName(get(registryName))
             }
-            ITEM_MODEL {
+            set(itemModel) {
                 json {
-                    "parent" to "versatile:block/materialblocks/" + (if (singleTextureSet) "" else "${mat.textureSet}/") + name
+                    "parent" to "versatile:block/materialblocks/" + (if (get(singleTextureSet)) "" else "${mat[textureSet]}/") + name
                 }
             }
             builder()
         }
     }
 
-    inline fun fluid(name: String, crossinline builder: GlobalForm.() -> Unit) = set(name) {
-        GlobalForm().apply {
-            this.name = name
-            singleTextureSet = true
-            indexBlacklist = listOf(0)
-            bucketVolume = 1000
-            itemTagName = "forge:buckets"
-            ITEM {
-                VersatileBucketItem({ stillFluid!! }, ExtendedItemProperties(
+    inline fun fluid(name: String, crossinline builder: Form.() -> Unit) = set(name) {
+        Form(name).apply {
+            set(singleTextureSet) { true }
+            set(indexBlacklist) { listOf(0) }
+            set(bucketVolume) { 1000 }
+            set(itemTag) { "forge:buckets" }
+            set(item) {
+                VersatileBucketItem({ get(stillFluid)!! }, ExtendedItemProperties(
                         group = Versatile.MAIN,
                         maxStackSize = 1,
-                        burnTime = burnTime
-                )).setRegistryName(registryName)
+                        burnTime = get(burnTime)
+                )).setRegistryName(get(registryName))
             }
-            BLOCK {
-                VersatileFluidBlock({ stillFluid!! }, ExtendedBlockProperties(
+            set(block) {
+                VersatileFluidBlock({ get(stillFluid)!! }, ExtendedBlockProperties(
                         material = net.minecraft.block.material.Material.WATER,
                         blocksMovement = false
-                )).setRegistryName(registryName)
+                )).setRegistryName(get(registryName))
             }
-            STILL_FLUID {
-                ForgeFlowingFluid.Source(fluidProperties!!).apply {
-                    registryName = this@STILL_FLUID.registryName
+            set(stillFluid) {
+                ForgeFlowingFluid.Source(get(fluidProperties)!!).also {
+                    it.registryName = get(registryName)
                 }
             }
-            FLOWING_FLUID {
-                ForgeFlowingFluid.Flowing(fluidProperties!!).apply {
-                    val stillRegName = this@FLOWING_FLUID.registryName
-                    registryName = ResourceLocation(stillRegName.namespace, "flowing_${stillRegName.path}")
+            set(flowingFluid) {
+                ForgeFlowingFluid.Flowing(get(fluidProperties)!!).also {
+                    val stillRegName = get(registryName)
+                    it.registryName = ResourceLocation(stillRegName.namespace, "flowing_${stillRegName.path}")
                 }
             }
-            RENDER_TYPE { DistExecutor.runForDist<RenderType?>({ Supplier { RenderType.getTranslucent() } }, { Supplier { null } }) }
-            COMBINED_BLOCK_TAGS { emptyList() }
+            set(renderType) { DistExecutor.runForDist<RenderType?>({ Supplier { RenderType.getTranslucent() } }, { Supplier { null } }) }
+            set(combinedBlocKTags) { emptyList() }
             builder()
         }
     }

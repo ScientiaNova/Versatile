@@ -15,7 +15,7 @@ object TransferButton : IGUIComponent {
         val textures = Internal.getTextures()
         val texture = textures.getButtonForState(true, isSelected(mouseX - xOffset, mouseY - yOffset))
         texture.draw(xOffset, yOffset, width, height)
-        JEITextures.TRANSFER_OVERLAY.draw(xOffset + 3, yOffset + 3, 7, 7)
+        transferOverlay.draw(xOffset + 3, yOffset + 3, 7, 7)
     }
 
     override fun drawInForeground(mouseX: Double, mouseY: Double, xOffset: Int, yOffset: Int, guiLeft: Int, guiTop: Int) {

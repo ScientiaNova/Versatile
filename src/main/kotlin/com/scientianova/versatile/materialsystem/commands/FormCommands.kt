@@ -3,7 +3,9 @@ package com.scientianova.versatile.materialsystem.commands
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.scientianova.versatile.common.extensions.*
-import com.scientianova.versatile.common.registry.FORMS
+import com.scientianova.versatile.common.registry.forms
+import com.scientianova.versatile.common.registry.materials
+import com.scientianova.versatile.materialsystem.properties.*
 import net.minecraft.command.CommandSource
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.util.text.TranslationTextComponent
@@ -18,47 +20,47 @@ class FormCommands(dispatcher: CommandDispatcher<CommandSource>) {
                 literal("tag") {
                     literal("item") {
                         does {
-                            FORMS[StringArgumentType.getString(this, "name")]?.let {
-                                source.sendFeedback(it.itemTagName.toComponent(), false)
-                            } ?: source.sendErrorMessage(TranslationTextComponent("command.objtype.error"))
+                            forms[StringArgumentType.getString(this, "name")]?.let {
+                                source.sendFeedback(it[itemTag].toComponent(), false)
+                            } ?: source.sendErrorMessage(TranslationTextComponent("command.form.error"))
                         }
                     }
                     literal("block") {
                         does {
-                            FORMS[StringArgumentType.getString(this, "name")]?.let {
-                                source.sendFeedback(it.blockTagName.toComponent(), false)
-                            } ?: source.sendErrorMessage(TranslationTextComponent("command.objtype.error"))
+                            forms[StringArgumentType.getString(this, "name")]?.let {
+                                source.sendFeedback(it[blockTag].toComponent(), false)
+                            } ?: source.sendErrorMessage(TranslationTextComponent("command.form.error"))
                         }
                     }
                 }
                 literal("items") {
                     does {
-                        FORMS[StringArgumentType.getString(this, "name")]?.let { global ->
-                            global.specialized.forEach { regular ->
-                                val item = regular.item ?: return@forEach
+                        forms[StringArgumentType.getString(this, "name")]?.let { form ->
+                            materials.forEach { mat ->
+                                val item = item[mat, form] ?: return@forEach
                                 source.sendFeedback(item.registryName!!.toString().toComponent(), false)
                             }
-                        } ?: source.sendErrorMessage(TranslationTextComponent("command.objtype.error"))
+                        } ?: source.sendErrorMessage(TranslationTextComponent("command.form.error"))
                     }
                 }
                 literal("blocks") {
                     does {
-                        FORMS[StringArgumentType.getString(this, "name")]?.let { global ->
-                            global.specialized.forEach { regular ->
-                                val block = regular.block ?: return@forEach
+                        forms[StringArgumentType.getString(this, "name")]?.let { form ->
+                            materials.forEach { mat ->
+                                val block = block[mat, form] ?: return@forEach
                                 source.sendFeedback(block.registryName!!.toString().toComponent(), false)
                             }
-                        } ?: source.sendErrorMessage(TranslationTextComponent("command.objtype.error"))
+                        } ?: source.sendErrorMessage(TranslationTextComponent("command.form.error"))
                     }
                 }
                 literal("fluids") {
                     does {
-                        FORMS[StringArgumentType.getString(this, "name")]?.let { global ->
-                            global.specialized.forEach { regular ->
-                                val fluid = regular.stillFluid ?: return@forEach
+                        forms[StringArgumentType.getString(this, "name")]?.let { form ->
+                            materials.forEach { mat ->
+                                val fluid = stillFluid[mat, form] ?: return@forEach
                                 source.sendFeedback(fluid.registryName!!.toString().toComponent(), false)
                             }
-                        } ?: source.sendErrorMessage(TranslationTextComponent("command.objtype.error"))
+                        } ?: source.sendErrorMessage(TranslationTextComponent("command.form.error"))
                     }
                 }
             }

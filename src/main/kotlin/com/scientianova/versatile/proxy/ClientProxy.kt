@@ -1,7 +1,10 @@
 package com.scientianova.versatile.proxy
 
 import com.scientianova.versatile.common.extensions.toResLoc
-import com.scientianova.versatile.common.registry.FORMS
+import com.scientianova.versatile.common.registry.forms
+import com.scientianova.versatile.common.registry.materials
+import com.scientianova.versatile.materialsystem.forms.FormInstance
+import com.scientianova.versatile.materialsystem.properties.*
 import com.scientianova.versatile.resources.FakeResourcePackFinder
 import com.scientianova.versatile.resources.addAssetsJSON
 import net.minecraft.client.Minecraft
@@ -22,22 +25,23 @@ object ClientProxy : IModProxy {
     override fun process(e: InterModProcessEvent) {}
 
     private fun color() {
-        FORMS.forEach { global ->
-            global.specialized.forEach inner@{ regular ->
-                if (regular.alreadyImplemented) return@inner
+        forms.forEach { form ->
+            materials.forEach inner@ { mat ->
+                val instance = FormInstance(mat, form)
+                if (instance[alreadyImplemented]) return@inner
 
-                val item = regular.item ?: return@inner
+                val item = instance[item] ?: return@inner
 
                 Minecraft.getInstance().itemColors.register(IItemColor { _, index ->
-                    if (index !in global.indexBlacklist)
-                        regular.color
+                    if (index !in form[indexBlacklist])
+                        instance[formColor]
                     else -1
                 }, item)
 
-                val block = regular.block ?: return@inner
+                val block = instance[block] ?: return@inner
                 Minecraft.getInstance().blockColors.register(IBlockColor { _, _, _, index ->
-                    if (index !in global.indexBlacklist)
-                        regular.color
+                    if (index !in form[indexBlacklist])
+                        instance[formColor]
                     else -1
                 }, block)
             }
@@ -45,14 +49,15 @@ object ClientProxy : IModProxy {
     }
 }
 
-fun addModelJSONs() = FORMS.forEach { global ->
-    global.specialized.forEach inner@{ regular ->
-        if (regular.alreadyImplemented) return@inner
+fun addModelJSONs() = forms.forEach { form ->
+    materials.forEach inner@ { mat ->
+        val instance = FormInstance(mat, form)
+        if (instance[alreadyImplemented]) return@inner
 
-        val itemReg = (regular.item ?: return@inner).registryName!!
-        addAssetsJSON("${itemReg.namespace}:models/item/${itemReg.path}.json".toResLoc(), regular.itemModel)
+        val itemReg = (instance[item] ?: return@inner).registryName!!
+        addAssetsJSON("${itemReg.namespace}:models/item/${itemReg.path}.json".toResLoc(), instance[itemModel])
 
-        val blockReg = (regular.block ?: return@inner).registryName!!
-        addAssetsJSON("${blockReg.namespace}:blockstates/${blockReg.path}.json".toResLoc(), regular.blockStateJSON)
+        val blockReg = (instance[block] ?: return@inner).registryName!!
+        addAssetsJSON("${blockReg.namespace}:blockstates/${blockReg.path}.json".toResLoc(), instance[blockstateJSON])
     }
 }

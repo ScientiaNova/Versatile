@@ -4,12 +4,13 @@ import com.scientianova.versatile.common.extensions.*
 import com.scientianova.versatile.materialsystem.materials.Material
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.StringArgumentType
-import com.scientianova.versatile.common.registry.FORMS
-import com.scientianova.versatile.common.registry.MATERIALS
+import com.scientianova.versatile.common.registry.forms
+import com.scientianova.versatile.common.registry.materials
 import com.scientianova.versatile.materialsystem.materials.material
-import com.scientianova.versatile.materialsystem.properties.BLOCK
-import com.scientianova.versatile.materialsystem.properties.ITEM
-import com.scientianova.versatile.materialsystem.properties.STILL_FLUID
+import com.scientianova.versatile.materialsystem.properties.block
+import com.scientianova.versatile.materialsystem.properties.composition
+import com.scientianova.versatile.materialsystem.properties.item
+import com.scientianova.versatile.materialsystem.properties.stillFluid
 import net.minecraft.command.CommandSource
 import net.minecraft.command.arguments.ItemArgument
 import net.minecraft.entity.player.ServerPlayerEntity
@@ -45,17 +46,17 @@ class MaterialCommand(dispatcher: CommandDispatcher<CommandSource>) {
                             source.sendFeedback(StringTextComponent((if (level > 0) " ".repeat(level - 1) + "-" else "")
                                     + localizedName.formattedText), false
                             )
-                            composition.forEach { it.material.sendHierarchy(level + 1) }
+                            get(composition).forEach { it.material.sendHierarchy(level + 1) }
                         }
-                        MATERIALS[StringArgumentType.getString(this, "name")]?.sendHierarchy()
+                        materials[StringArgumentType.getString(this, "name")]?.sendHierarchy()
                                 ?: source.sendErrorMessage(TranslationTextComponent("command.material.error"))
                     }
                 }
                 literal("items") {
                     does {
-                        MATERIALS[StringArgumentType.getString(this, "name")]?.let { mat ->
-                            FORMS.forEach { global ->
-                                val item = global[mat]?.get(ITEM) ?: return@forEach
+                        materials[StringArgumentType.getString(this, "name")]?.let { mat ->
+                            forms.forEach { form ->
+                                val item = item[mat, form] ?: return@forEach
                                 source.sendFeedback(item.registryName!!.toString().toComponent(), false)
                             }
                         } ?: source.sendErrorMessage(TranslationTextComponent("command.material.error"))
@@ -63,9 +64,9 @@ class MaterialCommand(dispatcher: CommandDispatcher<CommandSource>) {
                 }
                 literal("blocks") {
                     does {
-                        MATERIALS[StringArgumentType.getString(this, "name")]?.let { mat ->
-                            FORMS.forEach { global ->
-                                val block = global[mat]?.get(BLOCK) ?: return@forEach
+                        materials[StringArgumentType.getString(this, "name")]?.let { mat ->
+                            forms.forEach { form ->
+                                val block = block[mat, form] ?: return@forEach
                                 source.sendFeedback(block.registryName!!.toString().toComponent(), false)
                             }
                         } ?: source.sendErrorMessage(TranslationTextComponent("command.material.error"))
@@ -73,9 +74,9 @@ class MaterialCommand(dispatcher: CommandDispatcher<CommandSource>) {
                 }
                 literal("fluids") {
                     does {
-                        MATERIALS[StringArgumentType.getString(this, "name")]?.let { mat ->
-                            FORMS.forEach { global ->
-                                val fluid = global[mat]?.get(STILL_FLUID) ?: return@forEach
+                        materials[StringArgumentType.getString(this, "name")]?.let { mat ->
+                            forms.forEach { form ->
+                                val fluid = stillFluid[mat, form] ?: return@forEach
                                 source.sendFeedback(fluid.registryName!!.toString().toComponent(), false)
                             }
                         } ?: source.sendErrorMessage(TranslationTextComponent("command.material.error"))
